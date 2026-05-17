@@ -112,6 +112,37 @@ class TestJRAParser(unittest.TestCase):
         self.assertEqual("芝", horses[0].target_surface)
         self.assertEqual("1600", horses[0].target_distance)
 
+    def test_parse_race_detail_reads_frame_number_from_waku_image_alt(self):
+        html = """
+        <html><body>
+        <table class="basic">
+          <tr>
+            <th>枠</th>
+            <th>馬番</th>
+            <th>馬名 / 単勝オッズ(人気)</th>
+            <th>性齢/毛色 負担重量 騎手名</th>
+          </tr>
+          <tr>
+            <td class="waku"><img src="/JRADB/img/waku/6.png" alt="枠6緑"></td>
+            <td class="num">12</td>
+            <td class="horse">
+              <div class="name_line">
+                <div class="name"><a href="/JRADB/accessU.html?CNAME=a12">エンブロイダリー</a></div>
+                <div class="odds"><div class="odds_line"><span class="num"><strong>2.1</strong></span><span class="pop_rank">(1<span>番人気</span>)</span></div></div>
+              </div>
+            </td>
+            <td class="jockey">
+              <p class="weight">56.0kg</p>
+              <p class="jockey">C.ルメール</p>
+            </td>
+          </tr>
+        </table>
+        </body></html>
+        """
+        horses = self.parser.parse_race_detail(html, race_id="20260517_東京_11", race_name="ヴィクトリアマイル")
+        self.assertEqual("12", horses[0].horse_number)
+        self.assertEqual("6", horses[0].frame_number)
+
     def test_parse_race_detail_keeps_overseas_row_without_horse_link(self):
         html = """
         <html><body>

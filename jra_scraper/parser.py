@@ -711,6 +711,11 @@ class JRAParser:
                     self._norm(country_flag.get("alt") or country_flag.get("title") or "")
                 )
 
+        if not out.get("frame_number"):
+            frame_number = self._extract_frame_number_from_row(row)
+            if frame_number:
+                out["frame_number"] = frame_number
+
         if not out.get("current_popularity"):
             popularity_node = row.select_one(".name_line .odds .pop_rank")
             if popularity_node is not None:
@@ -997,6 +1002,26 @@ class JRAParser:
     def _normalize_country_code(value: str) -> str:
         cleaned = re.sub(r"[^A-Za-z]", "", value or "").upper()
         return cleaned[:3] if cleaned else ""
+
+    @staticmethod
+    def _extract_frame_number_from_row(row) -> str:
+        cell = row.select_one("td.waku")
+        if cell is None:
+            return ""
+        for value in (
+            cell.get_text(" ", strip=True),
+            cell.get("aria-label") or "",
+            cell.get("title") or "",
+        ):
+            frame_number = JRAParser._normalize_int_like(JRAParser._norm(value))
+            if frame_number and 1 <= int(frame_number) <= 8:
+                return frame_number
+        for image in cell.select("img"):
+            for attr in ("alt", "title", "src"):
+                frame_number = JRAParser._normalize_int_like(str(image.get(attr) or ""))
+                if frame_number and 1 <= int(frame_number) <= 8:
+                    return frame_number
+        return ""
 
     @staticmethod
     def _extract_text(node, selector: str) -> str:
