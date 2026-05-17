@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
+from itertools import combinations, permutations
 import math
 
 
@@ -10,9 +11,16 @@ def generate_tickets(
     *,
     bankroll_per_race: int = 1000,
     min_ev: float = 1.03,
+    min_place_ev: float = 1.01,
     min_wide_ev: float = 1.01,
-    max_tickets_per_race: int = 2,
+    min_wakuren_ev: float = 1.03,
+    min_umaren_ev: float = 1.04,
+    min_umatan_ev: float = 1.07,
+    min_sanrenpuku_ev: float = 1.06,
+    min_sanrentan_ev: float = 1.12,
+    max_tickets_per_race: int = 5,
     max_wide_tickets_per_race: int = 2,
+    max_exotic_tickets_per_race: int = 4,
     kelly_fraction: float = 0.33,
     prefer_wide: bool = False,
 ) -> dict[str, object]:
@@ -25,8 +33,10 @@ def generate_tickets(
     core: list[dict[str, object]] = []
     partner: list[dict[str, object]] = []
     longshots: list[dict[str, object]] = []
+    candidate_references: list[dict[str, object]] = []
+    aggregate_candidate_counts: dict[str, int] = defaultdict(int)
 
-    per_race_limit = 3 if mode == "aggressive" else max_tickets_per_race
+    per_race_limit = max(max_tickets_per_race, 5) if mode == "aggressive" else max_tickets_per_race
 
     for race_id in sorted(by_race.keys()):
         ranked = sorted(
@@ -40,34 +50,68 @@ def generate_tickets(
             for row in enriched
             if _to_float(row.get("ev")) >= min_ev and _to_float(row.get("current_odds")) > 0
         ]
+        place_candidates = _build_place_candidates(
+            enriched,
+            bankroll_per_race=bankroll_per_race,
+            min_place_ev=min_place_ev,
+            kelly_fraction=kelly_fraction,
+        )
         wide_candidates = _build_wide_candidates(
             enriched,
             bankroll_per_race=bankroll_per_race,
             min_wide_ev=min_wide_ev,
             kelly_fraction=kelly_fraction,
         )
+        wakuren_candidates = _build_wakuren_candidates(
+            enriched,
+            bankroll_per_race=bankroll_per_race,
+            min_wakuren_ev=min_wakuren_ev,
+            kelly_fraction=kelly_fraction,
+        )
+        exotic_candidates = _build_exotic_candidates(
+            enriched,
+            bankroll_per_race=bankroll_per_race,
+            min_umaren_ev=min_umaren_ev,
+            min_umatan_ev=min_umatan_ev,
+            min_sanrenpuku_ev=min_sanrenpuku_ev,
+            min_sanrentan_ev=min_sanrentan_ev,
+            kelly_fraction=kelly_fraction,
+        )
 
-        race_tickets: list[dict[str, object]] = []
         win_tickets = [
             ticket
             for row in win_candidates[:per_race_limit]
             if (ticket := _build_win_ticket(row, bankroll_per_race=bankroll_per_race, kelly_fraction=kelly_fraction)) is not None
         ]
-        wide_limit = min(max_wide_tickets_per_race, per_race_limit)
-        win_limit = max(0, per_race_limit - wide_limit)
 
-        if prefer_wide:
-            race_tickets.extend(wide_candidates[:wide_limit])
-            if _has_win_standout(enriched):
-                race_tickets.extend(win_tickets[: max(1, win_limit)])
-            elif not race_tickets:
-                race_tickets.extend(win_tickets[:1])
-        else:
-            race_tickets.extend(win_tickets[:per_race_limit])
-            if len(race_tickets) < per_race_limit:
-                race_tickets.extend(wide_candidates[: per_race_limit - len(race_tickets)])
+        candidate_pool = _rank_ticket_pool(
+            _dedupe_ticket_combos(
+                win_tickets
+                + place_candidates
+                + wide_candidates
+                + wakuren_candidates
+                + exotic_candidates
+            ),
+            prefer_wide=prefer_wide,
+        )
+        candidate_references.extend(candidate_pool)
+        candidate_counts = _candidate_counts_by_type(candidate_pool)
+        for bet_type, count in candidate_counts.items():
+            aggregate_candidate_counts[bet_type] += count
 
-        race_tickets = race_tickets[:per_race_limit]
+        selection_pool = _dedupe_ticket_combos(
+            win_tickets
+            + place_candidates
+            + wide_candidates[:max_wide_tickets_per_race]
+            + wakuren_candidates
+            + _prioritize_exotic_types(exotic_candidates)[:max_exotic_tickets_per_race]
+        )
+        race_tickets = _select_optimized_tickets(
+            selection_pool,
+            per_race_limit=per_race_limit,
+            prefer_wide=prefer_wide,
+            force_win_standout=_has_win_standout(enriched),
+        )
         race_tickets = _rebalance_race_stakes(race_tickets, bankroll_per_race=bankroll_per_race)
         flat_tickets.extend(race_tickets)
 
@@ -93,9 +137,36 @@ def generate_tickets(
                 "core": race_core,
                 "partner": race_partner,
                 "long": race_long,
+                "candidate_counts": candidate_counts,
+                "candidates": candidate_pool,
+                "exotics": exotic_candidates[:max_exotic_tickets_per_race],
                 "tickets": race_tickets,
             }
         )
+
+    combo_seed = _unique_horse_names(core + partner)
+    fukusho_labels = (
+        _labels_for_type(flat_tickets, "place")
+        or _labels_for_type(candidate_references, "place")
+        or [str(item.get("horse_name", "")) for item in core[:2] if str(item.get("horse_name", "")).strip()]
+    )
+    wakuren_labels = _labels_for_type(flat_tickets, "wakuren") or _labels_for_type(candidate_references, "wakuren")
+    umaren_labels = (
+        _labels_for_type(flat_tickets, "umaren")
+        or _labels_for_type(candidate_references, "umaren")
+        or _pair_strings(combo_seed[:3])
+    )
+    umatan_labels = _labels_for_type(flat_tickets, "umatan") or _labels_for_type(candidate_references, "umatan")
+    sanrenpuku_labels = (
+        _labels_for_type(flat_tickets, "sanrenpuku")
+        or _labels_for_type(candidate_references, "sanrenpuku")
+        or ([" - ".join(combo_seed[:3])] if len(combo_seed) >= 3 else [])
+    )
+    sanrentan_labels = (
+        _labels_for_type(flat_tickets, "sanrentan")
+        or _labels_for_type(candidate_references, "sanrentan")
+        or ([" → ".join(combo_seed[:3])] if len(combo_seed) >= 3 else [])
+    )
 
     return {
         "core": core,
@@ -103,11 +174,19 @@ def generate_tickets(
         "long": longshots,
         "tickets": flat_tickets,
         "races": races,
+        "bet_types_considered": ["win", "place", "wide", "wakuren", "umaren", "umatan", "sanrenpuku", "sanrentan"],
+        "candidate_counts": dict(aggregate_candidate_counts),
+        "optimization_mode": "cross_bet_ev_kelly_portfolio",
         "primary_bet_type": flat_tickets[0].get("bet_type", "wide") if flat_tickets else "wide",
         "tansho": [ticket.get("horse_name", "") for ticket in flat_tickets if ticket.get("bet_type") == "win"][:2],
+        "fukusho": fukusho_labels[:3],
         "wide": [ticket.get("horse_name", "") for ticket in flat_tickets if ticket.get("bet_type") == "wide"][:3]
         or _pair_strings([item.get("horse_name", "") for item in core[:3]]),
-        "sanrenpuku": [" - ".join([item.get("horse_name", "") for item in core[:3]])] if len(core) >= 3 else [],
+        "wakuren": wakuren_labels[:3],
+        "umaren": umaren_labels[:3],
+        "umatan": umatan_labels[:3],
+        "sanrenpuku": sanrenpuku_labels[:3],
+        "sanrentan": sanrentan_labels[:3],
     }
 
 
@@ -147,6 +226,99 @@ def _build_win_ticket(
         "model_score": str(row.get("model_score", "")),
         "predicted_odds": str(row.get("predicted_odds", "")),
         "predicted_odds_source": str(row.get("predicted_odds_source", "")),
+    }
+
+
+def _build_place_candidates(
+    rows: list[dict[str, object]],
+    *,
+    bankroll_per_race: int,
+    min_place_ev: float,
+    kelly_fraction: float,
+) -> list[dict[str, object]]:
+    tickets: list[dict[str, object]] = []
+    for row in rows:
+        ticket = _build_place_ticket(
+            row,
+            bankroll_per_race=bankroll_per_race,
+            kelly_fraction=min(0.42, kelly_fraction + 0.05),
+            min_place_ev=min_place_ev,
+        )
+        if ticket is not None:
+            tickets.append(ticket)
+
+    tickets.sort(
+        key=lambda ticket: (
+            _to_float(ticket.get("ev_current") or ticket.get("ev")),
+            _to_float(ticket.get("hit_prob")),
+            _to_float(ticket.get("confidence")),
+        ),
+        reverse=True,
+    )
+    return tickets
+
+
+def _build_place_ticket(
+    row: dict[str, object],
+    *,
+    bankroll_per_race: int,
+    kelly_fraction: float,
+    min_place_ev: float,
+) -> dict[str, object] | None:
+    place_prob = _to_float(row.get("place_prob"))
+    market_place_prob = _to_float(row.get("market_place_prob"))
+    if place_prob < 0.16 or market_place_prob <= 0:
+        return None
+
+    current_odds_est = _estimate_place_odds(market_place_prob)
+    predicted_odds_est = _estimate_predicted_combo_odds([row], current_odds_est=current_odds_est, max_odds=18.0)
+    ev_current = place_prob * current_odds_est if current_odds_est > 0 else 0.0
+    ev_predicted = place_prob * predicted_odds_est if predicted_odds_est > 0 else 0.0
+    if current_odds_est <= 1.0 or ev_current < min_place_ev:
+        return None
+
+    stake = _kelly_stake(
+        probability=place_prob,
+        odds=current_odds_est,
+        bankroll_per_race=bankroll_per_race,
+        kelly_fraction=kelly_fraction,
+        min_ev=min_place_ev,
+        max_fraction=0.32,
+    )
+    if stake <= 0:
+        return None
+
+    confidence = (place_prob / max(market_place_prob, 1e-6)) if market_place_prob > 0 else 0.0
+    return {
+        "race_id": str(row.get("race_id", "")),
+        "bet_type": "place",
+        "horse_id": str(row.get("horse_id", "")),
+        "horse_name": str(row.get("horse_name", "")),
+        "horse_number": int(_to_float(row.get("horse_number"), 0.0)),
+        "stake": stake,
+        "hit_prob": _fmt(place_prob),
+        "place_prob": _fmt(place_prob),
+        "place_prob_market": _fmt(market_place_prob),
+        "win_prob": str(row.get("win_prob", "")),
+        "win_odds": _fmt(current_odds_est),
+        "place_odds_est": _fmt(current_odds_est),
+        "predicted_odds": _fmt(predicted_odds_est),
+        "ev": _fmt(ev_current),
+        "ev_current": _fmt(ev_current),
+        "ev_predicted": _fmt(ev_predicted),
+        "fair_odds": str(row.get("place_fair_odds", "")),
+        "model_score": str(row.get("model_score", "")),
+        "predicted_odds_source": "place_estimated",
+        "confidence": _fmt(confidence),
+        "legs": [
+            {
+                "horse_id": str(row.get("horse_id", "")),
+                "horse_name": str(row.get("horse_name", "")),
+                "horse_number": str(row.get("horse_number", "")),
+                "win_prob": str(row.get("win_prob", "")),
+                "place_prob": _fmt(place_prob),
+            }
+        ],
     }
 
 
@@ -273,6 +445,310 @@ def _build_wide_ticket(
     }
 
 
+def _build_wakuren_candidates(
+    rows: list[dict[str, object]],
+    *,
+    bankroll_per_race: int,
+    min_wakuren_ev: float,
+    kelly_fraction: float,
+) -> list[dict[str, object]]:
+    if len(rows) < 2:
+        return []
+
+    field_size = len(rows)
+    by_frame: dict[str, list[dict[str, object]]] = defaultdict(list)
+    for row in rows:
+        frame_number = _resolve_frame_number(row, field_size=field_size)
+        if not frame_number:
+            continue
+        normalized = dict(row)
+        normalized["frame_number"] = frame_number
+        by_frame[frame_number].append(normalized)
+
+    if len(by_frame) < 2 and all(len(frame_rows) < 2 for frame_rows in by_frame.values()):
+        return []
+
+    frame_numbers = sorted(by_frame.keys(), key=_frame_sort_key)
+    tickets: list[dict[str, object]] = []
+    for left_idx, left_frame in enumerate(frame_numbers):
+        for right_frame in frame_numbers[left_idx:]:
+            if left_frame == right_frame and len(by_frame[left_frame]) < 2:
+                continue
+            ticket = _build_wakuren_ticket(
+                left_frame,
+                by_frame[left_frame],
+                right_frame,
+                by_frame[right_frame],
+                bankroll_per_race=bankroll_per_race,
+                kelly_fraction=min(kelly_fraction, 0.24),
+                min_wakuren_ev=min_wakuren_ev,
+            )
+            if ticket is not None:
+                tickets.append(ticket)
+
+    tickets.sort(
+        key=lambda ticket: (
+            _to_float(ticket.get("ev_current") or ticket.get("ev")),
+            _to_float(ticket.get("hit_prob")),
+            _to_float(ticket.get("confidence")),
+        ),
+        reverse=True,
+    )
+    return tickets
+
+
+def _build_wakuren_ticket(
+    left_frame: str,
+    left_rows: list[dict[str, object]],
+    right_frame: str,
+    right_rows: list[dict[str, object]],
+    *,
+    bankroll_per_race: int,
+    kelly_fraction: float,
+    min_wakuren_ev: float,
+) -> dict[str, object] | None:
+    hit_prob = _frame_combo_hit_prob(left_rows, right_rows, same_frame=left_frame == right_frame, key="win_prob")
+    market_prob = _frame_combo_hit_prob(left_rows, right_rows, same_frame=left_frame == right_frame, key="market_prob")
+    if hit_prob < 0.035 or market_prob <= 0:
+        return None
+
+    current_odds_est = _estimate_exotic_odds(market_prob, payout_rate=0.775, max_odds=150.0)
+    prediction_rows = left_rows if left_frame == right_frame else left_rows + right_rows
+    predicted_odds_est = _estimate_predicted_combo_odds(
+        prediction_rows,
+        current_odds_est=current_odds_est,
+        max_odds=150.0,
+    )
+    ev_current = hit_prob * current_odds_est if current_odds_est > 0 else 0.0
+    ev_predicted = hit_prob * predicted_odds_est if predicted_odds_est > 0 else 0.0
+    if current_odds_est <= 1.0 or ev_current < min_wakuren_ev:
+        return None
+
+    stake = _kelly_stake(
+        probability=hit_prob,
+        odds=current_odds_est,
+        bankroll_per_race=bankroll_per_race,
+        kelly_fraction=kelly_fraction,
+        min_ev=min_wakuren_ev,
+        max_fraction=0.18,
+    )
+    if stake <= 0:
+        return None
+
+    frame_numbers = [left_frame, right_frame]
+    confidence = (hit_prob / max(market_prob, 1e-6)) if market_prob > 0 else 0.0
+    return {
+        "race_id": str((left_rows or right_rows)[0].get("race_id", "")),
+        "bet_type": "wakuren",
+        "horse_id": f"frame:{left_frame}|frame:{right_frame}",
+        "horse_name": f"{left_frame}枠 - {right_frame}枠",
+        "horse_number": "-".join(frame_numbers),
+        "frame_numbers": frame_numbers,
+        "stake": stake,
+        "hit_prob": _fmt(hit_prob),
+        "win_prob": _fmt(hit_prob),
+        "combo_prob": _fmt(hit_prob),
+        "combo_prob_market": _fmt(market_prob),
+        "win_odds": _fmt(current_odds_est),
+        "wakuren_odds_est": _fmt(current_odds_est),
+        "predicted_odds": _fmt(predicted_odds_est),
+        "ev": _fmt(ev_current),
+        "ev_current": _fmt(ev_current),
+        "ev_predicted": _fmt(ev_predicted),
+        "predicted_odds_source": "wakuren_estimated",
+        "confidence": _fmt(confidence),
+        "legs": [
+            {
+                "frame_number": left_frame,
+                "horses": _frame_horse_summaries(left_rows),
+            },
+            {
+                "frame_number": right_frame,
+                "horses": _frame_horse_summaries(right_rows),
+            },
+        ],
+    }
+
+
+def _build_exotic_candidates(
+    rows: list[dict[str, object]],
+    *,
+    bankroll_per_race: int,
+    min_umaren_ev: float,
+    min_umatan_ev: float,
+    min_sanrenpuku_ev: float,
+    min_sanrentan_ev: float,
+    kelly_fraction: float,
+) -> list[dict[str, object]]:
+    if len(rows) < 2:
+        return []
+
+    pool = sorted(
+        rows,
+        key=lambda row: (
+            _to_float(row.get("win_prob")),
+            _to_float(row.get("place_prob")),
+            _to_float(row.get("ev_predicted") or row.get("ev")),
+        ),
+        reverse=True,
+    )[:6]
+
+    candidates: list[dict[str, object]] = []
+    for combo in combinations(pool, 2):
+        ticket = _build_exotic_ticket(
+            list(combo),
+            bet_type="umaren",
+            payout_rate=0.775,
+            max_odds=120.0,
+            bankroll_per_race=bankroll_per_race,
+            kelly_fraction=min(kelly_fraction, 0.25),
+            min_ev=min_umaren_ev,
+            min_prob=0.035,
+            max_fraction=0.20,
+        )
+        if ticket is not None:
+            candidates.append(ticket)
+
+    for order in permutations(pool, 2):
+        ticket = _build_exotic_ticket(
+            list(order),
+            bet_type="umatan",
+            payout_rate=0.75,
+            max_odds=300.0,
+            bankroll_per_race=bankroll_per_race,
+            kelly_fraction=min(kelly_fraction, 0.22),
+            min_ev=min_umatan_ev,
+            min_prob=0.018,
+            max_fraction=0.16,
+        )
+        if ticket is not None:
+            candidates.append(ticket)
+
+    if len(pool) >= 3:
+        for combo in combinations(pool[:5], 3):
+            ticket = _build_exotic_ticket(
+                list(combo),
+                bet_type="sanrenpuku",
+                payout_rate=0.775,
+                max_odds=240.0,
+                bankroll_per_race=bankroll_per_race,
+                kelly_fraction=min(kelly_fraction, 0.20),
+                min_ev=min_sanrenpuku_ev,
+                min_prob=0.018,
+                max_fraction=0.14,
+            )
+            if ticket is not None:
+                candidates.append(ticket)
+
+        ordered_pool = pool[:4]
+        for order in permutations(ordered_pool, 3):
+            ticket = _build_exotic_ticket(
+                list(order),
+                bet_type="sanrentan",
+                payout_rate=0.725,
+                max_odds=600.0,
+                bankroll_per_race=bankroll_per_race,
+                kelly_fraction=min(kelly_fraction, 0.16),
+                min_ev=min_sanrentan_ev,
+                min_prob=0.006,
+                max_fraction=0.10,
+            )
+            if ticket is not None:
+                candidates.append(ticket)
+
+    candidates.sort(
+        key=lambda ticket: (
+            _to_float(ticket.get("ev_current") or ticket.get("ev")),
+            _to_float(ticket.get("hit_prob")),
+            _to_float(ticket.get("confidence")),
+        ),
+        reverse=True,
+    )
+
+    return _prioritize_exotic_types(_dedupe_ticket_combos(candidates))
+
+
+def _build_exotic_ticket(
+    combo_rows: list[dict[str, object]],
+    *,
+    bet_type: str,
+    payout_rate: float,
+    max_odds: float,
+    bankroll_per_race: int,
+    kelly_fraction: float,
+    min_ev: float,
+    min_prob: float,
+    max_fraction: float,
+) -> dict[str, object] | None:
+    hit_prob = _combo_hit_prob(combo_rows, key="win_prob", bet_type=bet_type)
+    market_prob = _combo_hit_prob(combo_rows, key="market_prob", bet_type=bet_type)
+    if hit_prob < min_prob or market_prob <= 0:
+        return None
+
+    current_odds_est = _estimate_exotic_odds(market_prob, payout_rate=payout_rate, max_odds=max_odds)
+    predicted_odds_est = _estimate_predicted_combo_odds(combo_rows, current_odds_est=current_odds_est, max_odds=max_odds)
+    ev_current = hit_prob * current_odds_est if current_odds_est > 0 else 0.0
+    ev_predicted = hit_prob * predicted_odds_est if predicted_odds_est > 0 else 0.0
+    if current_odds_est <= 1.0 or ev_current < min_ev:
+        return None
+
+    stake = _kelly_stake(
+        probability=hit_prob,
+        odds=current_odds_est,
+        bankroll_per_race=bankroll_per_race,
+        kelly_fraction=kelly_fraction,
+        min_ev=min_ev,
+        max_fraction=max_fraction,
+    )
+    if stake <= 0:
+        return None
+
+    horse_ids = [str(row.get("horse_id", "")) for row in combo_rows]
+    horse_names = [str(row.get("horse_name", "")) for row in combo_rows]
+    horse_numbers = [str(row.get("horse_number", "")) for row in combo_rows]
+    confidence = (hit_prob / max(market_prob, 1e-6)) if market_prob > 0 else 0.0
+    odds_key = {
+        "umaren": "umaren_odds_est",
+        "umatan": "umatan_odds_est",
+        "sanrenpuku": "trio_odds_est",
+        "sanrentan": "trifecta_odds_est",
+    }[bet_type]
+
+    return {
+        "race_id": str(combo_rows[0].get("race_id", "")),
+        "bet_type": bet_type,
+        "horse_id": "|".join(horse_ids),
+        "horse_name": _combo_name(horse_names, bet_type=bet_type),
+        "horse_number": _combo_name(horse_numbers, bet_type=bet_type),
+        "horse_ids": horse_ids,
+        "horse_names": horse_names,
+        "horse_numbers": horse_numbers,
+        "stake": stake,
+        "hit_prob": _fmt(hit_prob),
+        "win_prob": _fmt(hit_prob),
+        "combo_prob": _fmt(hit_prob),
+        "combo_prob_market": _fmt(market_prob),
+        "win_odds": _fmt(current_odds_est),
+        odds_key: _fmt(current_odds_est),
+        "predicted_odds": _fmt(predicted_odds_est),
+        "ev": _fmt(ev_current),
+        "ev_current": _fmt(ev_current),
+        "ev_predicted": _fmt(ev_predicted),
+        "predicted_odds_source": f"{bet_type}_estimated",
+        "confidence": _fmt(confidence),
+        "legs": [
+            {
+                "horse_id": horse_id,
+                "horse_name": horse_name,
+                "horse_number": horse_number,
+                "win_prob": str(row.get("win_prob", "")),
+                "place_prob": str(row.get("place_prob", "")),
+            }
+            for horse_id, horse_name, horse_number, row in zip(horse_ids, horse_names, horse_numbers, combo_rows)
+        ],
+    }
+
+
 def _horse_summary(row: dict[str, object]) -> dict[str, object]:
     return {
         "race_id": str(row.get("race_id", "")),
@@ -295,6 +771,18 @@ def _pair_strings(names: list[str]) -> list[str]:
     for i in range(len(cleaned)):
         for j in range(i + 1, len(cleaned)):
             out.append(f"{cleaned[i]} - {cleaned[j]}")
+    return out
+
+
+def _unique_horse_names(rows: list[dict[str, object]]) -> list[str]:
+    seen: set[str] = set()
+    out: list[str] = []
+    for row in rows:
+        name = str(row.get("horse_name", "")).strip()
+        if not name or name in seen:
+            continue
+        seen.add(name)
+        out.append(name)
     return out
 
 
@@ -460,14 +948,29 @@ def _estimate_market_pair_odds(market_pair_prob: float) -> float:
     return _clamp(0.82 / market_pair_prob, minimum=1.1, maximum=75.0)
 
 
+def _estimate_place_odds(market_place_prob: float) -> float:
+    if market_place_prob <= 0:
+        return 0.0
+    return _clamp(0.80 / market_place_prob, minimum=1.1, maximum=18.0)
+
+
 def _estimate_predicted_pair_odds(
     left: dict[str, object],
     right: dict[str, object],
     *,
     current_odds_est: float,
 ) -> float:
+    return _estimate_predicted_combo_odds([left, right], current_odds_est=current_odds_est, max_odds=max(1.1, current_odds_est * 1.18))
+
+
+def _estimate_predicted_combo_odds(
+    rows: list[dict[str, object]],
+    *,
+    current_odds_est: float,
+    max_odds: float,
+) -> float:
     ratios: list[float] = []
-    for row in (left, right):
+    for row in rows:
         current = _to_float(row.get("current_odds"))
         predicted = _to_float(row.get("predicted_odds"))
         if current > 0 and predicted > 0:
@@ -475,7 +978,246 @@ def _estimate_predicted_pair_odds(
 
     trend_ratio = math.prod(ratios) ** (1.0 / len(ratios)) if ratios else 1.0
     trend_ratio = _clamp(trend_ratio, minimum=0.88, maximum=1.16)
-    return _clamp(current_odds_est * trend_ratio, minimum=1.1, maximum=max(1.1, current_odds_est * 1.18))
+    return _clamp(current_odds_est * trend_ratio, minimum=1.1, maximum=min(max_odds, max(1.1, current_odds_est * 1.18)))
+
+
+def _combo_hit_prob(rows: list[dict[str, object]], *, key: str, bet_type: str) -> float:
+    if len(rows) < 2:
+        return 0.0
+    if bet_type in {"umatan", "sanrentan"}:
+        return _ordered_finish_prob(rows, key=key)
+    return sum(_ordered_finish_prob(list(order), key=key) for order in permutations(rows, len(rows)))
+
+
+def _ordered_finish_prob(rows: list[dict[str, object]], *, key: str) -> float:
+    remaining = 1.0
+    probability = 1.0
+    for row in rows:
+        horse_prob = _to_float(row.get(key))
+        if horse_prob <= 0 or remaining <= 0 or horse_prob >= remaining:
+            return 0.0
+        probability *= horse_prob / remaining
+        remaining -= horse_prob
+    return probability
+
+
+def _estimate_exotic_odds(market_prob: float, *, payout_rate: float, max_odds: float) -> float:
+    if market_prob <= 0:
+        return 0.0
+    return _clamp(payout_rate / market_prob, minimum=1.1, maximum=max_odds)
+
+
+def _combo_name(values: list[str], *, bet_type: str) -> str:
+    separator = " → " if bet_type in {"umatan", "sanrentan"} else " - "
+    return separator.join(values)
+
+
+def _ticket_combo_label(ticket: dict[str, object]) -> str:
+    if ticket.get("bet_type") == "wakuren":
+        frame_numbers = [str(value) for value in list(ticket.get("frame_numbers") or []) if str(value).strip()]
+        return "-".join(frame_numbers) if frame_numbers else str(ticket.get("horse_number", ""))
+    values = list(ticket.get("horse_names") or [])
+    if not values:
+        return str(ticket.get("horse_name", ""))
+    return _combo_name([str(value) for value in values], bet_type=str(ticket.get("bet_type", "")))
+
+
+def _dedupe_ticket_combos(tickets: list[dict[str, object]]) -> list[dict[str, object]]:
+    seen: set[tuple[str, str, str]] = set()
+    out: list[dict[str, object]] = []
+    for ticket in tickets:
+        key = (
+            str(ticket.get("race_id", "")),
+            str(ticket.get("bet_type", "")),
+            str(ticket.get("horse_number", "")),
+        )
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(ticket)
+    return out
+
+
+def _prioritize_exotic_types(tickets: list[dict[str, object]]) -> list[dict[str, object]]:
+    by_type: dict[str, list[dict[str, object]]] = defaultdict(list)
+    for ticket in tickets:
+        by_type[str(ticket.get("bet_type", ""))].append(ticket)
+
+    out: list[dict[str, object]] = []
+    seen_ids: set[int] = set()
+    for bet_type in ("umaren", "umatan", "sanrenpuku", "sanrentan"):
+        if by_type[bet_type]:
+            ticket = by_type[bet_type][0]
+            out.append(ticket)
+            seen_ids.add(id(ticket))
+
+    for ticket in tickets:
+        if id(ticket) in seen_ids:
+            continue
+        out.append(ticket)
+    return out
+
+
+def _rank_ticket_pool(tickets: list[dict[str, object]], *, prefer_wide: bool) -> list[dict[str, object]]:
+    return sorted(
+        tickets,
+        key=lambda ticket: (
+            _ticket_type_rank(str(ticket.get("bet_type", "")), prefer_wide=prefer_wide),
+            -_to_float(ticket.get("ev_current") or ticket.get("ev")),
+            -_to_float(ticket.get("hit_prob") or ticket.get("win_prob")),
+            -_to_float(ticket.get("confidence")),
+        ),
+    )
+
+
+def _select_optimized_tickets(
+    tickets: list[dict[str, object]],
+    *,
+    per_race_limit: int,
+    prefer_wide: bool,
+    force_win_standout: bool,
+) -> list[dict[str, object]]:
+    ranked = _rank_ticket_pool(_dedupe_ticket_combos(tickets), prefer_wide=prefer_wide)
+    by_type: dict[str, list[dict[str, object]]] = defaultdict(list)
+    for ticket in ranked:
+        by_type[str(ticket.get("bet_type", ""))].append(ticket)
+
+    type_order = list(_selection_type_order(prefer_wide=prefer_wide))
+    selected: list[dict[str, object]] = []
+    selected_keys: set[tuple[str, str]] = set()
+
+    if force_win_standout and not prefer_wide and by_type["win"]:
+        _append_ticket_if_new(selected, selected_keys, by_type["win"][0], per_race_limit)
+
+    for bet_type in type_order:
+        if len(selected) >= per_race_limit:
+            break
+        if not by_type[bet_type]:
+            continue
+        _append_ticket_if_new(selected, selected_keys, by_type[bet_type][0], per_race_limit)
+
+    by_ev = sorted(
+        ranked,
+        key=lambda ticket: (
+            _to_float(ticket.get("ev_current") or ticket.get("ev")),
+            _to_float(ticket.get("hit_prob") or ticket.get("win_prob")),
+            _to_float(ticket.get("confidence")),
+        ),
+        reverse=True,
+    )
+    for ticket in by_ev:
+        if len(selected) >= per_race_limit:
+            break
+        _append_ticket_if_new(selected, selected_keys, ticket, per_race_limit)
+
+    return selected[:per_race_limit]
+
+
+def _append_ticket_if_new(
+    selected: list[dict[str, object]],
+    selected_keys: set[tuple[str, str]],
+    ticket: dict[str, object],
+    per_race_limit: int,
+) -> None:
+    if len(selected) >= per_race_limit:
+        return
+    key = (str(ticket.get("bet_type", "")), str(ticket.get("horse_number", "")))
+    if key in selected_keys:
+        return
+    selected.append(ticket)
+    selected_keys.add(key)
+
+
+def _selection_type_order(*, prefer_wide: bool) -> tuple[str, ...]:
+    if prefer_wide:
+        return ("wide", "place", "wakuren", "win", "umaren", "umatan", "sanrenpuku", "sanrentan")
+    return ("win", "place", "wide", "wakuren", "umaren", "umatan", "sanrenpuku", "sanrentan")
+
+
+def _ticket_type_rank(bet_type: str, *, prefer_wide: bool) -> int:
+    order = _selection_type_order(prefer_wide=prefer_wide)
+    try:
+        return order.index(bet_type)
+    except ValueError:
+        return len(order)
+
+
+def _candidate_counts_by_type(tickets: list[dict[str, object]]) -> dict[str, int]:
+    counts: dict[str, int] = defaultdict(int)
+    for ticket in tickets:
+        counts[str(ticket.get("bet_type", ""))] += 1
+    return dict(counts)
+
+
+def _labels_for_type(tickets: list[dict[str, object]], bet_type: str) -> list[str]:
+    return [
+        _ticket_combo_label(ticket)
+        for ticket in tickets
+        if str(ticket.get("bet_type", "")) == bet_type and _ticket_combo_label(ticket)
+    ]
+
+
+def _frame_combo_hit_prob(
+    left_rows: list[dict[str, object]],
+    right_rows: list[dict[str, object]],
+    *,
+    same_frame: bool,
+    key: str,
+) -> float:
+    total = 0.0
+    if same_frame:
+        for order in permutations(left_rows, 2):
+            total += _ordered_finish_prob(list(order), key=key)
+        return total
+
+    for left in left_rows:
+        for right in right_rows:
+            total += _ordered_finish_prob([left, right], key=key)
+            total += _ordered_finish_prob([right, left], key=key)
+    return total
+
+
+def _frame_horse_summaries(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    return [
+        {
+            "horse_id": str(row.get("horse_id", "")),
+            "horse_name": str(row.get("horse_name", "")),
+            "horse_number": str(row.get("horse_number", "")),
+            "win_prob": str(row.get("win_prob", "")),
+        }
+        for row in rows
+    ]
+
+
+def _resolve_frame_number(row: dict[str, object], *, field_size: int) -> str:
+    frame_number = str(row.get("frame_number", "")).strip()
+    if frame_number:
+        return frame_number
+
+    horse_number = int(_to_float(row.get("horse_number"), 0.0))
+    if horse_number <= 0:
+        return ""
+    if field_size <= 8:
+        return str(min(horse_number, 8))
+
+    base = field_size // 8
+    remainder = field_size % 8
+    slots = [base for _ in range(8)]
+    for idx in range(8 - remainder, 8):
+        if 0 <= idx < 8:
+            slots[idx] += 1
+
+    current = 1
+    for frame_idx, slot_count in enumerate(slots, start=1):
+        if current <= horse_number < current + max(slot_count, 0):
+            return str(frame_idx)
+        current += max(slot_count, 0)
+    return str(min(8, horse_number))
+
+
+def _frame_sort_key(value: str) -> tuple[int, str]:
+    number = int(_to_float(value, 999.0))
+    return (number, value)
 
 
 def _has_win_standout(rows: list[dict[str, object]]) -> bool:

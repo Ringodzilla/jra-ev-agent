@@ -17,9 +17,16 @@ class WorkflowSettings:
     max_repair_attempts: int = 1
     bankroll_per_race: int = 1000
     min_ev: float = 1.03
+    min_place_ev: float = 1.01
     min_wide_ev: float = 1.01
-    max_tickets_per_race: int = 2
+    min_wakuren_ev: float = 1.03
+    min_umaren_ev: float = 1.04
+    min_umatan_ev: float = 1.07
+    min_sanrenpuku_ev: float = 1.06
+    min_sanrentan_ev: float = 1.12
+    max_tickets_per_race: int = 5
     max_wide_tickets_per_race: int = 2
+    max_exotic_tickets_per_race: int = 4
     mode: str = "balanced"
     prefer_wide: bool = True
     max_ev_delta_abs: float = 0.20
@@ -111,9 +118,16 @@ class BetBuilderAgent:
             mode=self.settings.mode,
             bankroll_per_race=self.settings.bankroll_per_race,
             min_ev=self.settings.min_ev,
+            min_place_ev=self.settings.min_place_ev,
             min_wide_ev=self.settings.min_wide_ev,
+            min_wakuren_ev=self.settings.min_wakuren_ev,
+            min_umaren_ev=self.settings.min_umaren_ev,
+            min_umatan_ev=self.settings.min_umatan_ev,
+            min_sanrenpuku_ev=self.settings.min_sanrenpuku_ev,
+            min_sanrentan_ev=self.settings.min_sanrentan_ev,
             max_tickets_per_race=self.settings.max_tickets_per_race,
             max_wide_tickets_per_race=self.settings.max_wide_tickets_per_race,
+            max_exotic_tickets_per_race=self.settings.max_exotic_tickets_per_race,
             prefer_wide=self.settings.prefer_wide,
         )
 
@@ -481,7 +495,17 @@ def _ticket_hit_prob(ticket: dict[str, object]) -> float:
 
 
 def _ticket_odds(ticket: dict[str, object]) -> float:
-    return _to_float(ticket.get("wide_odds_est") or ticket.get("predicted_wide_odds") or ticket.get("win_odds"))
+    return _to_float(
+        ticket.get("place_odds_est")
+        or ticket.get("wide_odds_est")
+        or ticket.get("wakuren_odds_est")
+        or ticket.get("umaren_odds_est")
+        or ticket.get("umatan_odds_est")
+        or ticket.get("trio_odds_est")
+        or ticket.get("trifecta_odds_est")
+        or ticket.get("predicted_wide_odds")
+        or ticket.get("win_odds")
+    )
 
 
 def _ticket_ev(ticket: dict[str, object], *, default: float = 0.0) -> float:
@@ -489,26 +513,68 @@ def _ticket_ev(ticket: dict[str, object], *, default: float = 0.0) -> float:
 
 
 def _ticket_min_prob(ticket: dict[str, object]) -> float:
-    if str(ticket.get("bet_type", "")) == "wide":
+    bet_type = str(ticket.get("bet_type", ""))
+    if bet_type == "place":
+        return 0.16
+    if bet_type == "wide":
         return 0.10
+    if bet_type == "wakuren":
+        return 0.035
+    if bet_type == "umaren":
+        return 0.035
+    if bet_type == "umatan":
+        return 0.018
+    if bet_type == "sanrenpuku":
+        return 0.018
+    if bet_type == "sanrentan":
+        return 0.006
     return 0.04
 
 
 def _ticket_min_ev(ticket: dict[str, object], settings: WorkflowSettings) -> float:
-    if str(ticket.get("bet_type", "")) == "wide":
+    bet_type = str(ticket.get("bet_type", ""))
+    if bet_type == "place":
+        return settings.min_place_ev
+    if bet_type == "wide":
         return settings.min_wide_ev
+    if bet_type == "wakuren":
+        return settings.min_wakuren_ev
+    if bet_type == "umaren":
+        return settings.min_umaren_ev
+    if bet_type == "umatan":
+        return settings.min_umatan_ev
+    if bet_type == "sanrenpuku":
+        return settings.min_sanrenpuku_ev
+    if bet_type == "sanrentan":
+        return settings.min_sanrentan_ev
     return settings.min_ev
 
 
 def _longshot_odds_threshold(ticket: dict[str, object]) -> float:
-    if str(ticket.get("bet_type", "")) == "wide":
+    bet_type = str(ticket.get("bet_type", ""))
+    if bet_type == "place":
+        return 8.0
+    if bet_type == "wide":
         return 16.0
+    if bet_type == "wakuren":
+        return 35.0
+    if bet_type == "umaren":
+        return 35.0
+    if bet_type == "umatan":
+        return 70.0
+    if bet_type == "sanrenpuku":
+        return 60.0
+    if bet_type == "sanrentan":
+        return 120.0
     return 20.0
 
 
 def _longshot_stake_threshold(ticket: dict[str, object]) -> int:
-    if str(ticket.get("bet_type", "")) == "wide":
+    bet_type = str(ticket.get("bet_type", ""))
+    if bet_type in {"place", "wide"}:
         return 300
+    if bet_type in {"wakuren", "umaren", "umatan", "sanrenpuku", "sanrentan"}:
+        return 100
     return 100
 
 

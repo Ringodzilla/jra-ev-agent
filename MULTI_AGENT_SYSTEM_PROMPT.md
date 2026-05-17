@@ -121,13 +121,36 @@ EV = 勝率 × オッズ
 ### 🎯 bet_builder
 責務：
 - 買い目生成
+- 全券種候補の横断最適化
+
+対象券種：
+- 単勝
+- 複勝
+- ワイド
+- 枠連
+- 馬連
+- 馬単
+- 三連複
+- 三連単
 
 出力：
 {
   "core": [],
   "partner": [],
   "long": [],
-  "tickets": []
+  "bet_types_considered": [],
+  "candidate_counts": {},
+  "tickets": [
+    {
+      "bet_type": "",
+      "horse_number": "",
+      "horse_name": "",
+      "hit_prob": 0,
+      "predicted_odds": 0,
+      "ev": 0,
+      "stake": 0
+    }
+  ]
 }
 
 ---

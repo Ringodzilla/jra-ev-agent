@@ -237,6 +237,106 @@ class TestNoteArticle(unittest.TestCase):
         self.assertIn("ワイド 1-2 A - B 200円", markdown)
         self.assertIn("推定ワイドオッズ 5.8倍", markdown)
 
+    def test_generate_note_markdown_handles_exotic_tickets(self):
+        markdown = generate_note_markdown(
+            "サンプルレース",
+            ev_rows=[],
+            tickets={
+                "tickets": [
+                    {
+                        "race_id": "r1",
+                        "bet_type": "place",
+                        "horse_id": "h1",
+                        "horse_name": "A",
+                        "horse_number": "1",
+                        "stake": 200,
+                        "hit_prob": "0.48",
+                        "place_odds_est": "2.4",
+                        "ev_current": "1.152",
+                    },
+                    {
+                        "race_id": "r1",
+                        "bet_type": "wakuren",
+                        "horse_id": "frame:1|frame:2",
+                        "horse_name": "1枠 - 2枠",
+                        "horse_number": "1-2",
+                        "frame_numbers": ["1", "2"],
+                        "stake": 100,
+                        "hit_prob": "0.15",
+                        "wakuren_odds_est": "8.2",
+                        "ev_current": "1.23",
+                    },
+                    {
+                        "race_id": "r1",
+                        "bet_type": "umaren",
+                        "horse_id": "h1|h2",
+                        "horse_name": "A - B",
+                        "horse_number": "1-2",
+                        "horse_names": ["A", "B"],
+                        "horse_numbers": ["1", "2"],
+                        "stake": 100,
+                        "hit_prob": "0.12",
+                        "umaren_odds_est": "9.4",
+                        "ev_current": "1.128",
+                    },
+                    {
+                        "race_id": "r1",
+                        "bet_type": "umatan",
+                        "horse_id": "h1|h2",
+                        "horse_name": "A -> B",
+                        "horse_number": "1->2",
+                        "horse_names": ["A", "B"],
+                        "horse_numbers": ["1", "2"],
+                        "stake": 100,
+                        "hit_prob": "0.052",
+                        "umatan_odds_est": "24.0",
+                        "ev_current": "1.248",
+                    },
+                    {
+                        "race_id": "r1",
+                        "bet_type": "sanrenpuku",
+                        "horse_id": "h1|h2|h3",
+                        "horse_name": "A - B - C",
+                        "horse_number": "1-2-3",
+                        "horse_names": ["A", "B", "C"],
+                        "horse_numbers": ["1", "2", "3"],
+                        "stake": 100,
+                        "hit_prob": "0.06",
+                        "trio_odds_est": "22.5",
+                        "ev_current": "1.35",
+                    },
+                    {
+                        "race_id": "r1",
+                        "bet_type": "sanrentan",
+                        "horse_id": "h1|h2|h3",
+                        "horse_name": "A -> B -> C",
+                        "horse_number": "1->2->3",
+                        "horse_names": ["A", "B", "C"],
+                        "horse_numbers": ["1", "2", "3"],
+                        "stake": 100,
+                        "hit_prob": "0.018",
+                        "trifecta_odds_est": "82.0",
+                        "ev_current": "1.476",
+                    },
+                ]
+            },
+            review={"status": "OK", "reason": "quality gates passed"},
+            quality_report={"issue_count": 0, "live_snapshot_count": 3},
+        )
+
+        self.assertIn("複勝 1 A 200円", markdown)
+        self.assertIn("推定複勝オッズ 2.4倍", markdown)
+        self.assertIn("枠連 1-2 100円", markdown)
+        self.assertIn("推定枠連オッズ 8.2倍", markdown)
+        self.assertIn("馬連 1-2 A - B 100円", markdown)
+        self.assertIn("推定馬連オッズ 9.4倍", markdown)
+        self.assertIn("馬単 1→2 A → B 100円", markdown)
+        self.assertIn("推定馬単オッズ 24.0倍", markdown)
+        self.assertIn("三連複 1-2-3 A - B - C 100円", markdown)
+        self.assertIn("推定三連複オッズ 22.5倍", markdown)
+        self.assertIn("三連単 1→2→3 A → B → C 100円", markdown)
+        self.assertIn("推定三連単オッズ 82.0倍", markdown)
+
     def test_generate_note_markdown_shows_reference_candidate_without_formal_ticket(self):
         markdown = generate_note_markdown(
             "サンプルレース",

@@ -211,6 +211,82 @@ class TestEVPipeline(unittest.TestCase):
         self.assertIn("wide_odds_est", plan["tickets"][0])
         self.assertIn("ev_predicted", plan["tickets"][0])
 
+    def test_generate_tickets_adds_multi_bet_candidates_across_bet_types(self):
+        ev_rows = []
+        for horse_name, horse_number, frame_number, win_prob, odds, market_prob in [
+            ("A", "1", "1", 0.32, 6.0, 0.01),
+            ("B", "2", "1", 0.24, 8.0, 0.04),
+            ("C", "3", "2", 0.18, 12.0, 0.08),
+            ("D", "4", "2", 0.11, 18.0, 0.10),
+            ("E", "5", "3", 0.08, 30.0, 0.14),
+            ("F", "6", "3", 0.07, 40.0, 0.16),
+        ]:
+            ev_rows.append(
+                {
+                    "race_id": "r_exotic",
+                    "horse_id": f"h{horse_number}",
+                    "horse_name": horse_name,
+                    "frame_number": frame_number,
+                    "horse_number": horse_number,
+                    "win_prob": str(win_prob),
+                    "place_prob": str(min(0.75, win_prob * 2.1)),
+                    "current_odds": str(odds),
+                    "predicted_odds": str(odds),
+                    "ev": str(win_prob * odds),
+                    "ev_current": str(win_prob * odds),
+                    "ev_predicted": str(win_prob * odds),
+                    "market_prob": str(market_prob),
+                    "consistency": "0.70",
+                    "history_count": "5",
+                }
+            )
+
+        plan = generate_tickets(
+            ev_rows,
+            prefer_wide=True,
+            max_tickets_per_race=8,
+            max_exotic_tickets_per_race=6,
+        )
+        bet_types = {ticket["bet_type"] for ticket in plan["tickets"]}
+
+        self.assertIn("place", bet_types)
+        self.assertIn("wide", bet_types)
+        self.assertIn("wakuren", bet_types)
+        self.assertIn("umaren", bet_types)
+        self.assertIn("umatan", bet_types)
+        self.assertIn("sanrenpuku", bet_types)
+        self.assertIn("sanrentan", bet_types)
+        self.assertEqual(
+            ["win", "place", "wide", "wakuren", "umaren", "umatan", "sanrenpuku", "sanrentan"],
+            plan["bet_types_considered"],
+        )
+        self.assertTrue(plan["fukusho"])
+        self.assertTrue(plan["wakuren"])
+        self.assertTrue(plan["umaren"])
+        self.assertTrue(plan["umatan"])
+        self.assertTrue(plan["sanrenpuku"])
+        self.assertTrue(plan["sanrentan"])
+
+        place = next(ticket for ticket in plan["tickets"] if ticket["bet_type"] == "place")
+        wakuren = next(ticket for ticket in plan["tickets"] if ticket["bet_type"] == "wakuren")
+        umaren = next(ticket for ticket in plan["tickets"] if ticket["bet_type"] == "umaren")
+        umatan = next(ticket for ticket in plan["tickets"] if ticket["bet_type"] == "umatan")
+        sanrenpuku = next(ticket for ticket in plan["tickets"] if ticket["bet_type"] == "sanrenpuku")
+        sanrentan = next(ticket for ticket in plan["tickets"] if ticket["bet_type"] == "sanrentan")
+
+        self.assertIn("place_odds_est", place)
+        self.assertIn("wakuren_odds_est", wakuren)
+        self.assertIn("umaren_odds_est", umaren)
+        self.assertIn("umatan_odds_est", umatan)
+        self.assertIn("trio_odds_est", sanrenpuku)
+        self.assertIn("trifecta_odds_est", sanrentan)
+        self.assertGreater(float(place["hit_prob"]), 0.0)
+        self.assertGreater(float(wakuren["ev_current"]), 1.0)
+        self.assertGreater(float(umaren["hit_prob"]), 0.0)
+        self.assertEqual(2, len(umatan["horse_numbers"]))
+        self.assertGreater(float(sanrenpuku["ev_current"]), 1.0)
+        self.assertEqual(3, len(sanrentan["horse_numbers"]))
+
     def test_reviewer_rejects_meaningful_ev_divergence(self):
         reviewer = ReviewerAgent(WorkflowSettings())
         ev_rows = [

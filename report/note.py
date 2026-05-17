@@ -230,10 +230,12 @@ def _conclusion_lines(
 
     if sorted_by_ev:
         top = sorted_by_ev[0]
-        return [
+        lines = [
             "- reviewer は OK ですが、運用条件に合う買い目が少ないため無理打ちは避けます。",
             f"- 評価上位は {top.get('horse_number')} {top.get('horse_name')} です。",
         ]
+        lines.extend(_reference_candidate_lines(reference_candidates))
+        return lines
     return ["- 今回は有効な評価データが不足しています。"]
 
 
@@ -285,7 +287,9 @@ def _ticket_lines(
         return lines
 
     if not ticket_rows:
-        return ["- 期待値条件を満たす買い目はありません。"]
+        lines = ["- 期待値条件を満たす正式な買い目はありません。"]
+        lines.extend(_reference_candidate_lines(reference_candidates, prefix="- 参考候補: "))
+        return lines
 
     lines = []
     for ticket in ticket_rows:
@@ -449,9 +453,22 @@ def _humanize_review_reason_lines(review: dict[str, object]) -> list[str]:
 
 def _ticket_label(ticket: dict[str, object]) -> str:
     bet_type = str(ticket.get("bet_type", "win"))
+    labels = {
+        "win": "単勝",
+        "place": "複勝",
+        "wide": "ワイド",
+        "wakuren": "枠連",
+        "umaren": "馬連",
+        "umatan": "馬単",
+        "sanrenpuku": "三連複",
+        "sanrentan": "三連単",
+    }
+    label = labels.get(bet_type, bet_type)
     if bet_type == "wide":
-        return f"ワイド {_ticket_horse_display(ticket)}"
-    return f"単勝 {_ticket_horse_display(ticket)}"
+        return f"{label} {_ticket_horse_display(ticket)}"
+    if bet_type in {"wakuren", "umaren", "umatan", "sanrenpuku", "sanrentan"}:
+        return f"{label} {_ticket_horse_display(ticket)}"
+    return f"{label} {_ticket_horse_display(ticket)}"
 
 
 def _ticket_summary(ticket: dict[str, object]) -> str:
@@ -466,9 +483,33 @@ def _ticket_detail_line(ticket: dict[str, object]) -> str:
     label = _ticket_label(ticket)
     stake = int(_to_float(ticket.get("stake"), 0.0))
     probability = _fmt_pct(ticket.get("hit_prob") or ticket.get("wide_prob") or ticket.get("win_prob"))
-    if bet_type == "wide":
+    if bet_type == "place":
+        odds_label = "推定複勝オッズ"
+        odds_value = _fmt_odds(ticket.get("place_odds_est") or ticket.get("win_odds"))
+        prob_label = "的中率"
+    elif bet_type == "wide":
         odds_label = "推定ワイドオッズ"
         odds_value = _fmt_odds(ticket.get("wide_odds_est") or ticket.get("predicted_wide_odds") or ticket.get("win_odds"))
+        prob_label = "的中率"
+    elif bet_type == "wakuren":
+        odds_label = "推定枠連オッズ"
+        odds_value = _fmt_odds(ticket.get("wakuren_odds_est") or ticket.get("win_odds"))
+        prob_label = "的中率"
+    elif bet_type == "umaren":
+        odds_label = "推定馬連オッズ"
+        odds_value = _fmt_odds(ticket.get("umaren_odds_est") or ticket.get("win_odds"))
+        prob_label = "的中率"
+    elif bet_type == "umatan":
+        odds_label = "推定馬単オッズ"
+        odds_value = _fmt_odds(ticket.get("umatan_odds_est") or ticket.get("win_odds"))
+        prob_label = "的中率"
+    elif bet_type == "sanrenpuku":
+        odds_label = "推定三連複オッズ"
+        odds_value = _fmt_odds(ticket.get("trio_odds_est") or ticket.get("win_odds"))
+        prob_label = "的中率"
+    elif bet_type == "sanrentan":
+        odds_label = "推定三連単オッズ"
+        odds_value = _fmt_odds(ticket.get("trifecta_odds_est") or ticket.get("win_odds"))
         prob_label = "的中率"
     else:
         odds_label = "現在オッズ"
@@ -491,7 +532,7 @@ def _reference_candidate_lines(
         return []
 
     lines = ["- 最終判断は見送りですが、ロジック上の参考候補は残っています。"]
-    for candidate in reference_candidates[:2]:
+    for candidate in reference_candidates[:8]:
         lines.append(prefix + candidate)
     return lines
 
@@ -509,9 +550,18 @@ def _reference_candidate_labels(
 ) -> list[str]:
     candidates: list[str] = []
     if ticket_rows:
-        return [_ticket_label(ticket) for ticket in ticket_rows[:2]]
+        return [_ticket_label(ticket) for ticket in ticket_rows[:6]]
 
-    for key, label in (("wide", "ワイド"), ("tansho", "単勝"), ("sanrenpuku", "3連複")):
+    for key, label in (
+        ("fukusho", "複勝"),
+        ("wide", "ワイド"),
+        ("wakuren", "枠連"),
+        ("umaren", "馬連"),
+        ("umatan", "馬単"),
+        ("sanrenpuku", "三連複"),
+        ("sanrentan", "三連単"),
+        ("tansho", "単勝"),
+    ):
         for raw in list(tickets.get(key) or [])[:2]:
             text = str(raw).strip()
             if not text:
@@ -520,7 +570,7 @@ def _reference_candidate_labels(
                 text = f"{label} {text}"
             candidates.append(text)
 
-    return _dedupe_preserve_order(candidates[:2])
+    return _dedupe_preserve_order(candidates[:8])
 
 
 def _reference_candidate_details(
@@ -528,16 +578,23 @@ def _reference_candidate_details(
     tickets: dict[str, object],
 ) -> list[str]:
     if ticket_rows:
-        return [_ticket_summary(ticket) for ticket in ticket_rows[:2]]
+        return [_ticket_summary(ticket) for ticket in ticket_rows[:6]]
     return _reference_candidate_labels(ticket_rows, tickets)
 
 
 def _ticket_horse_display(ticket: dict[str, object]) -> str:
-    if str(ticket.get("bet_type", "win")) == "wide":
+    bet_type = str(ticket.get("bet_type", "win"))
+    if bet_type == "wakuren":
+        frame_numbers = list(ticket.get("frame_numbers") or [])
+        if len(frame_numbers) >= 2:
+            return "-".join(str(number) for number in frame_numbers)
+    if bet_type in {"wide", "umaren", "umatan", "sanrenpuku", "sanrentan"}:
         numbers = list(ticket.get("horse_numbers") or [])
         names = list(ticket.get("horse_names") or [])
         if len(numbers) >= 2 and len(names) >= 2:
-            return f"{numbers[0]}-{numbers[1]} {names[0]} - {names[1]}"
+            number_separator = "→" if bet_type in {"umatan", "sanrentan"} else "-"
+            name_separator = " → " if bet_type in {"umatan", "sanrentan"} else " - "
+            return f"{number_separator.join(str(number) for number in numbers)} {name_separator.join(str(name) for name in names)}"
     return f"{ticket.get('horse_number')} {ticket.get('horse_name')}"
 
 
