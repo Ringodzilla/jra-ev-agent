@@ -520,11 +520,19 @@ def _ticket_detail_line(ticket: dict[str, object]) -> str:
         odds_label = "現在オッズ"
         odds_value = _fmt_odds(ticket.get("win_odds"))
         prob_label = "勝率"
+    portfolio_total = int(_to_float(ticket.get("portfolio_total_stake"), 0.0))
+    return_if_hit = int(_to_float(ticket.get("return_if_hit"), 0.0))
+    portfolio_suffix = ""
+    if portfolio_total > 0 and return_if_hit > 0:
+        portfolio_suffix = f" / 的中時回収 {return_if_hit}円 / 総投資 {portfolio_total}円"
+    role_suffix = " / 保険候補" if str(ticket.get("ticket_role", "")) == "coverage" else ""
     return (
         f"- {label} {stake}円"
         f" / {prob_label} {probability}"
         f" / {odds_label} {odds_value}"
         f" / EV {_fmt_value(ticket.get('ev_current') or ticket.get('ev'))}"
+        f"{portfolio_suffix}"
+        f"{role_suffix}"
     )
 
 

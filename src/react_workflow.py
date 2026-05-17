@@ -27,6 +27,8 @@ class WorkflowSettings:
     max_tickets_per_race: int = 5
     max_wide_tickets_per_race: int = 2
     max_exotic_tickets_per_race: int = 4
+    min_portfolio_ev: float = 1.0
+    min_coverage_ev: float = 0.75
     mode: str = "balanced"
     prefer_wide: bool = True
     max_ev_delta_abs: float = 0.20
@@ -135,6 +137,8 @@ class BetBuilderAgent:
             max_tickets_per_race=self.settings.max_tickets_per_race,
             max_wide_tickets_per_race=self.settings.max_wide_tickets_per_race,
             max_exotic_tickets_per_race=self.settings.max_exotic_tickets_per_race,
+            min_portfolio_ev=self.settings.min_portfolio_ev,
+            min_coverage_ev=self.settings.min_coverage_ev,
             prefer_wide=self.settings.prefer_wide,
         )
 

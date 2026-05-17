@@ -248,14 +248,16 @@ class TestEVPipeline(unittest.TestCase):
             max_exotic_tickets_per_race=6,
         )
         bet_types = {ticket["bet_type"] for ticket in plan["tickets"]}
+        candidate_types = set(plan["candidate_counts"].keys())
+        available_types = bet_types | candidate_types
 
-        self.assertIn("place", bet_types)
-        self.assertIn("wide", bet_types)
-        self.assertIn("wakuren", bet_types)
-        self.assertIn("umaren", bet_types)
-        self.assertIn("umatan", bet_types)
-        self.assertIn("sanrenpuku", bet_types)
-        self.assertIn("sanrentan", bet_types)
+        self.assertIn("place", available_types)
+        self.assertIn("wide", available_types)
+        self.assertIn("wakuren", available_types)
+        self.assertIn("umaren", available_types)
+        self.assertIn("umatan", available_types)
+        self.assertIn("sanrenpuku", available_types)
+        self.assertIn("sanrentan", available_types)
         self.assertEqual(
             ["win", "place", "wide", "wakuren", "umaren", "umatan", "sanrenpuku", "sanrentan"],
             plan["bet_types_considered"],
@@ -267,12 +269,13 @@ class TestEVPipeline(unittest.TestCase):
         self.assertTrue(plan["sanrenpuku"])
         self.assertTrue(plan["sanrentan"])
 
-        place = next(ticket for ticket in plan["tickets"] if ticket["bet_type"] == "place")
-        wakuren = next(ticket for ticket in plan["tickets"] if ticket["bet_type"] == "wakuren")
-        umaren = next(ticket for ticket in plan["tickets"] if ticket["bet_type"] == "umaren")
-        umatan = next(ticket for ticket in plan["tickets"] if ticket["bet_type"] == "umatan")
-        sanrenpuku = next(ticket for ticket in plan["tickets"] if ticket["bet_type"] == "sanrenpuku")
-        sanrentan = next(ticket for ticket in plan["tickets"] if ticket["bet_type"] == "sanrentan")
+        candidates = list(plan["tickets"]) + list(plan["races"][0]["candidates"])
+        place = next(ticket for ticket in candidates if ticket["bet_type"] == "place")
+        wakuren = next(ticket for ticket in candidates if ticket["bet_type"] == "wakuren")
+        umaren = next(ticket for ticket in candidates if ticket["bet_type"] == "umaren")
+        umatan = next(ticket for ticket in candidates if ticket["bet_type"] == "umatan")
+        sanrenpuku = next(ticket for ticket in candidates if ticket["bet_type"] == "sanrenpuku")
+        sanrentan = next(ticket for ticket in candidates if ticket["bet_type"] == "sanrentan")
 
         self.assertIn("place_odds_est", place)
         self.assertIn("wakuren_odds_est", wakuren)
@@ -346,6 +349,103 @@ class TestEVPipeline(unittest.TestCase):
         self.assertEqual("24", by_key[("umatan", "1 → 2")]["umatan_odds_est"])
         self.assertEqual("22.5", by_key[("sanrenpuku", "1 - 2 - 3")]["trio_odds_est"])
         self.assertEqual("82", by_key[("sanrentan", "1 → 2 → 3")]["trifecta_odds_est"])
+
+    def test_generate_tickets_can_add_no_gami_coverage_when_portfolio_ev_survives(self):
+        ev_rows = []
+        for horse_name, horse_number, win_prob, odds, market_prob in [
+            ("A", "1", 0.38, 4.0, 0.22),
+            ("B", "2", 0.24, 2.0, 0.16),
+            ("C", "3", 0.16, 3.0, 0.12),
+            ("D", "4", 0.10, 4.0, 0.20),
+            ("E", "5", 0.07, 4.0, 0.15),
+            ("F", "6", 0.05, 4.0, 0.15),
+        ]:
+            ev_rows.append(
+                {
+                    "race_id": "r_coverage",
+                    "horse_id": f"h{horse_number}",
+                    "horse_name": horse_name,
+                    "frame_number": horse_number,
+                    "horse_number": horse_number,
+                    "win_prob": str(win_prob),
+                    "current_odds": str(odds),
+                    "predicted_odds": str(odds),
+                    "ev": str(win_prob * odds),
+                    "ev_current": str(win_prob * odds),
+                    "ev_predicted": str(win_prob * odds),
+                    "market_prob": str(market_prob),
+                    "consistency": "0.70",
+                    "history_count": "5",
+                }
+            )
+
+        odds_rows = [
+            {"race_id": "r_coverage", "bet_type": "win", "combination": "1", "odds": "4.0", "captured_at": "2026-05-17T01:00:00+00:00"},
+            {"race_id": "r_coverage", "bet_type": "umaren", "combination": "1-2", "odds": "4.0", "captured_at": "2026-05-17T01:00:00+00:00"},
+            {"race_id": "r_coverage", "bet_type": "umatan", "combination": "1>2", "odds": "7.0", "captured_at": "2026-05-17T01:00:00+00:00"},
+            {"race_id": "r_coverage", "bet_type": "sanrenpuku", "combination": "1-2-3", "odds": "8.0", "captured_at": "2026-05-17T01:00:00+00:00"},
+        ]
+
+        plan = generate_tickets(
+            ev_rows,
+            odds_rows=odds_rows,
+            prefer_wide=False,
+            max_tickets_per_race=5,
+            min_place_ev=9.0,
+            min_wide_ev=9.0,
+            min_wakuren_ev=9.0,
+            min_umaren_ev=9.0,
+            min_umatan_ev=9.0,
+            min_sanrenpuku_ev=9.0,
+            min_sanrentan_ev=9.0,
+        )
+
+        coverage_tickets = [ticket for ticket in plan["tickets"] if ticket.get("ticket_role") == "coverage"]
+        self.assertTrue(coverage_tickets)
+        self.assertGreaterEqual(float(plan["tickets"][0]["portfolio_ev"]), 1.0)
+        for ticket in plan["tickets"]:
+            self.assertTrue(ticket["portfolio_no_gami"])
+            self.assertGreaterEqual(int(ticket["return_if_hit"]), int(ticket["portfolio_total_stake"]))
+
+    def test_generate_tickets_prunes_gami_portfolios(self):
+        ev_rows = []
+        for horse_name, horse_number in [("A", "1"), ("B", "2"), ("C", "3")]:
+            ev_rows.append(
+                {
+                    "race_id": "r_gami",
+                    "horse_id": f"h{horse_number}",
+                    "horse_name": horse_name,
+                    "frame_number": horse_number,
+                    "horse_number": horse_number,
+                    "win_prob": "0.60",
+                    "current_odds": "2.0",
+                    "predicted_odds": "2.0",
+                    "ev": "1.2",
+                    "ev_current": "1.2",
+                    "ev_predicted": "1.2",
+                    "market_prob": "0.20",
+                    "consistency": "0.70",
+                    "history_count": "5",
+                }
+            )
+
+        plan = generate_tickets(
+            ev_rows,
+            prefer_wide=False,
+            max_tickets_per_race=3,
+            min_place_ev=9.0,
+            min_wide_ev=9.0,
+            min_wakuren_ev=9.0,
+            min_umaren_ev=9.0,
+            min_umatan_ev=9.0,
+            min_sanrenpuku_ev=9.0,
+            min_sanrentan_ev=9.0,
+        )
+
+        self.assertLessEqual(len(plan["tickets"]), 2)
+        for ticket in plan["tickets"]:
+            self.assertTrue(ticket["portfolio_no_gami"])
+            self.assertGreaterEqual(int(ticket["return_if_hit"]), int(ticket["portfolio_total_stake"]))
 
     def test_reviewer_rejects_meaningful_ev_divergence(self):
         reviewer = ReviewerAgent(WorkflowSettings())

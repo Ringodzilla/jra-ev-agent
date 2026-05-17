@@ -58,6 +58,11 @@ JRAのレースデータを取得し、**EVモデリングに直接使える整�
   * `accessO.html` から単勝・複勝・枠連・馬連・ワイド・馬単・三連複・三連単の実オッズを取得
   * 実オッズは `data/processed/live_combo_odds.csv` に `race_id, bet_type, combination, odds, odds_min, odds_max, captured_at, source_cname` で保存
   * 買い目生成はJRA実オッズを優先し、取得できない券種・組合せのみ推定オッズへフォールバック
+* **Portfolio EV + no-gami guard**
+
+  * 通常候補は券種ごとのEV閾値を満たしたものだけを採用
+  * 保険候補はJRA実オッズあり、EV下限あり、追加後のポートフォリオEVが1.0以上、的中時回収が総投資額以上の場合だけ採用
+  * 最終買い目は的中時に総投資額を下回る組み合わせを pruning して、ガミりやすい構成を避ける
 
 ## Architecture
 

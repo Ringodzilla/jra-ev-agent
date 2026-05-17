@@ -24,6 +24,8 @@ def generate_tickets(
     max_exotic_tickets_per_race: int = 4,
     kelly_fraction: float = 0.33,
     prefer_wide: bool = False,
+    min_portfolio_ev: float = 1.0,
+    min_coverage_ev: float = 0.75,
 ) -> dict[str, object]:
     by_race: dict[str, list[dict[str, object]]] = defaultdict(list)
     for row in ev_rows:
@@ -84,6 +86,12 @@ def generate_tickets(
             kelly_fraction=kelly_fraction,
             live_odds=live_odds,
         )
+        coverage_candidates = _build_coverage_candidates(
+            enriched,
+            bankroll_per_race=bankroll_per_race,
+            min_coverage_ev=min_coverage_ev,
+            live_odds=live_odds,
+        )
 
         win_tickets = [
             ticket
@@ -106,6 +114,7 @@ def generate_tickets(
                 + wide_candidates
                 + wakuren_candidates
                 + exotic_candidates
+                + coverage_candidates
             ),
             prefer_wide=prefer_wide,
         )
@@ -120,14 +129,17 @@ def generate_tickets(
             + wide_candidates[:max_wide_tickets_per_race]
             + wakuren_candidates
             + _prioritize_exotic_types(exotic_candidates)[:max_exotic_tickets_per_race]
+            + coverage_candidates
         )
         race_tickets = _select_optimized_tickets(
             selection_pool,
             per_race_limit=per_race_limit,
             prefer_wide=prefer_wide,
             force_win_standout=_has_win_standout(enriched),
+            min_portfolio_ev=min_portfolio_ev,
         )
         race_tickets = _rebalance_race_stakes(race_tickets, bankroll_per_race=bankroll_per_race)
+        race_tickets = _annotate_portfolio_tickets(_prune_gami_tickets(race_tickets))
         flat_tickets.extend(race_tickets)
 
         place_ranked = sorted(
@@ -713,6 +725,67 @@ def _build_exotic_candidates(
     return _prioritize_exotic_types(_dedupe_ticket_combos(candidates))
 
 
+def _build_coverage_candidates(
+    rows: list[dict[str, object]],
+    *,
+    bankroll_per_race: int,
+    min_coverage_ev: float,
+    live_odds: dict[tuple[str, str], dict[str, object]],
+) -> list[dict[str, object]]:
+    """Build high-conviction saver tickets, but only with real odds and an EV floor."""
+    if len(rows) < 3:
+        return []
+
+    core = sorted(
+        rows,
+        key=lambda row: (
+            _to_float(row.get("win_prob")),
+            _to_float(row.get("place_prob")),
+            _to_float(row.get("ev_predicted") or row.get("ev")),
+        ),
+        reverse=True,
+    )[:3]
+    if len(core) < 3:
+        return []
+
+    specs = [
+        ("umaren", core[:2], 0.775, 120.0, 0.020),
+        ("umatan", core[:2], 0.750, 300.0, 0.012),
+        ("sanrenpuku", core, 0.775, 240.0, 0.010),
+        ("sanrentan", core, 0.725, 600.0, 0.004),
+    ]
+
+    tickets: list[dict[str, object]] = []
+    for bet_type, combo_rows, payout_rate, max_odds, min_prob in specs:
+        ticket = _build_exotic_ticket(
+            list(combo_rows),
+            bet_type=bet_type,
+            payout_rate=payout_rate,
+            max_odds=max_odds,
+            bankroll_per_race=bankroll_per_race,
+            kelly_fraction=0.0,
+            min_ev=min_coverage_ev,
+            min_prob=min_prob,
+            max_fraction=0.08,
+            live_odds=live_odds,
+            ticket_role="coverage",
+            require_live_odds=True,
+            allow_flat_stake=True,
+        )
+        if ticket is not None:
+            tickets.append(ticket)
+
+    tickets.sort(
+        key=lambda ticket: (
+            _to_float(ticket.get("ev_current") or ticket.get("ev")),
+            _to_float(ticket.get("hit_prob")),
+            _to_float(ticket.get("win_odds")),
+        ),
+        reverse=True,
+    )
+    return _dedupe_ticket_combos(tickets)
+
+
 def _build_exotic_ticket(
     combo_rows: list[dict[str, object]],
     *,
@@ -725,6 +798,9 @@ def _build_exotic_ticket(
     min_prob: float,
     max_fraction: float,
     live_odds: dict[tuple[str, str], dict[str, object]],
+    ticket_role: str = "value",
+    require_live_odds: bool = False,
+    allow_flat_stake: bool = False,
 ) -> dict[str, object] | None:
     hit_prob = _combo_hit_prob(combo_rows, key="win_prob", bet_type=bet_type)
     market_prob = _combo_hit_prob(combo_rows, key="market_prob", bet_type=bet_type)
@@ -733,6 +809,8 @@ def _build_exotic_ticket(
 
     horse_numbers = [str(row.get("horse_number", "")) for row in combo_rows]
     live = _lookup_live_odds(live_odds, bet_type, horse_numbers)
+    if require_live_odds and not live:
+        return None
     current_odds_est = _live_odds_value(live) or _estimate_exotic_odds(market_prob, payout_rate=payout_rate, max_odds=max_odds)
     predicted_odds_est = _estimate_predicted_combo_odds(combo_rows, current_odds_est=current_odds_est, max_odds=max_odds)
     ev_current = hit_prob * current_odds_est if current_odds_est > 0 else 0.0
@@ -749,7 +827,10 @@ def _build_exotic_ticket(
         max_fraction=max_fraction,
     )
     if stake <= 0:
-        return None
+        if allow_flat_stake and current_odds_est > 1.0 and ev_current >= min_ev:
+            stake = min(100, bankroll_per_race)
+        else:
+            return None
 
     horse_ids = [str(row.get("horse_id", "")) for row in combo_rows]
     horse_names = [str(row.get("horse_name", "")) for row in combo_rows]
@@ -783,6 +864,8 @@ def _build_exotic_ticket(
         "ev_predicted": _fmt(ev_predicted),
         "predicted_odds_source": "jra_live" if live else f"{bet_type}_estimated",
         "odds_source": "jra_live" if live else "estimated",
+        "ticket_role": ticket_role,
+        "coverage_reason": "top_model_combo_real_odds" if ticket_role == "coverage" else "",
         "confidence": _fmt(confidence),
         "legs": [
             {
@@ -1124,10 +1207,13 @@ def _select_optimized_tickets(
     per_race_limit: int,
     prefer_wide: bool,
     force_win_standout: bool,
+    min_portfolio_ev: float,
 ) -> list[dict[str, object]]:
     ranked = _rank_ticket_pool(_dedupe_ticket_combos(tickets), prefer_wide=prefer_wide)
+    value_ranked = [ticket for ticket in ranked if not _is_coverage_ticket(ticket)]
+    coverage_ranked = [ticket for ticket in ranked if _is_coverage_ticket(ticket)]
     by_type: dict[str, list[dict[str, object]]] = defaultdict(list)
-    for ticket in ranked:
+    for ticket in value_ranked:
         by_type[str(ticket.get("bet_type", ""))].append(ticket)
 
     type_order = list(_selection_type_order(prefer_wide=prefer_wide))
@@ -1145,7 +1231,7 @@ def _select_optimized_tickets(
         _append_ticket_if_new(selected, selected_keys, by_type[bet_type][0], per_race_limit)
 
     by_ev = sorted(
-        ranked,
+        value_ranked,
         key=lambda ticket: (
             _to_float(ticket.get("ev_current") or ticket.get("ev")),
             _to_float(ticket.get("hit_prob") or ticket.get("win_prob")),
@@ -1156,6 +1242,13 @@ def _select_optimized_tickets(
     for ticket in by_ev:
         if len(selected) >= per_race_limit:
             break
+        _append_ticket_if_new(selected, selected_keys, ticket, per_race_limit)
+
+    for ticket in coverage_ranked:
+        if len(selected) >= per_race_limit:
+            break
+        if not _can_add_coverage_ticket(selected, ticket, min_portfolio_ev=min_portfolio_ev):
+            continue
         _append_ticket_if_new(selected, selected_keys, ticket, per_race_limit)
 
     return selected[:per_race_limit]
@@ -1174,6 +1267,92 @@ def _append_ticket_if_new(
         return
     selected.append(ticket)
     selected_keys.add(key)
+
+
+def _is_coverage_ticket(ticket: dict[str, object]) -> bool:
+    return str(ticket.get("ticket_role", "")) == "coverage"
+
+
+def _can_add_coverage_ticket(
+    selected: list[dict[str, object]],
+    ticket: dict[str, object],
+    *,
+    min_portfolio_ev: float,
+) -> bool:
+    portfolio = selected + [ticket]
+    if _portfolio_ev(portfolio) < min_portfolio_ev:
+        return False
+    return _portfolio_no_gami(portfolio)
+
+
+def _portfolio_ev(tickets: list[dict[str, object]]) -> float:
+    total_stake = _portfolio_total_stake(tickets)
+    if total_stake <= 0:
+        return 0.0
+    expected_return = sum(
+        int(_to_float(ticket.get("stake"), 0.0)) * _to_float(ticket.get("ev_current") or ticket.get("ev"))
+        for ticket in tickets
+    )
+    return expected_return / total_stake
+
+
+def _portfolio_no_gami(tickets: list[dict[str, object]]) -> bool:
+    total_stake = _portfolio_total_stake(tickets)
+    if total_stake <= 0:
+        return False
+    return all(_ticket_return_if_hit(ticket) >= total_stake for ticket in tickets)
+
+
+def _portfolio_total_stake(tickets: list[dict[str, object]]) -> int:
+    return sum(int(_to_float(ticket.get("stake"), 0.0)) for ticket in tickets)
+
+
+def _ticket_return_if_hit(ticket: dict[str, object]) -> int:
+    stake = int(_to_float(ticket.get("stake"), 0.0))
+    odds = _to_float(ticket.get("win_odds") or ticket.get("predicted_odds"))
+    return int(stake * odds)
+
+
+def _prune_gami_tickets(tickets: list[dict[str, object]]) -> list[dict[str, object]]:
+    out = [dict(ticket) for ticket in tickets if int(_to_float(ticket.get("stake"), 0.0)) > 0]
+    while out and not _portfolio_no_gami(out):
+        total_stake = _portfolio_total_stake(out)
+        removable = [
+            ticket
+            for ticket in out
+            if _ticket_return_if_hit(ticket) < total_stake
+        ]
+        if not removable:
+            break
+        drop = min(
+            removable,
+            key=lambda ticket: (
+                _to_float(ticket.get("ev_current") or ticket.get("ev")),
+                _ticket_return_if_hit(ticket) / max(total_stake, 1),
+                _to_float(ticket.get("hit_prob") or ticket.get("win_prob")),
+            ),
+        )
+        out.remove(drop)
+    return out
+
+
+def _annotate_portfolio_tickets(tickets: list[dict[str, object]]) -> list[dict[str, object]]:
+    if not tickets:
+        return []
+    total_stake = _portfolio_total_stake(tickets)
+    portfolio_ev = _portfolio_ev(tickets)
+    no_gami = _portfolio_no_gami(tickets)
+    annotated: list[dict[str, object]] = []
+    for ticket in tickets:
+        out = dict(ticket)
+        gross_return = _ticket_return_if_hit(ticket)
+        out["portfolio_total_stake"] = total_stake
+        out["portfolio_ev"] = _fmt(portfolio_ev)
+        out["portfolio_no_gami"] = no_gami
+        out["return_if_hit"] = gross_return
+        out["net_return_if_hit"] = gross_return - total_stake
+        annotated.append(out)
+    return annotated
 
 
 def _selection_type_order(*, prefer_wide: bool) -> tuple[str, ...]:
