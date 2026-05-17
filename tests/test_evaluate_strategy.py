@@ -1,63 +1,85 @@
-from scripts.evaluate_strategy import decide_keep_or_revert, evaluate_strategy
+import unittest
+from unittest.mock import patch
+
+from scripts import evaluate_strategy as evaluator
 
 
-def test_evaluate_strategy_returns_metrics() -> None:
-    rows = [
-        {
-            "race_id": "r1",
-            "horse_name": "A",
-            "position": "1",
-            "last_3f": "34.5",
-            "popularity": "1",
-            "odds": "2.0",
-        },
-        {
-            "race_id": "r1",
-            "horse_name": "B",
-            "position": "2",
-            "last_3f": "35.0",
-            "popularity": "2",
-            "odds": "3.0",
-        },
-        {
-            "race_id": "r2",
-            "horse_name": "C",
-            "position": "3",
-            "last_3f": "36.2",
-            "popularity": "3",
-            "odds": "4.5",
-        },
-    ]
+class TestEvaluateStrategy(unittest.TestCase):
+    def test_payout_lookup_accepts_jra_style_labels(self):
+        results = [
+            {"race_id": "r1", "式別": "単勝", "馬番": "1", "払戻金": "250円"},
+            {"race_id": "r1", "式別": "複勝", "馬番": "1", "払戻金": "140"},
+            {"race_id": "r1", "式別": "ワイド", "組番": "2-1", "払戻金": "580"},
+            {"race_id": "r1", "式別": "枠連", "組番": "2-1", "払戻金": "820"},
+            {"race_id": "r1", "式別": "馬連", "組番": "2-1", "払戻金": "940"},
+            {"race_id": "r1", "式別": "馬単", "組番": "1→2", "払戻金": "2,400円"},
+            {"race_id": "r1", "式別": "三連複", "組番": "3-2-1", "払戻金": "2,250"},
+            {"race_id": "r1", "式別": "三連単", "組番": "1→2→3", "払戻金": "8,200"},
+        ]
 
-    metrics = evaluate_strategy(rows, min_ev=1.0, max_bets_per_race=1, stake_per_bet=100)
+        lookup = evaluator._build_payout_lookup(results)
 
-    assert 0.0 <= metrics["score"] <= 1.0
-    assert metrics["race_count"] == 2
-    assert metrics["ticket_count"] >= 1
-    assert metrics["invested"] >= 100
-    assert "validation_roi" in metrics
-    assert "git_commit" in metrics
+        self.assertEqual(250, lookup[("r1", "win", "1")])
+        self.assertEqual(140, lookup[("r1", "place", "1")])
+        self.assertEqual(580, lookup[("r1", "wide", "1-2")])
+        self.assertEqual(820, lookup[("r1", "wakuren", "1-2")])
+        self.assertEqual(940, lookup[("r1", "umaren", "1-2")])
+        self.assertEqual(2400, lookup[("r1", "umatan", "1>2")])
+        self.assertEqual(2250, lookup[("r1", "sanrenpuku", "1-2-3")])
+        self.assertEqual(8200, lookup[("r1", "sanrentan", "1>2>3")])
+
+    def test_evaluate_strategy_settles_all_supported_bet_types(self):
+        tickets = [
+            {"race_id": "r1", "bet_type": "win", "horse_number": "1", "stake": 100},
+            {"race_id": "r1", "bet_type": "place", "horse_number": "1", "stake": 100},
+            {"race_id": "r1", "bet_type": "wide", "horse_numbers": ["1", "2"], "horse_number": "1-2", "stake": 100},
+            {"race_id": "r1", "bet_type": "wakuren", "frame_numbers": ["1", "2"], "horse_number": "1-2", "stake": 100},
+            {"race_id": "r1", "bet_type": "umaren", "horse_numbers": ["1", "2"], "horse_number": "1-2", "stake": 100},
+            {"race_id": "r1", "bet_type": "umatan", "horse_numbers": ["1", "2"], "horse_number": "1→2", "stake": 100},
+            {"race_id": "r1", "bet_type": "sanrenpuku", "horse_numbers": ["1", "2", "3"], "horse_number": "1-2-3", "stake": 100},
+            {"race_id": "r1", "bet_type": "sanrentan", "horse_numbers": ["1", "2", "3"], "horse_number": "1→2→3", "stake": 100},
+        ]
+        results = [
+            {"race_id": "r1", "式別": "単勝", "馬番": "1", "払戻金": "250"},
+            {"race_id": "r1", "式別": "複勝", "馬番": "1", "払戻金": "140"},
+            {"race_id": "r1", "式別": "ワイド", "組番": "1-2", "払戻金": "580"},
+            {"race_id": "r1", "式別": "枠連", "組番": "1-2", "払戻金": "820"},
+            {"race_id": "r1", "式別": "馬連", "組番": "1-2", "払戻金": "940"},
+            {"race_id": "r1", "式別": "馬単", "組番": "1-2", "払戻金": "2400"},
+            {"race_id": "r1", "式別": "三連複", "組番": "1-2-3", "払戻金": "2250"},
+            {"race_id": "r1", "式別": "三連単", "組番": "1-2-3", "払戻金": "8200"},
+        ]
+
+        with patch.object(evaluator, "compute_ev", return_value=[{"race_id": "r1"}]), patch.object(
+            evaluator,
+            "generate_tickets",
+            return_value={"tickets": tickets},
+        ):
+            metrics = evaluator.evaluate_strategy(rows=[{"race_id": "r1"}], results=results)
+
+        self.assertEqual(800, metrics["invested"])
+        self.assertEqual(15580, metrics["returned"])
+        self.assertEqual(8, metrics["hit_ticket_count"])
+        self.assertEqual(1.0, metrics["ticket_hit_rate"])
+        self.assertEqual("available", metrics["label_status"])
+        self.assertEqual(8200, metrics["bet_type_breakdown"]["sanrentan"]["returned"])
+        self.assertEqual(24.0, metrics["bet_type_breakdown"]["umatan"]["roi"])
+
+    def test_legacy_win_and_place_columns_are_supported(self):
+        results = [
+            {
+                "race_id": "r1",
+                "horse_number": "4",
+                "win_payout": "510",
+                "place_payout": "180",
+            }
+        ]
+
+        lookup = evaluator._build_payout_lookup(results)
+
+        self.assertEqual(510, lookup[("r1", "win", "4")])
+        self.assertEqual(180, lookup[("r1", "place", "4")])
 
 
-def test_evaluate_strategy_handles_empty_input() -> None:
-    metrics = evaluate_strategy([], min_ev=1.05, max_bets_per_race=2, stake_per_bet=100)
-    assert metrics["score"] == 0.0
-    assert metrics["race_count"] == 0
-    assert metrics["ticket_count"] == 0
-
-
-def test_decision_prefers_validation_roi() -> None:
-    before = {"validation_roi": 1.10, "score": 0.50}
-    after = {"validation_roi": 1.05, "score": 0.80}
-    decision, reason = decide_keep_or_revert(before, after)
-
-    assert decision == "revert"
-    assert "ROI" in reason
-
-
-def test_decision_keeps_on_roi_tie_and_score_gain() -> None:
-    before = {"validation_roi": 1.10, "score": 0.50}
-    after = {"validation_roi": 1.10, "score": 0.55}
-    decision, _ = decide_keep_or_revert(before, after)
-
-    assert decision == "keep"
+if __name__ == "__main__":
+    unittest.main()

@@ -123,6 +123,26 @@ keep の場合は `report/baseline_eval.json` を更新し、revert の場合は
 
 運用詳細は `RUNBOOK.md` を参照してください。
 
+### Evaluation result labels
+
+`scripts/evaluate_strategy.py` は単勝だけでなく、複勝・ワイド・枠連・馬連・馬単・三連複・三連単の払戻ラベルを評価できます。
+
+JRA風の縦持ちCSV例:
+
+```csv
+race_id,式別,組番,馬番,払戻金
+r1,単勝,,1,250
+r1,複勝,,1,140
+r1,ワイド,1-2,,580
+r1,枠連,1-2,,820
+r1,馬連,1-2,,940
+r1,馬単,1-2,,2400
+r1,三連複,1-2-3,,2250
+r1,三連単,1-2-3,,8200
+```
+
+旧形式の `race_id,horse_number,win_payout` も引き続き読めます。評価結果には `bet_type_breakdown`、`ticket_hit_rate`、`result_bet_types_available`、`label_status` が出力されます。
+
 
 ### Multi-agent workflow
 
