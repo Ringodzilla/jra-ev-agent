@@ -287,6 +287,66 @@ class TestEVPipeline(unittest.TestCase):
         self.assertGreater(float(sanrenpuku["ev_current"]), 1.0)
         self.assertEqual(3, len(sanrentan["horse_numbers"]))
 
+    def test_generate_tickets_prefers_jra_live_combo_odds(self):
+        ev_rows = []
+        for horse_name, horse_number, frame_number, win_prob, odds, market_prob in [
+            ("A", "1", "1", 0.32, 6.0, 0.01),
+            ("B", "2", "1", 0.24, 8.0, 0.04),
+            ("C", "3", "2", 0.18, 12.0, 0.08),
+            ("D", "4", "2", 0.11, 18.0, 0.10),
+            ("E", "5", "3", 0.08, 30.0, 0.14),
+            ("F", "6", "3", 0.07, 40.0, 0.16),
+        ]:
+            ev_rows.append(
+                {
+                    "race_id": "r_live_odds",
+                    "horse_id": f"h{horse_number}",
+                    "horse_name": horse_name,
+                    "frame_number": frame_number,
+                    "horse_number": horse_number,
+                    "win_prob": str(win_prob),
+                    "current_odds": str(odds),
+                    "predicted_odds": str(odds),
+                    "ev": str(win_prob * odds),
+                    "ev_current": str(win_prob * odds),
+                    "ev_predicted": str(win_prob * odds),
+                    "market_prob": str(market_prob),
+                    "consistency": "0.70",
+                    "history_count": "5",
+                }
+            )
+        odds_rows = [
+            {"race_id": "r_live_odds", "bet_type": "win", "combination": "1", "odds": "4.2", "captured_at": "2026-05-17T01:00:00+00:00"},
+            {"race_id": "r_live_odds", "bet_type": "place", "combination": "1", "odds": "2.4", "odds_min": "2.4", "odds_max": "3.0", "captured_at": "2026-05-17T01:00:00+00:00"},
+            {"race_id": "r_live_odds", "bet_type": "wide", "combination": "1-2", "odds": "5.8", "odds_min": "5.8", "odds_max": "6.4", "captured_at": "2026-05-17T01:00:00+00:00"},
+            {"race_id": "r_live_odds", "bet_type": "wakuren", "combination": "1-2", "odds": "8.2", "captured_at": "2026-05-17T01:00:00+00:00"},
+            {"race_id": "r_live_odds", "bet_type": "umaren", "combination": "1-2", "odds": "9.4", "captured_at": "2026-05-17T01:00:00+00:00"},
+            {"race_id": "r_live_odds", "bet_type": "umatan", "combination": "1>2", "odds": "24.0", "captured_at": "2026-05-17T01:00:00+00:00"},
+            {"race_id": "r_live_odds", "bet_type": "sanrenpuku", "combination": "1-2-3", "odds": "22.5", "captured_at": "2026-05-17T01:00:00+00:00"},
+            {"race_id": "r_live_odds", "bet_type": "sanrentan", "combination": "1>2>3", "odds": "82.0", "captured_at": "2026-05-17T01:00:00+00:00"},
+        ]
+
+        plan = generate_tickets(
+            ev_rows,
+            odds_rows=odds_rows,
+            prefer_wide=True,
+            max_tickets_per_race=8,
+            max_exotic_tickets_per_race=6,
+        )
+        candidates = plan["races"][0]["candidates"]
+        by_key = {(ticket["bet_type"], str(ticket["horse_number"])): ticket for ticket in candidates}
+
+        self.assertEqual("jra_live", by_key[("win", "1")]["odds_source"])
+        self.assertEqual("4.2", by_key[("win", "1")]["win_odds"])
+        self.assertEqual("jra_live", by_key[("place", "1")]["odds_source"])
+        self.assertEqual("2.4", by_key[("place", "1")]["place_odds_est"])
+        self.assertEqual("5.8", by_key[("wide", "1-2")]["wide_odds_est"])
+        self.assertEqual("8.2", by_key[("wakuren", "1-2")]["wakuren_odds_est"])
+        self.assertEqual("9.4", by_key[("umaren", "1 - 2")]["umaren_odds_est"])
+        self.assertEqual("24", by_key[("umatan", "1 → 2")]["umatan_odds_est"])
+        self.assertEqual("22.5", by_key[("sanrenpuku", "1 - 2 - 3")]["trio_odds_est"])
+        self.assertEqual("82", by_key[("sanrentan", "1 → 2 → 3")]["trifecta_odds_est"])
+
     def test_reviewer_rejects_meaningful_ev_divergence(self):
         reviewer = ReviewerAgent(WorkflowSettings())
         ev_rows = [

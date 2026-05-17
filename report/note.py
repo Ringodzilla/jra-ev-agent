@@ -323,6 +323,7 @@ def _data_quality_lines(
     issue_count = int(quality_report.get("issue_count", 0) or 0)
     repaired_row_count = int(quality_report.get("repaired_row_count", 0) or 0)
     live_snapshot_count = int(quality_report.get("live_snapshot_count", 0) or 0)
+    live_combo_odds_count = int(quality_report.get("live_combo_odds_count", 0) or 0)
     missing_current_odds = int(quality_report.get("missing_current_odds_entries", 0) or 0)
     entry_count = int(quality_report.get("entry_count", 0) or 0)
 
@@ -346,6 +347,9 @@ def _data_quality_lines(
         lines.append(f"- 当日オッズの時系列は {live_snapshot_count} 件たまっています。")
     else:
         lines.append("- 当日オッズの時系列はまだ十分にたまっていません。")
+
+    if live_combo_odds_count > 0:
+        lines.append(f"- 連系・複勝を含むJRA実オッズは履歴込みで {live_combo_odds_count} 件保存済みです。")
 
     if ticket_rows:
         lines.append(f"- 運用条件を満たした買い目候補は {len(ticket_rows)} 点です。")
@@ -483,32 +487,33 @@ def _ticket_detail_line(ticket: dict[str, object]) -> str:
     label = _ticket_label(ticket)
     stake = int(_to_float(ticket.get("stake"), 0.0))
     probability = _fmt_pct(ticket.get("hit_prob") or ticket.get("wide_prob") or ticket.get("win_prob"))
+    live_odds = str(ticket.get("odds_source", "")) == "jra_live"
     if bet_type == "place":
-        odds_label = "推定複勝オッズ"
+        odds_label = "JRA複勝オッズ下限" if live_odds else "推定複勝オッズ"
         odds_value = _fmt_odds(ticket.get("place_odds_est") or ticket.get("win_odds"))
         prob_label = "的中率"
     elif bet_type == "wide":
-        odds_label = "推定ワイドオッズ"
+        odds_label = "JRAワイドオッズ下限" if live_odds else "推定ワイドオッズ"
         odds_value = _fmt_odds(ticket.get("wide_odds_est") or ticket.get("predicted_wide_odds") or ticket.get("win_odds"))
         prob_label = "的中率"
     elif bet_type == "wakuren":
-        odds_label = "推定枠連オッズ"
+        odds_label = "JRA枠連オッズ" if live_odds else "推定枠連オッズ"
         odds_value = _fmt_odds(ticket.get("wakuren_odds_est") or ticket.get("win_odds"))
         prob_label = "的中率"
     elif bet_type == "umaren":
-        odds_label = "推定馬連オッズ"
+        odds_label = "JRA馬連オッズ" if live_odds else "推定馬連オッズ"
         odds_value = _fmt_odds(ticket.get("umaren_odds_est") or ticket.get("win_odds"))
         prob_label = "的中率"
     elif bet_type == "umatan":
-        odds_label = "推定馬単オッズ"
+        odds_label = "JRA馬単オッズ" if live_odds else "推定馬単オッズ"
         odds_value = _fmt_odds(ticket.get("umatan_odds_est") or ticket.get("win_odds"))
         prob_label = "的中率"
     elif bet_type == "sanrenpuku":
-        odds_label = "推定三連複オッズ"
+        odds_label = "JRA三連複オッズ" if live_odds else "推定三連複オッズ"
         odds_value = _fmt_odds(ticket.get("trio_odds_est") or ticket.get("win_odds"))
         prob_label = "的中率"
     elif bet_type == "sanrentan":
-        odds_label = "推定三連単オッズ"
+        odds_label = "JRA三連単オッズ" if live_odds else "推定三連単オッズ"
         odds_value = _fmt_odds(ticket.get("trifecta_odds_est") or ticket.get("win_odds"))
         prob_label = "的中率"
     else:

@@ -4,7 +4,7 @@ import hashlib
 import logging
 import time
 from pathlib import Path
-from typing import Optional
+from typing import Mapping, Optional
 from urllib.parse import urljoin
 
 import requests
@@ -111,6 +111,53 @@ class JRAScraper:
         cache_only: bool = False,
     ) -> Optional[str]:
         return self.fetch(urljoin(self.config.base_url, path), raw_name, use_cache=use_cache, cache_only=cache_only)
+
+    def fetch_post(
+        self,
+        url: str,
+        data: Mapping[str, str],
+        raw_name: Optional[str] = None,
+        *,
+        use_cache: bool = True,
+        cache_only: bool = False,
+    ) -> Optional[str]:
+        """POST helper for JRADB pages that are normally opened via doAction()."""
+        cache_key = f"POST {url} {sorted(data.items())}"
+        cache_path = self._resolve_raw_path(cache_key, raw_name)
+
+        if use_cache and cache_key in self.memory_cache:
+            return self.memory_cache[cache_key]
+        if use_cache and cache_path.exists():
+            html = cache_path.read_text(encoding="utf-8")
+            self.memory_cache[cache_key] = html
+            logger.info("Cache hit: %s", cache_key)
+            return html
+        if cache_only:
+            logger.warning("Cache-only mode miss: %s", cache_key)
+            return None
+
+        for attempt in range(1, self.config.max_retries + 1):
+            try:
+                response = self.session.post(url, data=dict(data), timeout=self.config.timeout)
+                response.raise_for_status()
+                html = self._decode_japanese_html(response)
+                cache_path.write_text(html, encoding="utf-8")
+                self.memory_cache[cache_key] = html
+                logger.info("Fetched %s", cache_key)
+                time.sleep(self.config.delay_seconds)
+                return html
+            except RequestException as exc:
+                logger.warning(
+                    "POST fetch failed (attempt %d/%d) for %s: %s",
+                    attempt,
+                    self.config.max_retries,
+                    cache_key,
+                    exc,
+                )
+                time.sleep(self.config.delay_seconds)
+
+        logger.error("Giving up POST fetch after retries: %s", cache_key)
+        return None
 
     def _resolve_raw_path(self, url: str, raw_name: Optional[str]) -> Path:
         if raw_name:

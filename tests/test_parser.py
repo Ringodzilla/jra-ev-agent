@@ -165,6 +165,50 @@ class TestJRAParser(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "No horses parsed"):
             self.parser.parse_race_detail(html, race_id="r1", race_name="11R")
 
+    def test_parse_odds_page_extracts_all_supported_bet_types(self):
+        html = """
+        <html><body>
+        <ul>
+          <li><a href="#" onclick="return doAction('/JRADB/accessO.html', 'pw151ouS/r1');">単勝・複勝</a></li>
+          <li><a href="#" onclick="return doAction('/JRADB/accessO.html', 'pw153ouS/r1');">枠連</a></li>
+          <li><a href="#" onclick="return doAction('/JRADB/accessO.html', 'pw154ouS/r1');">馬連</a></li>
+          <li><a href="#" onclick="return doAction('/JRADB/accessO.html', 'pw155ouS/r1');">ワイド</a></li>
+          <li><a href="#" onclick="return doAction('/JRADB/accessO.html', 'pw156ouS/r1');">馬単</a></li>
+          <li><a href="#" onclick="return doAction('/JRADB/accessO.html', 'pw157ouS/r1');">3連複</a></li>
+          <li><a href="#" onclick="return doAction('/JRADB/accessO.html', 'pw158ouS/r1');">3連単</a></li>
+        </ul>
+        <div id="odds_list">
+          <table><tbody>
+            <tr><td class="num">1</td><td class="horse">A</td><td class="odds_tan">2.4</td><td class="odds_fuku">1.2 - 1.5</td></tr>
+          </tbody></table>
+          <table class="basic narrow-xy waku"><caption class="waku1">1</caption><tbody><tr><th>2</th><td>8.2</td></tr></tbody></table>
+          <table class="basic narrow-xy umaren"><caption>1</caption><tbody><tr><th>2</th><td>9.4</td></tr></tbody></table>
+          <table class="basic narrow-xy wide"><caption>1</caption><tbody><tr><th>2</th><td>2.8 - 3.4</td></tr></tbody></table>
+          <table class="basic narrow-xy umatan"><caption>1</caption><tbody><tr><th>2</th><td>24.0</td></tr></tbody></table>
+          <table class="basic narrow-xy fuku3"><caption>1-2</caption><tbody><tr><th>3</th><td>22.5</td></tr></tbody></table>
+          <ul class="tan3_list"><li>
+            <div class="p_line"><div class="inner"><div class="cap"><span>1着</span></div><div class="num">1</div></div></div>
+            <div class="p_line"><div class="inner"><div class="cap"><span>2着</span></div><div class="num">2</div></div></div>
+            <table class="basic narrow-xy tan3"><tbody><tr><th>3</th><td>82.0</td></tr></tbody></table>
+          </li></ul>
+        </div>
+        </body></html>
+        """
+
+        cnames = self.parser.extract_odds_cnames(html)
+        rows = self.parser.parse_odds_page(html, race_id="r1", source_cname="c1", captured_at="now")
+        by_key = {(row["bet_type"], row["combination"]): row for row in rows}
+
+        self.assertEqual("pw153ouS/r1", cnames["wakuren"])
+        self.assertEqual("2.4", by_key[("win", "1")]["odds"])
+        self.assertEqual("1.2", by_key[("place", "1")]["odds_min"])
+        self.assertEqual("8.2", by_key[("wakuren", "1-2")]["odds"])
+        self.assertEqual("9.4", by_key[("umaren", "1-2")]["odds"])
+        self.assertEqual("2.8", by_key[("wide", "1-2")]["odds_min"])
+        self.assertEqual("24.0", by_key[("umatan", "1>2")]["odds"])
+        self.assertEqual("22.5", by_key[("sanrenpuku", "1-2-3")]["odds"])
+        self.assertEqual("82.0", by_key[("sanrentan", "1>2>3")]["odds"])
+
     def test_parse_horse_last5_maps_structured_columns(self):
         html = (FIX / "horse_history.html").read_text(encoding="utf-8")
         rows = self.parser.parse_horse_last5(

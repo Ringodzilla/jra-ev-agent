@@ -9,6 +9,7 @@ def generate_tickets(
     ev_rows: list[dict[str, object]],
     mode: str = "balanced",
     *,
+    odds_rows: list[dict[str, object]] | list[dict[str, str]] | None = None,
     bankroll_per_race: int = 1000,
     min_ev: float = 1.03,
     min_place_ev: float = 1.01,
@@ -27,6 +28,7 @@ def generate_tickets(
     by_race: dict[str, list[dict[str, object]]] = defaultdict(list)
     for row in ev_rows:
         by_race[str(row.get("race_id", ""))].append(row)
+    live_odds_by_race = _build_live_odds_lookup(list(odds_rows or []))
 
     races: list[dict[str, object]] = []
     flat_tickets: list[dict[str, object]] = []
@@ -45,28 +47,32 @@ def generate_tickets(
             reverse=True,
         )
         enriched = _enrich_rows_for_multi_bet(ranked)
+        live_odds = live_odds_by_race.get(race_id, {})
         win_candidates = [
             row
             for row in enriched
-            if _to_float(row.get("ev")) >= min_ev and _to_float(row.get("current_odds")) > 0
+            if _win_candidate_ev(row, live_odds) >= min_ev and _live_or_current_win_odds(row, live_odds) > 0
         ]
         place_candidates = _build_place_candidates(
             enriched,
             bankroll_per_race=bankroll_per_race,
             min_place_ev=min_place_ev,
             kelly_fraction=kelly_fraction,
+            live_odds=live_odds,
         )
         wide_candidates = _build_wide_candidates(
             enriched,
             bankroll_per_race=bankroll_per_race,
             min_wide_ev=min_wide_ev,
             kelly_fraction=kelly_fraction,
+            live_odds=live_odds,
         )
         wakuren_candidates = _build_wakuren_candidates(
             enriched,
             bankroll_per_race=bankroll_per_race,
             min_wakuren_ev=min_wakuren_ev,
             kelly_fraction=kelly_fraction,
+            live_odds=live_odds,
         )
         exotic_candidates = _build_exotic_candidates(
             enriched,
@@ -76,12 +82,21 @@ def generate_tickets(
             min_sanrenpuku_ev=min_sanrenpuku_ev,
             min_sanrentan_ev=min_sanrentan_ev,
             kelly_fraction=kelly_fraction,
+            live_odds=live_odds,
         )
 
         win_tickets = [
             ticket
             for row in win_candidates[:per_race_limit]
-            if (ticket := _build_win_ticket(row, bankroll_per_race=bankroll_per_race, kelly_fraction=kelly_fraction)) is not None
+            if (
+                ticket := _build_win_ticket(
+                    row,
+                    bankroll_per_race=bankroll_per_race,
+                    kelly_fraction=kelly_fraction,
+                    live_odds=live_odds,
+                )
+            )
+            is not None
         ]
 
         candidate_pool = _rank_ticket_pool(
@@ -195,10 +210,12 @@ def _build_win_ticket(
     *,
     bankroll_per_race: int,
     kelly_fraction: float,
+    live_odds: dict[tuple[str, str], dict[str, object]] | None = None,
 ) -> dict[str, object] | None:
     prob = _to_float(row.get("win_prob"))
-    odds = _to_float(row.get("current_odds"))
-    ev = _to_float(row.get("ev"))
+    live = _lookup_live_odds(live_odds or {}, "win", [str(row.get("horse_number", ""))])
+    odds = _live_odds_value(live) or _to_float(row.get("current_odds"))
+    ev = prob * odds if odds > 0 else _to_float(row.get("ev"))
     if prob <= 0 or odds <= 1.0 or ev <= 1.0:
         return None
 
@@ -220,12 +237,13 @@ def _build_win_ticket(
         "win_prob": _fmt(prob),
         "win_odds": _fmt(odds),
         "ev": _fmt(ev),
-        "ev_current": str(row.get("ev_current", row.get("ev", ""))),
+        "ev_current": _fmt(ev),
         "ev_predicted": str(row.get("ev_predicted", "")),
         "fair_odds": str(row.get("fair_odds", "")),
         "model_score": str(row.get("model_score", "")),
         "predicted_odds": str(row.get("predicted_odds", "")),
-        "predicted_odds_source": str(row.get("predicted_odds_source", "")),
+        "predicted_odds_source": "jra_live" if live else str(row.get("predicted_odds_source", "")),
+        "odds_source": "jra_live" if live else "entry",
     }
 
 
@@ -235,6 +253,7 @@ def _build_place_candidates(
     bankroll_per_race: int,
     min_place_ev: float,
     kelly_fraction: float,
+    live_odds: dict[tuple[str, str], dict[str, object]],
 ) -> list[dict[str, object]]:
     tickets: list[dict[str, object]] = []
     for row in rows:
@@ -243,6 +262,7 @@ def _build_place_candidates(
             bankroll_per_race=bankroll_per_race,
             kelly_fraction=min(0.42, kelly_fraction + 0.05),
             min_place_ev=min_place_ev,
+            live_odds=live_odds,
         )
         if ticket is not None:
             tickets.append(ticket)
@@ -264,13 +284,15 @@ def _build_place_ticket(
     bankroll_per_race: int,
     kelly_fraction: float,
     min_place_ev: float,
+    live_odds: dict[tuple[str, str], dict[str, object]],
 ) -> dict[str, object] | None:
     place_prob = _to_float(row.get("place_prob"))
     market_place_prob = _to_float(row.get("market_place_prob"))
     if place_prob < 0.16 or market_place_prob <= 0:
         return None
 
-    current_odds_est = _estimate_place_odds(market_place_prob)
+    live = _lookup_live_odds(live_odds, "place", [str(row.get("horse_number", ""))])
+    current_odds_est = _live_odds_value(live) or _estimate_place_odds(market_place_prob)
     predicted_odds_est = _estimate_predicted_combo_odds([row], current_odds_est=current_odds_est, max_odds=18.0)
     ev_current = place_prob * current_odds_est if current_odds_est > 0 else 0.0
     ev_predicted = place_prob * predicted_odds_est if predicted_odds_est > 0 else 0.0
@@ -302,13 +324,16 @@ def _build_place_ticket(
         "win_prob": str(row.get("win_prob", "")),
         "win_odds": _fmt(current_odds_est),
         "place_odds_est": _fmt(current_odds_est),
+        "place_odds_min": str(live.get("odds_min", "")) if live else "",
+        "place_odds_max": str(live.get("odds_max", "")) if live else "",
         "predicted_odds": _fmt(predicted_odds_est),
         "ev": _fmt(ev_current),
         "ev_current": _fmt(ev_current),
         "ev_predicted": _fmt(ev_predicted),
         "fair_odds": str(row.get("place_fair_odds", "")),
         "model_score": str(row.get("model_score", "")),
-        "predicted_odds_source": "place_estimated",
+        "predicted_odds_source": "jra_live" if live else "place_estimated",
+        "odds_source": "jra_live" if live else "estimated",
         "confidence": _fmt(confidence),
         "legs": [
             {
@@ -328,6 +353,7 @@ def _build_wide_candidates(
     bankroll_per_race: int,
     min_wide_ev: float,
     kelly_fraction: float,
+    live_odds: dict[tuple[str, str], dict[str, object]],
 ) -> list[dict[str, object]]:
     if len(rows) < 2:
         return []
@@ -353,6 +379,7 @@ def _build_wide_candidates(
                 bankroll_per_race=bankroll_per_race,
                 kelly_fraction=kelly_fraction,
                 min_wide_ev=min_wide_ev,
+                live_odds=live_odds,
             )
             if ticket is not None:
                 pairs.append(ticket)
@@ -376,10 +403,13 @@ def _build_wide_ticket(
     bankroll_per_race: int,
     kelly_fraction: float,
     min_wide_ev: float,
+    live_odds: dict[tuple[str, str], dict[str, object]],
 ) -> dict[str, object] | None:
     pair_prob = _estimate_pair_hit_prob(left, right, field_size=field_size)
     market_pair_prob = _estimate_market_pair_prob(left, right, field_size=field_size)
-    current_odds_est = _estimate_market_pair_odds(market_pair_prob)
+    horse_numbers = [str(left.get("horse_number", "")), str(right.get("horse_number", ""))]
+    live = _lookup_live_odds(live_odds, "wide", horse_numbers)
+    current_odds_est = _live_odds_value(live) or _estimate_market_pair_odds(market_pair_prob)
     predicted_odds_est = _estimate_predicted_pair_odds(left, right, current_odds_est=current_odds_est)
     ev_current = pair_prob * current_odds_est if current_odds_est > 0 else 0.0
     ev_predicted = pair_prob * predicted_odds_est if predicted_odds_est > 0 else 0.0
@@ -400,7 +430,6 @@ def _build_wide_ticket(
 
     horse_ids = [str(left.get("horse_id", "")), str(right.get("horse_id", ""))]
     horse_names = [str(left.get("horse_name", "")), str(right.get("horse_name", ""))]
-    horse_numbers = [str(left.get("horse_number", "")), str(right.get("horse_number", ""))]
     confidence = (pair_prob / max(market_pair_prob, 1e-6)) if market_pair_prob > 0 else 0.0
 
     return {
@@ -419,12 +448,15 @@ def _build_wide_ticket(
         "wide_prob_market": _fmt(market_pair_prob),
         "win_odds": _fmt(current_odds_est),
         "wide_odds_est": _fmt(current_odds_est),
+        "wide_odds_min": str(live.get("odds_min", "")) if live else "",
+        "wide_odds_max": str(live.get("odds_max", "")) if live else "",
         "predicted_odds": _fmt(predicted_odds_est),
         "predicted_wide_odds": _fmt(predicted_odds_est),
         "ev": _fmt(ev_current),
         "ev_current": _fmt(ev_current),
         "ev_predicted": _fmt(ev_predicted),
-        "predicted_odds_source": "pair_estimated",
+        "predicted_odds_source": "jra_live" if live else "pair_estimated",
+        "odds_source": "jra_live" if live else "estimated",
         "confidence": _fmt(confidence),
         "legs": [
             {
@@ -451,6 +483,7 @@ def _build_wakuren_candidates(
     bankroll_per_race: int,
     min_wakuren_ev: float,
     kelly_fraction: float,
+    live_odds: dict[tuple[str, str], dict[str, object]],
 ) -> list[dict[str, object]]:
     if len(rows) < 2:
         return []
@@ -465,7 +498,10 @@ def _build_wakuren_candidates(
         normalized["frame_number"] = frame_number
         by_frame[frame_number].append(normalized)
 
-    if len(by_frame) < 2 and all(len(frame_rows) < 2 for frame_rows in by_frame.values()):
+    has_multi_horse_frame = any(len(frame_rows) >= 2 for frame_rows in by_frame.values())
+    if field_size < 9 and not has_multi_horse_frame:
+        return []
+    if len(by_frame) < 2 and not has_multi_horse_frame:
         return []
 
     frame_numbers = sorted(by_frame.keys(), key=_frame_sort_key)
@@ -482,6 +518,7 @@ def _build_wakuren_candidates(
                 bankroll_per_race=bankroll_per_race,
                 kelly_fraction=min(kelly_fraction, 0.24),
                 min_wakuren_ev=min_wakuren_ev,
+                live_odds=live_odds,
             )
             if ticket is not None:
                 tickets.append(ticket)
@@ -506,13 +543,16 @@ def _build_wakuren_ticket(
     bankroll_per_race: int,
     kelly_fraction: float,
     min_wakuren_ev: float,
+    live_odds: dict[tuple[str, str], dict[str, object]],
 ) -> dict[str, object] | None:
     hit_prob = _frame_combo_hit_prob(left_rows, right_rows, same_frame=left_frame == right_frame, key="win_prob")
     market_prob = _frame_combo_hit_prob(left_rows, right_rows, same_frame=left_frame == right_frame, key="market_prob")
     if hit_prob < 0.035 or market_prob <= 0:
         return None
 
-    current_odds_est = _estimate_exotic_odds(market_prob, payout_rate=0.775, max_odds=150.0)
+    frame_numbers = [left_frame, right_frame]
+    live = _lookup_live_odds(live_odds, "wakuren", frame_numbers)
+    current_odds_est = _live_odds_value(live) or _estimate_exotic_odds(market_prob, payout_rate=0.775, max_odds=150.0)
     prediction_rows = left_rows if left_frame == right_frame else left_rows + right_rows
     predicted_odds_est = _estimate_predicted_combo_odds(
         prediction_rows,
@@ -535,7 +575,6 @@ def _build_wakuren_ticket(
     if stake <= 0:
         return None
 
-    frame_numbers = [left_frame, right_frame]
     confidence = (hit_prob / max(market_prob, 1e-6)) if market_prob > 0 else 0.0
     return {
         "race_id": str((left_rows or right_rows)[0].get("race_id", "")),
@@ -555,7 +594,8 @@ def _build_wakuren_ticket(
         "ev": _fmt(ev_current),
         "ev_current": _fmt(ev_current),
         "ev_predicted": _fmt(ev_predicted),
-        "predicted_odds_source": "wakuren_estimated",
+        "predicted_odds_source": "jra_live" if live else "wakuren_estimated",
+        "odds_source": "jra_live" if live else "estimated",
         "confidence": _fmt(confidence),
         "legs": [
             {
@@ -579,6 +619,7 @@ def _build_exotic_candidates(
     min_sanrenpuku_ev: float,
     min_sanrentan_ev: float,
     kelly_fraction: float,
+    live_odds: dict[tuple[str, str], dict[str, object]],
 ) -> list[dict[str, object]]:
     if len(rows) < 2:
         return []
@@ -605,6 +646,7 @@ def _build_exotic_candidates(
             min_ev=min_umaren_ev,
             min_prob=0.035,
             max_fraction=0.20,
+            live_odds=live_odds,
         )
         if ticket is not None:
             candidates.append(ticket)
@@ -620,6 +662,7 @@ def _build_exotic_candidates(
             min_ev=min_umatan_ev,
             min_prob=0.018,
             max_fraction=0.16,
+            live_odds=live_odds,
         )
         if ticket is not None:
             candidates.append(ticket)
@@ -636,6 +679,7 @@ def _build_exotic_candidates(
                 min_ev=min_sanrenpuku_ev,
                 min_prob=0.018,
                 max_fraction=0.14,
+                live_odds=live_odds,
             )
             if ticket is not None:
                 candidates.append(ticket)
@@ -652,6 +696,7 @@ def _build_exotic_candidates(
                 min_ev=min_sanrentan_ev,
                 min_prob=0.006,
                 max_fraction=0.10,
+                live_odds=live_odds,
             )
             if ticket is not None:
                 candidates.append(ticket)
@@ -679,13 +724,16 @@ def _build_exotic_ticket(
     min_ev: float,
     min_prob: float,
     max_fraction: float,
+    live_odds: dict[tuple[str, str], dict[str, object]],
 ) -> dict[str, object] | None:
     hit_prob = _combo_hit_prob(combo_rows, key="win_prob", bet_type=bet_type)
     market_prob = _combo_hit_prob(combo_rows, key="market_prob", bet_type=bet_type)
     if hit_prob < min_prob or market_prob <= 0:
         return None
 
-    current_odds_est = _estimate_exotic_odds(market_prob, payout_rate=payout_rate, max_odds=max_odds)
+    horse_numbers = [str(row.get("horse_number", "")) for row in combo_rows]
+    live = _lookup_live_odds(live_odds, bet_type, horse_numbers)
+    current_odds_est = _live_odds_value(live) or _estimate_exotic_odds(market_prob, payout_rate=payout_rate, max_odds=max_odds)
     predicted_odds_est = _estimate_predicted_combo_odds(combo_rows, current_odds_est=current_odds_est, max_odds=max_odds)
     ev_current = hit_prob * current_odds_est if current_odds_est > 0 else 0.0
     ev_predicted = hit_prob * predicted_odds_est if predicted_odds_est > 0 else 0.0
@@ -705,7 +753,6 @@ def _build_exotic_ticket(
 
     horse_ids = [str(row.get("horse_id", "")) for row in combo_rows]
     horse_names = [str(row.get("horse_name", "")) for row in combo_rows]
-    horse_numbers = [str(row.get("horse_number", "")) for row in combo_rows]
     confidence = (hit_prob / max(market_prob, 1e-6)) if market_prob > 0 else 0.0
     odds_key = {
         "umaren": "umaren_odds_est",
@@ -734,7 +781,8 @@ def _build_exotic_ticket(
         "ev": _fmt(ev_current),
         "ev_current": _fmt(ev_current),
         "ev_predicted": _fmt(ev_predicted),
-        "predicted_odds_source": f"{bet_type}_estimated",
+        "predicted_odds_source": "jra_live" if live else f"{bet_type}_estimated",
+        "odds_source": "jra_live" if live else "estimated",
         "confidence": _fmt(confidence),
         "legs": [
             {
@@ -1155,6 +1203,66 @@ def _labels_for_type(tickets: list[dict[str, object]], bet_type: str) -> list[st
         for ticket in tickets
         if str(ticket.get("bet_type", "")) == bet_type and _ticket_combo_label(ticket)
     ]
+
+
+def _build_live_odds_lookup(
+    odds_rows: list[dict[str, object]] | list[dict[str, str]],
+) -> dict[str, dict[tuple[str, str], dict[str, object]]]:
+    by_race: dict[str, dict[tuple[str, str], dict[str, object]]] = defaultdict(dict)
+    for row in odds_rows:
+        race_id = str(row.get("race_id", "")).strip()
+        bet_type = str(row.get("bet_type", "")).strip()
+        combination = str(row.get("combination", "")).strip()
+        if not race_id or not bet_type or not combination:
+            continue
+        key = (bet_type, combination)
+        current = by_race[race_id].get(key)
+        if current and str(current.get("captured_at", "")) > str(row.get("captured_at", "")):
+            continue
+        by_race[race_id][key] = dict(row)
+    return by_race
+
+
+def _lookup_live_odds(
+    live_odds: dict[tuple[str, str], dict[str, object]],
+    bet_type: str,
+    values: list[str],
+) -> dict[str, object]:
+    key = (bet_type, _live_combo_key(bet_type, values))
+    return dict(live_odds.get(key) or {})
+
+
+def _live_combo_key(bet_type: str, values: list[str]) -> str:
+    cleaned = [str(int(_to_float(value))) for value in values if _to_float(value) > 0]
+    if not cleaned:
+        return ""
+    if bet_type in {"umatan", "sanrentan"}:
+        return ">".join(cleaned)
+    if bet_type in {"wide", "wakuren", "umaren", "sanrenpuku"}:
+        return "-".join(sorted(cleaned, key=lambda item: int(item)))
+    return cleaned[0]
+
+
+def _live_odds_value(row: dict[str, object]) -> float:
+    if not row:
+        return 0.0
+    return _to_float(row.get("odds_min") or row.get("odds"))
+
+
+def _live_or_current_win_odds(
+    row: dict[str, object],
+    live_odds: dict[tuple[str, str], dict[str, object]],
+) -> float:
+    live = _lookup_live_odds(live_odds, "win", [str(row.get("horse_number", ""))])
+    return _live_odds_value(live) or _to_float(row.get("current_odds"))
+
+
+def _win_candidate_ev(
+    row: dict[str, object],
+    live_odds: dict[tuple[str, str], dict[str, object]],
+) -> float:
+    odds = _live_or_current_win_odds(row, live_odds)
+    return _to_float(row.get("win_prob")) * odds if odds > 0 else _to_float(row.get("ev"))
 
 
 def _frame_combo_hit_prob(

@@ -68,6 +68,63 @@ class JRAParser:
     def __init__(self, base_url: str) -> None:
         self.base_url = base_url
 
+    def extract_initial_odds_cname(self, html: str) -> str:
+        """Return the race-level win/place odds CNAME from a race detail page."""
+        candidates = self.extract_odds_cnames(html)
+        if candidates.get("win_place"):
+            return candidates["win_place"]
+        for cname in _extract_access_o_cnames(html):
+            if "ouS" in cname:
+                return cname
+        return ""
+
+    def extract_odds_cnames(self, html: str) -> dict[str, str]:
+        soup = BeautifulSoup(html, "html.parser")
+        out: dict[str, str] = {}
+        label_map = {
+            "単勝・複勝": "win_place",
+            "単勝複勝": "win_place",
+            "枠連": "wakuren",
+            "馬連": "umaren",
+            "ワイド": "wide",
+            "馬単": "umatan",
+            "3連複": "sanrenpuku",
+            "３連複": "sanrenpuku",
+            "三連複": "sanrenpuku",
+            "3連単": "sanrentan",
+            "３連単": "sanrentan",
+            "三連単": "sanrentan",
+        }
+        for anchor in soup.select('a[onclick*="/JRADB/accessO.html"]'):
+            onclick = anchor.get("onclick") or ""
+            cname = _extract_cname_from_onclick(onclick)
+            if not cname:
+                continue
+            label = self._norm(anchor.get_text(" ", strip=True)).replace(" ", "")
+            key = label_map.get(label)
+            if key and key not in out:
+                out[key] = cname
+        return out
+
+    def parse_odds_page(
+        self,
+        html: str,
+        *,
+        race_id: str,
+        source_cname: str = "",
+        captured_at: str = "",
+    ) -> list[dict[str, str]]:
+        soup = BeautifulSoup(html, "html.parser")
+        rows: list[dict[str, str]] = []
+        rows.extend(self._parse_win_place_odds(soup, race_id=race_id, source_cname=source_cname, captured_at=captured_at))
+        rows.extend(self._parse_matrix_odds(soup, "wakuren", "waku", race_id, source_cname, captured_at))
+        rows.extend(self._parse_matrix_odds(soup, "umaren", "umaren", race_id, source_cname, captured_at))
+        rows.extend(self._parse_matrix_odds(soup, "wide", "wide", race_id, source_cname, captured_at, odds_range=True))
+        rows.extend(self._parse_matrix_odds(soup, "umatan", "umatan", race_id, source_cname, captured_at, ordered=True))
+        rows.extend(self._parse_matrix_odds(soup, "sanrenpuku", "fuku3", race_id, source_cname, captured_at, caption_pair=True))
+        rows.extend(self._parse_trifecta_odds(soup, race_id=race_id, source_cname=source_cname, captured_at=captured_at))
+        return rows
+
     def parse_race_list(self, html: str) -> list[RaceLink]:
         soup = BeautifulSoup(html, "html.parser")
         links: list[RaceLink] = []
@@ -302,6 +359,144 @@ class JRAParser:
             out.append(row)
 
         return out
+
+    def _parse_win_place_odds(
+        self,
+        soup: BeautifulSoup,
+        *,
+        race_id: str,
+        source_cname: str,
+        captured_at: str,
+    ) -> list[dict[str, str]]:
+        rows: list[dict[str, str]] = []
+        for table in soup.select("table"):
+            if not table.select_one("td.odds_tan") and not table.select_one("td.odds_fuku"):
+                continue
+            for tr in table.select("tbody tr"):
+                horse_number = self._cell_text(tr.select_one("td.num"))
+                if not horse_number:
+                    continue
+                win_odds = self._normalize_decimal_like(self._cell_text(tr.select_one("td.odds_tan")))
+                if win_odds:
+                    rows.append(
+                        _odds_row(
+                            race_id=race_id,
+                            bet_type="win",
+                            combination=horse_number,
+                            odds=win_odds,
+                            captured_at=captured_at,
+                            source_cname=source_cname,
+                        )
+                    )
+
+                place_text = self._cell_text(tr.select_one("td.odds_fuku"))
+                place_min, place_max = _parse_odds_range(place_text)
+                if place_min:
+                    rows.append(
+                        _odds_row(
+                            race_id=race_id,
+                            bet_type="place",
+                            combination=horse_number,
+                            odds=place_min,
+                            odds_min=place_min,
+                            odds_max=place_max,
+                            captured_at=captured_at,
+                            source_cname=source_cname,
+                        )
+                    )
+        return rows
+
+    def _parse_matrix_odds(
+        self,
+        soup: BeautifulSoup,
+        bet_type: str,
+        table_class: str,
+        race_id: str,
+        source_cname: str,
+        captured_at: str,
+        *,
+        ordered: bool = False,
+        caption_pair: bool = False,
+        odds_range: bool = False,
+    ) -> list[dict[str, str]]:
+        rows: list[dict[str, str]] = []
+        for table in soup.select(f"table.{table_class}"):
+            caption_numbers = _number_tokens(table.select_one("caption").get_text(" ", strip=True) if table.select_one("caption") else "")
+            if not caption_numbers:
+                caption_class = " ".join(table.select_one("caption").get("class", [])) if table.select_one("caption") else ""
+                caption_numbers = _number_tokens(caption_class)
+            if not caption_numbers:
+                continue
+
+            for tr in table.select("tbody tr"):
+                row_number = self._cell_text(tr.select_one("th"))
+                row_numbers = _number_tokens(row_number)
+                if not row_numbers:
+                    continue
+                odds_text = self._cell_text(tr.select_one("td"))
+                odds_min, odds_max = _parse_odds_range(odds_text)
+                if not odds_min:
+                    continue
+
+                numbers = caption_numbers + [row_numbers[0]]
+                if caption_pair and len(numbers) != 3:
+                    continue
+                if not ordered:
+                    numbers = sorted(numbers, key=lambda item: int(item))
+                separator = ">" if ordered else "-"
+                rows.append(
+                    _odds_row(
+                        race_id=race_id,
+                        bet_type=bet_type,
+                        combination=separator.join(numbers),
+                        odds=odds_min,
+                        odds_min=odds_min if odds_range else "",
+                        odds_max=odds_max if odds_range else "",
+                        captured_at=captured_at,
+                        source_cname=source_cname,
+                    )
+                )
+        return rows
+
+    def _parse_trifecta_odds(
+        self,
+        soup: BeautifulSoup,
+        *,
+        race_id: str,
+        source_cname: str,
+        captured_at: str,
+    ) -> list[dict[str, str]]:
+        rows: list[dict[str, str]] = []
+        for table in soup.select("table.tan3"):
+            parent = table.parent
+            first_two: list[str] = []
+            if parent is not None:
+                for line in parent.select(":scope > div.p_line"):
+                    number = self._cell_text(line.select_one(".num"))
+                    if number:
+                        first_two.append(number)
+            if len(first_two) != 2:
+                continue
+            for tr in table.select("tbody tr"):
+                third = self._cell_text(tr.select_one("th"))
+                third_numbers = _number_tokens(third)
+                if not third_numbers:
+                    continue
+                odds = self._normalize_decimal_like(self._cell_text(tr.select_one("td")))
+                if not odds:
+                    continue
+                numbers = first_two + [third_numbers[0]]
+                rows.append(
+                    _odds_row(
+                        race_id=race_id,
+                        bet_type="sanrentan",
+                        combination=">".join(numbers),
+                        odds=odds,
+                        captured_at=captured_at,
+                        source_cname=source_cname,
+                    )
+                )
+        return rows
 
     def _select_entry_table(self, soup: BeautifulSoup):
         best_table = None
@@ -811,6 +1006,12 @@ class JRAParser:
         return JRAParser._norm(child.get_text(" ", strip=True))
 
     @staticmethod
+    def _cell_text(node) -> str:
+        if node is None:
+            return ""
+        return JRAParser._norm(node.get_text(" ", strip=True).replace("\xa0", " "))
+
+    @staticmethod
     def _extract_last_3f_value(value: str) -> str:
         matches = re.findall(r"\d+(?:\.\d+)?", value)
         return matches[-1] if matches else ""
@@ -840,3 +1041,52 @@ class JRAParser:
                 context=context,
             )
         )
+
+
+def _extract_access_o_cnames(html: str) -> list[str]:
+    return [
+        cname
+        for onclick in re.findall(r"doAction\('/JRADB/accessO\.html',\s*'([^']+)'\)", html)
+        if (cname := onclick.strip())
+    ]
+
+
+def _extract_cname_from_onclick(value: str) -> str:
+    match = re.search(r"doAction\('/JRADB/accessO\.html',\s*'([^']+)'\)", value)
+    return match.group(1).strip() if match else ""
+
+
+def _number_tokens(value: str) -> list[str]:
+    return [str(int(token)) for token in re.findall(r"\d+", value or "")]
+
+
+def _parse_odds_range(value: str) -> tuple[str, str]:
+    numbers = re.findall(r"\d+(?:\.\d+)?", value or "")
+    if not numbers:
+        return "", ""
+    if len(numbers) == 1:
+        return numbers[0], ""
+    return numbers[0], numbers[1]
+
+
+def _odds_row(
+    *,
+    race_id: str,
+    bet_type: str,
+    combination: str,
+    odds: str,
+    captured_at: str,
+    source_cname: str,
+    odds_min: str = "",
+    odds_max: str = "",
+) -> dict[str, str]:
+    return {
+        "race_id": race_id,
+        "bet_type": bet_type,
+        "combination": combination,
+        "odds": odds,
+        "odds_min": odds_min,
+        "odds_max": odds_max,
+        "captured_at": captured_at,
+        "source_cname": source_cname,
+    }

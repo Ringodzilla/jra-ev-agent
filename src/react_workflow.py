@@ -71,6 +71,7 @@ class DataCollectorAgent:
             "rows": rows,
             "entries": _read_csv(self.config.entries_csv),
             "odds_snapshots": _read_csv(self.config.odds_snapshots_csv),
+            "combo_odds": _read_csv(self.config.combo_odds_csv),
             "quality_report": _read_json(self.config.quality_report_path),
         }
 
@@ -112,9 +113,15 @@ class BetBuilderAgent:
     def __init__(self, settings: WorkflowSettings) -> None:
         self.settings = settings
 
-    def run(self, ev_rows: list[dict[str, object]]) -> dict[str, object]:
+    def run(
+        self,
+        ev_rows: list[dict[str, object]],
+        *,
+        combo_odds: list[dict[str, object]] | list[dict[str, str]] | None = None,
+    ) -> dict[str, object]:
         return generate_tickets(
             ev_rows,
+            odds_rows=list(combo_odds or []),
             mode=self.settings.mode,
             bankroll_per_race=self.settings.bankroll_per_race,
             min_ev=self.settings.min_ev,
@@ -307,7 +314,10 @@ class ReactiveRaceWorkflow:
             )
             simulated = self.simulator.run(list(analyzed.get("feature_rows") or []))
             calculated = self.ev_calculator.run(list(simulated.get("scenario_rows") or []))
-            bet_plan = self.bet_builder.run(list(calculated.get("ev_rows") or []))
+            bet_plan = self.bet_builder.run(
+                list(calculated.get("ev_rows") or []),
+                combo_odds=list(collected.get("combo_odds") or []),
+            )
             review = self.reviewer.run(
                 collected,
                 list(simulated.get("scenario_rows") or []),

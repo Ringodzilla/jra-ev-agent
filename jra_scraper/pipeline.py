@@ -24,6 +24,17 @@ LIVE_ODDS_SNAPSHOT_COLUMNS = [
     "captured_at",
 ]
 
+LIVE_COMBO_ODDS_COLUMNS = [
+    "race_id",
+    "bet_type",
+    "combination",
+    "odds",
+    "odds_min",
+    "odds_max",
+    "captured_at",
+    "source_cname",
+]
+
 
 logger = logging.getLogger(__name__)
 
@@ -64,6 +75,7 @@ class JRAPipeline:
         processed_races = set(state.get("processed_race_ids", []))
         failures = state.get("failures", {})
         all_new_rows: list[dict[str, str]] = []
+        all_combo_odds_rows: list[dict[str, str]] = []
         processed_this_run: list[str] = []
         issues: list[ParserIssue] = []
 
@@ -115,6 +127,14 @@ class JRAPipeline:
                 logger.warning("Skip race due to parse failure race_id=%s err=%s", race.race_id, exc)
                 continue
 
+            combo_odds_rows = self._fetch_combo_odds_rows(
+                race,
+                race_html,
+                reprocess_raw=reprocess_raw,
+                issues=issues,
+            )
+            all_combo_odds_rows.extend(combo_odds_rows)
+
             if horse_limit is not None:
                 horses = horses[:horse_limit]
             logger.info("Race=%s horses=%d", race.race_id, len(horses))
@@ -163,6 +183,7 @@ class JRAPipeline:
         self._write_csv(final_rows, self.config.output_csv, OUTPUT_COLUMNS)
         self._write_csv(entry_rows, self.config.entries_csv, ENTRY_COLUMNS)
         append_live_odds_snapshots(self.config.odds_snapshots_csv, entry_rows)
+        append_live_combo_odds(self.config.combo_odds_csv, all_combo_odds_rows)
         self._save_state(processed_races, failures, len(processed_this_run), len(all_new_rows))
         self._write_quality_report(issues, entry_rows)
 
@@ -269,6 +290,7 @@ class JRAPipeline:
         severity_counts = Counter(issue.severity for issue in issues)
         code_counts = Counter(issue.code for issue in issues)
         snapshot_rows = self._read_existing_rows(self.config.odds_snapshots_csv)
+        combo_odds_rows = self._read_existing_rows(self.config.combo_odds_csv)
         payload = {
             "generated_at": datetime.now(timezone.utc).isoformat(),
             "issue_count": len(issues),
@@ -278,6 +300,7 @@ class JRAPipeline:
             "missing_current_odds_entries": sum(1 for row in entry_rows if not row.get("current_odds")),
             "entry_count": len(entry_rows),
             "live_snapshot_count": len(snapshot_rows),
+            "live_combo_odds_count": len(combo_odds_rows),
             "issues": [issue.to_dict() for issue in issues],
         }
         with self.config.quality_report_path.open("w", encoding="utf-8") as file_obj:
@@ -315,6 +338,69 @@ class JRAPipeline:
     @staticmethod
     def _build_direct_race_id(race_url: str) -> str:
         return f"direct_{hashlib.md5(race_url.encode('utf-8')).hexdigest()[:12]}"
+
+    def _fetch_combo_odds_rows(
+        self,
+        race: RaceLink,
+        race_html: str,
+        *,
+        reprocess_raw: bool,
+        issues: list[ParserIssue],
+    ) -> list[dict[str, str]]:
+        captured_at = datetime.now(timezone.utc).isoformat()
+        initial_cname = self.parser.extract_initial_odds_cname(race_html)
+        if not initial_cname:
+            return []
+
+        odds_url = f"{self.config.base_url}/JRADB/accessO.html"
+        first_html = self.scraper.fetch_post(
+            odds_url,
+            {"CNAME": initial_cname},
+            raw_name=f"odds_{safe_filename(race.race_id)}_win_place.html",
+            use_cache=True,
+            cache_only=reprocess_raw,
+        )
+        if not first_html:
+            issues.append(
+                ParserIssue(
+                    stage="pipeline.odds",
+                    severity="low",
+                    code="odds_page_unavailable",
+                    message="Could not fetch the JRA odds page.",
+                    context={"race_id": race.race_id, "cname": initial_cname},
+                )
+            )
+            return []
+
+        rows = self.parser.parse_odds_page(
+            first_html,
+            race_id=race.race_id,
+            source_cname=initial_cname,
+            captured_at=captured_at,
+        )
+        cnames = self.parser.extract_odds_cnames(first_html)
+        cnames.setdefault("win_place", initial_cname)
+        for bet_type, cname in sorted(cnames.items()):
+            if cname == initial_cname:
+                continue
+            html = self.scraper.fetch_post(
+                odds_url,
+                {"CNAME": cname},
+                raw_name=f"odds_{safe_filename(race.race_id)}_{bet_type}.html",
+                use_cache=True,
+                cache_only=reprocess_raw,
+            )
+            if not html:
+                continue
+            rows.extend(
+                self.parser.parse_odds_page(
+                    html,
+                    race_id=race.race_id,
+                    source_cname=cname,
+                    captured_at=captured_at,
+                )
+            )
+        return _dedupe_combo_odds_rows(rows)
 
 
 def append_live_odds_snapshots(
@@ -373,6 +459,68 @@ def append_live_odds_snapshots(
         for row in pending_rows:
             writer.writerow(row)
     return pending_rows
+
+
+def append_live_combo_odds(
+    combo_odds_path: Path,
+    combo_odds_rows: list[dict[str, str]],
+) -> list[dict[str, str]]:
+    if not combo_odds_rows:
+        return []
+
+    combo_odds_path.parent.mkdir(parents=True, exist_ok=True)
+    existing_keys: set[tuple[str, str, str, str]] = set()
+    if combo_odds_path.exists() and combo_odds_path.stat().st_size > 0:
+        with combo_odds_path.open("r", encoding="utf-8", newline="") as file_obj:
+            for row in csv.DictReader(file_obj):
+                existing_keys.add(
+                    (
+                        str(row.get("race_id", "")).strip(),
+                        str(row.get("bet_type", "")).strip(),
+                        str(row.get("combination", "")).strip(),
+                        str(row.get("captured_at", "")).strip(),
+                    )
+                )
+
+    pending_rows = [
+        row
+        for row in _dedupe_combo_odds_rows(combo_odds_rows)
+        if (
+            str(row.get("race_id", "")).strip(),
+            str(row.get("bet_type", "")).strip(),
+            str(row.get("combination", "")).strip(),
+            str(row.get("captured_at", "")).strip(),
+        )
+        not in existing_keys
+    ]
+    if not pending_rows:
+        return []
+
+    write_header = not combo_odds_path.exists() or combo_odds_path.stat().st_size == 0
+    with combo_odds_path.open("a", encoding="utf-8", newline="") as file_obj:
+        writer = csv.DictWriter(file_obj, fieldnames=LIVE_COMBO_ODDS_COLUMNS)
+        if write_header:
+            writer.writeheader()
+        for row in pending_rows:
+            writer.writerow({key: row.get(key, "") for key in LIVE_COMBO_ODDS_COLUMNS})
+    return pending_rows
+
+
+def _dedupe_combo_odds_rows(rows: list[dict[str, str]]) -> list[dict[str, str]]:
+    seen: set[tuple[str, str, str, str]] = set()
+    out: list[dict[str, str]] = []
+    for row in rows:
+        key = (
+            str(row.get("race_id", "")).strip(),
+            str(row.get("bet_type", "")).strip(),
+            str(row.get("combination", "")).strip(),
+            str(row.get("captured_at", "")).strip(),
+        )
+        if not all(key) or key in seen:
+            continue
+        seen.add(key)
+        out.append(row)
+    return out
 
 
 def _rows_from_embedded_history(horse) -> list[dict[str, str]]:
