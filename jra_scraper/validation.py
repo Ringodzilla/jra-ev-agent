@@ -21,6 +21,7 @@ OUTPUT_COLUMNS = [
     "target_race_number",
     "target_surface",
     "target_distance",
+    "horse_country",
     "run_index",
     "date",
     "race_name",
@@ -54,6 +55,7 @@ ENTRY_COLUMNS = [
     "target_race_number",
     "target_surface",
     "target_distance",
+    "horse_country",
     "history_count",
 ]
 
@@ -108,6 +110,7 @@ def build_entry_rows(rows: list[dict[str, str]]) -> list[dict[str, str]]:
                 "target_race_number": first["target_race_number"],
                 "target_surface": first["target_surface"],
                 "target_distance": first["target_distance"],
+                "horse_country": first["horse_country"],
                 "history_count": str(len(group_rows)),
             }
         )
@@ -132,6 +135,7 @@ def _normalize_row(row: dict[str, str]) -> dict[str, str]:
     data["target_race_date"] = _normalize_date(data["target_race_date"])
     data["target_race_number"] = _normalize_int(data["target_race_number"])
     data["target_distance"] = _normalize_int(data["target_distance"])
+    data["horse_country"] = _normalize_country_code(data["horse_country"])
     data["date"] = _normalize_date(data["date"])
     data["distance"] = _normalize_int(data["distance"])
     data["position"] = _normalize_int(data["position"])
@@ -176,6 +180,11 @@ def _normalize_float(value: str) -> str:
     if not match:
         return ""
     return f"{float(match.group(0)):.1f}".rstrip("0").rstrip(".")
+
+
+def _normalize_country_code(value: str) -> str:
+    code = re.sub(r"[^A-Za-z]", "", value or "").upper()
+    return code[:3] if code else ""
 
 
 def _normalize_time(value: str) -> str:

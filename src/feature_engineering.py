@@ -10,6 +10,7 @@ from typing import Iterable, Sequence
 DEFAULT_LAST3F = 36.0
 DEFAULT_WEIGHT = 55.0
 DEFAULT_RECENCY_WEIGHTS = (1.00, 0.85, 0.70, 0.55, 0.40)
+DOMESTIC_TRACKS = {"札幌", "函館", "福島", "新潟", "東京", "中山", "中京", "京都", "阪神", "小倉"}
 
 
 def summarize_history_rows(
@@ -150,6 +151,7 @@ def build_feature_row(
     target_surface = str(current.get("target_surface", "")).strip()
     target_distance = _to_float(current.get("target_distance"), 0.0)
     current_jockey = str(current.get("current_jockey", "")).strip()
+    horse_country = _normalize_country_code(str(current.get("horse_country", "")).strip())
     assigned_weight = _to_float(current.get("assigned_weight"), DEFAULT_WEIGHT)
     current_odds = _to_float(current.get("current_odds") or current.get("win_odds"), 0.0)
 
@@ -191,7 +193,10 @@ def build_feature_row(
 
     finish_strength = 1.0 / max(avg_finish, 1.0)
     closing_strength = max(0.0, DEFAULT_LAST3F - avg_last3f) / 3.0
-    market_support = (1.0 / current_odds) if current_odds > 0 else 0.0
+    is_overseas_race = _is_overseas_track(target_track)
+    country_value_score = _country_value_score(horse_country, is_overseas=is_overseas_race)
+    market_support_base = (1.0 / current_odds) if current_odds > 0 else 0.0
+    market_support = _clamp(market_support_base * (1.0 + country_value_score), 0.0, 1.0)
     weight_delta = assigned_weight - avg_weight
 
     ability_score = (
@@ -221,6 +226,9 @@ def build_feature_row(
         "target_race_number": str(current.get("target_race_number", "")).strip(),
         "target_surface": target_surface,
         "target_distance": _fmt_float(target_distance),
+        "horse_country": horse_country,
+        "is_overseas_race": int(is_overseas_race),
+        "country_value_score": round(country_value_score, 4),
         "history_count": int(history_count),
         "avg_finish": _fmt_float(avg_finish),
         "avg_last3f": _fmt_float(avg_last3f),
@@ -253,6 +261,7 @@ def build_feature_row(
         "weight_score": round(weight_score, 4),
         "jockey_score": round(jockey_score, 4),
         "market_support": round(market_support, 4),
+        "market_support_base": round(market_support_base, 4),
     }
 
 
@@ -409,6 +418,37 @@ def _fmt_float(value: float) -> str:
     if math.isfinite(value):
         return f"{value:.4f}".rstrip("0").rstrip(".")
     return "0"
+
+
+def _normalize_country_code(value: str) -> str:
+    normalized = "".join(ch for ch in value.upper() if "A" <= ch <= "Z")
+    return normalized[:3] if normalized else ""
+
+
+def _is_overseas_track(track: str) -> bool:
+    normalized = track.strip()
+    if not normalized:
+        return False
+    return normalized not in DOMESTIC_TRACKS
+
+
+def _country_value_score(horse_country: str, *, is_overseas: bool) -> float:
+    if not is_overseas:
+        return 0.0
+
+    if horse_country in {"JPN", "JRA", "JP"}:
+        return -0.14
+    if horse_country in {"HK"}:
+        return 0.08
+    if horse_country in {"AUS", "NZ", "GB", "IRE", "USA", "FR", "GER", "UAE", "CAN", "SAF", "ITY"}:
+        return 0.06
+    if horse_country:
+        return 0.03
+    return 0.0
+
+
+def _clamp(value: float, minimum: float, maximum: float) -> float:
+    return max(minimum, min(maximum, value))
 
 
 def _safe_int(value: str) -> int:

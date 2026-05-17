@@ -168,6 +168,35 @@ class TestNoteArticle(unittest.TestCase):
         self.assertIn("headline", article)
         self.assertEqual("【4月12日（日） 中山 9R 14:15発走｜サンプルレース】競馬予想 ダート2400m", article["title"])
 
+    def test_build_note_article_uses_ev_row_race_metadata_when_config_is_sparse(self):
+        article = build_note_article(
+            "JRAレース",
+            ev_rows=[
+                {
+                    "race_id": "r1",
+                    "horse_id": "h1",
+                    "horse_name": "A",
+                    "horse_number": "1",
+                    "target_race_date": "2026-05-17",
+                    "target_track": "東京",
+                    "target_race_number": "11",
+                    "target_surface": "芝",
+                    "target_distance": "1600",
+                    "win_prob": "0.1",
+                    "current_odds": "9.0",
+                    "ev_current": "0.9",
+                }
+            ],
+            tickets={"tickets": []},
+            review={"status": "NG", "reason": "predicted/current EV divergence detected"},
+            quality_report={"issue_count": 0, "live_snapshot_count": 0},
+            race_config={"source_url": "https://example.test/race"},
+        )
+
+        self.assertEqual("【5月17日（日） 東京 11R｜JRAレース】競馬予想 芝1600m", article["title"])
+        self.assertIn("開催日: 2026-05-17", article["markdown"])
+        self.assertIn("開催情報: 東京11R", article["markdown"])
+
     def test_generate_note_markdown_handles_wide_ticket(self):
         markdown = generate_note_markdown(
             "サンプルレース",

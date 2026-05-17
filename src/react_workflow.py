@@ -28,6 +28,9 @@ class WorkflowSettings:
 
 
 class DataCollectorAgent:
+    collector_key: str = "domestic"
+    default_aggressive_repair: bool = False
+
     def __init__(self, config: ScrapeConfig) -> None:
         self.config = config
 
@@ -41,6 +44,7 @@ class DataCollectorAgent:
         aggressive_repair: bool = False,
         reprocess_raw: bool = False,
     ) -> dict[str, object]:
+        effective_aggressive_repair = aggressive_repair or self.default_aggressive_repair
         pipeline = JRAPipeline(self.config)
         try:
             rows = pipeline.run(
@@ -48,18 +52,30 @@ class DataCollectorAgent:
                 force_rebuild=force_rebuild,
                 race_limit=race_limit,
                 horse_limit=horse_limit,
-                aggressive_repair=aggressive_repair,
+                aggressive_repair=effective_aggressive_repair,
                 reprocess_raw=reprocess_raw,
             )
         finally:
             pipeline.close()
 
         return {
+            "collector_key": self.collector_key,
+            "aggressive_repair": effective_aggressive_repair,
             "rows": rows,
             "entries": _read_csv(self.config.entries_csv),
             "odds_snapshots": _read_csv(self.config.odds_snapshots_csv),
             "quality_report": _read_json(self.config.quality_report_path),
         }
+
+
+class DomesticDataCollectorAgent(DataCollectorAgent):
+    collector_key = "domestic"
+    default_aggressive_repair = False
+
+
+class OverseasDataCollectorAgent(DataCollectorAgent):
+    collector_key = "overseas"
+    default_aggressive_repair = True
 
 
 class AnalyzerAgent:
@@ -217,6 +233,19 @@ class ArticleWriterAgent:
 
 
 class ReactiveRaceWorkflow:
+    OVERSEAS_URL_MARKERS = ("/JRADB/accessSD.html", "/JRADB/accessSO.html", "/JRADB/accessSK.html")
+    OVERSEAS_TRACK_MARKERS = (
+        "シャティン",
+        "香港",
+        "HK",
+        "メイダン",
+        "ドバイ",
+        "ロンシャン",
+        "アスコット",
+        "チャーチル",
+        "海外",
+    )
+
     def __init__(
         self,
         config: ScrapeConfig | None = None,
@@ -227,7 +256,8 @@ class ReactiveRaceWorkflow:
         self.config = config or ScrapeConfig()
         self.config.ensure_dirs()
         self.settings = settings or WorkflowSettings()
-        self.collector = DataCollectorAgent(self.config)
+        self.domestic_collector = DomesticDataCollectorAgent(self.config)
+        self.overseas_collector = OverseasDataCollectorAgent(self.config)
         self.analyzer = AnalyzerAgent()
         self.simulator = SimulatorAgent()
         self.ev_calculator = EVCalculatorAgent(weights=weights)
@@ -245,10 +275,11 @@ class ReactiveRaceWorkflow:
         reprocess_raw: bool = False,
     ) -> dict[str, object]:
         final_payload: dict[str, object] = {}
+        collector = self._select_collector(race_configs)
 
         for attempt in range(self.settings.max_repair_attempts + 1):
             aggressive_repair = attempt > 0
-            collected = self.collector.run(
+            collected = collector.run(
                 race_configs,
                 force_rebuild=force_rebuild or aggressive_repair,
                 race_limit=race_limit,
@@ -295,6 +326,42 @@ class ReactiveRaceWorkflow:
                 break
 
         return final_payload
+
+    @classmethod
+    def resolve_collector_key(cls, race_configs: list[dict[str, object]]) -> str:
+        if not race_configs:
+            return "domestic"
+
+        explicit_modes = {
+            str(cfg.get("collector_mode", "")).strip().lower()
+            for cfg in race_configs
+            if str(cfg.get("collector_mode", "")).strip()
+        }
+        if "overseas" in explicit_modes:
+            return "overseas"
+        if "domestic" in explicit_modes:
+            return "domestic"
+
+        for cfg in race_configs:
+            source_url = str(cfg.get("source_url", "")).strip()
+            if any(marker in source_url for marker in cls.OVERSEAS_URL_MARKERS):
+                return "overseas"
+
+            track = str(cfg.get("track", "")).strip()
+            if any(marker in track for marker in cls.OVERSEAS_TRACK_MARKERS):
+                return "overseas"
+
+            race_name = str(cfg.get("race_name", "")).strip()
+            if any(marker in race_name for marker in cls.OVERSEAS_TRACK_MARKERS):
+                return "overseas"
+
+        return "domestic"
+
+    def _select_collector(self, race_configs: list[dict[str, object]]) -> DataCollectorAgent:
+        key = self.resolve_collector_key(race_configs)
+        if key == "overseas":
+            return self.overseas_collector
+        return self.domestic_collector
 
     def _write_stage_outputs(self, payload: dict[str, object]) -> None:
         stage_map = {

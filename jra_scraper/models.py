@@ -45,4 +45,5 @@ class HorseEntry:
     target_race_number: str = ""
     target_surface: str = ""
     target_distance: str = ""
+    horse_country: str = ""
     embedded_history: list[dict[str, str]] = field(default_factory=list)

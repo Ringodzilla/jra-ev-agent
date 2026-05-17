@@ -38,7 +38,7 @@ def build_note_article(
         headline,
         "",
         "## レース概要",
-        *_race_meta_lines(race_name, race_config, prediction_timestamp),
+        *_race_meta_lines(race_name, race_config, ev_rows, prediction_timestamp),
         "",
         "## 結論",
         *_conclusion_lines(review, ticket_rows, reference_candidate_details, sorted_by_ev),
@@ -126,7 +126,7 @@ def _build_article_title(
     race_config: dict[str, object],
     ev_rows: list[dict[str, object]],
 ) -> str:
-    prefix = _build_title_prefix(race_name, race_config)
+    prefix = _build_title_prefix(race_name, race_config, ev_rows)
     condition = _build_title_condition(race_config, ev_rows)
     if prefix and condition:
         return f"{prefix}競馬予想 {condition}"
@@ -135,10 +135,15 @@ def _build_article_title(
     return str(race_config.get("note_title") or f"{race_name} AI予想")
 
 
-def _build_title_prefix(race_name: str, race_config: dict[str, object]) -> str:
-    date_label = _format_race_date_label(str(race_config.get("race_date", "")).strip())
-    track = str(race_config.get("track", "")).strip()
-    race_number = str(race_config.get("race_number", "")).strip()
+def _build_title_prefix(
+    race_name: str,
+    race_config: dict[str, object],
+    ev_rows: list[dict[str, object]],
+) -> str:
+    race_date = str(race_config.get("race_date", "")).strip() or _first_nonempty(ev_rows, "target_race_date")
+    date_label = _format_race_date_label(race_date)
+    track = str(race_config.get("track", "")).strip() or _first_nonempty(ev_rows, "target_track")
+    race_number = str(race_config.get("race_number", "")).strip() or _first_nonempty(ev_rows, "target_race_number")
     post_time = _normalize_post_time(str(race_config.get("post_time") or race_config.get("start_time") or "").strip())
 
     parts = []
@@ -180,12 +185,13 @@ def _build_title_condition(race_config: dict[str, object], ev_rows: list[dict[st
 def _race_meta_lines(
     race_name: str,
     race_config: dict[str, object],
+    ev_rows: list[dict[str, object]],
     prediction_timestamp: str,
 ) -> list[str]:
     lines = [f"- レース名: {race_name}"]
-    race_date = str(race_config.get("race_date", "")).strip()
-    track = str(race_config.get("track", "")).strip()
-    race_number = str(race_config.get("race_number", "")).strip()
+    race_date = str(race_config.get("race_date", "")).strip() or _first_nonempty(ev_rows, "target_race_date")
+    track = str(race_config.get("track", "")).strip() or _first_nonempty(ev_rows, "target_track")
+    race_number = str(race_config.get("race_number", "")).strip() or _first_nonempty(ev_rows, "target_race_number")
     source_url = str(race_config.get("source_url", "")).strip()
     if race_date:
         lines.append(f"- 開催日: {race_date}")

@@ -275,6 +275,78 @@ class TestEVPipeline(unittest.TestCase):
         self.assertLess(float(longshot["predicted_odds"]), float(longshot["current_odds"]) * 1.06)
         self.assertLess(float(longshot["win_prob"]), float(favorite["win_prob"]))
 
+    def test_overseas_country_bias_adjusts_market_support(self):
+        rows = [
+            {
+                "race_id": "20260426_シャティン_07",
+                "horse_id": "h_jpn",
+                "horse_name": "JPN馬",
+                "horse_country": "JPN",
+                "horse_number": "1",
+                "current_odds": "5.0",
+                "current_popularity": "1",
+                "current_jockey": "川田",
+                "assigned_weight": "57",
+                "target_track": "シャティン",
+                "target_race_date": "2026-04-26",
+                "target_race_number": "07",
+                "target_surface": "芝",
+                "target_distance": "1600",
+                "run_index": "1",
+                "date": "2026-04-06",
+                "course": "HK",
+                "distance": "1600",
+                "position": "3",
+                "time": "93.8",
+                "weight": "57",
+                "jockey": "川田",
+                "last_3f": "35.8",
+                "passing_order": "6-4",
+                "odds": "5.8",
+                "popularity": "2",
+            },
+            {
+                "race_id": "20260426_シャティン_07",
+                "horse_id": "h_hk",
+                "horse_name": "HK馬",
+                "horse_country": "HK",
+                "horse_number": "2",
+                "current_odds": "5.0",
+                "current_popularity": "2",
+                "current_jockey": "J.モレイラ",
+                "assigned_weight": "57",
+                "target_track": "シャティン",
+                "target_race_date": "2026-04-26",
+                "target_race_number": "07",
+                "target_surface": "芝",
+                "target_distance": "1600",
+                "run_index": "1",
+                "date": "2026-04-06",
+                "course": "HK",
+                "distance": "1600",
+                "position": "3",
+                "time": "93.8",
+                "weight": "57",
+                "jockey": "J.モレイラ",
+                "last_3f": "35.8",
+                "passing_order": "6-4",
+                "odds": "5.8",
+                "popularity": "2",
+            },
+        ]
+
+        feature_rows = build_feature_rows(rows)
+        by_horse = {row["horse_id"]: row for row in feature_rows}
+
+        jpn = by_horse["h_jpn"]
+        hk = by_horse["h_hk"]
+
+        self.assertEqual(1, int(jpn["is_overseas_race"]))
+        self.assertLess(float(jpn["country_value_score"]), 0.0)
+        self.assertGreater(float(hk["country_value_score"]), 0.0)
+        self.assertLess(float(jpn["market_support"]), float(jpn["market_support_base"]))
+        self.assertGreater(float(hk["market_support"]), float(hk["market_support_base"]))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -102,6 +102,11 @@ class JRAPipeline:
                     race_html,
                     race.race_id,
                     race.race_name,
+                    target_race_date=race.race_date,
+                    target_track=race.track,
+                    target_race_number=race.race_number,
+                    target_surface=race.target_surface,
+                    target_distance=race.target_distance,
                     issue_sink=issues,
                     aggressive_repair=aggressive_repair,
                 )
@@ -284,8 +289,8 @@ class JRAPipeline:
         race_date = str(spec.get("race_date", "")).strip()
         track = str(spec.get("track", "")).strip()
         race_number = str(spec.get("race_number", "")).strip()
-        target_surface = str(spec.get("target_surface", "")).strip()
-        target_distance = str(spec.get("target_distance", "")).strip()
+        target_surface = str(spec.get("target_surface") or spec.get("surface") or spec.get("surface_label") or "").strip()
+        target_distance = str(spec.get("target_distance") or spec.get("distance") or spec.get("distance_label") or "").strip()
 
         race_id = str(spec.get("race_id", "")).strip()
         if not race_id and race_date and track and race_number:
@@ -394,6 +399,7 @@ def _rows_from_embedded_history(horse) -> list[dict[str, str]]:
             "target_race_number": horse.target_race_number,
             "target_surface": horse.target_surface,
             "target_distance": horse.target_distance,
+            "horse_country": horse.horse_country,
             "date": str(history.get("date", "")),
             "course": str(history.get("course", "")),
             "race_name": str(history.get("race_name", "")),

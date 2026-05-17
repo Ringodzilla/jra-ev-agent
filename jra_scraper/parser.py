@@ -98,6 +98,11 @@ class JRAParser:
         race_id: str,
         race_name: str,
         *,
+        target_race_date: str = "",
+        target_track: str = "",
+        target_race_number: str = "",
+        target_surface: str = "",
+        target_distance: str = "",
         issue_sink: list[ParserIssue] | None = None,
         aggressive_repair: bool = False,
     ) -> list[HorseEntry]:
@@ -118,8 +123,15 @@ class JRAParser:
         matches = self._build_header_matches(headers, self.ENTRY_HEADER_ALIASES)
         entry_canonicals = {match.canonical for match in matches}
         rows = [tr for tr in table.select("tr") if tr.select("td")]
-        target_date, target_track, target_race_number = self._parse_race_id_components(race_id)
-        target_surface, target_distance = self._extract_race_conditions(soup)
+        header_meta = self._extract_race_header_metadata(soup)
+        parsed_date, parsed_track, parsed_race_number = self._parse_race_id_components(race_id)
+        target_date = parsed_date or header_meta.get("race_date", "") or target_race_date
+        target_track = parsed_track or header_meta.get("track", "") or target_track
+        target_race_number = parsed_race_number or header_meta.get("race_number", "") or target_race_number
+        parsed_surface, parsed_distance = self._extract_race_conditions(soup)
+        target_surface = parsed_surface or header_meta.get("target_surface", "") or target_surface
+        target_distance = parsed_distance or header_meta.get("target_distance", "") or target_distance
+        effective_race_name = self._resolve_race_name(race_name, header_meta.get("race_name", ""))
 
         horses: list[HorseEntry] = []
         for row_index, row in enumerate(rows, start=1):
@@ -142,26 +154,39 @@ class JRAParser:
             )
 
             anchor = row.select_one("a[href]")
-            href = anchor.get("href") if anchor else ""
-            horse_name = mapped.get("horse_name") or (self._norm(anchor.get_text(" ", strip=True)) if anchor else "")
-            if not href or not horse_name:
+            href = (anchor.get("href") or "").strip() if anchor else ""
+            horse_name = (
+                mapped.get("horse_name")
+                or self._extract_text(row, "td.horse .name_line .name .txt")
+                or (self._norm(anchor.get_text(" ", strip=True)) if anchor else "")
+            )
+            if not horse_name:
                 self._issue(
                     issue_sink,
                     stage="parser.race_detail",
                     severity="medium",
                     code="entry_row_incomplete",
-                    message="Skipped race entry row because horse link or horse name was missing.",
+                    message="Skipped race entry row because horse name was missing.",
                     context={"race_id": race_id, "row_index": str(row_index)},
                 )
                 continue
+            if not href:
+                self._issue(
+                    issue_sink,
+                    stage="parser.race_detail",
+                    severity="low",
+                    code="entry_link_missing",
+                    message="Horse link was missing; used fallback horse_id.",
+                    context={"race_id": race_id, "row_index": str(row_index), "horse_name": horse_name},
+                )
 
             horses.append(
                 HorseEntry(
                     race_id=race_id,
-                    race_name=race_name,
+                    race_name=effective_race_name,
                     horse_id=self._extract_horse_id(href, horse_name),
                     horse_name=horse_name,
-                    horse_url=urljoin(self.base_url, href),
+                    horse_url=urljoin(self.base_url, href) if href else "",
                     frame_number=mapped.get("frame_number", ""),
                     horse_number=mapped.get("horse_number", ""),
                     current_jockey=mapped.get("current_jockey", ""),
@@ -173,6 +198,7 @@ class JRAParser:
                     target_race_number=target_race_number,
                     target_surface=target_surface,
                     target_distance=target_distance,
+                    horse_country=mapped.get("horse_country", ""),
                     embedded_history=self._extract_embedded_history(row),
                 )
             )
@@ -270,6 +296,7 @@ class JRAParser:
                         "target_race_number": current_entry.target_race_number,
                         "target_surface": current_entry.target_surface,
                         "target_distance": current_entry.target_distance,
+                        "horse_country": current_entry.horse_country,
                     }
                 )
             out.append(row)
@@ -459,6 +486,10 @@ class JRAParser:
         anchor = row.select_one("a[href]")
         if anchor and not out.get("horse_name"):
             out["horse_name"] = self._norm(anchor.get_text(" ", strip=True))
+        if not out.get("horse_name"):
+            horse_name_node = row.select_one("td.horse .name_line .name .txt")
+            if horse_name_node is not None:
+                out["horse_name"] = self._norm(horse_name_node.get_text(" ", strip=True))
 
         if not out.get("current_jockey"):
             jockey_node = row.select_one("td.jockey p.jockey")
@@ -471,6 +502,19 @@ class JRAParser:
                 weight_value = self._normalize_decimal_like(self._norm(weight_node.get_text(" ", strip=True)))
                 if weight_value:
                     out["assigned_weight"] = weight_value
+
+        if not out.get("horse_country"):
+            country_node = row.select_one("td.jockey p.code")
+            if country_node is not None:
+                out["horse_country"] = self._normalize_country_code(
+                    self._norm(country_node.get_text(" ", strip=True))
+                )
+        if not out.get("horse_country"):
+            country_flag = row.select_one("td.horse .name_line .name .line .flag img")
+            if country_flag is not None:
+                out["horse_country"] = self._normalize_country_code(
+                    self._norm(country_flag.get("alt") or country_flag.get("title") or "")
+                )
 
         if not out.get("current_popularity"):
             popularity_node = row.select_one(".name_line .odds .pop_rank")
@@ -557,14 +601,84 @@ class JRAParser:
         )
 
     def _extract_race_conditions(self, soup: BeautifulSoup) -> tuple[str, str]:
-        text = soup.get_text(" ", strip=True)
-        match = re.search(r"(芝|ダート|ダ|障害)\s*(\d{3,4})\s*m?", text)
-        if not match:
-            return "", ""
-        surface = match.group(1)
-        if surface == "ダ":
-            surface = "ダート"
-        return surface, match.group(2)
+        candidates = [
+            self._norm(node.get_text(" ", strip=True))
+            for node in soup.select(".race_header .cell.course, .race_title .cell.course, .cell.course")
+        ]
+        candidates.append(soup.get_text(" ", strip=True))
+
+        for text in candidates:
+            surface, distance = self._parse_condition_text(text)
+            if surface and distance:
+                return surface, distance
+        return "", ""
+
+    @classmethod
+    def _parse_condition_text(cls, text: str) -> tuple[str, str]:
+        normalized = cls._norm(text).replace(",", "")
+        patterns = (
+            r"(?P<surface>芝|ダート|ダ|障害)\s*(?P<distance>\d{3,4})\s*(?:m|メートル)?",
+            r"(?P<distance>\d{3,4})\s*(?:m|メートル).*?(?P<surface>芝|ダート|ダ|障害)",
+        )
+        for pattern in patterns:
+            match = re.search(pattern, normalized)
+            if match:
+                return cls._normalize_surface(match.group("surface")), match.group("distance")
+        return "", ""
+
+    @classmethod
+    def _extract_race_header_metadata(cls, soup: BeautifulSoup) -> dict[str, str]:
+        date_text = cls._extract_first_text(soup, ".race_header .cell.date, .cell.date")
+        race_name = cls._extract_first_text(soup, ".race_header .race_name, .race_title .race_name, .race_name")
+        race_number_text = cls._extract_first_text(
+            soup,
+            ".race_header .race_number img[alt], .race_title .race_number img[alt], .nav.race-num .current img[alt]",
+            attr="alt",
+        )
+        surface, distance = cls._parse_condition_text(
+            cls._extract_first_text(soup, ".race_header .cell.course, .race_title .cell.course, .cell.course")
+        )
+
+        date = ""
+        date_match = re.search(r"(20\d{2})年\s*(\d{1,2})月\s*(\d{1,2})日", date_text)
+        if date_match:
+            date = f"{date_match.group(1)}-{int(date_match.group(2)):02d}-{int(date_match.group(3)):02d}"
+
+        track = next((track_name for track_name in TRACKS if track_name in date_text), "")
+        race_number = ""
+        race_number_match = re.search(r"(\d{1,2})\s*レース", race_number_text)
+        if race_number_match:
+            race_number = f"{int(race_number_match.group(1)):02d}"
+
+        return {
+            "race_date": date,
+            "track": track,
+            "race_number": race_number,
+            "race_name": race_name,
+            "target_surface": surface,
+            "target_distance": distance,
+        }
+
+    @staticmethod
+    def _normalize_surface(surface: str) -> str:
+        return "ダート" if surface == "ダ" else surface
+
+    @staticmethod
+    def _resolve_race_name(current: str, parsed: str) -> str:
+        current = current.strip()
+        parsed = parsed.strip()
+        if parsed and (not current or current == "JRAレース" or current.startswith("direct_race_")):
+            return parsed
+        return current
+
+    @staticmethod
+    def _extract_first_text(soup: BeautifulSoup, selector: str, *, attr: str | None = None) -> str:
+        node = soup.select_one(selector)
+        if node is None:
+            return ""
+        if attr:
+            return JRAParser._norm(node.get(attr) or "")
+        return JRAParser._norm(node.get_text(" ", strip=True))
 
     @staticmethod
     def _parse_race_id_components(race_id: str) -> tuple[str, str, str]:
@@ -683,6 +797,11 @@ class JRAParser:
     def _normalize_decimal_like(value: str) -> str:
         match = re.search(r"\d+(?:\.\d+)?", value)
         return match.group(0) if match else ""
+
+    @staticmethod
+    def _normalize_country_code(value: str) -> str:
+        cleaned = re.sub(r"[^A-Za-z]", "", value or "").upper()
+        return cleaned[:3] if cleaned else ""
 
     @staticmethod
     def _extract_text(node, selector: str) -> str:
