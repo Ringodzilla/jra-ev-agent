@@ -95,7 +95,8 @@ python scripts/run_pipeline.py
 3. EV算出（`data/processed/race_ev.csv`）
 4. 買い目生成
 5. note Markdown生成（`report/note.md`）
-6. publish payload生成（`report/publish_payload.json`）
+6. note artifact Markdown同期（`report/note_artifact.md`）
+7. publish payload生成（`report/publish_payload.json`）
 
 ## Publishing phase (separated)
 

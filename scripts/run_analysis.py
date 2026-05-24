@@ -23,11 +23,12 @@ def main() -> None:
 
     tickets_safe = generate_tickets(scored, mode="safe")
     note = generate_note_markdown("JRAレース", scored, tickets_safe)
-    write_note(note_md, note)
+    artifact_md = write_note(note_md, note)
 
     print(f"EV rows: {len(scored)}")
     print(f"CSV: {ev_csv}")
     print(f"note: {note_md}")
+    print(f"artifact: {artifact_md}")
 
 
 if __name__ == "__main__":

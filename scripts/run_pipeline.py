@@ -94,7 +94,7 @@ def run_analysis_phase(
             race_config=race_configs[0] if race_configs else {},
         )
     )
-    write_note(note_path, note)
+    artifact_path = write_note(note_path, note)
 
     payload = {
         "title": article.get("title") or (race_configs[0].get("note_title") if race_configs else "jra-ev-agent analysis"),
@@ -103,6 +103,7 @@ def run_analysis_phase(
         "race_name": primary_race_name,
         "race_date": race_configs[0]["race_date"] if race_configs else "",
         "body_markdown_path": str(note_path),
+        "artifact_markdown_path": str(artifact_path),
         "mode_default": "browser:draft",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "dry_run": True,

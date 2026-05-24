@@ -96,9 +96,18 @@ def generate_note_markdown(
     return str(article["markdown"])
 
 
-def write_note(path: Path, text: str) -> None:
+def note_artifact_path(path: Path) -> Path:
+    suffix = path.suffix or ".md"
+    return path.with_name(f"{path.stem}_artifact{suffix}")
+
+
+def write_note(path: Path, text: str, *, artifact_path: Path | None = None) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text, encoding="utf-8")
+    resolved_artifact_path = artifact_path or note_artifact_path(path)
+    resolved_artifact_path.parent.mkdir(parents=True, exist_ok=True)
+    resolved_artifact_path.write_text(text, encoding="utf-8")
+    return resolved_artifact_path
 
 
 def _headline(

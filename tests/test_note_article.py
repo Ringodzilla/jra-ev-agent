@@ -1,10 +1,22 @@
 import unittest
+import tempfile
+from pathlib import Path
 
-from report.note import build_note_article, generate_note_markdown
+from report.note import build_note_article, generate_note_markdown, write_note
 from src.react_workflow import ArticleWriterAgent
 
 
 class TestNoteArticle(unittest.TestCase):
+    def test_write_note_always_syncs_artifact_markdown(self):
+        with tempfile.TemporaryDirectory() as td:
+            note_path = Path(td) / "note.md"
+            artifact_path = write_note(note_path, "# note body")
+
+            self.assertTrue(note_path.exists())
+            self.assertEqual(Path(td) / "note_artifact.md", artifact_path)
+            self.assertTrue(artifact_path.exists())
+            self.assertEqual(note_path.read_text(encoding="utf-8"), artifact_path.read_text(encoding="utf-8"))
+
     def test_generate_note_markdown_is_paste_ready(self):
         ev_rows = [
             {
