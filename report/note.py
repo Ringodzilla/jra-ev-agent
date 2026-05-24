@@ -479,6 +479,10 @@ def _ticket_summary(ticket: dict[str, object]) -> str:
     label = _ticket_label(ticket)
     stake = int(_to_float(ticket.get("stake"), 0.0))
     ev = _fmt_value(ticket.get("ev_current") or ticket.get("ev"))
+    point_count = int(_to_float(ticket.get("point_count"), 0.0))
+    if point_count > 1:
+        stake_per_point = int(_to_float(ticket.get("stake_per_point"), 0.0))
+        return f"{label} {stake}円 ({point_count}点×{stake_per_point}円) / EV {ev}"
     return f"{label} {stake}円 / EV {ev}"
 
 
@@ -524,10 +528,20 @@ def _ticket_detail_line(ticket: dict[str, object]) -> str:
     return_if_hit = int(_to_float(ticket.get("return_if_hit"), 0.0))
     portfolio_suffix = ""
     if portfolio_total > 0 and return_if_hit > 0:
-        portfolio_suffix = f" / 的中時回収 {return_if_hit}円 / 総投資 {portfolio_total}円"
+        max_return_if_hit = int(_to_float(ticket.get("return_if_hit_max"), 0.0))
+        if max_return_if_hit > return_if_hit:
+            portfolio_suffix = f" / 的中時回収 {return_if_hit}-{max_return_if_hit}円 / 総投資 {portfolio_total}円"
+        else:
+            portfolio_suffix = f" / 的中時回収 {return_if_hit}円 / 総投資 {portfolio_total}円"
+    point_suffix = ""
+    point_count = int(_to_float(ticket.get("point_count"), 0.0))
+    if point_count > 1:
+        stake_per_point = int(_to_float(ticket.get("stake_per_point"), 0.0))
+        point_suffix = f" ({point_count}点×{stake_per_point}円)"
     role_suffix = " / 保険候補" if str(ticket.get("ticket_role", "")) == "coverage" else ""
     return (
         f"- {label} {stake}円"
+        f"{point_suffix}"
         f" / {prob_label} {probability}"
         f" / {odds_label} {odds_value}"
         f" / EV {_fmt_value(ticket.get('ev_current') or ticket.get('ev'))}"
@@ -597,6 +611,14 @@ def _reference_candidate_details(
 
 def _ticket_horse_display(ticket: dict[str, object]) -> str:
     bet_type = str(ticket.get("bet_type", "win"))
+    if str(ticket.get("ticket_shape", "")) == "formation":
+        formation = dict(ticket.get("formation") or {})
+        first = _formation_axis_display(list(formation.get("first") or []))
+        second = _formation_axis_display(list(formation.get("second") or []))
+        third = _formation_axis_display(list(formation.get("third") or []))
+        if first and second and third:
+            return f"1着[{first}] 2着[{second}] 3着[{third}]"
+        return str(ticket.get("horse_number", ""))
     if bet_type == "wakuren":
         frame_numbers = list(ticket.get("frame_numbers") or [])
         if len(frame_numbers) >= 2:
@@ -609,6 +631,21 @@ def _ticket_horse_display(ticket: dict[str, object]) -> str:
             name_separator = " → " if bet_type in {"umatan", "sanrentan"} else " - "
             return f"{number_separator.join(str(number) for number in numbers)} {name_separator.join(str(name) for name in names)}"
     return f"{ticket.get('horse_number')} {ticket.get('horse_name')}"
+
+
+def _formation_axis_display(rows: list[object]) -> str:
+    labels = []
+    for item in rows:
+        row = dict(item) if isinstance(item, dict) else {}
+        number = str(row.get("horse_number", "")).strip()
+        name = str(row.get("horse_name", "")).strip()
+        if number and name:
+            labels.append(f"{number} {name}")
+        elif number:
+            labels.append(number)
+        elif name:
+            labels.append(name)
+    return ", ".join(labels)
 
 
 def _dedupe_preserve_order(items: list[str]) -> list[str]:

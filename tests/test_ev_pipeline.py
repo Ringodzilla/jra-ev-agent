@@ -290,6 +290,110 @@ class TestEVPipeline(unittest.TestCase):
         self.assertGreater(float(sanrenpuku["ev_current"]), 1.0)
         self.assertEqual(3, len(sanrentan["horse_numbers"]))
 
+    def test_generate_tickets_allocates_stakes_by_portfolio_ev(self):
+        ev_rows = []
+        for horse_name, horse_number, frame_number, win_prob, odds, market_prob in [
+            ("A", "1", "1", 0.30, 6.0, 0.04),
+            ("B", "2", "2", 0.22, 9.0, 0.06),
+            ("C", "3", "3", 0.17, 12.0, 0.08),
+            ("D", "4", "4", 0.12, 18.0, 0.12),
+            ("E", "5", "5", 0.09, 24.0, 0.15),
+            ("F", "6", "6", 0.06, 34.0, 0.18),
+        ]:
+            ev_rows.append(
+                {
+                    "race_id": "r_portfolio",
+                    "horse_id": f"h{horse_number}",
+                    "horse_name": horse_name,
+                    "frame_number": frame_number,
+                    "horse_number": horse_number,
+                    "win_prob": str(win_prob),
+                    "current_odds": str(odds),
+                    "predicted_odds": str(odds),
+                    "ev": str(win_prob * odds),
+                    "ev_current": str(win_prob * odds),
+                    "ev_predicted": str(win_prob * odds),
+                    "market_prob": str(market_prob),
+                    "consistency": "0.72",
+                    "history_count": "5",
+                }
+            )
+
+        plan = generate_tickets(
+            ev_rows,
+            prefer_wide=False,
+            bankroll_per_race=1000,
+            max_tickets_per_race=4,
+            max_exotic_tickets_per_race=4,
+        )
+
+        stakes = [int(ticket["stake"]) for ticket in plan["tickets"]]
+        self.assertTrue(plan["tickets"])
+        self.assertLessEqual(plan["portfolio_summary"]["total_stake"], 1000)
+        self.assertGreater(float(plan["portfolio_summary"]["portfolio_ev"]), 1.0)
+        self.assertTrue(any(stake > 100 for stake in stakes))
+        self.assertGreaterEqual(max(stakes), min(stakes))
+        for ticket in plan["tickets"]:
+            self.assertIn("portfolio_expected_profit", ticket)
+            self.assertIn("portfolio_total_points", ticket)
+
+    def test_generate_tickets_builds_sanrentan_formation_by_total_points(self):
+        ev_rows = []
+        for horse_name, horse_number, win_prob, odds, market_prob in [
+            ("A", "1", 0.30, 5.0, 0.09),
+            ("B", "2", 0.22, 7.0, 0.08),
+            ("C", "3", 0.18, 9.0, 0.07),
+            ("D", "4", 0.12, 14.0, 0.06),
+            ("E", "5", 0.08, 22.0, 0.05),
+            ("F", "6", 0.05, 34.0, 0.04),
+        ]:
+            ev_rows.append(
+                {
+                    "race_id": "r_formation",
+                    "horse_id": f"h{horse_number}",
+                    "horse_name": horse_name,
+                    "frame_number": horse_number,
+                    "horse_number": horse_number,
+                    "win_prob": str(win_prob),
+                    "current_odds": str(odds),
+                    "predicted_odds": str(odds),
+                    "ev": str(win_prob * odds),
+                    "ev_current": str(win_prob * odds),
+                    "ev_predicted": str(win_prob * odds),
+                    "market_prob": str(market_prob),
+                    "consistency": "0.70",
+                    "history_count": "5",
+                }
+            )
+
+        odds_rows = [
+            {"race_id": "r_formation", "bet_type": "sanrentan", "combination": combination, "odds": "55.0", "captured_at": "2026-05-24T01:00:00+00:00"}
+            for combination in ["1>2>3", "1>2>4", "1>2>5", "1>3>2", "1>3>4", "1>3>5"]
+        ]
+
+        plan = generate_tickets(
+            ev_rows,
+            odds_rows=odds_rows,
+            prefer_wide=False,
+            bankroll_per_race=1000,
+            max_tickets_per_race=6,
+            max_exotic_tickets_per_race=10,
+            min_sanrentan_ev=1.01,
+        )
+        candidates = list(plan["tickets"]) + list(plan["races"][0]["candidates"])
+        formation = next(
+            ticket
+            for ticket in candidates
+            if ticket["bet_type"] == "sanrentan" and ticket.get("ticket_shape") == "formation"
+        )
+
+        self.assertEqual("total_points", formation["formation_ev_basis"])
+        self.assertGreater(int(formation["point_count"]), 1)
+        self.assertEqual(int(formation["point_count"]) * 100, int(formation["stake"]))
+        self.assertGreaterEqual(float(formation["ev_current"]), 1.01)
+        self.assertIn("formation", formation)
+        self.assertIn("points", formation)
+
     def test_generate_tickets_prefers_jra_live_combo_odds(self):
         ev_rows = []
         for horse_name, horse_number, frame_number, win_prob, odds, market_prob in [

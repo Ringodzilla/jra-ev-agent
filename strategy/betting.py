@@ -138,6 +138,11 @@ def generate_tickets(
             force_win_standout=_has_win_standout(enriched),
             min_portfolio_ev=min_portfolio_ev,
         )
+        race_tickets = _optimize_portfolio_stakes(
+            race_tickets,
+            bankroll_per_race=bankroll_per_race,
+            min_portfolio_ev=min_portfolio_ev,
+        )
         race_tickets = _rebalance_race_stakes(race_tickets, bankroll_per_race=bankroll_per_race)
         race_tickets = _annotate_portfolio_tickets(_prune_gami_tickets(race_tickets))
         flat_tickets.extend(race_tickets)
@@ -168,6 +173,7 @@ def generate_tickets(
                 "candidates": candidate_pool,
                 "exotics": exotic_candidates[:max_exotic_tickets_per_race],
                 "tickets": race_tickets,
+                "portfolio": _portfolio_summary(race_tickets),
             }
         )
 
@@ -204,6 +210,7 @@ def generate_tickets(
         "bet_types_considered": ["win", "place", "wide", "wakuren", "umaren", "umatan", "sanrenpuku", "sanrentan"],
         "candidate_counts": dict(aggregate_candidate_counts),
         "optimization_mode": "cross_bet_ev_kelly_portfolio",
+        "portfolio_summary": _portfolio_summary(flat_tickets),
         "primary_bet_type": flat_tickets[0].get("bet_type", "wide") if flat_tickets else "wide",
         "tansho": [ticket.get("horse_name", "") for ticket in flat_tickets if ticket.get("bet_type") == "win"][:2],
         "fukusho": fukusho_labels[:3],
@@ -713,6 +720,15 @@ def _build_exotic_candidates(
             if ticket is not None:
                 candidates.append(ticket)
 
+        candidates.extend(
+            _build_sanrentan_formation_candidates(
+                pool,
+                bankroll_per_race=bankroll_per_race,
+                min_sanrentan_ev=min_sanrentan_ev,
+                live_odds=live_odds,
+            )
+        )
+
     candidates.sort(
         key=lambda ticket: (
             _to_float(ticket.get("ev_current") or ticket.get("ev")),
@@ -723,6 +739,187 @@ def _build_exotic_candidates(
     )
 
     return _prioritize_exotic_types(_dedupe_ticket_combos(candidates))
+
+
+def _build_sanrentan_formation_candidates(
+    rows: list[dict[str, object]],
+    *,
+    bankroll_per_race: int,
+    min_sanrentan_ev: float,
+    live_odds: dict[tuple[str, str], dict[str, object]],
+) -> list[dict[str, object]]:
+    if len(rows) < 3:
+        return []
+
+    ranked = sorted(
+        rows,
+        key=lambda row: (
+            _to_float(row.get("win_prob")),
+            _to_float(row.get("place_prob")),
+            _to_float(row.get("ev_predicted") or row.get("ev")),
+        ),
+        reverse=True,
+    )
+    max_points = max(1, bankroll_per_race // 100)
+    specs = [
+        (ranked[:1], ranked[:3], ranked[:5]),
+        (ranked[:2], ranked[:3], ranked[:4]),
+        (ranked[:1], ranked[:4], ranked[:5]),
+    ]
+
+    candidates: list[dict[str, object]] = []
+    seen_shapes: set[tuple[tuple[str, ...], tuple[str, ...], tuple[str, ...]]] = set()
+    for first_rows, second_rows, third_rows in specs:
+        if not first_rows or not second_rows or not third_rows:
+            continue
+        shape_key = (
+            tuple(str(row.get("horse_number", "")) for row in first_rows),
+            tuple(str(row.get("horse_number", "")) for row in second_rows),
+            tuple(str(row.get("horse_number", "")) for row in third_rows),
+        )
+        if shape_key in seen_shapes:
+            continue
+        seen_shapes.add(shape_key)
+
+        points = _formation_points(
+            first_rows,
+            second_rows,
+            third_rows,
+            live_odds=live_odds,
+        )
+        point_count = len(points)
+        if point_count < 2 or point_count > max_points:
+            continue
+
+        total_prob = sum(_to_float(point.get("hit_prob")) for point in points)
+        total_market_prob = sum(_to_float(point.get("market_prob")) for point in points)
+        expected_return_multiplier = sum(
+            _to_float(point.get("hit_prob")) * _to_float(point.get("odds"))
+            for point in points
+        )
+        formation_ev = expected_return_multiplier / point_count
+        if total_prob < 0.006 or formation_ev < min_sanrentan_ev:
+            continue
+
+        stake_per_point = 100
+        stake = point_count * stake_per_point
+        if stake > bankroll_per_race:
+            continue
+
+        all_rows = _dedupe_rows_by_horse_number(first_rows + second_rows + third_rows)
+        horse_ids = [str(row.get("horse_id", "")) for row in all_rows]
+        horse_names = [str(row.get("horse_name", "")) for row in all_rows]
+        horse_numbers = [str(row.get("horse_number", "")) for row in all_rows]
+        confidence = (total_prob / max(total_market_prob, 1e-6)) if total_market_prob > 0 else 0.0
+        min_odds = min(_to_float(point.get("odds")) for point in points)
+        max_odds = max(_to_float(point.get("odds")) for point in points)
+        avg_odds = (expected_return_multiplier / max(total_prob, 1e-6)) if total_prob > 0 else 0.0
+
+        candidates.append(
+            {
+                "race_id": str(rows[0].get("race_id", "")),
+                "bet_type": "sanrentan",
+                "ticket_shape": "formation",
+                "horse_id": "|".join(horse_ids),
+                "horse_name": _formation_axis_label(first_rows, second_rows, third_rows, key="horse_name"),
+                "horse_number": _formation_axis_label(first_rows, second_rows, third_rows, key="horse_number"),
+                "horse_ids": horse_ids,
+                "horse_names": horse_names,
+                "horse_numbers": horse_numbers,
+                "stake": stake,
+                "stake_per_point": stake_per_point,
+                "point_count": point_count,
+                "hit_prob": _fmt(total_prob),
+                "win_prob": _fmt(total_prob),
+                "combo_prob": _fmt(total_prob),
+                "combo_prob_market": _fmt(total_market_prob),
+                "win_odds": _fmt(avg_odds),
+                "trifecta_odds_est": _fmt(avg_odds),
+                "trifecta_odds_min": _fmt(min_odds),
+                "trifecta_odds_max": _fmt(max_odds),
+                "predicted_odds": _fmt(avg_odds),
+                "ev": _fmt(formation_ev),
+                "ev_current": _fmt(formation_ev),
+                "ev_predicted": _fmt(formation_ev),
+                "predicted_odds_source": "jra_live" if all(point.get("odds_source") == "jra_live" for point in points) else "sanrentan_formation",
+                "odds_source": "jra_live" if any(point.get("odds_source") == "jra_live" for point in points) else "estimated",
+                "ticket_role": "value",
+                "coverage_reason": "",
+                "confidence": _fmt(confidence),
+                "formation_ev_basis": "total_points",
+                "formation": {
+                    "first": _formation_axis_rows(first_rows),
+                    "second": _formation_axis_rows(second_rows),
+                    "third": _formation_axis_rows(third_rows),
+                    "point_count": point_count,
+                },
+                "points": points,
+                "min_return_if_hit": int(stake_per_point * min_odds),
+                "max_return_if_hit": int(stake_per_point * max_odds),
+                "legs": [
+                    {
+                        "horse_id": str(row.get("horse_id", "")),
+                        "horse_name": str(row.get("horse_name", "")),
+                        "horse_number": str(row.get("horse_number", "")),
+                        "win_prob": str(row.get("win_prob", "")),
+                        "place_prob": str(row.get("place_prob", "")),
+                    }
+                    for row in all_rows
+                ],
+            }
+        )
+
+    candidates.sort(
+        key=lambda ticket: (
+            _to_float(ticket.get("ev_current") or ticket.get("ev")),
+            _to_float(ticket.get("hit_prob")),
+            _to_float(ticket.get("confidence")),
+        ),
+        reverse=True,
+    )
+    return candidates
+
+
+def _formation_points(
+    first_rows: list[dict[str, object]],
+    second_rows: list[dict[str, object]],
+    third_rows: list[dict[str, object]],
+    *,
+    live_odds: dict[tuple[str, str], dict[str, object]],
+) -> list[dict[str, object]]:
+    points: list[dict[str, object]] = []
+    for first in first_rows:
+        for second in second_rows:
+            for third in third_rows:
+                point_rows = [first, second, third]
+                numbers = [str(row.get("horse_number", "")) for row in point_rows]
+                if len(set(numbers)) != 3:
+                    continue
+
+                hit_prob = _combo_hit_prob(point_rows, key="win_prob", bet_type="sanrentan")
+                market_prob = _combo_hit_prob(point_rows, key="market_prob", bet_type="sanrentan")
+                if hit_prob <= 0 or market_prob <= 0:
+                    continue
+
+                live = _lookup_live_odds(live_odds, "sanrentan", numbers)
+                odds = _live_odds_value(live) or _estimate_exotic_odds(market_prob, payout_rate=0.725, max_odds=600.0)
+                if odds <= 1.0:
+                    continue
+
+                point_ev = hit_prob * odds
+                points.append(
+                    {
+                        "horse_number": _combo_name(numbers, bet_type="sanrentan"),
+                        "horse_name": _combo_name([str(row.get("horse_name", "")) for row in point_rows], bet_type="sanrentan"),
+                        "horse_numbers": numbers,
+                        "hit_prob": _fmt(hit_prob),
+                        "market_prob": _fmt(market_prob),
+                        "odds": _fmt(odds),
+                        "ev": _fmt(point_ev),
+                        "odds_source": "jra_live" if live else "estimated",
+                    }
+                )
+    return points
 
 
 def _build_coverage_candidates(
@@ -894,6 +1091,48 @@ def _horse_summary(row: dict[str, object]) -> dict[str, object]:
         "predicted_odds": str(row.get("predicted_odds", "")),
         "predicted_odds_source": str(row.get("predicted_odds_source", "")),
     }
+
+
+def _dedupe_rows_by_horse_number(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    seen: set[str] = set()
+    out: list[dict[str, object]] = []
+    for row in rows:
+        horse_number = str(row.get("horse_number", "")).strip()
+        if not horse_number or horse_number in seen:
+            continue
+        seen.add(horse_number)
+        out.append(row)
+    return out
+
+
+def _formation_axis_rows(rows: list[dict[str, object]]) -> list[dict[str, str]]:
+    return [
+        {
+            "horse_id": str(row.get("horse_id", "")),
+            "horse_name": str(row.get("horse_name", "")),
+            "horse_number": str(row.get("horse_number", "")),
+        }
+        for row in rows
+    ]
+
+
+def _formation_axis_label(
+    first_rows: list[dict[str, object]],
+    second_rows: list[dict[str, object]],
+    third_rows: list[dict[str, object]],
+    *,
+    key: str,
+) -> str:
+    return (
+        f"1着:{_axis_values(first_rows, key)} / "
+        f"2着:{_axis_values(second_rows, key)} / "
+        f"3着:{_axis_values(third_rows, key)}"
+    )
+
+
+def _axis_values(rows: list[dict[str, object]], key: str) -> str:
+    values = [str(row.get(key, "")).strip() for row in rows if str(row.get(key, "")).strip()]
+    return ",".join(values)
 
 
 def _pair_strings(names: list[str]) -> list[str]:
@@ -1144,6 +1383,8 @@ def _combo_name(values: list[str], *, bet_type: str) -> str:
 
 
 def _ticket_combo_label(ticket: dict[str, object]) -> str:
+    if _is_formation_ticket(ticket):
+        return str(ticket.get("horse_number", ""))
     if ticket.get("bet_type") == "wakuren":
         frame_numbers = [str(value) for value in list(ticket.get("frame_numbers") or []) if str(value).strip()]
         return "-".join(frame_numbers) if frame_numbers else str(ticket.get("horse_number", ""))
@@ -1273,6 +1514,10 @@ def _is_coverage_ticket(ticket: dict[str, object]) -> bool:
     return str(ticket.get("ticket_role", "")) == "coverage"
 
 
+def _is_formation_ticket(ticket: dict[str, object]) -> bool:
+    return str(ticket.get("ticket_shape", "")) == "formation"
+
+
 def _can_add_coverage_ticket(
     selected: list[dict[str, object]],
     ticket: dict[str, object],
@@ -1296,6 +1541,13 @@ def _portfolio_ev(tickets: list[dict[str, object]]) -> float:
     return expected_return / total_stake
 
 
+def _portfolio_expected_return(tickets: list[dict[str, object]]) -> float:
+    return sum(
+        int(_to_float(ticket.get("stake"), 0.0)) * _to_float(ticket.get("ev_current") or ticket.get("ev"))
+        for ticket in tickets
+    )
+
+
 def _portfolio_no_gami(tickets: list[dict[str, object]]) -> bool:
     total_stake = _portfolio_total_stake(tickets)
     if total_stake <= 0:
@@ -1307,10 +1559,70 @@ def _portfolio_total_stake(tickets: list[dict[str, object]]) -> int:
     return sum(int(_to_float(ticket.get("stake"), 0.0)) for ticket in tickets)
 
 
+def _portfolio_total_points(tickets: list[dict[str, object]]) -> int:
+    return sum(_ticket_point_count(ticket) for ticket in tickets)
+
+
 def _ticket_return_if_hit(ticket: dict[str, object]) -> int:
+    if _is_formation_ticket(ticket):
+        stake_per_point = int(_to_float(ticket.get("stake_per_point"), 0.0))
+        min_odds = _to_float(ticket.get("trifecta_odds_min") or ticket.get("win_odds"))
+        return int(stake_per_point * min_odds)
     stake = int(_to_float(ticket.get("stake"), 0.0))
     odds = _to_float(ticket.get("win_odds") or ticket.get("predicted_odds"))
     return int(stake * odds)
+
+
+def _ticket_max_return_if_hit(ticket: dict[str, object]) -> int:
+    if _is_formation_ticket(ticket):
+        stake_per_point = int(_to_float(ticket.get("stake_per_point"), 0.0))
+        max_odds = _to_float(ticket.get("trifecta_odds_max") or ticket.get("win_odds"))
+        return int(stake_per_point * max_odds)
+    return _ticket_return_if_hit(ticket)
+
+
+def _ticket_point_count(ticket: dict[str, object]) -> int:
+    if _is_formation_ticket(ticket):
+        point_count = int(_to_float(ticket.get("point_count"), 0.0))
+        if point_count > 0:
+            return point_count
+        return max(1, len(list(ticket.get("points") or [])))
+    return 1
+
+
+def _ticket_stake_unit(ticket: dict[str, object]) -> int:
+    return max(100, _ticket_point_count(ticket) * 100) if _is_formation_ticket(ticket) else 100
+
+
+def _with_adjusted_stake(ticket: dict[str, object], stake: int) -> dict[str, object]:
+    out = dict(ticket)
+    unit = _ticket_stake_unit(ticket)
+    adjusted = int(stake / unit) * unit
+    if adjusted <= 0:
+        adjusted = 0
+    out["stake"] = adjusted
+    if _is_formation_ticket(out):
+        point_count = _ticket_point_count(out)
+        stake_per_point = int(adjusted / max(point_count, 1))
+        out["stake_per_point"] = stake_per_point
+        min_odds = _to_float(out.get("trifecta_odds_min") or out.get("win_odds"))
+        max_odds = _to_float(out.get("trifecta_odds_max") or out.get("win_odds"))
+        out["min_return_if_hit"] = int(stake_per_point * min_odds)
+        out["max_return_if_hit"] = int(stake_per_point * max_odds)
+    return out
+
+
+def _portfolio_summary(tickets: list[dict[str, object]]) -> dict[str, object]:
+    total_stake = _portfolio_total_stake(tickets)
+    expected_return = _portfolio_expected_return(tickets)
+    return {
+        "total_stake": total_stake,
+        "total_points": _portfolio_total_points(tickets),
+        "expected_return": int(expected_return),
+        "expected_profit": int(expected_return - total_stake),
+        "portfolio_ev": _fmt(_portfolio_ev(tickets)),
+        "no_gami": _portfolio_no_gami(tickets) if tickets else False,
+    }
 
 
 def _prune_gami_tickets(tickets: list[dict[str, object]]) -> list[dict[str, object]]:
@@ -1341,15 +1653,23 @@ def _annotate_portfolio_tickets(tickets: list[dict[str, object]]) -> list[dict[s
         return []
     total_stake = _portfolio_total_stake(tickets)
     portfolio_ev = _portfolio_ev(tickets)
+    expected_return = _portfolio_expected_return(tickets)
     no_gami = _portfolio_no_gami(tickets)
+    total_points = _portfolio_total_points(tickets)
     annotated: list[dict[str, object]] = []
     for ticket in tickets:
         out = dict(ticket)
         gross_return = _ticket_return_if_hit(ticket)
         out["portfolio_total_stake"] = total_stake
+        out["portfolio_total_points"] = total_points
         out["portfolio_ev"] = _fmt(portfolio_ev)
+        out["portfolio_expected_return"] = int(expected_return)
+        out["portfolio_expected_profit"] = int(expected_return - total_stake)
         out["portfolio_no_gami"] = no_gami
         out["return_if_hit"] = gross_return
+        if _is_formation_ticket(out):
+            out["return_if_hit_min"] = gross_return
+            out["return_if_hit_max"] = _ticket_max_return_if_hit(out)
         out["net_return_if_hit"] = gross_return - total_stake
         annotated.append(out)
     return annotated
@@ -1514,6 +1834,102 @@ def _has_win_standout(rows: list[dict[str, object]]) -> bool:
     return _to_float(leader.get("win_prob")) >= 0.20 and _to_float(leader.get("ev")) >= 1.08
 
 
+def _optimize_portfolio_stakes(
+    tickets: list[dict[str, object]],
+    *,
+    bankroll_per_race: int,
+    min_portfolio_ev: float,
+) -> list[dict[str, object]]:
+    if not tickets or bankroll_per_race <= 0:
+        return []
+
+    allocated: list[dict[str, object]] = []
+    for ticket in tickets:
+        unit = _ticket_stake_unit(ticket)
+        stake = int(_to_float(ticket.get("stake"), 0.0))
+        base_stake = max(unit, int(stake / unit) * unit)
+        if base_stake <= bankroll_per_race:
+            allocated.append(_with_adjusted_stake(ticket, base_stake))
+
+    if not allocated:
+        return []
+    if _portfolio_total_stake(allocated) > bankroll_per_race:
+        allocated = _rebalance_race_stakes(allocated, bankroll_per_race=bankroll_per_race)
+
+    while allocated:
+        remaining = bankroll_per_race - _portfolio_total_stake(allocated)
+        if remaining < 100:
+            break
+
+        best_idx = -1
+        best_score = 0.0
+        best_trial: list[dict[str, object]] | None = None
+        for idx, ticket in enumerate(allocated):
+            unit = _ticket_stake_unit(ticket)
+            if unit > remaining:
+                continue
+
+            current_stake = int(_to_float(ticket.get("stake"), 0.0))
+            max_stake = _ticket_max_portfolio_stake(ticket, bankroll_per_race=bankroll_per_race)
+            if current_stake + unit > max_stake:
+                continue
+
+            trial_ticket = _with_adjusted_stake(ticket, current_stake + unit)
+            trial = [dict(item) for item in allocated]
+            trial[idx] = trial_ticket
+            if _portfolio_ev(trial) < min_portfolio_ev:
+                continue
+            if _portfolio_no_gami(allocated) and not _portfolio_no_gami(trial):
+                continue
+
+            score = _stake_allocation_score(ticket)
+            if score > best_score:
+                best_idx = idx
+                best_score = score
+                best_trial = trial
+
+        if best_idx < 0 or best_trial is None:
+            break
+        allocated = best_trial
+
+    return allocated
+
+
+def _ticket_max_portfolio_stake(ticket: dict[str, object], *, bankroll_per_race: int) -> int:
+    bet_type = str(ticket.get("bet_type", ""))
+    if _is_formation_ticket(ticket):
+        share = 0.70
+    elif bet_type in {"place", "wide"}:
+        share = 0.45
+    elif bet_type == "win":
+        share = 0.35
+    elif bet_type in {"wakuren", "umaren"}:
+        share = 0.30
+    elif bet_type in {"umatan", "sanrenpuku"}:
+        share = 0.24
+    elif bet_type == "sanrentan":
+        share = 0.20
+    else:
+        share = 0.20
+
+    unit = _ticket_stake_unit(ticket)
+    max_stake = int((bankroll_per_race * share) / unit) * unit
+    return max(unit, max_stake)
+
+
+def _stake_allocation_score(ticket: dict[str, object]) -> float:
+    ev = _to_float(ticket.get("ev_current") or ticket.get("ev"))
+    edge = max(0.0, ev - 1.0)
+    if edge <= 0:
+        return 0.0
+    hit_prob = _to_float(ticket.get("hit_prob") or ticket.get("win_prob"))
+    confidence = _clamp(_to_float(ticket.get("confidence"), 1.0), minimum=0.30, maximum=2.50)
+    odds = max(1.0, _to_float(ticket.get("win_odds") or ticket.get("predicted_odds"), 1.0))
+    stability = 1.0 / (1.0 + abs(_to_float(ticket.get("ev_predicted")) - ev))
+    shape_bonus = 1.08 if _is_formation_ticket(ticket) else 1.0
+    return edge * math.sqrt(max(hit_prob, 0.001)) * confidence * stability * shape_bonus / math.sqrt(odds)
+
+
 def _rebalance_race_stakes(
     tickets: list[dict[str, object]],
     *,
@@ -1529,17 +1945,16 @@ def _rebalance_race_stakes(
     scaled: list[dict[str, object]] = []
     scale = bankroll_per_race / max(total, 1)
     for ticket in tickets:
-        out = dict(ticket)
         stake = int(_to_float(ticket.get("stake"), 0.0))
-        adjusted = int((stake * scale) / 100) * 100
+        unit = _ticket_stake_unit(ticket)
+        adjusted = int((stake * scale) / unit) * unit
         if adjusted <= 0:
             continue
-        out["stake"] = adjusted
-        scaled.append(out)
+        scaled.append(_with_adjusted_stake(ticket, adjusted))
 
     if not scaled:
         best = dict(max(tickets, key=lambda ticket: _to_float(ticket.get("ev_current") or ticket.get("ev"))))
-        best["stake"] = min(100, bankroll_per_race)
+        best = _with_adjusted_stake(best, min(_ticket_stake_unit(best), bankroll_per_race))
         return [best] if int(_to_float(best.get("stake"), 0.0)) > 0 else []
     return scaled
 
