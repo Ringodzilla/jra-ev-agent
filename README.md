@@ -214,3 +214,21 @@ r1,三連単,1-2-3,,8200
 ```bash
 python -m unittest discover -s tests -v
 ```
+
+## Review and CI gates
+
+Before committing or pushing changes, run the local review gate:
+
+```bash
+bash scripts/preflight.sh
+```
+
+This prints the working-tree review summary, checks feature leakage, and runs the full unit test suite.
+
+To install local Git hooks that surface review context before commit and block push on failing local CI:
+
+```bash
+bash scripts/install_git_hooks.sh
+```
+
+Remote CI is also configured in `.github/workflows/ci.yml` for pushes to `main` and pull requests.

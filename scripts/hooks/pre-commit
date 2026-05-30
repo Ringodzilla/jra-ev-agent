@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "pre-commit review: staged changes"
+git diff --cached --stat
+
+if git diff --cached --quiet; then
+  echo "pre-commit review: no staged changes"
+fi
