@@ -2,7 +2,7 @@ import unittest
 import tempfile
 from pathlib import Path
 
-from report.note import build_note_article, generate_note_markdown, write_note
+from report.note import build_note_article, generate_note_markdown, validate_note_artifact, write_note, write_note_artifacts
 from src.react_workflow import ArticleWriterAgent
 
 
@@ -16,6 +16,27 @@ class TestNoteArticle(unittest.TestCase):
             self.assertEqual(Path(td) / "note_artifact.md", artifact_path)
             self.assertTrue(artifact_path.exists())
             self.assertEqual(note_path.read_text(encoding="utf-8"), artifact_path.read_text(encoding="utf-8"))
+
+    def test_write_note_artifacts_returns_verified_metadata(self):
+        with tempfile.TemporaryDirectory() as td:
+            note_path = Path(td) / "note.md"
+            result = write_note_artifacts(note_path, "# note body")
+
+            self.assertEqual(str(note_path), result.body_markdown_path)
+            self.assertEqual(str(Path(td) / "note_artifact.md"), result.artifact_markdown_path)
+            self.assertTrue(result.artifact_exists)
+            self.assertGreater(result.artifact_size_bytes, 0)
+            self.assertTrue(result.artifact_synced)
+
+    def test_validate_note_artifact_rejects_unsynced_markdown(self):
+        with tempfile.TemporaryDirectory() as td:
+            note_path = Path(td) / "note.md"
+            artifact_path = Path(td) / "note_artifact.md"
+            note_path.write_text("# note body", encoding="utf-8")
+            artifact_path.write_text("# stale artifact", encoding="utf-8")
+
+            with self.assertRaises(ValueError):
+                validate_note_artifact(note_path, artifact_path)
 
     def test_generate_note_markdown_is_paste_ready(self):
         ev_rows = [

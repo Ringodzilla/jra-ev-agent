@@ -17,6 +17,7 @@ REQUIRED_PAYLOAD_KEYS = {
     "race_name",
     "race_date",
     "body_markdown_path",
+    "artifact_markdown_path",
     "mode_default",
 }
 
@@ -41,8 +42,24 @@ def validate_publish_inputs(payload_path: Path, note_path: Path) -> tuple[dict, 
     logging.info("validation start payload=%s note=%s", payload_path, note_path)
     payload = load_publish_payload(payload_path)
     note = load_note_markdown(note_path)
+    artifact_path = _resolve_payload_path(payload_path, str(payload["artifact_markdown_path"]))
+    artifact = load_note_markdown(artifact_path)
+    if not artifact.strip():
+        raise ValueError(f"artifact markdown is empty: {artifact_path}")
+    if artifact != note:
+        raise ValueError(f"artifact markdown is not synced with note markdown: {artifact_path}")
     logging.info("validation success")
     return payload, note
+
+
+def _resolve_payload_path(payload_path: Path, value: str) -> Path:
+    candidate = Path(value)
+    if candidate.is_absolute() or candidate.exists():
+        return candidate
+    sibling = payload_path.parent / candidate
+    if sibling.exists():
+        return sibling
+    return payload_path.parent.parent / candidate
 
 
 def write_publish_preview(preview_path: Path, payload: dict, note: str, intended_mode: str) -> None:

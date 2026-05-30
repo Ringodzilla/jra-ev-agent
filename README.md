@@ -63,6 +63,11 @@ JRAのレースデータを取得し、**EVモデリングに直接使える整�
   * 通常候補は券種ごとのEV閾値を満たしたものだけを採用
   * 保険候補はJRA実オッズあり、EV下限あり、追加後のポートフォリオEVが1.0以上、的中時回収が総投資額以上の場合だけ採用
   * 最終買い目は的中時に総投資額を下回る組み合わせを pruning して、ガミりやすい構成を避ける
+* **Verified note artifact output**
+
+  * note本文は `report/note.md`、提出用Markdown artifact は `report/note_artifact.md` に同期出力
+  * `publish_payload.json` には `artifact_markdown_path`、`artifact_exists`、`artifact_size_bytes`、`artifact_synced` を保存
+  * publish前検証では本文Markdownとartifact Markdownの不一致・空ファイル・未生成をエラーとして扱う
 
 ## Architecture
 

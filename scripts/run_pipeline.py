@@ -14,7 +14,7 @@ if str(ROOT) not in sys.path:
 
 from analysis.ev import save_ev
 from jra_scraper.config import ScrapeConfig
-from report.note import generate_note_markdown, write_note
+from report.note import generate_note_markdown, write_note_artifacts
 from src.react_workflow import ReactiveRaceWorkflow, WorkflowSettings
 
 
@@ -94,7 +94,7 @@ def run_analysis_phase(
             race_config=race_configs[0] if race_configs else {},
         )
     )
-    artifact_path = write_note(note_path, note)
+    artifact_result = write_note_artifacts(note_path, note)
 
     payload = {
         "title": article.get("title") or (race_configs[0].get("note_title") if race_configs else "jra-ev-agent analysis"),
@@ -102,8 +102,12 @@ def run_analysis_phase(
         "slug": race_configs[0]["output_slug"] if race_configs else "jra-ev-analysis",
         "race_name": primary_race_name,
         "race_date": race_configs[0]["race_date"] if race_configs else "",
-        "body_markdown_path": str(note_path),
-        "artifact_markdown_path": str(artifact_path),
+        "body_markdown_path": artifact_result.body_markdown_path,
+        "artifact_markdown_path": artifact_result.artifact_markdown_path,
+        "artifact_exists": artifact_result.artifact_exists,
+        "artifact_size_bytes": artifact_result.artifact_size_bytes,
+        "artifact_synced": artifact_result.artifact_synced,
+        "artifact": artifact_result.to_dict(),
         "mode_default": "browser:draft",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "dry_run": True,

@@ -1,8 +1,21 @@
 from __future__ import annotations
 
+from dataclasses import asdict, dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 import re
+
+
+@dataclass(frozen=True)
+class NoteArtifactResult:
+    body_markdown_path: str
+    artifact_markdown_path: str
+    artifact_exists: bool
+    artifact_size_bytes: int
+    artifact_synced: bool
+
+    def to_dict(self) -> dict[str, object]:
+        return asdict(self)
 
 
 def build_note_article(
@@ -108,6 +121,35 @@ def write_note(path: Path, text: str, *, artifact_path: Path | None = None) -> P
     resolved_artifact_path.parent.mkdir(parents=True, exist_ok=True)
     resolved_artifact_path.write_text(text, encoding="utf-8")
     return resolved_artifact_path
+
+
+def write_note_artifacts(path: Path, text: str, *, artifact_path: Path | None = None) -> NoteArtifactResult:
+    """Write the note body and the user-facing artifact, then verify both outputs."""
+    resolved_artifact_path = write_note(path, text, artifact_path=artifact_path)
+    validate_note_artifact(path, resolved_artifact_path, expected_text=text)
+    return NoteArtifactResult(
+        body_markdown_path=str(path),
+        artifact_markdown_path=str(resolved_artifact_path),
+        artifact_exists=resolved_artifact_path.exists(),
+        artifact_size_bytes=resolved_artifact_path.stat().st_size,
+        artifact_synced=path.read_text(encoding="utf-8") == resolved_artifact_path.read_text(encoding="utf-8"),
+    )
+
+
+def validate_note_artifact(body_path: Path, artifact_path: Path, *, expected_text: str | None = None) -> None:
+    if not body_path.exists():
+        raise FileNotFoundError(f"note markdown file not found: {body_path}")
+    if not artifact_path.exists():
+        raise FileNotFoundError(f"note artifact markdown file not found: {artifact_path}")
+
+    body = body_path.read_text(encoding="utf-8")
+    artifact = artifact_path.read_text(encoding="utf-8")
+    if not artifact.strip():
+        raise ValueError(f"note artifact markdown is empty: {artifact_path}")
+    if expected_text is not None and artifact != expected_text:
+        raise ValueError("note artifact markdown does not match generated markdown")
+    if body != artifact:
+        raise ValueError("note artifact markdown is not synced with body markdown")
 
 
 def _headline(
