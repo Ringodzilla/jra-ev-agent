@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 
 try:
-    from scripts.run_pipeline import load_race_configs
+    from scripts.run_pipeline import _race_artifact_id, load_race_configs
     from jra_scraper.pipeline import JRAPipeline
     HAS_RUN_PIPELINE = True
 except ModuleNotFoundError:
@@ -36,6 +36,19 @@ class TestPipelineEntrypoints(unittest.TestCase):
 
         self.assertEqual("芝", race.target_surface)
         self.assertEqual("1600", race.target_distance)
+
+    def test_race_artifact_id_prefers_stable_race_metadata(self):
+        artifact_id = _race_artifact_id(
+            {
+                "race_date": "2026-05-30",
+                "track": "京都",
+                "race_number": 11,
+                "output_slug": "sample",
+            },
+            [],
+        )
+
+        self.assertEqual("20260530_京都_11", artifact_id)
 
 
 if __name__ == "__main__":

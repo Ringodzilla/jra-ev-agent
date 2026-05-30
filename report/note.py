@@ -629,6 +629,9 @@ def _reference_candidate_labels(
     candidates: list[str] = []
     if ticket_rows:
         return [_ticket_label(ticket) for ticket in ticket_rows[:6]]
+    invalidated_tickets = _invalidated_ticket_rows(tickets)
+    if invalidated_tickets:
+        return [_ticket_label(ticket) for ticket in invalidated_tickets[:6]]
 
     for key, label in (
         ("fukusho", "複勝"),
@@ -657,7 +660,19 @@ def _reference_candidate_details(
 ) -> list[str]:
     if ticket_rows:
         return [_ticket_summary(ticket) for ticket in ticket_rows[:6]]
+    invalidated_tickets = _invalidated_ticket_rows(tickets)
+    if invalidated_tickets:
+        return [_ticket_summary(ticket) for ticket in invalidated_tickets[:6]]
     return _reference_candidate_labels(ticket_rows, tickets)
+
+
+def _invalidated_ticket_rows(tickets: dict[str, object]) -> list[dict[str, object]]:
+    out = [dict(ticket) for ticket in list(tickets.get("invalidated_tickets") or [])]
+    if out:
+        return out
+    for race in list(tickets.get("races") or []):
+        out.extend(dict(ticket) for ticket in list(dict(race).get("invalidated_tickets") or []))
+    return out
 
 
 def _ticket_horse_display(ticket: dict[str, object]) -> str:

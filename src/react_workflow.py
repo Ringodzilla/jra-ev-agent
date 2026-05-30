@@ -329,6 +329,8 @@ class ReactiveRaceWorkflow:
                 dict(bet_plan),
                 attempt=attempt,
             )
+            if review.get("status") != "OK":
+                bet_plan = _downgrade_ticket_plan_for_review(dict(bet_plan), review)
             article = self.article_writer.run(
                 race_configs,
                 ev_rows=list(calculated.get("ev_rows") or []),
@@ -417,6 +419,38 @@ def _probability_sums(ev_rows: list[dict[str, object]]) -> dict[str, float]:
         race_id = str(row.get("race_id", ""))
         totals[race_id] = totals.get(race_id, 0.0) + _to_float(row.get("win_prob"))
     return totals
+
+
+def _downgrade_ticket_plan_for_review(ticket_plan: dict[str, object], review: dict[str, object]) -> dict[str, object]:
+    tickets = [dict(ticket) for ticket in list(ticket_plan.get("tickets") or [])]
+    if not tickets:
+        return ticket_plan
+
+    out = dict(ticket_plan)
+    out["invalidated_tickets"] = tickets
+    out["tickets"] = []
+    out["ticket_status"] = "invalidated_by_reviewer"
+    out["invalidation_reason"] = str(review.get("reason", "")).strip()
+    out["portfolio_summary"] = {
+        "total_stake": 0,
+        "total_points": 0,
+        "expected_return": 0,
+        "expected_profit": 0,
+        "portfolio_ev": "0",
+        "no_gami": False,
+    }
+
+    downgraded_races = []
+    for race in list(ticket_plan.get("races") or []):
+        race_out = dict(race)
+        race_tickets = [dict(ticket) for ticket in list(race_out.get("tickets") or [])]
+        race_out["invalidated_tickets"] = race_tickets
+        race_out["tickets"] = []
+        race_out["ticket_status"] = "invalidated_by_reviewer"
+        race_out["portfolio"] = out["portfolio_summary"]
+        downgraded_races.append(race_out)
+    out["races"] = downgraded_races
+    return out
 
 
 def _latest_snapshot_timestamp(rows: list[dict[str, object]] | list[dict[str, str]]) -> str:

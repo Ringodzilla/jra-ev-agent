@@ -179,6 +179,35 @@ class TestNoteArticle(unittest.TestCase):
         self.assertIn("直前のオッズ変動に対して期待値が安定しきらないため", article["markdown"])
         self.assertIn("予想時点: 2026-04-12 12:55 JST", article["markdown"])
 
+    def test_article_writer_uses_invalidated_tickets_as_references(self):
+        agent = ArticleWriterAgent()
+        article = agent.run(
+            [{"race_name": "サンプル", "race_date": "2026-04-12", "track": "阪神", "race_number": 11}],
+            ev_rows=[],
+            ticket_plan={
+                "tickets": [],
+                "invalidated_tickets": [
+                    {
+                        "race_id": "r1",
+                        "bet_type": "wide",
+                        "horse_name": "A - B",
+                        "horse_number": "1-2",
+                        "horse_names": ["A", "B"],
+                        "horse_numbers": ["1", "2"],
+                        "stake": 300,
+                        "wide_odds_est": "8.1",
+                        "ev_current": "1.22",
+                    }
+                ],
+            },
+            review={"status": "NG", "reason": "ticket plan contains low-confidence or sub-threshold tickets"},
+            quality_report={"issue_count": 0},
+        )
+
+        self.assertEqual(0, article["ticket_count"])
+        self.assertIn("参考候補: ワイド 1-2 A - B 300円 / EV 1.220", article["markdown"])
+        self.assertIn("正式な買い目候補はありませんが、参考候補は 1 点あります。", article["markdown"])
+
     def test_build_note_article_returns_structured_metadata(self):
         article = build_note_article(
             "サンプルレース",

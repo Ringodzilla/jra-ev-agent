@@ -1,6 +1,6 @@
 import unittest
 
-from src.react_workflow import ReactiveRaceWorkflow
+from src.react_workflow import ReactiveRaceWorkflow, _downgrade_ticket_plan_for_review
 
 
 class TestWorkflowRouting(unittest.TestCase):
@@ -52,6 +52,44 @@ class TestWorkflowRouting(unittest.TestCase):
             ]
         )
         self.assertEqual("domestic", key)
+
+    def test_reviewer_ng_downgrades_tickets_to_invalidated_references(self):
+        plan = {
+            "tickets": [
+                {
+                    "race_id": "r1",
+                    "bet_type": "wide",
+                    "horse_number": "1-2",
+                    "horse_name": "A - B",
+                    "stake": 400,
+                    "ev_current": "1.20",
+                }
+            ],
+            "races": [
+                {
+                    "race_id": "r1",
+                    "tickets": [
+                        {
+                            "race_id": "r1",
+                            "bet_type": "wide",
+                            "horse_number": "1-2",
+                            "horse_name": "A - B",
+                            "stake": 400,
+                            "ev_current": "1.20",
+                        }
+                    ],
+                }
+            ],
+            "portfolio_summary": {"total_stake": 400},
+        }
+
+        downgraded = _downgrade_ticket_plan_for_review(plan, {"status": "NG", "reason": "risk"})
+
+        self.assertEqual([], downgraded["tickets"])
+        self.assertEqual("invalidated_by_reviewer", downgraded["ticket_status"])
+        self.assertEqual(1, len(downgraded["invalidated_tickets"]))
+        self.assertEqual(0, downgraded["portfolio_summary"]["total_stake"])
+        self.assertEqual([], downgraded["races"][0]["tickets"])
 
 
 if __name__ == "__main__":

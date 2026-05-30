@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import shutil
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -80,8 +81,14 @@ def run_analysis_phase(
     note_path = ROOT / "report/note.md"
     payload_path = ROOT / "report/publish_payload.json"
     run_path = ROOT / "report/pipeline_run.json"
+    race_artifact_dir = ROOT / "report/races" / _race_artifact_id(race_configs[0] if race_configs else {}, ev_rows)
+    race_note_path = race_artifact_dir / "note.md"
+    race_payload_path = race_artifact_dir / "publish_payload.json"
+    race_run_path = race_artifact_dir / "pipeline_run.json"
+    race_ev_path = race_artifact_dir / "race_ev.csv"
 
     save_ev(ev_rows, ev_path)
+    save_ev(ev_rows, race_ev_path)
     primary_race_name = race_configs[0]["race_name"] if race_configs else "JRAレース"
     note = str(
         article.get("markdown")
@@ -94,7 +101,8 @@ def run_analysis_phase(
             race_config=race_configs[0] if race_configs else {},
         )
     )
-    artifact_result = write_note_artifacts(note_path, note)
+    latest_artifact_result = write_note_artifacts(note_path, note)
+    artifact_result = write_note_artifacts(race_note_path, note)
 
     payload = {
         "title": article.get("title") or (race_configs[0].get("note_title") if race_configs else "jra-ev-agent analysis"),
@@ -108,18 +116,59 @@ def run_analysis_phase(
         "artifact_size_bytes": artifact_result.artifact_size_bytes,
         "artifact_synced": artifact_result.artifact_synced,
         "artifact": artifact_result.to_dict(),
+        "latest_body_markdown_path": latest_artifact_result.body_markdown_path,
+        "latest_artifact_markdown_path": latest_artifact_result.artifact_markdown_path,
+        "race_artifact_dir": str(race_artifact_dir),
         "mode_default": "browser:draft",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "dry_run": True,
         "review_status": review.get("status", "UNKNOWN"),
         "article_status": article.get("status", "unknown"),
         "quality_report_path": str(config.quality_report_path),
-        "ev_csv_path": str(ev_path),
+        "ev_csv_path": str(race_ev_path),
+        "latest_ev_csv_path": str(ev_path),
     }
     payload_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    race_payload_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     run_path.write_text(json.dumps(outputs, ensure_ascii=False, indent=2), encoding="utf-8")
+    race_run_path.write_text(json.dumps(outputs, ensure_ascii=False, indent=2), encoding="utf-8")
+    _copy_stage_outputs(config.stages_dir, race_artifact_dir / "stages")
     logging.info("analysis phase completed")
     return payload
+
+
+def _race_artifact_id(race_config: dict[str, object], ev_rows: list[dict[str, object]]) -> str:
+    race_id = str(race_config.get("race_id", "")).strip() or _first_nonempty(ev_rows, "race_id")
+    if race_id:
+        return _safe_path_part(race_id)
+
+    race_date = str(race_config.get("race_date", "")).replace("-", "").strip()
+    track = str(race_config.get("track", "")).strip()
+    race_number = str(race_config.get("race_number", "")).strip()
+    if race_date and track and race_number:
+        return _safe_path_part(f"{race_date}_{track}_{int(race_number):02d}")
+    return _safe_path_part(str(race_config.get("output_slug") or "unknown_race"))
+
+
+def _copy_stage_outputs(source: Path, destination: Path) -> None:
+    if not source.exists():
+        return
+    if destination.exists():
+        shutil.rmtree(destination)
+    shutil.copytree(source, destination)
+
+
+def _first_nonempty(rows: list[dict[str, object]], key: str) -> str:
+    for row in rows:
+        value = str(row.get(key, "")).strip()
+        if value:
+            return value
+    return ""
+
+
+def _safe_path_part(value: str) -> str:
+    cleaned = "".join(ch if ch.isalnum() or ch in "-_" else "_" for ch in value)
+    return cleaned.strip("_") or "unknown_race"
 
 
 def main() -> None:

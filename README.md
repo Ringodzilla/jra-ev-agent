@@ -66,8 +66,17 @@ JRAのレースデータを取得し、**EVモデリングに直接使える整�
 * **Verified note artifact output**
 
   * note本文は `report/note.md`、提出用Markdown artifact は `report/note_artifact.md` に同期出力
+  * レース別の再現用artifactは `report/races/<race_id>/` に保存し、別レース実行による上書きを避ける
   * `publish_payload.json` には `artifact_markdown_path`、`artifact_exists`、`artifact_size_bytes`、`artifact_synced` を保存
   * publish前検証では本文Markdownとartifact Markdownの不一致・空ファイル・未生成をエラーとして扱う
+* **Reviewer-first ticket safety**
+
+  * `reviewer` が `NG` の場合、正式な `tickets` は空にし、候補は `invalidated_tickets` として参考扱いへ降格
+  * ハイペース時は前受け同士のワイドを減点し、枠連は枠内の弱馬ノイズを補正して過大評価を抑える
+* **Result label accumulation**
+
+  * 振り返りJSONから `data/processed/result_labels.csv` にJRA風払戻ラベルを蓄積
+  * アルゴリズム変更は単発レースの印象ではなく、蓄積ラベルを使った固定評価で判断する
 
 ## Architecture
 
@@ -232,3 +241,13 @@ bash scripts/install_git_hooks.sh
 ```
 
 Remote CI is also configured in `.github/workflows/ci.yml` for pushes to `main` and pull requests.
+
+## Result label accumulation
+
+After creating a race review JSON, append its payout labels for fixed evaluation:
+
+```bash
+python scripts/append_result_labels.py --review-json report/aoi_stakes_20260530_review.json
+```
+
+The output is idempotently appended to `data/processed/result_labels.csv`, which can be passed to strategy evaluation as labels.

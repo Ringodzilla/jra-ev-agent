@@ -430,6 +430,8 @@ def _build_wide_ticket(
     live = _lookup_live_odds(live_odds, "wide", horse_numbers)
     current_odds_est = _live_odds_value(live) or _estimate_market_pair_odds(market_pair_prob)
     predicted_odds_est = _estimate_predicted_pair_odds(left, right, current_odds_est=current_odds_est)
+    pace_adjustment = _wide_pace_adjustment(left, right)
+    pair_prob *= pace_adjustment
     ev_current = pair_prob * current_odds_est if current_odds_est > 0 else 0.0
     ev_predicted = pair_prob * predicted_odds_est if predicted_odds_est > 0 else 0.0
 
@@ -477,6 +479,7 @@ def _build_wide_ticket(
         "predicted_odds_source": "jra_live" if live else "pair_estimated",
         "odds_source": "jra_live" if live else "estimated",
         "confidence": _fmt(confidence),
+        "pace_adjustment": _fmt(pace_adjustment),
         "legs": [
             {
                 "horse_id": horse_ids[0],
@@ -566,6 +569,8 @@ def _build_wakuren_ticket(
 ) -> dict[str, object] | None:
     hit_prob = _frame_combo_hit_prob(left_rows, right_rows, same_frame=left_frame == right_frame, key="win_prob")
     market_prob = _frame_combo_hit_prob(left_rows, right_rows, same_frame=left_frame == right_frame, key="market_prob")
+    frame_quality_adjustment = _frame_quality_adjustment(left_rows, right_rows, same_frame=left_frame == right_frame)
+    hit_prob *= frame_quality_adjustment
     if hit_prob < 0.035 or market_prob <= 0:
         return None
 
@@ -616,6 +621,7 @@ def _build_wakuren_ticket(
         "predicted_odds_source": "jra_live" if live else "wakuren_estimated",
         "odds_source": "jra_live" if live else "estimated",
         "confidence": _fmt(confidence),
+        "frame_quality_adjustment": _fmt(frame_quality_adjustment),
         "legs": [
             {
                 "frame_number": left_frame,
@@ -1312,6 +1318,24 @@ def _estimate_market_pair_prob(
     return _clamp(joint, minimum=0.0, maximum=min(left_place, right_place) * 0.98)
 
 
+def _wide_pace_adjustment(left: dict[str, object], right: dict[str, object]) -> float:
+    high_mix = max(_to_float(left.get("pace_mix_high")), _to_float(right.get("pace_mix_high")))
+    if high_mix < 0.45:
+        return 1.0
+
+    left_front = _to_float(left.get("front_rate"), 0.5)
+    right_front = _to_float(right.get("front_rate"), 0.5)
+    if left_front < 0.62 or right_front < 0.62:
+        return 1.0
+
+    avg_closing = (_to_float(left.get("closing_strength")) + _to_float(right.get("closing_strength"))) / 2.0
+    if avg_closing < 0.35:
+        return 0.72
+    if avg_closing < 0.50:
+        return 0.84
+    return 0.92
+
+
 def _estimate_market_pair_odds(market_pair_prob: float) -> float:
     if market_pair_prob <= 0:
         return 0.0
@@ -1782,6 +1806,29 @@ def _frame_combo_hit_prob(
             total += _ordered_finish_prob([left, right], key=key)
             total += _ordered_finish_prob([right, left], key=key)
     return total
+
+
+def _frame_quality_adjustment(
+    left_rows: list[dict[str, object]],
+    right_rows: list[dict[str, object]],
+    *,
+    same_frame: bool,
+) -> float:
+    if same_frame:
+        return _single_frame_quality(left_rows) ** 2
+    return _single_frame_quality(left_rows) * _single_frame_quality(right_rows)
+
+
+def _single_frame_quality(rows: list[dict[str, object]]) -> float:
+    if len(rows) <= 1:
+        return 1.0
+    probs = sorted((_to_float(row.get("win_prob")) for row in rows), reverse=True)
+    top = probs[0] if probs else 0.0
+    if top <= 0:
+        return 0.80
+    second = probs[1] if len(probs) > 1 else 0.0
+    depth_ratio = second / top
+    return _clamp(0.82 + (0.18 * depth_ratio), minimum=0.82, maximum=1.0)
 
 
 def _frame_horse_summaries(rows: list[dict[str, object]]) -> list[dict[str, object]]:

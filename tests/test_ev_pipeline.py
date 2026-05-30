@@ -2,7 +2,7 @@ import unittest
 
 from analysis.ev import build_feature_rows, compute_ev, simulate_race_scenarios
 from src.react_workflow import ReviewerAgent, WorkflowSettings
-from strategy.betting import generate_tickets
+from strategy.betting import _frame_quality_adjustment, _wide_pace_adjustment, generate_tickets
 
 
 class TestEVPipeline(unittest.TestCase):
@@ -289,6 +289,23 @@ class TestEVPipeline(unittest.TestCase):
         self.assertEqual(2, len(umatan["horse_numbers"]))
         self.assertGreater(float(sanrenpuku["ev_current"]), 1.0)
         self.assertEqual(3, len(sanrentan["horse_numbers"]))
+
+    def test_high_pace_penalizes_front_pair_wide(self):
+        adjustment = _wide_pace_adjustment(
+            {"pace_mix_high": "0.55", "front_rate": "0.76", "closing_strength": "0.30"},
+            {"pace_mix_high": "0.55", "front_rate": "0.70", "closing_strength": "0.34"},
+        )
+
+        self.assertLess(adjustment, 1.0)
+
+    def test_frame_quality_penalizes_one_strong_one_weak_frame(self):
+        adjustment = _frame_quality_adjustment(
+            [{"win_prob": "0.20"}, {"win_prob": "0.02"}],
+            [{"win_prob": "0.18"}, {"win_prob": "0.03"}],
+            same_frame=False,
+        )
+
+        self.assertLess(adjustment, 1.0)
 
     def test_generate_tickets_allocates_stakes_by_portfolio_ev(self):
         ev_rows = []
