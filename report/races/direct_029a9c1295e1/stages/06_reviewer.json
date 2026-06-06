@@ -1,0 +1,105 @@
+{
+  "status": "NG",
+  "reason": "ticket plan overweights extreme longshots; predicted/current EV divergence detected: ウップヘリーア@direct_029a9c1295e1, メリディアンスター@direct_638f0e20378a, スナッピードレッサ@direct_638f0e20378a",
+  "fix": "",
+  "repair_actions": [],
+  "probability_sums": {
+    "direct_029a9c1295e1": "1",
+    "direct_638f0e20378a": "1",
+    "direct_64927940a911": "1",
+    "direct_8103152b1284": "0.999998",
+    "direct_c163d49ee19d": "1"
+  },
+  "divergent_rows": [
+    {
+      "race_id": "direct_029a9c1295e1",
+      "horse_id": "pw01dud002023107228/05",
+      "horse_name": "ウップヘリーア",
+      "popularity_band": "favorite",
+      "current_odds": "2.8",
+      "predicted_odds": "3.139246",
+      "ev_current": "0.628325",
+      "ev_predicted": "0.704452",
+      "ev_delta_ratio": "0.121159",
+      "odds_gap_ratio": "0.121159"
+    },
+    {
+      "race_id": "direct_638f0e20378a",
+      "horse_id": "pw01dud002022100905/CE",
+      "horse_name": "メリディアンスター",
+      "popularity_band": "favorite",
+      "current_odds": "4.5",
+      "predicted_odds": "5.093909",
+      "ev_current": "0.727595",
+      "ev_predicted": "0.823623",
+      "ev_delta_ratio": "0.13198",
+      "odds_gap_ratio": "0.13198"
+    },
+    {
+      "race_id": "direct_638f0e20378a",
+      "horse_id": "pw01dud002022110007/C9",
+      "horse_name": "スナッピードレッサ",
+      "popularity_band": "favorite",
+      "current_odds": "1.9",
+      "predicted_odds": "2.363064",
+      "ev_current": "0.563059",
+      "ev_predicted": "0.700286",
+      "ev_delta_ratio": "0.243717",
+      "odds_gap_ratio": "0.243718"
+    },
+    {
+      "race_id": "direct_64927940a911",
+      "horse_id": "pw01dud002021105503/43",
+      "horse_name": "クルミナーレ",
+      "popularity_band": "favorite",
+      "current_odds": "4.8",
+      "predicted_odds": "5.443398",
+      "ev_current": "0.710444",
+      "ev_predicted": "0.805673",
+      "ev_delta_ratio": "0.134042",
+      "odds_gap_ratio": "0.134041"
+    },
+    {
+      "race_id": "direct_64927940a911",
+      "horse_id": "pw01dud002022103207/2A",
+      "horse_name": "ミュージシャン",
+      "popularity_band": "favorite",
+      "current_odds": "3.1",
+      "predicted_odds": "3.740447",
+      "ev_current": "0.587842",
+      "ev_predicted": "0.709287",
+      "ev_delta_ratio": "0.206595",
+      "odds_gap_ratio": "0.206596"
+    },
+    {
+      "race_id": "direct_8103152b1284",
+      "horse_id": "pw01dud002023106925/14",
+      "horse_name": "クレパスキュラー",
+      "popularity_band": "favorite",
+      "current_odds": "1.9",
+      "predicted_odds": "2.383247",
+      "ev_current": "0.51826",
+      "ev_predicted": "0.650074",
+      "ev_delta_ratio": "0.25434",
+      "odds_gap_ratio": "0.254341"
+    },
+    {
+      "race_id": "direct_c163d49ee19d",
+      "horse_id": "pw01dud002023102553/DE",
+      "horse_name": "ボクマダネムイヨ",
+      "popularity_band": "favorite",
+      "current_odds": "1.5",
+      "predicted_odds": "1.856855",
+      "ev_current": "0.557786",
+      "ev_predicted": "0.690485",
+      "ev_delta_ratio": "0.237903",
+      "odds_gap_ratio": "0.237903"
+    }
+  ],
+  "stage_counts": {
+    "entries": 68,
+    "feature_rows": 68,
+    "ev_rows": 68,
+    "tickets": 23
+  }
+}

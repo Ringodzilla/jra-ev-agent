@@ -50,6 +50,8 @@ def run_analysis_phase(
     bankroll_per_race: int = 1000,
     min_ev: float = 1.03,
     mode: str = "balanced",
+    win5_max_points: int | None = None,
+    win5_stake_yen_per_point: int = 100,
 ) -> dict:
     logging.info("analysis phase started")
 
@@ -61,6 +63,8 @@ def run_analysis_phase(
             bankroll_per_race=bankroll_per_race,
             min_ev=min_ev,
             mode=mode,
+            win5_max_points=win5_max_points,
+            win5_stake_yen_per_point=win5_stake_yen_per_point,
         ),
     )
     outputs = workflow.run(
@@ -181,7 +185,14 @@ def main() -> None:
     parser.add_argument("--max-repairs", type=int, default=1, help="How many self-repair retries to allow")
     parser.add_argument("--bankroll-per-race", type=int, default=1000, help="Budget cap per race in yen")
     parser.add_argument("--min-ev", type=float, default=1.03, help="Minimum EV required for ticket generation")
-    parser.add_argument("--mode", choices=["balanced", "aggressive"], default="balanced", help="Ticketing mode")
+    parser.add_argument(
+        "--mode",
+        choices=["balanced", "aggressive", "win5_under_10", "win5_compact", "win5_balanced", "win5_value"],
+        default="balanced",
+        help="Ticketing mode",
+    )
+    parser.add_argument("--win5-max-points", type=int, default=None, help="Maximum WIN5 formation points")
+    parser.add_argument("--win5-stake-yen-per-point", type=int, default=100, help="Stake per WIN5 point")
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -196,6 +207,8 @@ def main() -> None:
         bankroll_per_race=args.bankroll_per_race,
         min_ev=args.min_ev,
         mode=args.mode,
+        win5_max_points=args.win5_max_points,
+        win5_stake_yen_per_point=args.win5_stake_yen_per_point,
     )
     logging.info("outputs ready: %s", payload)
 

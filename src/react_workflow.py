@@ -10,6 +10,7 @@ from jra_scraper.config import ScrapeConfig
 from jra_scraper.pipeline import JRAPipeline
 from report.note import build_note_article
 from strategy.betting import generate_tickets
+from strategy.win5 import generate_win5_plan, is_win5_mode
 
 
 @dataclass
@@ -30,6 +31,8 @@ class WorkflowSettings:
     min_portfolio_ev: float = 1.0
     min_coverage_ev: float = 0.75
     mode: str = "balanced"
+    win5_max_points: int | None = None
+    win5_stake_yen_per_point: int = 100
     prefer_wide: bool = True
     max_ev_delta_abs: float = 0.20
     max_ev_delta_ratio: float = 0.18
@@ -121,6 +124,14 @@ class BetBuilderAgent:
         *,
         combo_odds: list[dict[str, object]] | list[dict[str, str]] | None = None,
     ) -> dict[str, object]:
+        if is_win5_mode(self.settings.mode):
+            return generate_win5_plan(
+                ev_rows,
+                mode=self.settings.mode,
+                max_points=self.settings.win5_max_points,
+                stake_yen_per_point=self.settings.win5_stake_yen_per_point,
+            )
+
         return generate_tickets(
             ev_rows,
             odds_rows=list(combo_odds or []),
@@ -180,23 +191,33 @@ class ReviewerAgent:
         if bad_prob_races:
             reasons.append(f"probability normalization drift detected: {bad_prob_races}")
 
-        risky_tickets = [
-            ticket
-            for ticket in tickets
-            if _ticket_ev(ticket, default=0.0) < _ticket_min_ev(ticket, self.settings)
-            or _ticket_hit_prob(ticket) < _ticket_min_prob(ticket)
-        ]
-        if risky_tickets:
-            reasons.append("ticket plan contains low-confidence or sub-threshold tickets")
+        if str(ticket_plan.get("bet_type", "")) == "win5":
+            win5_points = int(_to_float(ticket_plan.get("points"), 0.0))
+            if win5_points <= 0:
+                reasons.append("WIN5 formation has no valid points")
+            if self.settings.win5_max_points is not None and win5_points > self.settings.win5_max_points:
+                reasons.append("WIN5 formation exceeds max point constraint")
+            if len(list(ticket_plan.get("legs") or [])) != 5:
+                reasons.append("WIN5 formation must contain exactly five legs")
+        else:
+            risky_tickets = [
+                ticket
+                for ticket in tickets
+                if _ticket_ev(ticket, default=0.0) < _ticket_min_ev(ticket, self.settings)
+                or _ticket_hit_prob(ticket) < _ticket_min_prob(ticket)
+            ]
+            if risky_tickets:
+                reasons.append("ticket plan contains low-confidence or sub-threshold tickets")
 
-        longshot_overweight = [
-            ticket
-            for ticket in tickets
-            if _ticket_odds(ticket) >= _longshot_odds_threshold(ticket)
-            and int(_to_float(ticket.get("stake"), 0.0)) > _longshot_stake_threshold(ticket)
-        ]
-        if longshot_overweight:
-            reasons.append("ticket plan overweights extreme longshots")
+        if str(ticket_plan.get("bet_type", "")) != "win5":
+            longshot_overweight = [
+                ticket
+                for ticket in tickets
+                if _ticket_odds(ticket) >= _longshot_odds_threshold(ticket)
+                and int(_to_float(ticket.get("stake"), 0.0)) > _longshot_stake_threshold(ticket)
+            ]
+            if longshot_overweight:
+                reasons.append("ticket plan overweights extreme longshots")
 
         divergent_rows = _find_divergent_rows(
             ev_rows,
@@ -204,7 +225,7 @@ class ReviewerAgent:
             max_ev_delta_ratio=self.settings.max_ev_delta_ratio,
             max_odds_gap_ratio=self.settings.max_odds_gap_ratio,
         )
-        if divergent_rows:
+        if divergent_rows and str(ticket_plan.get("bet_type", "")) != "win5":
             reasons.append(
                 "predicted/current EV divergence detected: "
                 + ", ".join(

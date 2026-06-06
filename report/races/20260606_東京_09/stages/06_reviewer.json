@@ -1,0 +1,93 @@
+{
+  "status": "OK",
+  "reason": "quality gates passed",
+  "fix": "",
+  "repair_actions": [],
+  "probability_sums": {
+    "20260606_東京_09": "1.000002",
+    "20260606_東京_10": "1.000001",
+    "20260606_東京_11": "0.999998",
+    "20260606_阪神_10": "1",
+    "20260606_阪神_11": "1"
+  },
+  "divergent_rows": [
+    {
+      "race_id": "20260606_東京_10",
+      "horse_id": "pw01dud002023106925/14",
+      "horse_name": "クレパスキュラー",
+      "popularity_band": "favorite",
+      "current_odds": "1.8",
+      "predicted_odds": "2.25876",
+      "ev_current": "0.517756",
+      "ev_predicted": "0.649714",
+      "ev_delta_ratio": "0.254865",
+      "odds_gap_ratio": "0.254867"
+    },
+    {
+      "race_id": "20260606_東京_11",
+      "horse_id": "pw01dud002022100905/CE",
+      "horse_name": "メリディアンスター",
+      "popularity_band": "favorite",
+      "current_odds": "4.4",
+      "predicted_odds": "4.984623",
+      "ev_current": "0.726127",
+      "ev_predicted": "0.822607",
+      "ev_delta_ratio": "0.132869",
+      "odds_gap_ratio": "0.132869"
+    },
+    {
+      "race_id": "20260606_東京_11",
+      "horse_id": "pw01dud002022110007/C9",
+      "horse_name": "スナッピードレッサ",
+      "popularity_band": "favorite",
+      "current_odds": "2",
+      "predicted_odds": "2.464345",
+      "ev_current": "0.574735",
+      "ev_predicted": "0.708172",
+      "ev_delta_ratio": "0.232171",
+      "odds_gap_ratio": "0.232172"
+    },
+    {
+      "race_id": "20260606_阪神_10",
+      "horse_id": "pw01dud002023102553/DE",
+      "horse_name": "ボクマダネムイヨ",
+      "popularity_band": "favorite",
+      "current_odds": "1.5",
+      "predicted_odds": "1.863838",
+      "ev_current": "0.553296",
+      "ev_predicted": "0.687503",
+      "ev_delta_ratio": "0.242559",
+      "odds_gap_ratio": "0.242559"
+    },
+    {
+      "race_id": "20260606_阪神_11",
+      "horse_id": "pw01dud002021105503/43",
+      "horse_name": "クルミナーレ",
+      "popularity_band": "favorite",
+      "current_odds": "4.8",
+      "predicted_odds": "5.439375",
+      "ev_current": "0.711769",
+      "ev_predicted": "0.806579",
+      "ev_delta_ratio": "0.133203",
+      "odds_gap_ratio": "0.133203"
+    },
+    {
+      "race_id": "20260606_阪神_11",
+      "horse_id": "pw01dud002022103207/2A",
+      "horse_name": "ミュージシャン",
+      "popularity_band": "favorite",
+      "current_odds": "3.1",
+      "predicted_odds": "3.736726",
+      "ev_current": "0.589141",
+      "ev_predicted": "0.710148",
+      "ev_delta_ratio": "0.205396",
+      "odds_gap_ratio": "0.205395"
+    }
+  ],
+  "stage_counts": {
+    "entries": 68,
+    "feature_rows": 68,
+    "ev_rows": 68,
+    "tickets": 8
+  }
+}

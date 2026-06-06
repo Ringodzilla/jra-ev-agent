@@ -1,0 +1,29 @@
+{
+  "status": "NG",
+  "reason": "ticket plan overweights extreme longshots; predicted/current EV divergence detected: トロヴァトーレ@20260607_東京_11",
+  "fix": "",
+  "repair_actions": [],
+  "probability_sums": {
+    "20260607_東京_11": "1.000001"
+  },
+  "divergent_rows": [
+    {
+      "race_id": "20260607_東京_11",
+      "horse_id": "pw01dud002021105557/5F",
+      "horse_name": "トロヴァトーレ",
+      "popularity_band": "favorite",
+      "current_odds": "3.6",
+      "predicted_odds": "4.113653",
+      "ev_current": "0.628997",
+      "ev_predicted": "0.718743",
+      "ev_delta_ratio": "0.142681",
+      "odds_gap_ratio": "0.142681"
+    }
+  ],
+  "stage_counts": {
+    "entries": 17,
+    "feature_rows": 17,
+    "ev_rows": 17,
+    "tickets": 2
+  }
+}

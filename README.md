@@ -112,6 +112,29 @@ python scripts/run_pipeline.py
 6. note artifact Markdown同期（`report/note_artifact.md`）
 7. publish payload生成（`report/publish_payload.json`）
 
+## WIN5 mode
+
+WIN5は通常の単レース馬券とは別に、5レース分の勝率からフォーメーションを生成します。
+
+```bash
+python scripts/run_win5.py --config-path config/win5_races.json --mode win5_under_10 --max-points 10
+```
+
+通常エントリポイントからも実行できます。
+
+```bash
+python scripts/run_pipeline.py --config-path config/win5_races.json --mode win5_compact --win5-max-points 60
+```
+
+WIN5モード:
+
+* `win5_under_10`: 10点以下向け。固定レースを増やし、勝率上位中心で絞る
+* `win5_compact`: 20〜60点程度。的中率と点数を両立する標準モード
+* `win5_balanced`: 100〜500点程度。混戦レースを広げる
+* `win5_value`: 荒れ指数と単勝EVをやや強めに見る
+
+出力は `report/stages/05_bet_builder.json` に `bet_type=win5`、`legs`、`points`、`estimated_hit_prob`、`tickets` として保存されます。
+
 ## Publishing phase (separated)
 
 ```bash
