@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 
 try:
-    from scripts.run_pipeline import _race_artifact_id, load_race_configs
+    from scripts.run_pipeline import _artifact_dir_for_run, _race_artifact_id, load_race_configs
     from jra_scraper.pipeline import JRAPipeline
     HAS_RUN_PIPELINE = True
 except ModuleNotFoundError:
@@ -49,6 +49,40 @@ class TestPipelineEntrypoints(unittest.TestCase):
         )
 
         self.assertEqual("20260530_京都_11", artifact_id)
+
+    def test_artifact_dir_uses_mode_partition_for_win5(self):
+        artifact_dir = _artifact_dir_for_run(
+            Path("/repo"),
+            [
+                {
+                    "race_date": "2026-06-07",
+                    "track": "東京",
+                    "race_number": 9,
+                    "output_slug": "win5-leg-1",
+                }
+            ],
+            [],
+            mode="win5_under_10",
+        )
+
+        self.assertEqual(Path("/repo/report/win5/20260607/win5_under_10"), artifact_dir)
+
+    def test_artifact_dir_keeps_regular_race_layout(self):
+        artifact_dir = _artifact_dir_for_run(
+            Path("/repo"),
+            [
+                {
+                    "race_date": "2026-06-07",
+                    "track": "東京",
+                    "race_number": 11,
+                    "output_slug": "yasuda",
+                }
+            ],
+            [],
+            mode="balanced",
+        )
+
+        self.assertEqual(Path("/repo/report/races/20260607_東京_11"), artifact_dir)
 
 
 if __name__ == "__main__":

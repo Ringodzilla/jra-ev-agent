@@ -134,6 +134,7 @@ WIN5モード:
 * `win5_value`: 荒れ指数と単勝EVをやや強めに見る
 
 出力は `report/stages/05_bet_builder.json` に `bet_type=win5`、`legs`、`points`、`estimated_hit_prob`、`tickets` として保存されます。
+note artifact はモードごとに `report/win5/<date>/<mode>/note.md` へ保存されます。
 
 ## Publishing phase (separated)
 

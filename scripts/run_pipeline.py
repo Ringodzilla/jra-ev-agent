@@ -85,7 +85,7 @@ def run_analysis_phase(
     note_path = ROOT / "report/note.md"
     payload_path = ROOT / "report/publish_payload.json"
     run_path = ROOT / "report/pipeline_run.json"
-    race_artifact_dir = ROOT / "report/races" / _race_artifact_id(race_configs[0] if race_configs else {}, ev_rows)
+    race_artifact_dir = _artifact_dir_for_run(ROOT, race_configs, ev_rows, mode=mode)
     race_note_path = race_artifact_dir / "note.md"
     race_payload_path = race_artifact_dir / "publish_payload.json"
     race_run_path = race_artifact_dir / "pipeline_run.json"
@@ -152,6 +152,31 @@ def _race_artifact_id(race_config: dict[str, object], ev_rows: list[dict[str, ob
     if race_date and track and race_number:
         return _safe_path_part(f"{race_date}_{track}_{int(race_number):02d}")
     return _safe_path_part(str(race_config.get("output_slug") or "unknown_race"))
+
+
+def _artifact_dir_for_run(
+    root: Path,
+    race_configs: list[dict[str, object]],
+    ev_rows: list[dict[str, object]],
+    *,
+    mode: str,
+) -> Path:
+    if mode.startswith("win5_"):
+        return root / "report/win5" / _win5_artifact_date(race_configs, ev_rows) / _safe_path_part(mode)
+    return root / "report/races" / _race_artifact_id(race_configs[0] if race_configs else {}, ev_rows)
+
+
+def _win5_artifact_date(race_configs: list[dict[str, object]], ev_rows: list[dict[str, object]]) -> str:
+    for config in race_configs:
+        race_date = str(config.get("race_date", "")).strip()
+        if race_date:
+            return _safe_path_part(race_date.replace("-", ""))
+
+    race_date = _first_nonempty(ev_rows, "target_race_date")
+    if race_date:
+        return _safe_path_part(race_date.replace("-", ""))
+
+    return "unknown_date"
 
 
 def _copy_stage_outputs(source: Path, destination: Path) -> None:
