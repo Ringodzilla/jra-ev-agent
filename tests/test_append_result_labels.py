@@ -43,6 +43,23 @@ class TestAppendResultLabels(unittest.TestCase):
                 stored = list(csv.DictReader(file_obj))
             self.assertEqual(1, len(stored))
 
+    def test_rows_from_review_builds_win5_label_without_race_metadata(self):
+        rows = rows_from_review(
+            {
+                "result": {
+                    "win5": {
+                        "numbers": ["8", "4", "6", "2", "9"],
+                        "payout_yen_per_100": "3159870",
+                    }
+                }
+            }
+        )
+
+        self.assertEqual(
+            {"race_id": "WIN5", "式別": "WIN5", "組番": "8-4-6-2-9", "馬番": "", "払戻金": "3159870"},
+            rows[0],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

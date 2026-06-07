@@ -14,8 +14,9 @@ def generate_win5_plan(
     mode: str = "win5_compact",
     max_points: int | None = None,
     stake_yen_per_point: int = 100,
+    race_order: list[str] | None = None,
 ) -> dict[str, object]:
-    race_groups = _ordered_race_groups(ev_rows)
+    race_groups = _ordered_race_groups(ev_rows, race_order=race_order)
     if len(race_groups) != 5:
         return {
             "status": "NG",
@@ -58,6 +59,9 @@ def generate_win5_plan(
         "estimated_fair_odds": _fmt((1.0 / hit_prob) if hit_prob > 0 else 0.0),
         "legs": legs,
         "tickets": tickets,
+        "race_order": [race_id for race_id, _ in race_groups],
+        "race_order_source": "config" if race_order else "ev_rows",
+        "warnings": _win5_warnings(legs, mode=mode),
         "single": [leg["horses"][0] for leg in legs],
         "fixed_legs": [leg for leg in legs if len(leg["horses"]) == 1],
         "spread_legs": [leg for leg in legs if len(leg["horses"]) > 1],
@@ -79,6 +83,41 @@ def is_win5_mode(mode: str) -> bool:
     return mode in WIN5_MODES
 
 
+def evaluate_win5_coverage(plan: dict[str, object], result_numbers: list[str]) -> dict[str, object]:
+    legs = list(plan.get("legs") or [])
+    normalized_results = [str(number).strip() for number in result_numbers if str(number).strip()]
+    leg_results = []
+
+    for index, leg in enumerate(legs):
+        result_number = normalized_results[index] if index < len(normalized_results) else ""
+        selected_numbers = [str(horse.get("horse_number", "")).strip() for horse in list(leg.get("horses") or [])]
+        alternate_numbers = [str(horse.get("horse_number", "")).strip() for horse in list(leg.get("alternates") or [])]
+        top5_numbers = [str(horse.get("horse_number", "")).strip() for horse in list(leg.get("top5_candidates") or [])]
+        leg_results.append(
+            {
+                "leg": int(_to_float(leg.get("leg"), index + 1)),
+                "race_id": str(leg.get("race_id", "")),
+                "result_number": result_number,
+                "selected": result_number in selected_numbers,
+                "alternate": result_number in alternate_numbers,
+                "top5_covered": result_number in top5_numbers,
+            }
+        )
+
+    selected_hits = sum(1 for item in leg_results if item["selected"])
+    top5_hits = sum(1 for item in leg_results if item["top5_covered"])
+    return {
+        "bet_type": "win5",
+        "result_numbers": normalized_results,
+        "hit": selected_hits == 5 and len(leg_results) == 5,
+        "selected_hit_count": selected_hits,
+        "selected_coverage_rate": _fmt(selected_hits / max(len(leg_results), 1)),
+        "top5_hit_count": top5_hits,
+        "top5_coverage_rate": _fmt(top5_hits / max(len(leg_results), 1)),
+        "leg_results": leg_results,
+    }
+
+
 def _default_max_points(mode: str) -> int:
     if mode == "win5_under_10":
         return 10
@@ -89,7 +128,11 @@ def _default_max_points(mode: str) -> int:
     return 60
 
 
-def _ordered_race_groups(ev_rows: list[dict[str, object]]) -> list[tuple[str, list[dict[str, object]]]]:
+def _ordered_race_groups(
+    ev_rows: list[dict[str, object]],
+    *,
+    race_order: list[str] | None = None,
+) -> list[tuple[str, list[dict[str, object]]]]:
     by_race: dict[str, list[dict[str, object]]] = defaultdict(list)
     order: list[str] = []
     for row in ev_rows:
@@ -99,6 +142,10 @@ def _ordered_race_groups(ev_rows: list[dict[str, object]]) -> list[tuple[str, li
         if race_id not in by_race:
             order.append(race_id)
         by_race[race_id].append(row)
+    if race_order:
+        ordered = [race_id for race_id in race_order if race_id in by_race]
+        ordered.extend(race_id for race_id in order if race_id not in ordered)
+        order = ordered
     return [(race_id, by_race[race_id]) for race_id in order]
 
 
@@ -153,6 +200,7 @@ def _allocation_score(
     coverages = []
     chaos_fit = 0.0
     value_bonus = 0.0
+    fixed_risk_penalty = 0.0
     for summary, count in zip(summaries, counts):
         ranked = list(summary["ranked"])
         selected = ranked[:count]
@@ -160,13 +208,22 @@ def _allocation_score(
         coverages.append(max(coverage, 1e-9))
         chaos_fit += _to_float(summary["chaos"]) * math.log(count + 1.0)
         value_bonus += sum(max(0.0, _to_float(row.get("ev")) - 1.0) * 0.015 for row in selected)
+        if mode == "win5_under_10" and count == 1:
+            fixed_risk_penalty += _under_10_fixed_risk(summary)
 
     hit_prob = math.prod(coverages)
     points = math.prod(counts)
     point_efficiency = 1.0 - (points / max(point_limit, 1)) * 0.04
     fixed_bonus = counts.count(1) * (0.012 if mode == "win5_under_10" else 0.004)
     value_weight = 1.0 if mode == "win5_value" else 0.35
-    return math.log(hit_prob) + (0.12 * chaos_fit) + (value_weight * value_bonus) + point_efficiency + fixed_bonus
+    return (
+        math.log(hit_prob)
+        + (0.12 * chaos_fit)
+        + (value_weight * value_bonus)
+        + point_efficiency
+        + fixed_bonus
+        - fixed_risk_penalty
+    )
 
 
 def _build_leg(leg_number: int, summary: dict[str, object], count: int) -> dict[str, object]:
@@ -182,6 +239,9 @@ def _build_leg(leg_number: int, summary: dict[str, object], count: int) -> dict[
         "fixed": len(selected) == 1,
         "horses": [_horse_payload(row) for row in selected],
         "alternates": [_horse_payload(row) for row in ranked[count : count + 3]],
+        "top5_candidates": [_horse_payload(row) for row in ranked[:5]],
+        "chaos_candidates": [_horse_payload(row) for row in ranked[:5]] if _to_float(summary["chaos"]) >= 0.78 else [],
+        "warnings": _leg_warnings(summary, selected),
     }
 
 
@@ -249,6 +309,56 @@ def _popularity_mix(legs: list[dict[str, object]]) -> dict[str, int]:
             else:
                 mix["long"] += 1
     return mix
+
+
+def _under_10_fixed_risk(summary: dict[str, object]) -> float:
+    ranked = list(summary["ranked"])
+    if not ranked:
+        return 0.0
+
+    top = ranked[0]
+    top_prob = _to_float(top.get("win_prob"))
+    penalty = 0.0
+    if top_prob < 0.35:
+        penalty += 0.55 + ((0.35 - top_prob) * 2.0)
+
+    value_rivals = [
+        row
+        for row in ranked[1:5]
+        if _to_float(row.get("ev")) > 1.0
+    ]
+    if value_rivals:
+        penalty += 0.28 + (0.08 * min(len(value_rivals), 3))
+
+    if _to_float(summary.get("chaos")) >= 0.78:
+        penalty += 0.18
+    return penalty
+
+
+def _leg_warnings(summary: dict[str, object], selected: list[dict[str, object]]) -> list[str]:
+    if len(selected) != 1:
+        return []
+
+    ranked = list(summary["ranked"])
+    top = selected[0]
+    warnings: list[str] = []
+    if _to_float(top.get("win_prob")) < 0.35:
+        warnings.append("fixed_favorite_below_35pct")
+    if any(_to_float(row.get("ev")) > 1.0 for row in ranked[1:5]):
+        warnings.append("fixed_with_value_rivals_rank2_to_5")
+    if _to_float(summary.get("chaos")) >= 0.78:
+        warnings.append("fixed_high_chaos_leg")
+    return warnings
+
+
+def _win5_warnings(legs: list[dict[str, object]], *, mode: str) -> list[str]:
+    warnings: list[str] = []
+    for leg in legs:
+        for warning in list(leg.get("warnings") or []):
+            warnings.append(f"leg{leg.get('leg')}:{warning}")
+    if mode == "win5_under_10" and warnings:
+        warnings.append("under_10_contains_fragile_fixed_leg")
+    return warnings
 
 
 def _normalized_entropy(probs: list[float]) -> float:

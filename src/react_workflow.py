@@ -73,6 +73,7 @@ class DataCollectorAgent:
         return {
             "collector_key": self.collector_key,
             "aggressive_repair": effective_aggressive_repair,
+            "race_configs": race_configs,
             "rows": rows,
             "entries": _read_csv(self.config.entries_csv),
             "odds_snapshots": _read_csv(self.config.odds_snapshots_csv),
@@ -123,6 +124,7 @@ class BetBuilderAgent:
         ev_rows: list[dict[str, object]],
         *,
         combo_odds: list[dict[str, object]] | list[dict[str, str]] | None = None,
+        race_configs: list[dict[str, object]] | None = None,
     ) -> dict[str, object]:
         if is_win5_mode(self.settings.mode):
             return generate_win5_plan(
@@ -130,6 +132,7 @@ class BetBuilderAgent:
                 mode=self.settings.mode,
                 max_points=self.settings.win5_max_points,
                 stake_yen_per_point=self.settings.win5_stake_yen_per_point,
+                race_order=_race_order_from_configs(race_configs or []),
             )
 
         return generate_tickets(
@@ -199,6 +202,10 @@ class ReviewerAgent:
                 reasons.append("WIN5 formation exceeds max point constraint")
             if len(list(ticket_plan.get("legs") or [])) != 5:
                 reasons.append("WIN5 formation must contain exactly five legs")
+            configured_order = _race_order_from_configs(list(collected.get("race_configs") or []))
+            actual_order = [str(race_id) for race_id in list(ticket_plan.get("race_order") or [])]
+            if configured_order and actual_order[: len(configured_order)] != configured_order:
+                reasons.append("WIN5 race order does not match config order")
         else:
             risky_tickets = [
                 ticket
@@ -342,6 +349,7 @@ class ReactiveRaceWorkflow:
             bet_plan = self.bet_builder.run(
                 list(calculated.get("ev_rows") or []),
                 combo_odds=list(collected.get("combo_odds") or []),
+                race_configs=race_configs,
             )
             review = self.reviewer.run(
                 collected,
@@ -440,6 +448,28 @@ def _probability_sums(ev_rows: list[dict[str, object]]) -> dict[str, float]:
         race_id = str(row.get("race_id", ""))
         totals[race_id] = totals.get(race_id, 0.0) + _to_float(row.get("win_prob"))
     return totals
+
+
+def _race_order_from_configs(race_configs: list[dict[str, object]]) -> list[str]:
+    order: list[str] = []
+    for config in race_configs:
+        race_id = _race_id_from_config(config)
+        if race_id:
+            order.append(race_id)
+    return order
+
+
+def _race_id_from_config(config: dict[str, object]) -> str:
+    explicit = str(config.get("race_id", "")).strip()
+    if explicit:
+        return explicit
+
+    race_date = str(config.get("race_date", "")).replace("-", "").strip()
+    track = str(config.get("track", "")).strip()
+    race_number = str(config.get("race_number", "")).strip()
+    if race_date and track and race_number:
+        return f"{race_date}_{track}_{int(_to_float(race_number)):02d}"
+    return ""
 
 
 def _downgrade_ticket_plan_for_review(ticket_plan: dict[str, object], review: dict[str, object]) -> dict[str, object]:

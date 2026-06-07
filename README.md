@@ -136,6 +136,16 @@ WIN5モード:
 出力は `report/stages/05_bet_builder.json` に `bet_type=win5`、`legs`、`points`、`estimated_hit_prob`、`tickets` として保存されます。
 note artifact はモードごとに `report/win5/<date>/<mode>/note.md` へ保存されます。
 
+WIN5の振り返りは、実際の5頭を渡して選択カバー率とrank5カバー率で評価します。
+
+```bash
+python scripts/evaluate_win5.py \
+  --plan-json report/win5/20260606/win5_under_10/stages/05_bet_builder.json \
+  --result-numbers 8 4 6 2 9
+```
+
+`scripts/append_result_labels.py` は `result.win5.numbers` を `式別=WIN5` のラベルとして保存できます。
+
 ## Publishing phase (separated)
 
 ```bash

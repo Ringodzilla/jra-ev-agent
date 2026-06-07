@@ -18,12 +18,16 @@ DEFAULT_OUTPUT = ROOT / "data/processed/result_labels.csv"
 
 def rows_from_review(review: dict[str, object]) -> list[dict[str, str]]:
     race = dict(review.get("race") or {})
-    race_id = str(race.get("race_id") or _build_race_id(race)).strip()
-    if not race_id:
-        raise ValueError("review JSON does not contain enough race metadata to build race_id")
-
     rows: list[dict[str, str]] = []
     result = dict(review.get("result") or {})
+    win5_row = _win5_label_row(result)
+    if win5_row:
+        rows.append(win5_row)
+
+    race_id = str(race.get("race_id") or _build_race_id(race)).strip()
+    if not race_id and list(result.get("payouts") or []):
+        raise ValueError("review JSON does not contain enough race metadata to build race_id")
+
     for payout in list(result.get("payouts") or []):
         row = _label_row(race_id, dict(payout))
         if row:
@@ -66,6 +70,18 @@ def _label_row(race_id: str, payout: dict[str, object]) -> dict[str, str]:
     if bet_type in {"単勝", "複勝"}:
         return {"race_id": race_id, "式別": bet_type, "組番": "", "馬番": combination, "払戻金": payout_yen}
     return {"race_id": race_id, "式別": bet_type, "組番": combination, "馬番": "", "払戻金": payout_yen}
+
+
+def _win5_label_row(result: dict[str, object]) -> dict[str, str]:
+    win5 = dict(result.get("win5") or {})
+    numbers = win5.get("numbers") or win5.get("horse_numbers") or win5.get("result_numbers")
+    if not isinstance(numbers, list):
+        return {}
+    combination = "-".join(str(number).strip() for number in numbers if str(number).strip())
+    payout_yen = str(win5.get("payout_yen_per_100") or win5.get("payout") or "").replace(",", "").strip()
+    if not combination or not payout_yen:
+        return {}
+    return {"race_id": "WIN5", "式別": "WIN5", "組番": combination, "馬番": "", "払戻金": payout_yen}
 
 
 def _build_race_id(race: dict[str, object]) -> str:
