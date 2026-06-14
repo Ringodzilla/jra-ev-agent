@@ -1,0 +1,2170 @@
+{
+  "status": "OK",
+  "reason": "WIN5 formation generated from win probabilities under point constraints",
+  "fix": "",
+  "bet_type": "win5",
+  "mode": "win5_value",
+  "max_points": 120,
+  "stake_yen_per_point": 100,
+  "points": 108,
+  "total_stake": 10800,
+  "estimated_hit_prob": "0.041224",
+  "estimated_fair_odds": "24.257623",
+  "legs": [
+    {
+      "leg": 1,
+      "race_id": "20260607_東京_09",
+      "race_label": "東京9R",
+      "chaos": "0.768136",
+      "coverage": "0.680901",
+      "fixed": false,
+      "horses": [
+        {
+          "horse_number": "6",
+          "horse_name": "ゴーラッキー",
+          "win_prob": "0.345243",
+          "current_odds": "1.6",
+          "ev": "0.552388",
+          "rank": 1,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "8",
+          "horse_name": "サラスヴァティー",
+          "win_prob": "0.165599",
+          "current_odds": "6.7",
+          "ev": "1.109513",
+          "rank": 2,
+          "popularity": "3"
+        },
+        {
+          "horse_number": "7",
+          "horse_name": "ビーオンザカバー",
+          "win_prob": "0.170059",
+          "current_odds": "4.8",
+          "ev": "0.816285",
+          "rank": 3,
+          "popularity": "2"
+        }
+      ],
+      "alternates": [
+        {
+          "horse_number": "1",
+          "horse_name": "コンフォルツァ",
+          "win_prob": "0.097069",
+          "current_odds": "10.6",
+          "ev": "1.028928",
+          "rank": 4,
+          "popularity": "4"
+        },
+        {
+          "horse_number": "4",
+          "horse_name": "エボルヴィング",
+          "win_prob": "0.070168",
+          "current_odds": "15.2",
+          "ev": "1.06656",
+          "rank": 5,
+          "popularity": "5"
+        },
+        {
+          "horse_number": "5",
+          "horse_name": "マイネルアレス",
+          "win_prob": "0.057564",
+          "current_odds": "19.4",
+          "ev": "1.11675",
+          "rank": 6,
+          "popularity": "6"
+        }
+      ],
+      "top5_candidates": [
+        {
+          "horse_number": "6",
+          "horse_name": "ゴーラッキー",
+          "win_prob": "0.345243",
+          "current_odds": "1.6",
+          "ev": "0.552388",
+          "rank": 1,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "8",
+          "horse_name": "サラスヴァティー",
+          "win_prob": "0.165599",
+          "current_odds": "6.7",
+          "ev": "1.109513",
+          "rank": 2,
+          "popularity": "3"
+        },
+        {
+          "horse_number": "7",
+          "horse_name": "ビーオンザカバー",
+          "win_prob": "0.170059",
+          "current_odds": "4.8",
+          "ev": "0.816285",
+          "rank": 3,
+          "popularity": "2"
+        },
+        {
+          "horse_number": "1",
+          "horse_name": "コンフォルツァ",
+          "win_prob": "0.097069",
+          "current_odds": "10.6",
+          "ev": "1.028928",
+          "rank": 4,
+          "popularity": "4"
+        },
+        {
+          "horse_number": "4",
+          "horse_name": "エボルヴィング",
+          "win_prob": "0.070168",
+          "current_odds": "15.2",
+          "ev": "1.06656",
+          "rank": 5,
+          "popularity": "5"
+        }
+      ],
+      "chaos_candidates": [],
+      "warnings": []
+    },
+    {
+      "leg": 2,
+      "race_id": "20260607_阪神_10",
+      "race_label": "阪神10R",
+      "chaos": "0.753393",
+      "coverage": "0.644889",
+      "fixed": false,
+      "horses": [
+        {
+          "horse_number": "5",
+          "horse_name": "ジョイエッロ",
+          "win_prob": "0.349106",
+          "current_odds": "1.6",
+          "ev": "0.55857",
+          "rank": 1,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "6",
+          "horse_name": "エバーグルーヴ",
+          "win_prob": "0.165228",
+          "current_odds": "5.3",
+          "ev": "0.875707",
+          "rank": 2,
+          "popularity": "2"
+        },
+        {
+          "horse_number": "8",
+          "horse_name": "ヤマニンガラッシア",
+          "win_prob": "0.130555",
+          "current_odds": "8.3",
+          "ev": "1.083603",
+          "rank": 3,
+          "popularity": "3"
+        }
+      ],
+      "alternates": [
+        {
+          "horse_number": "3",
+          "horse_name": "ユメハハテシナク",
+          "win_prob": "0.10787",
+          "current_odds": "9.4",
+          "ev": "1.013975",
+          "rank": 4,
+          "popularity": "4"
+        },
+        {
+          "horse_number": "1",
+          "horse_name": "ウインリベラシオン",
+          "win_prob": "0.082248",
+          "current_odds": "12.8",
+          "ev": "1.05278",
+          "rank": 5,
+          "popularity": "5"
+        },
+        {
+          "horse_number": "9",
+          "horse_name": "ツーエムクロノス",
+          "win_prob": "0.064527",
+          "current_odds": "17",
+          "ev": "1.096951",
+          "rank": 6,
+          "popularity": "6"
+        }
+      ],
+      "top5_candidates": [
+        {
+          "horse_number": "5",
+          "horse_name": "ジョイエッロ",
+          "win_prob": "0.349106",
+          "current_odds": "1.6",
+          "ev": "0.55857",
+          "rank": 1,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "6",
+          "horse_name": "エバーグルーヴ",
+          "win_prob": "0.165228",
+          "current_odds": "5.3",
+          "ev": "0.875707",
+          "rank": 2,
+          "popularity": "2"
+        },
+        {
+          "horse_number": "8",
+          "horse_name": "ヤマニンガラッシア",
+          "win_prob": "0.130555",
+          "current_odds": "8.3",
+          "ev": "1.083603",
+          "rank": 3,
+          "popularity": "3"
+        },
+        {
+          "horse_number": "3",
+          "horse_name": "ユメハハテシナク",
+          "win_prob": "0.10787",
+          "current_odds": "9.4",
+          "ev": "1.013975",
+          "rank": 4,
+          "popularity": "4"
+        },
+        {
+          "horse_number": "1",
+          "horse_name": "ウインリベラシオン",
+          "win_prob": "0.082248",
+          "current_odds": "12.8",
+          "ev": "1.05278",
+          "rank": 5,
+          "popularity": "5"
+        }
+      ],
+      "chaos_candidates": [],
+      "warnings": []
+    },
+    {
+      "leg": 3,
+      "race_id": "20260607_東京_10",
+      "race_label": "東京10R",
+      "chaos": "0.660839",
+      "coverage": "0.405264",
+      "fixed": true,
+      "horses": [
+        {
+          "horse_number": "10",
+          "horse_name": "マジッククッキー",
+          "win_prob": "0.405264",
+          "current_odds": "1.4",
+          "ev": "0.56737",
+          "rank": 1,
+          "popularity": "1"
+        }
+      ],
+      "alternates": [
+        {
+          "horse_number": "6",
+          "horse_name": "ポッドベル",
+          "win_prob": "0.148655",
+          "current_odds": "6",
+          "ev": "0.89193",
+          "rank": 2,
+          "popularity": "2"
+        },
+        {
+          "horse_number": "16",
+          "horse_name": "ライジンマル",
+          "win_prob": "0.09087",
+          "current_odds": "14.4",
+          "ev": "1.308521",
+          "rank": 3,
+          "popularity": "3"
+        },
+        {
+          "horse_number": "14",
+          "horse_name": "ホウオウプレミア",
+          "win_prob": "0.067126",
+          "current_odds": "16",
+          "ev": "1.074022",
+          "rank": 4,
+          "popularity": "4"
+        }
+      ],
+      "top5_candidates": [
+        {
+          "horse_number": "10",
+          "horse_name": "マジッククッキー",
+          "win_prob": "0.405264",
+          "current_odds": "1.4",
+          "ev": "0.56737",
+          "rank": 1,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "6",
+          "horse_name": "ポッドベル",
+          "win_prob": "0.148655",
+          "current_odds": "6",
+          "ev": "0.89193",
+          "rank": 2,
+          "popularity": "2"
+        },
+        {
+          "horse_number": "16",
+          "horse_name": "ライジンマル",
+          "win_prob": "0.09087",
+          "current_odds": "14.4",
+          "ev": "1.308521",
+          "rank": 3,
+          "popularity": "3"
+        },
+        {
+          "horse_number": "14",
+          "horse_name": "ホウオウプレミア",
+          "win_prob": "0.067126",
+          "current_odds": "16",
+          "ev": "1.074022",
+          "rank": 4,
+          "popularity": "4"
+        },
+        {
+          "horse_number": "3",
+          "horse_name": "エムティエスターテ",
+          "win_prob": "0.052532",
+          "current_odds": "21.5",
+          "ev": "1.129441",
+          "rank": 5,
+          "popularity": "5"
+        }
+      ],
+      "chaos_candidates": [],
+      "warnings": [
+        "fixed_with_value_rivals_rank2_to_5"
+      ]
+    },
+    {
+      "leg": 4,
+      "race_id": "20260607_阪神_11",
+      "race_label": "阪神11R",
+      "chaos": "0.874572",
+      "coverage": "0.514292",
+      "fixed": false,
+      "horses": [
+        {
+          "horse_number": "6",
+          "horse_name": "アンズアメ",
+          "win_prob": "0.161195",
+          "current_odds": "3.7",
+          "ev": "0.596421",
+          "rank": 1,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "3",
+          "horse_name": "プレゼンティーア",
+          "win_prob": "0.114934",
+          "current_odds": "6.9",
+          "ev": "0.793044",
+          "rank": 2,
+          "popularity": "3"
+        },
+        {
+          "horse_number": "15",
+          "horse_name": "コンクイスタ",
+          "win_prob": "0.137205",
+          "current_odds": "4.3",
+          "ev": "0.589981",
+          "rank": 3,
+          "popularity": "2"
+        },
+        {
+          "horse_number": "14",
+          "horse_name": "サンライズアムール",
+          "win_prob": "0.100958",
+          "current_odds": "8",
+          "ev": "0.80766",
+          "rank": 4,
+          "popularity": "4"
+        }
+      ],
+      "alternates": [
+        {
+          "horse_number": "5",
+          "horse_name": "ショウナンアビアス",
+          "win_prob": "0.07018",
+          "current_odds": "15.5",
+          "ev": "1.087785",
+          "rank": 5,
+          "popularity": "5"
+        },
+        {
+          "horse_number": "1",
+          "horse_name": "ムーヴ",
+          "win_prob": "0.063476",
+          "current_odds": "17.3",
+          "ev": "1.098143",
+          "rank": 6,
+          "popularity": "7"
+        },
+        {
+          "horse_number": "12",
+          "horse_name": "ロードフロンティア",
+          "win_prob": "0.064184",
+          "current_odds": "16.6",
+          "ev": "1.065454",
+          "rank": 7,
+          "popularity": "6"
+        }
+      ],
+      "top5_candidates": [
+        {
+          "horse_number": "6",
+          "horse_name": "アンズアメ",
+          "win_prob": "0.161195",
+          "current_odds": "3.7",
+          "ev": "0.596421",
+          "rank": 1,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "3",
+          "horse_name": "プレゼンティーア",
+          "win_prob": "0.114934",
+          "current_odds": "6.9",
+          "ev": "0.793044",
+          "rank": 2,
+          "popularity": "3"
+        },
+        {
+          "horse_number": "15",
+          "horse_name": "コンクイスタ",
+          "win_prob": "0.137205",
+          "current_odds": "4.3",
+          "ev": "0.589981",
+          "rank": 3,
+          "popularity": "2"
+        },
+        {
+          "horse_number": "14",
+          "horse_name": "サンライズアムール",
+          "win_prob": "0.100958",
+          "current_odds": "8",
+          "ev": "0.80766",
+          "rank": 4,
+          "popularity": "4"
+        },
+        {
+          "horse_number": "5",
+          "horse_name": "ショウナンアビアス",
+          "win_prob": "0.07018",
+          "current_odds": "15.5",
+          "ev": "1.087785",
+          "rank": 5,
+          "popularity": "5"
+        }
+      ],
+      "chaos_candidates": [
+        {
+          "horse_number": "6",
+          "horse_name": "アンズアメ",
+          "win_prob": "0.161195",
+          "current_odds": "3.7",
+          "ev": "0.596421",
+          "rank": 1,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "3",
+          "horse_name": "プレゼンティーア",
+          "win_prob": "0.114934",
+          "current_odds": "6.9",
+          "ev": "0.793044",
+          "rank": 2,
+          "popularity": "3"
+        },
+        {
+          "horse_number": "15",
+          "horse_name": "コンクイスタ",
+          "win_prob": "0.137205",
+          "current_odds": "4.3",
+          "ev": "0.589981",
+          "rank": 3,
+          "popularity": "2"
+        },
+        {
+          "horse_number": "14",
+          "horse_name": "サンライズアムール",
+          "win_prob": "0.100958",
+          "current_odds": "8",
+          "ev": "0.80766",
+          "rank": 4,
+          "popularity": "4"
+        },
+        {
+          "horse_number": "5",
+          "horse_name": "ショウナンアビアス",
+          "win_prob": "0.07018",
+          "current_odds": "15.5",
+          "ev": "1.087785",
+          "rank": 5,
+          "popularity": "5"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "leg": 5,
+      "race_id": "20260607_東京_11",
+      "race_label": "東京11R",
+      "chaos": "0.862941",
+      "coverage": "0.450438",
+      "fixed": false,
+      "horses": [
+        {
+          "horse_number": "17",
+          "horse_name": "トロヴァトーレ",
+          "win_prob": "0.179151",
+          "current_odds": "3.6",
+          "ev": "0.644942",
+          "rank": 1,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "14",
+          "horse_name": "ガイアフォース",
+          "win_prob": "0.169416",
+          "current_odds": "3.6",
+          "ev": "0.609898",
+          "rank": 2,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "1",
+          "horse_name": "レーベンスティール",
+          "win_prob": "0.101871",
+          "current_odds": "7.8",
+          "ev": "0.794592",
+          "rank": 3,
+          "popularity": "3"
+        }
+      ],
+      "alternates": [
+        {
+          "horse_number": "16",
+          "horse_name": "パンジャタワー",
+          "win_prob": "0.089756",
+          "current_odds": "10.6",
+          "ev": "0.951417",
+          "rank": 4,
+          "popularity": "5"
+        },
+        {
+          "horse_number": "6",
+          "horse_name": "ステレンボッシュ",
+          "win_prob": "0.088783",
+          "current_odds": "10.5",
+          "ev": "0.932223",
+          "rank": 5,
+          "popularity": "4"
+        },
+        {
+          "horse_number": "13",
+          "horse_name": "セイウンハーデス",
+          "win_prob": "0.075634",
+          "current_odds": "13.4",
+          "ev": "1.013496",
+          "rank": 6,
+          "popularity": "6"
+        }
+      ],
+      "top5_candidates": [
+        {
+          "horse_number": "17",
+          "horse_name": "トロヴァトーレ",
+          "win_prob": "0.179151",
+          "current_odds": "3.6",
+          "ev": "0.644942",
+          "rank": 1,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "14",
+          "horse_name": "ガイアフォース",
+          "win_prob": "0.169416",
+          "current_odds": "3.6",
+          "ev": "0.609898",
+          "rank": 2,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "1",
+          "horse_name": "レーベンスティール",
+          "win_prob": "0.101871",
+          "current_odds": "7.8",
+          "ev": "0.794592",
+          "rank": 3,
+          "popularity": "3"
+        },
+        {
+          "horse_number": "16",
+          "horse_name": "パンジャタワー",
+          "win_prob": "0.089756",
+          "current_odds": "10.6",
+          "ev": "0.951417",
+          "rank": 4,
+          "popularity": "5"
+        },
+        {
+          "horse_number": "6",
+          "horse_name": "ステレンボッシュ",
+          "win_prob": "0.088783",
+          "current_odds": "10.5",
+          "ev": "0.932223",
+          "rank": 5,
+          "popularity": "4"
+        }
+      ],
+      "chaos_candidates": [
+        {
+          "horse_number": "17",
+          "horse_name": "トロヴァトーレ",
+          "win_prob": "0.179151",
+          "current_odds": "3.6",
+          "ev": "0.644942",
+          "rank": 1,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "14",
+          "horse_name": "ガイアフォース",
+          "win_prob": "0.169416",
+          "current_odds": "3.6",
+          "ev": "0.609898",
+          "rank": 2,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "1",
+          "horse_name": "レーベンスティール",
+          "win_prob": "0.101871",
+          "current_odds": "7.8",
+          "ev": "0.794592",
+          "rank": 3,
+          "popularity": "3"
+        },
+        {
+          "horse_number": "16",
+          "horse_name": "パンジャタワー",
+          "win_prob": "0.089756",
+          "current_odds": "10.6",
+          "ev": "0.951417",
+          "rank": 4,
+          "popularity": "5"
+        },
+        {
+          "horse_number": "6",
+          "horse_name": "ステレンボッシュ",
+          "win_prob": "0.088783",
+          "current_odds": "10.5",
+          "ev": "0.932223",
+          "rank": 5,
+          "popularity": "4"
+        }
+      ],
+      "warnings": []
+    }
+  ],
+  "tickets": [
+    {
+      "bet_type": "win5",
+      "horse_number": "6-5-10-6-17",
+      "horse_name": "ゴーラッキー - ジョイエッロ - マジッククッキー - アンズアメ - トロヴァトーレ",
+      "hit_prob": "0.001411",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-5-10-6-14",
+      "horse_name": "ゴーラッキー - ジョイエッロ - マジッククッキー - アンズアメ - ガイアフォース",
+      "hit_prob": "0.001334",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-5-10-6-1",
+      "horse_name": "ゴーラッキー - ジョイエッロ - マジッククッキー - アンズアメ - レーベンスティール",
+      "hit_prob": "0.000802",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-5-10-3-17",
+      "horse_name": "ゴーラッキー - ジョイエッロ - マジッククッキー - プレゼンティーア - トロヴァトーレ",
+      "hit_prob": "0.001006",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-5-10-3-14",
+      "horse_name": "ゴーラッキー - ジョイエッロ - マジッククッキー - プレゼンティーア - ガイアフォース",
+      "hit_prob": "0.000951",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-5-10-3-1",
+      "horse_name": "ゴーラッキー - ジョイエッロ - マジッククッキー - プレゼンティーア - レーベンスティール",
+      "hit_prob": "0.000572",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-5-10-15-17",
+      "horse_name": "ゴーラッキー - ジョイエッロ - マジッククッキー - コンクイスタ - トロヴァトーレ",
+      "hit_prob": "0.001201",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-5-10-15-14",
+      "horse_name": "ゴーラッキー - ジョイエッロ - マジッククッキー - コンクイスタ - ガイアフォース",
+      "hit_prob": "0.001135",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-5-10-15-1",
+      "horse_name": "ゴーラッキー - ジョイエッロ - マジッククッキー - コンクイスタ - レーベンスティール",
+      "hit_prob": "0.000683",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-5-10-14-17",
+      "horse_name": "ゴーラッキー - ジョイエッロ - マジッククッキー - サンライズアムール - トロヴァトーレ",
+      "hit_prob": "0.000883",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-5-10-14-14",
+      "horse_name": "ゴーラッキー - ジョイエッロ - マジッククッキー - サンライズアムール - ガイアフォース",
+      "hit_prob": "0.000835",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-5-10-14-1",
+      "horse_name": "ゴーラッキー - ジョイエッロ - マジッククッキー - サンライズアムール - レーベンスティール",
+      "hit_prob": "0.000502",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-6-10-6-17",
+      "horse_name": "ゴーラッキー - エバーグルーヴ - マジッククッキー - アンズアメ - トロヴァトーレ",
+      "hit_prob": "0.000668",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-6-10-6-14",
+      "horse_name": "ゴーラッキー - エバーグルーヴ - マジッククッキー - アンズアメ - ガイアフォース",
+      "hit_prob": "0.000631",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-6-10-6-1",
+      "horse_name": "ゴーラッキー - エバーグルーヴ - マジッククッキー - アンズアメ - レーベンスティール",
+      "hit_prob": "0.00038",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-6-10-3-17",
+      "horse_name": "ゴーラッキー - エバーグルーヴ - マジッククッキー - プレゼンティーア - トロヴァトーレ",
+      "hit_prob": "0.000476",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-6-10-3-14",
+      "horse_name": "ゴーラッキー - エバーグルーヴ - マジッククッキー - プレゼンティーア - ガイアフォース",
+      "hit_prob": "0.00045",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-6-10-3-1",
+      "horse_name": "ゴーラッキー - エバーグルーヴ - マジッククッキー - プレゼンティーア - レーベンスティール",
+      "hit_prob": "0.000271",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-6-10-15-17",
+      "horse_name": "ゴーラッキー - エバーグルーヴ - マジッククッキー - コンクイスタ - トロヴァトーレ",
+      "hit_prob": "0.000568",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-6-10-15-14",
+      "horse_name": "ゴーラッキー - エバーグルーヴ - マジッククッキー - コンクイスタ - ガイアフォース",
+      "hit_prob": "0.000537",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-6-10-15-1",
+      "horse_name": "ゴーラッキー - エバーグルーヴ - マジッククッキー - コンクイスタ - レーベンスティール",
+      "hit_prob": "0.000323",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-6-10-14-17",
+      "horse_name": "ゴーラッキー - エバーグルーヴ - マジッククッキー - サンライズアムール - トロヴァトーレ",
+      "hit_prob": "0.000418",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-6-10-14-14",
+      "horse_name": "ゴーラッキー - エバーグルーヴ - マジッククッキー - サンライズアムール - ガイアフォース",
+      "hit_prob": "0.000395",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-6-10-14-1",
+      "horse_name": "ゴーラッキー - エバーグルーヴ - マジッククッキー - サンライズアムール - レーベンスティール",
+      "hit_prob": "0.000238",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-8-10-6-17",
+      "horse_name": "ゴーラッキー - ヤマニンガラッシア - マジッククッキー - アンズアメ - トロヴァトーレ",
+      "hit_prob": "0.000528",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-8-10-6-14",
+      "horse_name": "ゴーラッキー - ヤマニンガラッシア - マジッククッキー - アンズアメ - ガイアフォース",
+      "hit_prob": "0.000499",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-8-10-6-1",
+      "horse_name": "ゴーラッキー - ヤマニンガラッシア - マジッククッキー - アンズアメ - レーベンスティール",
+      "hit_prob": "0.0003",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-8-10-3-17",
+      "horse_name": "ゴーラッキー - ヤマニンガラッシア - マジッククッキー - プレゼンティーア - トロヴァトーレ",
+      "hit_prob": "0.000376",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-8-10-3-14",
+      "horse_name": "ゴーラッキー - ヤマニンガラッシア - マジッククッキー - プレゼンティーア - ガイアフォース",
+      "hit_prob": "0.000356",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-8-10-3-1",
+      "horse_name": "ゴーラッキー - ヤマニンガラッシア - マジッククッキー - プレゼンティーア - レーベンスティール",
+      "hit_prob": "0.000214",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-8-10-15-17",
+      "horse_name": "ゴーラッキー - ヤマニンガラッシア - マジッククッキー - コンクイスタ - トロヴァトーレ",
+      "hit_prob": "0.000449",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-8-10-15-14",
+      "horse_name": "ゴーラッキー - ヤマニンガラッシア - マジッククッキー - コンクイスタ - ガイアフォース",
+      "hit_prob": "0.000425",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-8-10-15-1",
+      "horse_name": "ゴーラッキー - ヤマニンガラッシア - マジッククッキー - コンクイスタ - レーベンスティール",
+      "hit_prob": "0.000255",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-8-10-14-17",
+      "horse_name": "ゴーラッキー - ヤマニンガラッシア - マジッククッキー - サンライズアムール - トロヴァトーレ",
+      "hit_prob": "0.00033",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-8-10-14-14",
+      "horse_name": "ゴーラッキー - ヤマニンガラッシア - マジッククッキー - サンライズアムール - ガイアフォース",
+      "hit_prob": "0.000312",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "6-8-10-14-1",
+      "horse_name": "ゴーラッキー - ヤマニンガラッシア - マジッククッキー - サンライズアムール - レーベンスティール",
+      "hit_prob": "0.000188",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-5-10-6-17",
+      "horse_name": "サラスヴァティー - ジョイエッロ - マジッククッキー - アンズアメ - トロヴァトーレ",
+      "hit_prob": "0.000677",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-5-10-6-14",
+      "horse_name": "サラスヴァティー - ジョイエッロ - マジッククッキー - アンズアメ - ガイアフォース",
+      "hit_prob": "0.00064",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-5-10-6-1",
+      "horse_name": "サラスヴァティー - ジョイエッロ - マジッククッキー - アンズアメ - レーベンスティール",
+      "hit_prob": "0.000385",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-5-10-3-17",
+      "horse_name": "サラスヴァティー - ジョイエッロ - マジッククッキー - プレゼンティーア - トロヴァトーレ",
+      "hit_prob": "0.000482",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-5-10-3-14",
+      "horse_name": "サラスヴァティー - ジョイエッロ - マジッククッキー - プレゼンティーア - ガイアフォース",
+      "hit_prob": "0.000456",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-5-10-3-1",
+      "horse_name": "サラスヴァティー - ジョイエッロ - マジッククッキー - プレゼンティーア - レーベンスティール",
+      "hit_prob": "0.000274",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-5-10-15-17",
+      "horse_name": "サラスヴァティー - ジョイエッロ - マジッククッキー - コンクイスタ - トロヴァトーレ",
+      "hit_prob": "0.000576",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-5-10-15-14",
+      "horse_name": "サラスヴァティー - ジョイエッロ - マジッククッキー - コンクイスタ - ガイアフォース",
+      "hit_prob": "0.000545",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-5-10-15-1",
+      "horse_name": "サラスヴァティー - ジョイエッロ - マジッククッキー - コンクイスタ - レーベンスティール",
+      "hit_prob": "0.000327",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-5-10-14-17",
+      "horse_name": "サラスヴァティー - ジョイエッロ - マジッククッキー - サンライズアムール - トロヴァトーレ",
+      "hit_prob": "0.000424",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-5-10-14-14",
+      "horse_name": "サラスヴァティー - ジョイエッロ - マジッククッキー - サンライズアムール - ガイアフォース",
+      "hit_prob": "0.000401",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-5-10-14-1",
+      "horse_name": "サラスヴァティー - ジョイエッロ - マジッククッキー - サンライズアムール - レーベンスティール",
+      "hit_prob": "0.000241",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-6-10-6-17",
+      "horse_name": "サラスヴァティー - エバーグルーヴ - マジッククッキー - アンズアメ - トロヴァトーレ",
+      "hit_prob": "0.00032",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-6-10-6-14",
+      "horse_name": "サラスヴァティー - エバーグルーヴ - マジッククッキー - アンズアメ - ガイアフォース",
+      "hit_prob": "0.000303",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-6-10-6-1",
+      "horse_name": "サラスヴァティー - エバーグルーヴ - マジッククッキー - アンズアメ - レーベンスティール",
+      "hit_prob": "0.000182",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-6-10-3-17",
+      "horse_name": "サラスヴァティー - エバーグルーヴ - マジッククッキー - プレゼンティーア - トロヴァトーレ",
+      "hit_prob": "0.000228",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-6-10-3-14",
+      "horse_name": "サラスヴァティー - エバーグルーヴ - マジッククッキー - プレゼンティーア - ガイアフォース",
+      "hit_prob": "0.000216",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-6-10-3-1",
+      "horse_name": "サラスヴァティー - エバーグルーヴ - マジッククッキー - プレゼンティーア - レーベンスティール",
+      "hit_prob": "0.00013",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-6-10-15-17",
+      "horse_name": "サラスヴァティー - エバーグルーヴ - マジッククッキー - コンクイスタ - トロヴァトーレ",
+      "hit_prob": "0.000273",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-6-10-15-14",
+      "horse_name": "サラスヴァティー - エバーグルーヴ - マジッククッキー - コンクイスタ - ガイアフォース",
+      "hit_prob": "0.000258",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-6-10-15-1",
+      "horse_name": "サラスヴァティー - エバーグルーヴ - マジッククッキー - コンクイスタ - レーベンスティール",
+      "hit_prob": "0.000155",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-6-10-14-17",
+      "horse_name": "サラスヴァティー - エバーグルーヴ - マジッククッキー - サンライズアムール - トロヴァトーレ",
+      "hit_prob": "0.000201",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-6-10-14-14",
+      "horse_name": "サラスヴァティー - エバーグルーヴ - マジッククッキー - サンライズアムール - ガイアフォース",
+      "hit_prob": "0.00019",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-6-10-14-1",
+      "horse_name": "サラスヴァティー - エバーグルーヴ - マジッククッキー - サンライズアムール - レーベンスティール",
+      "hit_prob": "0.000114",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-8-10-6-17",
+      "horse_name": "サラスヴァティー - ヤマニンガラッシア - マジッククッキー - アンズアメ - トロヴァトーレ",
+      "hit_prob": "0.000253",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-8-10-6-14",
+      "horse_name": "サラスヴァティー - ヤマニンガラッシア - マジッククッキー - アンズアメ - ガイアフォース",
+      "hit_prob": "0.000239",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-8-10-6-1",
+      "horse_name": "サラスヴァティー - ヤマニンガラッシア - マジッククッキー - アンズアメ - レーベンスティール",
+      "hit_prob": "0.000144",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-8-10-3-17",
+      "horse_name": "サラスヴァティー - ヤマニンガラッシア - マジッククッキー - プレゼンティーア - トロヴァトーレ",
+      "hit_prob": "0.00018",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-8-10-3-14",
+      "horse_name": "サラスヴァティー - ヤマニンガラッシア - マジッククッキー - プレゼンティーア - ガイアフォース",
+      "hit_prob": "0.000171",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-8-10-3-1",
+      "horse_name": "サラスヴァティー - ヤマニンガラッシア - マジッククッキー - プレゼンティーア - レーベンスティール",
+      "hit_prob": "0.000103",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-8-10-15-17",
+      "horse_name": "サラスヴァティー - ヤマニンガラッシア - マジッククッキー - コンクイスタ - トロヴァトーレ",
+      "hit_prob": "0.000215",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-8-10-15-14",
+      "horse_name": "サラスヴァティー - ヤマニンガラッシア - マジッククッキー - コンクイスタ - ガイアフォース",
+      "hit_prob": "0.000204",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-8-10-15-1",
+      "horse_name": "サラスヴァティー - ヤマニンガラッシア - マジッククッキー - コンクイスタ - レーベンスティール",
+      "hit_prob": "0.000122",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-8-10-14-17",
+      "horse_name": "サラスヴァティー - ヤマニンガラッシア - マジッククッキー - サンライズアムール - トロヴァトーレ",
+      "hit_prob": "0.000158",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-8-10-14-14",
+      "horse_name": "サラスヴァティー - ヤマニンガラッシア - マジッククッキー - サンライズアムール - ガイアフォース",
+      "hit_prob": "0.00015",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "8-8-10-14-1",
+      "horse_name": "サラスヴァティー - ヤマニンガラッシア - マジッククッキー - サンライズアムール - レーベンスティール",
+      "hit_prob": "0.00009",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-5-10-6-17",
+      "horse_name": "ビーオンザカバー - ジョイエッロ - マジッククッキー - アンズアメ - トロヴァトーレ",
+      "hit_prob": "0.000695",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-5-10-6-14",
+      "horse_name": "ビーオンザカバー - ジョイエッロ - マジッククッキー - アンズアメ - ガイアフォース",
+      "hit_prob": "0.000657",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-5-10-6-1",
+      "horse_name": "ビーオンザカバー - ジョイエッロ - マジッククッキー - アンズアメ - レーベンスティール",
+      "hit_prob": "0.000395",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-5-10-3-17",
+      "horse_name": "ビーオンザカバー - ジョイエッロ - マジッククッキー - プレゼンティーア - トロヴァトーレ",
+      "hit_prob": "0.000495",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-5-10-3-14",
+      "horse_name": "ビーオンザカバー - ジョイエッロ - マジッククッキー - プレゼンティーア - ガイアフォース",
+      "hit_prob": "0.000468",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-5-10-3-1",
+      "horse_name": "ビーオンザカバー - ジョイエッロ - マジッククッキー - プレゼンティーア - レーベンスティール",
+      "hit_prob": "0.000282",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-5-10-15-17",
+      "horse_name": "ビーオンザカバー - ジョイエッロ - マジッククッキー - コンクイスタ - トロヴァトーレ",
+      "hit_prob": "0.000591",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-5-10-15-14",
+      "horse_name": "ビーオンザカバー - ジョイエッロ - マジッククッキー - コンクイスタ - ガイアフォース",
+      "hit_prob": "0.000559",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-5-10-15-1",
+      "horse_name": "ビーオンザカバー - ジョイエッロ - マジッククッキー - コンクイスタ - レーベンスティール",
+      "hit_prob": "0.000336",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-5-10-14-17",
+      "horse_name": "ビーオンザカバー - ジョイエッロ - マジッククッキー - サンライズアムール - トロヴァトーレ",
+      "hit_prob": "0.000435",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-5-10-14-14",
+      "horse_name": "ビーオンザカバー - ジョイエッロ - マジッククッキー - サンライズアムール - ガイアフォース",
+      "hit_prob": "0.000412",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-5-10-14-1",
+      "horse_name": "ビーオンザカバー - ジョイエッロ - マジッククッキー - サンライズアムール - レーベンスティール",
+      "hit_prob": "0.000247",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-6-10-6-17",
+      "horse_name": "ビーオンザカバー - エバーグルーヴ - マジッククッキー - アンズアメ - トロヴァトーレ",
+      "hit_prob": "0.000329",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-6-10-6-14",
+      "horse_name": "ビーオンザカバー - エバーグルーヴ - マジッククッキー - アンズアメ - ガイアフォース",
+      "hit_prob": "0.000311",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-6-10-6-1",
+      "horse_name": "ビーオンザカバー - エバーグルーヴ - マジッククッキー - アンズアメ - レーベンスティール",
+      "hit_prob": "0.000187",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-6-10-3-17",
+      "horse_name": "ビーオンザカバー - エバーグルーヴ - マジッククッキー - プレゼンティーア - トロヴァトーレ",
+      "hit_prob": "0.000234",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-6-10-3-14",
+      "horse_name": "ビーオンザカバー - エバーグルーヴ - マジッククッキー - プレゼンティーア - ガイアフォース",
+      "hit_prob": "0.000222",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-6-10-3-1",
+      "horse_name": "ビーオンザカバー - エバーグルーヴ - マジッククッキー - プレゼンティーア - レーベンスティール",
+      "hit_prob": "0.000133",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-6-10-15-17",
+      "horse_name": "ビーオンザカバー - エバーグルーヴ - マジッククッキー - コンクイスタ - トロヴァトーレ",
+      "hit_prob": "0.00028",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-6-10-15-14",
+      "horse_name": "ビーオンザカバー - エバーグルーヴ - マジッククッキー - コンクイスタ - ガイアフォース",
+      "hit_prob": "0.000265",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-6-10-15-1",
+      "horse_name": "ビーオンザカバー - エバーグルーヴ - マジッククッキー - コンクイスタ - レーベンスティール",
+      "hit_prob": "0.000159",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-6-10-14-17",
+      "horse_name": "ビーオンザカバー - エバーグルーヴ - マジッククッキー - サンライズアムール - トロヴァトーレ",
+      "hit_prob": "0.000206",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-6-10-14-14",
+      "horse_name": "ビーオンザカバー - エバーグルーヴ - マジッククッキー - サンライズアムール - ガイアフォース",
+      "hit_prob": "0.000195",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-6-10-14-1",
+      "horse_name": "ビーオンザカバー - エバーグルーヴ - マジッククッキー - サンライズアムール - レーベンスティール",
+      "hit_prob": "0.000117",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-8-10-6-17",
+      "horse_name": "ビーオンザカバー - ヤマニンガラッシア - マジッククッキー - アンズアメ - トロヴァトーレ",
+      "hit_prob": "0.00026",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-8-10-6-14",
+      "horse_name": "ビーオンザカバー - ヤマニンガラッシア - マジッククッキー - アンズアメ - ガイアフォース",
+      "hit_prob": "0.000246",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-8-10-6-1",
+      "horse_name": "ビーオンザカバー - ヤマニンガラッシア - マジッククッキー - アンズアメ - レーベンスティール",
+      "hit_prob": "0.000148",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-8-10-3-17",
+      "horse_name": "ビーオンザカバー - ヤマニンガラッシア - マジッククッキー - プレゼンティーア - トロヴァトーレ",
+      "hit_prob": "0.000185",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-8-10-3-14",
+      "horse_name": "ビーオンザカバー - ヤマニンガラッシア - マジッククッキー - プレゼンティーア - ガイアフォース",
+      "hit_prob": "0.000175",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-8-10-3-1",
+      "horse_name": "ビーオンザカバー - ヤマニンガラッシア - マジッククッキー - プレゼンティーア - レーベンスティール",
+      "hit_prob": "0.000105",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-8-10-15-17",
+      "horse_name": "ビーオンザカバー - ヤマニンガラッシア - マジッククッキー - コンクイスタ - トロヴァトーレ",
+      "hit_prob": "0.000221",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-8-10-15-14",
+      "horse_name": "ビーオンザカバー - ヤマニンガラッシア - マジッククッキー - コンクイスタ - ガイアフォース",
+      "hit_prob": "0.000209",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-8-10-15-1",
+      "horse_name": "ビーオンザカバー - ヤマニンガラッシア - マジッククッキー - コンクイスタ - レーベンスティール",
+      "hit_prob": "0.000126",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-8-10-14-17",
+      "horse_name": "ビーオンザカバー - ヤマニンガラッシア - マジッククッキー - サンライズアムール - トロヴァトーレ",
+      "hit_prob": "0.000163",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-8-10-14-14",
+      "horse_name": "ビーオンザカバー - ヤマニンガラッシア - マジッククッキー - サンライズアムール - ガイアフォース",
+      "hit_prob": "0.000154",
+      "stake": 100
+    },
+    {
+      "bet_type": "win5",
+      "horse_number": "7-8-10-14-1",
+      "horse_name": "ビーオンザカバー - ヤマニンガラッシア - マジッククッキー - サンライズアムール - レーベンスティール",
+      "hit_prob": "0.000093",
+      "stake": 100
+    }
+  ],
+  "race_order": [
+    "20260607_東京_09",
+    "20260607_阪神_10",
+    "20260607_東京_10",
+    "20260607_阪神_11",
+    "20260607_東京_11"
+  ],
+  "race_order_source": "config",
+  "warnings": [
+    "leg3:fixed_with_value_rivals_rank2_to_5"
+  ],
+  "single": [
+    {
+      "horse_number": "6",
+      "horse_name": "ゴーラッキー",
+      "win_prob": "0.345243",
+      "current_odds": "1.6",
+      "ev": "0.552388",
+      "rank": 1,
+      "popularity": "1"
+    },
+    {
+      "horse_number": "5",
+      "horse_name": "ジョイエッロ",
+      "win_prob": "0.349106",
+      "current_odds": "1.6",
+      "ev": "0.55857",
+      "rank": 1,
+      "popularity": "1"
+    },
+    {
+      "horse_number": "10",
+      "horse_name": "マジッククッキー",
+      "win_prob": "0.405264",
+      "current_odds": "1.4",
+      "ev": "0.56737",
+      "rank": 1,
+      "popularity": "1"
+    },
+    {
+      "horse_number": "6",
+      "horse_name": "アンズアメ",
+      "win_prob": "0.161195",
+      "current_odds": "3.7",
+      "ev": "0.596421",
+      "rank": 1,
+      "popularity": "1"
+    },
+    {
+      "horse_number": "17",
+      "horse_name": "トロヴァトーレ",
+      "win_prob": "0.179151",
+      "current_odds": "3.6",
+      "ev": "0.644942",
+      "rank": 1,
+      "popularity": "1"
+    }
+  ],
+  "fixed_legs": [
+    {
+      "leg": 3,
+      "race_id": "20260607_東京_10",
+      "race_label": "東京10R",
+      "chaos": "0.660839",
+      "coverage": "0.405264",
+      "fixed": true,
+      "horses": [
+        {
+          "horse_number": "10",
+          "horse_name": "マジッククッキー",
+          "win_prob": "0.405264",
+          "current_odds": "1.4",
+          "ev": "0.56737",
+          "rank": 1,
+          "popularity": "1"
+        }
+      ],
+      "alternates": [
+        {
+          "horse_number": "6",
+          "horse_name": "ポッドベル",
+          "win_prob": "0.148655",
+          "current_odds": "6",
+          "ev": "0.89193",
+          "rank": 2,
+          "popularity": "2"
+        },
+        {
+          "horse_number": "16",
+          "horse_name": "ライジンマル",
+          "win_prob": "0.09087",
+          "current_odds": "14.4",
+          "ev": "1.308521",
+          "rank": 3,
+          "popularity": "3"
+        },
+        {
+          "horse_number": "14",
+          "horse_name": "ホウオウプレミア",
+          "win_prob": "0.067126",
+          "current_odds": "16",
+          "ev": "1.074022",
+          "rank": 4,
+          "popularity": "4"
+        }
+      ],
+      "top5_candidates": [
+        {
+          "horse_number": "10",
+          "horse_name": "マジッククッキー",
+          "win_prob": "0.405264",
+          "current_odds": "1.4",
+          "ev": "0.56737",
+          "rank": 1,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "6",
+          "horse_name": "ポッドベル",
+          "win_prob": "0.148655",
+          "current_odds": "6",
+          "ev": "0.89193",
+          "rank": 2,
+          "popularity": "2"
+        },
+        {
+          "horse_number": "16",
+          "horse_name": "ライジンマル",
+          "win_prob": "0.09087",
+          "current_odds": "14.4",
+          "ev": "1.308521",
+          "rank": 3,
+          "popularity": "3"
+        },
+        {
+          "horse_number": "14",
+          "horse_name": "ホウオウプレミア",
+          "win_prob": "0.067126",
+          "current_odds": "16",
+          "ev": "1.074022",
+          "rank": 4,
+          "popularity": "4"
+        },
+        {
+          "horse_number": "3",
+          "horse_name": "エムティエスターテ",
+          "win_prob": "0.052532",
+          "current_odds": "21.5",
+          "ev": "1.129441",
+          "rank": 5,
+          "popularity": "5"
+        }
+      ],
+      "chaos_candidates": [],
+      "warnings": [
+        "fixed_with_value_rivals_rank2_to_5"
+      ]
+    }
+  ],
+  "spread_legs": [
+    {
+      "leg": 1,
+      "race_id": "20260607_東京_09",
+      "race_label": "東京9R",
+      "chaos": "0.768136",
+      "coverage": "0.680901",
+      "fixed": false,
+      "horses": [
+        {
+          "horse_number": "6",
+          "horse_name": "ゴーラッキー",
+          "win_prob": "0.345243",
+          "current_odds": "1.6",
+          "ev": "0.552388",
+          "rank": 1,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "8",
+          "horse_name": "サラスヴァティー",
+          "win_prob": "0.165599",
+          "current_odds": "6.7",
+          "ev": "1.109513",
+          "rank": 2,
+          "popularity": "3"
+        },
+        {
+          "horse_number": "7",
+          "horse_name": "ビーオンザカバー",
+          "win_prob": "0.170059",
+          "current_odds": "4.8",
+          "ev": "0.816285",
+          "rank": 3,
+          "popularity": "2"
+        }
+      ],
+      "alternates": [
+        {
+          "horse_number": "1",
+          "horse_name": "コンフォルツァ",
+          "win_prob": "0.097069",
+          "current_odds": "10.6",
+          "ev": "1.028928",
+          "rank": 4,
+          "popularity": "4"
+        },
+        {
+          "horse_number": "4",
+          "horse_name": "エボルヴィング",
+          "win_prob": "0.070168",
+          "current_odds": "15.2",
+          "ev": "1.06656",
+          "rank": 5,
+          "popularity": "5"
+        },
+        {
+          "horse_number": "5",
+          "horse_name": "マイネルアレス",
+          "win_prob": "0.057564",
+          "current_odds": "19.4",
+          "ev": "1.11675",
+          "rank": 6,
+          "popularity": "6"
+        }
+      ],
+      "top5_candidates": [
+        {
+          "horse_number": "6",
+          "horse_name": "ゴーラッキー",
+          "win_prob": "0.345243",
+          "current_odds": "1.6",
+          "ev": "0.552388",
+          "rank": 1,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "8",
+          "horse_name": "サラスヴァティー",
+          "win_prob": "0.165599",
+          "current_odds": "6.7",
+          "ev": "1.109513",
+          "rank": 2,
+          "popularity": "3"
+        },
+        {
+          "horse_number": "7",
+          "horse_name": "ビーオンザカバー",
+          "win_prob": "0.170059",
+          "current_odds": "4.8",
+          "ev": "0.816285",
+          "rank": 3,
+          "popularity": "2"
+        },
+        {
+          "horse_number": "1",
+          "horse_name": "コンフォルツァ",
+          "win_prob": "0.097069",
+          "current_odds": "10.6",
+          "ev": "1.028928",
+          "rank": 4,
+          "popularity": "4"
+        },
+        {
+          "horse_number": "4",
+          "horse_name": "エボルヴィング",
+          "win_prob": "0.070168",
+          "current_odds": "15.2",
+          "ev": "1.06656",
+          "rank": 5,
+          "popularity": "5"
+        }
+      ],
+      "chaos_candidates": [],
+      "warnings": []
+    },
+    {
+      "leg": 2,
+      "race_id": "20260607_阪神_10",
+      "race_label": "阪神10R",
+      "chaos": "0.753393",
+      "coverage": "0.644889",
+      "fixed": false,
+      "horses": [
+        {
+          "horse_number": "5",
+          "horse_name": "ジョイエッロ",
+          "win_prob": "0.349106",
+          "current_odds": "1.6",
+          "ev": "0.55857",
+          "rank": 1,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "6",
+          "horse_name": "エバーグルーヴ",
+          "win_prob": "0.165228",
+          "current_odds": "5.3",
+          "ev": "0.875707",
+          "rank": 2,
+          "popularity": "2"
+        },
+        {
+          "horse_number": "8",
+          "horse_name": "ヤマニンガラッシア",
+          "win_prob": "0.130555",
+          "current_odds": "8.3",
+          "ev": "1.083603",
+          "rank": 3,
+          "popularity": "3"
+        }
+      ],
+      "alternates": [
+        {
+          "horse_number": "3",
+          "horse_name": "ユメハハテシナク",
+          "win_prob": "0.10787",
+          "current_odds": "9.4",
+          "ev": "1.013975",
+          "rank": 4,
+          "popularity": "4"
+        },
+        {
+          "horse_number": "1",
+          "horse_name": "ウインリベラシオン",
+          "win_prob": "0.082248",
+          "current_odds": "12.8",
+          "ev": "1.05278",
+          "rank": 5,
+          "popularity": "5"
+        },
+        {
+          "horse_number": "9",
+          "horse_name": "ツーエムクロノス",
+          "win_prob": "0.064527",
+          "current_odds": "17",
+          "ev": "1.096951",
+          "rank": 6,
+          "popularity": "6"
+        }
+      ],
+      "top5_candidates": [
+        {
+          "horse_number": "5",
+          "horse_name": "ジョイエッロ",
+          "win_prob": "0.349106",
+          "current_odds": "1.6",
+          "ev": "0.55857",
+          "rank": 1,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "6",
+          "horse_name": "エバーグルーヴ",
+          "win_prob": "0.165228",
+          "current_odds": "5.3",
+          "ev": "0.875707",
+          "rank": 2,
+          "popularity": "2"
+        },
+        {
+          "horse_number": "8",
+          "horse_name": "ヤマニンガラッシア",
+          "win_prob": "0.130555",
+          "current_odds": "8.3",
+          "ev": "1.083603",
+          "rank": 3,
+          "popularity": "3"
+        },
+        {
+          "horse_number": "3",
+          "horse_name": "ユメハハテシナク",
+          "win_prob": "0.10787",
+          "current_odds": "9.4",
+          "ev": "1.013975",
+          "rank": 4,
+          "popularity": "4"
+        },
+        {
+          "horse_number": "1",
+          "horse_name": "ウインリベラシオン",
+          "win_prob": "0.082248",
+          "current_odds": "12.8",
+          "ev": "1.05278",
+          "rank": 5,
+          "popularity": "5"
+        }
+      ],
+      "chaos_candidates": [],
+      "warnings": []
+    },
+    {
+      "leg": 4,
+      "race_id": "20260607_阪神_11",
+      "race_label": "阪神11R",
+      "chaos": "0.874572",
+      "coverage": "0.514292",
+      "fixed": false,
+      "horses": [
+        {
+          "horse_number": "6",
+          "horse_name": "アンズアメ",
+          "win_prob": "0.161195",
+          "current_odds": "3.7",
+          "ev": "0.596421",
+          "rank": 1,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "3",
+          "horse_name": "プレゼンティーア",
+          "win_prob": "0.114934",
+          "current_odds": "6.9",
+          "ev": "0.793044",
+          "rank": 2,
+          "popularity": "3"
+        },
+        {
+          "horse_number": "15",
+          "horse_name": "コンクイスタ",
+          "win_prob": "0.137205",
+          "current_odds": "4.3",
+          "ev": "0.589981",
+          "rank": 3,
+          "popularity": "2"
+        },
+        {
+          "horse_number": "14",
+          "horse_name": "サンライズアムール",
+          "win_prob": "0.100958",
+          "current_odds": "8",
+          "ev": "0.80766",
+          "rank": 4,
+          "popularity": "4"
+        }
+      ],
+      "alternates": [
+        {
+          "horse_number": "5",
+          "horse_name": "ショウナンアビアス",
+          "win_prob": "0.07018",
+          "current_odds": "15.5",
+          "ev": "1.087785",
+          "rank": 5,
+          "popularity": "5"
+        },
+        {
+          "horse_number": "1",
+          "horse_name": "ムーヴ",
+          "win_prob": "0.063476",
+          "current_odds": "17.3",
+          "ev": "1.098143",
+          "rank": 6,
+          "popularity": "7"
+        },
+        {
+          "horse_number": "12",
+          "horse_name": "ロードフロンティア",
+          "win_prob": "0.064184",
+          "current_odds": "16.6",
+          "ev": "1.065454",
+          "rank": 7,
+          "popularity": "6"
+        }
+      ],
+      "top5_candidates": [
+        {
+          "horse_number": "6",
+          "horse_name": "アンズアメ",
+          "win_prob": "0.161195",
+          "current_odds": "3.7",
+          "ev": "0.596421",
+          "rank": 1,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "3",
+          "horse_name": "プレゼンティーア",
+          "win_prob": "0.114934",
+          "current_odds": "6.9",
+          "ev": "0.793044",
+          "rank": 2,
+          "popularity": "3"
+        },
+        {
+          "horse_number": "15",
+          "horse_name": "コンクイスタ",
+          "win_prob": "0.137205",
+          "current_odds": "4.3",
+          "ev": "0.589981",
+          "rank": 3,
+          "popularity": "2"
+        },
+        {
+          "horse_number": "14",
+          "horse_name": "サンライズアムール",
+          "win_prob": "0.100958",
+          "current_odds": "8",
+          "ev": "0.80766",
+          "rank": 4,
+          "popularity": "4"
+        },
+        {
+          "horse_number": "5",
+          "horse_name": "ショウナンアビアス",
+          "win_prob": "0.07018",
+          "current_odds": "15.5",
+          "ev": "1.087785",
+          "rank": 5,
+          "popularity": "5"
+        }
+      ],
+      "chaos_candidates": [
+        {
+          "horse_number": "6",
+          "horse_name": "アンズアメ",
+          "win_prob": "0.161195",
+          "current_odds": "3.7",
+          "ev": "0.596421",
+          "rank": 1,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "3",
+          "horse_name": "プレゼンティーア",
+          "win_prob": "0.114934",
+          "current_odds": "6.9",
+          "ev": "0.793044",
+          "rank": 2,
+          "popularity": "3"
+        },
+        {
+          "horse_number": "15",
+          "horse_name": "コンクイスタ",
+          "win_prob": "0.137205",
+          "current_odds": "4.3",
+          "ev": "0.589981",
+          "rank": 3,
+          "popularity": "2"
+        },
+        {
+          "horse_number": "14",
+          "horse_name": "サンライズアムール",
+          "win_prob": "0.100958",
+          "current_odds": "8",
+          "ev": "0.80766",
+          "rank": 4,
+          "popularity": "4"
+        },
+        {
+          "horse_number": "5",
+          "horse_name": "ショウナンアビアス",
+          "win_prob": "0.07018",
+          "current_odds": "15.5",
+          "ev": "1.087785",
+          "rank": 5,
+          "popularity": "5"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "leg": 5,
+      "race_id": "20260607_東京_11",
+      "race_label": "東京11R",
+      "chaos": "0.862941",
+      "coverage": "0.450438",
+      "fixed": false,
+      "horses": [
+        {
+          "horse_number": "17",
+          "horse_name": "トロヴァトーレ",
+          "win_prob": "0.179151",
+          "current_odds": "3.6",
+          "ev": "0.644942",
+          "rank": 1,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "14",
+          "horse_name": "ガイアフォース",
+          "win_prob": "0.169416",
+          "current_odds": "3.6",
+          "ev": "0.609898",
+          "rank": 2,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "1",
+          "horse_name": "レーベンスティール",
+          "win_prob": "0.101871",
+          "current_odds": "7.8",
+          "ev": "0.794592",
+          "rank": 3,
+          "popularity": "3"
+        }
+      ],
+      "alternates": [
+        {
+          "horse_number": "16",
+          "horse_name": "パンジャタワー",
+          "win_prob": "0.089756",
+          "current_odds": "10.6",
+          "ev": "0.951417",
+          "rank": 4,
+          "popularity": "5"
+        },
+        {
+          "horse_number": "6",
+          "horse_name": "ステレンボッシュ",
+          "win_prob": "0.088783",
+          "current_odds": "10.5",
+          "ev": "0.932223",
+          "rank": 5,
+          "popularity": "4"
+        },
+        {
+          "horse_number": "13",
+          "horse_name": "セイウンハーデス",
+          "win_prob": "0.075634",
+          "current_odds": "13.4",
+          "ev": "1.013496",
+          "rank": 6,
+          "popularity": "6"
+        }
+      ],
+      "top5_candidates": [
+        {
+          "horse_number": "17",
+          "horse_name": "トロヴァトーレ",
+          "win_prob": "0.179151",
+          "current_odds": "3.6",
+          "ev": "0.644942",
+          "rank": 1,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "14",
+          "horse_name": "ガイアフォース",
+          "win_prob": "0.169416",
+          "current_odds": "3.6",
+          "ev": "0.609898",
+          "rank": 2,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "1",
+          "horse_name": "レーベンスティール",
+          "win_prob": "0.101871",
+          "current_odds": "7.8",
+          "ev": "0.794592",
+          "rank": 3,
+          "popularity": "3"
+        },
+        {
+          "horse_number": "16",
+          "horse_name": "パンジャタワー",
+          "win_prob": "0.089756",
+          "current_odds": "10.6",
+          "ev": "0.951417",
+          "rank": 4,
+          "popularity": "5"
+        },
+        {
+          "horse_number": "6",
+          "horse_name": "ステレンボッシュ",
+          "win_prob": "0.088783",
+          "current_odds": "10.5",
+          "ev": "0.932223",
+          "rank": 5,
+          "popularity": "4"
+        }
+      ],
+      "chaos_candidates": [
+        {
+          "horse_number": "17",
+          "horse_name": "トロヴァトーレ",
+          "win_prob": "0.179151",
+          "current_odds": "3.6",
+          "ev": "0.644942",
+          "rank": 1,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "14",
+          "horse_name": "ガイアフォース",
+          "win_prob": "0.169416",
+          "current_odds": "3.6",
+          "ev": "0.609898",
+          "rank": 2,
+          "popularity": "1"
+        },
+        {
+          "horse_number": "1",
+          "horse_name": "レーベンスティール",
+          "win_prob": "0.101871",
+          "current_odds": "7.8",
+          "ev": "0.794592",
+          "rank": 3,
+          "popularity": "3"
+        },
+        {
+          "horse_number": "16",
+          "horse_name": "パンジャタワー",
+          "win_prob": "0.089756",
+          "current_odds": "10.6",
+          "ev": "0.951417",
+          "rank": 4,
+          "popularity": "5"
+        },
+        {
+          "horse_number": "6",
+          "horse_name": "ステレンボッシュ",
+          "win_prob": "0.088783",
+          "current_odds": "10.5",
+          "ev": "0.932223",
+          "rank": 5,
+          "popularity": "4"
+        }
+      ],
+      "warnings": []
+    }
+  ],
+  "candidate_counts": {
+    "win5": 108
+  },
+  "bet_types_considered": [
+    "win5"
+  ],
+  "portfolio_summary": {
+    "total_stake": 10800,
+    "total_points": 108,
+    "estimated_hit_prob": "0.041224",
+    "estimated_fair_odds": "24.257623",
+    "favorite_count": 13,
+    "mid_count": 1,
+    "long_count": 0
+  }
+}

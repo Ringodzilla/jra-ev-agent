@@ -1,0 +1,129 @@
+{
+  "status": "OK",
+  "reason": "quality gates passed",
+  "fix": "",
+  "repair_actions": [],
+  "probability_sums": {
+    "20260607_東京_09": "1",
+    "20260607_東京_10": "0.999999",
+    "20260607_東京_11": "1",
+    "20260607_阪神_10": "1",
+    "20260607_阪神_11": "1"
+  },
+  "divergent_rows": [
+    {
+      "race_id": "20260607_東京_09",
+      "horse_id": "pw01dud002023107056/ED",
+      "horse_name": "ゴーラッキー",
+      "popularity_band": "favorite",
+      "current_odds": "1.6",
+      "predicted_odds": "1.939983",
+      "ev_current": "0.552388",
+      "ev_predicted": "0.669765",
+      "ev_delta_ratio": "0.21249",
+      "odds_gap_ratio": "0.212489"
+    },
+    {
+      "race_id": "20260607_東京_10",
+      "horse_id": "pw01dud002021101449/48",
+      "horse_name": "ライジンマル",
+      "popularity_band": "favorite",
+      "current_odds": "14.4",
+      "predicted_odds": "12.290101",
+      "ev_current": "1.308521",
+      "ev_predicted": "1.116796",
+      "ev_delta_ratio": "0.14652",
+      "odds_gap_ratio": "0.146521"
+    },
+    {
+      "race_id": "20260607_東京_10",
+      "horse_id": "pw01dud002023105092/83",
+      "horse_name": "マジッククッキー",
+      "popularity_band": "favorite",
+      "current_odds": "1.4",
+      "predicted_odds": "1.736542",
+      "ev_current": "0.56737",
+      "ev_predicted": "0.703758",
+      "ev_delta_ratio": "0.240386",
+      "odds_gap_ratio": "0.240387"
+    },
+    {
+      "race_id": "20260607_東京_11",
+      "horse_id": "pw01dud002021105557/5F",
+      "horse_name": "トロヴァトーレ",
+      "popularity_band": "favorite",
+      "current_odds": "3.6",
+      "predicted_odds": "4.068372",
+      "ev_current": "0.644942",
+      "ev_predicted": "0.728851",
+      "ev_delta_ratio": "0.130103",
+      "odds_gap_ratio": "0.130103"
+    },
+    {
+      "race_id": "20260607_阪神_10",
+      "horse_id": "pw01dud002020104285/9B",
+      "horse_name": "ラーテル",
+      "popularity_band": "mid",
+      "current_odds": "50.6",
+      "predicted_odds": "42.370859",
+      "ev_current": "1.427536",
+      "ev_predicted": "1.195374",
+      "ev_delta_ratio": "0.162631",
+      "odds_gap_ratio": "0.162631"
+    },
+    {
+      "race_id": "20260607_阪神_10",
+      "horse_id": "pw01dud002017101772/C3",
+      "horse_name": "ヤマニンガラッシア",
+      "popularity_band": "favorite",
+      "current_odds": "8.3",
+      "predicted_odds": "7.192043",
+      "ev_current": "1.083603",
+      "ev_predicted": "0.938954",
+      "ev_delta_ratio": "0.133489",
+      "odds_gap_ratio": "0.133489"
+    },
+    {
+      "race_id": "20260607_阪神_10",
+      "horse_id": "pw01dud002022105438/0D",
+      "horse_name": "ジョイエッロ",
+      "popularity_band": "favorite",
+      "current_odds": "1.6",
+      "predicted_odds": "1.989887",
+      "ev_current": "0.55857",
+      "ev_predicted": "0.694681",
+      "ev_delta_ratio": "0.243678",
+      "odds_gap_ratio": "0.243679"
+    },
+    {
+      "race_id": "20260607_阪神_11",
+      "horse_id": "pw01dud002022106689/21",
+      "horse_name": "アンズアメ",
+      "popularity_band": "favorite",
+      "current_odds": "3.7",
+      "predicted_odds": "4.439085",
+      "ev_current": "0.596421",
+      "ev_predicted": "0.715558",
+      "ev_delta_ratio": "0.199753",
+      "odds_gap_ratio": "0.199753"
+    },
+    {
+      "race_id": "20260607_阪神_11",
+      "horse_id": "pw01dud002020106557/C2",
+      "horse_name": "コンクイスタ",
+      "popularity_band": "favorite",
+      "current_odds": "4.3",
+      "predicted_odds": "5.328437",
+      "ev_current": "0.589981",
+      "ev_predicted": "0.731088",
+      "ev_delta_ratio": "0.239172",
+      "odds_gap_ratio": "0.239171"
+    }
+  ],
+  "stage_counts": {
+    "entries": 66,
+    "feature_rows": 66,
+    "ev_rows": 66,
+    "tickets": 108
+  }
+}

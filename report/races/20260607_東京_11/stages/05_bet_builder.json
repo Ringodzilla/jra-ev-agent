@@ -2,29 +2,29 @@
   "core": [
     {
       "race_id": "20260607_東京_11",
-      "horse_id": "pw01dud002021105557/5F",
-      "horse_name": "トロヴァトーレ",
-      "horse_number": "17",
-      "win_prob": "0.174721",
-      "place_prob": "0.372112",
-      "ev": "0.628997",
-      "ev_predicted": "0.718743",
-      "current_odds": "3.6",
-      "predicted_odds": "4.113653",
-      "predicted_odds_source": "structural"
-    },
-    {
-      "race_id": "20260607_東京_11",
       "horse_id": "pw01dud002019104476/E1",
       "horse_name": "ガイアフォース",
       "horse_number": "14",
-      "win_prob": "0.164506",
-      "place_prob": "0.34624",
-      "ev": "0.592221",
-      "ev_predicted": "0.658276",
-      "current_odds": "3.6",
-      "predicted_odds": "4.001541",
-      "predicted_odds_source": "structural"
+      "win_prob": "0.205012",
+      "place_prob": "0.408974",
+      "ev": "0.594534",
+      "ev_predicted": "0.617861",
+      "current_odds": "2.9",
+      "predicted_odds": "3.013784",
+      "predicted_odds_source": "live"
+    },
+    {
+      "race_id": "20260607_東京_11",
+      "horse_id": "pw01dud002021105557/5F",
+      "horse_name": "トロヴァトーレ",
+      "horse_number": "17",
+      "win_prob": "0.149791",
+      "place_prob": "0.331417",
+      "ev": "0.733976",
+      "ev_predicted": "0.812212",
+      "current_odds": "4.9",
+      "predicted_odds": "5.422301",
+      "predicted_odds_source": "live"
     }
   ],
   "partner": [
@@ -33,86 +33,190 @@
       "horse_id": "pw01dud002022101732/32",
       "horse_name": "パンジャタワー",
       "horse_number": "16",
-      "win_prob": "0.089473",
-      "place_prob": "0.245328",
-      "ev": "0.948411",
-      "ev_predicted": "0.93933",
-      "current_odds": "10.6",
-      "predicted_odds": "10.498511",
-      "predicted_odds_source": "structural"
+      "win_prob": "0.107595",
+      "place_prob": "0.276403",
+      "ev": "0.893041",
+      "ev_predicted": "0.893862",
+      "current_odds": "8.3",
+      "predicted_odds": "8.307627",
+      "predicted_odds_source": "live"
     },
     {
       "race_id": "20260607_東京_11",
-      "horse_id": "pw01dud002020102078/A4",
-      "horse_name": "レーベンスティール",
-      "horse_number": "1",
-      "win_prob": "0.100775",
-      "place_prob": "0.221199",
-      "ev": "0.786044",
-      "ev_predicted": "0.831233",
-      "current_odds": "7.8",
-      "predicted_odds": "8.248417",
-      "predicted_odds_source": "structural"
+      "horse_id": "pw01dud002021105743/E5",
+      "horse_name": "ステレンボッシュ",
+      "horse_number": "6",
+      "win_prob": "0.096037",
+      "place_prob": "0.228635",
+      "ev": "0.912351",
+      "ev_predicted": "0.940647",
+      "current_odds": "9.5",
+      "predicted_odds": "9.79463",
+      "predicted_odds_source": "live"
     }
   ],
-  "long": [
+  "long": [],
+  "tickets": [
     {
       "race_id": "20260607_東京_11",
-      "horse_id": "pw01dud002021105724/38",
-      "horse_name": "シックスペンス",
-      "horse_number": "4",
-      "win_prob": "0.053136",
-      "place_prob": "0.165375",
-      "ev": "1.142414",
-      "ev_predicted": "1.147211",
-      "current_odds": "21.5",
-      "predicted_odds": "21.59028",
-      "predicted_odds_source": "structural"
+      "bet_type": "wide",
+      "horse_id": "pw01dud002021105557/5F|pw01dud002022101732/32",
+      "horse_name": "トロヴァトーレ - パンジャタワー",
+      "horse_number": "17-16",
+      "horse_ids": [
+        "pw01dud002021105557/5F",
+        "pw01dud002022101732/32"
+      ],
+      "horse_names": [
+        "トロヴァトーレ",
+        "パンジャタワー"
+      ],
+      "horse_numbers": [
+        "17",
+        "16"
+      ],
+      "stake": 400,
+      "hit_prob": "0.123568",
+      "win_prob": "0.123568",
+      "wide_prob": "0.123568",
+      "wide_prob_market": "0.117328",
+      "win_odds": "8.3",
+      "wide_odds_est": "8.3",
+      "wide_odds_min": "8.3",
+      "wide_odds_max": "9.5",
+      "predicted_odds": "8.735169",
+      "predicted_wide_odds": "8.735169",
+      "ev": "1.025613",
+      "ev_current": "1.025613",
+      "ev_predicted": "1.079386",
+      "predicted_odds_source": "jra_live",
+      "odds_source": "jra_live",
+      "confidence": "1.053182",
+      "pace_adjustment": "1",
+      "legs": [
+        {
+          "horse_id": "pw01dud002021105557/5F",
+          "horse_name": "トロヴァトーレ",
+          "horse_number": "17",
+          "place_prob": "0.331417",
+          "win_prob": "0.149791"
+        },
+        {
+          "horse_id": "pw01dud002022101732/32",
+          "horse_name": "パンジャタワー",
+          "horse_number": "16",
+          "place_prob": "0.276403",
+          "win_prob": "0.107595"
+        }
+      ],
+      "portfolio_total_stake": 600,
+      "portfolio_total_points": 2,
+      "portfolio_ev": "1.051593",
+      "portfolio_expected_return": 630,
+      "portfolio_expected_profit": 30,
+      "portfolio_no_gami": true,
+      "return_if_hit": 3320,
+      "net_return_if_hit": 2720
     },
     {
       "race_id": "20260607_東京_11",
-      "horse_id": "pw01dud002021105864/A9",
-      "horse_name": "ワールズエンド",
-      "horse_number": "11",
-      "win_prob": "0.059489",
-      "place_prob": "0.178906",
-      "ev": "1.130291",
-      "ev_predicted": "1.205746",
-      "current_odds": "19",
-      "predicted_odds": "20.268387",
-      "predicted_odds_source": "structural"
+      "bet_type": "sanrenpuku",
+      "horse_id": "pw01dud002019104476/E1|pw01dud002022101732/32|pw01dud002020102078/A4",
+      "horse_name": "ガイアフォース - パンジャタワー - レーベンスティール",
+      "horse_number": "14 - 16 - 1",
+      "horse_ids": [
+        "pw01dud002019104476/E1",
+        "pw01dud002022101732/32",
+        "pw01dud002020102078/A4"
+      ],
+      "horse_names": [
+        "ガイアフォース",
+        "パンジャタワー",
+        "レーベンスティール"
+      ],
+      "horse_numbers": [
+        "14",
+        "16",
+        "1"
+      ],
+      "stake": 200,
+      "hit_prob": "0.021939",
+      "win_prob": "0.021939",
+      "combo_prob": "0.021939",
+      "combo_prob_market": "0.027979",
+      "win_odds": "50.3",
+      "trio_odds_est": "50.3",
+      "predicted_odds": "51.148376",
+      "ev": "1.103552",
+      "ev_current": "1.103552",
+      "ev_predicted": "1.122165",
+      "predicted_odds_source": "jra_live",
+      "odds_source": "jra_live",
+      "ticket_role": "value",
+      "coverage_reason": "",
+      "confidence": "0.784151",
+      "legs": [
+        {
+          "horse_id": "pw01dud002019104476/E1",
+          "horse_name": "ガイアフォース",
+          "horse_number": "14",
+          "win_prob": "0.205012",
+          "place_prob": "0.408974"
+        },
+        {
+          "horse_id": "pw01dud002022101732/32",
+          "horse_name": "パンジャタワー",
+          "horse_number": "16",
+          "win_prob": "0.107595",
+          "place_prob": "0.276403"
+        },
+        {
+          "horse_id": "pw01dud002020102078/A4",
+          "horse_name": "レーベンスティール",
+          "horse_number": "1",
+          "win_prob": "0.102395",
+          "place_prob": "0.224054"
+        }
+      ],
+      "portfolio_total_stake": 600,
+      "portfolio_total_points": 2,
+      "portfolio_ev": "1.051593",
+      "portfolio_expected_return": 630,
+      "portfolio_expected_profit": 30,
+      "portfolio_no_gami": true,
+      "return_if_hit": 10060,
+      "net_return_if_hit": 9460
     }
   ],
-  "tickets": [],
   "races": [
     {
       "race_id": "20260607_東京_11",
       "core": [
         {
           "race_id": "20260607_東京_11",
-          "horse_id": "pw01dud002021105557/5F",
-          "horse_name": "トロヴァトーレ",
-          "horse_number": "17",
-          "win_prob": "0.174721",
-          "place_prob": "0.372112",
-          "ev": "0.628997",
-          "ev_predicted": "0.718743",
-          "current_odds": "3.6",
-          "predicted_odds": "4.113653",
-          "predicted_odds_source": "structural"
-        },
-        {
-          "race_id": "20260607_東京_11",
           "horse_id": "pw01dud002019104476/E1",
           "horse_name": "ガイアフォース",
           "horse_number": "14",
-          "win_prob": "0.164506",
-          "place_prob": "0.34624",
-          "ev": "0.592221",
-          "ev_predicted": "0.658276",
-          "current_odds": "3.6",
-          "predicted_odds": "4.001541",
-          "predicted_odds_source": "structural"
+          "win_prob": "0.205012",
+          "place_prob": "0.408974",
+          "ev": "0.594534",
+          "ev_predicted": "0.617861",
+          "current_odds": "2.9",
+          "predicted_odds": "3.013784",
+          "predicted_odds_source": "live"
+        },
+        {
+          "race_id": "20260607_東京_11",
+          "horse_id": "pw01dud002021105557/5F",
+          "horse_name": "トロヴァトーレ",
+          "horse_number": "17",
+          "win_prob": "0.149791",
+          "place_prob": "0.331417",
+          "ev": "0.733976",
+          "ev_predicted": "0.812212",
+          "current_odds": "4.9",
+          "predicted_odds": "5.422301",
+          "predicted_odds_source": "live"
         }
       ],
       "partner": [
@@ -121,162 +225,352 @@
           "horse_id": "pw01dud002022101732/32",
           "horse_name": "パンジャタワー",
           "horse_number": "16",
-          "win_prob": "0.089473",
-          "place_prob": "0.245328",
-          "ev": "0.948411",
-          "ev_predicted": "0.93933",
-          "current_odds": "10.6",
-          "predicted_odds": "10.498511",
-          "predicted_odds_source": "structural"
+          "win_prob": "0.107595",
+          "place_prob": "0.276403",
+          "ev": "0.893041",
+          "ev_predicted": "0.893862",
+          "current_odds": "8.3",
+          "predicted_odds": "8.307627",
+          "predicted_odds_source": "live"
         },
         {
           "race_id": "20260607_東京_11",
-          "horse_id": "pw01dud002020102078/A4",
-          "horse_name": "レーベンスティール",
-          "horse_number": "1",
-          "win_prob": "0.100775",
-          "place_prob": "0.221199",
-          "ev": "0.786044",
-          "ev_predicted": "0.831233",
-          "current_odds": "7.8",
-          "predicted_odds": "8.248417",
-          "predicted_odds_source": "structural"
+          "horse_id": "pw01dud002021105743/E5",
+          "horse_name": "ステレンボッシュ",
+          "horse_number": "6",
+          "win_prob": "0.096037",
+          "place_prob": "0.228635",
+          "ev": "0.912351",
+          "ev_predicted": "0.940647",
+          "current_odds": "9.5",
+          "predicted_odds": "9.79463",
+          "predicted_odds_source": "live"
         }
       ],
-      "long": [
-        {
-          "race_id": "20260607_東京_11",
-          "horse_id": "pw01dud002021105724/38",
-          "horse_name": "シックスペンス",
-          "horse_number": "4",
-          "win_prob": "0.053136",
-          "place_prob": "0.165375",
-          "ev": "1.142414",
-          "ev_predicted": "1.147211",
-          "current_odds": "21.5",
-          "predicted_odds": "21.59028",
-          "predicted_odds_source": "structural"
-        },
-        {
-          "race_id": "20260607_東京_11",
-          "horse_id": "pw01dud002021105864/A9",
-          "horse_name": "ワールズエンド",
-          "horse_number": "11",
-          "win_prob": "0.059489",
-          "place_prob": "0.178906",
-          "ev": "1.130291",
-          "ev_predicted": "1.205746",
-          "current_odds": "19",
-          "predicted_odds": "20.268387",
-          "predicted_odds_source": "structural"
-        }
-      ],
+      "long": [],
       "candidate_counts": {
-        "win": 2
+        "wide": 1,
+        "sanrenpuku": 1
       },
       "candidates": [
         {
           "race_id": "20260607_東京_11",
-          "bet_type": "win",
-          "horse_id": "pw01dud002021105724/38",
-          "horse_name": "シックスペンス",
-          "horse_number": 4,
+          "bet_type": "wide",
+          "horse_id": "pw01dud002021105557/5F|pw01dud002022101732/32",
+          "horse_name": "トロヴァトーレ - パンジャタワー",
+          "horse_number": "17-16",
+          "horse_ids": [
+            "pw01dud002021105557/5F",
+            "pw01dud002022101732/32"
+          ],
+          "horse_names": [
+            "トロヴァトーレ",
+            "パンジャタワー"
+          ],
+          "horse_numbers": [
+            "17",
+            "16"
+          ],
           "stake": 100,
-          "win_prob": "0.053136",
-          "win_odds": "21.5",
-          "ev": "1.142424",
-          "ev_current": "1.142424",
-          "ev_predicted": "1.147211",
-          "fair_odds": "18.819792",
-          "model_score": "0.203567",
-          "predicted_odds": "21.59028",
+          "hit_prob": "0.123568",
+          "win_prob": "0.123568",
+          "wide_prob": "0.123568",
+          "wide_prob_market": "0.117328",
+          "win_odds": "8.3",
+          "wide_odds_est": "8.3",
+          "wide_odds_min": "8.3",
+          "wide_odds_max": "9.5",
+          "predicted_odds": "8.735169",
+          "predicted_wide_odds": "8.735169",
+          "ev": "1.025613",
+          "ev_current": "1.025613",
+          "ev_predicted": "1.079386",
           "predicted_odds_source": "jra_live",
-          "odds_source": "jra_live"
+          "odds_source": "jra_live",
+          "confidence": "1.053182",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002021105557/5F",
+              "horse_name": "トロヴァトーレ",
+              "horse_number": "17",
+              "place_prob": "0.331417",
+              "win_prob": "0.149791"
+            },
+            {
+              "horse_id": "pw01dud002022101732/32",
+              "horse_name": "パンジャタワー",
+              "horse_number": "16",
+              "place_prob": "0.276403",
+              "win_prob": "0.107595"
+            }
+          ]
         },
         {
           "race_id": "20260607_東京_11",
-          "bet_type": "win",
-          "horse_id": "pw01dud002021105864/A9",
-          "horse_name": "ワールズエンド",
-          "horse_number": 11,
+          "bet_type": "sanrenpuku",
+          "horse_id": "pw01dud002019104476/E1|pw01dud002022101732/32|pw01dud002020102078/A4",
+          "horse_name": "ガイアフォース - パンジャタワー - レーベンスティール",
+          "horse_number": "14 - 16 - 1",
+          "horse_ids": [
+            "pw01dud002019104476/E1",
+            "pw01dud002022101732/32",
+            "pw01dud002020102078/A4"
+          ],
+          "horse_names": [
+            "ガイアフォース",
+            "パンジャタワー",
+            "レーベンスティール"
+          ],
+          "horse_numbers": [
+            "14",
+            "16",
+            "1"
+          ],
           "stake": 100,
-          "win_prob": "0.059489",
-          "win_odds": "19",
-          "ev": "1.130291",
-          "ev_current": "1.130291",
-          "ev_predicted": "1.205746",
-          "fair_odds": "16.809834",
-          "model_score": "0.407537",
-          "predicted_odds": "20.268387",
+          "hit_prob": "0.021939",
+          "win_prob": "0.021939",
+          "combo_prob": "0.021939",
+          "combo_prob_market": "0.027979",
+          "win_odds": "50.3",
+          "trio_odds_est": "50.3",
+          "predicted_odds": "51.148376",
+          "ev": "1.103552",
+          "ev_current": "1.103552",
+          "ev_predicted": "1.122165",
           "predicted_odds_source": "jra_live",
-          "odds_source": "jra_live"
+          "odds_source": "jra_live",
+          "ticket_role": "value",
+          "coverage_reason": "",
+          "confidence": "0.784151",
+          "legs": [
+            {
+              "horse_id": "pw01dud002019104476/E1",
+              "horse_name": "ガイアフォース",
+              "horse_number": "14",
+              "win_prob": "0.205012",
+              "place_prob": "0.408974"
+            },
+            {
+              "horse_id": "pw01dud002022101732/32",
+              "horse_name": "パンジャタワー",
+              "horse_number": "16",
+              "win_prob": "0.107595",
+              "place_prob": "0.276403"
+            },
+            {
+              "horse_id": "pw01dud002020102078/A4",
+              "horse_name": "レーベンスティール",
+              "horse_number": "1",
+              "win_prob": "0.102395",
+              "place_prob": "0.224054"
+            }
+          ]
         }
       ],
-      "exotics": [],
-      "tickets": [],
+      "exotics": [
+        {
+          "race_id": "20260607_東京_11",
+          "bet_type": "sanrenpuku",
+          "horse_id": "pw01dud002019104476/E1|pw01dud002022101732/32|pw01dud002020102078/A4",
+          "horse_name": "ガイアフォース - パンジャタワー - レーベンスティール",
+          "horse_number": "14 - 16 - 1",
+          "horse_ids": [
+            "pw01dud002019104476/E1",
+            "pw01dud002022101732/32",
+            "pw01dud002020102078/A4"
+          ],
+          "horse_names": [
+            "ガイアフォース",
+            "パンジャタワー",
+            "レーベンスティール"
+          ],
+          "horse_numbers": [
+            "14",
+            "16",
+            "1"
+          ],
+          "stake": 100,
+          "hit_prob": "0.021939",
+          "win_prob": "0.021939",
+          "combo_prob": "0.021939",
+          "combo_prob_market": "0.027979",
+          "win_odds": "50.3",
+          "trio_odds_est": "50.3",
+          "predicted_odds": "51.148376",
+          "ev": "1.103552",
+          "ev_current": "1.103552",
+          "ev_predicted": "1.122165",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "value",
+          "coverage_reason": "",
+          "confidence": "0.784151",
+          "legs": [
+            {
+              "horse_id": "pw01dud002019104476/E1",
+              "horse_name": "ガイアフォース",
+              "horse_number": "14",
+              "win_prob": "0.205012",
+              "place_prob": "0.408974"
+            },
+            {
+              "horse_id": "pw01dud002022101732/32",
+              "horse_name": "パンジャタワー",
+              "horse_number": "16",
+              "win_prob": "0.107595",
+              "place_prob": "0.276403"
+            },
+            {
+              "horse_id": "pw01dud002020102078/A4",
+              "horse_name": "レーベンスティール",
+              "horse_number": "1",
+              "win_prob": "0.102395",
+              "place_prob": "0.224054"
+            }
+          ]
+        }
+      ],
+      "tickets": [
+        {
+          "race_id": "20260607_東京_11",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002021105557/5F|pw01dud002022101732/32",
+          "horse_name": "トロヴァトーレ - パンジャタワー",
+          "horse_number": "17-16",
+          "horse_ids": [
+            "pw01dud002021105557/5F",
+            "pw01dud002022101732/32"
+          ],
+          "horse_names": [
+            "トロヴァトーレ",
+            "パンジャタワー"
+          ],
+          "horse_numbers": [
+            "17",
+            "16"
+          ],
+          "stake": 400,
+          "hit_prob": "0.123568",
+          "win_prob": "0.123568",
+          "wide_prob": "0.123568",
+          "wide_prob_market": "0.117328",
+          "win_odds": "8.3",
+          "wide_odds_est": "8.3",
+          "wide_odds_min": "8.3",
+          "wide_odds_max": "9.5",
+          "predicted_odds": "8.735169",
+          "predicted_wide_odds": "8.735169",
+          "ev": "1.025613",
+          "ev_current": "1.025613",
+          "ev_predicted": "1.079386",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "confidence": "1.053182",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002021105557/5F",
+              "horse_name": "トロヴァトーレ",
+              "horse_number": "17",
+              "place_prob": "0.331417",
+              "win_prob": "0.149791"
+            },
+            {
+              "horse_id": "pw01dud002022101732/32",
+              "horse_name": "パンジャタワー",
+              "horse_number": "16",
+              "place_prob": "0.276403",
+              "win_prob": "0.107595"
+            }
+          ],
+          "portfolio_total_stake": 600,
+          "portfolio_total_points": 2,
+          "portfolio_ev": "1.051593",
+          "portfolio_expected_return": 630,
+          "portfolio_expected_profit": 30,
+          "portfolio_no_gami": true,
+          "return_if_hit": 3320,
+          "net_return_if_hit": 2720
+        },
+        {
+          "race_id": "20260607_東京_11",
+          "bet_type": "sanrenpuku",
+          "horse_id": "pw01dud002019104476/E1|pw01dud002022101732/32|pw01dud002020102078/A4",
+          "horse_name": "ガイアフォース - パンジャタワー - レーベンスティール",
+          "horse_number": "14 - 16 - 1",
+          "horse_ids": [
+            "pw01dud002019104476/E1",
+            "pw01dud002022101732/32",
+            "pw01dud002020102078/A4"
+          ],
+          "horse_names": [
+            "ガイアフォース",
+            "パンジャタワー",
+            "レーベンスティール"
+          ],
+          "horse_numbers": [
+            "14",
+            "16",
+            "1"
+          ],
+          "stake": 200,
+          "hit_prob": "0.021939",
+          "win_prob": "0.021939",
+          "combo_prob": "0.021939",
+          "combo_prob_market": "0.027979",
+          "win_odds": "50.3",
+          "trio_odds_est": "50.3",
+          "predicted_odds": "51.148376",
+          "ev": "1.103552",
+          "ev_current": "1.103552",
+          "ev_predicted": "1.122165",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "value",
+          "coverage_reason": "",
+          "confidence": "0.784151",
+          "legs": [
+            {
+              "horse_id": "pw01dud002019104476/E1",
+              "horse_name": "ガイアフォース",
+              "horse_number": "14",
+              "win_prob": "0.205012",
+              "place_prob": "0.408974"
+            },
+            {
+              "horse_id": "pw01dud002022101732/32",
+              "horse_name": "パンジャタワー",
+              "horse_number": "16",
+              "win_prob": "0.107595",
+              "place_prob": "0.276403"
+            },
+            {
+              "horse_id": "pw01dud002020102078/A4",
+              "horse_name": "レーベンスティール",
+              "horse_number": "1",
+              "win_prob": "0.102395",
+              "place_prob": "0.224054"
+            }
+          ],
+          "portfolio_total_stake": 600,
+          "portfolio_total_points": 2,
+          "portfolio_ev": "1.051593",
+          "portfolio_expected_return": 630,
+          "portfolio_expected_profit": 30,
+          "portfolio_no_gami": true,
+          "return_if_hit": 10060,
+          "net_return_if_hit": 9460
+        }
+      ],
       "portfolio": {
-        "total_stake": 0,
-        "total_points": 0,
-        "expected_return": 0,
-        "expected_profit": 0,
-        "portfolio_ev": "0",
-        "no_gami": false
-      },
-      "invalidated_tickets": [
-        {
-          "race_id": "20260607_東京_11",
-          "bet_type": "win",
-          "horse_id": "pw01dud002021105724/38",
-          "horse_name": "シックスペンス",
-          "horse_number": 4,
-          "stake": 300,
-          "win_prob": "0.053136",
-          "win_odds": "21.5",
-          "ev": "1.142424",
-          "ev_current": "1.142424",
-          "ev_predicted": "1.147211",
-          "fair_odds": "18.819792",
-          "model_score": "0.203567",
-          "predicted_odds": "21.59028",
-          "predicted_odds_source": "jra_live",
-          "odds_source": "jra_live",
-          "portfolio_total_stake": 600,
-          "portfolio_total_points": 2,
-          "portfolio_ev": "1.136357",
-          "portfolio_expected_return": 681,
-          "portfolio_expected_profit": 81,
-          "portfolio_no_gami": true,
-          "return_if_hit": 6450,
-          "net_return_if_hit": 5850
-        },
-        {
-          "race_id": "20260607_東京_11",
-          "bet_type": "win",
-          "horse_id": "pw01dud002021105864/A9",
-          "horse_name": "ワールズエンド",
-          "horse_number": 11,
-          "stake": 300,
-          "win_prob": "0.059489",
-          "win_odds": "19",
-          "ev": "1.130291",
-          "ev_current": "1.130291",
-          "ev_predicted": "1.205746",
-          "fair_odds": "16.809834",
-          "model_score": "0.407537",
-          "predicted_odds": "20.268387",
-          "predicted_odds_source": "jra_live",
-          "odds_source": "jra_live",
-          "portfolio_total_stake": 600,
-          "portfolio_total_points": 2,
-          "portfolio_ev": "1.136357",
-          "portfolio_expected_return": 681,
-          "portfolio_expected_profit": 81,
-          "portfolio_no_gami": true,
-          "return_if_hit": 5700,
-          "net_return_if_hit": 5100
-        }
-      ],
-      "ticket_status": "invalidated_by_reviewer"
+        "total_stake": 600,
+        "total_points": 2,
+        "expected_return": 630,
+        "expected_profit": 30,
+        "portfolio_ev": "1.051593",
+        "no_gami": true
+      }
     }
   ],
   "bet_types_considered": [
@@ -290,96 +584,38 @@
     "sanrentan"
   ],
   "candidate_counts": {
-    "win": 2
+    "wide": 1,
+    "sanrenpuku": 1
   },
   "optimization_mode": "cross_bet_ev_kelly_portfolio",
   "portfolio_summary": {
-    "total_stake": 0,
-    "total_points": 0,
-    "expected_return": 0,
-    "expected_profit": 0,
-    "portfolio_ev": "0",
-    "no_gami": false
+    "total_stake": 600,
+    "total_points": 2,
+    "expected_return": 630,
+    "expected_profit": 30,
+    "portfolio_ev": "1.051593",
+    "no_gami": true
   },
-  "primary_bet_type": "win",
-  "tansho": [
-    "シックスペンス",
-    "ワールズエンド"
-  ],
+  "primary_bet_type": "wide",
+  "tansho": [],
   "fukusho": [
-    "トロヴァトーレ",
-    "ガイアフォース"
+    "ガイアフォース",
+    "トロヴァトーレ"
   ],
   "wide": [
-    "トロヴァトーレ - ガイアフォース"
+    "トロヴァトーレ - パンジャタワー"
   ],
   "wakuren": [],
   "umaren": [
-    "トロヴァトーレ - ガイアフォース",
-    "トロヴァトーレ - パンジャタワー",
-    "ガイアフォース - パンジャタワー"
+    "ガイアフォース - トロヴァトーレ",
+    "ガイアフォース - パンジャタワー",
+    "トロヴァトーレ - パンジャタワー"
   ],
   "umatan": [],
   "sanrenpuku": [
-    "トロヴァトーレ - ガイアフォース - パンジャタワー"
+    "ガイアフォース - パンジャタワー - レーベンスティール"
   ],
   "sanrentan": [
-    "トロヴァトーレ → ガイアフォース → パンジャタワー"
-  ],
-  "invalidated_tickets": [
-    {
-      "race_id": "20260607_東京_11",
-      "bet_type": "win",
-      "horse_id": "pw01dud002021105724/38",
-      "horse_name": "シックスペンス",
-      "horse_number": 4,
-      "stake": 300,
-      "win_prob": "0.053136",
-      "win_odds": "21.5",
-      "ev": "1.142424",
-      "ev_current": "1.142424",
-      "ev_predicted": "1.147211",
-      "fair_odds": "18.819792",
-      "model_score": "0.203567",
-      "predicted_odds": "21.59028",
-      "predicted_odds_source": "jra_live",
-      "odds_source": "jra_live",
-      "portfolio_total_stake": 600,
-      "portfolio_total_points": 2,
-      "portfolio_ev": "1.136357",
-      "portfolio_expected_return": 681,
-      "portfolio_expected_profit": 81,
-      "portfolio_no_gami": true,
-      "return_if_hit": 6450,
-      "net_return_if_hit": 5850
-    },
-    {
-      "race_id": "20260607_東京_11",
-      "bet_type": "win",
-      "horse_id": "pw01dud002021105864/A9",
-      "horse_name": "ワールズエンド",
-      "horse_number": 11,
-      "stake": 300,
-      "win_prob": "0.059489",
-      "win_odds": "19",
-      "ev": "1.130291",
-      "ev_current": "1.130291",
-      "ev_predicted": "1.205746",
-      "fair_odds": "16.809834",
-      "model_score": "0.407537",
-      "predicted_odds": "20.268387",
-      "predicted_odds_source": "jra_live",
-      "odds_source": "jra_live",
-      "portfolio_total_stake": 600,
-      "portfolio_total_points": 2,
-      "portfolio_ev": "1.136357",
-      "portfolio_expected_return": 681,
-      "portfolio_expected_profit": 81,
-      "portfolio_no_gami": true,
-      "return_if_hit": 5700,
-      "net_return_if_hit": 5100
-    }
-  ],
-  "ticket_status": "invalidated_by_reviewer",
-  "invalidation_reason": "ticket plan overweights extreme longshots; predicted/current EV divergence detected: トロヴァトーレ@20260607_東京_11"
+    "ガイアフォース → トロヴァトーレ → パンジャタワー"
+  ]
 }
