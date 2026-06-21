@@ -298,6 +298,83 @@ class TestEVPipeline(unittest.TestCase):
 
         self.assertLess(adjustment, 1.0)
 
+    def test_track_condition_match_improves_course_score(self):
+        base = {
+            "race_id": "r_condition",
+            "horse_name": "A",
+            "horse_number": "1",
+            "current_odds": "5.0",
+            "target_track": "東京",
+            "target_surface": "芝",
+            "target_distance": "1800",
+            "target_track_condition": "稍重",
+            "run_index": "1",
+            "date": "2026-06-01",
+            "course": "東京",
+            "distance": "芝1800",
+            "position": "3",
+            "time": "106.0",
+            "weight": "55",
+            "last_3f": "34.5",
+            "passing_order": "3-3-3",
+            "popularity": "4",
+        }
+        matching = {**base, "horse_id": "matching", "track_condition": "稍重"}
+        mismatching = {
+            **base,
+            "horse_id": "mismatching",
+            "horse_name": "B",
+            "horse_number": "2",
+            "track_condition": "良",
+        }
+
+        features = {row["horse_id"]: row for row in build_feature_rows([matching, mismatching])}
+
+        self.assertGreater(features["matching"]["track_condition_score"], features["mismatching"]["track_condition_score"])
+        self.assertGreater(features["matching"]["course_score"], features["mismatching"]["course_score"])
+        self.assertEqual(0.7, features["mismatching"]["track_condition_score"])
+
+    def test_missing_track_condition_history_is_neutral(self):
+        row = {
+            "race_id": "r_condition_missing",
+            "horse_id": "h1",
+            "horse_name": "A",
+            "horse_number": "1",
+            "current_odds": "5.0",
+            "target_track": "東京",
+            "target_surface": "芝",
+            "target_distance": "1800",
+            "target_track_condition": "稍重",
+            "run_index": "1",
+            "date": "2026-06-01",
+            "course": "東京",
+            "distance": "芝1800",
+            "position": "3",
+            "time": "106.0",
+            "weight": "55",
+            "last_3f": "34.5",
+            "passing_order": "3-3-3",
+            "popularity": "4",
+            "track_condition": "",
+        }
+
+        feature = build_feature_rows([row])[0]
+
+        self.assertEqual(0.5, feature["track_condition_score"])
+
+    def test_simulator_exposes_relative_front_structure(self):
+        rows = [
+            {"race_id": "r_front", "horse_id": "leader", "front_rate": 0.9, "closing_strength": 0.2, "ability_score": 0.5, "course_score": 0.5, "consistency": 0.5},
+            {"race_id": "r_front", "horse_id": "stalker", "front_rate": 0.7, "closing_strength": 0.3, "ability_score": 0.5, "course_score": 0.5, "consistency": 0.5},
+            {"race_id": "r_front", "horse_id": "closer", "front_rate": 0.2, "closing_strength": 0.8, "ability_score": 0.5, "course_score": 0.5, "consistency": 0.5},
+        ]
+
+        simulated = {row["horse_id"]: row for row in simulate_race_scenarios(rows)}
+
+        self.assertGreater(float(simulated["leader"]["relative_front_rank"]), float(simulated["stalker"]["relative_front_rank"]))
+        self.assertGreater(float(simulated["leader"]["solo_lead_score"]), float(simulated["stalker"]["solo_lead_score"]))
+        self.assertEqual("2", simulated["leader"]["front_competitor_count"])
+
     def test_frame_quality_penalizes_one_strong_one_weak_frame(self):
         adjustment = _frame_quality_adjustment(
             [{"win_prob": "0.20"}, {"win_prob": "0.02"}],

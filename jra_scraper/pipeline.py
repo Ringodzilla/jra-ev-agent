@@ -78,6 +78,8 @@ class JRAPipeline:
         all_combo_odds_rows: list[dict[str, str]] = []
         processed_this_run: list[str] = []
         issues: list[ParserIssue] = []
+        missing_history_requests: list[dict[str, object]] = []
+        manual_history_rows = self._read_existing_rows(self.config.manual_history_csv)
 
         races = self._resolve_races(
             race_specs=race_specs,
@@ -151,7 +153,7 @@ class JRAPipeline:
             race_failed = False
             for horse in horses:
                 embedded_rows = _rows_from_embedded_history(horse)
-                if embedded_rows:
+                if len(embedded_rows) >= 5:
                     race_rows.extend(embedded_rows)
                     continue
 
@@ -164,10 +166,40 @@ class JRAPipeline:
                 if not horse_html:
                     failures[horse.horse_url] = failures.get(horse.horse_url, 0) + 1
                     logger.warning("Skip horse due to missing html: %s", horse.horse_url)
-                    race_failed = True
+                    manual_rows = _manual_rows_for_horse(horse, manual_history_rows)
+                    rows = _merge_history_rows(
+                        embedded_rows,
+                        manual_rows,
+                        target_race_date=horse.target_race_date,
+                    )
+                    if rows:
+                        race_rows.extend(rows)
+                        if len(rows) < 5:
+                            missing_history_requests.append(
+                                _missing_history_request(
+                                    horse,
+                                    history_count=len(rows),
+                                    manual_history_csv=self.config.manual_history_csv,
+                                )
+                            )
+                            issues.append(
+                                ParserIssue(
+                                    stage="pipeline.history",
+                                    severity="medium",
+                                    code="history_incomplete",
+                                    message="Embedded history had fewer than five runs and horse detail was unavailable.",
+                                    context={
+                                        "race_id": horse.race_id,
+                                        "horse_name": horse.horse_name,
+                                        "history_count": str(len(rows)),
+                                    },
+                                )
+                            )
+                    else:
+                        race_failed = True
                     continue
 
-                rows = self.parser.parse_horse_last5(
+                detail_rows = self.parser.parse_horse_last5(
                     horse_html,
                     race_id=horse.race_id,
                     horse_id=horse.horse_id,
@@ -177,8 +209,35 @@ class JRAPipeline:
                     issue_sink=issues,
                     aggressive_repair=aggressive_repair,
                 )
+                manual_rows = _manual_rows_for_horse(horse, manual_history_rows)
+                rows = _merge_history_rows(
+                    embedded_rows,
+                    detail_rows + manual_rows,
+                    target_race_date=horse.target_race_date,
+                )
                 if not rows:
                     race_failed = True
+                elif len(rows) < 5:
+                    missing_history_requests.append(
+                        _missing_history_request(
+                            horse,
+                            history_count=len(rows),
+                            manual_history_csv=self.config.manual_history_csv,
+                        )
+                    )
+                    issues.append(
+                        ParserIssue(
+                            stage="pipeline.history",
+                            severity="medium",
+                            code="history_incomplete",
+                            message="Fewer than five history rows were available after merging sources.",
+                            context={
+                                "race_id": horse.race_id,
+                                "horse_name": horse.horse_name,
+                                "history_count": str(len(rows)),
+                            },
+                        )
+                    )
                 race_rows.extend(rows)
 
             all_new_rows.extend(race_rows)
@@ -194,6 +253,7 @@ class JRAPipeline:
         append_live_combo_odds(self.config.combo_odds_csv, all_combo_odds_rows)
         self._save_state(processed_races, failures, len(processed_this_run), len(all_new_rows))
         self._write_quality_report(issues, entry_rows)
+        self._write_missing_history_requests(missing_history_requests)
 
         logger.info(
             "Pipeline complete total_rows=%d entry_rows=%d new_rows=%d processed_races=%d",
@@ -306,12 +366,26 @@ class JRAPipeline:
             "issues_by_code": dict(code_counts),
             "repaired_row_count": sum(1 for issue in issues if issue.code in {"row_padding", "row_merge"}),
             "missing_current_odds_entries": sum(1 for row in entry_rows if not row.get("current_odds")),
+            "incomplete_history_entries": sum(
+                1 for row in entry_rows if int(str(row.get("history_count") or "0")) < 5
+            ),
             "entry_count": len(entry_rows),
             "live_snapshot_count": len(snapshot_rows),
             "live_combo_odds_count": len(combo_odds_rows),
             "issues": [issue.to_dict() for issue in issues],
         }
         with self.config.quality_report_path.open("w", encoding="utf-8") as file_obj:
+            json.dump(payload, file_obj, ensure_ascii=False, indent=2)
+
+    def _write_missing_history_requests(self, requests: list[dict[str, object]]) -> None:
+        payload = {
+            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "status": "action_required" if requests else "complete",
+            "fallback_policy": "continue_with_neutral_score_0.5",
+            "manual_history_csv": str(self.config.manual_history_csv),
+            "requests": requests,
+        }
+        with self.config.missing_history_requests_path.open("w", encoding="utf-8") as file_obj:
             json.dump(payload, file_obj, ensure_ascii=False, indent=2)
 
     def _race_from_spec(self, spec: dict[str, object]) -> RaceLink:
@@ -592,3 +666,102 @@ def _rows_from_embedded_history(horse) -> list[dict[str, str]]:
             row["last_3f"] = JRAParser.LAST_3F_NEUTRAL_BASELINE
         rows.append(row)
     return rows
+
+
+def _merge_history_rows(
+    embedded_rows: list[dict[str, str]],
+    detail_rows: list[dict[str, str]],
+    *,
+    target_race_date: str = "",
+) -> list[dict[str, str]]:
+    """Merge newest-first history sources and return exactly the best available last five."""
+    merged: list[dict[str, str]] = []
+    seen: set[tuple[str, str, str]] = set()
+    target_date_key = _compact_date_key(target_race_date)
+    for row in list(embedded_rows) + list(detail_rows):
+        history_date_key = _compact_date_key(str(row.get("date", "")))
+        if target_date_key and history_date_key and history_date_key >= target_date_key:
+            continue
+        key = (
+            str(row.get("date", "")).strip(),
+            str(row.get("race_name", "")).strip(),
+            str(row.get("course", "")).strip(),
+        )
+        if not any(key) or key in seen:
+            continue
+        seen.add(key)
+        normalized = dict(row)
+        normalized["run_index"] = str(len(merged) + 1)
+        merged.append(normalized)
+        if len(merged) == 5:
+            break
+    return merged
+
+
+def _manual_rows_for_horse(horse, manual_rows: list[dict[str, str]]) -> list[dict[str, str]]:
+    matched: list[dict[str, str]] = []
+    for row in manual_rows:
+        row_horse_id = str(row.get("horse_id", "")).strip()
+        row_horse_name = str(row.get("horse_name", "")).strip()
+        if row_horse_id and row_horse_id != horse.horse_id:
+            continue
+        if not row_horse_id and row_horse_name != horse.horse_name:
+            continue
+        enriched = dict(row)
+        enriched.update(
+            {
+                "race_id": horse.race_id,
+                "horse_id": horse.horse_id,
+                "horse_name": horse.horse_name,
+                "horse_url": horse.horse_url,
+                "frame_number": horse.frame_number,
+                "horse_number": horse.horse_number,
+                "current_jockey": horse.current_jockey,
+                "assigned_weight": horse.assigned_weight,
+                "current_odds": horse.current_odds,
+                "current_popularity": horse.current_popularity,
+                "target_track": horse.target_track,
+                "target_race_date": horse.target_race_date,
+                "target_race_number": horse.target_race_number,
+                "target_surface": horse.target_surface,
+                "target_distance": horse.target_distance,
+                "target_weather": horse.target_weather,
+                "target_track_condition": horse.target_track_condition,
+                "target_conditions_captured_at": horse.target_conditions_captured_at,
+                "horse_country": horse.horse_country,
+            }
+        )
+        matched.append(enriched)
+    return matched
+
+
+def _missing_history_request(horse, *, history_count: int, manual_history_csv: Path) -> dict[str, object]:
+    return {
+        "race_id": horse.race_id,
+        "horse_id": horse.horse_id,
+        "horse_name": horse.horse_name,
+        "horse_url": horse.horse_url,
+        "history_count": history_count,
+        "missing_count": max(0, 5 - history_count),
+        "fallback_score": 0.5,
+        "fallback_reason": "user_unavailable_or_manual_data_not_stored",
+        "action": "Research missing prior runs and append them to the manual history CSV.",
+        "manual_history_csv": str(manual_history_csv),
+    }
+
+
+def _compact_date_key(value: str) -> str:
+    normalized = (
+        value.strip()
+        .replace("年", "-")
+        .replace("月", "-")
+        .replace("日", "")
+        .replace("/", "-")
+        .replace(".", "-")
+    )
+    parts = [part for part in normalized.split("-") if part]
+    if len(parts) >= 3 and all(part.isdigit() for part in parts[:3]):
+        year, month, day = parts[:3]
+        return f"{int(year):04d}{int(month):02d}{int(day):02d}"
+    digits = "".join(character for character in value if character.isdigit())
+    return digits[:8] if len(digits) >= 8 else ""

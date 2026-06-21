@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import math
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
@@ -89,6 +90,12 @@ def simulate_race_scenarios(feature_rows: list[dict[str, object]]) -> list[dict[
     simulated: list[dict[str, object]] = []
     for race_id in sorted(by_race.keys()):
         race_rows = by_race[race_id]
+        front_rates = [_to_float(row.get("front_rate"), 0.5) for row in race_rows]
+        ordered_front_rates = sorted(front_rates, reverse=True)
+        max_front_rate = ordered_front_rates[0] if ordered_front_rates else 0.5
+        front_weights = [math.exp(6.0 * (value - max_front_rate)) for value in front_rates]
+        front_weight_total = sum(front_weights) or 1.0
+        front_competitor_count = sum(1 for value in front_rates if value >= 0.68)
         front_density = sum(_to_float(row.get("front_rate"), 0.5) for row in race_rows) / max(len(race_rows), 1)
         high = _clamp(0.18 + max(0.0, front_density - 0.48) * 1.2, 0.15, 0.55)
         slow = _clamp(0.18 + max(0.0, 0.42 - front_density) * 1.2, 0.15, 0.55)
@@ -98,16 +105,33 @@ def simulate_race_scenarios(feature_rows: list[dict[str, object]]) -> list[dict[
         mid /= total
         slow /= total
 
-        for row in race_rows:
+        for row_index, row in enumerate(race_rows):
             front_rate = _to_float(row.get("front_rate"), 0.5)
             closing_strength = _to_float(row.get("closing_strength"), 0.0)
             ability_score = _to_float(row.get("ability_score"), 0.0)
             course_score = _to_float(row.get("course_score"), 0.0)
             consistency = _to_float(row.get("consistency"), 0.5)
+            rank_index = ordered_front_rates.index(front_rate) if ordered_front_rates else 0
+            relative_front_rank = 1.0 - (rank_index / max(len(race_rows) - 1, 1))
+            solo_lead_score = front_weights[row_index] / front_weight_total
 
             high_fit = _clamp((0.65 * closing_strength) + (0.35 * (1.0 - front_rate)), 0.0, 1.5)
-            mid_fit = _clamp((0.50 * ability_score) + (0.20 * front_rate) + (0.30 * consistency), 0.0, 1.5)
-            slow_fit = _clamp((0.55 * front_rate) + (0.30 * course_score) + (0.15 * consistency), 0.0, 1.5)
+            mid_fit = _clamp(
+                (0.40 * ability_score)
+                + (0.15 * front_rate)
+                + (0.25 * consistency)
+                + (0.20 * relative_front_rank),
+                0.0,
+                1.5,
+            )
+            slow_fit = _clamp(
+                (0.40 * front_rate)
+                + (0.25 * course_score)
+                + (0.15 * consistency)
+                + (0.20 * solo_lead_score),
+                0.0,
+                1.5,
+            )
             blended_pace = (high * high_fit) + (mid * mid_fit) + (slow * slow_fit)
 
             row["pace_high"] = _fmt(high_fit)
@@ -116,6 +140,9 @@ def simulate_race_scenarios(feature_rows: list[dict[str, object]]) -> list[dict[
             row["pace_mix_high"] = _fmt(high)
             row["pace_mix_mid"] = _fmt(mid)
             row["pace_mix_slow"] = _fmt(slow)
+            row["relative_front_rank"] = _fmt(relative_front_rank)
+            row["solo_lead_score"] = _fmt(solo_lead_score)
+            row["front_competitor_count"] = str(front_competitor_count)
             row["pace_score"] = _fmt(blended_pace)
             simulated.append(row)
 

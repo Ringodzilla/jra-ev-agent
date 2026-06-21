@@ -3,11 +3,18 @@ import os
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 
 try:
     from jra_scraper.config import ScrapeConfig
     from scripts.run_pipeline import _artifact_dir_for_run, _race_artifact_id, load_race_configs
-    from jra_scraper.pipeline import JRAPipeline, _raw_file_captured_at
+    from jra_scraper.pipeline import (
+        JRAPipeline,
+        _manual_rows_for_horse,
+        _merge_history_rows,
+        _missing_history_request,
+        _raw_file_captured_at,
+    )
     HAS_RUN_PIPELINE = True
 except ModuleNotFoundError:
     HAS_RUN_PIPELINE = False
@@ -72,6 +79,8 @@ class TestPipelineEntrypoints(unittest.TestCase):
                 raw_dir=root / "raw",
                 state_path=root / "state.json",
                 quality_report_path=root / "quality.json",
+                missing_history_requests_path=root / "missing_history.json",
+                manual_history_csv=root / "manual_history.csv",
                 stages_dir=root / "stages",
             )
             pipeline = JRAPipeline(config)
@@ -125,6 +134,8 @@ class TestPipelineEntrypoints(unittest.TestCase):
                 raw_dir=root / "raw",
                 state_path=root / "state.json",
                 quality_report_path=root / "quality.json",
+                missing_history_requests_path=root / "missing_history.json",
+                manual_history_csv=root / "manual_history.csv",
                 stages_dir=root / "stages",
             )
             pipeline = JRAPipeline(config)
@@ -152,6 +163,60 @@ class TestPipelineEntrypoints(unittest.TestCase):
                 "2025-06-15T15:06:40+00:00",
                 _raw_file_captured_at(path),
             )
+
+    def test_merge_history_rows_fills_missing_fifth_run(self):
+        embedded = [
+            {"run_index": str(index), "date": f"2026-0{6-index}-01", "race_name": f"R{index}", "course": "東京"}
+            for index in range(1, 5)
+        ]
+        detail = embedded + [
+            {"run_index": "5", "date": "2025-12-01", "race_name": "R5", "course": "東京"}
+        ]
+
+        merged = _merge_history_rows(embedded, detail)
+
+        self.assertEqual(5, len(merged))
+        self.assertEqual("R5", merged[-1]["race_name"])
+        self.assertEqual(["1", "2", "3", "4", "5"], [row["run_index"] for row in merged])
+
+    def test_merge_history_rows_excludes_target_race_result(self):
+        detail = [
+            {"date": "2026年6月21日", "race_name": "対象レース", "course": "東京"},
+            {"date": "2026年5月1日", "race_name": "前走", "course": "東京"},
+        ]
+
+        merged = _merge_history_rows([], detail, target_race_date="2026-06-21")
+
+        self.assertEqual(["前走"], [row["race_name"] for row in merged])
+
+    def test_manual_history_rows_are_enriched_for_current_entry(self):
+        horse = SimpleNamespace(
+            race_id="r1", horse_id="h1", horse_name="A", horse_url="https://example.test/h1",
+            frame_number="1", horse_number="2", current_jockey="騎手", assigned_weight="55",
+            current_odds="8.0", current_popularity="4", target_track="東京",
+            target_race_date="2026-06-21", target_race_number="11", target_surface="芝",
+            target_distance="1800", target_weather="曇", target_track_condition="稍重",
+            target_conditions_captured_at="2026-06-21T06:00:00+00:00", horse_country="",
+        )
+
+        rows = _manual_rows_for_horse(
+            horse,
+            [{"horse_id": "h1", "horse_name": "A", "date": "2025-06-22", "race_name": "府中牝馬S"}],
+        )
+
+        self.assertEqual(1, len(rows))
+        self.assertEqual("r1", rows[0]["race_id"])
+        self.assertEqual("稍重", rows[0]["target_track_condition"])
+
+    def test_missing_history_request_uses_neutral_fallback(self):
+        horse = SimpleNamespace(
+            race_id="r1", horse_id="h1", horse_name="A", horse_url="https://example.test/h1"
+        )
+
+        request = _missing_history_request(horse, history_count=4, manual_history_csv=Path("manual.csv"))
+
+        self.assertEqual(1, request["missing_count"])
+        self.assertEqual(0.5, request["fallback_score"])
 
     def test_race_artifact_id_prefers_stable_race_metadata(self):
         artifact_id = _race_artifact_id(

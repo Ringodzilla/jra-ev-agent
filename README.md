@@ -184,6 +184,16 @@ keep の場合は `report/baseline_eval.json` を更新し、revert の場合は
 
 運用詳細は `RUNBOOK.md` を参照してください。
 
+### Manual history fallback
+
+出馬表と馬詳細ページを統合しても過去5走が揃わない場合、パイプラインは
+`report/missing_history_requests.json` に要調査リストを出力します。処理は停止せず、
+欠損特徴量には中立値 `0.5` を使用します。
+
+手動で確認できた過去走は `data/manual/horse_history_overrides.csv` に追加してください。
+次回実行時に馬ID（未設定時は馬名）で照合され、自動的に過去走へマージされます。
+対象レース当日以降の日付はリーク防止のため取り込まれません。
+
 ### Evaluation result labels
 
 `scripts/evaluate_strategy.py` は単勝だけでなく、複勝・ワイド・枠連・馬連・馬単・三連複・三連単の払戻ラベルを評価できます。

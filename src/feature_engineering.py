@@ -55,6 +55,10 @@ def summarize_history_rows(
         venue_map = _weighted_counts((str(row.get("course", "")).strip() for row in ordered), weights)
         surface_map = _weighted_counts((_surface_from_distance_field(str(row.get("distance", ""))) for row in ordered), weights)
         jockey_map = _weighted_counts((str(row.get("jockey", "")).strip() for row in ordered), weights)
+        track_condition_map = _weighted_counts(
+            (str(row.get("track_condition", "")).strip() for row in ordered),
+            weights,
+        )
         latest_history_date = str(ordered[0].get("date", "")).strip() if ordered else ""
 
         summaries[key] = {
@@ -78,6 +82,7 @@ def summarize_history_rows(
             "venue_map": venue_map,
             "surface_map": surface_map,
             "jockey_map": jockey_map,
+            "track_condition_map": track_condition_map,
             "latest_history_date": latest_history_date,
         }
     return summaries
@@ -162,6 +167,10 @@ def build_feature_row(
     surface_match = _map_score(history_summary.get("surface_map"), target_surface)
     jockey_match = _map_score(history_summary.get("jockey_map"), current_jockey)
     distance_fit = _distance_fit_score(history_summary.get("avg_distance", 0.0), target_distance)
+    track_condition_match = _condition_match_score(
+        history_summary.get("track_condition_map"),
+        target_track_condition,
+    )
 
     avg_finish = _to_float(history_summary.get("avg_finish"), 10.0)
     avg_last3f = _to_float(history_summary.get("avg_last3f"), DEFAULT_LAST3F)
@@ -209,7 +218,12 @@ def build_feature_row(
         + 0.18 * speed_score
         + 0.12 * consistency
     )
-    course_score = 0.55 * venue_match + 0.25 * surface_match + 0.20 * distance_fit
+    course_score = (
+        0.40 * venue_match
+        + 0.20 * surface_match
+        + 0.20 * distance_fit
+        + 0.20 * track_condition_match
+    )
     pace_score = 0.55 * front_rate + 0.45 * closing_strength
     weight_score = max(-1.5, min(1.5, -weight_delta / 3.0))
     jockey_score = 0.65 * jockey_match + 0.35 * win_rate
@@ -263,6 +277,7 @@ def build_feature_row(
         "consistency": round(consistency, 4),
         "ability_score": round(ability_score, 4),
         "course_score": round(course_score, 4),
+        "track_condition_score": round(track_condition_match, 4),
         "pace_score": round(pace_score, 4),
         "weight_score": round(weight_score, 4),
         "jockey_score": round(jockey_score, 4),
@@ -347,6 +362,27 @@ def _map_score(value: object, key: str) -> float:
         return 0.5
     total = sum(float(v) for v in value.values()) or 1.0
     return float(value.get(key, 0.0)) / total
+
+
+def _condition_match_score(value: object, key: str) -> float:
+    if not isinstance(value, dict) or not value or not key:
+        return 0.5
+    condition_order = {"良": 0, "稍重": 1, "重": 2, "不良": 3}
+    target_index = condition_order.get(key)
+    if target_index is None:
+        return 0.5
+
+    similarity_by_gap = {0: 1.0, 1: 0.70, 2: 0.35, 3: 0.10}
+    weighted_similarity = 0.0
+    total = 0.0
+    for condition, count_value in value.items():
+        condition_index = condition_order.get(str(condition))
+        if condition_index is None:
+            continue
+        count = float(count_value)
+        weighted_similarity += similarity_by_gap[abs(target_index - condition_index)] * count
+        total += count
+    return weighted_similarity / total if total > 0 else 0.5
 
 
 def _odds_trend(odds_values: Sequence[float]) -> float:
