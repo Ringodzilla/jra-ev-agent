@@ -34,6 +34,9 @@ def build_features(race_last5_path: str, entries_path: str, odds_path: str) -> l
                 "target_race_date": str(row.get("target_race_date", "")),
                 "target_surface": str(row.get("target_surface", "")),
                 "target_distance": str(row.get("target_distance", "")),
+                "target_weather": str(row.get("target_weather", "")),
+                "target_track_condition": str(row.get("target_track_condition", "")),
+                "target_conditions_captured_at": str(row.get("target_conditions_captured_at", "")),
                 "horse_country": str(row.get("horse_country", "")),
             }
             summary = summaries.get((horse_id,), {})

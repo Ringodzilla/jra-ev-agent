@@ -25,6 +25,8 @@ class RaceLink:
     race_number: str = ""
     target_surface: str = ""
     target_distance: str = ""
+    target_weather: str = ""
+    target_track_condition: str = ""
 
 
 @dataclass
@@ -45,5 +47,8 @@ class HorseEntry:
     target_race_number: str = ""
     target_surface: str = ""
     target_distance: str = ""
+    target_weather: str = ""
+    target_track_condition: str = ""
+    target_conditions_captured_at: str = ""
     horse_country: str = ""
     embedded_history: list[dict[str, str]] = field(default_factory=list)

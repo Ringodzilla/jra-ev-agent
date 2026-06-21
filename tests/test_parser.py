@@ -96,6 +96,10 @@ class TestJRAParser(unittest.TestCase):
           <div class="cell course">
             <span class="cap">コース：</span>1,600<span class="unit">メートル</span><span class="detail">（芝・左）</span>
           </div>
+          <div class="cell baba"><ul>
+            <li class="weather"><span class="cap">天候</span><span class="txt">雨</span></li>
+            <li class="turf"><span class="cap">芝</span><span class="txt">重</span></li>
+          </ul></div>
         </div>
         <table class="race_table_01">
           <tr><th>枠</th><th>馬番</th><th>馬名</th><th>騎手</th><th>斤量</th><th>単勝</th></tr>
@@ -111,6 +115,30 @@ class TestJRAParser(unittest.TestCase):
         self.assertEqual("11", horses[0].target_race_number)
         self.assertEqual("芝", horses[0].target_surface)
         self.assertEqual("1600", horses[0].target_distance)
+        self.assertEqual("雨", horses[0].target_weather)
+        self.assertEqual("重", horses[0].target_track_condition)
+
+    def test_parse_race_detail_prefers_target_surface_condition(self):
+        html = """
+        <html><body>
+        <div class="race_header">
+          <div class="cell course">コース：1,800メートル（ダート・右）</div>
+          <div class="cell baba"><ul>
+            <li class="weather"><span class="cap">天候</span><span class="txt">曇</span></li>
+            <li class="turf"><span class="cap">芝</span><span class="txt">稍重</span></li>
+            <li class="dirt"><span class="cap">ダート</span><span class="txt">重</span></li>
+          </ul></div>
+        </div>
+        <table class="race_table_01">
+          <tr><th>枠</th><th>馬番</th><th>馬名</th></tr>
+          <tr><td>1</td><td>1</td><td class="horse"><a href="/JRADB/accessU.html?CNAME=a1">サンプルホースA</a></td></tr>
+        </table>
+        </body></html>
+        """
+        horses = self.parser.parse_race_detail(html, race_id="r1", race_name="テスト競走")
+        self.assertEqual("ダート", horses[0].target_surface)
+        self.assertEqual("曇", horses[0].target_weather)
+        self.assertEqual("重", horses[0].target_track_condition)
 
     def test_parse_race_detail_reads_frame_number_from_waku_image_alt(self):
         html = """

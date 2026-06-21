@@ -150,6 +150,9 @@ def build_feature_row(
     target_track = str(current.get("target_track", "")).strip()
     target_surface = str(current.get("target_surface", "")).strip()
     target_distance = _to_float(current.get("target_distance"), 0.0)
+    target_weather = str(current.get("target_weather", "")).strip()
+    target_track_condition = str(current.get("target_track_condition", "")).strip()
+    target_conditions_captured_at = str(current.get("target_conditions_captured_at", "")).strip()
     current_jockey = str(current.get("current_jockey", "")).strip()
     horse_country = _normalize_country_code(str(current.get("horse_country", "")).strip())
     assigned_weight = _to_float(current.get("assigned_weight"), DEFAULT_WEIGHT)
@@ -226,6 +229,9 @@ def build_feature_row(
         "target_race_number": str(current.get("target_race_number", "")).strip(),
         "target_surface": target_surface,
         "target_distance": _fmt_float(target_distance),
+        "target_weather": target_weather,
+        "target_track_condition": target_track_condition,
+        "target_conditions_captured_at": target_conditions_captured_at,
         "horse_country": horse_country,
         "is_overseas_race": int(is_overseas_race),
         "country_value_score": round(country_value_score, 4),
