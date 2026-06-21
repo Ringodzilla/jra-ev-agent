@@ -98,10 +98,11 @@ class JRAPipeline:
                 logger.info("Skip already processed race race_id=%s", race.race_id)
                 continue
 
+            race_raw_name = f"race_{safe_filename(race.race_id)}.html"
             race_html = self.scraper.fetch(
                 race.race_url,
-                raw_name=f"race_{safe_filename(race.race_id)}.html",
-                use_cache=True,
+                raw_name=race_raw_name,
+                use_cache=reprocess_raw or not force_rebuild,
                 cache_only=reprocess_raw,
             )
             if not race_html:
@@ -110,6 +111,9 @@ class JRAPipeline:
                 continue
 
             try:
+                target_conditions_captured_at = _raw_file_captured_at(
+                    self.config.raw_dir / race_raw_name
+                )
                 horses = self.parser.parse_race_detail(
                     race_html,
                     race.race_id,
@@ -119,6 +123,9 @@ class JRAPipeline:
                     target_race_number=race.race_number,
                     target_surface=race.target_surface,
                     target_distance=race.target_distance,
+                    target_weather=race.target_weather,
+                    target_track_condition=race.target_track_condition,
+                    target_conditions_captured_at=target_conditions_captured_at,
                     issue_sink=issues,
                     aggressive_repair=aggressive_repair,
                 )
@@ -131,6 +138,7 @@ class JRAPipeline:
                 race,
                 race_html,
                 reprocess_raw=reprocess_raw,
+                force_refresh=force_rebuild,
                 issues=issues,
             )
             all_combo_odds_rows.extend(combo_odds_rows)
@@ -314,6 +322,10 @@ class JRAPipeline:
         race_number = str(spec.get("race_number", "")).strip()
         target_surface = str(spec.get("target_surface") or spec.get("surface") or spec.get("surface_label") or "").strip()
         target_distance = str(spec.get("target_distance") or spec.get("distance") or spec.get("distance_label") or "").strip()
+        target_weather = str(spec.get("target_weather") or spec.get("weather") or "").strip()
+        target_track_condition = str(
+            spec.get("target_track_condition") or spec.get("track_condition") or ""
+        ).strip()
 
         race_id = str(spec.get("race_id", "")).strip()
         if not race_id and race_date and track and race_number:
@@ -333,6 +345,8 @@ class JRAPipeline:
             race_number=race_number,
             target_surface=target_surface,
             target_distance=target_distance,
+            target_weather=target_weather,
+            target_track_condition=target_track_condition,
         )
 
     @staticmethod
@@ -345,6 +359,7 @@ class JRAPipeline:
         race_html: str,
         *,
         reprocess_raw: bool,
+        force_refresh: bool,
         issues: list[ParserIssue],
     ) -> list[dict[str, str]]:
         captured_at = datetime.now(timezone.utc).isoformat()
@@ -357,7 +372,7 @@ class JRAPipeline:
             odds_url,
             {"CNAME": initial_cname},
             raw_name=f"odds_{safe_filename(race.race_id)}_win_place.html",
-            use_cache=True,
+            use_cache=reprocess_raw or not force_refresh,
             cache_only=reprocess_raw,
         )
         if not first_html:
@@ -387,7 +402,7 @@ class JRAPipeline:
                 odds_url,
                 {"CNAME": cname},
                 raw_name=f"odds_{safe_filename(race.race_id)}_{bet_type}.html",
-                use_cache=True,
+                use_cache=reprocess_raw or not force_refresh,
                 cache_only=reprocess_raw,
             )
             if not html:
@@ -523,6 +538,12 @@ def _dedupe_combo_odds_rows(rows: list[dict[str, str]]) -> list[dict[str, str]]:
     return out
 
 
+def _raw_file_captured_at(path: Path) -> str:
+    if not path.exists():
+        return ""
+    return datetime.fromtimestamp(path.stat().st_mtime, tz=timezone.utc).isoformat()
+
+
 def _rows_from_embedded_history(horse) -> list[dict[str, str]]:
     embedded_history = list(getattr(horse, "embedded_history", []) or [])
     if not embedded_history:
@@ -547,6 +568,9 @@ def _rows_from_embedded_history(horse) -> list[dict[str, str]]:
             "target_race_number": horse.target_race_number,
             "target_surface": horse.target_surface,
             "target_distance": horse.target_distance,
+            "target_weather": horse.target_weather,
+            "target_track_condition": horse.target_track_condition,
+            "target_conditions_captured_at": horse.target_conditions_captured_at,
             "horse_country": horse.horse_country,
             "date": str(history.get("date", "")),
             "course": str(history.get("course", "")),

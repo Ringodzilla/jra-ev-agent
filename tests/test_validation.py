@@ -25,6 +25,9 @@ class TestValidation(unittest.TestCase):
                     "last_3f": "34.2",
                     "track_condition": "良",
                     "weather": "晴",
+                    "target_weather": "雨",
+                    "target_track_condition": "重",
+                    "target_conditions_captured_at": "2026-03-29T06:30:00+00:00",
                     "passing_order": "5-5-4-2",
                     "odds": "3.2倍",
                     "popularity": "1人気",
@@ -45,6 +48,9 @@ class TestValidation(unittest.TestCase):
         self.assertEqual("2", validated[0]["passing_order"])
         self.assertEqual("3.2", validated[0]["odds"])
         self.assertEqual("1", validated[0]["popularity"])
+        self.assertEqual("雨", validated[0]["target_weather"])
+        self.assertEqual("重", validated[0]["target_track_condition"])
+        self.assertEqual("2026-03-29T06:30:00+00:00", validated[0]["target_conditions_captured_at"])
         self.assertEqual(set(OUTPUT_COLUMNS), set(validated[0].keys()))
 
     def test_build_row_id_stable(self):

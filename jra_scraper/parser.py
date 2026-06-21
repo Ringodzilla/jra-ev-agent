@@ -160,6 +160,9 @@ class JRAParser:
         target_race_number: str = "",
         target_surface: str = "",
         target_distance: str = "",
+        target_weather: str = "",
+        target_track_condition: str = "",
+        target_conditions_captured_at: str = "",
         issue_sink: list[ParserIssue] | None = None,
         aggressive_repair: bool = False,
     ) -> list[HorseEntry]:
@@ -188,6 +191,12 @@ class JRAParser:
         parsed_surface, parsed_distance = self._extract_race_conditions(soup)
         target_surface = parsed_surface or header_meta.get("target_surface", "") or target_surface
         target_distance = parsed_distance or header_meta.get("target_distance", "") or target_distance
+        parsed_weather, parsed_track_condition = self._extract_current_race_conditions(
+            soup,
+            target_surface=target_surface,
+        )
+        target_weather = parsed_weather or target_weather
+        target_track_condition = parsed_track_condition or target_track_condition
         effective_race_name = self._resolve_race_name(race_name, header_meta.get("race_name", ""))
 
         horses: list[HorseEntry] = []
@@ -255,6 +264,9 @@ class JRAParser:
                     target_race_number=target_race_number,
                     target_surface=target_surface,
                     target_distance=target_distance,
+                    target_weather=target_weather,
+                    target_track_condition=target_track_condition,
+                    target_conditions_captured_at=target_conditions_captured_at,
                     horse_country=mapped.get("horse_country", ""),
                     embedded_history=self._extract_embedded_history(row),
                 )
@@ -353,6 +365,9 @@ class JRAParser:
                         "target_race_number": current_entry.target_race_number,
                         "target_surface": current_entry.target_surface,
                         "target_distance": current_entry.target_distance,
+                        "target_weather": current_entry.target_weather,
+                        "target_track_condition": current_entry.target_track_condition,
+                        "target_conditions_captured_at": current_entry.target_conditions_captured_at,
                         "horse_country": current_entry.horse_country,
                     }
                 )
@@ -812,6 +827,36 @@ class JRAParser:
             if surface and distance:
                 return surface, distance
         return "", ""
+
+    @classmethod
+    def _extract_current_race_conditions(
+        cls,
+        soup: BeautifulSoup,
+        *,
+        target_surface: str,
+    ) -> tuple[str, str]:
+        weather = cls._extract_first_text(soup, ".cell.baba li.weather .txt, .cell.baba .weather .txt")
+        surface_labels = {
+            "芝": ("芝", "turf"),
+            "ダート": ("ダート", "dirt"),
+            "障害": ("障害", "turf"),
+        }
+        expected_label, expected_class = surface_labels.get(target_surface, (target_surface, ""))
+
+        if expected_class:
+            condition = cls._extract_first_text(
+                soup,
+                f".cell.baba li.{expected_class} .txt, .cell.baba .{expected_class} .txt",
+            )
+            if condition:
+                return weather, condition
+
+        for item in soup.select(".cell.baba li"):
+            cap = cls._extract_first_text(item, ".cap")
+            value = cls._extract_first_text(item, ".txt")
+            if value and cap != "天候" and (not expected_label or cap == expected_label):
+                return weather, value
+        return weather, ""
 
     @classmethod
     def _parse_condition_text(cls, text: str) -> tuple[str, str]:

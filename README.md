@@ -34,6 +34,7 @@ JRAのレースデータを取得し、**EVモデリングに直接使える整�
 
   * `date, race_name, course, distance, position, time, weight, jockey`
   * `pace, last_3f, track_condition, weather, passing_order, odds, popularity`
+  * 対象レースの最新状態は `target_weather, target_track_condition, target_conditions_captured_at` として過去走列から分離
 * **Unique identifiers**
 
   * `race_id` = `YYYYMMDD_track_raceNo`
@@ -49,6 +50,7 @@ JRAのレースデータを取得し、**EVモデリングに直接使える整�
 
   * 取得HTMLは `data/raw/` へ保存
   * `--reprocess-raw` でfetchせず再処理可能
+  * `--force-rebuild` では対象レース・オッズHTMLを再取得し、最新の天候・馬場状態を保存
 * **Incremental + idempotent pipeline**
 
   * `pipeline_state.json` の `processed_race_ids` で既処理レースをスキップ
