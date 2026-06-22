@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import math
+import random
+from hashlib import blake2b
 from collections import defaultdict
 from dataclasses import dataclass
 
@@ -15,6 +17,10 @@ class ModelWeights:
     market: float = 0.12
     temperature: float = 1.15
     market_shrink: float = 0.25
+    monte_carlo_iterations: int = 2000
+    monte_carlo_seed: int = 731
+    luck_score_std: float = 0.16
+    consistency_noise_scale: float = 0.75
 
 
 def estimate_win_probs(rows: list[dict], weights: ModelWeights | None = None) -> list[dict]:
@@ -26,11 +32,15 @@ def estimate_win_probs(rows: list[dict], weights: ModelWeights | None = None) ->
     out: list[dict] = []
     for race_id, group in by_race.items():
         scored_group = [_score_row(row, weights) for row in group]
-        raw_probs = _softmax([float(row["model_score"]) * weights.temperature for row in scored_group])
         market_probs = _market_probs(scored_group)
-        blended_probs, calibration = _blend_probabilities(scored_group, raw_probs, market_probs, weights)
+        blended_probs, probability_stds, calibration = _monte_carlo_win_probs(
+            scored_group,
+            market_probs,
+            weights,
+            race_id=race_id,
+        )
 
-        for row, prob, meta in zip(scored_group, blended_probs, calibration):
+        for row, prob, probability_std, meta in zip(scored_group, blended_probs, probability_stds, calibration):
             odds = _to_float(row.get("current_odds") or row.get("win_odds"), 0.0)
             fair_odds = (1.0 / prob) if prob > 0 else 0.0
             predicted_structural = _predict_structural_odds(row, current_odds=odds, fair_odds=fair_odds)
@@ -60,6 +70,11 @@ def estimate_win_probs(rows: list[dict], weights: ModelWeights | None = None) ->
                     "predicted_odds": _fmt(predicted_odds),
                     "predicted_odds_source": prediction_source,
                     "win_prob": _fmt(prob),
+                    "win_prob_mean": _fmt(prob),
+                    "win_prob_std": _fmt(probability_std),
+                    "monte_carlo_iterations": str(max(1, int(weights.monte_carlo_iterations))),
+                    "monte_carlo_seed": str(int(weights.monte_carlo_seed)),
+                    "luck_score_std": _fmt(max(0.0, weights.luck_score_std)),
                     "fair_odds": _fmt(fair_odds),
                     "market_prob": _fmt(meta["market_prob"]),
                     "market_shrink_used": _fmt(meta["market_shrink"]),
@@ -86,6 +101,58 @@ def estimate_win_probs(rows: list[dict], weights: ModelWeights | None = None) ->
         )
     )
     return out
+
+
+def _monte_carlo_win_probs(
+    rows: list[dict],
+    market_probs: list[float],
+    weights: ModelWeights,
+    *,
+    race_id: str,
+) -> tuple[list[float], list[float], list[dict[str, float | str]]]:
+    if not rows:
+        return [], [], []
+
+    iterations = max(1, int(weights.monte_carlo_iterations))
+    base_scores = [_to_float(row.get("model_score"), 0.0) for row in rows]
+    base_raw_probs = _softmax([score * weights.temperature for score in base_scores])
+    base_probs, calibration = _blend_probabilities(rows, base_raw_probs, market_probs, weights)
+    if iterations == 1 or weights.luck_score_std <= 0:
+        return base_probs, [0.0 for _ in rows], calibration
+
+    rng = random.Random(_stable_race_seed(race_id, weights.monte_carlo_seed))
+    sums = [0.0 for _ in rows]
+    squared_sums = [0.0 for _ in rows]
+    noise_stds = [_luck_noise_std(row, weights) for row in rows]
+
+    for _ in range(iterations):
+        noisy_scores = [
+            (score + rng.gauss(0.0, noise_std)) * weights.temperature
+            for score, noise_std in zip(base_scores, noise_stds)
+        ]
+        raw_probs = _softmax(noisy_scores)
+        trial_probs, _ = _blend_probabilities(rows, raw_probs, market_probs, weights)
+        for index, probability in enumerate(trial_probs):
+            sums[index] += probability
+            squared_sums[index] += probability * probability
+
+    means = _normalize_probs([value / iterations for value in sums])
+    stds = [
+        math.sqrt(max(0.0, (squared_sums[index] / iterations) - ((sums[index] / iterations) ** 2)))
+        for index in range(len(rows))
+    ]
+    return means, stds, calibration
+
+
+def _luck_noise_std(row: dict, weights: ModelWeights) -> float:
+    consistency = _clamp(_to_float(row.get("consistency"), 0.5), 0.0, 1.0)
+    uncertainty_multiplier = 1.0 + (max(0.0, weights.consistency_noise_scale) * (1.0 - consistency))
+    return max(0.0, weights.luck_score_std) * uncertainty_multiplier
+
+
+def _stable_race_seed(race_id: str, base_seed: int) -> int:
+    digest = blake2b(f"{base_seed}:{race_id}".encode("utf-8"), digest_size=8).digest()
+    return int.from_bytes(digest, "big", signed=False)
 
 
 def _score_row(row: dict, weights: ModelWeights) -> dict:

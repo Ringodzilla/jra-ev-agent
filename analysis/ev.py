@@ -20,6 +20,10 @@ class EVWeights:
     market: float = 0.12
     temperature: float = 1.15
     market_shrink: float = 0.25
+    monte_carlo_iterations: int = 2000
+    monte_carlo_seed: int = 731
+    luck_score_std: float = 0.16
+    consistency_noise_scale: float = 0.75
 
     def to_model_weights(self) -> ModelWeights:
         return ModelWeights(
@@ -31,6 +35,10 @@ class EVWeights:
             market=self.market,
             temperature=self.temperature,
             market_shrink=self.market_shrink,
+            monte_carlo_iterations=self.monte_carlo_iterations,
+            monte_carlo_seed=self.monte_carlo_seed,
+            luck_score_std=self.luck_score_std,
+            consistency_noise_scale=self.consistency_noise_scale,
         )
 
 

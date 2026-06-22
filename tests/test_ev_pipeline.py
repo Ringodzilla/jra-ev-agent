@@ -1,11 +1,63 @@
 import unittest
 
-from analysis.ev import build_feature_rows, compute_ev, simulate_race_scenarios
+from analysis.ev import EVWeights, build_feature_rows, compute_ev, simulate_race_scenarios
 from src.react_workflow import ReviewerAgent, WorkflowSettings
 from strategy.betting import _frame_quality_adjustment, _wide_pace_adjustment, generate_tickets
 
 
 class TestEVPipeline(unittest.TestCase):
+    def test_compute_ev_uses_reproducible_monte_carlo_mean_probability(self):
+        rows = [
+            {
+                "race_id": "r_mc",
+                "horse_id": "h1",
+                "horse_name": "A",
+                "horse_number": "1",
+                "current_odds": "3.0",
+                "current_popularity": "1",
+                "ability_score": 0.80,
+                "course_score": 0.70,
+                "pace_score": 0.60,
+                "weight_score": 0.50,
+                "jockey_score": 0.60,
+                "market_support": 0.33,
+                "consistency": 0.80,
+                "pace_mix_high": 0.3,
+            },
+            {
+                "race_id": "r_mc",
+                "horse_id": "h2",
+                "horse_name": "B",
+                "horse_number": "2",
+                "current_odds": "5.0",
+                "current_popularity": "2",
+                "ability_score": 0.65,
+                "course_score": 0.55,
+                "pace_score": 0.70,
+                "weight_score": 0.50,
+                "jockey_score": 0.50,
+                "market_support": 0.20,
+                "consistency": 0.35,
+                "pace_mix_high": 0.3,
+            },
+        ]
+        weights = EVWeights(monte_carlo_iterations=500, monte_carlo_seed=42, luck_score_std=0.20)
+
+        first = compute_ev(rows, weights=weights)
+        second = compute_ev(rows, weights=weights)
+
+        self.assertEqual(first, second)
+        self.assertAlmostEqual(1.0, sum(float(row["win_prob"]) for row in first), places=5)
+        self.assertTrue(all(row["win_prob"] == row["win_prob_mean"] for row in first))
+        self.assertTrue(all(float(row["win_prob_std"]) > 0 for row in first))
+        self.assertTrue(all(row["monte_carlo_iterations"] == "500" for row in first))
+        for row in first:
+            self.assertAlmostEqual(
+                float(row["ev_current"]),
+                float(row["win_prob_mean"]) * float(row["current_odds"]),
+                places=5,
+            )
+
     def test_compute_ev_is_race_normalized(self):
         rows = [
             {
