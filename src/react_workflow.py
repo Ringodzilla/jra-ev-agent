@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 from dataclasses import dataclass
 from pathlib import Path
@@ -11,6 +12,20 @@ from jra_scraper.pipeline import JRAPipeline
 from report.note import build_note_article
 from strategy.betting import generate_tickets
 from strategy.win5 import generate_win5_plan, is_win5_mode
+
+
+CANONICAL_STAGE_SCHEMA_VERSION = "1"
+CANONICAL_STAGE_PRODUCER = "src.react_workflow.ReactiveRaceWorkflow"
+CANONICAL_STAGE_ORDER = (
+    "01_data_collector.json",
+    "02_analyzer.json",
+    "03_simulator.json",
+    "04_ev_calculator.json",
+    "05_bet_builder.json",
+    "06_reviewer.json",
+    "07_article_writer.json",
+    "run_summary.json",
+)
 
 
 @dataclass
@@ -440,6 +455,59 @@ class ReactiveRaceWorkflow:
         for filename, body in stage_map.items():
             path = self.config.stages_dir / filename
             path.write_text(json.dumps(body or {}, ensure_ascii=False, indent=2), encoding="utf-8")
+        manifest = {
+            "schema_version": CANONICAL_STAGE_SCHEMA_VERSION,
+            "producer": CANONICAL_STAGE_PRODUCER,
+            "stage_order": list(CANONICAL_STAGE_ORDER),
+            "attempt": payload.get("attempt"),
+            "artifacts": {
+                filename: {"sha256": _file_sha256(self.config.stages_dir / filename)}
+                for filename in CANONICAL_STAGE_ORDER
+            },
+        }
+        manifest_path = self.config.stages_dir / "run_manifest.json"
+        manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
+        assert_canonical_stage_manifest(self.config.stages_dir)
+
+
+def validate_canonical_stage_manifest(stages_dir: Path) -> list[str]:
+    manifest_path = stages_dir / "run_manifest.json"
+    if not manifest_path.exists():
+        return ["run_manifest.json is missing"]
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        return [f"run_manifest.json is invalid: {exc}"]
+
+    errors: list[str] = []
+    if manifest.get("schema_version") != CANONICAL_STAGE_SCHEMA_VERSION:
+        errors.append("stage schema version does not match the canonical workflow")
+    if manifest.get("producer") != CANONICAL_STAGE_PRODUCER:
+        errors.append("stage producer is not the canonical workflow")
+    if manifest.get("stage_order") != list(CANONICAL_STAGE_ORDER):
+        errors.append("stage order does not match the repository workflow")
+
+    artifacts = dict(manifest.get("artifacts") or {})
+    for filename in CANONICAL_STAGE_ORDER:
+        path = stages_dir / filename
+        if not path.exists():
+            errors.append(f"{filename} is missing")
+            continue
+        expected = str(dict(artifacts.get(filename) or {}).get("sha256", ""))
+        actual = _file_sha256(path)
+        if not expected or expected != actual:
+            errors.append(f"{filename} digest does not match run_manifest.json")
+    return errors
+
+
+def assert_canonical_stage_manifest(stages_dir: Path) -> None:
+    errors = validate_canonical_stage_manifest(stages_dir)
+    if errors:
+        raise ValueError("invalid canonical stage artifacts: " + "; ".join(errors))
+
+
+def _file_sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def _probability_sums(ev_rows: list[dict[str, object]]) -> dict[str, float]:

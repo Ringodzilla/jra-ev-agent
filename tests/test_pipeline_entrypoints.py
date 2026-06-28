@@ -10,11 +10,13 @@ try:
     from scripts.run_pipeline import _artifact_dir_for_run, _race_artifact_id, load_race_configs
     from jra_scraper.pipeline import (
         JRAPipeline,
+        _issues_for_selected_history,
         _manual_rows_for_horse,
         _merge_history_rows,
         _missing_history_request,
         _raw_file_captured_at,
     )
+    from jra_scraper.models import ParserIssue
     HAS_RUN_PIPELINE = True
 except ModuleNotFoundError:
     HAS_RUN_PIPELINE = False
@@ -188,6 +190,85 @@ class TestPipelineEntrypoints(unittest.TestCase):
         merged = _merge_history_rows([], detail, target_race_date="2026-06-21")
 
         self.assertEqual(["前走"], [row["race_name"] for row in merged])
+
+    def test_selected_history_issues_ignore_discarded_detail_fallbacks(self):
+        detail_issues = [
+            ParserIssue(
+                stage="parser.horse_history",
+                severity="medium",
+                code="history_header_missing",
+                message="Missing expected history header: last_3f",
+            ),
+            *[
+                ParserIssue(
+                    stage="parser.horse_history",
+                    severity="medium",
+                    code="last3f_fallback",
+                    message="fallback",
+                    context={"run_index": str(index)},
+                )
+                for index in range(1, 6)
+            ],
+        ]
+        selected_rows = [
+            {
+                "race_id": "r1",
+                "horse_name": "A",
+                "run_index": str(index),
+                "last_3f": "34.5",
+                "last_3f_source": "embedded",
+            }
+            for index in range(1, 5)
+        ] + [
+            {
+                "race_id": "r1",
+                "horse_name": "A",
+                "run_index": "5",
+                "last_3f": "36.0",
+                "last_3f_source": "fallback",
+            }
+        ]
+
+        issues = _issues_for_selected_history(detail_issues, selected_rows)
+
+        self.assertEqual(1, sum(issue.code == "last3f_fallback" for issue in issues))
+        self.assertEqual(1, sum(issue.code == "history_header_missing" for issue in issues))
+
+    def test_quality_report_distinguishes_observed_fallback_and_missing_last3f(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            config = ScrapeConfig(
+                output_csv=root / "race_last5.csv",
+                entries_csv=root / "entries.csv",
+                odds_snapshots_csv=root / "odds.csv",
+                combo_odds_csv=root / "combo.csv",
+                raw_dir=root / "raw",
+                state_path=root / "state.json",
+                quality_report_path=root / "quality.json",
+                missing_history_requests_path=root / "missing.json",
+                manual_history_csv=root / "manual.csv",
+                stages_dir=root / "stages",
+            )
+            pipeline = JRAPipeline(config)
+            issues = [
+                ParserIssue(
+                    stage="pipeline.history",
+                    severity="medium",
+                    code="last3f_fallback",
+                    message="fallback",
+                )
+            ]
+            history_rows = [{"last_3f": "34.5"}, {"last_3f": "36.0"}, {"last_3f": ""}]
+
+            pipeline._write_quality_report(issues, [], history_rows)
+            report = json.loads(config.quality_report_path.read_text(encoding="utf-8"))
+            pipeline.close()
+
+        self.assertEqual(3, report["history_row_count"])
+        self.assertEqual(1, report["last3f_observed_rows"])
+        self.assertEqual(1, report["last3f_fallback_rows"])
+        self.assertEqual(1, report["last3f_missing_rows"])
+        self.assertEqual(0.333333, report["last3f_observed_rate"])
 
     def test_manual_history_rows_are_enriched_for_current_entry(self):
         horse = SimpleNamespace(

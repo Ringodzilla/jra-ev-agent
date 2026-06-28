@@ -92,7 +92,7 @@ class JRAPipeline:
             self._write_csv(existing_rows, self.config.output_csv, OUTPUT_COLUMNS)
             self._write_csv(build_entry_rows(existing_rows), self.config.entries_csv, ENTRY_COLUMNS)
             self._save_state(processed_races, failures, 0, 0)
-            self._write_quality_report(issues, build_entry_rows(existing_rows))
+            self._write_quality_report(issues, build_entry_rows(existing_rows), existing_rows)
             return existing_rows
 
         for race in races:
@@ -199,6 +199,7 @@ class JRAPipeline:
                         race_failed = True
                     continue
 
+                detail_issues: list[ParserIssue] = []
                 detail_rows = self.parser.parse_horse_last5(
                     horse_html,
                     race_id=horse.race_id,
@@ -206,7 +207,7 @@ class JRAPipeline:
                     horse_name=horse.horse_name,
                     horse_url=horse.horse_url,
                     current_entry=horse,
-                    issue_sink=issues,
+                    issue_sink=detail_issues,
                     aggressive_repair=aggressive_repair,
                 )
                 manual_rows = _manual_rows_for_horse(horse, manual_history_rows)
@@ -215,6 +216,7 @@ class JRAPipeline:
                     detail_rows + manual_rows,
                     target_race_date=horse.target_race_date,
                 )
+                issues.extend(_issues_for_selected_history(detail_issues, rows))
                 if not rows:
                     race_failed = True
                 elif len(rows) < 5:
@@ -252,7 +254,7 @@ class JRAPipeline:
         append_live_odds_snapshots(self.config.odds_snapshots_csv, entry_rows)
         append_live_combo_odds(self.config.combo_odds_csv, all_combo_odds_rows)
         self._save_state(processed_races, failures, len(processed_this_run), len(all_new_rows))
-        self._write_quality_report(issues, entry_rows)
+        self._write_quality_report(issues, entry_rows, final_rows)
         self._write_missing_history_requests(missing_history_requests)
 
         logger.info(
@@ -354,9 +356,18 @@ class JRAPipeline:
         with self.config.state_path.open("w", encoding="utf-8") as file_obj:
             json.dump(payload, file_obj, ensure_ascii=False, indent=2)
 
-    def _write_quality_report(self, issues: list[ParserIssue], entry_rows: list[dict[str, str]]) -> None:
+    def _write_quality_report(
+        self,
+        issues: list[ParserIssue],
+        entry_rows: list[dict[str, str]],
+        history_rows: list[dict[str, str]] | None = None,
+    ) -> None:
         severity_counts = Counter(issue.severity for issue in issues)
         code_counts = Counter(issue.code for issue in issues)
+        selected_history_rows = list(history_rows or [])
+        fallback_count = int(code_counts.get("last3f_fallback", 0))
+        missing_last3f_count = sum(1 for row in selected_history_rows if not str(row.get("last_3f", "")).strip())
+        observed_last3f_count = max(0, len(selected_history_rows) - fallback_count - missing_last3f_count)
         snapshot_rows = self._read_existing_rows(self.config.odds_snapshots_csv)
         combo_odds_rows = self._read_existing_rows(self.config.combo_odds_csv)
         payload = {
@@ -368,6 +379,15 @@ class JRAPipeline:
             "missing_current_odds_entries": sum(1 for row in entry_rows if not row.get("current_odds")),
             "incomplete_history_entries": sum(
                 1 for row in entry_rows if int(str(row.get("history_count") or "0")) < 5
+            ),
+            "history_row_count": len(selected_history_rows),
+            "last3f_observed_rows": observed_last3f_count,
+            "last3f_fallback_rows": fallback_count,
+            "last3f_missing_rows": missing_last3f_count,
+            "last3f_observed_rate": (
+                round(observed_last3f_count / len(selected_history_rows), 6)
+                if selected_history_rows
+                else 0.0
             ),
             "entry_count": len(entry_rows),
             "live_snapshot_count": len(snapshot_rows),
@@ -656,6 +676,7 @@ def _rows_from_embedded_history(horse) -> list[dict[str, str]]:
             "jockey": str(history.get("jockey", "")),
             "pace": str(history.get("pace", "")),
             "last_3f": str(history.get("last_3f", "")),
+            "last_3f_source": str(history.get("last_3f_source", "embedded")),
             "track_condition": str(history.get("track_condition", "")),
             "weather": str(history.get("weather", "")),
             "passing_order": str(history.get("passing_order", "")),
@@ -664,6 +685,7 @@ def _rows_from_embedded_history(horse) -> list[dict[str, str]]:
         }
         if not row["last_3f"]:
             row["last_3f"] = JRAParser.LAST_3F_NEUTRAL_BASELINE
+            row["last_3f_source"] = "fallback"
         rows.append(row)
     return rows
 
@@ -698,6 +720,54 @@ def _merge_history_rows(
     return merged
 
 
+def _issues_for_selected_history(
+    detail_issues: list[ParserIssue],
+    selected_rows: list[dict[str, str]],
+) -> list[ParserIssue]:
+    """Keep parser diagnostics only when they affect the five rows used downstream."""
+    retained = [
+        issue
+        for issue in detail_issues
+        if issue.code != "last3f_fallback"
+        and not (issue.code == "history_header_missing" and "last_3f" in issue.message)
+    ]
+    fallback_rows = [
+        row
+        for row in selected_rows
+        if str(row.get("last_3f_source", "")).strip() == "fallback"
+        or not str(row.get("last_3f", "")).strip()
+    ]
+    if not fallback_rows:
+        return retained
+
+    missing_header = next(
+        (
+            issue
+            for issue in detail_issues
+            if issue.code == "history_header_missing" and "last_3f" in issue.message
+        ),
+        None,
+    )
+    if missing_header is not None:
+        retained.append(missing_header)
+
+    for row in fallback_rows:
+        retained.append(
+            ParserIssue(
+                stage="pipeline.history",
+                severity="medium",
+                code="last3f_fallback",
+                message="Selected history row uses the neutral last_3f fallback.",
+                context={
+                    "race_id": str(row.get("race_id", "")),
+                    "horse_name": str(row.get("horse_name", "")),
+                    "run_index": str(row.get("run_index", "")),
+                },
+            )
+        )
+    return retained
+
+
 def _manual_rows_for_horse(horse, manual_rows: list[dict[str, str]]) -> list[dict[str, str]]:
     matched: list[dict[str, str]] = []
     for row in manual_rows:
@@ -708,6 +778,7 @@ def _manual_rows_for_horse(horse, manual_rows: list[dict[str, str]]) -> list[dic
         if not row_horse_id and row_horse_name != horse.horse_name:
             continue
         enriched = dict(row)
+        enriched["last_3f_source"] = "manual" if str(row.get("last_3f", "")).strip() else "fallback"
         enriched.update(
             {
                 "race_id": horse.race_id,

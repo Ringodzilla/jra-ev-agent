@@ -16,7 +16,7 @@ if str(ROOT) not in sys.path:
 from analysis.ev import save_ev
 from jra_scraper.config import ScrapeConfig
 from report.note import generate_note_markdown, write_note_artifacts
-from src.react_workflow import ReactiveRaceWorkflow, WorkflowSettings
+from src.react_workflow import ReactiveRaceWorkflow, WorkflowSettings, assert_canonical_stage_manifest
 
 
 REQUIRED_CONFIG_KEYS = {
@@ -182,6 +182,7 @@ def _win5_artifact_date(race_configs: list[dict[str, object]], ev_rows: list[dic
 def _copy_stage_outputs(source: Path, destination: Path) -> None:
     if not source.exists():
         return
+    assert_canonical_stage_manifest(source)
     if destination.exists():
         shutil.rmtree(destination)
     shutil.copytree(source, destination)

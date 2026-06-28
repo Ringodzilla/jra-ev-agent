@@ -1,6 +1,13 @@
 import unittest
+import tempfile
+from pathlib import Path
+from types import SimpleNamespace
 
-from src.react_workflow import ReactiveRaceWorkflow, _downgrade_ticket_plan_for_review
+from src.react_workflow import (
+    ReactiveRaceWorkflow,
+    _downgrade_ticket_plan_for_review,
+    validate_canonical_stage_manifest,
+)
 
 
 class TestWorkflowRouting(unittest.TestCase):
@@ -90,6 +97,30 @@ class TestWorkflowRouting(unittest.TestCase):
         self.assertEqual(1, len(downgraded["invalidated_tickets"]))
         self.assertEqual(0, downgraded["portfolio_summary"]["total_stake"])
         self.assertEqual([], downgraded["races"][0]["tickets"])
+
+    def test_stage_manifest_detects_noncanonical_overwrite(self):
+        with tempfile.TemporaryDirectory() as td:
+            stages_dir = Path(td)
+            workflow = object.__new__(ReactiveRaceWorkflow)
+            workflow.config = SimpleNamespace(stages_dir=stages_dir)
+            workflow._write_stage_outputs(
+                {
+                    "data_collector": {"rows": []},
+                    "analyzer": {"feature_rows": []},
+                    "simulator": {"scenario_rows": []},
+                    "ev_calculator": {"ev_rows": []},
+                    "bet_builder": {"tickets": []},
+                    "reviewer": {"status": "OK"},
+                    "article_writer": {"status": "ready"},
+                    "attempt": 0,
+                }
+            )
+            self.assertEqual([], validate_canonical_stage_manifest(stages_dir))
+
+            (stages_dir / "02_analyzer.json").write_text('{"scores": []}', encoding="utf-8")
+            errors = validate_canonical_stage_manifest(stages_dir)
+
+        self.assertIn("02_analyzer.json digest does not match run_manifest.json", errors)
 
 
 if __name__ == "__main__":
