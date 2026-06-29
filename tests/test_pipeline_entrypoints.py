@@ -181,6 +181,72 @@ class TestPipelineEntrypoints(unittest.TestCase):
         self.assertEqual("R5", merged[-1]["race_name"])
         self.assertEqual(["1", "2", "3", "4", "5"], [row["run_index"] for row in merged])
 
+    def test_merge_history_rows_dedupes_same_run_with_different_race_labels(self):
+        embedded = [
+            {
+                "run_index": "1",
+                "date": "2026年4月18日",
+                "race_name": "1勝クラス",
+                "course": "中山",
+                "distance": "1800芝",
+                "last_3f": "33.1",
+                "last_3f_source": "embedded",
+            }
+        ]
+        detail = [
+            {
+                "run_index": "1",
+                "date": "2026-04-18",
+                "race_name": "3歳1勝クラス",
+                "course": "中山",
+                "distance": "芝1800",
+                "last_3f": "36.0",
+                "last_3f_source": "fallback",
+            },
+            {
+                "run_index": "2",
+                "date": "2026-02-01",
+                "race_name": "未勝利",
+                "course": "東京",
+                "last_3f": "36.0",
+                "last_3f_source": "fallback",
+            },
+        ]
+
+        merged = _merge_history_rows(embedded, detail)
+
+        self.assertEqual(2, len(merged))
+        self.assertEqual("33.1", merged[0]["last_3f"])
+        self.assertEqual("embedded", merged[0]["last_3f_source"])
+        self.assertEqual("2026-02-01", merged[1]["date"])
+
+    def test_merge_history_rows_replaces_fallback_with_manual_observation(self):
+        rows = [
+            {
+                "date": f"2026-0{5-index}-01",
+                "race_name": f"R{index}",
+                "last_3f": "36.0",
+                "last_3f_source": "fallback",
+            }
+            for index in range(5)
+        ] + [
+            {
+                "date": "2026年1月1日",
+                "race_name": "別表記R4",
+                "last_3f": "34.2",
+                "last_3f_source": "manual",
+            },
+        ]
+
+        merged = _merge_history_rows([], rows)
+
+        self.assertEqual(5, len(merged))
+        self.assertEqual("34.2", merged[4]["last_3f"])
+        self.assertEqual("manual", merged[4]["last_3f_source"])
+
+    def test_merge_history_rows_ignores_empty_records(self):
+        self.assertEqual([], _merge_history_rows([], [{"last_3f": "36.0"}]))
+
     def test_merge_history_rows_excludes_target_race_result(self):
         detail = [
             {"date": "2026年6月21日", "race_name": "対象レース", "course": "東京"},

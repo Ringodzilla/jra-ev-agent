@@ -698,26 +698,78 @@ def _merge_history_rows(
 ) -> list[dict[str, str]]:
     """Merge newest-first history sources and return exactly the best available last five."""
     merged: list[dict[str, str]] = []
-    seen: set[tuple[str, str, str]] = set()
+    row_indexes: dict[tuple[str, ...], int] = {}
     target_date_key = _compact_date_key(target_race_date)
     for row in list(embedded_rows) + list(detail_rows):
         history_date_key = _compact_date_key(str(row.get("date", "")))
         if target_date_key and history_date_key and history_date_key >= target_date_key:
             continue
-        key = (
-            str(row.get("date", "")).strip(),
-            str(row.get("race_name", "")).strip(),
-            str(row.get("course", "")).strip(),
-        )
-        if not any(key) or key in seen:
+
+        key = _history_identity(row)
+        if not any(key):
             continue
-        seen.add(key)
+
+        existing_index = row_indexes.get(key)
+        if existing_index is not None:
+            merged[existing_index] = _coalesce_history_rows(merged[existing_index], row)
+            continue
+
+        if len(merged) >= 5:
+            continue
+
         normalized = dict(row)
         normalized["run_index"] = str(len(merged) + 1)
+        row_indexes[key] = len(merged)
         merged.append(normalized)
-        if len(merged) == 5:
-            break
     return merged
+
+
+def _history_identity(row: dict[str, str]) -> tuple[str, ...]:
+    """Identify one run consistently across JRA tables with different race labels."""
+    date_key = _compact_date_key(str(row.get("date", "")))
+    if date_key:
+        # A horse cannot have two JRA starts on the same date. This also handles
+        # labels such as "1勝クラス" versus "3歳1勝クラス" for the same run.
+        return ("date", date_key)
+
+    fields = (
+        _compact_history_text(row.get("race_name", "")),
+        _compact_history_text(row.get("course", "")),
+        _compact_history_text(row.get("distance", "")),
+        _compact_history_text(row.get("position", "")),
+    )
+    return ("fields", *fields) if any(fields) else ()
+
+
+def _coalesce_history_rows(primary: dict[str, str], secondary: dict[str, str]) -> dict[str, str]:
+    """Fill gaps in a duplicate run without replacing observed values with fallbacks."""
+    merged = dict(primary)
+    for key, value in secondary.items():
+        if key == "run_index":
+            continue
+        if not str(merged.get(key, "")).strip() and str(value).strip():
+            merged[key] = value
+
+    primary_last3f = str(primary.get("last_3f", "")).strip()
+    secondary_last3f = str(secondary.get("last_3f", "")).strip()
+    primary_source = str(primary.get("last_3f_source", "")).strip()
+    secondary_source = str(secondary.get("last_3f_source", "")).strip()
+    if secondary_last3f and _is_last3f_fallback(primary_last3f, primary_source) and not _is_last3f_fallback(
+        secondary_last3f,
+        secondary_source,
+    ):
+        merged["last_3f"] = secondary_last3f
+        merged["last_3f_source"] = secondary_source or "observed"
+
+    return merged
+
+
+def _is_last3f_fallback(value: str, source: str) -> bool:
+    return not value or source == "fallback"
+
+
+def _compact_history_text(value: object) -> str:
+    return "".join(str(value or "").split()).lower()
 
 
 def _issues_for_selected_history(
