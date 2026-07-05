@@ -1,0 +1,152 @@
+{
+  "core": [
+    {
+      "horse_number": "14",
+      "horse_name": "フィーリウス"
+    },
+    {
+      "horse_number": "5",
+      "horse_name": "イガッチ"
+    },
+    {
+      "horse_number": "1",
+      "horse_name": "バルナバ"
+    }
+  ],
+  "partner": [
+    {
+      "horse_number": "15",
+      "horse_name": "デビットバローズ"
+    },
+    {
+      "horse_number": "11",
+      "horse_name": "ジュタ"
+    },
+    {
+      "horse_number": "12",
+      "horse_name": "エコロディノス"
+    },
+    {
+      "horse_number": "8",
+      "horse_name": "ケイアイセナ"
+    }
+  ],
+  "long": [
+    {
+      "horse_number": "3",
+      "horse_name": "ピースワンデュック"
+    },
+    {
+      "horse_number": "7",
+      "horse_name": "チャックネイト"
+    },
+    {
+      "horse_number": "6",
+      "horse_name": "サンストックトン"
+    }
+  ],
+  "bet_types_considered": [
+    "win",
+    "place",
+    "wide",
+    "wakuren",
+    "umaren",
+    "umatan",
+    "sanrenpuku",
+    "sanrentan"
+  ],
+  "candidate_counts": {
+    "win": 15,
+    "place": 15,
+    "wide": 105,
+    "wakuren": 35,
+    "umaren": 105,
+    "umatan": 210,
+    "sanrenpuku": 455,
+    "sanrentan": 2730,
+    "total": 3670
+  },
+  "tickets": [
+    {
+      "bet_type": "place",
+      "horse_number": "14",
+      "horse_name": "フィーリウス",
+      "hit_prob": 0.746551701,
+      "predicted_odds": 2.5,
+      "ev": 1.866379,
+      "stake": 200
+    },
+    {
+      "bet_type": "place",
+      "horse_number": "1",
+      "horse_name": "バルナバ",
+      "hit_prob": 0.374236191,
+      "predicted_odds": 4.8,
+      "ev": 1.796334,
+      "stake": 100
+    },
+    {
+      "bet_type": "place",
+      "horse_number": "5",
+      "horse_name": "イガッチ",
+      "hit_prob": 0.719952138,
+      "predicted_odds": 2.1,
+      "ev": 1.511899,
+      "stake": 100
+    },
+    {
+      "bet_type": "win",
+      "horse_number": "1",
+      "horse_name": "バルナバ",
+      "hit_prob": 0.106773,
+      "predicted_odds": 20.9,
+      "ev": 2.231556,
+      "stake": 100
+    },
+    {
+      "bet_type": "win",
+      "horse_number": "5",
+      "horse_name": "イガッチ",
+      "hit_prob": 0.28204,
+      "predicted_odds": 6.9,
+      "ev": 1.946076,
+      "stake": 100
+    },
+    {
+      "bet_type": "win",
+      "horse_number": "14",
+      "horse_name": "フィーリウス",
+      "hit_prob": 0.30587,
+      "predicted_odds": 6.0,
+      "ev": 1.83522,
+      "stake": 100
+    },
+    {
+      "bet_type": "wide",
+      "horse_number": "14-15",
+      "horse_name": "フィーリウス-デビットバローズ",
+      "hit_prob": 0.164812839,
+      "predicted_odds": 16.9,
+      "ev": 2.785337,
+      "stake": 100
+    },
+    {
+      "bet_type": "wakuren",
+      "horse_number": "1-8",
+      "horse_name": "1枠-8枠",
+      "hit_prob": 0.099968673,
+      "predicted_odds": 51.2,
+      "ev": 5.118396,
+      "stake": 100
+    },
+    {
+      "bet_type": "sanrenpuku",
+      "horse_number": "1-5-14",
+      "horse_name": "バルナバ-イガッチ-フィーリウス",
+      "hit_prob": 0.141346905,
+      "predicted_odds": 121.0,
+      "ev": 17.102976,
+      "stake": 100
+    }
+  ]
+}

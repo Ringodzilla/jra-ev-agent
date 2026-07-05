@@ -1,0 +1,583 @@
+{
+  "core": [
+    {
+      "race_id": "20260621_東京_11",
+      "horse_id": "pw01dud002022104764/15",
+      "horse_name": "ヴァルキリーバース",
+      "horse_number": "6",
+      "win_prob": "0.223954",
+      "place_prob": "0.485317",
+      "ev": "0.604676",
+      "ev_predicted": "0.622072",
+      "current_odds": "2.7",
+      "predicted_odds": "2.777678",
+      "predicted_odds_source": "live"
+    },
+    {
+      "race_id": "20260621_東京_11",
+      "horse_id": "pw01dud002021100244/B8",
+      "horse_name": "ニシノティアモ",
+      "horse_number": "8",
+      "win_prob": "0.131885",
+      "place_prob": "0.28712",
+      "ev": "0.698988",
+      "ev_predicted": "0.715499",
+      "current_odds": "5.3",
+      "predicted_odds": "5.425189",
+      "predicted_odds_source": "live"
+    }
+  ],
+  "partner": [
+    {
+      "race_id": "20260621_東京_11",
+      "horse_id": "pw01dud002022101192/6C",
+      "horse_name": "エストゥペンダ",
+      "horse_number": "5",
+      "win_prob": "0.105585",
+      "place_prob": "0.264942",
+      "ev": "0.939706",
+      "ev_predicted": "0.952702",
+      "current_odds": "8.9",
+      "predicted_odds": "9.023084",
+      "predicted_odds_source": "live"
+    },
+    {
+      "race_id": "20260621_東京_11",
+      "horse_id": "pw01dud002021103975/7F",
+      "horse_name": "セキトバイースト",
+      "horse_number": "7",
+      "win_prob": "0.087182",
+      "place_prob": "0.234886",
+      "ev": "0.93285",
+      "ev_predicted": "0.934823",
+      "current_odds": "10.7",
+      "predicted_odds": "10.722628",
+      "predicted_odds_source": "live"
+    }
+  ],
+  "long": [],
+  "tickets": [
+    {
+      "race_id": "20260621_東京_11",
+      "bet_type": "wide",
+      "horse_id": "pw01dud002022104764/15|pw01dud002021103975/7F",
+      "horse_name": "ヴァルキリーバース - セキトバイースト",
+      "horse_number": "6-7",
+      "horse_ids": [
+        "pw01dud002022104764/15",
+        "pw01dud002021103975/7F"
+      ],
+      "horse_names": [
+        "ヴァルキリーバース",
+        "セキトバイースト"
+      ],
+      "horse_numbers": [
+        "6",
+        "7"
+      ],
+      "stake": 400,
+      "hit_prob": "0.156563",
+      "win_prob": "0.156563",
+      "wide_prob": "0.156563",
+      "wide_prob_market": "0.163575",
+      "win_odds": "7.9",
+      "wide_odds_est": "7.9",
+      "wide_odds_min": "7.9",
+      "wide_odds_max": "8.8",
+      "predicted_odds": "8.021302",
+      "predicted_wide_odds": "8.021302",
+      "ev": "1.236847",
+      "ev_current": "1.236847",
+      "ev_predicted": "1.255838",
+      "predicted_odds_source": "jra_live",
+      "odds_source": "jra_live",
+      "confidence": "0.957131",
+      "pace_adjustment": "1",
+      "legs": [
+        {
+          "horse_id": "pw01dud002022104764/15",
+          "horse_name": "ヴァルキリーバース",
+          "horse_number": "6",
+          "place_prob": "0.485317",
+          "win_prob": "0.223954"
+        },
+        {
+          "horse_id": "pw01dud002021103975/7F",
+          "horse_name": "セキトバイースト",
+          "horse_number": "7",
+          "place_prob": "0.234886",
+          "win_prob": "0.087182"
+        }
+      ],
+      "portfolio_total_stake": 600,
+      "portfolio_total_points": 2,
+      "portfolio_ev": "1.225262",
+      "portfolio_expected_return": 735,
+      "portfolio_expected_profit": 135,
+      "portfolio_no_gami": true,
+      "return_if_hit": 3160,
+      "net_return_if_hit": 2560
+    },
+    {
+      "race_id": "20260621_東京_11",
+      "bet_type": "umatan",
+      "horse_id": "pw01dud002021103975/7F|pw01dud002022104764/15",
+      "horse_name": "セキトバイースト → ヴァルキリーバース",
+      "horse_number": "7 → 6",
+      "horse_ids": [
+        "pw01dud002021103975/7F",
+        "pw01dud002022104764/15"
+      ],
+      "horse_names": [
+        "セキトバイースト",
+        "ヴァルキリーバース"
+      ],
+      "horse_numbers": [
+        "7",
+        "6"
+      ],
+      "stake": 200,
+      "hit_prob": "0.02139",
+      "win_prob": "0.02139",
+      "combo_prob": "0.02139",
+      "combo_prob_market": "0.023333",
+      "win_odds": "56.2",
+      "umatan_odds_est": "56.2",
+      "predicted_odds": "57.062936",
+      "ev": "1.202092",
+      "ev_current": "1.202092",
+      "ev_predicted": "1.22055",
+      "predicted_odds_source": "jra_live",
+      "odds_source": "jra_live",
+      "ticket_role": "value",
+      "coverage_reason": "",
+      "confidence": "0.916694",
+      "legs": [
+        {
+          "horse_id": "pw01dud002021103975/7F",
+          "horse_name": "セキトバイースト",
+          "horse_number": "7",
+          "win_prob": "0.087182",
+          "place_prob": "0.234886"
+        },
+        {
+          "horse_id": "pw01dud002022104764/15",
+          "horse_name": "ヴァルキリーバース",
+          "horse_number": "6",
+          "win_prob": "0.223954",
+          "place_prob": "0.485317"
+        }
+      ],
+      "portfolio_total_stake": 600,
+      "portfolio_total_points": 2,
+      "portfolio_ev": "1.225262",
+      "portfolio_expected_return": 735,
+      "portfolio_expected_profit": 135,
+      "portfolio_no_gami": true,
+      "return_if_hit": 11240,
+      "net_return_if_hit": 10640
+    }
+  ],
+  "races": [
+    {
+      "race_id": "20260621_東京_11",
+      "core": [
+        {
+          "race_id": "20260621_東京_11",
+          "horse_id": "pw01dud002022104764/15",
+          "horse_name": "ヴァルキリーバース",
+          "horse_number": "6",
+          "win_prob": "0.223954",
+          "place_prob": "0.485317",
+          "ev": "0.604676",
+          "ev_predicted": "0.622072",
+          "current_odds": "2.7",
+          "predicted_odds": "2.777678",
+          "predicted_odds_source": "live"
+        },
+        {
+          "race_id": "20260621_東京_11",
+          "horse_id": "pw01dud002021100244/B8",
+          "horse_name": "ニシノティアモ",
+          "horse_number": "8",
+          "win_prob": "0.131885",
+          "place_prob": "0.28712",
+          "ev": "0.698988",
+          "ev_predicted": "0.715499",
+          "current_odds": "5.3",
+          "predicted_odds": "5.425189",
+          "predicted_odds_source": "live"
+        }
+      ],
+      "partner": [
+        {
+          "race_id": "20260621_東京_11",
+          "horse_id": "pw01dud002022101192/6C",
+          "horse_name": "エストゥペンダ",
+          "horse_number": "5",
+          "win_prob": "0.105585",
+          "place_prob": "0.264942",
+          "ev": "0.939706",
+          "ev_predicted": "0.952702",
+          "current_odds": "8.9",
+          "predicted_odds": "9.023084",
+          "predicted_odds_source": "live"
+        },
+        {
+          "race_id": "20260621_東京_11",
+          "horse_id": "pw01dud002021103975/7F",
+          "horse_name": "セキトバイースト",
+          "horse_number": "7",
+          "win_prob": "0.087182",
+          "place_prob": "0.234886",
+          "ev": "0.93285",
+          "ev_predicted": "0.934823",
+          "current_odds": "10.7",
+          "predicted_odds": "10.722628",
+          "predicted_odds_source": "live"
+        }
+      ],
+      "long": [],
+      "candidate_counts": {
+        "wide": 1,
+        "umatan": 1
+      },
+      "candidates": [
+        {
+          "race_id": "20260621_東京_11",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002022104764/15|pw01dud002021103975/7F",
+          "horse_name": "ヴァルキリーバース - セキトバイースト",
+          "horse_number": "6-7",
+          "horse_ids": [
+            "pw01dud002022104764/15",
+            "pw01dud002021103975/7F"
+          ],
+          "horse_names": [
+            "ヴァルキリーバース",
+            "セキトバイースト"
+          ],
+          "horse_numbers": [
+            "6",
+            "7"
+          ],
+          "stake": 100,
+          "hit_prob": "0.156563",
+          "win_prob": "0.156563",
+          "wide_prob": "0.156563",
+          "wide_prob_market": "0.163575",
+          "win_odds": "7.9",
+          "wide_odds_est": "7.9",
+          "wide_odds_min": "7.9",
+          "wide_odds_max": "8.8",
+          "predicted_odds": "8.021302",
+          "predicted_wide_odds": "8.021302",
+          "ev": "1.236847",
+          "ev_current": "1.236847",
+          "ev_predicted": "1.255838",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "confidence": "0.957131",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002022104764/15",
+              "horse_name": "ヴァルキリーバース",
+              "horse_number": "6",
+              "place_prob": "0.485317",
+              "win_prob": "0.223954"
+            },
+            {
+              "horse_id": "pw01dud002021103975/7F",
+              "horse_name": "セキトバイースト",
+              "horse_number": "7",
+              "place_prob": "0.234886",
+              "win_prob": "0.087182"
+            }
+          ]
+        },
+        {
+          "race_id": "20260621_東京_11",
+          "bet_type": "umatan",
+          "horse_id": "pw01dud002021103975/7F|pw01dud002022104764/15",
+          "horse_name": "セキトバイースト → ヴァルキリーバース",
+          "horse_number": "7 → 6",
+          "horse_ids": [
+            "pw01dud002021103975/7F",
+            "pw01dud002022104764/15"
+          ],
+          "horse_names": [
+            "セキトバイースト",
+            "ヴァルキリーバース"
+          ],
+          "horse_numbers": [
+            "7",
+            "6"
+          ],
+          "stake": 100,
+          "hit_prob": "0.02139",
+          "win_prob": "0.02139",
+          "combo_prob": "0.02139",
+          "combo_prob_market": "0.023333",
+          "win_odds": "56.2",
+          "umatan_odds_est": "56.2",
+          "predicted_odds": "57.062936",
+          "ev": "1.202092",
+          "ev_current": "1.202092",
+          "ev_predicted": "1.22055",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "value",
+          "coverage_reason": "",
+          "confidence": "0.916694",
+          "legs": [
+            {
+              "horse_id": "pw01dud002021103975/7F",
+              "horse_name": "セキトバイースト",
+              "horse_number": "7",
+              "win_prob": "0.087182",
+              "place_prob": "0.234886"
+            },
+            {
+              "horse_id": "pw01dud002022104764/15",
+              "horse_name": "ヴァルキリーバース",
+              "horse_number": "6",
+              "win_prob": "0.223954",
+              "place_prob": "0.485317"
+            }
+          ]
+        }
+      ],
+      "exotics": [
+        {
+          "race_id": "20260621_東京_11",
+          "bet_type": "umatan",
+          "horse_id": "pw01dud002021103975/7F|pw01dud002022104764/15",
+          "horse_name": "セキトバイースト → ヴァルキリーバース",
+          "horse_number": "7 → 6",
+          "horse_ids": [
+            "pw01dud002021103975/7F",
+            "pw01dud002022104764/15"
+          ],
+          "horse_names": [
+            "セキトバイースト",
+            "ヴァルキリーバース"
+          ],
+          "horse_numbers": [
+            "7",
+            "6"
+          ],
+          "stake": 100,
+          "hit_prob": "0.02139",
+          "win_prob": "0.02139",
+          "combo_prob": "0.02139",
+          "combo_prob_market": "0.023333",
+          "win_odds": "56.2",
+          "umatan_odds_est": "56.2",
+          "predicted_odds": "57.062936",
+          "ev": "1.202092",
+          "ev_current": "1.202092",
+          "ev_predicted": "1.22055",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "value",
+          "coverage_reason": "",
+          "confidence": "0.916694",
+          "legs": [
+            {
+              "horse_id": "pw01dud002021103975/7F",
+              "horse_name": "セキトバイースト",
+              "horse_number": "7",
+              "win_prob": "0.087182",
+              "place_prob": "0.234886"
+            },
+            {
+              "horse_id": "pw01dud002022104764/15",
+              "horse_name": "ヴァルキリーバース",
+              "horse_number": "6",
+              "win_prob": "0.223954",
+              "place_prob": "0.485317"
+            }
+          ]
+        }
+      ],
+      "tickets": [
+        {
+          "race_id": "20260621_東京_11",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002022104764/15|pw01dud002021103975/7F",
+          "horse_name": "ヴァルキリーバース - セキトバイースト",
+          "horse_number": "6-7",
+          "horse_ids": [
+            "pw01dud002022104764/15",
+            "pw01dud002021103975/7F"
+          ],
+          "horse_names": [
+            "ヴァルキリーバース",
+            "セキトバイースト"
+          ],
+          "horse_numbers": [
+            "6",
+            "7"
+          ],
+          "stake": 400,
+          "hit_prob": "0.156563",
+          "win_prob": "0.156563",
+          "wide_prob": "0.156563",
+          "wide_prob_market": "0.163575",
+          "win_odds": "7.9",
+          "wide_odds_est": "7.9",
+          "wide_odds_min": "7.9",
+          "wide_odds_max": "8.8",
+          "predicted_odds": "8.021302",
+          "predicted_wide_odds": "8.021302",
+          "ev": "1.236847",
+          "ev_current": "1.236847",
+          "ev_predicted": "1.255838",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "confidence": "0.957131",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002022104764/15",
+              "horse_name": "ヴァルキリーバース",
+              "horse_number": "6",
+              "place_prob": "0.485317",
+              "win_prob": "0.223954"
+            },
+            {
+              "horse_id": "pw01dud002021103975/7F",
+              "horse_name": "セキトバイースト",
+              "horse_number": "7",
+              "place_prob": "0.234886",
+              "win_prob": "0.087182"
+            }
+          ],
+          "portfolio_total_stake": 600,
+          "portfolio_total_points": 2,
+          "portfolio_ev": "1.225262",
+          "portfolio_expected_return": 735,
+          "portfolio_expected_profit": 135,
+          "portfolio_no_gami": true,
+          "return_if_hit": 3160,
+          "net_return_if_hit": 2560
+        },
+        {
+          "race_id": "20260621_東京_11",
+          "bet_type": "umatan",
+          "horse_id": "pw01dud002021103975/7F|pw01dud002022104764/15",
+          "horse_name": "セキトバイースト → ヴァルキリーバース",
+          "horse_number": "7 → 6",
+          "horse_ids": [
+            "pw01dud002021103975/7F",
+            "pw01dud002022104764/15"
+          ],
+          "horse_names": [
+            "セキトバイースト",
+            "ヴァルキリーバース"
+          ],
+          "horse_numbers": [
+            "7",
+            "6"
+          ],
+          "stake": 200,
+          "hit_prob": "0.02139",
+          "win_prob": "0.02139",
+          "combo_prob": "0.02139",
+          "combo_prob_market": "0.023333",
+          "win_odds": "56.2",
+          "umatan_odds_est": "56.2",
+          "predicted_odds": "57.062936",
+          "ev": "1.202092",
+          "ev_current": "1.202092",
+          "ev_predicted": "1.22055",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "value",
+          "coverage_reason": "",
+          "confidence": "0.916694",
+          "legs": [
+            {
+              "horse_id": "pw01dud002021103975/7F",
+              "horse_name": "セキトバイースト",
+              "horse_number": "7",
+              "win_prob": "0.087182",
+              "place_prob": "0.234886"
+            },
+            {
+              "horse_id": "pw01dud002022104764/15",
+              "horse_name": "ヴァルキリーバース",
+              "horse_number": "6",
+              "win_prob": "0.223954",
+              "place_prob": "0.485317"
+            }
+          ],
+          "portfolio_total_stake": 600,
+          "portfolio_total_points": 2,
+          "portfolio_ev": "1.225262",
+          "portfolio_expected_return": 735,
+          "portfolio_expected_profit": 135,
+          "portfolio_no_gami": true,
+          "return_if_hit": 11240,
+          "net_return_if_hit": 10640
+        }
+      ],
+      "portfolio": {
+        "total_stake": 600,
+        "total_points": 2,
+        "expected_return": 735,
+        "expected_profit": 135,
+        "portfolio_ev": "1.225262",
+        "no_gami": true
+      }
+    }
+  ],
+  "bet_types_considered": [
+    "win",
+    "place",
+    "wide",
+    "wakuren",
+    "umaren",
+    "umatan",
+    "sanrenpuku",
+    "sanrentan"
+  ],
+  "candidate_counts": {
+    "wide": 1,
+    "umatan": 1
+  },
+  "optimization_mode": "cross_bet_ev_kelly_portfolio",
+  "portfolio_summary": {
+    "total_stake": 600,
+    "total_points": 2,
+    "expected_return": 735,
+    "expected_profit": 135,
+    "portfolio_ev": "1.225262",
+    "no_gami": true
+  },
+  "primary_bet_type": "wide",
+  "tansho": [],
+  "fukusho": [
+    "ヴァルキリーバース",
+    "ニシノティアモ"
+  ],
+  "wide": [
+    "ヴァルキリーバース - セキトバイースト"
+  ],
+  "wakuren": [],
+  "umaren": [
+    "ヴァルキリーバース - ニシノティアモ",
+    "ヴァルキリーバース - エストゥペンダ",
+    "ニシノティアモ - エストゥペンダ"
+  ],
+  "umatan": [
+    "セキトバイースト → ヴァルキリーバース"
+  ],
+  "sanrenpuku": [
+    "ヴァルキリーバース - ニシノティアモ - エストゥペンダ"
+  ],
+  "sanrentan": [
+    "ヴァルキリーバース → ニシノティアモ → エストゥペンダ"
+  ]
+}

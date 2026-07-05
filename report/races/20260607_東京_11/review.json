@@ -1,0 +1,194 @@
+{
+  "race": {
+    "race_id": "20260607_東京_11",
+    "name": "安田記念",
+    "date": "2026-06-07",
+    "track": "東京",
+    "race_number": 11,
+    "surface": "芝",
+    "distance": "1600m",
+    "weather_at_result": "曇",
+    "track_condition_at_result": "良",
+    "official_result_url": "https://www.jra.go.jp/JRADB/accessS.html?CNAME=pw01sde0105202603021120260607/51"
+  },
+  "result": {
+    "top5": [
+      {
+        "finish": 1,
+        "frame": "2",
+        "horse_number": "4",
+        "horse_name": "シックスペンス",
+        "jockey": "武 豊",
+        "time": "1:32.1",
+        "margin": "",
+        "corner_3": "2",
+        "corner_4": "2",
+        "last_3f": "33.9",
+        "popularity": "8"
+      },
+      {
+        "finish": 2,
+        "frame": "6",
+        "horse_number": "11",
+        "horse_name": "ワールズエンド",
+        "jockey": "津村 明秀",
+        "time": "1:32.1",
+        "margin": "クビ",
+        "corner_3": "1",
+        "corner_4": "1",
+        "last_3f": "34.2",
+        "popularity": "7"
+      },
+      {
+        "finish": 2,
+        "frame": "7",
+        "horse_number": "14",
+        "horse_name": "ガイアフォース",
+        "jockey": "横山 武史",
+        "time": "1:32.1",
+        "margin": "同着",
+        "corner_3": "8",
+        "corner_4": "9",
+        "last_3f": "33.0",
+        "popularity": "1"
+      },
+      {
+        "finish": 4,
+        "frame": "7",
+        "horse_number": "13",
+        "horse_name": "セイウンハーデス",
+        "jockey": "幸 英明",
+        "time": "1:32.1",
+        "margin": "クビ",
+        "corner_3": "3",
+        "corner_4": "3",
+        "last_3f": "33.7",
+        "popularity": "6"
+      },
+      {
+        "finish": 5,
+        "frame": "8",
+        "horse_number": "16",
+        "horse_name": "パンジャタワー",
+        "jockey": "松山 弘平",
+        "time": "1:32.2",
+        "margin": "クビ",
+        "corner_3": "6",
+        "corner_4": "6",
+        "last_3f": "33.4",
+        "popularity": "4"
+      }
+    ],
+    "payouts": [
+      {"bet_type": "単勝", "combination": "4", "payout_yen_per_100": 2160, "popularity": "8"},
+      {"bet_type": "複勝", "combination": "4", "payout_yen_per_100": 540, "popularity": "8"},
+      {"bet_type": "複勝", "combination": "11", "payout_yen_per_100": 460, "popularity": "7"},
+      {"bet_type": "複勝", "combination": "14", "payout_yen_per_100": 140, "popularity": "1"},
+      {"bet_type": "枠連", "combination": "2-6", "payout_yen_per_100": 3630, "popularity": "20"},
+      {"bet_type": "枠連", "combination": "2-7", "payout_yen_per_100": 1100, "popularity": "9"},
+      {"bet_type": "ワイド", "combination": "4-11", "payout_yen_per_100": 4200, "popularity": "46"},
+      {"bet_type": "ワイド", "combination": "4-14", "payout_yen_per_100": 1600, "popularity": "15"},
+      {"bet_type": "ワイド", "combination": "11-14", "payout_yen_per_100": 1110, "popularity": "11"},
+      {"bet_type": "馬連", "combination": "4-11", "payout_yen_per_100": 6390, "popularity": "38"},
+      {"bet_type": "馬連", "combination": "4-14", "payout_yen_per_100": 2430, "popularity": "16"},
+      {"bet_type": "馬単", "combination": "4-11", "payout_yen_per_100": 13980, "popularity": "79"},
+      {"bet_type": "馬単", "combination": "4-14", "payout_yen_per_100": 5960, "popularity": "39"},
+      {"bet_type": "三連複", "combination": "4-11-14", "payout_yen_per_100": 16210, "popularity": "54"},
+      {"bet_type": "三連単", "combination": "4-11-14", "payout_yen_per_100": 84350, "popularity": "509"},
+      {"bet_type": "三連単", "combination": "4-14-11", "payout_yen_per_100": 65720, "popularity": "409"}
+    ],
+    "race_lap": {
+      "furlongs": [12.5, 10.9, 11.1, 11.6, 11.8, 11.4, 11.2, 11.6],
+      "first_3f": 34.5,
+      "last_3f": 34.2,
+      "classification": "良馬場のミドルペース前受け持続戦"
+    }
+  },
+  "prediction_review": {
+    "review_status": "OK",
+    "final_decision": "BET",
+    "reason": "quality gates passed",
+    "article_status": "ready"
+  },
+  "recommended_ticket_settlement": {
+    "stake": 600,
+    "returned": 0,
+    "net": -600,
+    "return_rate": 0.0,
+    "hit_count": 0,
+    "ticket_count": 2,
+    "tickets": [
+      {
+        "bet_type": "ワイド",
+        "combination": "16-17",
+        "horse_name": "パンジャタワー - トロヴァトーレ",
+        "stake": 400,
+        "hit": false,
+        "returned": 0,
+        "net": -400,
+        "predicted_ev": 1.025613
+      },
+      {
+        "bet_type": "三連複",
+        "combination": "1-14-16",
+        "horse_name": "レーベンスティール - ガイアフォース - パンジャタワー",
+        "stake": 200,
+        "hit": false,
+        "returned": 0,
+        "net": -200,
+        "predicted_ev": 1.103552
+      }
+    ]
+  },
+  "model_review": {
+    "actual_top5_with_prediction": [
+      {"finish": 1, "horse_number": "4", "horse_name": "シックスペンス", "pred_win_prob": 0.048484, "pred_ev": 1.047259, "pred_rank_by_win_prob": 8, "pred_rank_by_ev": 1},
+      {"finish": 2, "horse_number": "11", "horse_name": "ワールズエンド", "pred_win_prob": 0.067387, "pred_ev": 1.017545, "pred_rank_by_win_prob": 7, "pred_rank_by_ev": 2},
+      {"finish": 2, "horse_number": "14", "horse_name": "ガイアフォース", "pred_win_prob": 0.205012, "pred_ev": 0.594534, "pred_rank_by_win_prob": 1, "pred_rank_by_ev": 17},
+      {"finish": 4, "horse_number": "13", "horse_name": "セイウンハーデス", "pred_win_prob": 0.08653, "pred_ev": 0.951827, "pred_rank_by_win_prob": 6, "pred_rank_by_ev": 3},
+      {"finish": 5, "horse_number": "16", "horse_name": "パンジャタワー", "pred_win_prob": 0.107595, "pred_ev": 0.893041, "pred_rank_by_win_prob": 3, "pred_rank_by_ev": 8}
+    ],
+    "focus_horses": {
+      "シックスペンス": {
+        "pred_win_prob": 0.048484,
+        "pred_rank_by_win_prob": 8,
+        "pred_rank_by_ev": 1,
+        "actual_finish": 1,
+        "assessment": "単勝EV1位で価値検出は成功したが、勝率が低く正式買い目に組み込めなかった"
+      },
+      "ワールズエンド": {
+        "pred_win_prob": 0.067387,
+        "pred_rank_by_win_prob": 7,
+        "pred_rank_by_ev": 2,
+        "actual_finish": 2,
+        "assessment": "ペース評価とEV評価は機能したが、連系の相手選定から漏れた"
+      },
+      "ガイアフォース": {
+        "pred_win_prob": 0.205012,
+        "pred_rank_by_win_prob": 1,
+        "pred_rank_by_ev": 17,
+        "actual_finish": 2,
+        "assessment": "能力最上位評価は妥当。単勝EV低位も、1番人気の2着という結果に整合した"
+      },
+      "トロヴァトーレ": {
+        "pred_win_prob": 0.149791,
+        "pred_rank_by_win_prob": 2,
+        "actual_finish": 9,
+        "assessment": "4角14番手から届かず、正式ワイドの軸として過大評価だった"
+      }
+    }
+  },
+  "ev_lessons": [
+    "単勝EV1位の4シックスペンスが8番人気で1着、EV2位の11ワールズエンドが7番人気で2着となり、単勝EVランキングの価値検出は機能した。",
+    "正式買い目2点はともに不的中。買い目生成が勝率上位の17トロヴァトーレと16パンジャタワーに寄り、EV上位の4と11を活用できなかった。",
+    "勝率1位の14ガイアフォースは2着同着、6位の13セイウンハーデスは4着、3位の16パンジャタワーは5着で、能力序列の大枠は崩れていない。",
+    "前半3F34.5秒に対し後半3F34.2秒。逃げた11と2番手の4が連対しており、前受け馬の組み合わせ評価が不足した。",
+    "ポートフォリオ予測EVは1.051593だったが、単レース実績は回収率0%。サンプル1件で閾値は変更せず固定評価に累積する。"
+  ],
+  "next_actions": [
+    "単勝EV上位と勝率上位を分離したまま、EV上位馬を連系の軸・相手に候補化するルートを比較検証する。",
+    "東京芝1600mで前半が極端なハイでない場合、逃げ・好位のペアを過小評価しない補正をオフライン検証する。",
+    "予測勝率上位でも4角後方になるリスクを脚質分布と組み合わせ、連系軸の信頼度に反映する。",
+    "今回の全券種払戻ラベルをresult_labels.csvに追加し、evaluate_strategy.pyで固定評価する。"
+  ]
+}

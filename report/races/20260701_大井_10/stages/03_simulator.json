@@ -1,0 +1,114 @@
+{
+  "pace_mix": {
+    "high": 0.479935,
+    "mid": 0.340065,
+    "slow": 0.18
+  },
+  "probabilities": [
+    {
+      "horse": "プレストステラ",
+      "horse_number": "12",
+      "high": 0.09274,
+      "mid": 0.099453,
+      "slow": 0.096763,
+      "final": 0.095747
+    },
+    {
+      "horse": "ゴールドジャッジ",
+      "horse_number": "3",
+      "high": 0.083593,
+      "mid": 0.085982,
+      "slow": 0.085269,
+      "final": 0.084707
+    },
+    {
+      "horse": "トゥースパークル",
+      "horse_number": "2",
+      "high": 0.079786,
+      "mid": 0.082943,
+      "slow": 0.081803,
+      "final": 0.081223
+    },
+    {
+      "horse": "フェルディナンド",
+      "horse_number": "13",
+      "high": 0.080267,
+      "mid": 0.078521,
+      "slow": 0.078952,
+      "final": 0.079437
+    },
+    {
+      "horse": "ランベリー",
+      "horse_number": "8",
+      "high": 0.076241,
+      "mid": 0.077834,
+      "slow": 0.077672,
+      "final": 0.07704
+    },
+    {
+      "horse": "イルヴェント",
+      "horse_number": "9",
+      "high": 0.076506,
+      "mid": 0.074841,
+      "slow": 0.075926,
+      "final": 0.075835
+    },
+    {
+      "horse": "サッキーミツグ",
+      "horse_number": "10",
+      "high": 0.07548,
+      "mid": 0.076142,
+      "slow": 0.075936,
+      "final": 0.075787
+    },
+    {
+      "horse": "カナウ",
+      "horse_number": "11",
+      "high": 0.076406,
+      "mid": 0.073518,
+      "slow": 0.074346,
+      "final": 0.075053
+    },
+    {
+      "horse": "ダイバリオン",
+      "horse_number": "5",
+      "high": 0.076537,
+      "mid": 0.073189,
+      "slow": 0.074303,
+      "final": 0.074996
+    },
+    {
+      "horse": "ロアリングルックス",
+      "horse_number": "6",
+      "high": 0.071686,
+      "mid": 0.071016,
+      "slow": 0.072057,
+      "final": 0.071525
+    },
+    {
+      "horse": "メンタイマヨ",
+      "horse_number": "1",
+      "high": 0.071677,
+      "mid": 0.070989,
+      "slow": 0.070648,
+      "final": 0.071257
+    },
+    {
+      "horse": "ゴッドセンド",
+      "horse_number": "4",
+      "high": 0.069191,
+      "mid": 0.068498,
+      "slow": 0.068568,
+      "final": 0.068843
+    },
+    {
+      "horse": "キタノブレイド",
+      "horse_number": "7",
+      "high": 0.069891,
+      "mid": 0.067073,
+      "slow": 0.067758,
+      "final": 0.068549
+    }
+  ],
+  "method": "scenario-specific Softmax; temperature=1.15; final=pace-mix weighted probability"
+}

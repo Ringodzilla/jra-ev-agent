@@ -1,0 +1,53 @@
+{
+  "status": "NG",
+  "reason": "ticket plan contains low-confidence or sub-threshold tickets; ticket plan overweights extreme longshots; predicted/current EV divergence detected: カップッチョ@20260705_函館_07, マインセーラ@20260705_函館_07, キャリーグレイス@20260705_函館_07",
+  "fix": "",
+  "repair_actions": [],
+  "probability_sums": {
+    "20260705_函館_07": "1"
+  },
+  "divergent_rows": [
+    {
+      "race_id": "20260705_函館_07",
+      "horse_id": "pw01dud002017104266/57",
+      "horse_name": "カップッチョ",
+      "popularity_band": "mid",
+      "current_odds": "100",
+      "predicted_odds": "73.053486",
+      "ev_current": "1.929934",
+      "ev_predicted": "1.409884",
+      "ev_delta_ratio": "0.269465",
+      "odds_gap_ratio": "0.269465"
+    },
+    {
+      "race_id": "20260705_函館_07",
+      "horse_id": "pw01dud002023102305/12",
+      "horse_name": "マインセーラ",
+      "popularity_band": "mid",
+      "current_odds": "86.2",
+      "predicted_odds": "72.997785",
+      "ev_current": "1.792762",
+      "ev_predicted": "1.518186",
+      "ev_delta_ratio": "0.153158",
+      "odds_gap_ratio": "0.153158"
+    },
+    {
+      "race_id": "20260705_函館_07",
+      "horse_id": "pw01dud002022100091/D9",
+      "horse_name": "キャリーグレイス",
+      "popularity_band": "favorite",
+      "current_odds": "3.3",
+      "predicted_odds": "3.784629",
+      "ev_current": "0.678674",
+      "ev_predicted": "0.778342",
+      "ev_delta_ratio": "0.146857",
+      "odds_gap_ratio": "0.146857"
+    }
+  ],
+  "stage_counts": {
+    "entries": 9,
+    "feature_rows": 9,
+    "ev_rows": 9,
+    "tickets": 5
+  }
+}

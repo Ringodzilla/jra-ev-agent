@@ -1,0 +1,132 @@
+{
+  "race_id": "20260701_大井_06",
+  "status": "PARTIAL_UNPUBLISHED",
+  "source_url": "https://www.keiba.go.jp/KeibaWeb_IPAT/TodayRaceInfo/DebaTable_ipat?k_raceDate=2026%2F07%2F01&k_raceNo=6&k_babaCode=20",
+  "captured_at": "2026-06-30T07:02:21Z",
+  "entry_count": 10,
+  "history_requested": 50,
+  "history_collected": 50,
+  "missing_history_fields": {
+    "date": 0,
+    "race_name": 0,
+    "course": 0,
+    "distance": 0,
+    "position": 0,
+    "time": 0,
+    "weight": 0,
+    "jockey": 0,
+    "last_3f": 0,
+    "track_condition": 0,
+    "passing_order": 0,
+    "popularity": 0,
+    "horse_body_weight": 0,
+    "weather": 0,
+    "pace": 8,
+    "odds": 3
+  },
+  "current_unpublished_fields": {
+    "current_odds": 10,
+    "current_popularity": 10,
+    "current_body_weight": 10,
+    "target_weather": 1,
+    "target_track_condition": 1,
+    "combo_odds": [
+      "複勝",
+      "ワイド",
+      "枠連",
+      "馬連",
+      "馬単",
+      "三連複",
+      "三連単"
+    ]
+  },
+  "unresolved_history": {
+    "odds": [
+      {
+        "horse": "ツルマルヴィオレ",
+        "run_index": 4,
+        "date": "2025-09-18",
+        "reason": "final odds not verifiable from available authoritative result"
+      },
+      {
+        "horse": "ハクアイソレイユ",
+        "run_index": 4,
+        "date": "2026-04-14",
+        "reason": "final odds not verifiable from available authoritative result"
+      },
+      {
+        "horse": "ドバイミッション",
+        "run_index": 2,
+        "date": "2026-01-27",
+        "reason": "final odds not verifiable from available authoritative result"
+      }
+    ],
+    "pace": [
+      {
+        "horse": "クアッズ",
+        "run_index": 3,
+        "date": "2026-05-01",
+        "reason": "sectional time not published by source"
+      },
+      {
+        "horse": "ツルマルヴィオレ",
+        "run_index": 5,
+        "date": "2025-08-14",
+        "reason": "sectional time not published by source"
+      },
+      {
+        "horse": "ハイアップグレード",
+        "run_index": 5,
+        "date": "2026-02-04",
+        "reason": "sectional time not published by source"
+      },
+      {
+        "horse": "サクラジェンヌ",
+        "run_index": 3,
+        "date": "2026-01-30",
+        "reason": "sectional time not published by source"
+      },
+      {
+        "horse": "サクラジェンヌ",
+        "run_index": 5,
+        "date": "2025-09-04",
+        "reason": "sectional time not published by source"
+      },
+      {
+        "horse": "ハクアイソレイユ",
+        "run_index": 4,
+        "date": "2026-04-14",
+        "reason": "sectional time not published by source"
+      },
+      {
+        "horse": "ドバイミッション",
+        "run_index": 4,
+        "date": "2025-11-06",
+        "reason": "sectional time not published by source"
+      },
+      {
+        "horse": "ドバイミッション",
+        "run_index": 5,
+        "date": "2025-10-23",
+        "reason": "sectional time not published by source"
+      }
+    ],
+    "weather": []
+  },
+  "checks": {
+    "entry_count_is_10": true,
+    "history_count_is_50": true,
+    "history_per_horse_is_5": true,
+    "row_ids_unique": true,
+    "required_identity_fields_complete": true,
+    "current_values_not_fabricated": true,
+    "recalculation_1": 50,
+    "recalculation_2": 50,
+    "recalculations_match": true
+  },
+  "notes": [
+    "2026-06-30 16:02 JST時点で対象レースの当日単勝・複勝・連系オッズ、馬体重、天候、馬場状態は未公表。",
+    "未公表の当日値は欠損補完せず空欄を維持。",
+    "過去走の結果・人気・馬体重・通過順等はNAR/JRA公式結果を基礎に照合。最終値を確認できない過去オッズと公式非公表ラップは空欄。"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "status": "NG",
+  "reason": "predicted/current EV divergence detected: マナボニート@20260705_函館_09, ハリウッドメモリー@20260705_函館_09",
+  "fix": "",
+  "repair_actions": [],
+  "probability_sums": {
+    "20260705_函館_09": "1.000001"
+  },
+  "divergent_rows": [
+    {
+      "race_id": "20260705_函館_09",
+      "horse_id": "pw01dud002023100617/BD",
+      "horse_name": "マナボニート",
+      "popularity_band": "favorite",
+      "current_odds": "5.2",
+      "predicted_odds": "5.974792",
+      "ev_current": "0.686194",
+      "ev_predicted": "0.788436",
+      "ev_delta_ratio": "0.148999",
+      "odds_gap_ratio": "0.148998"
+    },
+    {
+      "race_id": "20260705_函館_09",
+      "horse_id": "pw01dud002022100632/12",
+      "horse_name": "ハリウッドメモリー",
+      "popularity_band": "favorite",
+      "current_odds": "6.1",
+      "predicted_odds": "7.196238",
+      "ev_current": "0.671115",
+      "ev_predicted": "0.791722",
+      "ev_delta_ratio": "0.179711",
+      "odds_gap_ratio": "0.179711"
+    }
+  ],
+  "stage_counts": {
+    "entries": 16,
+    "feature_rows": 16,
+    "ev_rows": 16,
+    "tickets": 2
+  }
+}

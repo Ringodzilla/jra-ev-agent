@@ -1,0 +1,176 @@
+{
+  "race": {
+    "race_id": "20260614_阪神_11",
+    "name": "宝塚記念",
+    "date": "2026-06-14",
+    "track": "阪神",
+    "race_number": 11,
+    "surface": "芝",
+    "distance": "2200m",
+    "weather_at_result": "雨",
+    "track_condition_at_result": "重",
+    "official_result_url": "https://jra.jp/datafile/seiseki/g1/takara/result/takara2026.html"
+  },
+  "result": {
+    "top5": [
+      {
+        "finish": 1,
+        "frame": "8",
+        "horse_number": "16",
+        "horse_name": "メイショウタバル",
+        "jockey": "武 豊",
+        "time": "2:12.1",
+        "margin": "",
+        "passing_order": "2-2-2-2",
+        "last_3f": "35.3",
+        "popularity": "2"
+      },
+      {
+        "finish": 2,
+        "frame": "3",
+        "horse_number": "5",
+        "horse_name": "クロワデュノール",
+        "jockey": "北村 友一",
+        "time": "2:12.2",
+        "margin": "クビ",
+        "passing_order": "5-5-4-3",
+        "last_3f": "35.2",
+        "popularity": "1"
+      },
+      {
+        "finish": 3,
+        "frame": "1",
+        "horse_number": "1",
+        "horse_name": "ダノンデサイル",
+        "jockey": "戸崎 圭太",
+        "time": "2:12.6",
+        "margin": "2 1/2",
+        "passing_order": "11-12-12-9",
+        "last_3f": "35.0",
+        "popularity": "3"
+      },
+      {
+        "finish": 4,
+        "frame": "5",
+        "horse_number": "9",
+        "horse_name": "コスモキュランダ",
+        "jockey": "横山 武史",
+        "time": "2:12.6",
+        "margin": "アタマ",
+        "passing_order": "1-1-1-1",
+        "last_3f": "36.1",
+        "popularity": "8"
+      },
+      {
+        "finish": 5,
+        "frame": "4",
+        "horse_number": "8",
+        "horse_name": "タガノデュード",
+        "jockey": "高杉 吏麒",
+        "time": "2:13.5",
+        "margin": "5",
+        "passing_order": "18-18-17-16",
+        "last_3f": "35.2",
+        "popularity": "10"
+      }
+    ],
+    "payouts": [
+      {"bet_type": "単勝", "combination": "16", "payout_yen_per_100": 390},
+      {"bet_type": "複勝", "combination": "16", "payout_yen_per_100": 140},
+      {"bet_type": "複勝", "combination": "5", "payout_yen_per_100": 120},
+      {"bet_type": "複勝", "combination": "1", "payout_yen_per_100": 170},
+      {"bet_type": "枠連", "combination": "3-8", "payout_yen_per_100": 380},
+      {"bet_type": "ワイド", "combination": "5-16", "payout_yen_per_100": 260},
+      {"bet_type": "ワイド", "combination": "1-16", "payout_yen_per_100": 490},
+      {"bet_type": "ワイド", "combination": "1-5", "payout_yen_per_100": 290},
+      {"bet_type": "馬連", "combination": "5-16", "payout_yen_per_100": 620},
+      {"bet_type": "馬単", "combination": "16-5", "payout_yen_per_100": 1360},
+      {"bet_type": "三連複", "combination": "1-5-16", "payout_yen_per_100": 1230},
+      {"bet_type": "三連単", "combination": "16-5-1", "payout_yen_per_100": 6040}
+    ],
+    "race_lap": {
+      "furlongs": [12.4, 11.1, 11.9, 12.4, 12.5, 12.0, 12.1, 12.1, 11.8, 11.6, 12.2],
+      "first_3f": 35.4,
+      "last_3f": 35.6,
+      "first_1000m": 60.3,
+      "last_1000m": 59.8,
+      "classification": "重馬場のミドル持続戦"
+    }
+  },
+  "prediction_review": {
+    "review_status": "NG",
+    "final_decision": "NO_BET",
+    "reason": "ticket plan contains low-confidence or sub-threshold tickets; ticket plan overweights extreme longshots; predicted/current EV divergence detected: クロワデュノール@20260614_阪神_11",
+    "official_operation": {
+      "stake": 0,
+      "returned": 0,
+      "net": 0,
+      "decision_correct": true
+    }
+  },
+  "hypothetical_settlement": {
+    "invalidated_model_tickets": {
+      "stake": 1000,
+      "returned": 0,
+      "net": -1000,
+      "hit_count": 0,
+      "ticket_count": 5
+    },
+    "high_mid_no_slow_discretionary_plan": {
+      "stake": 1000,
+      "returned": 0,
+      "net": -1000,
+      "hit_count": 0,
+      "ticket_count": 5,
+      "miss_reason": "9着ミュージアムマイルを全券の軸または構成馬にしたため全滅"
+    },
+    "croix_du_nord_win_10000_reference": {
+      "stake": 10000,
+      "returned": 0,
+      "net": -10000,
+      "finish": 2
+    }
+  },
+  "model_review": {
+    "actual_top5_with_prediction": [
+      {"finish": 1, "horse_number": "16", "horse_name": "メイショウタバル", "pred_win_prob": 0.121308, "pred_ev": 0.812762, "pred_rank_by_win_prob": 3, "pred_rank_by_ev": 17},
+      {"finish": 2, "horse_number": "5", "horse_name": "クロワデュノール", "pred_win_prob": 0.2949, "pred_ev": 0.56031, "pred_rank_by_win_prob": 1, "pred_rank_by_ev": 18},
+      {"finish": 3, "horse_number": "1", "horse_name": "ダノンデサイル", "pred_win_prob": 0.119946, "pred_ev": 1.007547, "pred_rank_by_win_prob": 4, "pred_rank_by_ev": 8},
+      {"finish": 4, "horse_number": "9", "horse_name": "コスモキュランダ", "pred_win_prob": 0.028852, "pred_ev": 1.407983, "pred_rank_by_win_prob": 8, "pred_rank_by_ev": 1},
+      {"finish": 5, "horse_number": "8", "horse_name": "タガノデュード", "pred_win_prob": 0.019195, "pred_ev": 1.013496, "pred_rank_by_win_prob": 9, "pred_rank_by_ev": 7}
+    ],
+    "focus_horses": {
+      "ミュージアムマイル": {
+        "pred_win_prob": 0.119453,
+        "pred_rank_by_win_prob": 5,
+        "actual_finish": 9,
+        "assessment": "ハイ適性を重視した展開加点が不発。重馬場適性と好位持続力を十分に反映できなかった"
+      },
+      "メイショウタバル": {
+        "pred_win_prob": 0.121308,
+        "pred_rank_by_win_prob": 3,
+        "actual_finish": 1,
+        "assessment": "勝率上位評価は妥当だったが、スロー切りの裁量補正で評価を下げた判断が誤り"
+      },
+      "クロワデュノール": {
+        "pred_win_prob": 0.2949,
+        "pred_rank_by_win_prob": 1,
+        "actual_finish": 2,
+        "assessment": "能力最上位評価は妥当。単勝EVマイナス判断も的中した"
+      }
+    }
+  },
+  "ev_lessons": [
+    "reviewer NGによる正式見送りは正解。参考買い目・裁量プランはいずれも全滅だった。",
+    "モデル勝率上位4頭のうち16メイショウタバル、5クロワデュノール、1ダノンデサイルが上位3着を占め、能力順位は機能した。",
+    "EV順位は9コスモキュランダを1位評価し4着。長穴単勝への過重をreviewerが止めたことは妥当だった。",
+    "直前の豪雨による良から重への急変が主要な未反映要因。展開だけでなく当日馬場適性の再計算が必要だった。",
+    "スローを完全に切ったことでメイショウタバルの評価を下げ、ミュージアムマイルを過大評価した。シナリオ確率をゼロにする裁量上書きは避ける。"
+  ],
+  "next_actions": [
+    "発走前の天候・馬場状態変化を検知した場合、course_scoreとpaceシナリオを再計算する。",
+    "重馬場では脚質だけでなく過去の道悪実績とパワー型適性を特徴量へ追加する。",
+    "ハイ・ミドル・スローのいずれかを裁量で0にせず、最低確率を残してロバストに混合する。",
+    "勝率上位馬同士の連系とEV長穴候補を分離し、長穴単勝のstake上限を維持する。"
+  ]
+}

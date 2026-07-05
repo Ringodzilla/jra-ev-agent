@@ -1,0 +1,69 @@
+{
+  "race_id": "20260607_東京_11",
+  "execution": {
+    "model": "current_repository",
+    "mode": "balanced",
+    "bankroll_yen": 1000,
+    "min_ev": 1.03,
+    "input_policy": "cached pre-race race card and odds only",
+    "result_data_used_as_feature": false,
+    "history_rows": 68,
+    "history_rows_on_or_after_target_date": 0,
+    "data_quality_warning": "17頭すべて過去走4件。5件目の馬詳細HTMLはキャッシュに残っていない"
+  },
+  "prediction": {
+    "probability_top4": [
+      {"rank": 1, "horse_number": "14", "horse_name": "ガイアフォース", "win_prob": 0.194776, "win_ev": 0.564849},
+      {"rank": 2, "horse_number": "17", "horse_name": "トロヴァトーレ", "win_prob": 0.145415, "win_ev": 0.712533},
+      {"rank": 3, "horse_number": "16", "horse_name": "パンジャタワー", "win_prob": 0.1069, "win_ev": 0.887273},
+      {"rank": 4, "horse_number": "1", "horse_name": "レーベンスティール", "win_prob": 0.102765, "win_ev": 0.811846}
+    ],
+    "ev_top5": [
+      {"rank": 1, "horse_number": "4", "horse_name": "シックスペンス", "win_prob": 0.051737, "odds": 21.6, "win_ev": 1.117514},
+      {"rank": 2, "horse_number": "11", "horse_name": "ワールズエンド", "win_prob": 0.070597, "odds": 15.1, "win_ev": 1.066009},
+      {"rank": 3, "horse_number": "2", "horse_name": "ロングラン", "win_prob": 0.002565, "odds": 392.1, "win_ev": 1.005822},
+      {"rank": 4, "horse_number": "7", "horse_name": "スズハローム", "win_prob": 0.02224, "odds": 44.7, "win_ev": 0.99411},
+      {"rank": 5, "horse_number": "3", "horse_name": "オフトレイル", "win_prob": 0.027038, "odds": 35.7, "win_ev": 0.96524}
+    ]
+  },
+  "bet_builder": {
+    "candidate_count": 2,
+    "portfolio_stake_yen": 600,
+    "portfolio_ev": 1.074693,
+    "candidates": [
+      {"bet_type": "枠連", "combination": "2-8", "stake_yen": 300, "ev": 1.031867},
+      {"bet_type": "単勝", "combination": "4", "horse_name": "シックスペンス", "stake_yen": 300, "ev": 1.117519}
+    ]
+  },
+  "reviewer": {
+    "status": "NG",
+    "final_decision": "NO_BET",
+    "reason": "ticket plan overweights extreme longshots; predicted/current EV divergence detected: ガイアフォース@20260607_東京_11",
+    "formal_tickets": [],
+    "invalidated_candidate_count": 2
+  },
+  "settlement": {
+    "rule_compliant_operation": {"stake_yen": 0, "returned_yen": 0, "net_yen": 0},
+    "invalidated_candidates_reference": {
+      "stake_yen": 600,
+      "returned_yen": 6480,
+      "net_yen": 5880,
+      "return_rate": 10.8,
+      "hit_count": 1,
+      "ticket_count": 2,
+      "hit_ticket": "単勝 4 シックスペンス"
+    }
+  },
+  "comparison_with_original_prediction": {
+    "original_reviewer_status": "OK",
+    "original_formal_ticket_count": 2,
+    "original_stake_yen": 600,
+    "original_returned_yen": 0,
+    "original_net_yen": -600,
+    "current_reviewer_status": "NG",
+    "current_formal_ticket_count": 0,
+    "current_net_yen": 0,
+    "difference_yen": 600,
+    "key_change": "現行bet_builderは勝ち馬4シックスペンスを単勝候補に抽出したが、reviewerがポートフォリオ全体を無効化した"
+  }
+}

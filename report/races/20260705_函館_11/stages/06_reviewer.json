@@ -1,0 +1,29 @@
+{
+  "status": "NG",
+  "reason": "predicted/current EV divergence detected: ヒルノハンブルク@20260705_函館_11",
+  "fix": "",
+  "repair_actions": [],
+  "probability_sums": {
+    "20260705_函館_11": "0.999999"
+  },
+  "divergent_rows": [
+    {
+      "race_id": "20260705_函館_11",
+      "horse_id": "pw01dud002022103614/A5",
+      "horse_name": "ヒルノハンブルク",
+      "popularity_band": "favorite",
+      "current_odds": "3.6",
+      "predicted_odds": "4.265943",
+      "ev_current": "0.624133",
+      "ev_predicted": "0.739587",
+      "ev_delta_ratio": "0.184983",
+      "odds_gap_ratio": "0.184984"
+    }
+  ],
+  "stage_counts": {
+    "entries": 11,
+    "feature_rows": 11,
+    "ev_rows": 11,
+    "tickets": 5
+  }
+}

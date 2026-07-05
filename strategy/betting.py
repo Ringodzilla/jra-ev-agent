@@ -4,6 +4,26 @@ from collections import defaultdict
 from itertools import combinations, permutations
 import math
 
+from strategy.live_odds import (
+    build_live_odds_lookup as _build_live_odds_lookup,
+    live_odds_value as _live_odds_value,
+    lookup_live_odds as _lookup_live_odds,
+)
+from strategy.portfolio import (
+    is_formation_ticket as _is_formation_ticket,
+    portfolio_ev as _portfolio_ev,
+    portfolio_expected_return as _portfolio_expected_return,
+    portfolio_no_gami as _portfolio_no_gami,
+    portfolio_summary as _portfolio_summary,
+    portfolio_total_points as _portfolio_total_points,
+    portfolio_total_stake as _portfolio_total_stake,
+    ticket_max_return_if_hit as _ticket_max_return_if_hit,
+    ticket_point_count as _ticket_point_count,
+    ticket_return_if_hit as _ticket_return_if_hit,
+    ticket_stake_unit as _ticket_stake_unit,
+    with_adjusted_stake as _with_adjusted_stake,
+)
+
 
 def generate_tickets(
     ev_rows: list[dict[str, object]],
@@ -1538,10 +1558,6 @@ def _is_coverage_ticket(ticket: dict[str, object]) -> bool:
     return str(ticket.get("ticket_role", "")) == "coverage"
 
 
-def _is_formation_ticket(ticket: dict[str, object]) -> bool:
-    return str(ticket.get("ticket_shape", "")) == "formation"
-
-
 def _can_add_coverage_ticket(
     selected: list[dict[str, object]],
     ticket: dict[str, object],
@@ -1552,101 +1568,6 @@ def _can_add_coverage_ticket(
     if _portfolio_ev(portfolio) < min_portfolio_ev:
         return False
     return _portfolio_no_gami(portfolio)
-
-
-def _portfolio_ev(tickets: list[dict[str, object]]) -> float:
-    total_stake = _portfolio_total_stake(tickets)
-    if total_stake <= 0:
-        return 0.0
-    expected_return = sum(
-        int(_to_float(ticket.get("stake"), 0.0)) * _to_float(ticket.get("ev_current") or ticket.get("ev"))
-        for ticket in tickets
-    )
-    return expected_return / total_stake
-
-
-def _portfolio_expected_return(tickets: list[dict[str, object]]) -> float:
-    return sum(
-        int(_to_float(ticket.get("stake"), 0.0)) * _to_float(ticket.get("ev_current") or ticket.get("ev"))
-        for ticket in tickets
-    )
-
-
-def _portfolio_no_gami(tickets: list[dict[str, object]]) -> bool:
-    total_stake = _portfolio_total_stake(tickets)
-    if total_stake <= 0:
-        return False
-    return all(_ticket_return_if_hit(ticket) >= total_stake for ticket in tickets)
-
-
-def _portfolio_total_stake(tickets: list[dict[str, object]]) -> int:
-    return sum(int(_to_float(ticket.get("stake"), 0.0)) for ticket in tickets)
-
-
-def _portfolio_total_points(tickets: list[dict[str, object]]) -> int:
-    return sum(_ticket_point_count(ticket) for ticket in tickets)
-
-
-def _ticket_return_if_hit(ticket: dict[str, object]) -> int:
-    if _is_formation_ticket(ticket):
-        stake_per_point = int(_to_float(ticket.get("stake_per_point"), 0.0))
-        min_odds = _to_float(ticket.get("trifecta_odds_min") or ticket.get("win_odds"))
-        return int(stake_per_point * min_odds)
-    stake = int(_to_float(ticket.get("stake"), 0.0))
-    odds = _to_float(ticket.get("win_odds") or ticket.get("predicted_odds"))
-    return int(stake * odds)
-
-
-def _ticket_max_return_if_hit(ticket: dict[str, object]) -> int:
-    if _is_formation_ticket(ticket):
-        stake_per_point = int(_to_float(ticket.get("stake_per_point"), 0.0))
-        max_odds = _to_float(ticket.get("trifecta_odds_max") or ticket.get("win_odds"))
-        return int(stake_per_point * max_odds)
-    return _ticket_return_if_hit(ticket)
-
-
-def _ticket_point_count(ticket: dict[str, object]) -> int:
-    if _is_formation_ticket(ticket):
-        point_count = int(_to_float(ticket.get("point_count"), 0.0))
-        if point_count > 0:
-            return point_count
-        return max(1, len(list(ticket.get("points") or [])))
-    return 1
-
-
-def _ticket_stake_unit(ticket: dict[str, object]) -> int:
-    return max(100, _ticket_point_count(ticket) * 100) if _is_formation_ticket(ticket) else 100
-
-
-def _with_adjusted_stake(ticket: dict[str, object], stake: int) -> dict[str, object]:
-    out = dict(ticket)
-    unit = _ticket_stake_unit(ticket)
-    adjusted = int(stake / unit) * unit
-    if adjusted <= 0:
-        adjusted = 0
-    out["stake"] = adjusted
-    if _is_formation_ticket(out):
-        point_count = _ticket_point_count(out)
-        stake_per_point = int(adjusted / max(point_count, 1))
-        out["stake_per_point"] = stake_per_point
-        min_odds = _to_float(out.get("trifecta_odds_min") or out.get("win_odds"))
-        max_odds = _to_float(out.get("trifecta_odds_max") or out.get("win_odds"))
-        out["min_return_if_hit"] = int(stake_per_point * min_odds)
-        out["max_return_if_hit"] = int(stake_per_point * max_odds)
-    return out
-
-
-def _portfolio_summary(tickets: list[dict[str, object]]) -> dict[str, object]:
-    total_stake = _portfolio_total_stake(tickets)
-    expected_return = _portfolio_expected_return(tickets)
-    return {
-        "total_stake": total_stake,
-        "total_points": _portfolio_total_points(tickets),
-        "expected_return": int(expected_return),
-        "expected_profit": int(expected_return - total_stake),
-        "portfolio_ev": _fmt(_portfolio_ev(tickets)),
-        "no_gami": _portfolio_no_gami(tickets) if tickets else False,
-    }
 
 
 def _prune_gami_tickets(tickets: list[dict[str, object]]) -> list[dict[str, object]]:
@@ -1726,50 +1647,6 @@ def _labels_for_type(tickets: list[dict[str, object]], bet_type: str) -> list[st
         for ticket in tickets
         if str(ticket.get("bet_type", "")) == bet_type and _ticket_combo_label(ticket)
     ]
-
-
-def _build_live_odds_lookup(
-    odds_rows: list[dict[str, object]] | list[dict[str, str]],
-) -> dict[str, dict[tuple[str, str], dict[str, object]]]:
-    by_race: dict[str, dict[tuple[str, str], dict[str, object]]] = defaultdict(dict)
-    for row in odds_rows:
-        race_id = str(row.get("race_id", "")).strip()
-        bet_type = str(row.get("bet_type", "")).strip()
-        combination = str(row.get("combination", "")).strip()
-        if not race_id or not bet_type or not combination:
-            continue
-        key = (bet_type, combination)
-        current = by_race[race_id].get(key)
-        if current and str(current.get("captured_at", "")) > str(row.get("captured_at", "")):
-            continue
-        by_race[race_id][key] = dict(row)
-    return by_race
-
-
-def _lookup_live_odds(
-    live_odds: dict[tuple[str, str], dict[str, object]],
-    bet_type: str,
-    values: list[str],
-) -> dict[str, object]:
-    key = (bet_type, _live_combo_key(bet_type, values))
-    return dict(live_odds.get(key) or {})
-
-
-def _live_combo_key(bet_type: str, values: list[str]) -> str:
-    cleaned = [str(int(_to_float(value))) for value in values if _to_float(value) > 0]
-    if not cleaned:
-        return ""
-    if bet_type in {"umatan", "sanrentan"}:
-        return ">".join(cleaned)
-    if bet_type in {"wide", "wakuren", "umaren", "sanrenpuku"}:
-        return "-".join(sorted(cleaned, key=lambda item: int(item)))
-    return cleaned[0]
-
-
-def _live_odds_value(row: dict[str, object]) -> float:
-    if not row:
-        return 0.0
-    return _to_float(row.get("odds_min") or row.get("odds"))
 
 
 def _live_or_current_win_odds(

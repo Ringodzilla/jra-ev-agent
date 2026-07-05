@@ -1,0 +1,41 @@
+{
+  "schema_version": "1",
+  "producer": "src.react_workflow.ReactiveRaceWorkflow",
+  "stage_order": [
+    "01_data_collector.json",
+    "02_analyzer.json",
+    "03_simulator.json",
+    "04_ev_calculator.json",
+    "05_bet_builder.json",
+    "06_reviewer.json",
+    "07_article_writer.json",
+    "run_summary.json"
+  ],
+  "attempt": 0,
+  "artifacts": {
+    "01_data_collector.json": {
+      "sha256": "33e9e88d154dc516433644ed2d8c285634e8339827dd78bc6fde36ef384d2e2c"
+    },
+    "02_analyzer.json": {
+      "sha256": "b7322fde382dbaaf29d3fe172ceef300269308f35557833e309462fb2571eb16"
+    },
+    "03_simulator.json": {
+      "sha256": "58b470bb9d3d55a151d82b4b7d39be781e3c42c7ade0e8c0679d38d6d93404e8"
+    },
+    "04_ev_calculator.json": {
+      "sha256": "221bfa767af4be58319736848b13f424541860b4904ac2217bb7af4f1351d264"
+    },
+    "05_bet_builder.json": {
+      "sha256": "23de91f7f19c4f125ea7a690d15241bec915585001a03652286c1b832ba64d26"
+    },
+    "06_reviewer.json": {
+      "sha256": "17511a9f1e3969d5fd8ec08d97d9862d0c59f821b5b0e1f2d2732e7755981243"
+    },
+    "07_article_writer.json": {
+      "sha256": "be03ae240a6b83abb0b66baea86d954cfbb3880c8858acb812aa8b92545483e4"
+    },
+    "run_summary.json": {
+      "sha256": "bf9d021307eb36fa37eebd8731c8d4df41372b164a6cd5177996c8e607e412b4"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "status": "NG",
+  "reason": "主催者発表の単勝・複勝・連系オッズが未掲載で、13頭すべてEVを計算できない",
+  "fix": "主催者オッズ公開後に同一URLから全券種オッズを再取得し、ev_calculator以降を再実行する",
+  "checks": {
+    "ev_valid": false,
+    "pace_consistent": true,
+    "overbet_favorites_excluded": null,
+    "probability_sum": 0.999999,
+    "tickets_empty": true
+  }
+}

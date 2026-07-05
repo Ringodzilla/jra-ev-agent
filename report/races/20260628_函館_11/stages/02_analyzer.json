@@ -1,0 +1,240 @@
+{
+  "scores": [
+    {
+      "horse": "バルナバ",
+      "horse_number": 1,
+      "ability": 77.13,
+      "course": 0.0,
+      "pace": 2.0,
+      "weight": 2.63,
+      "jockey": 0.4,
+      "S": 82.16
+    },
+    {
+      "horse": "ファウストラーゼン",
+      "horse_number": 2,
+      "ability": 10.6,
+      "course": 0.0,
+      "pace": 2.0,
+      "weight": 1.5,
+      "jockey": 0.0,
+      "S": 14.1
+    },
+    {
+      "horse": "ピースワンデュック",
+      "horse_number": 3,
+      "ability": 49.6,
+      "course": 0.0,
+      "pace": 4.0,
+      "weight": 1.5,
+      "jockey": 0.0,
+      "S": 55.1
+    },
+    {
+      "horse": "マジックサンズ",
+      "horse_number": 4,
+      "ability": 57.53,
+      "course": 0.0,
+      "pace": -2.0,
+      "weight": -1.88,
+      "jockey": 2.75,
+      "S": 56.4
+    },
+    {
+      "horse": "イガッチ",
+      "horse_number": 5,
+      "ability": 92.53,
+      "course": 0.0,
+      "pace": 4.0,
+      "weight": 1.88,
+      "jockey": 0.85,
+      "S": 99.26
+    },
+    {
+      "horse": "サンストックトン",
+      "horse_number": 6,
+      "ability": 43.53,
+      "course": 0.0,
+      "pace": -2.0,
+      "weight": 4.88,
+      "jockey": 0.0,
+      "S": 46.41
+    },
+    {
+      "horse": "チャックネイト",
+      "horse_number": 7,
+      "ability": 48.67,
+      "course": 0.0,
+      "pace": 0.0,
+      "weight": -1.13,
+      "jockey": 0.0,
+      "S": 47.54
+    },
+    {
+      "horse": "ケイアイセナ",
+      "horse_number": 8,
+      "ability": 58.93,
+      "course": 5.0,
+      "pace": 2.0,
+      "weight": -0.19,
+      "jockey": 0.0,
+      "S": 65.74
+    },
+    {
+      "horse": "オニャンコポン",
+      "horse_number": 9,
+      "ability": 23.93,
+      "course": 0.0,
+      "pace": 0.0,
+      "weight": 5.0,
+      "jockey": 0.0,
+      "S": 28.93
+    },
+    {
+      "horse": "ケリフレッドアスク",
+      "horse_number": 10,
+      "ability": 37.47,
+      "course": 0.0,
+      "pace": -2.0,
+      "weight": 0.75,
+      "jockey": 0.0,
+      "S": 36.22
+    },
+    {
+      "horse": "ジュタ",
+      "horse_number": 11,
+      "ability": 66.4,
+      "course": 0.0,
+      "pace": 4.0,
+      "weight": 2.25,
+      "jockey": -3.65,
+      "S": 69.0
+    },
+    {
+      "horse": "エコロディノス",
+      "horse_number": 12,
+      "ability": 62.67,
+      "course": 0.0,
+      "pace": 4.0,
+      "weight": -0.75,
+      "jockey": 0.7,
+      "S": 66.62
+    },
+    {
+      "horse": "アラタ",
+      "horse_number": 13,
+      "ability": 40.27,
+      "course": 0.0,
+      "pace": 0.0,
+      "weight": -0.19,
+      "jockey": -3.7,
+      "S": 36.38
+    },
+    {
+      "horse": "フィーリウス",
+      "horse_number": 14,
+      "ability": 94.87,
+      "course": 0.0,
+      "pace": 4.0,
+      "weight": 0.75,
+      "jockey": 1.1,
+      "S": 100.72
+    },
+    {
+      "horse": "デビットバローズ",
+      "horse_number": 15,
+      "ability": 70.6,
+      "course": 0.0,
+      "pace": 4.0,
+      "weight": -1.13,
+      "jockey": 1.04,
+      "S": 74.51
+    }
+  ],
+  "metadata": {
+    "race_id": "20260628_函館_11",
+    "input_files": [
+      "report/races/20260628_函館_11/stages/01_data_collector.json",
+      "report/races/20260628_函館_11/data_collector/race_entries.csv",
+      "report/races/20260628_函館_11/data_collector/race_last5.csv",
+      "report/races/20260628_函館_11/data_collector/data_quality.json"
+    ],
+    "market_data_excluded": true,
+    "excluded_columns": [
+      "current_odds",
+      "current_popularity",
+      "odds",
+      "popularity",
+      "last_3f"
+    ],
+    "excluded_column_reasons": {
+      "current_odds": "人気順トレースを防止するため不使用",
+      "current_popularity": "人気順トレースを防止するため不使用",
+      "odds": "人気順トレースを防止するため不使用",
+      "popularity": "人気順トレースを防止するため不使用",
+      "last_3f": "data_quality.jsonで全75履歴行がlast3f_fallbackと記録されているため不使用"
+    },
+    "scoring": {
+      "ability": {
+        "used_columns": [
+          "run_index",
+          "position"
+        ],
+        "formula": "各走点=max(0,100-7*(position-1)); ability=sum(各走点*[5,4,3,2,1])/15",
+        "range": "0..100"
+      },
+      "course": {
+        "used_columns": [
+          "course",
+          "target_track",
+          "position"
+        ],
+        "formula": "course==target_trackの履歴のみを対象に、mean(clamp(8-position,-5,5)); 該当履歴なしは0",
+        "range": "-5..5"
+      },
+      "pace": {
+        "used_columns": [
+          "passing_order"
+        ],
+        "formula": "前受け率=count(passing_order<=4)/count(valid passing_order); 0.6以上=4, 0.4以上=2, 0.2以上=0, それ未満=-2",
+        "range": "-2..4"
+      },
+      "weight": {
+        "used_columns": [
+          "weight",
+          "assigned_weight"
+        ],
+        "formula": "clamp((mean(valid historical weight)-assigned_weight)*1.5,-5,5)",
+        "range": "-5..5"
+      },
+      "jockey": {
+        "used_columns": [
+          "current_jockey",
+          "jockey",
+          "position"
+        ],
+        "formula": "同一騎手履歴がある場合clamp((全履歴平均着順-同騎手平均着順)*0.75+同騎手騎乗数*0.25,-5,5); ない場合0",
+        "range": "-5..5"
+      },
+      "S": {
+        "used_columns": [
+          "ability",
+          "course",
+          "pace",
+          "weight",
+          "jockey"
+        ],
+        "formula": "ability+course+pace+weight+jockey"
+      }
+    },
+    "rounding": "各項目を小数第2位に丸め、Sは丸め後の5項目を合計して小数第2位に丸める",
+    "validation": {
+      "entry_count": 15,
+      "score_count": 15,
+      "unique_horse_numbers": 15,
+      "all_entries_matched": true,
+      "sum_identity_checked": true,
+      "json_parse_checked": true
+    }
+  }
+}

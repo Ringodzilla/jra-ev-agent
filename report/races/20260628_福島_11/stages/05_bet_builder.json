@@ -1,0 +1,176 @@
+{
+  "core": [
+    {
+      "race_id": "20260628_福島_11",
+      "horse_id": "pw01dud002023104224/6C",
+      "horse_name": "リッツパーティー",
+      "horse_number": "5",
+      "win_prob": "0.116702",
+      "place_prob": "0.274634",
+      "ev": "0.665202",
+      "ev_predicted": "0.74413",
+      "current_odds": "5.7",
+      "predicted_odds": "6.37632",
+      "predicted_odds_source": "structural"
+    },
+    {
+      "race_id": "20260628_福島_11",
+      "horse_id": "pw01dud002023103907/0D",
+      "horse_name": "スカイスプレンダー",
+      "horse_number": "14",
+      "win_prob": "0.08923",
+      "place_prob": "0.241102",
+      "ev": "0.847683",
+      "ev_predicted": "0.979245",
+      "current_odds": "9.5",
+      "predicted_odds": "10.974413",
+      "predicted_odds_source": "structural"
+    }
+  ],
+  "partner": [
+    {
+      "race_id": "20260628_福島_11",
+      "horse_id": "pw01dud002023105084/59",
+      "horse_name": "コルテオソレイユ",
+      "horse_number": "6",
+      "win_prob": "0.104728",
+      "place_prob": "0.239661",
+      "ev": "0.774988",
+      "ev_predicted": "0.875762",
+      "current_odds": "7.4",
+      "predicted_odds": "8.36224",
+      "predicted_odds_source": "structural"
+    },
+    {
+      "race_id": "20260628_福島_11",
+      "horse_id": "pw01dud002023105684/7F",
+      "horse_name": "クカイリモク",
+      "horse_number": "2",
+      "win_prob": "0.074197",
+      "place_prob": "0.239382",
+      "ev": "1.016504",
+      "ev_predicted": "1.121818",
+      "current_odds": "13.7",
+      "predicted_odds": "15.119382",
+      "predicted_odds_source": "structural"
+    }
+  ],
+  "long": [],
+  "tickets": [],
+  "races": [
+    {
+      "race_id": "20260628_福島_11",
+      "core": [
+        {
+          "race_id": "20260628_福島_11",
+          "horse_id": "pw01dud002023104224/6C",
+          "horse_name": "リッツパーティー",
+          "horse_number": "5",
+          "win_prob": "0.116702",
+          "place_prob": "0.274634",
+          "ev": "0.665202",
+          "ev_predicted": "0.74413",
+          "current_odds": "5.7",
+          "predicted_odds": "6.37632",
+          "predicted_odds_source": "structural"
+        },
+        {
+          "race_id": "20260628_福島_11",
+          "horse_id": "pw01dud002023103907/0D",
+          "horse_name": "スカイスプレンダー",
+          "horse_number": "14",
+          "win_prob": "0.08923",
+          "place_prob": "0.241102",
+          "ev": "0.847683",
+          "ev_predicted": "0.979245",
+          "current_odds": "9.5",
+          "predicted_odds": "10.974413",
+          "predicted_odds_source": "structural"
+        }
+      ],
+      "partner": [
+        {
+          "race_id": "20260628_福島_11",
+          "horse_id": "pw01dud002023105084/59",
+          "horse_name": "コルテオソレイユ",
+          "horse_number": "6",
+          "win_prob": "0.104728",
+          "place_prob": "0.239661",
+          "ev": "0.774988",
+          "ev_predicted": "0.875762",
+          "current_odds": "7.4",
+          "predicted_odds": "8.36224",
+          "predicted_odds_source": "structural"
+        },
+        {
+          "race_id": "20260628_福島_11",
+          "horse_id": "pw01dud002023105684/7F",
+          "horse_name": "クカイリモク",
+          "horse_number": "2",
+          "win_prob": "0.074197",
+          "place_prob": "0.239382",
+          "ev": "1.016504",
+          "ev_predicted": "1.121818",
+          "current_odds": "13.7",
+          "predicted_odds": "15.119382",
+          "predicted_odds_source": "structural"
+        }
+      ],
+      "long": [],
+      "candidate_counts": {},
+      "candidates": [],
+      "exotics": [],
+      "tickets": [],
+      "portfolio": {
+        "total_stake": 0,
+        "total_points": 0,
+        "expected_return": 0,
+        "expected_profit": 0,
+        "portfolio_ev": "0",
+        "no_gami": false
+      }
+    }
+  ],
+  "bet_types_considered": [
+    "win",
+    "place",
+    "wide",
+    "wakuren",
+    "umaren",
+    "umatan",
+    "sanrenpuku",
+    "sanrentan"
+  ],
+  "candidate_counts": {},
+  "optimization_mode": "cross_bet_ev_kelly_portfolio",
+  "portfolio_summary": {
+    "total_stake": 0,
+    "total_points": 0,
+    "expected_return": 0,
+    "expected_profit": 0,
+    "portfolio_ev": "0",
+    "no_gami": false
+  },
+  "primary_bet_type": "wide",
+  "tansho": [],
+  "fukusho": [
+    "リッツパーティー",
+    "スカイスプレンダー"
+  ],
+  "wide": [
+    "リッツパーティー - スカイスプレンダー"
+  ],
+  "wakuren": [],
+  "umaren": [
+    "リッツパーティー - スカイスプレンダー",
+    "リッツパーティー - コルテオソレイユ",
+    "スカイスプレンダー - コルテオソレイユ"
+  ],
+  "umatan": [],
+  "sanrenpuku": [
+    "リッツパーティー - スカイスプレンダー - コルテオソレイユ"
+  ],
+  "sanrentan": [
+    "リッツパーティー → スカイスプレンダー → コルテオソレイユ"
+  ]
+}

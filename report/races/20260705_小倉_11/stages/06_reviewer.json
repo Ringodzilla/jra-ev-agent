@@ -1,0 +1,41 @@
+{
+  "status": "NG",
+  "reason": "predicted/current EV divergence detected: デアヴェローチェ@20260705_小倉_11, フリッカージャブ@20260705_小倉_11",
+  "fix": "",
+  "repair_actions": [],
+  "probability_sums": {
+    "20260705_小倉_11": "1.000001"
+  },
+  "divergent_rows": [
+    {
+      "race_id": "20260705_小倉_11",
+      "horse_id": "pw01dud002023107264/79",
+      "horse_name": "デアヴェローチェ",
+      "popularity_band": "favorite",
+      "current_odds": "4.6",
+      "predicted_odds": "5.361508",
+      "ev_current": "0.651348",
+      "ev_predicted": "0.759176",
+      "ev_delta_ratio": "0.165546",
+      "odds_gap_ratio": "0.165545"
+    },
+    {
+      "race_id": "20260705_小倉_11",
+      "horse_id": "pw01dud002022102020/D4",
+      "horse_name": "フリッカージャブ",
+      "popularity_band": "favorite",
+      "current_odds": "3.5",
+      "predicted_odds": "4.342465",
+      "ev_current": "0.585658",
+      "ev_predicted": "0.726628",
+      "ev_delta_ratio": "0.240704",
+      "odds_gap_ratio": "0.240704"
+    }
+  ],
+  "stage_counts": {
+    "entries": 13,
+    "feature_rows": 13,
+    "ev_rows": 13,
+    "tickets": 1
+  }
+}
