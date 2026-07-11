@@ -414,6 +414,80 @@ class TestEVPipeline(unittest.TestCase):
 
         self.assertEqual(0.5, feature["track_condition_score"])
 
+    def test_unprofiled_track_bias_is_neutral(self):
+        row = {
+            "race_id": "r_bias_neutral",
+            "horse_id": "h1",
+            "horse_name": "A",
+            "frame_number": "4",
+            "horse_number": "4",
+            "current_odds": "5.0",
+            "target_track": "東京",
+            "target_surface": "ダート",
+            "target_distance": "1600",
+            "target_track_condition": "良",
+            "run_index": "1",
+            "date": "2026-06-01",
+            "course": "東京",
+            "distance": "ダ1600",
+            "position": "3",
+            "time": "98.0",
+            "weight": "55",
+            "last_3f": "37.0",
+            "passing_order": "3-3",
+            "popularity": "4",
+            "track_condition": "良",
+        }
+
+        feature = build_feature_rows([row])[0]
+
+        self.assertEqual(0.0, feature["track_bias_score"])
+        self.assertEqual("neutral", feature["track_bias_style"])
+        self.assertEqual(0.0, feature["track_bias_strength"])
+
+    def test_local_dirt_1700_bias_rewards_forward_position(self):
+        base = {
+            "race_id": "r_kokura_bias",
+            "current_odds": "5.0",
+            "target_track": "小倉",
+            "target_surface": "ダート",
+            "target_distance": "1700",
+            "target_track_condition": "良",
+            "run_index": "1",
+            "date": "2026-06-01",
+            "course": "小倉",
+            "distance": "ダ1700",
+            "position": "4",
+            "time": "106.0",
+            "weight": "55",
+            "last_3f": "38.8",
+            "popularity": "4",
+            "track_condition": "良",
+        }
+        leader = {
+            **base,
+            "horse_id": "leader",
+            "horse_name": "Leader",
+            "frame_number": "6",
+            "horse_number": "6",
+            "passing_order": "1-1-1-1",
+        }
+        closer = {
+            **base,
+            "horse_id": "closer",
+            "horse_name": "Closer",
+            "frame_number": "8",
+            "horse_number": "8",
+            "passing_order": "14-14-14-14",
+        }
+
+        features = {row["horse_id"]: row for row in build_feature_rows([leader, closer])}
+
+        self.assertEqual("front", features["leader"]["track_bias_style"])
+        self.assertEqual("closer", features["closer"]["track_bias_style"])
+        self.assertGreater(features["leader"]["track_bias_score"], features["closer"]["track_bias_score"])
+        self.assertGreater(features["leader"]["pace_score"], features["closer"]["pace_score"])
+
     def test_simulator_exposes_relative_front_structure(self):
         rows = [
             {"race_id": "r_front", "horse_id": "leader", "front_rate": 0.9, "closing_strength": 0.2, "ability_score": 0.5, "course_score": 0.5, "consistency": 0.5},

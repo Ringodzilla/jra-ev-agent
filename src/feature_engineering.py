@@ -6,6 +6,8 @@ from collections import defaultdict
 from statistics import pstdev
 from typing import Iterable, Sequence
 
+from src.track_bias import track_bias_adjustment
+
 
 DEFAULT_LAST3F = 36.0
 DEFAULT_WEIGHT = 55.0
@@ -224,7 +226,22 @@ def build_feature_row(
         + 0.20 * distance_fit
         + 0.20 * track_condition_match
     )
-    pace_score = 0.55 * front_rate + 0.45 * closing_strength
+    track_bias = track_bias_adjustment(
+        track=target_track,
+        surface=target_surface,
+        distance=target_distance,
+        track_condition=target_track_condition,
+        frame_number=str(current.get("frame_number", "")).strip(),
+        front_rate=front_rate,
+    )
+    track_bias_score = _to_float(track_bias.get("track_bias_score"), 0.0)
+    track_bias_strength = _to_float(track_bias.get("track_bias_strength"), 0.0)
+    pace_score = _clamp(
+        (0.55 * front_rate + 0.45 * closing_strength)
+        + (track_bias_strength * track_bias_score),
+        0.0,
+        1.5,
+    )
     weight_score = max(-1.5, min(1.5, -weight_delta / 3.0))
     jockey_score = 0.65 * jockey_match + 0.35 * win_rate
 
@@ -275,6 +292,10 @@ def build_feature_row(
         "front_rate": round(front_rate, 4),
         "closing_strength": round(closing_strength, 4),
         "consistency": round(consistency, 4),
+        "track_bias_score": round(track_bias_score, 4),
+        "track_bias_style": str(track_bias.get("track_bias_style", "neutral")),
+        "track_bias_strength": round(track_bias_strength, 4),
+        "track_bias_frame": round(_to_float(track_bias.get("track_bias_frame"), 0.0), 4),
         "ability_score": round(ability_score, 4),
         "course_score": round(course_score, 4),
         "track_condition_score": round(track_condition_match, 4),

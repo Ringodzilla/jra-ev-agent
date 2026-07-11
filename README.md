@@ -266,6 +266,15 @@ r1,三連単,1-2-3,,8200
 * `odds`
 * `popularity`
 
+## Track bias priors
+
+* `config/track_biases.json` stores researched course-bias priors for 小倉・福島・函館 dirt 1700m.
+* `src.track_bias.track_bias_adjustment` maps `target_track`, `target_surface`, `target_distance`, `target_track_condition`, `frame_number`, and `front_rate` to a small additive pace prior.
+* Feature rows expose `track_bias_score`, `track_bias_style`, `track_bias_strength`, and `track_bias_frame` for review/debugging.
+* Unknown tracks/distances remain neutral, so existing races outside these profiles are unchanged.
+* Validate the file with `python scripts/update_track_biases.py`.
+* To refresh researched values, prepare a JSON patch with `sources` and/or `profiles`, then run `python scripts/update_track_biases.py --merge path/to/patch.json`. Matching profiles are replaced by `(track, surface, distance)`.
+
 ## Testing
 
 ```bash

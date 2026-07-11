@@ -1,0 +1,140 @@
+{
+  "version": "2026-07-11",
+  "description": "Course bias priors for local JRA dirt 1700m races. Values are small additive priors for feature engineering, not standalone predictions.",
+  "sources": [
+    {
+      "id": "jra_kokura_course",
+      "url": "https://www.jra.go.jp/facilities/race/kokura/course/",
+      "notes": "Kokura dirt is a small right-handed course with a 291.3m homestretch; JRA describes front and stalking types as advantaged and deep closers as disadvantaged."
+    },
+    {
+      "id": "jra_fukushima_course",
+      "url": "https://www.jra.go.jp/facilities/race/fukushima/course/index.html",
+      "notes": "JRA notes that Fukushima dirt produces above-average success for front-runners."
+    },
+    {
+      "id": "jra_hakodate_course",
+      "url": "https://www.jra.go.jp/facilities/race/hakodate/course/",
+      "notes": "Hakodate has the shortest JRA dirt homestretch at 260.3m; JRA notes front and stalking types stand out while deep closers struggle."
+    },
+    {
+      "id": "keibalab_kokura_d1700",
+      "url": "https://www.keibalab.jp/db/race/202602081001/course.html",
+      "notes": "Kokura dirt 1700m tends to reward horses already forward at the fourth corner; long sustained moves can work better than late acceleration."
+    },
+    {
+      "id": "keibalab_fukushima_d1700",
+      "url": "https://www.keibalab.jp/db/race/202607040303/course.html",
+      "notes": "Fukushima dirt 1700m is strongly front/stalker friendly; closers need the ability to move up before the stretch."
+    },
+    {
+      "id": "keibalab_hakodate_d1700",
+      "url": "https://www.keibalab.jp/db/race/202607040206/course.html",
+      "notes": "Hakodate dirt 1700m is strongly front/stalker friendly because the stretch is too short for deep closers to rely on late acceleration."
+    },
+    {
+      "id": "umanity_kokura_d1700",
+      "url": "https://umanity.jp/sp/keibasapuri/view.php?id=95",
+      "notes": "Kokura dirt 1700m has high stalker performance and very poor deep-closer performance relative to other dirt courses."
+    },
+    {
+      "id": "umanity_fukushima_d1700",
+      "url": "https://umanity.jp/sp/keibasapuri/view.php?id=76",
+      "notes": "Fukushima dirt 1700m is front/stalker friendly; 2 and 6 frames are noted positively while 1 frame is slightly weak."
+    },
+    {
+      "id": "navi_hakodate_d1700",
+      "url": "https://navi-keiba.com/coursedata/hakodate/d1700",
+      "notes": "Hakodate dirt 1700m favors forward position and requires closers to move before the stretch; 8 frame is slightly weaker in good going."
+    }
+  ],
+  "profiles": [
+    {
+      "track": "小倉",
+      "surface": "ダート",
+      "distance": 1700,
+      "bias_strength": 0.18,
+      "running_style_bias": {
+        "front": 0.20,
+        "stalker": 0.28,
+        "midpack": -0.12,
+        "closer": -0.38
+      },
+      "frame_bias": {
+        "1": 0.00,
+        "2": 0.02,
+        "3": -0.02,
+        "4": 0.00,
+        "5": 0.02,
+        "6": 0.03,
+        "7": 0.01,
+        "8": 0.00
+      },
+      "condition_adjustments": {
+        "良": {"front": 0.00, "stalker": 0.00, "midpack": 0.00, "closer": 0.00},
+        "稍重": {"front": 0.03, "stalker": 0.02, "midpack": -0.01, "closer": -0.03},
+        "重": {"front": 0.04, "stalker": 0.02, "midpack": -0.02, "closer": -0.04},
+        "不良": {"front": 0.04, "stalker": 0.03, "midpack": -0.02, "closer": -0.05}
+      },
+      "source_ids": ["jra_kokura_course", "keibalab_kokura_d1700", "umanity_kokura_d1700"]
+    },
+    {
+      "track": "福島",
+      "surface": "ダート",
+      "distance": 1700,
+      "bias_strength": 0.20,
+      "running_style_bias": {
+        "front": 0.32,
+        "stalker": 0.24,
+        "midpack": -0.14,
+        "closer": -0.35
+      },
+      "frame_bias": {
+        "1": -0.04,
+        "2": 0.05,
+        "3": 0.01,
+        "4": 0.00,
+        "5": 0.02,
+        "6": 0.06,
+        "7": 0.02,
+        "8": 0.03
+      },
+      "condition_adjustments": {
+        "良": {"front": 0.00, "stalker": 0.00, "midpack": 0.00, "closer": 0.00},
+        "稍重": {"front": 0.03, "stalker": 0.02, "midpack": -0.01, "closer": -0.03},
+        "重": {"front": 0.05, "stalker": 0.02, "midpack": -0.02, "closer": -0.05},
+        "不良": {"front": 0.05, "stalker": 0.03, "midpack": -0.03, "closer": -0.06}
+      },
+      "source_ids": ["jra_fukushima_course", "keibalab_fukushima_d1700", "umanity_fukushima_d1700"]
+    },
+    {
+      "track": "函館",
+      "surface": "ダート",
+      "distance": 1700,
+      "bias_strength": 0.22,
+      "running_style_bias": {
+        "front": 0.34,
+        "stalker": 0.30,
+        "midpack": -0.16,
+        "closer": -0.42
+      },
+      "frame_bias": {
+        "1": 0.05,
+        "2": 0.00,
+        "3": 0.04,
+        "4": -0.01,
+        "5": 0.00,
+        "6": 0.02,
+        "7": 0.06,
+        "8": -0.03
+      },
+      "condition_adjustments": {
+        "良": {"front": 0.00, "stalker": 0.00, "midpack": 0.00, "closer": 0.00},
+        "稍重": {"front": 0.04, "stalker": 0.02, "midpack": -0.01, "closer": -0.04},
+        "重": {"front": 0.05, "stalker": 0.03, "midpack": -0.02, "closer": -0.06},
+        "不良": {"front": 0.05, "stalker": 0.03, "midpack": -0.03, "closer": -0.07}
+      },
+      "source_ids": ["jra_hakodate_course", "keibalab_hakodate_d1700", "navi_hakodate_d1700"]
+    }
+  ]
+}
