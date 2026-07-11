@@ -26,7 +26,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Feature leakage check
-        run: python scripts/check_feature_leakage.py data/processed/race_last5.csv
+        run: python scripts/check_feature_leakage.py
 
       - name: Unit tests
-        run: python -m unittest discover -s tests -v
+        run: python -m pytest -q

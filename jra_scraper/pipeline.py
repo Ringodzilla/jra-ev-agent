@@ -418,7 +418,7 @@ class JRAPipeline:
             key = (
                 str(row.get("horse_id", "")).strip(),
                 str(row.get("horse_name", "")).strip(),
-                str(index),
+                str(row.get("_missing_slot") or index).strip(),
             )
             if key in seen:
                 continue

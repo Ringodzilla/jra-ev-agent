@@ -68,7 +68,8 @@ JRAのレースデータを取得し、**EVモデリングに直接使える整�
 * **Verified note artifact output**
 
   * note本文は `report/note.md`、提出用Markdown artifact は `report/note_artifact.md` に同期出力
-  * レース別の再現用artifactは `report/races/<race_id>/` に保存し、別レース実行による上書きを避ける
+  * レース別の再現用artifactは `report/races/<race_id>/` にローカル生成し、別レース実行による上書きを避ける
+  * `report/races/` と `report/win5/` は生成物としてGit管理対象外
   * `publish_payload.json` には `artifact_markdown_path`、`artifact_exists`、`artifact_size_bytes`、`artifact_synced` を保存
   * publish前検証では本文Markdownとartifact Markdownの不一致・空ファイル・未生成をエラーとして扱う
 * **Reviewer-first ticket safety**
@@ -187,7 +188,8 @@ keep の場合は `report/baseline_eval.json` を更新し、revert の場合は
 ### Manual history fallback
 
 出馬表と馬詳細ページを統合しても過去5走が揃わない場合、パイプラインは
-`report/missing_history_requests.json` に要調査リストを出力します。処理は停止せず、
+`report/missing_history_requests.json` に要調査リストを、`report/manual_history_template.csv`
+に補足用テンプレートを出力します。処理は停止せず、
 欠損特徴量には中立値 `0.5` を使用します。
 
 手動で確認できた過去走は `data/manual/horse_history_overrides.csv` に追加してください。
@@ -267,7 +269,7 @@ r1,三連単,1-2-3,,8200
 ## Testing
 
 ```bash
-python -m unittest discover -s tests -v
+python -m pytest -q
 ```
 
 ## Review and CI gates

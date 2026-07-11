@@ -417,6 +417,39 @@ class TestPipelineEntrypoints(unittest.TestCase):
         self.assertEqual(1, len(rows))
         self.assertEqual("h1", rows[0]["horse_id"])
         self.assertIn("last_3f", rows[0])
+        self.assertNotIn("_missing_slot", rows[0])
+
+    def test_write_manual_history_template_dedupes_same_missing_slot(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            config = ScrapeConfig(
+                output_csv=root / "race_last5.csv",
+                entries_csv=root / "entries.csv",
+                odds_snapshots_csv=root / "odds.csv",
+                combo_odds_csv=root / "combo.csv",
+                raw_dir=root / "raw",
+                state_path=root / "state.json",
+                quality_report_path=root / "quality.json",
+                missing_history_requests_path=root / "missing.json",
+                manual_history_template_csv=root / "manual_template.csv",
+                manual_history_csv=root / "manual.csv",
+                stages_dir=root / "stages",
+            )
+            pipeline = JRAPipeline(config)
+
+            pipeline._write_manual_history_template(
+                [
+                    {"horse_id": "h1", "horse_name": "A", "_missing_slot": "1"},
+                    {"horse_id": "h1", "horse_name": "A", "_missing_slot": "2"},
+                    {"horse_id": "h1", "horse_name": "A", "_missing_slot": "1"},
+                ]
+            )
+            with config.manual_history_template_csv.open(encoding="utf-8") as file_obj:
+                rows = list(csv.DictReader(file_obj))
+            pipeline.close()
+
+        self.assertEqual(2, len(rows))
+        self.assertEqual(["h1", "h1"], [row["horse_id"] for row in rows])
 
     def test_race_artifact_id_prefers_stable_race_metadata(self):
         artifact_id = _race_artifact_id(

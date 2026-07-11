@@ -126,11 +126,12 @@ def missing_history_request(
 
 def manual_template_rows(horse, missing_count: int) -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
-    for _ in range(max(0, missing_count)):
+    for slot in range(1, max(0, missing_count) + 1):
         rows.append(
             {
                 "horse_id": horse.horse_id,
                 "horse_name": horse.horse_name,
+                "_missing_slot": str(slot),
                 "date": "",
                 "race_name": "",
                 "course": "",

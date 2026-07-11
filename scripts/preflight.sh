@@ -13,6 +13,15 @@ if [[ -z "$PYTHON_BIN" ]]; then
   fi
 fi
 
+if ! "$PYTHON_BIN" -m pytest --version >/dev/null 2>&1; then
+  if [[ "$PYTHON_BIN" != "python3" ]] && python3 -m pytest --version >/dev/null 2>&1; then
+    PYTHON_BIN="python3"
+  else
+    echo "pytest is required. Install dependencies with: $PYTHON_BIN -m pip install -r requirements.txt" >&2
+    exit 1
+  fi
+fi
+
 echo "== Review Gate =="
 echo "branch: $(git branch --show-current)"
 echo "head: $(git rev-parse --short HEAD)"
@@ -30,18 +39,12 @@ echo "== Staged Diff Summary =="
 git diff --cached --stat
 echo
 
-if [[ -f "data/processed/race_last5.csv" ]]; then
-  echo "== Feature Leakage Check =="
-  "$PYTHON_BIN" scripts/check_feature_leakage.py data/processed/race_last5.csv
-  echo
-else
-  echo "== Feature Leakage Check =="
-  echo "skipped: data/processed/race_last5.csv not found"
-  echo
-fi
+echo "== Feature Leakage Check =="
+"$PYTHON_BIN" scripts/check_feature_leakage.py
+echo
 
 echo "== Unit Tests =="
-"$PYTHON_BIN" -m unittest discover -s tests -v
+"$PYTHON_BIN" -m pytest -q
 echo
 
 echo "preflight: OK"
