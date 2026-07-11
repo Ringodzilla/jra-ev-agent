@@ -1,3 +1,4 @@
+import csv
 import json
 import os
 import tempfile
@@ -16,6 +17,7 @@ try:
         _missing_history_request,
         _raw_file_captured_at,
     )
+    from jra_scraper.data_repair import MissingHistoryRepairAction
     from jra_scraper.models import ParserIssue
     HAS_RUN_PIPELINE = True
 except ModuleNotFoundError:
@@ -364,6 +366,57 @@ class TestPipelineEntrypoints(unittest.TestCase):
 
         self.assertEqual(1, request["missing_count"])
         self.assertEqual(0.5, request["fallback_score"])
+
+    def test_missing_history_repair_action_prepares_manual_template(self):
+        horse = SimpleNamespace(
+            race_id="r1", horse_id="h1", horse_name="A", horse_url="https://example.test/h1"
+        )
+        action = MissingHistoryRepairAction(
+            manual_history_csv=Path("manual.csv"),
+            manual_template_csv=Path("manual_template.csv"),
+        )
+
+        result = action.build_result(
+            horse,
+            rows=[{"date": "2026-01-01"}, {"date": "2025-12-01"}, {"date": "2025-11-01"}],
+            reason="history_sources_exhausted",
+            source_counts={"embedded": 1, "detail": 2, "manual": 0},
+        )
+
+        self.assertTrue(result.requires_manual_input)
+        self.assertEqual("manual_required", result.repair_actions[0]["status"])
+        self.assertEqual(2, result.manual_requests[0]["missing_count"])
+        self.assertEqual(2, len(result.manual_template_rows))
+        self.assertEqual("h1", result.manual_template_rows[0]["horse_id"])
+
+    def test_write_manual_history_template_outputs_fillable_csv(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            config = ScrapeConfig(
+                output_csv=root / "race_last5.csv",
+                entries_csv=root / "entries.csv",
+                odds_snapshots_csv=root / "odds.csv",
+                combo_odds_csv=root / "combo.csv",
+                raw_dir=root / "raw",
+                state_path=root / "state.json",
+                quality_report_path=root / "quality.json",
+                missing_history_requests_path=root / "missing.json",
+                manual_history_template_csv=root / "manual_template.csv",
+                manual_history_csv=root / "manual.csv",
+                stages_dir=root / "stages",
+            )
+            pipeline = JRAPipeline(config)
+
+            pipeline._write_manual_history_template(
+                [{"horse_id": "h1", "horse_name": "A", "date": ""}]
+            )
+            with config.manual_history_template_csv.open(encoding="utf-8") as file_obj:
+                rows = list(csv.DictReader(file_obj))
+            pipeline.close()
+
+        self.assertEqual(1, len(rows))
+        self.assertEqual("h1", rows[0]["horse_id"])
+        self.assertIn("last_3f", rows[0])
 
     def test_race_artifact_id_prefers_stable_race_metadata(self):
         artifact_id = _race_artifact_id(

@@ -9,6 +9,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from .config import ScrapeConfig
+from .data_repair import MANUAL_HISTORY_COLUMNS, MissingHistoryRepairAction, missing_history_request
 from .models import ParserIssue, RaceLink
 from .parser import JRAParser
 from .scraper import JRAScraper, safe_filename
@@ -79,7 +80,13 @@ class JRAPipeline:
         processed_this_run: list[str] = []
         issues: list[ParserIssue] = []
         missing_history_requests: list[dict[str, object]] = []
+        missing_history_template_rows: list[dict[str, str]] = []
+        repair_actions: list[dict[str, object]] = []
         manual_history_rows = self._read_existing_rows(self.config.manual_history_csv)
+        history_repair = MissingHistoryRepairAction(
+            self.config.manual_history_csv,
+            self.config.manual_history_template_csv,
+        )
 
         races = self._resolve_races(
             race_specs=race_specs,
@@ -92,7 +99,8 @@ class JRAPipeline:
             self._write_csv(existing_rows, self.config.output_csv, OUTPUT_COLUMNS)
             self._write_csv(build_entry_rows(existing_rows), self.config.entries_csv, ENTRY_COLUMNS)
             self._save_state(processed_races, failures, 0, 0)
-            self._write_quality_report(issues, build_entry_rows(existing_rows), existing_rows)
+            self._write_quality_report(issues, build_entry_rows(existing_rows), existing_rows, [])
+            self._write_manual_history_template([])
             return existing_rows
 
         for race in races:
@@ -172,29 +180,23 @@ class JRAPipeline:
                         manual_rows,
                         target_race_date=horse.target_race_date,
                     )
+                    repair_result = history_repair.build_result(
+                        horse,
+                        rows=rows,
+                        reason="horse_detail_html_unavailable",
+                        source_counts={
+                            "embedded": len(embedded_rows),
+                            "manual": len(manual_rows),
+                            "detail": 0,
+                        },
+                    )
+                    rows = repair_result.rows
+                    repair_actions.extend(repair_result.repair_actions)
+                    missing_history_requests.extend(repair_result.manual_requests)
+                    missing_history_template_rows.extend(repair_result.manual_template_rows)
                     if rows:
                         race_rows.extend(rows)
-                        if len(rows) < 5:
-                            missing_history_requests.append(
-                                _missing_history_request(
-                                    horse,
-                                    history_count=len(rows),
-                                    manual_history_csv=self.config.manual_history_csv,
-                                )
-                            )
-                            issues.append(
-                                ParserIssue(
-                                    stage="pipeline.history",
-                                    severity="medium",
-                                    code="history_incomplete",
-                                    message="Embedded history had fewer than five runs and horse detail was unavailable.",
-                                    context={
-                                        "race_id": horse.race_id,
-                                        "horse_name": horse.horse_name,
-                                        "history_count": str(len(rows)),
-                                    },
-                                )
-                            )
+                        issues.extend(repair_result.issues)
                     else:
                         race_failed = True
                     continue
@@ -217,29 +219,24 @@ class JRAPipeline:
                     target_race_date=horse.target_race_date,
                 )
                 issues.extend(_issues_for_selected_history(detail_issues, rows))
+                repair_result = history_repair.build_result(
+                    horse,
+                    rows=rows,
+                    reason="history_sources_exhausted",
+                    source_counts={
+                        "embedded": len(embedded_rows),
+                        "manual": len(manual_rows),
+                        "detail": len(detail_rows),
+                    },
+                )
+                rows = repair_result.rows
+                repair_actions.extend(repair_result.repair_actions)
+                missing_history_requests.extend(repair_result.manual_requests)
+                missing_history_template_rows.extend(repair_result.manual_template_rows)
                 if not rows:
                     race_failed = True
                 elif len(rows) < 5:
-                    missing_history_requests.append(
-                        _missing_history_request(
-                            horse,
-                            history_count=len(rows),
-                            manual_history_csv=self.config.manual_history_csv,
-                        )
-                    )
-                    issues.append(
-                        ParserIssue(
-                            stage="pipeline.history",
-                            severity="medium",
-                            code="history_incomplete",
-                            message="Fewer than five history rows were available after merging sources.",
-                            context={
-                                "race_id": horse.race_id,
-                                "horse_name": horse.horse_name,
-                                "history_count": str(len(rows)),
-                            },
-                        )
-                    )
+                    issues.extend(repair_result.issues)
                 race_rows.extend(rows)
 
             all_new_rows.extend(race_rows)
@@ -254,8 +251,9 @@ class JRAPipeline:
         append_live_odds_snapshots(self.config.odds_snapshots_csv, entry_rows)
         append_live_combo_odds(self.config.combo_odds_csv, all_combo_odds_rows)
         self._save_state(processed_races, failures, len(processed_this_run), len(all_new_rows))
-        self._write_quality_report(issues, entry_rows, final_rows)
+        self._write_quality_report(issues, entry_rows, final_rows, repair_actions)
         self._write_missing_history_requests(missing_history_requests)
+        self._write_manual_history_template(missing_history_template_rows)
 
         logger.info(
             "Pipeline complete total_rows=%d entry_rows=%d new_rows=%d processed_races=%d",
@@ -361,6 +359,7 @@ class JRAPipeline:
         issues: list[ParserIssue],
         entry_rows: list[dict[str, str]],
         history_rows: list[dict[str, str]] | None = None,
+        repair_actions: list[dict[str, object]] | None = None,
     ) -> None:
         severity_counts = Counter(issue.severity for issue in issues)
         code_counts = Counter(issue.code for issue in issues)
@@ -392,6 +391,8 @@ class JRAPipeline:
             "entry_count": len(entry_rows),
             "live_snapshot_count": len(snapshot_rows),
             "live_combo_odds_count": len(combo_odds_rows),
+            "missing_data_repair_action_count": len(repair_actions or []),
+            "missing_data_repair_actions": repair_actions or [],
             "issues": [issue.to_dict() for issue in issues],
         }
         with self.config.quality_report_path.open("w", encoding="utf-8") as file_obj:
@@ -407,6 +408,23 @@ class JRAPipeline:
         }
         with self.config.missing_history_requests_path.open("w", encoding="utf-8") as file_obj:
             json.dump(payload, file_obj, ensure_ascii=False, indent=2)
+
+    def _write_manual_history_template(self, rows: list[dict[str, str]]) -> None:
+        if not rows and not self.config.manual_history_template_csv.exists():
+            return
+        deduped: list[dict[str, str]] = []
+        seen: set[tuple[str, str, str]] = set()
+        for index, row in enumerate(rows, start=1):
+            key = (
+                str(row.get("horse_id", "")).strip(),
+                str(row.get("horse_name", "")).strip(),
+                str(index),
+            )
+            if key in seen:
+                continue
+            seen.add(key)
+            deduped.append(row)
+        self._write_csv(deduped, self.config.manual_history_template_csv, MANUAL_HISTORY_COLUMNS)
 
     def _race_from_spec(self, spec: dict[str, object]) -> RaceLink:
         race_name = str(spec.get("race_name", "")).strip()
@@ -859,18 +877,13 @@ def _manual_rows_for_horse(horse, manual_rows: list[dict[str, str]]) -> list[dic
 
 
 def _missing_history_request(horse, *, history_count: int, manual_history_csv: Path) -> dict[str, object]:
-    return {
-        "race_id": horse.race_id,
-        "horse_id": horse.horse_id,
-        "horse_name": horse.horse_name,
-        "horse_url": horse.horse_url,
-        "history_count": history_count,
-        "missing_count": max(0, 5 - history_count),
-        "fallback_score": 0.5,
-        "fallback_reason": "user_unavailable_or_manual_data_not_stored",
-        "action": "Research missing prior runs and append them to the manual history CSV.",
-        "manual_history_csv": str(manual_history_csv),
-    }
+    return missing_history_request(
+        horse,
+        history_count=history_count,
+        manual_history_csv=manual_history_csv,
+        manual_template_csv=manual_history_csv.with_name("manual_history_template.csv"),
+        reason="user_unavailable_or_manual_data_not_stored",
+    )
 
 
 def _compact_date_key(value: str) -> str:

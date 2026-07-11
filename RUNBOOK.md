@@ -74,3 +74,11 @@ This runbook defines how to run one-patch-at-a-time strategy optimization safely
 ## Orchestrator
 - `python scripts/orchestrator.py --race "..."`
 - Output files are written to `experiments/orchestrator_latest/`.
+
+## Data Gap Repair
+- During data collection, history gaps are handled by `MissingHistoryRepairAction`.
+- Automatic repair merges embedded race-card history, horse-detail history, and `data/manual/horse_history_overrides.csv`.
+- If fewer than five prior runs remain, the pipeline continues with the neutral fallback policy and writes:
+  - `report/missing_history_requests.json`
+  - `report/manual_history_template.csv`
+- Fill the template rows, append completed rows to `data/manual/horse_history_overrides.csv`, then rerun with `--force-rebuild`.

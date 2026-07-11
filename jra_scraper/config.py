@@ -17,6 +17,7 @@ class ScrapeConfig:
     state_path: Path = Path("data/processed/pipeline_state.json")
     quality_report_path: Path = Path("report/data_quality.json")
     missing_history_requests_path: Path = Path("report/missing_history_requests.json")
+    manual_history_template_csv: Path = Path("report/manual_history_template.csv")
     manual_history_csv: Path = Path("data/manual/horse_history_overrides.csv")
     stages_dir: Path = Path("report/stages")
 
@@ -33,5 +34,6 @@ class ScrapeConfig:
         self.state_path.parent.mkdir(parents=True, exist_ok=True)
         self.quality_report_path.parent.mkdir(parents=True, exist_ok=True)
         self.missing_history_requests_path.parent.mkdir(parents=True, exist_ok=True)
+        self.manual_history_template_csv.parent.mkdir(parents=True, exist_ok=True)
         self.manual_history_csv.parent.mkdir(parents=True, exist_ok=True)
         self.stages_dir.mkdir(parents=True, exist_ok=True)
