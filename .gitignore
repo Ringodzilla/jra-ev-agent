@@ -3,10 +3,16 @@ __pycache__/
 *.pyc
 .DS_Store
 config/races_from_url.json
+config/race_*.json
+config/races_*.json
 data/raw/*.html
 data/processed/*.csv
 data/processed/*.json
 output/
 report/*.json
 report/*.md
+report/*.csv
 report/stages/
+report/races/
+report/win5/
+tmp/
