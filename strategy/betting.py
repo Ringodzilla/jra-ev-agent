@@ -1217,6 +1217,48 @@ def _build_marked_top5_coverage_candidates(
         return []
 
     tickets: list[dict[str, object]] = []
+    marked_core = marked[:4]
+    marked_core_index = {id(row): index for index, row in enumerate(marked_core)}
+    for left, right in combinations(marked_core, 2):
+        if max(marked_core_index[id(left)], marked_core_index[id(right)]) <= 2:
+            continue
+        ticket = _build_wide_ticket(
+            left,
+            right,
+            field_size=field_size,
+            bankroll_per_race=bankroll_per_race,
+            kelly_fraction=0.0,
+            min_wide_ev=min(min_coverage_ev, 0.62),
+            live_odds=live_odds,
+            ticket_role="coverage",
+            coverage_reason="marked_core_pair_real_odds",
+            require_live_odds=True,
+            allow_flat_stake=True,
+            min_pair_prob=0.038,
+        )
+        if ticket is not None:
+            tickets.append(ticket)
+
+    for combo in combinations(marked_core, 3):
+        ticket = _build_exotic_ticket(
+            list(combo),
+            bet_type="sanrenpuku",
+            payout_rate=0.775,
+            max_odds=220.0,
+            bankroll_per_race=bankroll_per_race,
+            kelly_fraction=0.0,
+            min_ev=min(min_coverage_ev, 0.62),
+            min_prob=0.0045,
+            max_fraction=0.06,
+            live_odds=live_odds,
+            ticket_role="coverage",
+            require_live_odds=True,
+            allow_flat_stake=True,
+            coverage_reason="marked_core_trio_real_odds",
+        )
+        if ticket is not None:
+            tickets.append(ticket)
+
     for left, right in combinations(marked, 2):
         ticket = _build_wide_ticket(
             left,
@@ -1786,6 +1828,8 @@ def _dedupe_ticket_combos(tickets: list[dict[str, object]]) -> list[dict[str, ob
 
 def _coverage_priority(ticket: dict[str, object]) -> int:
     reason = str(ticket.get("coverage_reason", ""))
+    if reason in {"marked_core_pair_real_odds", "marked_core_trio_real_odds"}:
+        return 4
     if reason in {
         "top_model_pair_real_odds",
         "top_model_combo_real_odds",
@@ -1846,6 +1890,8 @@ def _select_optimized_tickets(
         for ticket in coverage_ranked
         if str(ticket.get("coverage_reason", ""))
         in {
+            "marked_core_pair_real_odds",
+            "marked_core_trio_real_odds",
             "top_model_pair_real_odds",
             "marked_top5_pair_real_odds",
             "marked_top5_trio_real_odds",
@@ -1923,6 +1969,8 @@ def _is_coverage_ticket(ticket: dict[str, object]) -> bool:
 
 def _is_model_pair_coverage_ticket(ticket: dict[str, object]) -> bool:
     return str(ticket.get("coverage_reason", "")) in {
+        "marked_core_pair_real_odds",
+        "marked_core_trio_real_odds",
         "top_model_pair_real_odds",
         "marked_top5_pair_real_odds",
         "marked_top5_trio_real_odds",
@@ -1941,6 +1989,8 @@ def _can_add_coverage_ticket(
     if _portfolio_ev(portfolio) < min_portfolio_ev:
         return False
     if str(ticket.get("coverage_reason", "")) in {
+        "marked_core_pair_real_odds",
+        "marked_core_trio_real_odds",
         "top_model_pair_real_odds",
         "marked_top5_pair_real_odds",
         "marked_top5_trio_real_odds",

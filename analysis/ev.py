@@ -152,7 +152,14 @@ def simulate_race_scenarios(feature_rows: list[dict[str, object]]) -> list[dict[
                 front_competitor_count=front_competitor_count,
             )
             learned_pace_adjustment = _to_float(learned_pace.get("course_pace_adjustment"), 0.0)
-            pace_multiplier = _clamp(1.0 + learned_pace_adjustment, 0.70, 1.18)
+            short_sprint_adjustment = _short_sprint_front_density_adjustment(
+                row,
+                pace_mix_high=high,
+                front_density=front_density,
+                front_competitor_count=front_competitor_count,
+            )
+            combined_pace_adjustment = learned_pace_adjustment + short_sprint_adjustment
+            pace_multiplier = _clamp(1.0 + combined_pace_adjustment, 0.70, 1.18)
             if pace_multiplier < 1.0:
                 slow_fit *= pace_multiplier
                 mid_fit *= _clamp(0.92 + (0.08 * pace_multiplier), 0.88, 1.0)
@@ -167,6 +174,8 @@ def simulate_race_scenarios(feature_rows: list[dict[str, object]]) -> list[dict[
             row["pace_slow"] = _fmt(slow_fit)
             row["pace_front_overuse_penalty"] = _fmt(pace_multiplier)
             row["course_pace_adjustment"] = _fmt(learned_pace_adjustment)
+            row["short_sprint_front_density_adjustment"] = _fmt(short_sprint_adjustment)
+            row["front_density"] = _fmt(front_density)
             row["course_pace_scope"] = str(learned_pace.get("course_pace_scope", ""))
             row["course_pace_style"] = str(learned_pace.get("course_pace_style", ""))
             row["course_pace_confidence"] = _fmt(_to_float(learned_pace.get("course_pace_confidence"), 0.0))
@@ -180,6 +189,36 @@ def simulate_race_scenarios(feature_rows: list[dict[str, object]]) -> list[dict[
             simulated.append(row)
 
     return simulated
+
+
+def _short_sprint_front_density_adjustment(
+    row: dict[str, object],
+    *,
+    pace_mix_high: float,
+    front_density: float,
+    front_competitor_count: int,
+) -> float:
+    surface = str(row.get("target_surface", "")).strip()
+    distance = _to_float(row.get("target_distance"), 0.0)
+    is_short_sprint = (surface == "芝" and distance <= 1200) or (surface == "ダ" and distance <= 1000)
+    if not is_short_sprint or front_competitor_count < 3 or pace_mix_high < 0.42:
+        return 0.0
+
+    front_rate = _to_float(row.get("front_rate"), 0.5)
+    closing_strength = _to_float(row.get("closing_strength"), 0.0)
+    density_pressure = _clamp((front_density - 0.48) * 0.80, 0.0, 0.06)
+    competitor_pressure = _clamp((front_competitor_count - 2) * 0.025, 0.0, 0.075)
+    pressure = density_pressure + competitor_pressure
+
+    if front_rate >= 0.78:
+        return -_clamp(0.07 + pressure - (0.03 * closing_strength), 0.06, 0.18)
+    if front_rate >= 0.62:
+        return -_clamp(0.035 + (0.60 * pressure) - (0.04 * closing_strength), 0.02, 0.12)
+    if front_rate >= 0.38:
+        return _clamp(0.015 + (0.25 * pressure), 0.0, 0.04)
+    if closing_strength >= 0.50:
+        return _clamp(0.015 + (0.20 * pressure), 0.0, 0.035)
+    return 0.0
 
 
 def compute_ev(

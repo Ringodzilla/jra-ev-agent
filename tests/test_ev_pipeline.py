@@ -641,6 +641,77 @@ class TestEVPipeline(unittest.TestCase):
         self.assertLess(float(simulated["stalker"]["pace_front_overuse_penalty"]), 1.0)
         self.assertEqual("1", simulated["closer"]["pace_front_overuse_penalty"])
 
+    def test_short_sprint_front_density_penalizes_crowded_speed(self):
+        rows = [
+            {
+                "race_id": "r_kokura_short",
+                "horse_id": "leader",
+                "target_track": "小倉",
+                "target_surface": "芝",
+                "target_distance": "1200",
+                "front_rate": 0.84,
+                "closing_strength": 0.22,
+                "ability_score": 0.5,
+                "course_score": 0.5,
+                "consistency": 0.5,
+            },
+            {
+                "race_id": "r_kokura_short",
+                "horse_id": "speed2",
+                "target_track": "小倉",
+                "target_surface": "芝",
+                "target_distance": "1200",
+                "front_rate": 0.80,
+                "closing_strength": 0.28,
+                "ability_score": 0.5,
+                "course_score": 0.5,
+                "consistency": 0.5,
+            },
+            {
+                "race_id": "r_kokura_short",
+                "horse_id": "speed3",
+                "target_track": "小倉",
+                "target_surface": "芝",
+                "target_distance": "1200",
+                "front_rate": 0.74,
+                "closing_strength": 0.30,
+                "ability_score": 0.5,
+                "course_score": 0.5,
+                "consistency": 0.5,
+            },
+            {
+                "race_id": "r_kokura_short",
+                "horse_id": "speed4",
+                "target_track": "小倉",
+                "target_surface": "芝",
+                "target_distance": "1200",
+                "front_rate": 0.70,
+                "closing_strength": 0.34,
+                "ability_score": 0.5,
+                "course_score": 0.5,
+                "consistency": 0.5,
+            },
+            {
+                "race_id": "r_kokura_short",
+                "horse_id": "stalker",
+                "target_track": "小倉",
+                "target_surface": "芝",
+                "target_distance": "1200",
+                "front_rate": 0.48,
+                "closing_strength": 0.52,
+                "ability_score": 0.5,
+                "course_score": 0.5,
+                "consistency": 0.5,
+            },
+        ]
+
+        simulated = {row["horse_id"]: row for row in simulate_race_scenarios(rows)}
+
+        self.assertLess(float(simulated["leader"]["short_sprint_front_density_adjustment"]), 0.0)
+        self.assertLess(float(simulated["leader"]["pace_front_overuse_penalty"]), 1.0)
+        self.assertGreater(float(simulated["stalker"]["short_sprint_front_density_adjustment"]), 0.0)
+        self.assertGreater(float(simulated["stalker"]["pace_front_overuse_penalty"]), 1.0)
+
     def test_frame_quality_penalizes_one_strong_one_weak_frame(self):
         adjustment = _frame_quality_adjustment(
             [{"win_prob": "0.20"}, {"win_prob": "0.02"}],
@@ -920,6 +991,52 @@ class TestEVPipeline(unittest.TestCase):
         self.assertTrue(trio_coverage)
         self.assertEqual("coverage", trio_coverage[0]["ticket_role"])
         self.assertEqual("jra_live", trio_coverage[0]["odds_source"])
+
+    def test_generate_tickets_promotes_marked_core_coverage_with_real_odds(self):
+        ev_rows = []
+        for horse_name, horse_number, win_prob, odds, market_prob in [
+            ("A", "1", 0.22, 3.4, 0.24),
+            ("B", "2", 0.18, 4.8, 0.19),
+            ("C", "3", 0.15, 7.5, 0.15),
+            ("D", "4", 0.11, 11.0, 0.11),
+            ("E", "5", 0.08, 18.0, 0.08),
+            ("F", "6", 0.06, 24.0, 0.06),
+        ]:
+            ev_rows.append(
+                {
+                    "race_id": "r_marked_core",
+                    "horse_id": f"h{horse_number}",
+                    "horse_name": horse_name,
+                    "frame_number": horse_number,
+                    "horse_number": horse_number,
+                    "win_prob": str(win_prob),
+                    "current_odds": str(odds),
+                    "predicted_odds": str(odds),
+                    "ev": str(win_prob * odds),
+                    "ev_current": str(win_prob * odds),
+                    "ev_predicted": str(win_prob * odds),
+                    "market_prob": str(market_prob),
+                    "consistency": "0.70",
+                    "history_count": "5",
+                }
+            )
+
+        odds_rows = [
+            {"race_id": "r_marked_core", "bet_type": "wide", "combination": "1-4", "odds": "7.0", "captured_at": "2026-05-17T01:00:00+00:00"},
+            {"race_id": "r_marked_core", "bet_type": "sanrenpuku", "combination": "1-2-4", "odds": "34.0", "captured_at": "2026-05-17T01:00:00+00:00"},
+        ]
+
+        plan = generate_tickets(
+            ev_rows,
+            odds_rows=odds_rows,
+            prefer_wide=False,
+            max_tickets_per_race=5,
+        )
+        all_tickets = list(plan["tickets"]) + list(plan["races"][0]["candidates"])
+        reasons = {str(ticket.get("coverage_reason", "")) for ticket in all_tickets}
+
+        self.assertIn("marked_core_pair_real_odds", reasons)
+        self.assertIn("marked_core_trio_real_odds", reasons)
 
     def test_generate_tickets_suppresses_sub_five_percent_win_tickets(self):
         ev_rows = [
