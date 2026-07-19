@@ -8,6 +8,7 @@ from pathlib import Path
 
 from src.feature_engineering import build_feature_row, summarize_history_rows, summarize_live_odds_rows
 from src.model import ModelWeights, estimate_win_probs
+from src.track_bias import course_pace_adjustment
 
 
 @dataclass
@@ -140,16 +141,35 @@ def simulate_race_scenarios(feature_rows: list[dict[str, object]]) -> list[dict[
                 0.0,
                 1.5,
             )
-            front_overuse_penalty = _fukushima_turf1200_front_overuse_penalty(row, front_competitor_count)
-            if front_overuse_penalty < 1.0:
-                slow_fit *= front_overuse_penalty
-                mid_fit *= _clamp(0.92 + (0.08 * front_overuse_penalty), 0.88, 1.0)
+            learned_pace = course_pace_adjustment(
+                track=str(row.get("target_track", "")).strip(),
+                surface=str(row.get("target_surface", "")).strip(),
+                distance=_to_float(row.get("target_distance"), 0.0),
+                track_condition=str(row.get("target_track_condition", "")).strip(),
+                pace_mix_high=high,
+                front_rate=front_rate,
+                closing_strength=closing_strength,
+                front_competitor_count=front_competitor_count,
+            )
+            learned_pace_adjustment = _to_float(learned_pace.get("course_pace_adjustment"), 0.0)
+            pace_multiplier = _clamp(1.0 + learned_pace_adjustment, 0.70, 1.18)
+            if pace_multiplier < 1.0:
+                slow_fit *= pace_multiplier
+                mid_fit *= _clamp(0.92 + (0.08 * pace_multiplier), 0.88, 1.0)
+                high_fit *= _clamp(0.95 + (0.05 * pace_multiplier), 0.92, 1.0)
+            elif pace_multiplier > 1.0:
+                high_fit *= pace_multiplier
+                mid_fit *= _clamp(0.96 + (0.04 * pace_multiplier), 1.0, 1.05)
             blended_pace = (high * high_fit) + (mid * mid_fit) + (slow * slow_fit)
 
             row["pace_high"] = _fmt(high_fit)
             row["pace_mid"] = _fmt(mid_fit)
             row["pace_slow"] = _fmt(slow_fit)
-            row["pace_front_overuse_penalty"] = _fmt(front_overuse_penalty)
+            row["pace_front_overuse_penalty"] = _fmt(pace_multiplier)
+            row["course_pace_adjustment"] = _fmt(learned_pace_adjustment)
+            row["course_pace_scope"] = str(learned_pace.get("course_pace_scope", ""))
+            row["course_pace_style"] = str(learned_pace.get("course_pace_style", ""))
+            row["course_pace_confidence"] = _fmt(_to_float(learned_pace.get("course_pace_confidence"), 0.0))
             row["pace_mix_high"] = _fmt(high)
             row["pace_mix_mid"] = _fmt(mid)
             row["pace_mix_slow"] = _fmt(slow)
@@ -202,33 +222,6 @@ def _clamp(value: float, minimum: float, maximum: float) -> float:
 
 def _fmt(value: float) -> str:
     return f"{value:.6f}".rstrip("0").rstrip(".")
-
-
-def _fukushima_turf1200_front_overuse_penalty(row: dict[str, object], front_competitor_count: int) -> float:
-    target_track = str(row.get("target_track", "")).strip()
-    target_surface = str(row.get("target_surface", "")).strip()
-    target_distance = _to_float(row.get("target_distance"), 0.0)
-    if target_track != "福島" or target_surface != "芝" or abs(target_distance - 1200.0) > 1e-6:
-        return 1.0
-
-    front_rate = _to_float(row.get("front_rate"), 0.5)
-    closing_strength = _to_float(row.get("closing_strength"), 0.5)
-    race_number = _to_float(row.get("target_race_number"), 0.0)
-    upper_class_like = race_number >= 10
-
-    if front_rate < 0.66:
-        return 1.0
-
-    penalty = 1.0
-    if front_competitor_count >= 2:
-        penalty -= 0.08
-    if closing_strength < 0.42:
-        penalty -= 0.08
-    if upper_class_like:
-        penalty -= 0.06
-    if front_rate >= 0.78 and closing_strength < 0.50:
-        penalty -= 0.04
-    return _clamp(penalty, 0.74, 1.0)
 
 
 def _safe_int(value: str) -> int:

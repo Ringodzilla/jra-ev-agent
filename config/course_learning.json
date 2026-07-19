@@ -1,0 +1,126 @@
+{
+  "version": "2026-07-19",
+  "description": "Learned race-context pace adjustments. Profiles are scoped so evaluation can decide whether an effect is global by distance, track-specific, or track/surface/distance-specific.",
+  "pace_adjustments": [
+    {
+      "id": "learned_函館_芝1200_high_pace",
+      "scope": "track_surface_distance",
+      "track": "函館",
+      "surface": "芝",
+      "distance": 1200,
+      "distance_tolerance": 1,
+      "track_condition": "*",
+      "high_pace_min": 0.3,
+      "front_competitor_min": 2,
+      "style_bias": {
+        "front": 0.0231,
+        "stalker": -0.0154,
+        "midpack": -0.0077,
+        "closer": 0.0
+      },
+      "closing_deficiency_penalty": {
+        "threshold": 0.42,
+        "style_bias": {
+          "front": 0.0,
+          "stalker": 0.0,
+          "midpack": 0.0,
+          "closer": 0.0
+        }
+      },
+      "confidence": 0.25,
+      "sample_size": 1,
+      "enabled": true,
+      "notes": "Auto-learned from race review labels."
+    },
+    {
+      "id": "learned_芝1200_high_pace",
+      "scope": "surface_distance",
+      "track": "",
+      "surface": "芝",
+      "distance": 1200,
+      "distance_tolerance": 1,
+      "track_condition": "*",
+      "high_pace_min": 0.3,
+      "front_competitor_min": 2,
+      "style_bias": {
+        "front": 0.0231,
+        "stalker": -0.0154,
+        "midpack": -0.0077,
+        "closer": 0.0
+      },
+      "closing_deficiency_penalty": {
+        "threshold": 0.42,
+        "style_bias": {
+          "front": 0.0,
+          "stalker": 0.0,
+          "midpack": 0.0,
+          "closer": 0.0
+        }
+      },
+      "confidence": 0.25,
+      "sample_size": 1,
+      "enabled": true,
+      "notes": "Auto-learned from race review labels."
+    },
+    {
+      "id": "legacy_fukushima_turf1200_front_overuse_prior",
+      "scope": "track_surface_distance",
+      "track": "福島",
+      "surface": "芝",
+      "distance": 1200,
+      "distance_tolerance": 1,
+      "track_condition": "*",
+      "high_pace_min": 0.3,
+      "front_competitor_min": 2,
+      "style_bias": {
+        "front": -0.08,
+        "stalker": -0.03,
+        "midpack": 0.03,
+        "closer": 0.0
+      },
+      "closing_deficiency_penalty": {
+        "threshold": 0.42,
+        "style_bias": {
+          "front": -0.08,
+          "stalker": -0.03,
+          "midpack": 0.0,
+          "closer": 0.0
+        }
+      },
+      "confidence": 0.45,
+      "sample_size": 0,
+      "enabled": true,
+      "notes": "Migrated from the previous hard-coded Fukushima turf 1200m front-overuse penalty. Kept as a learnable scoped prior rather than a fixed rule."
+    },
+    {
+      "id": "turf1200_high_pace_front_pressure_prior",
+      "scope": "surface_distance",
+      "track": "",
+      "surface": "芝",
+      "distance": 1200,
+      "distance_tolerance": 1,
+      "track_condition": "*",
+      "high_pace_min": 0.3,
+      "front_competitor_min": 2,
+      "style_bias": {
+        "front": -0.04,
+        "stalker": -0.01,
+        "midpack": 0.04,
+        "closer": 0.0
+      },
+      "closing_deficiency_penalty": {
+        "threshold": 0.42,
+        "style_bias": {
+          "front": -0.04,
+          "stalker": -0.02,
+          "midpack": 0.0,
+          "closer": 0.0
+        }
+      },
+      "confidence": 0.25,
+      "sample_size": 1,
+      "enabled": true,
+      "notes": "Weak prior from 20260719函館11R: high pace lifted horses not committed to the first line and hurt some forward-heavy pairs."
+    }
+  ]
+}

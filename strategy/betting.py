@@ -124,6 +124,12 @@ def generate_tickets(
             min_coverage_ev=min_coverage_ev,
             live_odds=live_odds,
         )
+        win_ev_translation_candidates = _build_win_ev_translation_candidates(
+            enriched,
+            bankroll_per_race=bankroll_per_race,
+            min_coverage_ev=min_coverage_ev,
+            live_odds=live_odds,
+        )
         marked_coverage_candidates = _build_marked_top5_coverage_candidates(
             enriched,
             bankroll_per_race=bankroll_per_race,
@@ -154,6 +160,7 @@ def generate_tickets(
                 + exotic_candidates
                 + coverage_candidates
                 + consistency_candidates
+                + win_ev_translation_candidates
                 + marked_coverage_candidates
             ),
             prefer_wide=prefer_wide,
@@ -171,6 +178,7 @@ def generate_tickets(
             + _prioritize_exotic_types(exotic_candidates)[:max_exotic_tickets_per_race]
             + coverage_candidates
             + consistency_candidates
+            + win_ev_translation_candidates
             + marked_coverage_candidates
         )
         race_tickets = _select_optimized_tickets(
@@ -1098,6 +1106,92 @@ def _build_model_consistency_candidates(
     return _dedupe_ticket_combos(tickets)
 
 
+def _build_win_ev_translation_candidates(
+    rows: list[dict[str, object]],
+    *,
+    bankroll_per_race: int,
+    min_coverage_ev: float,
+    live_odds: dict[tuple[str, str], dict[str, object]],
+) -> list[dict[str, object]]:
+    """Translate high win-EV outsiders into place/wide coverage candidates."""
+    if len(rows) < 3:
+        return []
+
+    field_size = len(rows)
+    ranked_by_win_ev = sorted(
+        rows,
+        key=lambda row: (
+            _win_ev_translation_score(row),
+            _to_float(row.get("win_prob")),
+            _to_float(row.get("current_odds")),
+        ),
+        reverse=True,
+    )
+    value_rows = [
+        row
+        for row in ranked_by_win_ev[: max(3, min(6, len(ranked_by_win_ev)))]
+        if _is_win_ev_translation_row(row)
+    ][:2]
+    if not value_rows:
+        return []
+
+    anchors = sorted(
+        rows,
+        key=lambda row: (
+            _to_float(row.get("place_prob")),
+            _to_float(row.get("win_prob")),
+            _to_float(row.get("market_prob")),
+        ),
+        reverse=True,
+    )[:5]
+
+    tickets: list[dict[str, object]] = []
+    for value_row in value_rows:
+        place_ticket = _build_place_ticket(
+            value_row,
+            bankroll_per_race=bankroll_per_race,
+            kelly_fraction=0.0,
+            min_place_ev=min(min_coverage_ev, 0.74),
+            live_odds=live_odds,
+        )
+        if place_ticket is not None:
+            place_ticket = dict(place_ticket)
+            place_ticket["ticket_role"] = "coverage"
+            place_ticket["coverage_reason"] = "win_ev_longshot_place_translation"
+            place_ticket["stake"] = min(int(_to_float(place_ticket.get("stake"), 100.0)), 100)
+            tickets.append(place_ticket)
+
+        for anchor in anchors:
+            if str(anchor.get("horse_number", "")) == str(value_row.get("horse_number", "")):
+                continue
+            ticket = _build_wide_ticket(
+                value_row,
+                anchor,
+                field_size=field_size,
+                bankroll_per_race=bankroll_per_race,
+                kelly_fraction=0.0,
+                min_wide_ev=min(min_coverage_ev, 0.74),
+                live_odds=live_odds,
+                ticket_role="coverage",
+                coverage_reason="win_ev_longshot_wide_translation",
+                require_live_odds=True,
+                allow_flat_stake=True,
+                min_pair_prob=0.025,
+            )
+            if ticket is not None:
+                tickets.append(ticket)
+
+    tickets.sort(
+        key=lambda ticket: (
+            str(ticket.get("coverage_reason", "")).endswith("wide_translation"),
+            _to_float(ticket.get("ev_current") or ticket.get("ev")),
+            _to_float(ticket.get("hit_prob") or ticket.get("win_prob")),
+        ),
+        reverse=True,
+    )
+    return _dedupe_ticket_combos(tickets)
+
+
 def _build_marked_top5_coverage_candidates(
     rows: list[dict[str, object]],
     *,
@@ -1692,7 +1786,12 @@ def _dedupe_ticket_combos(tickets: list[dict[str, object]]) -> list[dict[str, ob
 
 def _coverage_priority(ticket: dict[str, object]) -> int:
     reason = str(ticket.get("coverage_reason", ""))
-    if reason in {"top_model_pair_real_odds", "top_model_combo_real_odds"}:
+    if reason in {
+        "top_model_pair_real_odds",
+        "top_model_combo_real_odds",
+        "win_ev_longshot_place_translation",
+        "win_ev_longshot_wide_translation",
+    }:
         return 3
     if reason in {"marked_top5_pair_real_odds", "marked_top5_trio_real_odds"}:
         return 2
@@ -1746,7 +1845,13 @@ def _select_optimized_tickets(
         ticket
         for ticket in coverage_ranked
         if str(ticket.get("coverage_reason", ""))
-        in {"top_model_pair_real_odds", "marked_top5_pair_real_odds", "marked_top5_trio_real_odds"}
+        in {
+            "top_model_pair_real_odds",
+            "marked_top5_pair_real_odds",
+            "marked_top5_trio_real_odds",
+            "win_ev_longshot_place_translation",
+            "win_ev_longshot_wide_translation",
+        }
     ]
     by_type: dict[str, list[dict[str, object]]] = defaultdict(list)
     for ticket in value_ranked:
@@ -1821,6 +1926,8 @@ def _is_model_pair_coverage_ticket(ticket: dict[str, object]) -> bool:
         "top_model_pair_real_odds",
         "marked_top5_pair_real_odds",
         "marked_top5_trio_real_odds",
+        "win_ev_longshot_place_translation",
+        "win_ev_longshot_wide_translation",
     }
 
 
@@ -1837,6 +1944,8 @@ def _can_add_coverage_ticket(
         "top_model_pair_real_odds",
         "marked_top5_pair_real_odds",
         "marked_top5_trio_real_odds",
+        "win_ev_longshot_place_translation",
+        "win_ev_longshot_wide_translation",
     }:
         return True
     return _portfolio_no_gami(portfolio)
@@ -1940,6 +2049,26 @@ def _win_candidate_ev(
 ) -> float:
     odds = _live_or_current_win_odds(row, live_odds)
     return _to_float(row.get("win_prob")) * odds if odds > 0 else _to_float(row.get("ev"))
+
+
+def _is_win_ev_translation_row(row: dict[str, object]) -> bool:
+    odds = _to_float(row.get("current_odds"))
+    win_prob = _to_float(row.get("win_prob"))
+    ev = _to_float(row.get("ev_current") or row.get("ev"))
+    if odds < 10.0 or win_prob < 0.035:
+        return False
+    if ev >= 0.98:
+        return True
+    band = str(row.get("probability_band") or _probability_band_from_row(row))
+    return ev >= 0.92 and band in {"outsider", "longshot"}
+
+
+def _win_ev_translation_score(row: dict[str, object]) -> float:
+    ev = _to_float(row.get("ev_current") or row.get("ev"))
+    win_prob = _to_float(row.get("win_prob"))
+    odds = _to_float(row.get("current_odds"))
+    place_edge = _to_float(row.get("place_edge"))
+    return ev + (0.30 * win_prob) + (0.04 * min(odds / 10.0, 4.0)) + max(0.0, place_edge)
 
 
 def _is_top_two_model_pair(ticket: dict[str, object], core: list[dict[str, object]]) -> bool:

@@ -342,6 +342,97 @@ class TestEVPipeline(unittest.TestCase):
         self.assertGreater(float(sanrenpuku["ev_current"]), 1.0)
         self.assertEqual(3, len(sanrentan["horse_numbers"]))
 
+    def test_generate_tickets_translates_high_win_ev_outsider_to_coverage_surface(self):
+        ev_rows = [
+            {
+                "race_id": "r_translate",
+                "horse_id": "h1",
+                "horse_name": "Favorite",
+                "frame_number": "1",
+                "horse_number": "1",
+                "win_prob": "0.22",
+                "current_odds": "3.2",
+                "predicted_odds": "3.3",
+                "ev": "0.704",
+                "ev_current": "0.704",
+                "ev_predicted": "0.726",
+                "market_prob": "0.25",
+                "consistency": "0.75",
+                "history_count": "4",
+            },
+            {
+                "race_id": "r_translate",
+                "horse_id": "h2",
+                "horse_name": "Anchor",
+                "frame_number": "2",
+                "horse_number": "2",
+                "win_prob": "0.16",
+                "current_odds": "5.0",
+                "predicted_odds": "5.2",
+                "ev": "0.80",
+                "ev_current": "0.80",
+                "ev_predicted": "0.832",
+                "market_prob": "0.16",
+                "consistency": "0.70",
+                "history_count": "4",
+            },
+            {
+                "race_id": "r_translate",
+                "horse_id": "h3",
+                "horse_name": "ValueOutsider",
+                "frame_number": "3",
+                "horse_number": "3",
+                "win_prob": "0.055",
+                "current_odds": "19.0",
+                "predicted_odds": "20.0",
+                "ev": "1.045",
+                "ev_current": "1.045",
+                "ev_predicted": "1.10",
+                "market_prob": "0.045",
+                "consistency": "0.55",
+                "history_count": "3",
+            },
+        ]
+        for idx in range(4, 10):
+            ev_rows.append(
+                {
+                    "race_id": "r_translate",
+                    "horse_id": f"h{idx}",
+                    "horse_name": f"Other{idx}",
+                    "frame_number": str(min(idx, 8)),
+                    "horse_number": str(idx),
+                    "win_prob": "0.04",
+                    "current_odds": "20.0",
+                    "predicted_odds": "20.0",
+                    "ev": "0.80",
+                    "ev_current": "0.80",
+                    "ev_predicted": "0.80",
+                    "market_prob": "0.04",
+                    "consistency": "0.40",
+                    "history_count": "3",
+                }
+            )
+        odds_rows = [
+            {"race_id": "r_translate", "bet_type": "place", "combination": "3", "odds_min": "4.3", "odds_max": "5.2", "captured_at": "15:00"},
+            {"race_id": "r_translate", "bet_type": "wide", "combination": "2-3", "odds_min": "9.6", "odds_max": "11.2", "captured_at": "15:00"},
+        ]
+
+        plan = generate_tickets(
+            ev_rows,
+            odds_rows=odds_rows,
+            min_coverage_ev=0.74,
+            max_tickets_per_race=5,
+        )
+        coverage_reasons = {
+            str(ticket.get("coverage_reason", ""))
+            for ticket in plan["races"][0]["candidates"]
+            if str(ticket.get("horse_number", "")) in {"3", "3-2"}
+            or "ValueOutsider" in str(ticket.get("horse_name", ""))
+        }
+
+        self.assertIn("win_ev_longshot_place_translation", coverage_reasons)
+        self.assertIn("win_ev_longshot_wide_translation", coverage_reasons)
+
     def test_high_pace_penalizes_front_pair_wide(self):
         adjustment = _wide_pace_adjustment(
             {"pace_mix_high": "0.55", "front_rate": "0.76", "closing_strength": "0.30"},

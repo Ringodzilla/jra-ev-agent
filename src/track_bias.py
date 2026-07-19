@@ -7,6 +7,7 @@ from typing import Any
 
 
 BIAS_CONFIG_PATH = Path(__file__).resolve().parents[1] / "config" / "track_biases.json"
+COURSE_LEARNING_CONFIG_PATH = Path(__file__).resolve().parents[1] / "config" / "course_learning.json"
 
 
 def track_bias_adjustment(
@@ -46,9 +47,92 @@ def track_bias_adjustment(
     }
 
 
+def course_pace_adjustment(
+    *,
+    track: str,
+    surface: str,
+    distance: float,
+    track_condition: str,
+    pace_mix_high: float,
+    front_rate: float,
+    closing_strength: float,
+    front_competitor_count: int,
+    learning_config: dict[str, Any] | None = None,
+) -> dict[str, object]:
+    """Return learned pace/style adjustment for the target race context.
+
+    The learning config can contain broad distance rules and narrow
+    track/surface/distance rules. Matching rules are blended by confidence,
+    sample size, and specificity so accumulated race evidence can decide
+    whether an effect is global or venue-specific.
+    """
+    style = _running_style(front_rate)
+    config = learning_config if learning_config is not None else _load_course_learning_config()
+    matches = [
+        (profile, _profile_specificity(profile))
+        for profile in list(config.get("pace_adjustments") or [])
+        if _pace_profile_matches(
+            profile,
+            track=track,
+            surface=surface,
+            distance=distance,
+            track_condition=track_condition,
+            pace_mix_high=pace_mix_high,
+            front_competitor_count=front_competitor_count,
+        )
+    ]
+    if not matches:
+        return {
+            "course_pace_adjustment": 0.0,
+            "course_pace_scope": "",
+            "course_pace_style": style,
+            "course_pace_confidence": 0.0,
+        }
+
+    weighted_adjustment = 0.0
+    weight_total = 0.0
+    scopes: list[str] = []
+    for profile, specificity in matches:
+        confidence = _clamp(_to_float(profile.get("confidence"), 0.0), 0.0, 1.0)
+        sample_size = max(0.0, _to_float(profile.get("sample_size"), 0.0))
+        evidence_weight = confidence * (1.0 + min(sample_size, 200.0) / 50.0) * (1.0 + specificity * 0.18)
+        if evidence_weight <= 0:
+            continue
+
+        style_bias = _to_float(dict(profile.get("style_bias") or {}).get(style), 0.0)
+        closing_penalty = _closing_deficiency_adjustment(profile, style=style, closing_strength=closing_strength)
+        adjustment = _clamp(style_bias + closing_penalty, -0.30, 0.18)
+        weighted_adjustment += adjustment * evidence_weight
+        weight_total += evidence_weight
+        scopes.append(str(profile.get("scope") or profile.get("id") or "learned").strip())
+
+    if weight_total <= 0:
+        return {
+            "course_pace_adjustment": 0.0,
+            "course_pace_scope": "",
+            "course_pace_style": style,
+            "course_pace_confidence": 0.0,
+        }
+
+    return {
+        "course_pace_adjustment": round(_clamp(weighted_adjustment / weight_total, -0.30, 0.18), 4),
+        "course_pace_scope": "+".join(dict.fromkeys(scope for scope in scopes if scope)),
+        "course_pace_style": style,
+        "course_pace_confidence": round(min(1.0, weight_total / 5.0), 4),
+    }
+
+
 @lru_cache(maxsize=1)
 def _load_config() -> dict[str, Any]:
     with BIAS_CONFIG_PATH.open("r", encoding="utf-8") as file_obj:
+        return json.load(file_obj)
+
+
+@lru_cache(maxsize=1)
+def _load_course_learning_config() -> dict[str, Any]:
+    if not COURSE_LEARNING_CONFIG_PATH.exists():
+        return {"version": "", "pace_adjustments": []}
+    with COURSE_LEARNING_CONFIG_PATH.open("r", encoding="utf-8") as file_obj:
         return json.load(file_obj)
 
 
@@ -74,6 +158,61 @@ def _running_style(front_rate: float) -> str:
     if front_rate >= 0.36:
         return "midpack"
     return "closer"
+
+
+def _pace_profile_matches(
+    profile: dict[str, Any],
+    *,
+    track: str,
+    surface: str,
+    distance: float,
+    track_condition: str,
+    pace_mix_high: float,
+    front_competitor_count: int,
+) -> bool:
+    if profile.get("enabled") is False:
+        return False
+    profile_track = str(profile.get("track", "")).strip()
+    if profile_track and profile_track != track:
+        return False
+    profile_surface = str(profile.get("surface", "")).strip()
+    if profile_surface and profile_surface != surface:
+        return False
+    profile_distance = _to_float(profile.get("distance"), 0.0)
+    if profile_distance > 0:
+        tolerance = max(0.0, _to_float(profile.get("distance_tolerance"), 50.0))
+        if abs(profile_distance - distance) > tolerance:
+            return False
+    condition = str(profile.get("track_condition", "*")).strip()
+    if condition not in {"", "*"} and condition != track_condition:
+        return False
+    if pace_mix_high < _to_float(profile.get("high_pace_min"), 0.0):
+        return False
+    if front_competitor_count < int(_to_float(profile.get("front_competitor_min"), 0.0)):
+        return False
+    return True
+
+
+def _profile_specificity(profile: dict[str, Any]) -> int:
+    score = 0
+    if str(profile.get("track", "")).strip():
+        score += 3
+    if str(profile.get("surface", "")).strip():
+        score += 2
+    if _to_float(profile.get("distance"), 0.0) > 0:
+        score += 2
+    if str(profile.get("track_condition", "*")).strip() not in {"", "*"}:
+        score += 1
+    return score
+
+
+def _closing_deficiency_adjustment(profile: dict[str, Any], *, style: str, closing_strength: float) -> float:
+    rule = profile.get("closing_deficiency_penalty")
+    if not isinstance(rule, dict):
+        return 0.0
+    if closing_strength >= _to_float(rule.get("threshold"), 0.0):
+        return 0.0
+    return _to_float(dict(rule.get("style_bias") or {}).get(style), 0.0)
 
 
 def _to_float(value: object, default: float = 0.0) -> float:
