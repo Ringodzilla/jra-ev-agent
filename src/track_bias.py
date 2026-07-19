@@ -18,17 +18,38 @@ def track_bias_adjustment(
     track_condition: str,
     frame_number: str,
     front_rate: float,
+    learning_config: dict[str, Any] | None = None,
 ) -> dict[str, object]:
+    style = _running_style(front_rate)
+    learned_frame = learned_frame_adjustment(
+        track=track,
+        surface=surface,
+        distance=distance,
+        frame_number=frame_number,
+        learning_config=learning_config,
+    )
+    learned_frame_bias = _to_float(learned_frame.get("learned_frame_bias"), 0.0)
+    learned_frame_scope = str(learned_frame.get("learned_frame_scope", ""))
     profile = _find_profile(track=track, surface=surface, distance=distance)
     if not profile:
+        if not learned_frame_scope and learned_frame_bias == 0.0:
+            return {
+                "track_bias_score": 0.0,
+                "track_bias_style": "neutral",
+                "track_bias_strength": 0.0,
+                "track_bias_frame": 0.0,
+                "track_bias_learned_frame": 0.0,
+                "track_bias_learned_scope": "",
+            }
         return {
-            "track_bias_score": 0.0,
-            "track_bias_style": "neutral",
-            "track_bias_strength": 0.0,
-            "track_bias_frame": 0.0,
+            "track_bias_score": round(learned_frame_bias, 4),
+            "track_bias_style": style,
+            "track_bias_strength": round(_to_float(learned_frame.get("learned_frame_confidence"), 0.0), 4),
+            "track_bias_frame": round(learned_frame_bias, 4),
+            "track_bias_learned_frame": round(learned_frame_bias, 4),
+            "track_bias_learned_scope": learned_frame_scope,
         }
 
-    style = _running_style(front_rate)
     style_bias = _to_float(profile.get("running_style_bias", {}).get(style), 0.0)
     condition_bias = _to_float(
         profile.get("condition_adjustments", {})
@@ -36,14 +57,66 @@ def track_bias_adjustment(
         .get(style),
         0.0,
     )
-    frame_bias = _to_float(profile.get("frame_bias", {}).get(str(frame_number).strip()), 0.0)
+    base_frame_bias = _to_float(profile.get("frame_bias", {}).get(str(frame_number).strip()), 0.0)
+    frame_bias = base_frame_bias + learned_frame_bias
     score = _clamp(style_bias + condition_bias + frame_bias, -0.6, 0.6)
 
     return {
         "track_bias_score": round(score, 4),
         "track_bias_style": style,
-        "track_bias_strength": round(_to_float(profile.get("bias_strength"), 0.0), 4),
+        "track_bias_strength": round(
+            _clamp(
+                _to_float(profile.get("bias_strength"), 0.0)
+                + _to_float(learned_frame.get("learned_frame_confidence"), 0.0) * 0.25,
+                0.0,
+                1.0,
+            ),
+            4,
+        ),
         "track_bias_frame": round(frame_bias, 4),
+        "track_bias_learned_frame": round(learned_frame_bias, 4),
+        "track_bias_learned_scope": str(learned_frame.get("learned_frame_scope", "")),
+    }
+
+
+def learned_frame_adjustment(
+    *,
+    track: str,
+    surface: str,
+    distance: float,
+    frame_number: str,
+    learning_config: dict[str, Any] | None = None,
+) -> dict[str, object]:
+    config = learning_config if learning_config is not None else _load_course_learning_config()
+    frame = str(frame_number).strip()
+    if not frame:
+        return {"learned_frame_bias": 0.0, "learned_frame_scope": "", "learned_frame_confidence": 0.0}
+
+    matches = [
+        (profile, _profile_specificity(profile))
+        for profile in list(config.get("frame_adjustments") or [])
+        if _frame_profile_matches(profile, track=track, surface=surface, distance=distance)
+    ]
+    weighted_bias = 0.0
+    weight_total = 0.0
+    scopes: list[str] = []
+    for profile, specificity in matches:
+        confidence = _clamp(_to_float(profile.get("confidence"), 0.0), 0.0, 1.0)
+        sample_size = max(0.0, _to_float(profile.get("sample_size"), 0.0))
+        evidence_weight = confidence * (1.0 + min(sample_size, 200.0) / 50.0) * (1.0 + specificity * 0.18)
+        if evidence_weight <= 0:
+            continue
+        frame_bias = _to_float(dict(profile.get("frame_bias") or {}).get(frame), 0.0)
+        weighted_bias += frame_bias * evidence_weight
+        weight_total += evidence_weight
+        scopes.append(str(profile.get("scope") or profile.get("id") or "learned").strip())
+
+    if weight_total <= 0:
+        return {"learned_frame_bias": 0.0, "learned_frame_scope": "", "learned_frame_confidence": 0.0}
+    return {
+        "learned_frame_bias": round(_clamp(weighted_bias / weight_total, -0.12, 0.12), 4),
+        "learned_frame_scope": "+".join(dict.fromkeys(scope for scope in scopes if scope)),
+        "learned_frame_confidence": round(min(1.0, weight_total / 5.0), 4),
     }
 
 
@@ -190,6 +263,29 @@ def _pace_profile_matches(
         return False
     if front_competitor_count < int(_to_float(profile.get("front_competitor_min"), 0.0)):
         return False
+    return True
+
+
+def _frame_profile_matches(
+    profile: dict[str, Any],
+    *,
+    track: str,
+    surface: str,
+    distance: float,
+) -> bool:
+    if profile.get("enabled") is False:
+        return False
+    profile_track = str(profile.get("track", "")).strip()
+    if profile_track and profile_track != track:
+        return False
+    profile_surface = str(profile.get("surface", "")).strip()
+    if profile_surface and profile_surface != surface:
+        return False
+    profile_distance = _to_float(profile.get("distance"), 0.0)
+    if profile_distance > 0:
+        tolerance = max(0.0, _to_float(profile.get("distance_tolerance"), 50.0))
+        if abs(profile_distance - distance) > tolerance:
+            return False
     return True
 
 

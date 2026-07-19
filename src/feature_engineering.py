@@ -296,6 +296,8 @@ def build_feature_row(
         "track_bias_style": str(track_bias.get("track_bias_style", "neutral")),
         "track_bias_strength": round(track_bias_strength, 4),
         "track_bias_frame": round(_to_float(track_bias.get("track_bias_frame"), 0.0), 4),
+        "track_bias_learned_frame": round(_to_float(track_bias.get("track_bias_learned_frame"), 0.0), 4),
+        "track_bias_learned_scope": str(track_bias.get("track_bias_learned_scope", "")),
         "ability_score": round(ability_score, 4),
         "course_score": round(course_score, 4),
         "track_condition_score": round(track_condition_match, 4),

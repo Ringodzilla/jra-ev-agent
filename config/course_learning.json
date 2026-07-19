@@ -1,6 +1,140 @@
 {
   "version": "2026-07-19",
-  "description": "Learned race-context pace adjustments. Profiles are scoped so evaluation can decide whether an effect is global by distance, track-specific, or track/surface/distance-specific.",
+  "description": "Learned race-context pace and frame adjustments. Profiles are scoped so evaluation can decide whether an effect is global by distance, track-specific, or track/surface/distance-specific.",
+  "frame_adjustments": [
+    {
+      "id": "observed_20260718_20260719_hakodate_turf1200_frame",
+      "scope": "track_surface_distance",
+      "track": "函館",
+      "surface": "芝",
+      "distance": 1200,
+      "distance_tolerance": 1,
+      "frame_bias": {
+        "1": 0.025,
+        "2": 0.005,
+        "3": 0.02,
+        "4": 0.02,
+        "5": 0.015,
+        "6": 0.0,
+        "7": -0.005,
+        "8": -0.005
+      },
+      "confidence": 0.22,
+      "sample_size": 7,
+      "enabled": true,
+      "notes": "Observed from 2026-07-18 and 2026-07-19 Hakodate turf 1200m results: 1 frame won 3 of 7, and 1/3/4/5 frames were frequent in the top three. Low confidence due to two-day sample."
+    },
+    {
+      "id": "observed_20260718_20260719_fukushima_turf1200_frame",
+      "scope": "track_surface_distance",
+      "track": "福島",
+      "surface": "芝",
+      "distance": 1200,
+      "distance_tolerance": 1,
+      "frame_bias": {
+        "1": -0.01,
+        "2": -0.005,
+        "3": 0.0,
+        "4": 0.01,
+        "5": 0.005,
+        "6": 0.025,
+        "7": 0.025,
+        "8": 0.015
+      },
+      "confidence": 0.2,
+      "sample_size": 5,
+      "enabled": true,
+      "notes": "Observed from 2026-07-18 and 2026-07-19 Fukushima turf 1200m results: winners came only from 6/7/8 frames, with 6 frame strongest in top three. Low confidence due to two-day sample."
+    },
+    {
+      "id": "observed_20260718_20260719_kokura_turf1200_frame",
+      "scope": "track_surface_distance",
+      "track": "小倉",
+      "surface": "芝",
+      "distance": 1200,
+      "distance_tolerance": 1,
+      "frame_bias": {
+        "1": 0.03,
+        "2": 0.0,
+        "3": 0.015,
+        "4": 0.0,
+        "5": 0.02,
+        "6": -0.005,
+        "7": 0.0,
+        "8": 0.005
+      },
+      "confidence": 0.22,
+      "sample_size": 5,
+      "enabled": true,
+      "notes": "Observed from 2026-07-18 and 2026-07-19 Kokura turf 1200m results: 1 frame won 3 of 5 and 1/3/5 frames were prominent in the top three. Low confidence due to two-day sample."
+    },
+    {
+      "id": "observed_20260718_20260719_kokura_turf1800_frame",
+      "scope": "track_surface_distance",
+      "track": "小倉",
+      "surface": "芝",
+      "distance": 1800,
+      "distance_tolerance": 1,
+      "frame_bias": {
+        "1": -0.01,
+        "2": -0.005,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.005,
+        "6": 0.005,
+        "7": 0.035,
+        "8": 0.03
+      },
+      "confidence": 0.24,
+      "sample_size": 5,
+      "enabled": true,
+      "notes": "Observed from 2026-07-18 and 2026-07-19 Kokura turf 1800m results: all five winners came from 7/8 frames. Low confidence due to two-day sample."
+    },
+    {
+      "id": "observed_20260718_20260719_fukushima_dirt1700_frame",
+      "scope": "track_surface_distance",
+      "track": "福島",
+      "surface": "ダート",
+      "distance": 1700,
+      "distance_tolerance": 1,
+      "frame_bias": {
+        "1": -0.01,
+        "2": 0.035,
+        "3": 0.0,
+        "4": 0.01,
+        "5": -0.005,
+        "6": 0.005,
+        "7": -0.005,
+        "8": 0.015
+      },
+      "confidence": 0.22,
+      "sample_size": 5,
+      "enabled": true,
+      "notes": "Observed from 2026-07-18 and 2026-07-19 Fukushima dirt 1700m results: 2 frame won 3 of 5, with 2/4/8 frames frequent in the top three. Low confidence due to two-day sample."
+    },
+    {
+      "id": "observed_20260718_20260719_hakodate_dirt1700_frame",
+      "scope": "track_surface_distance",
+      "track": "函館",
+      "surface": "ダート",
+      "distance": 1700,
+      "distance_tolerance": 1,
+      "frame_bias": {
+        "1": -0.01,
+        "2": 0.005,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.02,
+        "6": 0.015,
+        "7": 0.025,
+        "8": 0.005
+      },
+      "confidence": 0.18,
+      "sample_size": 6,
+      "enabled": true,
+      "notes": "Observed from 2026-07-18 and 2026-07-19 Hakodate dirt 1700m results: 5/6/7 frames were comparatively productive. Low confidence due to two-day sample."
+    }
+  ],
   "pace_adjustments": [
     {
       "id": "learned_函館_芝1200_high_pace",
@@ -33,6 +167,36 @@
       "notes": "Auto-learned from race review labels."
     },
     {
+      "id": "learned_福島_芝2000_high_pace",
+      "scope": "track_surface_distance",
+      "track": "福島",
+      "surface": "芝",
+      "distance": 2000,
+      "distance_tolerance": 1,
+      "track_condition": "*",
+      "high_pace_min": 0.3,
+      "front_competitor_min": 2,
+      "style_bias": {
+        "front": 0.0146,
+        "stalker": -0.0438,
+        "midpack": 0.0292,
+        "closer": 0.0
+      },
+      "closing_deficiency_penalty": {
+        "threshold": 0.42,
+        "style_bias": {
+          "front": 0.0,
+          "stalker": 0.0,
+          "midpack": 0.0,
+          "closer": 0.0
+        }
+      },
+      "confidence": 0.25,
+      "sample_size": 1,
+      "enabled": true,
+      "notes": "Auto-learned from race review labels."
+    },
+    {
       "id": "learned_芝1200_high_pace",
       "scope": "surface_distance",
       "track": "",
@@ -46,6 +210,36 @@
         "front": 0.0231,
         "stalker": -0.0154,
         "midpack": -0.0077,
+        "closer": 0.0
+      },
+      "closing_deficiency_penalty": {
+        "threshold": 0.42,
+        "style_bias": {
+          "front": 0.0,
+          "stalker": 0.0,
+          "midpack": 0.0,
+          "closer": 0.0
+        }
+      },
+      "confidence": 0.25,
+      "sample_size": 1,
+      "enabled": true,
+      "notes": "Auto-learned from race review labels."
+    },
+    {
+      "id": "learned_芝2000_high_pace",
+      "scope": "surface_distance",
+      "track": "",
+      "surface": "芝",
+      "distance": 2000,
+      "distance_tolerance": 1,
+      "track_condition": "*",
+      "high_pace_min": 0.3,
+      "front_competitor_min": 2,
+      "style_bias": {
+        "front": 0.0146,
+        "stalker": -0.0438,
+        "midpack": 0.0292,
         "closer": 0.0
       },
       "closing_deficiency_penalty": {

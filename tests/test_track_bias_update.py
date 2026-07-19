@@ -2,7 +2,7 @@ import importlib.util
 import json
 from pathlib import Path
 
-from src.track_bias import course_pace_adjustment
+from src.track_bias import course_pace_adjustment, track_bias_adjustment
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -95,6 +95,37 @@ def test_update_course_learning_adds_surface_and_track_scoped_profiles():
     assert "learned_芝1200_high_pace" in ids
     assert "learned_函館_芝1200_high_pace" in ids
     assert all(profile["sample_size"] == 1 for profile in updated["pace_adjustments"])
+
+
+def test_course_learning_frame_adjustment_applies_without_static_profile():
+    learned = {
+        "frame_adjustments": [
+            {
+                "id": "kokura_turf1200_inner",
+                "scope": "track_surface_distance",
+                "track": "小倉",
+                "surface": "芝",
+                "distance": 1200,
+                "distance_tolerance": 1,
+                "frame_bias": {"1": 0.03, "2": 0.0, "3": 0.01, "4": 0.0, "5": 0.0, "6": 0.0, "7": 0.0, "8": 0.0},
+                "confidence": 0.25,
+                "sample_size": 5,
+                "enabled": True,
+            }
+        ]
+    }
+    adjustment = track_bias_adjustment(
+        track="小倉",
+        surface="芝",
+        distance=1200,
+        track_condition="良",
+        frame_number="1",
+        front_rate=0.5,
+        learning_config=learned,
+    )
+
+    assert adjustment["track_bias_score"] > 0
+    assert adjustment["track_bias_learned_scope"] == "track_surface_distance"
 
 
 def test_merge_replaces_matching_profile_and_adds_source():
