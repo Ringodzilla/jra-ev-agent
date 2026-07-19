@@ -714,7 +714,7 @@ def _ticket_min_ev(ticket: dict[str, object], settings: WorkflowSettings) -> flo
         return settings.min_sanrenpuku_ev
     if bet_type == "sanrentan":
         return settings.min_sanrentan_ev
-    return settings.min_ev
+    return max(settings.min_ev, 1.05)
 
 
 def _longshot_odds_threshold(ticket: dict[str, object]) -> float:

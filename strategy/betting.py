@@ -25,6 +25,9 @@ from strategy.portfolio import (
 )
 
 
+MIN_WIN_EV = 1.05
+
+
 def generate_tickets(
     ev_rows: list[dict[str, object]],
     mode: str = "balanced",
@@ -61,6 +64,7 @@ def generate_tickets(
     aggregate_candidate_counts: dict[str, int] = defaultdict(int)
 
     per_race_limit = max(max_tickets_per_race, 5) if mode == "aggressive" else max_tickets_per_race
+    min_win_ev = max(min_ev, MIN_WIN_EV)
 
     for race_id in sorted(by_race.keys()):
         ranked = sorted(
@@ -74,7 +78,7 @@ def generate_tickets(
             row
             for row in enriched
             if _is_win_candidate_allowed(row)
-            and _win_candidate_ev(row, live_odds) >= min_ev
+            and _win_candidate_ev(row, live_odds) >= min_win_ev
             and _live_or_current_win_odds(row, live_odds) > 0
         ]
         place_candidates = _build_place_candidates(
@@ -192,11 +196,7 @@ def generate_tickets(
         )
         race_core = [_horse_summary(row) for row in place_ranked[:2] if _to_float(row.get("place_prob")) >= 0.22]
         race_partner = [_horse_summary(row) for row in place_ranked[2:4] if _to_float(row.get("place_prob")) >= 0.16]
-        race_long = [
-            _horse_summary(row)
-            for row in enriched
-            if _to_float(row.get("current_odds")) >= 10.0 and _to_float(row.get("ev")) >= max(min_ev, 1.08)
-        ][:2]
+        race_long = _build_race_longshots(enriched, min_win_ev=min_win_ev, limit=2)
 
         core.extend(race_core)
         partner.extend(race_partner)
@@ -273,7 +273,7 @@ def _build_win_ticket(
     live = _lookup_live_odds(live_odds or {}, "win", [str(row.get("horse_number", ""))])
     odds = _live_odds_value(live) or _to_float(row.get("current_odds"))
     ev = prob * odds if odds > 0 else _to_float(row.get("ev"))
-    if prob <= 0 or odds <= 1.0 or ev <= 1.0:
+    if prob <= 0 or odds <= 1.0 or ev < MIN_WIN_EV:
         return None
 
     full_kelly = ((odds * prob) - 1.0) / max(odds - 1.0, 1e-6)
@@ -1280,7 +1280,74 @@ def _horse_summary(row: dict[str, object]) -> dict[str, object]:
         "current_odds": str(row.get("current_odds", "")),
         "predicted_odds": str(row.get("predicted_odds", "")),
         "predicted_odds_source": str(row.get("predicted_odds_source", "")),
+        "model_score": str(row.get("model_score", "")),
+        "probability_band": str(row.get("probability_band") or _probability_band_from_row(row)),
+        "long_reason": str(row.get("long_reason", "")),
     }
+
+
+def _build_race_longshots(
+    rows: list[dict[str, object]],
+    *,
+    min_win_ev: float,
+    limit: int,
+) -> list[dict[str, object]]:
+    if not rows or limit <= 0:
+        return []
+
+    value_longs = [
+        _with_long_reason(row, "win_ev_threshold")
+        for row in rows
+        if _to_float(row.get("current_odds")) >= 10.0 and _to_float(row.get("ev")) >= max(min_win_ev, 1.08)
+    ]
+    model_longs = _model_score_longshots(rows)
+    merged = _dedupe_rows_by_horse_number(value_longs + model_longs)
+    merged.sort(
+        key=lambda row: (
+            str(row.get("long_reason")) == "top_model_score_longshot",
+            _to_float(row.get("ev")),
+            _to_float(row.get("model_score")),
+            _to_float(row.get("win_prob")),
+        ),
+        reverse=True,
+    )
+    return [_horse_summary(row) for row in merged[:limit]]
+
+
+def _model_score_longshots(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    ranked = sorted(rows, key=lambda row: _to_float(row.get("model_score")), reverse=True)
+    if not ranked:
+        return []
+
+    top_score = _to_float(ranked[0].get("model_score"))
+    top_window = ranked[: max(1, math.ceil(len(ranked) * 0.20))]
+    out: list[dict[str, object]] = []
+    for index, row in enumerate(top_window):
+        score = _to_float(row.get("model_score"))
+        odds = _to_float(row.get("current_odds"))
+        band = str(row.get("probability_band") or _probability_band_from_row(row))
+        if index > 0 and score < top_score * 0.92:
+            continue
+        if odds < 10.0 or band not in {"outsider", "longshot"}:
+            continue
+        if not _has_longshot_structural_support(row):
+            continue
+        out.append(_with_long_reason(row, "top_model_score_longshot"))
+    return out[:2]
+
+
+def _has_longshot_structural_support(row: dict[str, object]) -> bool:
+    return (
+        _to_float(row.get("weight_score")) >= 0.50
+        or _to_float(row.get("pace_score")) >= 0.38
+        or _to_float(row.get("course_score")) >= 0.38
+    )
+
+
+def _with_long_reason(row: dict[str, object], reason: str) -> dict[str, object]:
+    out = dict(row)
+    out["long_reason"] = reason
+    return out
 
 
 def _dedupe_rows_by_horse_number(rows: list[dict[str, object]]) -> list[dict[str, object]]:

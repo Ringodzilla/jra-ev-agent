@@ -896,6 +896,109 @@ class TestEVPipeline(unittest.TestCase):
             ]
         )
 
+    def test_generate_tickets_requires_one_point_zero_five_ev_for_win_candidates(self):
+        ev_rows = []
+        for horse_name, horse_number, win_prob, odds, model_score in [
+            ("ThinWin", "1", 0.20, 5.20, 0.40),
+            ("A", "2", 0.18, 4.00, 0.38),
+            ("B", "3", 0.16, 4.50, 0.36),
+            ("C", "4", 0.14, 6.00, 0.34),
+            ("D", "5", 0.12, 7.00, 0.32),
+            ("E", "6", 0.10, 8.00, 0.30),
+        ]:
+            ev = win_prob * odds
+            ev_rows.append(
+                {
+                    "race_id": "r_win_floor",
+                    "horse_id": f"h{horse_number}",
+                    "horse_name": horse_name,
+                    "frame_number": horse_number,
+                    "horse_number": horse_number,
+                    "win_prob": str(win_prob),
+                    "current_odds": str(odds),
+                    "predicted_odds": str(odds),
+                    "ev": str(ev),
+                    "ev_current": str(ev),
+                    "ev_predicted": str(ev),
+                    "market_prob": str(max(0.01, 1.0 / odds)),
+                    "model_score": str(model_score),
+                    "consistency": "0.65",
+                    "history_count": "5",
+                }
+            )
+
+        plan = generate_tickets(ev_rows, min_ev=1.03, prefer_wide=False)
+        all_tickets = list(plan["tickets"]) + list(plan["races"][0]["candidates"])
+
+        self.assertFalse(
+            [
+                ticket
+                for ticket in all_tickets
+                if ticket["bet_type"] == "win" and str(ticket["horse_number"]) == "1"
+            ]
+        )
+
+    def test_generate_tickets_keeps_top_model_score_longshot_as_long_candidate(self):
+        ev_rows = [
+            {
+                "race_id": "r_model_long",
+                "horse_id": "h1",
+                "horse_name": "ModelLong",
+                "frame_number": "1",
+                "horse_number": "1",
+                "win_prob": "0.025",
+                "current_odds": "34.0",
+                "predicted_odds": "34.0",
+                "ev": "0.85",
+                "ev_current": "0.85",
+                "ev_predicted": "0.85",
+                "market_prob": "0.029",
+                "model_score": "0.45",
+                "pace_score": "0.48",
+                "weight_score": "1.5",
+                "course_score": "0.37",
+                "probability_band": "longshot",
+                "consistency": "0.55",
+                "history_count": "5",
+            }
+        ]
+        for horse_name, horse_number, win_prob, odds, model_score in [
+            ("Favorite", "2", 0.22, 3.0, 0.36),
+            ("Contender", "3", 0.16, 5.0, 0.34),
+            ("Partner", "4", 0.13, 7.0, 0.32),
+            ("Mid", "5", 0.10, 12.0, 0.30),
+            ("Other", "6", 0.08, 18.0, 0.28),
+        ]:
+            ev = win_prob * odds
+            ev_rows.append(
+                {
+                    "race_id": "r_model_long",
+                    "horse_id": f"h{horse_number}",
+                    "horse_name": horse_name,
+                    "frame_number": horse_number,
+                    "horse_number": horse_number,
+                    "win_prob": str(win_prob),
+                    "current_odds": str(odds),
+                    "predicted_odds": str(odds),
+                    "ev": str(ev),
+                    "ev_current": str(ev),
+                    "ev_predicted": str(ev),
+                    "market_prob": str(max(0.01, 1.0 / odds)),
+                    "model_score": str(model_score),
+                    "pace_score": "0.30",
+                    "weight_score": "0.0",
+                    "course_score": "0.30",
+                    "consistency": "0.60",
+                    "history_count": "5",
+                }
+            )
+
+        plan = generate_tickets(ev_rows)
+        long_by_number = {str(row["horse_number"]): row for row in plan["long"]}
+
+        self.assertIn("1", long_by_number)
+        self.assertEqual("top_model_score_longshot", long_by_number["1"]["long_reason"])
+
     def test_generate_tickets_can_add_no_gami_coverage_when_portfolio_ev_survives(self):
         ev_rows = []
         for horse_name, horse_number, win_prob, odds, market_prob in [
