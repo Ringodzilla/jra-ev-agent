@@ -674,6 +674,126 @@ class TestEVPipeline(unittest.TestCase):
         self.assertEqual("22.5", by_key[("sanrenpuku", "1 - 2 - 3")]["trio_odds_est"])
         self.assertEqual("82", by_key[("sanrentan", "1 → 2 → 3")]["trifecta_odds_est"])
 
+    def test_generate_tickets_keeps_top_model_wide_coverage_with_real_odds(self):
+        ev_rows = []
+        for horse_name, horse_number, win_prob, odds, market_prob in [
+            ("A", "1", 0.24, 3.0, 0.30),
+            ("B", "2", 0.18, 4.2, 0.22),
+            ("C", "3", 0.14, 8.0, 0.12),
+            ("D", "4", 0.10, 12.0, 0.10),
+            ("E", "5", 0.08, 18.0, 0.09),
+            ("F", "6", 0.06, 24.0, 0.07),
+        ]:
+            ev_rows.append(
+                {
+                    "race_id": "r_model_pair",
+                    "horse_id": f"h{horse_number}",
+                    "horse_name": horse_name,
+                    "frame_number": horse_number,
+                    "horse_number": horse_number,
+                    "win_prob": str(win_prob),
+                    "current_odds": str(odds),
+                    "predicted_odds": str(odds),
+                    "ev": str(win_prob * odds),
+                    "ev_current": str(win_prob * odds),
+                    "ev_predicted": str(win_prob * odds),
+                    "market_prob": str(market_prob),
+                    "consistency": "0.70",
+                    "history_count": "5",
+                }
+            )
+
+        odds_rows = [
+            {"race_id": "r_model_pair", "bet_type": "wide", "combination": "1-2", "odds": "3.2", "captured_at": "2026-05-17T01:00:00+00:00"},
+            {"race_id": "r_model_pair", "bet_type": "wide", "combination": "1-3", "odds": "5.5", "captured_at": "2026-05-17T01:00:00+00:00"},
+            {"race_id": "r_model_pair", "bet_type": "wide", "combination": "2-3", "odds": "7.2", "captured_at": "2026-05-17T01:00:00+00:00"},
+        ]
+
+        plan = generate_tickets(
+            ev_rows,
+            odds_rows=odds_rows,
+            prefer_wide=False,
+            max_tickets_per_race=5,
+        )
+        all_tickets = list(plan["tickets"]) + list(plan["races"][0]["candidates"])
+        coverage = [
+            ticket
+            for ticket in all_tickets
+            if ticket["bet_type"] == "wide"
+            and ticket["horse_number"] == "1-2"
+            and ticket.get("coverage_reason") == "top_model_pair_real_odds"
+        ]
+
+        self.assertTrue(coverage)
+        self.assertEqual("coverage", coverage[0]["ticket_role"])
+        self.assertEqual("jra_live", coverage[0]["odds_source"])
+
+    def test_generate_tickets_suppresses_sub_five_percent_win_tickets(self):
+        ev_rows = [
+            {
+                "race_id": "r_low_win",
+                "horse_id": "h1",
+                "horse_name": "A",
+                "frame_number": "1",
+                "horse_number": "1",
+                "win_prob": "0.28",
+                "current_odds": "4.0",
+                "predicted_odds": "4.0",
+                "ev": "1.12",
+                "ev_current": "1.12",
+                "ev_predicted": "1.12",
+                "market_prob": "0.22",
+                "consistency": "0.70",
+                "history_count": "5",
+            },
+            {
+                "race_id": "r_low_win",
+                "horse_id": "h9",
+                "horse_name": "Long",
+                "frame_number": "8",
+                "horse_number": "9",
+                "win_prob": "0.04",
+                "current_odds": "45.0",
+                "predicted_odds": "45.0",
+                "ev": "1.8",
+                "ev_current": "1.8",
+                "ev_predicted": "1.8",
+                "market_prob": "0.02",
+                "consistency": "0.55",
+                "history_count": "5",
+            },
+        ]
+        for idx in range(2, 7):
+            ev_rows.append(
+                {
+                    "race_id": "r_low_win",
+                    "horse_id": f"h{idx}",
+                    "horse_name": f"H{idx}",
+                    "frame_number": str(idx),
+                    "horse_number": str(idx),
+                    "win_prob": "0.10",
+                    "current_odds": "9.0",
+                    "predicted_odds": "9.0",
+                    "ev": "0.9",
+                    "ev_current": "0.9",
+                    "ev_predicted": "0.9",
+                    "market_prob": "0.12",
+                    "consistency": "0.60",
+                    "history_count": "5",
+                }
+            )
+
+        plan = generate_tickets(ev_rows, prefer_wide=False)
+        all_tickets = list(plan["tickets"]) + list(plan["races"][0]["candidates"])
+
+        self.assertFalse(
+            [
+                ticket
+                for ticket in all_tickets
+                if ticket["bet_type"] == "win" and str(ticket["horse_number"]) == "9"
+            ]
+        )
+
     def test_generate_tickets_can_add_no_gami_coverage_when_portfolio_ev_survives(self):
         ev_rows = []
         for horse_name, horse_number, win_prob, odds, market_prob in [

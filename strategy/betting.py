@@ -73,7 +73,9 @@ def generate_tickets(
         win_candidates = [
             row
             for row in enriched
-            if _win_candidate_ev(row, live_odds) >= min_ev and _live_or_current_win_odds(row, live_odds) > 0
+            if _is_win_candidate_allowed(row)
+            and _win_candidate_ev(row, live_odds) >= min_ev
+            and _live_or_current_win_odds(row, live_odds) > 0
         ]
         place_candidates = _build_place_candidates(
             enriched,
@@ -112,6 +114,12 @@ def generate_tickets(
             min_coverage_ev=min_coverage_ev,
             live_odds=live_odds,
         )
+        consistency_candidates = _build_model_consistency_candidates(
+            enriched,
+            bankroll_per_race=bankroll_per_race,
+            min_coverage_ev=min_coverage_ev,
+            live_odds=live_odds,
+        )
 
         win_tickets = [
             ticket
@@ -135,6 +143,7 @@ def generate_tickets(
                 + wakuren_candidates
                 + exotic_candidates
                 + coverage_candidates
+                + consistency_candidates
             ),
             prefer_wide=prefer_wide,
         )
@@ -150,6 +159,7 @@ def generate_tickets(
             + wakuren_candidates
             + _prioritize_exotic_types(exotic_candidates)[:max_exotic_tickets_per_race]
             + coverage_candidates
+            + consistency_candidates
         )
         race_tickets = _select_optimized_tickets(
             selection_pool,
@@ -443,11 +453,18 @@ def _build_wide_ticket(
     kelly_fraction: float,
     min_wide_ev: float,
     live_odds: dict[tuple[str, str], dict[str, object]],
+    ticket_role: str = "value",
+    coverage_reason: str = "",
+    require_live_odds: bool = False,
+    allow_flat_stake: bool = False,
+    min_pair_prob: float = 0.10,
 ) -> dict[str, object] | None:
     pair_prob = _estimate_pair_hit_prob(left, right, field_size=field_size)
     market_pair_prob = _estimate_market_pair_prob(left, right, field_size=field_size)
     horse_numbers = [str(left.get("horse_number", "")), str(right.get("horse_number", ""))]
     live = _lookup_live_odds(live_odds, "wide", horse_numbers)
+    if require_live_odds and not live:
+        return None
     current_odds_est = _live_odds_value(live) or _estimate_market_pair_odds(market_pair_prob)
     predicted_odds_est = _estimate_predicted_pair_odds(left, right, current_odds_est=current_odds_est)
     pace_adjustment = _wide_pace_adjustment(left, right)
@@ -455,7 +472,7 @@ def _build_wide_ticket(
     ev_current = pair_prob * current_odds_est if current_odds_est > 0 else 0.0
     ev_predicted = pair_prob * predicted_odds_est if predicted_odds_est > 0 else 0.0
 
-    if pair_prob < 0.10 or current_odds_est <= 1.0 or ev_current < min_wide_ev:
+    if pair_prob < min_pair_prob or current_odds_est <= 1.0 or ev_current < min_wide_ev:
         return None
 
     stake = _kelly_stake(
@@ -467,7 +484,10 @@ def _build_wide_ticket(
         max_fraction=0.36,
     )
     if stake <= 0:
-        return None
+        if allow_flat_stake and current_odds_est > 1.0 and ev_current >= min_wide_ev:
+            stake = min(100, bankroll_per_race)
+        else:
+            return None
 
     horse_ids = [str(left.get("horse_id", "")), str(right.get("horse_id", ""))]
     horse_names = [str(left.get("horse_name", "")), str(right.get("horse_name", ""))]
@@ -498,6 +518,8 @@ def _build_wide_ticket(
         "ev_predicted": _fmt(ev_predicted),
         "predicted_odds_source": "jra_live" if live else "pair_estimated",
         "odds_source": "jra_live" if live else "estimated",
+        "ticket_role": ticket_role,
+        "coverage_reason": coverage_reason,
         "confidence": _fmt(confidence),
         "pace_adjustment": _fmt(pace_adjustment),
         "legs": [
@@ -1009,6 +1031,65 @@ def _build_coverage_candidates(
     return _dedupe_ticket_combos(tickets)
 
 
+def _build_model_consistency_candidates(
+    rows: list[dict[str, object]],
+    *,
+    bankroll_per_race: int,
+    min_coverage_ev: float,
+    live_odds: dict[tuple[str, str], dict[str, object]],
+) -> list[dict[str, object]]:
+    """Keep model-top pairs in the betting surface when real wide odds exist."""
+    if len(rows) < 3:
+        return []
+
+    field_size = len(rows)
+    core = sorted(
+        rows,
+        key=lambda row: (
+            _to_float(row.get("win_prob")),
+            _to_float(row.get("place_prob")),
+            _to_float(row.get("ev_predicted") or row.get("ev")),
+        ),
+        reverse=True,
+    )[:3]
+    if len(core) < 3:
+        return []
+
+    top2_sum = sum(_to_float(row.get("win_prob")) for row in core[:2])
+    top3_sum = sum(_to_float(row.get("win_prob")) for row in core)
+    if top2_sum < 0.28 and top3_sum < 0.38:
+        return []
+
+    tickets: list[dict[str, object]] = []
+    for left, right in combinations(core, 2):
+        ticket = _build_wide_ticket(
+            left,
+            right,
+            field_size=field_size,
+            bankroll_per_race=bankroll_per_race,
+            kelly_fraction=0.0,
+            min_wide_ev=min(min_coverage_ev, 0.55),
+            live_odds=live_odds,
+            ticket_role="coverage",
+            coverage_reason="top_model_pair_real_odds",
+            require_live_odds=True,
+            allow_flat_stake=True,
+            min_pair_prob=0.08,
+        )
+        if ticket is not None:
+            tickets.append(ticket)
+
+    tickets.sort(
+        key=lambda ticket: (
+            _is_top_two_model_pair(ticket, core),
+            _to_float(ticket.get("hit_prob")),
+            _to_float(ticket.get("ev_current") or ticket.get("ev")),
+        ),
+        reverse=True,
+    )
+    return _dedupe_ticket_combos(tickets)
+
+
 def _build_exotic_ticket(
     combo_rows: list[dict[str, object]],
     *,
@@ -1497,6 +1578,11 @@ def _select_optimized_tickets(
     ranked = _rank_ticket_pool(_dedupe_ticket_combos(tickets), prefer_wide=prefer_wide)
     value_ranked = [ticket for ticket in ranked if not _is_coverage_ticket(ticket)]
     coverage_ranked = [ticket for ticket in ranked if _is_coverage_ticket(ticket)]
+    priority_coverage = [
+        ticket
+        for ticket in coverage_ranked
+        if str(ticket.get("coverage_reason", "")) == "top_model_pair_real_odds"
+    ]
     by_type: dict[str, list[dict[str, object]]] = defaultdict(list)
     for ticket in value_ranked:
         by_type[str(ticket.get("bet_type", ""))].append(ticket)
@@ -1514,6 +1600,13 @@ def _select_optimized_tickets(
         if not by_type[bet_type]:
             continue
         _append_ticket_if_new(selected, selected_keys, by_type[bet_type][0], per_race_limit)
+
+    for ticket in priority_coverage:
+        if len(selected) >= per_race_limit:
+            break
+        if not _can_add_coverage_ticket(selected, ticket, min_portfolio_ev=min_portfolio_ev):
+            continue
+        _append_ticket_if_new(selected, selected_keys, ticket, per_race_limit)
 
     by_ev = sorted(
         value_ranked,
@@ -1558,6 +1651,10 @@ def _is_coverage_ticket(ticket: dict[str, object]) -> bool:
     return str(ticket.get("ticket_role", "")) == "coverage"
 
 
+def _is_model_pair_coverage_ticket(ticket: dict[str, object]) -> bool:
+    return str(ticket.get("coverage_reason", "")) == "top_model_pair_real_odds"
+
+
 def _can_add_coverage_ticket(
     selected: list[dict[str, object]],
     ticket: dict[str, object],
@@ -1567,6 +1664,8 @@ def _can_add_coverage_ticket(
     portfolio = selected + [ticket]
     if _portfolio_ev(portfolio) < min_portfolio_ev:
         return False
+    if str(ticket.get("coverage_reason", "")) == "top_model_pair_real_odds":
+        return True
     return _portfolio_no_gami(portfolio)
 
 
@@ -1577,7 +1676,7 @@ def _prune_gami_tickets(tickets: list[dict[str, object]]) -> list[dict[str, obje
         removable = [
             ticket
             for ticket in out
-            if _ticket_return_if_hit(ticket) < total_stake
+            if _ticket_return_if_hit(ticket) < total_stake and not _is_model_pair_coverage_ticket(ticket)
         ]
         if not removable:
             break
@@ -1657,12 +1756,23 @@ def _live_or_current_win_odds(
     return _live_odds_value(live) or _to_float(row.get("current_odds"))
 
 
+def _is_win_candidate_allowed(row: dict[str, object]) -> bool:
+    """Avoid staking win tickets on very thin model probabilities."""
+    return _to_float(row.get("win_prob")) >= 0.05
+
+
 def _win_candidate_ev(
     row: dict[str, object],
     live_odds: dict[tuple[str, str], dict[str, object]],
 ) -> float:
     odds = _live_or_current_win_odds(row, live_odds)
     return _to_float(row.get("win_prob")) * odds if odds > 0 else _to_float(row.get("ev"))
+
+
+def _is_top_two_model_pair(ticket: dict[str, object], core: list[dict[str, object]]) -> bool:
+    top_two = {str(row.get("horse_number", "")) for row in core[:2]}
+    ticket_numbers = {str(number) for number in list(ticket.get("horse_numbers") or [])}
+    return ticket_numbers == top_two
 
 
 def _frame_combo_hit_prob(
