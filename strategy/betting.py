@@ -120,6 +120,12 @@ def generate_tickets(
             min_coverage_ev=min_coverage_ev,
             live_odds=live_odds,
         )
+        marked_coverage_candidates = _build_marked_top5_coverage_candidates(
+            enriched,
+            bankroll_per_race=bankroll_per_race,
+            min_coverage_ev=min_coverage_ev,
+            live_odds=live_odds,
+        )
 
         win_tickets = [
             ticket
@@ -144,6 +150,7 @@ def generate_tickets(
                 + exotic_candidates
                 + coverage_candidates
                 + consistency_candidates
+                + marked_coverage_candidates
             ),
             prefer_wide=prefer_wide,
         )
@@ -160,6 +167,7 @@ def generate_tickets(
             + _prioritize_exotic_types(exotic_candidates)[:max_exotic_tickets_per_race]
             + coverage_candidates
             + consistency_candidates
+            + marked_coverage_candidates
         )
         race_tickets = _select_optimized_tickets(
             selection_pool,
@@ -1090,6 +1098,80 @@ def _build_model_consistency_candidates(
     return _dedupe_ticket_combos(tickets)
 
 
+def _build_marked_top5_coverage_candidates(
+    rows: list[dict[str, object]],
+    *,
+    bankroll_per_race: int,
+    min_coverage_ev: float,
+    live_odds: dict[tuple[str, str], dict[str, object]],
+) -> list[dict[str, object]]:
+    """Keep the model's marked top five in the real-odds betting surface."""
+    if len(rows) < 3:
+        return []
+
+    field_size = len(rows)
+    marked = sorted(
+        rows,
+        key=lambda row: (
+            _to_float(row.get("place_prob")),
+            _to_float(row.get("win_prob")),
+            _to_float(row.get("ev_predicted") or row.get("ev")),
+        ),
+        reverse=True,
+    )[:5]
+    if len(marked) < 3:
+        return []
+
+    tickets: list[dict[str, object]] = []
+    for left, right in combinations(marked, 2):
+        ticket = _build_wide_ticket(
+            left,
+            right,
+            field_size=field_size,
+            bankroll_per_race=bankroll_per_race,
+            kelly_fraction=0.0,
+            min_wide_ev=min(min_coverage_ev, 0.70),
+            live_odds=live_odds,
+            ticket_role="coverage",
+            coverage_reason="marked_top5_pair_real_odds",
+            require_live_odds=True,
+            allow_flat_stake=True,
+            min_pair_prob=0.045,
+        )
+        if ticket is not None:
+            tickets.append(ticket)
+
+    for combo in combinations(marked, 3):
+        ticket = _build_exotic_ticket(
+            list(combo),
+            bet_type="sanrenpuku",
+            payout_rate=0.775,
+            max_odds=240.0,
+            bankroll_per_race=bankroll_per_race,
+            kelly_fraction=0.0,
+            min_ev=min(min_coverage_ev, 0.70),
+            min_prob=0.006,
+            max_fraction=0.08,
+            live_odds=live_odds,
+            ticket_role="coverage",
+            require_live_odds=True,
+            allow_flat_stake=True,
+            coverage_reason="marked_top5_trio_real_odds",
+        )
+        if ticket is not None:
+            tickets.append(ticket)
+
+    tickets.sort(
+        key=lambda ticket: (
+            str(ticket.get("bet_type", "")) == "sanrenpuku",
+            _to_float(ticket.get("ev_current") or ticket.get("ev")),
+            _to_float(ticket.get("hit_prob") or ticket.get("win_prob")),
+        ),
+        reverse=True,
+    )
+    return _dedupe_ticket_combos(tickets)
+
+
 def _build_exotic_ticket(
     combo_rows: list[dict[str, object]],
     *,
@@ -1105,6 +1187,7 @@ def _build_exotic_ticket(
     ticket_role: str = "value",
     require_live_odds: bool = False,
     allow_flat_stake: bool = False,
+    coverage_reason: str = "",
 ) -> dict[str, object] | None:
     hit_prob = _combo_hit_prob(combo_rows, key="win_prob", bet_type=bet_type)
     market_prob = _combo_hit_prob(combo_rows, key="market_prob", bet_type=bet_type)
@@ -1169,7 +1252,7 @@ def _build_exotic_ticket(
         "predicted_odds_source": "jra_live" if live else f"{bet_type}_estimated",
         "odds_source": "jra_live" if live else "estimated",
         "ticket_role": ticket_role,
-        "coverage_reason": "top_model_combo_real_odds" if ticket_role == "coverage" else "",
+        "coverage_reason": coverage_reason or ("top_model_combo_real_odds" if ticket_role == "coverage" else ""),
         "confidence": _fmt(confidence),
         "legs": [
             {
@@ -1521,6 +1604,7 @@ def _ticket_combo_label(ticket: dict[str, object]) -> str:
 
 def _dedupe_ticket_combos(tickets: list[dict[str, object]]) -> list[dict[str, object]]:
     seen: set[tuple[str, str, str]] = set()
+    index_by_key: dict[tuple[str, str, str], int] = {}
     out: list[dict[str, object]] = []
     for ticket in tickets:
         key = (
@@ -1529,10 +1613,23 @@ def _dedupe_ticket_combos(tickets: list[dict[str, object]]) -> list[dict[str, ob
             str(ticket.get("horse_number", "")),
         )
         if key in seen:
+            existing = out[index_by_key[key]]
+            if _coverage_priority(ticket) > _coverage_priority(existing):
+                out[index_by_key[key]] = ticket
             continue
         seen.add(key)
+        index_by_key[key] = len(out)
         out.append(ticket)
     return out
+
+
+def _coverage_priority(ticket: dict[str, object]) -> int:
+    reason = str(ticket.get("coverage_reason", ""))
+    if reason in {"top_model_pair_real_odds", "top_model_combo_real_odds"}:
+        return 3
+    if reason in {"marked_top5_pair_real_odds", "marked_top5_trio_real_odds"}:
+        return 2
+    return 0
 
 
 def _prioritize_exotic_types(tickets: list[dict[str, object]]) -> list[dict[str, object]]:
@@ -1581,7 +1678,8 @@ def _select_optimized_tickets(
     priority_coverage = [
         ticket
         for ticket in coverage_ranked
-        if str(ticket.get("coverage_reason", "")) == "top_model_pair_real_odds"
+        if str(ticket.get("coverage_reason", ""))
+        in {"top_model_pair_real_odds", "marked_top5_pair_real_odds", "marked_top5_trio_real_odds"}
     ]
     by_type: dict[str, list[dict[str, object]]] = defaultdict(list)
     for ticket in value_ranked:
@@ -1652,7 +1750,11 @@ def _is_coverage_ticket(ticket: dict[str, object]) -> bool:
 
 
 def _is_model_pair_coverage_ticket(ticket: dict[str, object]) -> bool:
-    return str(ticket.get("coverage_reason", "")) == "top_model_pair_real_odds"
+    return str(ticket.get("coverage_reason", "")) in {
+        "top_model_pair_real_odds",
+        "marked_top5_pair_real_odds",
+        "marked_top5_trio_real_odds",
+    }
 
 
 def _can_add_coverage_ticket(
@@ -1664,7 +1766,11 @@ def _can_add_coverage_ticket(
     portfolio = selected + [ticket]
     if _portfolio_ev(portfolio) < min_portfolio_ev:
         return False
-    if str(ticket.get("coverage_reason", "")) == "top_model_pair_real_odds":
+    if str(ticket.get("coverage_reason", "")) in {
+        "top_model_pair_real_odds",
+        "marked_top5_pair_real_odds",
+        "marked_top5_trio_real_odds",
+    }:
         return True
     return _portfolio_no_gami(portfolio)
 

@@ -501,6 +501,55 @@ class TestEVPipeline(unittest.TestCase):
         self.assertGreater(float(simulated["leader"]["solo_lead_score"]), float(simulated["stalker"]["solo_lead_score"]))
         self.assertEqual("2", simulated["leader"]["front_competitor_count"])
 
+    def test_fukushima_turf1200_reduces_thin_front_bias(self):
+        rows = [
+            {
+                "race_id": "r_fukushima",
+                "horse_id": "leader",
+                "target_track": "福島",
+                "target_surface": "芝",
+                "target_distance": "1200",
+                "target_race_number": "11",
+                "front_rate": 0.82,
+                "closing_strength": 0.30,
+                "ability_score": 0.5,
+                "course_score": 0.5,
+                "consistency": 0.5,
+            },
+            {
+                "race_id": "r_fukushima",
+                "horse_id": "stalker",
+                "target_track": "福島",
+                "target_surface": "芝",
+                "target_distance": "1200",
+                "target_race_number": "11",
+                "front_rate": 0.70,
+                "closing_strength": 0.36,
+                "ability_score": 0.5,
+                "course_score": 0.5,
+                "consistency": 0.5,
+            },
+            {
+                "race_id": "r_fukushima",
+                "horse_id": "closer",
+                "target_track": "福島",
+                "target_surface": "芝",
+                "target_distance": "1200",
+                "target_race_number": "11",
+                "front_rate": 0.28,
+                "closing_strength": 0.74,
+                "ability_score": 0.5,
+                "course_score": 0.5,
+                "consistency": 0.5,
+            },
+        ]
+
+        simulated = {row["horse_id"]: row for row in simulate_race_scenarios(rows)}
+
+        self.assertLess(float(simulated["leader"]["pace_front_overuse_penalty"]), 1.0)
+        self.assertLess(float(simulated["stalker"]["pace_front_overuse_penalty"]), 1.0)
+        self.assertEqual("1", simulated["closer"]["pace_front_overuse_penalty"])
+
     def test_frame_quality_penalizes_one_strong_one_weak_frame(self):
         adjustment = _frame_quality_adjustment(
             [{"win_prob": "0.20"}, {"win_prob": "0.02"}],
@@ -727,6 +776,59 @@ class TestEVPipeline(unittest.TestCase):
         self.assertTrue(coverage)
         self.assertEqual("coverage", coverage[0]["ticket_role"])
         self.assertEqual("jra_live", coverage[0]["odds_source"])
+
+    def test_generate_tickets_keeps_marked_top5_trio_coverage_with_real_odds(self):
+        ev_rows = []
+        for horse_name, horse_number, win_prob, odds, market_prob in [
+            ("A", "1", 0.24, 3.0, 0.25),
+            ("B", "2", 0.20, 4.0, 0.20),
+            ("C", "3", 0.16, 7.0, 0.16),
+            ("D", "4", 0.12, 12.0, 0.12),
+            ("E", "5", 0.08, 18.0, 0.08),
+            ("F", "6", 0.06, 24.0, 0.06),
+        ]:
+            ev_rows.append(
+                {
+                    "race_id": "r_marked_top5",
+                    "horse_id": f"h{horse_number}",
+                    "horse_name": horse_name,
+                    "frame_number": horse_number,
+                    "horse_number": horse_number,
+                    "win_prob": str(win_prob),
+                    "current_odds": str(odds),
+                    "predicted_odds": str(odds),
+                    "ev": str(win_prob * odds),
+                    "ev_current": str(win_prob * odds),
+                    "ev_predicted": str(win_prob * odds),
+                    "market_prob": str(market_prob),
+                    "consistency": "0.70",
+                    "history_count": "5",
+                }
+            )
+
+        odds_rows = [
+            {"race_id": "r_marked_top5", "bet_type": "sanrenpuku", "combination": "1-3-5", "odds": "46.0", "captured_at": "2026-05-17T01:00:00+00:00"},
+            {"race_id": "r_marked_top5", "bet_type": "wide", "combination": "1-5", "odds": "8.5", "captured_at": "2026-05-17T01:00:00+00:00"},
+        ]
+
+        plan = generate_tickets(
+            ev_rows,
+            odds_rows=odds_rows,
+            prefer_wide=False,
+            max_tickets_per_race=5,
+        )
+        all_tickets = list(plan["tickets"]) + list(plan["races"][0]["candidates"])
+        trio_coverage = [
+            ticket
+            for ticket in all_tickets
+            if ticket["bet_type"] == "sanrenpuku"
+            and ticket["horse_number"] == "1 - 3 - 5"
+            and ticket.get("coverage_reason") == "marked_top5_trio_real_odds"
+        ]
+
+        self.assertTrue(trio_coverage)
+        self.assertEqual("coverage", trio_coverage[0]["ticket_role"])
+        self.assertEqual("jra_live", trio_coverage[0]["odds_source"])
 
     def test_generate_tickets_suppresses_sub_five_percent_win_tickets(self):
         ev_rows = [

@@ -213,6 +213,7 @@ def _blend_probabilities(
     for row, raw_prob, market_prob in zip(rows, raw_probs, market_probs):
         band = _probability_band(row)
         shrink = _dynamic_market_shrink(row, base_shrink=weights.market_shrink, band=band)
+        shrink = _market_divergence_shrink(raw_prob, market_prob, shrink, band=band)
         blended = ((1.0 - shrink) * raw_prob) + (shrink * market_prob)
         cap = _probability_cap(row, market_prob=market_prob, band=band)
         blended_probs.append(blended)
@@ -414,12 +415,30 @@ def _dynamic_market_shrink(row: dict, *, base_shrink: float, band: str) -> float
         _to_float(row.get("odds_span_minutes"), 0.0),
     )
     band_target = {
-        "favorite": 0.38,
-        "contender": 0.58,
-        "outsider": 0.74,
-        "longshot": 0.88,
+        "favorite": 0.42,
+        "contender": 0.64,
+        "outsider": 0.78,
+        "longshot": 0.90,
     }.get(band, base_shrink)
     return _clamp(max(base_shrink, band_target + (0.06 * live_conf)), 0.0, 0.96)
+
+
+def _market_divergence_shrink(raw_prob: float, market_prob: float, shrink: float, *, band: str) -> float:
+    if raw_prob <= 0 or market_prob <= 0:
+        return shrink
+
+    ratio = raw_prob / market_prob
+    if ratio <= 1.35:
+        return shrink
+
+    band_sensitivity = {
+        "favorite": 0.08,
+        "contender": 0.14,
+        "outsider": 0.18,
+        "longshot": 0.22,
+    }.get(band, 0.12)
+    extra = min(0.18, (ratio - 1.35) * band_sensitivity)
+    return _clamp(shrink + extra, 0.0, 0.97)
 
 
 def _probability_cap(row: dict, *, market_prob: float, band: str) -> float:
@@ -437,13 +456,13 @@ def _probability_cap(row: dict, *, market_prob: float, band: str) -> float:
     model_conf = _clamp((0.45 * ability) + (0.25 * course) + (0.20 * pace) + (0.10 * history), 0.0, 1.0)
 
     if band == "favorite":
-        multiplier = 1.28 + (0.10 * model_conf) - (0.02 * live_conf)
+        multiplier = 1.24 + (0.08 * model_conf) - (0.02 * live_conf)
         additive = 0.020
     elif band == "contender":
-        multiplier = 1.14 + (0.08 * model_conf) - (0.03 * live_conf)
+        multiplier = 1.08 + (0.06 * model_conf) - (0.03 * live_conf)
         additive = 0.010
     elif band == "outsider":
-        multiplier = 1.06 + (0.05 * model_conf) - (0.05 * live_conf)
+        multiplier = 1.03 + (0.04 * model_conf) - (0.05 * live_conf)
         additive = 0.003
     else:
         multiplier = 1.01 + (0.03 * model_conf) - (0.05 * live_conf)
