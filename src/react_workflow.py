@@ -52,6 +52,8 @@ class WorkflowSettings:
     max_ev_delta_abs: float = 0.20
     max_ev_delta_ratio: float = 0.18
     max_odds_gap_ratio: float = 0.25
+    min_top3_ticket_coverage: int = 2
+    max_horse_ticket_dependency_ratio: float = 0.50
 
 
 class DataCollectorAgent:
@@ -230,6 +232,30 @@ class ReviewerAgent:
             ]
             if risky_tickets:
                 reasons.append("ticket plan contains low-confidence or sub-threshold tickets")
+
+            top_rows = sorted(
+                ev_rows,
+                key=lambda row: _to_float(row.get("win_prob"), 0.0),
+                reverse=True,
+            )[:3]
+            ticket_horses = _ticket_horse_numbers(tickets)
+            covered_top = [
+                str(row.get("horse_number", ""))
+                for row in top_rows
+                if str(row.get("horse_number", "")) in ticket_horses
+            ]
+            if tickets and top_rows and str(top_rows[0].get("horse_number", "")) not in ticket_horses:
+                reasons.append("top win-probability horse is missing from every ticket")
+            required_top_coverage = min(self.settings.min_top3_ticket_coverage, len(top_rows))
+            if tickets and len(covered_top) < required_top_coverage:
+                reasons.append(
+                    f"top-3 ticket coverage is too low: {len(covered_top)}/{required_top_coverage}"
+                )
+            dependency_ratio = _max_horse_ticket_dependency_ratio(tickets)
+            if tickets and dependency_ratio > self.settings.max_horse_ticket_dependency_ratio:
+                reasons.append(
+                    f"horse ticket dependency ratio is too high: {dependency_ratio:.3f}"
+                )
 
         if str(ticket_plan.get("bet_type", "")) != "win5":
             longshot_overweight = [
@@ -743,6 +769,27 @@ def _longshot_stake_threshold(ticket: dict[str, object]) -> int:
     if bet_type in {"wakuren", "umaren", "umatan", "sanrenpuku", "sanrentan"}:
         return 100
     return 100
+
+
+def _ticket_horse_numbers(tickets: list[dict[str, object]]) -> set[str]:
+    numbers: set[str] = set()
+    for ticket in tickets:
+        explicit = [str(value) for value in list(ticket.get("horse_numbers") or [])]
+        value = str(ticket.get("horse_number", "")).replace(">", "-").replace("→", "-")
+        numbers.update(part for part in explicit + value.split("-") if part.isdigit())
+    return numbers
+
+
+def _max_horse_ticket_dependency_ratio(tickets: list[dict[str, object]]) -> float:
+    if not tickets:
+        return 0.0
+    counts: dict[str, int] = {}
+    for ticket in tickets:
+        explicit = [str(value) for value in list(ticket.get("horse_numbers") or [])]
+        value = str(ticket.get("horse_number", "")).replace(">", "-").replace("→", "-")
+        for horse_number in set(part for part in explicit + value.split("-") if part.isdigit()):
+            counts[horse_number] = counts.get(horse_number, 0) + 1
+    return max(counts.values(), default=0) / len(tickets)
 
 
 def _read_csv(path: Path) -> list[dict[str, str]]:

@@ -2,7 +2,12 @@ import unittest
 
 from analysis.ev import EVWeights, build_feature_rows, compute_ev, simulate_race_scenarios
 from src.react_workflow import ReviewerAgent, WorkflowSettings
-from strategy.betting import _frame_quality_adjustment, _wide_pace_adjustment, generate_tickets
+from strategy.betting import (
+    _calibrate_ticket_probabilities,
+    _frame_quality_adjustment,
+    _wide_pace_adjustment,
+    generate_tickets,
+)
 
 
 class TestEVPipeline(unittest.TestCase):
@@ -504,6 +509,49 @@ class TestEVPipeline(unittest.TestCase):
         feature = build_feature_rows([row])[0]
 
         self.assertEqual(0.5, feature["track_condition_score"])
+        self.assertEqual(0.0, feature["track_condition_confidence"])
+
+    def test_unseen_bad_track_uses_low_proxy_confidence(self):
+        base = {
+            "race_id": "r_condition_confidence",
+            "horse_name": "A",
+            "horse_number": "1",
+            "current_odds": "5.0",
+            "target_track": "新潟",
+            "target_surface": "芝",
+            "target_distance": "1600",
+            "target_track_condition": "不良",
+            "date": "2026-06-01",
+            "course": "東京",
+            "distance": "芝1600",
+            "position": "3",
+            "time": "96.0",
+            "weight": "56",
+            "last_3f": "34.5",
+            "passing_order": "3-3",
+            "popularity": "4",
+        }
+        exact = build_feature_rows([{**base, "horse_id": "exact", "track_condition": "不良"}])[0]
+        proxy = build_feature_rows([{**base, "horse_id": "proxy", "track_condition": "重"}])[0]
+
+        self.assertGreater(exact["track_condition_confidence"], proxy["track_condition_confidence"])
+        self.assertEqual(0.0, proxy["track_condition_evidence"])
+
+    def test_ticket_type_calibration_shrinks_exotics_more_than_win(self):
+        win, trifecta = _calibrate_ticket_probabilities(
+            [
+                {"bet_type": "win", "horse_number": "1", "hit_prob": "0.20", "predicted_odds": "10"},
+                {
+                    "bet_type": "sanrentan",
+                    "horse_number": "1>2>3",
+                    "hit_prob": "0.20",
+                    "predicted_odds": "10",
+                },
+            ]
+        )
+
+        self.assertGreater(float(win["hit_prob"]), float(trifecta["hit_prob"]))
+        self.assertEqual("0.82", trifecta["bet_type_market_shrink"])
 
     def test_unprofiled_track_bias_is_neutral(self):
         row = {
@@ -1330,6 +1378,46 @@ class TestEVPipeline(unittest.TestCase):
         self.assertEqual("NG", review["status"])
         self.assertIn("predicted/current EV divergence", review["reason"])
         self.assertTrue(review["divergent_rows"])
+
+    def test_reviewer_rejects_missing_top_horses_and_dependency(self):
+        reviewer = ReviewerAgent(WorkflowSettings())
+        ev_rows = [
+            {
+                "race_id": "r_cover",
+                "horse_number": str(number),
+                "horse_name": name,
+                "win_prob": str(probability),
+                "current_odds": "5.0",
+                "predicted_odds": "5.0",
+                "ev_current": "1.1",
+                "ev_predicted": "1.1",
+            }
+            for number, name, probability in [(1, "A", 0.30), (2, "B", 0.20), (3, "C", 0.15)]
+        ]
+        tickets = [
+            {
+                "race_id": "r_cover",
+                "bet_type": "wide",
+                "horse_number": selection,
+                "hit_prob": "0.2",
+                "predicted_odds": "6.0",
+                "ev_current": "1.2",
+                "stake": 100,
+            }
+            for selection in ("2-4", "2-5", "2-6")
+        ]
+
+        review = reviewer.run(
+            {"quality_report": {"issues_by_severity": {}}, "entries": [{"race_id": "r_cover"}]},
+            scenario_rows=ev_rows,
+            ev_rows=ev_rows,
+            ticket_plan={"tickets": tickets},
+            attempt=0,
+        )
+
+        self.assertEqual("NG", review["status"])
+        self.assertIn("top win-probability horse", review["reason"])
+        self.assertIn("dependency ratio", review["reason"])
 
     def test_compute_ev_calibrates_extreme_longshots_toward_market(self):
         feature_rows = []

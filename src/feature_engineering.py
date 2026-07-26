@@ -85,6 +85,7 @@ def summarize_history_rows(
             "surface_map": surface_map,
             "jockey_map": jockey_map,
             "track_condition_map": track_condition_map,
+            "track_condition_observations": float(sum(track_condition_map.values())),
             "latest_history_date": latest_history_date,
         }
     return summaries
@@ -170,6 +171,14 @@ def build_feature_row(
     jockey_match = _map_score(history_summary.get("jockey_map"), current_jockey)
     distance_fit = _distance_fit_score(history_summary.get("avg_distance", 0.0), target_distance)
     track_condition_match = _condition_match_score(
+        history_summary.get("track_condition_map"),
+        target_track_condition,
+    )
+    track_condition_evidence = _condition_evidence(
+        history_summary.get("track_condition_map"),
+        target_track_condition,
+    )
+    track_condition_confidence = _condition_confidence(
         history_summary.get("track_condition_map"),
         target_track_condition,
     )
@@ -301,6 +310,8 @@ def build_feature_row(
         "ability_score": round(ability_score, 4),
         "course_score": round(course_score, 4),
         "track_condition_score": round(track_condition_match, 4),
+        "track_condition_evidence": round(track_condition_evidence, 4),
+        "track_condition_confidence": round(track_condition_confidence, 4),
         "pace_score": round(pace_score, 4),
         "weight_score": round(weight_score, 4),
         "jockey_score": round(jockey_score, 4),
@@ -406,6 +417,30 @@ def _condition_match_score(value: object, key: str) -> float:
         weighted_similarity += similarity_by_gap[abs(target_index - condition_index)] * count
         total += count
     return weighted_similarity / total if total > 0 else 0.5
+
+
+def _condition_evidence(value: object, key: str) -> float:
+    if not isinstance(value, dict) or not value or not key:
+        return 0.0
+    return max(0.0, float(value.get(key, 0.0)))
+
+
+def _condition_confidence(value: object, key: str) -> float:
+    """Return evidence confidence separately from the condition-fit score."""
+    if not isinstance(value, dict) or not value or not key:
+        return 0.0
+    condition_order = {"良": 0, "稍重": 1, "重": 2, "不良": 3}
+    target_index = condition_order.get(key)
+    if target_index is None:
+        return 0.0
+    evidence = 0.0
+    for condition, count_value in value.items():
+        condition_index = condition_order.get(str(condition))
+        if condition_index is None:
+            continue
+        gap = abs(target_index - condition_index)
+        evidence += max(0.0, float(count_value)) * {0: 1.0, 1: 0.35, 2: 0.10, 3: 0.0}[gap]
+    return max(0.0, min(1.0, evidence / 3.0))
 
 
 def _odds_trend(odds_values: Sequence[float]) -> float:

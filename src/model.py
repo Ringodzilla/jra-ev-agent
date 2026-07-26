@@ -420,7 +420,9 @@ def _dynamic_market_shrink(row: dict, *, base_shrink: float, band: str) -> float
         "outsider": 0.78,
         "longshot": 0.90,
     }.get(band, base_shrink)
-    return _clamp(max(base_shrink, band_target + (0.06 * live_conf)), 0.0, 0.96)
+    condition_confidence = _clamp(_to_float(row.get("track_condition_confidence"), 0.0), 0.0, 1.0)
+    uncertainty_shrink = 0.24 * (1.0 - condition_confidence)
+    return _clamp(max(base_shrink, band_target + (0.06 * live_conf) + uncertainty_shrink), 0.0, 0.97)
 
 
 def _market_divergence_shrink(raw_prob: float, market_prob: float, shrink: float, *, band: str) -> float:
@@ -454,6 +456,8 @@ def _probability_cap(row: dict, *, market_prob: float, band: str) -> float:
         _to_float(row.get("odds_span_minutes"), 0.0),
     )
     model_conf = _clamp((0.45 * ability) + (0.25 * course) + (0.20 * pace) + (0.10 * history), 0.0, 1.0)
+    condition_confidence = _clamp(_to_float(row.get("track_condition_confidence"), 0.0), 0.0, 1.0)
+    model_conf *= 0.65 + (0.35 * condition_confidence)
 
     if band == "favorite":
         multiplier = 1.24 + (0.08 * model_conf) - (0.02 * live_conf)
@@ -468,8 +472,9 @@ def _probability_cap(row: dict, *, market_prob: float, band: str) -> float:
         multiplier = 1.01 + (0.03 * model_conf) - (0.05 * live_conf)
         additive = 0.0005
 
-    multiplier = max(1.0, multiplier)
-    additive = max(0.0, additive * (1.0 - (0.40 * live_conf)))
+    uncertainty_multiplier = 0.70 + (0.30 * condition_confidence)
+    multiplier = max(1.0, 1.0 + ((multiplier - 1.0) * uncertainty_multiplier))
+    additive = max(0.0, additive * (1.0 - (0.40 * live_conf)) * uncertainty_multiplier)
     return min(1.0, (market_prob * multiplier) + additive)
 
 

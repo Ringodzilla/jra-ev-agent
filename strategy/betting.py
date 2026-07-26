@@ -26,6 +26,16 @@ from strategy.portfolio import (
 
 
 MIN_WIN_EV = 1.05
+BET_TYPE_MARKET_SHRINK = {
+    "win": 0.35,
+    "place": 0.45,
+    "wide": 0.55,
+    "wakuren": 0.60,
+    "umaren": 0.62,
+    "umatan": 0.70,
+    "sanrenpuku": 0.76,
+    "sanrentan": 0.82,
+}
 
 
 def generate_tickets(
@@ -170,7 +180,7 @@ def generate_tickets(
         for bet_type, count in candidate_counts.items():
             aggregate_candidate_counts[bet_type] += count
 
-        selection_pool = _dedupe_ticket_combos(
+        selection_pool = _calibrate_ticket_probabilities(_dedupe_ticket_combos(
             win_tickets
             + place_candidates
             + wide_candidates[:max_wide_tickets_per_race]
@@ -180,7 +190,27 @@ def generate_tickets(
             + consistency_candidates
             + win_ev_translation_candidates
             + marked_coverage_candidates
-        )
+        ))
+        thresholds = {
+            "win": min_win_ev,
+            "place": min_place_ev,
+            "wide": min_wide_ev,
+            "wakuren": min_wakuren_ev,
+            "umaren": min_umaren_ev,
+            "umatan": min_umatan_ev,
+            "sanrenpuku": min_sanrenpuku_ev,
+            "sanrentan": min_sanrentan_ev,
+        }
+        selection_pool = [
+            ticket
+            for ticket in selection_pool
+            if _to_float(ticket.get("ev_current") or ticket.get("ev"))
+            >= (
+                min_coverage_ev
+                if _is_coverage_ticket(ticket)
+                else thresholds.get(str(ticket.get("bet_type", "")), min_ev)
+            )
+        ]
         race_tickets = _select_optimized_tickets(
             selection_pool,
             per_race_limit=per_race_limit,
@@ -1959,8 +1989,60 @@ def _append_ticket_if_new(
     key = (str(ticket.get("bet_type", "")), str(ticket.get("horse_number", "")))
     if key in selected_keys:
         return
+    if _would_exceed_horse_dependency(selected, ticket, per_race_limit=per_race_limit):
+        return
     selected.append(ticket)
     selected_keys.add(key)
+
+
+def _calibrate_ticket_probabilities(tickets: list[dict[str, object]]) -> list[dict[str, object]]:
+    """Conservatively calibrate each ticket type against its live market odds."""
+    calibrated: list[dict[str, object]] = []
+    for original in tickets:
+        ticket = dict(original)
+        bet_type = str(ticket.get("bet_type", ""))
+        shrink = BET_TYPE_MARKET_SHRINK.get(bet_type, 0.65)
+        odds = _to_float(ticket.get("predicted_odds") or ticket.get("win_odds"), 0.0)
+        raw_prob = _to_float(ticket.get("hit_prob") or ticket.get("win_prob"), 0.0)
+        if odds <= 0 or raw_prob <= 0:
+            calibrated.append(ticket)
+            continue
+        market_prob = min(1.0, 1.0 / odds)
+        calibrated_prob = ((1.0 - shrink) * raw_prob) + (shrink * market_prob)
+        calibrated_ev = calibrated_prob * odds
+        ticket["raw_hit_prob"] = _fmt(raw_prob)
+        ticket["hit_prob"] = _fmt(calibrated_prob)
+        if bet_type == "win":
+            ticket["win_prob"] = _fmt(calibrated_prob)
+        ticket["market_prob"] = _fmt(market_prob)
+        ticket["bet_type_market_shrink"] = _fmt(shrink)
+        ticket["ev"] = _fmt(calibrated_ev)
+        ticket["ev_current"] = _fmt(calibrated_ev)
+        calibrated.append(ticket)
+    return calibrated
+
+
+def _would_exceed_horse_dependency(
+    selected: list[dict[str, object]],
+    candidate: dict[str, object],
+    *,
+    per_race_limit: int,
+) -> bool:
+    cap = max(2, math.ceil(per_race_limit * 0.50))
+    counts: dict[str, int] = defaultdict(int)
+    for ticket in selected + [candidate]:
+        for horse_number in _ticket_horse_numbers(ticket):
+            counts[horse_number] += 1
+    return any(count > cap for count in counts.values())
+
+
+def _ticket_horse_numbers(ticket: dict[str, object]) -> set[str]:
+    explicit = {str(value) for value in list(ticket.get("horse_numbers") or []) if str(value).strip()}
+    if explicit:
+        return explicit
+    value = str(ticket.get("horse_number", "")).strip()
+    normalized = value.replace(">", "-").replace("→", "-")
+    return {part for part in normalized.split("-") if part.isdigit()}
 
 
 def _is_coverage_ticket(ticket: dict[str, object]) -> bool:
