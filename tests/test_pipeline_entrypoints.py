@@ -19,6 +19,7 @@ try:
     )
     from jra_scraper.data_repair import MissingHistoryRepairAction
     from jra_scraper.models import ParserIssue
+    from jra_scraper.validation import OUTPUT_COLUMNS
     HAS_RUN_PIPELINE = True
 except ModuleNotFoundError:
     HAS_RUN_PIPELINE = False
@@ -155,6 +156,49 @@ class TestPipelineEntrypoints(unittest.TestCase):
 
             self.assertTrue(scraper.calls[0]["use_cache"])
             self.assertTrue(scraper.calls[0]["cache_only"])
+
+    def test_processed_race_skip_does_not_append_fresh_odds_snapshot(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            config = ScrapeConfig(
+                output_csv=root / "race_last5.csv",
+                entries_csv=root / "entries.csv",
+                odds_snapshots_csv=root / "odds.csv",
+                combo_odds_csv=root / "combo.csv",
+                raw_dir=root / "raw",
+                state_path=root / "state.json",
+                quality_report_path=root / "quality.json",
+                missing_history_requests_path=root / "missing.json",
+                manual_history_csv=root / "manual.csv",
+                stages_dir=root / "stages",
+            )
+            pipeline = JRAPipeline(config)
+            pipeline._write_csv(
+                [
+                    {
+                        "race_id": "R1",
+                        "horse_id": "H1",
+                        "horse_name": "A",
+                        "horse_number": "1",
+                        "current_odds": "5.0",
+                        "current_popularity": "1",
+                        "run_index": "1",
+                        "date": "2026-01-01",
+                        "race_name": "前走",
+                    }
+                ],
+                config.output_csv,
+                OUTPUT_COLUMNS,
+            )
+            config.state_path.write_text(
+                json.dumps({"processed_race_ids": ["R1"], "failures": {}}),
+                encoding="utf-8",
+            )
+
+            pipeline.run(race_specs=[{"race_id": "R1", "source_url": "https://example.test/race"}])
+            pipeline.close()
+
+            self.assertFalse(config.odds_snapshots_csv.exists())
 
     def test_raw_file_captured_at_uses_file_mtime(self):
         with tempfile.TemporaryDirectory() as td:

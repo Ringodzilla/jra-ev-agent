@@ -1,6 +1,6 @@
 import unittest
 
-from jra_scraper.validation import OUTPUT_COLUMNS, build_row_id, validate_rows
+from jra_scraper.validation import ENTRY_COLUMNS, OUTPUT_COLUMNS, build_entry_rows, build_row_id, validate_rows
 
 
 class TestValidation(unittest.TestCase):
@@ -28,6 +28,10 @@ class TestValidation(unittest.TestCase):
                     "target_weather": "雨",
                     "target_track_condition": "重",
                     "target_conditions_captured_at": "2026-03-29T06:30:00+00:00",
+                    "assigned_weight": "57.0kg",
+                    "current_body_weight": "472kg",
+                    "body_weight_change": "-2kg",
+                    "body_weight_status": "published",
                     "passing_order": "5-5-4-2",
                     "odds": "3.2倍",
                     "popularity": "1人気",
@@ -51,7 +55,31 @@ class TestValidation(unittest.TestCase):
         self.assertEqual("雨", validated[0]["target_weather"])
         self.assertEqual("重", validated[0]["target_track_condition"])
         self.assertEqual("2026-03-29T06:30:00+00:00", validated[0]["target_conditions_captured_at"])
+        self.assertEqual("57", validated[0]["assigned_weight"])
+        self.assertEqual("472", validated[0]["current_body_weight"])
+        self.assertEqual("-2", validated[0]["body_weight_change"])
+        self.assertEqual("published", validated[0]["body_weight_status"])
         self.assertEqual(set(OUTPUT_COLUMNS), set(validated[0].keys()))
+
+        entries = build_entry_rows(validated)
+        self.assertEqual(set(ENTRY_COLUMNS), set(entries[0].keys()))
+        self.assertEqual("57", entries[0]["assigned_weight"])
+        self.assertEqual("472", entries[0]["current_body_weight"])
+        self.assertEqual("-2", entries[0]["body_weight_change"])
+        self.assertEqual("published", entries[0]["body_weight_status"])
+
+    def test_validate_rows_defaults_missing_body_weight_to_unpublished(self):
+        validated = validate_rows([
+            {
+                "race_id": "r1",
+                "horse_id": "h1",
+                "horse_name": "A",
+                "run_index": "1",
+            }
+        ])
+        self.assertEqual("", validated[0]["current_body_weight"])
+        self.assertEqual("", validated[0]["body_weight_change"])
+        self.assertEqual("unpublished", validated[0]["body_weight_status"])
 
     def test_build_row_id_stable(self):
         row = {

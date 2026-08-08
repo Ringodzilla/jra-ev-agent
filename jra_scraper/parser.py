@@ -257,6 +257,9 @@ class JRAParser:
                     horse_number=mapped.get("horse_number", ""),
                     current_jockey=mapped.get("current_jockey", ""),
                     assigned_weight=mapped.get("assigned_weight", ""),
+                    current_body_weight=mapped.get("current_body_weight", ""),
+                    body_weight_change=mapped.get("body_weight_change", ""),
+                    body_weight_status=mapped.get("body_weight_status", "unpublished"),
                     current_odds=mapped.get("current_odds", ""),
                     current_popularity=mapped.get("current_popularity", ""),
                     target_track=target_track,
@@ -358,6 +361,9 @@ class JRAParser:
                         "horse_number": current_entry.horse_number,
                         "current_jockey": current_entry.current_jockey,
                         "assigned_weight": current_entry.assigned_weight,
+                        "current_body_weight": current_entry.current_body_weight,
+                        "body_weight_change": current_entry.body_weight_change,
+                        "body_weight_status": current_entry.body_weight_status,
                         "current_odds": current_entry.current_odds,
                         "current_popularity": current_entry.current_popularity,
                         "target_track": current_entry.target_track,
@@ -713,6 +719,13 @@ class JRAParser:
                 if weight_value:
                     out["assigned_weight"] = weight_value
 
+        body_weight_node = row.select_one("td.horse .result_line .cell.weight")
+        body_weight_text = self._norm(body_weight_node.get_text(" ", strip=True)) if body_weight_node else ""
+        current_body_weight, body_weight_change, body_weight_status = self._parse_current_body_weight(body_weight_text)
+        out["current_body_weight"] = current_body_weight
+        out["body_weight_change"] = body_weight_change
+        out["body_weight_status"] = body_weight_status
+
         if not out.get("horse_country"):
             country_node = row.select_one("td.jockey p.code")
             if country_node is not None:
@@ -791,6 +804,25 @@ class JRAParser:
                     break
 
         return out
+
+    @staticmethod
+    def _parse_current_body_weight(value: str) -> tuple[str, str, str]:
+        compact = re.sub(r"\s+", "", value or "")
+        if not compact or "未発表" in compact:
+            return "", "", "unpublished"
+        if "計不" in compact:
+            return "", "", "not_measured"
+
+        match = re.search(
+            r"(?P<weight>\d+)kg(?:[（(](?P<change>[+\-\N{MINUS SIGN}]?\d+)[）)])?",
+            compact,
+            flags=re.IGNORECASE,
+        )
+        if match is None:
+            return "", "", "unpublished"
+
+        change = (match.group("change") or "").replace("\N{MINUS SIGN}", "-")
+        return match.group("weight"), change, "published"
 
     def _apply_last_3f_fallback(
         self,

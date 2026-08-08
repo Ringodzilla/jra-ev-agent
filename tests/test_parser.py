@@ -86,6 +86,40 @@ class TestJRAParser(unittest.TestCase):
         self.assertEqual("33.8", horses[0].embedded_history[0]["last_3f"])
         self.assertEqual("3", horses[0].embedded_history[0]["popularity"])
 
+    def test_parse_race_detail_extracts_current_body_weight_without_confusing_assigned_weight(self):
+        html = """
+        <html><body>
+        <table class="race_table_01">
+          <tr><th>馬番</th><th>馬名</th><th>斤量</th></tr>
+          <tr><td>1</td><td class="horse"><div class="name_line"><div class="name"><a href="/horse/1">A</a></div></div><div class="result_line"><div class="cell weight">472kg(-2)</div></div></td><td>57.0kg</td></tr>
+          <tr><td>2</td><td class="horse"><div class="name_line"><div class="name"><a href="/horse/2">B</a></div></div><div class="result_line"><div class="cell weight">500kg(0)</div></div></td><td>56.0kg</td></tr>
+          <tr><td>3</td><td class="horse"><div class="name_line"><div class="name"><a href="/horse/3">C</a></div></div><div class="result_line"><div class="cell weight">計不</div></div></td><td>55.0kg</td></tr>
+          <tr><td>4</td><td class="horse"><div class="name_line"><div class="name"><a href="/horse/4">D</a></div></div><div class="result_line"><div class="cell weight">未発表</div></div></td><td>54.0kg</td></tr>
+          <tr><td>5</td><td class="horse"><div class="name_line"><div class="name"><a href="/horse/5">E</a></div></div><div class="result_line"></div></td><td>53.0kg</td></tr>
+        </table>
+        </body></html>
+        """
+        horses = self.parser.parse_race_detail(html, race_id="r1", race_name="11R")
+
+        self.assertEqual(("472", "-2", "published"), (
+            horses[0].current_body_weight,
+            horses[0].body_weight_change,
+            horses[0].body_weight_status,
+        ))
+        self.assertEqual(("500", "0", "published"), (
+            horses[1].current_body_weight,
+            horses[1].body_weight_change,
+            horses[1].body_weight_status,
+        ))
+        self.assertEqual(("", "", "not_measured"), (
+            horses[2].current_body_weight,
+            horses[2].body_weight_change,
+            horses[2].body_weight_status,
+        ))
+        self.assertEqual("unpublished", horses[3].body_weight_status)
+        self.assertEqual("unpublished", horses[4].body_weight_status)
+        self.assertEqual(["57.0kg", "56.0kg", "55.0kg", "54.0kg", "53.0kg"], [horse.assigned_weight for horse in horses])
+
     def test_parse_race_detail_extracts_header_metadata_for_direct_race_id(self):
         html = """
         <html><body>

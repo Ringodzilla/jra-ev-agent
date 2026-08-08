@@ -248,7 +248,11 @@ class JRAPipeline:
         entry_rows = build_entry_rows(final_rows)
         self._write_csv(final_rows, self.config.output_csv, OUTPUT_COLUMNS)
         self._write_csv(entry_rows, self.config.entries_csv, ENTRY_COLUMNS)
-        append_live_odds_snapshots(self.config.odds_snapshots_csv, entry_rows)
+        refreshed_race_ids = set(processed_this_run)
+        append_live_odds_snapshots(
+            self.config.odds_snapshots_csv,
+            [row for row in entry_rows if row.get("race_id") in refreshed_race_ids],
+        )
         append_live_combo_odds(self.config.combo_odds_csv, all_combo_odds_rows)
         self._save_state(processed_races, failures, len(processed_this_run), len(all_new_rows))
         self._write_quality_report(issues, entry_rows, final_rows, repair_actions)
@@ -673,6 +677,9 @@ def _rows_from_embedded_history(horse) -> list[dict[str, str]]:
             "horse_number": horse.horse_number,
             "current_jockey": horse.current_jockey,
             "assigned_weight": horse.assigned_weight,
+            "current_body_weight": getattr(horse, "current_body_weight", ""),
+            "body_weight_change": getattr(horse, "body_weight_change", ""),
+            "body_weight_status": getattr(horse, "body_weight_status", "unpublished"),
             "current_odds": horse.current_odds,
             "current_popularity": horse.current_popularity,
             "target_track": horse.target_track,
@@ -859,6 +866,9 @@ def _manual_rows_for_horse(horse, manual_rows: list[dict[str, str]]) -> list[dic
                 "horse_number": horse.horse_number,
                 "current_jockey": horse.current_jockey,
                 "assigned_weight": horse.assigned_weight,
+                "current_body_weight": getattr(horse, "current_body_weight", ""),
+                "body_weight_change": getattr(horse, "body_weight_change", ""),
+                "body_weight_status": getattr(horse, "body_weight_status", "unpublished"),
                 "current_odds": horse.current_odds,
                 "current_popularity": horse.current_popularity,
                 "target_track": horse.target_track,

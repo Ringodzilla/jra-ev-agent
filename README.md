@@ -87,9 +87,12 @@ JRAのレースデータを取得し、**EVモデリングに直接使える整�
 * `jra_scraper/parser.py`: JRA/JRADB構造の解析と列マッピング
 * `jra_scraper/validation.py`: 型正規化・ID付与・重複除去・5件上限
 * `jra_scraper/pipeline.py`: 増分更新、状態管理、CSV出力
+* `jra_scraper/live_snapshot.py`: 直前用の出馬表・馬体重・天候・馬場・全券種オッズ取得（過去走は取得しない）
 * `analysis/ev.py`: EV算出
 * `strategy/betting.py`: 買い目生成
 * `report/note.py`: note用Markdown生成
+* `src/deadline.py`: 発走時刻からT-5出力締切と実行モードを算出
+* `src/final_workflow.py`: 事前分析と最新スナップショットを統合し、最終 `GO / NO_GO` を判定
 
 ## Installation
 
@@ -114,6 +117,50 @@ python scripts/run_pipeline.py
 5. note Markdown生成（`report/note.md`）
 6. note artifact Markdown同期（`report/note_artifact.md`）
 7. publish payload生成（`report/publish_payload.json`）
+
+## Race-day final prediction (T-5 deadline)
+
+直前処理では全履歴を取り直しません。通常パイプラインで事前に作った
+`pipeline_run.json` または `race_last5.csv` を基礎データとして再利用し、JRAから次だけを更新します。
+
+1. 出走馬・騎手・斤量・馬体重
+2. 天候・馬場状態
+3. 単勝、複勝、枠連、馬連、ワイド、馬単、三連複、三連単の同一時点オッズ
+4. 能力再計算、シミュレーション、EV、買い目、reviewer の順で再実行
+
+事前分析（レースの十分前）:
+
+```bash
+python3 scripts/run_pipeline.py --config-path config/final_prediction.example.json
+```
+
+直前確定:
+
+```bash
+python3 scripts/run_final_prediction.py \
+  --config-path config/final_prediction.example.json \
+  --baseline-path report/races/20260808_札幌_11/pipeline_run.json
+```
+
+`--baseline-path` を省略すると、対象 `race_id` と一致するレース別artifactまたは収集済みCSVを探索します。
+実行モードは締切までの残り時間に応じて `normal / fast / emergency / too_late` へ切り替わります。
+`emergency` でも既定の最小更新時間40秒と出力予約10秒を確保できない場合は、取得を開始せず `NO_GO` にします。
+締切は既定で発走5分前です。締切到達時はハードウォッチドッグが処理を中断し、買い目を空にした
+`NO_GO` を出力します。
+
+`GO` には、以下をすべて満たす必要があります。
+
+* 5分前締切内に完了
+* 8券種が同一 `snapshot_id` で取得され、出走頭数から求めた全組番が欠損なし
+* 公式オッズ、天候、馬場状態が鮮度上限内
+* 馬体重が未発表ではない（JRA公式の「計不」は取得済み状態として区別）
+* 事前分析と最新出馬表の頭数・馬IDが一致し、各馬の過去走が5件ある
+* `pipeline_run.json` 使用時は事前reviewerが `OK` で、stage manifestが一致
+* reviewerが `OK`、買い目が存在し、フォーメーションを含む全購入点の組番がJRA実オッズに存在
+
+いずれかが欠ける場合は `NO_GO` となり、`tickets` は必ず空になります。結果は
+`report/final_predictions/<race_id>/<run_id>/final_decision.json` に保存され、最新結果は
+`report/final_predictions/<race_id>/latest_decision.json` から参照できます。
 
 ## WIN5 mode
 

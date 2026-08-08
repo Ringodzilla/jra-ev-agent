@@ -15,6 +15,31 @@ class LiveOddsTest(unittest.TestCase):
         self.assertEqual(live_combo_key("wide", ["8", "2"]), "2-8")
         self.assertEqual(live_odds_value(lookup_live_odds(lookup["R1"], "wide", ["8", "2"])), 6.2)
 
+    def test_latest_complete_snapshot_does_not_backfill_missing_combinations(self):
+        rows = [
+            {
+                "race_id": "R1", "bet_type": "win", "combination": "1", "odds": "4.0",
+                "captured_at": "10:00", "snapshot_id": "S1", "snapshot_complete": "true",
+            },
+            {
+                "race_id": "R1", "bet_type": "win", "combination": "2", "odds": "8.0",
+                "captured_at": "10:00", "snapshot_id": "S1", "snapshot_complete": "true",
+            },
+            {
+                "race_id": "R1", "bet_type": "win", "combination": "1", "odds": "5.0",
+                "captured_at": "10:05", "snapshot_id": "S2", "snapshot_complete": "true",
+            },
+            {
+                "race_id": "R1", "bet_type": "win", "combination": "2", "odds": "9.0",
+                "captured_at": "10:10", "snapshot_id": "S3", "snapshot_complete": "false",
+            },
+        ]
+
+        lookup = build_live_odds_lookup(rows)
+
+        self.assertEqual(live_odds_value(lookup_live_odds(lookup["R1"], "win", ["1"])), 5.0)
+        self.assertEqual(lookup_live_odds(lookup["R1"], "win", ["2"]), {})
+
 
 class PortfolioTest(unittest.TestCase):
     def test_summary_uses_stake_weighted_ev(self):

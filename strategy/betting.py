@@ -936,7 +936,7 @@ def _build_sanrentan_formation_candidates(
                 "ev_current": _fmt(formation_ev),
                 "ev_predicted": _fmt(formation_ev),
                 "predicted_odds_source": "jra_live" if all(point.get("odds_source") == "jra_live" for point in points) else "sanrentan_formation",
-                "odds_source": "jra_live" if any(point.get("odds_source") == "jra_live" for point in points) else "estimated",
+                "odds_source": "jra_live" if all(point.get("odds_source") == "jra_live" for point in points) else "estimated",
                 "ticket_role": "value",
                 "coverage_reason": "",
                 "confidence": _fmt(confidence),

@@ -14,6 +14,9 @@ OUTPUT_COLUMNS = [
     "horse_number",
     "current_jockey",
     "assigned_weight",
+    "current_body_weight",
+    "body_weight_change",
+    "body_weight_status",
     "current_odds",
     "current_popularity",
     "target_track",
@@ -51,6 +54,9 @@ ENTRY_COLUMNS = [
     "horse_number",
     "current_jockey",
     "assigned_weight",
+    "current_body_weight",
+    "body_weight_change",
+    "body_weight_status",
     "current_odds",
     "current_popularity",
     "target_track",
@@ -109,6 +115,9 @@ def build_entry_rows(rows: list[dict[str, str]]) -> list[dict[str, str]]:
                 "horse_number": first["horse_number"],
                 "current_jockey": first["current_jockey"],
                 "assigned_weight": first["assigned_weight"],
+                "current_body_weight": first["current_body_weight"],
+                "body_weight_change": first["body_weight_change"],
+                "body_weight_status": first["body_weight_status"],
                 "current_odds": first["current_odds"],
                 "current_popularity": first["current_popularity"],
                 "target_track": first["target_track"],
@@ -139,6 +148,12 @@ def _normalize_row(row: dict[str, str]) -> dict[str, str]:
     data["frame_number"] = _normalize_int(data["frame_number"])
     data["horse_number"] = _normalize_int(data["horse_number"])
     data["assigned_weight"] = _normalize_float(data["assigned_weight"])
+    data["current_body_weight"] = _normalize_int(data["current_body_weight"])
+    data["body_weight_change"] = _normalize_int(data["body_weight_change"])
+    data["body_weight_status"] = _normalize_body_weight_status(
+        data["body_weight_status"],
+        data["current_body_weight"],
+    )
     data["current_odds"] = _normalize_float(data["current_odds"])
     data["current_popularity"] = _normalize_int(data["current_popularity"])
     data["target_race_date"] = _normalize_date(data["target_race_date"])
@@ -194,6 +209,15 @@ def _normalize_float(value: str) -> str:
 def _normalize_country_code(value: str) -> str:
     code = re.sub(r"[^A-Za-z]", "", value or "").upper()
     return code[:3] if code else ""
+
+
+def _normalize_body_weight_status(value: str, current_body_weight: str) -> str:
+    if current_body_weight:
+        return "published"
+    normalized = (value or "").strip().lower()
+    if normalized in {"not_measured", "計不"}:
+        return "not_measured"
+    return "unpublished"
 
 
 def _normalize_time(value: str) -> str:

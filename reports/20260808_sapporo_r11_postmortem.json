@@ -1,0 +1,304 @@
+{
+  "schema_version": "1.0",
+  "race_id": "20260808_札幌_11",
+  "race": {
+    "name": "第31回エルムステークス",
+    "grade": "GIII",
+    "post_time": "2026-08-08T15:25:00+09:00",
+    "course": "札幌ダート1700m・右",
+    "official_weather": "曇",
+    "official_track_condition": "稍重"
+  },
+  "sources": {
+    "official_result": "https://www.jra.go.jp/JRADB/accessS.html?CNAME=pw01sde0101202601051120260808/D3",
+    "official_entry": "https://www.jra.go.jp/JRADB/accessD.html?CNAME=pw01dde0101202601051120260808/17",
+    "reviewed_snapshot": "data/collected/20260808_sapporo_11/final/06_reviewer.json",
+    "latest_collector": "data/collected/20260808_sapporo_11/final_prediction/01_data_collector.json",
+    "latest_analyzer": "data/collected/20260808_sapporo_11/final_prediction/02_analyzer.json",
+    "latest_simulator": "data/collected/20260808_sapporo_11/final_prediction/03_simulator.json",
+    "latest_odds": "data/collected/20260808_sapporo_11/final_prediction/live_combo_odds.csv"
+  },
+  "official_result": {
+    "finishers": [
+      {
+        "place": 1,
+        "horse_number": 3,
+        "horse": "ルクソールカフェ",
+        "time": "1:43.8",
+        "passing_order": "10-9-5-4",
+        "last_3f": 37.1,
+        "body_weight_kg": 542,
+        "body_weight_change_kg": -2,
+        "popularity": 3
+      },
+      {
+        "place": 2,
+        "horse_number": 11,
+        "horse": "ペリエール",
+        "time": "1:44.0",
+        "passing_order": "3-3-4-3",
+        "last_3f": 37.8,
+        "body_weight_kg": 488,
+        "body_weight_change_kg": -4,
+        "popularity": 4
+      },
+      {
+        "place": 3,
+        "horse_number": 5,
+        "horse": "テーオーパスワード",
+        "time": "1:44.2",
+        "passing_order": "5-5-5-5",
+        "last_3f": 37.5,
+        "body_weight_kg": 490,
+        "body_weight_change_kg": -2,
+        "popularity": 2
+      },
+      {
+        "place": 4,
+        "horse_number": 4,
+        "horse": "ナチュラルライズ",
+        "time": "1:44.8",
+        "passing_order": "11-11-9-7",
+        "last_3f": 37.6,
+        "body_weight_kg": 500,
+        "body_weight_change_kg": 0,
+        "popularity": 5
+      },
+      {
+        "place": 5,
+        "horse_number": 6,
+        "horse": "ヴァルツァーシャル",
+        "time": "1:44.9",
+        "passing_order": "7-7-7-7",
+        "last_3f": 38.0,
+        "body_weight_kg": 500,
+        "body_weight_change_kg": -8,
+        "popularity": 7
+      },
+      {
+        "place": 6,
+        "horse_number": 7,
+        "horse": "テーオードレフォン",
+        "time": "1:45.0",
+        "passing_order": "9-9-8-9",
+        "last_3f": 37.9,
+        "body_weight_kg": 498,
+        "body_weight_change_kg": 0,
+        "popularity": 11
+      },
+      {
+        "place": 7,
+        "horse_number": 9,
+        "horse": "ヒルノハンブルク",
+        "time": "1:45.3",
+        "passing_order": "2-2-2-2",
+        "last_3f": 39.3,
+        "body_weight_kg": 472,
+        "body_weight_change_kg": 4,
+        "popularity": 10
+      },
+      {
+        "place": 8,
+        "horse_number": 8,
+        "horse": "ウェイワードアクト",
+        "time": "1:45.9",
+        "passing_order": "1-1-2-1",
+        "last_3f": 39.9,
+        "body_weight_kg": 542,
+        "body_weight_change_kg": 2,
+        "popularity": 1
+      },
+      {
+        "place": 9,
+        "horse_number": 10,
+        "horse": "オメガギネス",
+        "time": "1:47.1",
+        "passing_order": "5-5-1-5",
+        "last_3f": 41.2,
+        "body_weight_kg": 498,
+        "body_weight_change_kg": 2,
+        "popularity": 6
+      },
+      {
+        "place": 10,
+        "horse_number": 2,
+        "horse": "レヴォントゥレット",
+        "time": "1:50.9",
+        "passing_order": "3-3-11-11",
+        "last_3f": 42.7,
+        "body_weight_kg": 494,
+        "body_weight_change_kg": 2,
+        "popularity": 8
+      },
+      {
+        "place": 11,
+        "horse_number": 1,
+        "horse": "アクションプラン",
+        "time": "1:51.0",
+        "passing_order": "7-7-10-10",
+        "last_3f": 43.4,
+        "body_weight_kg": 506,
+        "body_weight_change_kg": -6,
+        "popularity": 9
+      }
+    ],
+    "payouts_per_100_yen": {
+      "win_3": 500,
+      "umaren_3-11": 2020,
+      "sanrenpuku_3-5-11": 2950,
+      "sanrentan_3>11>5": 19010
+    }
+  },
+  "prediction_review": {
+    "latest_completed_model_stage": {
+      "odds_as_of": "2026-08-08T15:11:00+09:00",
+      "captured_at": "2026-08-08T15:12:30.115227+09:00",
+      "weather": "曇",
+      "track_condition": "稍重",
+      "completed_through": "simulator",
+      "formal_go_issued": false,
+      "missing_final_stages": [
+        "ev_calculator",
+        "bet_builder",
+        "reviewer"
+      ]
+    },
+    "model_probability_ranking": [
+      {
+        "rank": 1,
+        "horse_number": 8,
+        "horse": "ウェイワードアクト",
+        "win_probability": 0.240378818173074,
+        "actual_place": 8
+      },
+      {
+        "rank": 2,
+        "horse_number": 11,
+        "horse": "ペリエール",
+        "win_probability": 0.151426689355075,
+        "actual_place": 2
+      },
+      {
+        "rank": 3,
+        "horse_number": 5,
+        "horse": "テーオーパスワード",
+        "win_probability": 0.137016534617778,
+        "actual_place": 3
+      },
+      {
+        "rank": 4,
+        "horse_number": 10,
+        "horse": "オメガギネス",
+        "win_probability": 0.129475888162859,
+        "actual_place": 9
+      },
+      {
+        "rank": 5,
+        "horse_number": 6,
+        "horse": "ヴァルツァーシャル",
+        "win_probability": 0.095918097089994,
+        "actual_place": 5
+      },
+      {
+        "rank": 6,
+        "horse_number": 3,
+        "horse": "ルクソールカフェ",
+        "win_probability": 0.064295823257016,
+        "actual_place": 1
+      }
+    ],
+    "assessment": {
+      "actual_top3_in_model_top3": 2,
+      "winner_model_rank": 6,
+      "top_pick_actual_place": 8,
+      "positive": "2着ペリエールと3着テーオーパスワードを確率順位2位・3位に評価できた。",
+      "negative": "勝ち馬ルクソールカフェを6位まで下げ、1位ウェイワードアクトと旧買い目の軸オメガギネスを高く評価しすぎた。"
+    }
+  },
+  "portfolio_review": {
+    "status": "NOT_A_FORMAL_FINAL_GO",
+    "reason": "10:24時点のreviewer OKは固定スナップショット限定で、購入直前の再取得と再レビューを必須としていた。15:11時点の更新処理はsimulatorで終了し、正式な買い目とGOを発行しなかった。",
+    "stale_snapshot_candidate_tickets": [
+      {
+        "bet_type": "三連複",
+        "combination": "6-10-11",
+        "stake": 200,
+        "hit": false
+      },
+      {
+        "bet_type": "馬連",
+        "combination": "9-10",
+        "stake": 300,
+        "hit": false
+      },
+      {
+        "bet_type": "単勝",
+        "combination": "7",
+        "stake": 200,
+        "hit": false
+      },
+      {
+        "bet_type": "単勝",
+        "combination": "6",
+        "stake": 300,
+        "hit": false
+      }
+    ],
+    "hypothetical_if_stale_candidates_were_purchased": {
+      "stake": 1000,
+      "return": 0,
+      "profit": -1000,
+      "roi": 0.0
+    }
+  },
+  "root_causes": [
+    {
+      "category": "deadline",
+      "severity": "critical",
+      "finding": "15:12のライブ更新後、6段階中3段階で処理が止まり、発走5分前までのGO/NO_GO出力を保証する制御がなかった。"
+    },
+    {
+      "category": "snapshot_freshness",
+      "severity": "critical",
+      "finding": "10:24のオッズに対するreviewer OKが残っていたが、発走301分前の固定値限定であり、購入承認として扱えない状態だった。"
+    },
+    {
+      "category": "body_weight",
+      "severity": "high",
+      "finding": "15:12のdata_collector出力に当日馬体重が保存されておらず、直前変動をレビューできなかった。"
+    },
+    {
+      "category": "pace_model",
+      "severity": "high",
+      "finding": "同日ダートの前残り傾向を強く反映した一方、本番は先行勢が崩れ、10番手から進出したルクソールカフェが最速上がり37.1秒で勝った。勝ち馬にはpace -3、1番人気ウェイワードアクトにはpace +4を与えており、当該レースの先行競合リスクを過小評価した。"
+    }
+  ],
+  "corrective_actions": [
+    {
+      "action": "事前分析と直前ライブ更新を分離し、過去走を直前に再取得しない。",
+      "status": "implemented"
+    },
+    {
+      "action": "発走5分前を出力締切とし、normal/fast/emergency/too_lateの実行モードとハードウォッチドッグを導入する。",
+      "status": "implemented"
+    },
+    {
+      "action": "馬体重をpublished/not_measured/unpublishedで保存し、未発表時はNO_GOにする。",
+      "status": "implemented"
+    },
+    {
+      "action": "8券種の全組番を同一snapshot_idで取得し、欠損・鮮度・実オッズをreviewerのGO条件にする。",
+      "status": "implemented"
+    },
+    {
+      "action": "同日馬場バイアスにサンプル数と先行競合度による上限を設け、前崩れシナリオの校正をバックテストする。",
+      "status": "planned"
+    }
+  ],
+  "overall": {
+    "prediction_quality": "NG",
+    "operational_quality": "NG",
+    "formal_betting_decision": "NO_GO_NOT_ISSUED",
+    "lesson": "能力上位の2着・3着は捉えたが、勝ち馬と前崩れを取り逃がした。さらに直前処理が完走せず、古いレビューを購入判断に転用できない状態だった。モデル改善より先に、締切内に最新データでGO/NO_GOを必ず確定させる運用保証が必要だった。"
+  }
+}
