@@ -43,6 +43,48 @@ class TestAppendResultLabels(unittest.TestCase):
                 stored = list(csv.DictReader(file_obj))
             self.assertEqual(1, len(stored))
 
+    def test_rows_from_review_accepts_dict_and_string_payouts(self):
+        base = {"race": {"race_id": "2026072607020207"}}
+        dict_rows = rows_from_review(
+            {**base, "result": {"payouts": {"単勝": {"14": 1630}, "ワイド": {"5-14": 720}}}}
+        )
+        string_rows = rows_from_review(
+            {**base, "result": {"payouts": "{'単勝': {'14': 1630}, 'ワイド': {'5-14': 720}}"}}
+        )
+
+        self.assertEqual(dict_rows, string_rows)
+        self.assertEqual(
+            [
+                {"race_id": "2026072607020207", "式別": "単勝", "組番": "", "馬番": "14", "払戻金": "1630"},
+                {"race_id": "2026072607020207", "式別": "ワイド", "組番": "5-14", "馬番": "", "払戻金": "720"},
+            ],
+            dict_rows,
+        )
+
+    def test_rows_from_review_accepts_jra_display_payouts(self):
+        rows = rows_from_review(
+            {
+                "race": {"race_id": "2026072607020207"},
+                "result": {
+                    "payouts": {
+                        "単勝": "14 1,630円",
+                        "複勝": ["14 380円", "11 330円", "5 110円"],
+                        "ワイド": ["11-14 1,890円", "5-14 710円", "5-11 550円"],
+                    }
+                },
+            }
+        )
+
+        self.assertEqual(7, len(rows))
+        self.assertEqual(
+            {"race_id": "2026072607020207", "式別": "単勝", "組番": "", "馬番": "14", "払戻金": "1630"},
+            rows[0],
+        )
+        self.assertEqual(
+            {"race_id": "2026072607020207", "式別": "ワイド", "組番": "11-14", "馬番": "", "払戻金": "1890"},
+            rows[4],
+        )
+
     def test_rows_from_review_builds_win5_label_without_race_metadata(self):
         rows = rows_from_review(
             {

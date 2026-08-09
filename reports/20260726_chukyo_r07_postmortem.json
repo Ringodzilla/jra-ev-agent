@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "race_id": "20260726_中京_07",
+  "race": {
+    "name": "第43回東海ステークス",
+    "grade": "GIII",
+    "post_time": "2026-07-26T15:35:00+09:00",
+    "course": "中京ダート1400m・左",
+    "weather": "晴",
+    "track_condition": "良"
+  },
+  "source": {
+    "entry": "https://www.jra.go.jp/JRADB/accessD.html?CNAME=pw01dde0107202602020720260726/56",
+    "odds_as_of": "2026-07-26T15:14:00+09:00",
+    "history_rows": 70,
+    "history_rows_per_horse": 5,
+    "odds_candidate_count": 2974,
+    "unresolved_missing_fields": 59,
+    "missing_policy": "Values unavailable from JRA primary data remain null; no inferred values were persisted."
+  },
+  "prediction": {
+    "win_probability_ranking": [
+      {"rank": 1, "horse_number": 5, "horse": "ドンインザムード", "win_probability": 0.2479918816, "actual_place": 3},
+      {"rank": 2, "horse_number": 7, "horse": "ダノンフィーゴ", "win_probability": 0.2479918816, "actual_place": 10},
+      {"rank": 3, "horse_number": 8, "horse": "ベルジュロネット", "win_probability": 0.1231491239, "actual_place": 9},
+      {"rank": 4, "horse_number": 9, "horse": "インユアパレス", "win_probability": 0.1059954332, "actual_place": 4},
+      {"rank": 5, "horse_number": 14, "horse": "マテンロウコマンド", "win_probability": 0.0777901959, "actual_place": 1}
+    ],
+    "tickets": [
+      {"bet_type": "ワイド", "combination": "6-7", "stake_yen": 300, "hit_probability": 0.0631764961, "odds": 107.8, "ev": 6.8104262767},
+      {"bet_type": "ワイド", "combination": "4-5", "stake_yen": 300, "hit_probability": 0.0693004933, "odds": 64.6, "ev": 4.4768118669},
+      {"bet_type": "単勝", "combination": "14", "stake_yen": 200, "hit_probability": 0.0777901959, "odds": 15.8, "ev": 1.2290850952},
+      {"bet_type": "複勝", "combination": "10", "stake_yen": 100, "hit_probability": 0.080849, "odds": 19.1, "ev": 1.5442159},
+      {"bet_type": "三連複", "combination": "7-8-14", "stake_yen": 100, "hit_probability": 0.0244531712, "odds": 87.7, "ev": 2.1445431126}
+    ]
+  },
+  "official_result": {
+    "top_three": [
+      {"place": 1, "horse_number": 14, "horse": "マテンロウコマンド", "time": "1:22.8", "popularity": 7},
+      {"place": 2, "horse_number": 11, "horse": "メイショウハチロー", "time": "1:22.9", "popularity": 6},
+      {"place": 3, "horse_number": 5, "horse": "ドンインザムード", "time": "1:23.3", "popularity": 1}
+    ],
+    "payouts_per_100_yen": {
+      "単勝_14": 1630,
+      "複勝_14": 380,
+      "複勝_11": 330,
+      "複勝_5": 110,
+      "枠連_7-8": 2140,
+      "ワイド_11-14": 1890,
+      "ワイド_5-14": 710,
+      "ワイド_5-11": 550,
+      "馬連_11-14": 7050,
+      "馬単_14-11": 13570,
+      "三連複_5-11-14": 4180,
+      "三連単_14-11-5": 43200
+    }
+  },
+  "settlement": {
+    "ticket_count": 5,
+    "hit_count": 1,
+    "stake_yen": 1000,
+    "return_yen": 3260,
+    "profit_yen": 2260,
+    "roi": 3.26,
+    "winning_ticket": {"bet_type": "単勝", "combination": "14", "stake_yen": 200, "return_yen": 3260}
+  },
+  "review": {
+    "winner_predicted_rank": 5,
+    "top3_overlap_count": 1,
+    "top5_overlap_count": 3,
+    "mean_absolute_rank_error": 3.2857142857,
+    "positive": "14番マテンロウコマンドを単勝EV対象として残し、全体収支をプラスにした。",
+    "negative": "7番ダノンフィーゴ、8番ベルジュロネット、13番ドラゴンテイラーを過大評価した。",
+    "calibration_policy": "Do not retune model coefficients from this single race. Validate calibration over multiple races."
+  }
+}

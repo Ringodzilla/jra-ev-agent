@@ -1,6 +1,7 @@
 import unittest
 
 from analysis.ev import EVWeights, build_feature_rows, compute_ev, simulate_race_scenarios
+from src.feature_engineering import build_feature_row
 from src.react_workflow import ReviewerAgent, WorkflowSettings
 from strategy.betting import (
     _calibrate_ticket_probabilities,
@@ -267,6 +268,49 @@ class TestEVPipeline(unittest.TestCase):
         self.assertEqual("wide", plan["tickets"][0]["bet_type"])
         self.assertIn("wide_odds_est", plan["tickets"][0])
         self.assertIn("ev_predicted", plan["tickets"][0])
+
+    def test_generate_tickets_classifies_every_ticket_horse_exactly_once(self):
+        ev_rows = []
+        for number, win_prob, odds, place_prob in [
+            (1, 0.28, 4.0, 0.55),
+            (2, 0.22, 5.0, 0.45),
+            (3, 0.18, 7.0, 0.35),
+            (4, 0.12, 10.0, 0.25),
+            (5, 0.08, 18.0, 0.15),
+        ]:
+            ev_rows.append(
+                {
+                    "race_id": "r_classification",
+                    "horse_id": f"h{number}",
+                    "horse_name": f"Horse {number}",
+                    "horse_number": str(number),
+                    "win_prob": str(win_prob),
+                    "place_prob": str(place_prob),
+                    "market_place_prob": "0.10",
+                    "current_odds": str(odds),
+                    "predicted_odds": str(odds),
+                    "market_prob": str(1 / odds),
+                    "ev": str(win_prob * odds),
+                    "ev_current": str(win_prob * odds),
+                    "ev_predicted": str(win_prob * odds),
+                    "model_score": str(1 - number * 0.05),
+                    "consistency": "0.7",
+                    "history_count": "5",
+                }
+            )
+
+        plan = generate_tickets(ev_rows, max_tickets_per_race=5, min_portfolio_ev=0.0)
+        classified = plan["core"] + plan["partner"] + plan["long"]
+        classified_numbers = [str(item["horse_number"]) for item in classified]
+        ticket_numbers = {
+            str(number)
+            for ticket in plan["tickets"]
+            for number in (ticket.get("horse_numbers") or [ticket.get("horse_number")])
+        }
+
+        self.assertTrue(ticket_numbers)
+        self.assertTrue(ticket_numbers.issubset(set(classified_numbers)))
+        self.assertEqual(len(classified_numbers), len(set(classified_numbers)))
 
     def test_generate_tickets_adds_multi_bet_candidates_across_bet_types(self):
         ev_rows = []
@@ -1527,6 +1571,26 @@ class TestEVPipeline(unittest.TestCase):
         self.assertGreater(float(hk["country_value_score"]), 0.0)
         self.assertLess(float(jpn["market_support"]), float(jpn["market_support_base"]))
         self.assertGreater(float(hk["market_support"]), float(hk["market_support_base"]))
+
+
+    def test_weight_increase_is_penalty_and_decrease_is_bonus(self):
+        current = {
+            "race_id": "r1",
+            "horse_id": "h1",
+            "assigned_weight": "57",
+            "target_distance": "1400",
+        }
+        summary = {"avg_weight": 55.0}
+
+        increased = build_feature_row(current, summary)
+        decreased = build_feature_row({**current, "assigned_weight": "53"}, summary)
+
+        self.assertLess(float(increased["weight_score"]), 0.0)
+        self.assertGreater(float(decreased["weight_score"]), 0.0)
+        self.assertAlmostEqual(
+            float(increased["weight_score"]),
+            -float(decreased["weight_score"]),
+        )
 
 
 if __name__ == "__main__":

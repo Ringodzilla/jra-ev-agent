@@ -54,6 +54,7 @@ class MissingHistoryRepairAction:
         rows: list[dict[str, str]],
         reason: str,
         source_counts: dict[str, int],
+        attempted_urls: list[str] | None = None,
     ) -> MissingDataRepairResult:
         actions: list[dict[str, object]] = [
             {
@@ -66,6 +67,7 @@ class MissingHistoryRepairAction:
                 "history_count": len(rows),
                 "missing_count": max(0, 5 - len(rows)),
                 "source_counts": source_counts,
+                "attempted_urls": list(attempted_urls or [horse.horse_url]),
             }
         ]
         if len(rows) >= 5:
@@ -77,6 +79,7 @@ class MissingHistoryRepairAction:
             manual_history_csv=self.manual_history_csv,
             manual_template_csv=self.manual_template_csv,
             reason=reason,
+            attempted_urls=attempted_urls,
         )
         issue = ParserIssue(
             stage="pipeline.history_repair",
@@ -106,6 +109,7 @@ def missing_history_request(
     manual_history_csv: Path,
     manual_template_csv: Path,
     reason: str,
+    attempted_urls: list[str] | None = None,
 ) -> dict[str, object]:
     return {
         "race_id": horse.race_id,
@@ -116,6 +120,7 @@ def missing_history_request(
         "missing_count": max(0, 5 - history_count),
         "fallback_score": 0.5,
         "fallback_reason": reason,
+        "attempted_urls": list(attempted_urls or [horse.horse_url]),
         "status": "manual_input_required",
         "action": "Fill the template rows and append completed observations to the manual history CSV.",
         "manual_history_csv": str(manual_history_csv),

@@ -189,6 +189,7 @@ class JRAPipeline:
                             "manual": len(manual_rows),
                             "detail": 0,
                         },
+                        attempted_urls=[horse.horse_url],
                     )
                     rows = repair_result.rows
                     repair_actions.extend(repair_result.repair_actions)
@@ -228,6 +229,7 @@ class JRAPipeline:
                         "manual": len(manual_rows),
                         "detail": len(detail_rows),
                     },
+                    attempted_urls=[horse.horse_url],
                 )
                 rows = repair_result.rows
                 repair_actions.extend(repair_result.repair_actions)
@@ -893,6 +895,7 @@ def _missing_history_request(horse, *, history_count: int, manual_history_csv: P
         manual_history_csv=manual_history_csv,
         manual_template_csv=manual_history_csv.with_name("manual_history_template.csv"),
         reason="user_unavailable_or_manual_data_not_stored",
+        attempted_urls=[horse.horse_url],
     )
 
 

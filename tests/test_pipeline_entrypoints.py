@@ -372,7 +372,18 @@ class TestPipelineEntrypoints(unittest.TestCase):
             ]
             history_rows = [{"last_3f": "34.5"}, {"last_3f": "36.0"}, {"last_3f": ""}]
 
-            pipeline._write_quality_report(issues, [], history_rows)
+            pipeline._write_quality_report(
+                issues,
+                [],
+                history_rows,
+                [
+                    {
+                        "type": "history_gap_repair",
+                        "reason": "history_sources_exhausted",
+                        "attempted_urls": ["https://example.test/h1"],
+                    }
+                ],
+            )
             report = json.loads(config.quality_report_path.read_text(encoding="utf-8"))
             pipeline.close()
 
@@ -381,6 +392,10 @@ class TestPipelineEntrypoints(unittest.TestCase):
         self.assertEqual(1, report["last3f_fallback_rows"])
         self.assertEqual(1, report["last3f_missing_rows"])
         self.assertEqual(0.333333, report["last3f_observed_rate"])
+        self.assertEqual(
+            ["https://example.test/h1"],
+            report["missing_data_repair_actions"][0]["attempted_urls"],
+        )
 
     def test_manual_history_rows_are_enriched_for_current_entry(self):
         horse = SimpleNamespace(
@@ -410,6 +425,8 @@ class TestPipelineEntrypoints(unittest.TestCase):
 
         self.assertEqual(1, request["missing_count"])
         self.assertEqual(0.5, request["fallback_score"])
+        self.assertEqual("user_unavailable_or_manual_data_not_stored", request["fallback_reason"])
+        self.assertEqual(["https://example.test/h1"], request["attempted_urls"])
 
     def test_missing_history_repair_action_prepares_manual_template(self):
         horse = SimpleNamespace(
@@ -430,6 +447,9 @@ class TestPipelineEntrypoints(unittest.TestCase):
         self.assertTrue(result.requires_manual_input)
         self.assertEqual("manual_required", result.repair_actions[0]["status"])
         self.assertEqual(2, result.manual_requests[0]["missing_count"])
+        self.assertEqual("history_sources_exhausted", result.manual_requests[0]["fallback_reason"])
+        self.assertEqual(["https://example.test/h1"], result.manual_requests[0]["attempted_urls"])
+        self.assertEqual(["https://example.test/h1"], result.repair_actions[0]["attempted_urls"])
         self.assertEqual(2, len(result.manual_template_rows))
         self.assertEqual("h1", result.manual_template_rows[0]["horse_id"])
 

@@ -235,6 +235,13 @@ def generate_tickets(
         race_core = [_horse_summary(row) for row in place_ranked[:2] if _to_float(row.get("place_prob")) >= 0.22]
         race_partner = [_horse_summary(row) for row in place_ranked[2:4] if _to_float(row.get("place_prob")) >= 0.16]
         race_long = _build_race_longshots(enriched, min_win_ev=min_win_ev, limit=2)
+        race_core, race_partner, race_long = _reconcile_ticket_classifications(
+            race_core,
+            race_partner,
+            race_long,
+            race_tickets,
+            enriched,
+        )
 
         core.extend(race_core)
         partner.extend(race_partner)
@@ -1478,6 +1485,62 @@ def _build_race_longshots(
         reverse=True,
     )
     return [_horse_summary(row) for row in merged[:limit]]
+
+
+def _reconcile_ticket_classifications(
+    core: list[dict[str, object]],
+    partner: list[dict[str, object]],
+    longshots: list[dict[str, object]],
+    tickets: list[dict[str, object]],
+    rows: list[dict[str, object]],
+) -> tuple[list[dict[str, object]], list[dict[str, object]], list[dict[str, object]]]:
+    """Keep classifications exclusive and cover every horse used by a ticket."""
+    seen: set[str] = set()
+
+    def unique(items: list[dict[str, object]]) -> list[dict[str, object]]:
+        out: list[dict[str, object]] = []
+        for item in items:
+            horse_number = str(item.get("horse_number", "")).strip()
+            if not horse_number or horse_number in seen:
+                continue
+            seen.add(horse_number)
+            out.append(item)
+        return out
+
+    core = unique(core)
+    partner = unique(partner)
+    longshots = unique(longshots)
+    rows_by_number = {str(row.get("horse_number", "")).strip(): row for row in rows}
+    ticket_numbers: set[str] = set()
+    for ticket in tickets:
+        ticket_numbers.update(_ticket_horse_numbers_for_classification(ticket))
+
+    for horse_number in sorted(ticket_numbers, key=lambda value: int(value) if value.isdigit() else math.inf):
+        if horse_number in seen or horse_number not in rows_by_number:
+            continue
+        summary = _horse_summary(rows_by_number[horse_number])
+        summary["long_reason"] = "selected_ticket"
+        longshots.append(summary)
+        seen.add(horse_number)
+    return core, partner, longshots
+
+
+def _ticket_horse_numbers_for_classification(ticket: dict[str, object]) -> set[str]:
+    numbers = {str(value).strip() for value in list(ticket.get("horse_numbers") or []) if str(value).strip()}
+    for leg in list(ticket.get("legs") or []):
+        if not isinstance(leg, dict):
+            continue
+        horse_number = str(leg.get("horse_number", "")).strip()
+        if horse_number:
+            numbers.add(horse_number)
+        for horse in list(leg.get("horses") or []):
+            if isinstance(horse, dict):
+                horse_number = str(horse.get("horse_number", "")).strip()
+                if horse_number:
+                    numbers.add(horse_number)
+    if not numbers and str(ticket.get("bet_type", "")) != "wakuren":
+        numbers.update(_ticket_horse_numbers(ticket))
+    return numbers
 
 
 def _model_score_longshots(rows: list[dict[str, object]]) -> list[dict[str, object]]:

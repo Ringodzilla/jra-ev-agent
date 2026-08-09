@@ -2,8 +2,10 @@
 from __future__ import annotations
 
 import argparse
+import ast
 import csv
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -25,14 +27,70 @@ def rows_from_review(review: dict[str, object]) -> list[dict[str, str]]:
         rows.append(win5_row)
 
     race_id = str(race.get("race_id") or _build_race_id(race)).strip()
-    if not race_id and list(result.get("payouts") or []):
+    payouts = _normalize_payouts(result.get("payouts"))
+    if not race_id and payouts:
         raise ValueError("review JSON does not contain enough race metadata to build race_id")
 
-    for payout in list(result.get("payouts") or []):
-        row = _label_row(race_id, dict(payout))
+    for payout in payouts:
+        row = _label_row(race_id, payout)
         if row:
             rows.append(row)
     return rows
+
+
+def _normalize_payouts(value: object) -> list[dict[str, object]]:
+    """Accept canonical lists plus persisted dict/string representations."""
+    if isinstance(value, str):
+        text = value.strip()
+        if not text:
+            return []
+        try:
+            value = json.loads(text)
+        except json.JSONDecodeError:
+            try:
+                value = ast.literal_eval(text)
+            except (ValueError, SyntaxError):
+                return []
+
+    if isinstance(value, list):
+        return [dict(item) for item in value if isinstance(item, dict)]
+    if not isinstance(value, dict):
+        return []
+
+    normalized: list[dict[str, object]] = []
+    for bet_type, details in value.items():
+        if isinstance(details, list):
+            for item in details:
+                if isinstance(item, dict):
+                    normalized.append({"bet_type": bet_type, **item})
+                elif parsed := _parse_jra_payout_text(bet_type, item):
+                    normalized.append(parsed)
+        elif isinstance(details, dict):
+            if any(key in details for key in ("combination", "payout_yen_per_100")):
+                normalized.append({"bet_type": bet_type, **details})
+            else:
+                normalized.extend(
+                    {
+                        "bet_type": bet_type,
+                        "combination": combination,
+                        "payout_yen_per_100": payout,
+                    }
+                    for combination, payout in details.items()
+                )
+        elif parsed := _parse_jra_payout_text(bet_type, details):
+            normalized.append(parsed)
+    return normalized
+
+
+def _parse_jra_payout_text(bet_type: object, value: object) -> dict[str, object]:
+    match = re.fullmatch(r"\s*(\d+(?:-\d+)*)\s+([\d,]+)円\s*", str(value))
+    if not match:
+        return {}
+    return {
+        "bet_type": str(bet_type),
+        "combination": match.group(1),
+        "payout_yen_per_100": match.group(2).replace(",", ""),
+    }
 
 
 def append_rows(path: Path, rows: list[dict[str, str]]) -> list[dict[str, str]]:
