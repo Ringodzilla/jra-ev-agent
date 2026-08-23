@@ -6,6 +6,7 @@ from src.react_workflow import ReviewerAgent, WorkflowSettings
 from strategy.betting import (
     _calibrate_ticket_probabilities,
     _frame_quality_adjustment,
+    _limit_eligible_selection_pool,
     _wide_pace_adjustment,
     generate_tickets,
 )
@@ -1130,7 +1131,7 @@ class TestEVPipeline(unittest.TestCase):
         self.assertIn("marked_core_pair_real_odds", reasons)
         self.assertIn("marked_core_trio_real_odds", reasons)
 
-    def test_generate_tickets_suppresses_sub_five_percent_win_tickets(self):
+    def test_generate_tickets_calibrates_extreme_low_evidence_win_ticket_out_of_selection(self):
         ev_rows = [
             {
                 "race_id": "r_low_win",
@@ -1154,15 +1155,15 @@ class TestEVPipeline(unittest.TestCase):
                 "horse_name": "Long",
                 "frame_number": "8",
                 "horse_number": "9",
-                "win_prob": "0.04",
-                "current_odds": "45.0",
-                "predicted_odds": "45.0",
-                "ev": "1.8",
-                "ev_current": "1.8",
-                "ev_predicted": "1.8",
-                "market_prob": "0.02",
-                "consistency": "0.55",
-                "history_count": "5",
+                "win_prob": "0.005",
+                "current_odds": "400.0",
+                "predicted_odds": "400.0",
+                "ev": "2.0",
+                "ev_current": "2.0",
+                "ev_predicted": "2.0",
+                "market_prob": "0.0025",
+                "consistency": "0.10",
+                "history_count": "1",
             },
         ]
         for idx in range(2, 7):
@@ -1186,15 +1187,141 @@ class TestEVPipeline(unittest.TestCase):
             )
 
         plan = generate_tickets(ev_rows, prefer_wide=False)
-        all_tickets = list(plan["tickets"]) + list(plan["races"][0]["candidates"])
 
         self.assertFalse(
             [
                 ticket
-                for ticket in all_tickets
+                for ticket in plan["tickets"]
                 if ticket["bet_type"] == "win" and str(ticket["horse_number"]) == "9"
             ]
         )
+
+    def test_generate_tickets_keeps_cbc_boundary_win_row_eligible(self):
+        win_prob = 0.04798577599968
+        stale_odds = 20.0
+        official_odds = 27.3
+        ev_rows = [
+            {
+                "race_id": "r_cbc_boundary",
+                "horse_id": "h2",
+                "horse_name": "フロムダスク",
+                "frame_number": "1",
+                "horse_number": "2",
+                "win_prob": str(win_prob),
+                "current_odds": str(stale_odds),
+                "predicted_odds": str(stale_odds),
+                "ev": str(win_prob * stale_odds),
+                "ev_current": str(win_prob * stale_odds),
+                "ev_predicted": str(win_prob * stale_odds),
+                "market_prob": str(1.0 / stale_odds),
+                "consistency": "0.1523",
+                "history_count": "5",
+            }
+        ]
+        odds_rows = [
+            {
+                "race_id": "r_cbc_boundary",
+                "bet_type": "win",
+                "combination": "2",
+                "odds": str(official_odds),
+                "captured_at": "2026-08-09T15:25:00+09:00",
+            }
+        ]
+
+        plan = generate_tickets(
+            ev_rows,
+            odds_rows=odds_rows,
+            prefer_wide=False,
+            max_tickets_per_race=1,
+            min_place_ev=9.0,
+            min_wide_ev=9.0,
+            min_wakuren_ev=9.0,
+            min_umaren_ev=9.0,
+            min_umatan_ev=9.0,
+            min_sanrenpuku_ev=9.0,
+            min_sanrentan_ev=9.0,
+        )
+        boundary = next(
+            ticket
+            for ticket in plan["tickets"]
+            if ticket["bet_type"] == "win" and str(ticket["horse_number"]) == "2"
+        )
+
+        self.assertGreater(float(boundary["ev_current"]), 1.05)
+        self.assertEqual(official_odds, float(boundary["win_odds"]))
+        self.assertAlmostEqual(win_prob, float(boundary["raw_hit_prob"]), places=6)
+
+    def test_generate_tickets_refills_win_selection_from_complete_eligible_universe(self):
+        ev_rows = []
+        for horse_name, horse_number, win_prob, odds, consistency, history_count in [
+            ("RejectedA", "1", 0.0100, 200.0, 0.10, 1),
+            ("RejectedB", "2", 0.0095, 200.0, 0.10, 1),
+            ("RefillA", "3", 0.04798577599968, 27.3, 0.65, 5),
+            ("RefillB", "4", 0.0800, 16.0, 0.65, 5),
+        ]:
+            ev = win_prob * odds
+            ev_rows.append(
+                {
+                    "race_id": "r_win_refill",
+                    "horse_id": f"h{horse_number}",
+                    "horse_name": horse_name,
+                    "frame_number": horse_number,
+                    "horse_number": horse_number,
+                    "win_prob": str(win_prob),
+                    "current_odds": str(odds),
+                    "predicted_odds": str(odds),
+                    "ev": str(ev),
+                    "ev_current": str(ev),
+                    "ev_predicted": str(ev),
+                    "market_prob": str(1.0 / odds),
+                    "consistency": str(consistency),
+                    "history_count": str(history_count),
+                }
+            )
+
+        plan = generate_tickets(
+            ev_rows,
+            prefer_wide=False,
+            max_tickets_per_race=2,
+            min_place_ev=9.0,
+            min_wide_ev=9.0,
+            min_wakuren_ev=9.0,
+            min_umaren_ev=9.0,
+            min_umatan_ev=9.0,
+            min_sanrenpuku_ev=9.0,
+            min_sanrentan_ev=9.0,
+        )
+        selected_win_numbers = {
+            str(ticket["horse_number"])
+            for ticket in plan["tickets"]
+            if ticket["bet_type"] == "win"
+        }
+
+        self.assertEqual({"3", "4"}, selected_win_numbers)
+
+    def test_selection_caps_rank_the_post_calibration_eligible_pool(self):
+        low_ev_first = {
+            "race_id": "r_cap_order",
+            "bet_type": "wide",
+            "horse_number": "1-2",
+            "ev_current": "1.10",
+            "hit_prob": "0.25",
+        }
+        high_ev_second = {
+            "race_id": "r_cap_order",
+            "bet_type": "wide",
+            "horse_number": "3-4",
+            "ev_current": "1.40",
+            "hit_prob": "0.20",
+        }
+
+        limited = _limit_eligible_selection_pool(
+            [low_ev_first, high_ev_second],
+            max_wide_tickets_per_race=1,
+            max_exotic_tickets_per_race=0,
+        )
+
+        self.assertEqual(["3-4"], [ticket["horse_number"] for ticket in limited])
 
     def test_generate_tickets_requires_one_point_zero_five_ev_for_win_candidates(self):
         ev_rows = []
@@ -1463,6 +1590,85 @@ class TestEVPipeline(unittest.TestCase):
         self.assertIn("top win-probability horse", review["reason"])
         self.assertIn("dependency ratio", review["reason"])
 
+    def test_reviewer_rejects_eligible_official_win_missing_from_candidate_universe(self):
+        reviewer = ReviewerAgent(WorkflowSettings(min_ev=1.05))
+        ev_rows = [
+            {
+                "race_id": "r_candidate_audit",
+                "horse_id": "h1",
+                "horse_number": "1",
+                "horse_name": "Omitted",
+                "win_prob": "0.06",
+                "current_odds": "20.0",
+                "ev_current": "1.2",
+            },
+            {
+                "race_id": "r_candidate_audit",
+                "horse_id": "h2",
+                "horse_number": "2",
+                "horse_name": "Considered",
+                "win_prob": "0.94",
+                "current_odds": "2.0",
+                "ev_current": "1.88",
+            },
+        ]
+        collected = {
+            "quality_report": {"issues_by_severity": {}},
+            "entries": [
+                {"race_id": "r_candidate_audit", "horse_id": "h1"},
+                {"race_id": "r_candidate_audit", "horse_id": "h2"},
+            ],
+            "combo_odds": [
+                {
+                    "race_id": "r_candidate_audit",
+                    "bet_type": "win",
+                    "combination": "1",
+                    "odds": "20.0",
+                    "captured_at": "2026-08-09T15:25:00+09:00",
+                },
+                {
+                    "race_id": "r_candidate_audit",
+                    "bet_type": "win",
+                    "combination": "2",
+                    "odds": "2.0",
+                    "captured_at": "2026-08-09T15:25:00+09:00",
+                },
+            ],
+        }
+        ticket_plan = {
+            "tickets": [],
+            "races": [
+                {
+                    "race_id": "r_candidate_audit",
+                    "candidates": [],
+                }
+            ],
+            "candidate_evaluations": [
+                {
+                    "race_id": "r_candidate_audit",
+                    "bet_type": "win",
+                    "combination": "2",
+                    "official_odds": "2.0",
+                }
+            ],
+        }
+
+        review = reviewer.run(
+            collected,
+            scenario_rows=ev_rows,
+            ev_rows=ev_rows,
+            ticket_plan=ticket_plan,
+            attempt=0,
+        )
+
+        self.assertEqual("NG", review["status"])
+        self.assertIn("missing from candidate universe", review["reason"])
+        self.assertEqual(
+            ["1"],
+            [row["horse_number"] for row in review["missing_eligible_win_candidates"]],
+        )
+        self.assertEqual("1.2", review["missing_eligible_win_candidates"][0]["win_ev"])
+
     def test_compute_ev_calibrates_extreme_longshots_toward_market(self):
         feature_rows = []
         odds_ladder = [3.2, 4.1, 6.8, 10.5, 13.2, 18.4, 24.7, 33.0, 55.0, 80.0, 120.0, 260.0]
@@ -1591,6 +1797,25 @@ class TestEVPipeline(unittest.TestCase):
             float(increased["weight_score"]),
             -float(decreased["weight_score"]),
         )
+
+    def test_feature_row_preserves_body_weight_as_gate_only_metadata(self):
+        current = {
+            "race_id": "r_body_weight",
+            "horse_id": "h1",
+            "assigned_weight": "55",
+            "current_body_weight": "472",
+            "body_weight_change": "-2",
+            "body_weight_status": "published",
+            "target_distance": "1200",
+        }
+
+        feature = build_feature_row(current, {"avg_weight": 55.0})
+
+        self.assertEqual("472", feature["current_body_weight"])
+        self.assertEqual("-2", feature["body_weight_change"])
+        self.assertEqual("published", feature["body_weight_status"])
+        self.assertEqual("gate_only", feature["body_weight_model_usage"])
+        self.assertFalse(feature["body_weight_adjustment_applied"])
 
 
 if __name__ == "__main__":

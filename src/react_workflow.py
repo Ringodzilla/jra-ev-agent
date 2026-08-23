@@ -10,7 +10,8 @@ from analysis.ev import EVWeights, build_feature_rows, compute_ev, simulate_race
 from jra_scraper.config import ScrapeConfig
 from jra_scraper.pipeline import JRAPipeline
 from report.note import build_note_article
-from strategy.betting import generate_tickets
+from strategy.betting import MIN_WIN_EV, generate_tickets
+from strategy.live_odds import build_live_odds_lookup, live_odds_value, lookup_live_odds
 from strategy.win5 import generate_win5_plan, is_win5_mode
 
 
@@ -282,6 +283,21 @@ class ReviewerAgent:
                 )
             )
 
+        missing_eligible_win_candidates = _find_missing_eligible_win_candidates(
+            collected,
+            ev_rows,
+            ticket_plan,
+            minimum_win_ev=max(self.settings.min_ev, MIN_WIN_EV),
+        )
+        if missing_eligible_win_candidates and str(ticket_plan.get("bet_type", "")) != "win5":
+            reasons.append(
+                "eligible official-live win candidates are missing from candidate universe: "
+                + ", ".join(
+                    f"{row['horse_name']}@{row['race_id']}"
+                    for row in missing_eligible_win_candidates[:3]
+                )
+            )
+
         status = "OK" if not reasons else "NG"
         return {
             "status": status,
@@ -290,6 +306,7 @@ class ReviewerAgent:
             "repair_actions": repair_actions,
             "probability_sums": {race_id: _fmt(total) for race_id, total in prob_sums.items()},
             "divergent_rows": divergent_rows,
+            "missing_eligible_win_candidates": missing_eligible_win_candidates,
             "stage_counts": {
                 "entries": len(entry_rows),
                 "feature_rows": len(scenario_rows),
@@ -542,6 +559,131 @@ def _probability_sums(ev_rows: list[dict[str, object]]) -> dict[str, float]:
         race_id = str(row.get("race_id", ""))
         totals[race_id] = totals.get(race_id, 0.0) + _to_float(row.get("win_prob"))
     return totals
+
+
+def _find_missing_eligible_win_candidates(
+    collected: dict[str, object],
+    ev_rows: list[dict[str, object]],
+    ticket_plan: dict[str, object],
+    *,
+    minimum_win_ev: float,
+) -> list[dict[str, str]]:
+    """Audit live win-EV rows against the bet builder's explicit candidate universe.
+
+    Legacy plans did not expose candidate metadata. Those plans are intentionally
+    skipped because an empty or absent legacy ticket list is not evidence that the
+    builder evaluated every horse.
+    """
+    candidate_tokens_by_race: dict[str, set[str]] = {}
+    metadata_races: set[str] = set()
+    plan_races = [dict(race) for race in list(ticket_plan.get("races") or [])]
+
+    for race in plan_races:
+        race_id = str(race.get("race_id", "")).strip()
+        if not race_id or "candidates" not in race:
+            continue
+        metadata_races.add(race_id)
+        candidate_tokens_by_race.setdefault(race_id, set()).update(
+            _win_candidate_tokens(list(race.get("candidates") or []), race_id=race_id)
+        )
+        if "candidate_evaluations" in race:
+            candidate_tokens_by_race[race_id].update(
+                _win_candidate_tokens(
+                    list(race.get("candidate_evaluations") or []),
+                    race_id=race_id,
+                )
+            )
+
+    if "candidate_evaluations" in ticket_plan:
+        default_race_id = str(ticket_plan.get("race_id", "")).strip()
+        if not default_race_id and len(plan_races) == 1:
+            default_race_id = str(plan_races[0].get("race_id", "")).strip()
+        for evaluation in list(ticket_plan.get("candidate_evaluations") or []):
+            candidate = dict(evaluation)
+            race_id = str(candidate.get("race_id", "")).strip() or default_race_id
+            if not race_id:
+                continue
+            metadata_races.add(race_id)
+            candidate_tokens_by_race.setdefault(race_id, set()).update(
+                _win_candidate_tokens([candidate], race_id=race_id)
+            )
+
+    if not metadata_races:
+        return []
+
+    live_odds_by_race = build_live_odds_lookup(list(collected.get("combo_odds") or []))
+    if not live_odds_by_race:
+        return []
+
+    missing: list[dict[str, str]] = []
+    for row in ev_rows:
+        race_id = str(row.get("race_id", "")).strip()
+        horse_number = _horse_number_token(row.get("horse_number"))
+        if race_id not in metadata_races or not horse_number:
+            continue
+        live_row = lookup_live_odds(
+            live_odds_by_race.get(race_id, {}),
+            "win",
+            [horse_number],
+        )
+        official_odds = live_odds_value(live_row)
+        win_prob = _to_float(row.get("win_prob"))
+        win_ev = win_prob * official_odds
+        if official_odds <= 0 or win_prob <= 0 or win_ev < minimum_win_ev:
+            continue
+
+        row_tokens = {f"horse_number:{horse_number}"}
+        horse_id = str(row.get("horse_id", "")).strip()
+        if horse_id:
+            row_tokens.add(f"horse_id:{horse_id}")
+        if row_tokens & candidate_tokens_by_race.get(race_id, set()):
+            continue
+
+        missing.append(
+            {
+                "race_id": race_id,
+                "horse_id": horse_id,
+                "horse_number": horse_number,
+                "horse_name": str(row.get("horse_name", "")).strip(),
+                "win_prob": _fmt(win_prob),
+                "official_odds": _fmt(official_odds),
+                "win_ev": _fmt(win_ev),
+                "minimum_win_ev": _fmt(minimum_win_ev),
+                "odds_source": "jra_live",
+            }
+        )
+
+    return sorted(
+        missing,
+        key=lambda row: _to_float(row.get("win_ev")),
+        reverse=True,
+    )
+
+
+def _win_candidate_tokens(candidates: list[object], *, race_id: str) -> set[str]:
+    tokens: set[str] = set()
+    for value in candidates:
+        if not isinstance(value, dict):
+            continue
+        candidate = dict(value)
+        if str(candidate.get("race_id", "")).strip() not in {"", race_id}:
+            continue
+        if str(candidate.get("bet_type", "")).strip() != "win":
+            continue
+        horse_number = _horse_number_token(
+            candidate.get("horse_number") or candidate.get("combination")
+        )
+        if horse_number:
+            tokens.add(f"horse_number:{horse_number}")
+        horse_id = str(candidate.get("horse_id", "")).strip()
+        if horse_id:
+            tokens.add(f"horse_id:{horse_id}")
+    return tokens
+
+
+def _horse_number_token(value: object) -> str:
+    number = int(_to_float(value, 0.0))
+    return str(number) if number > 0 else ""
 
 
 def _race_order_from_configs(race_configs: list[dict[str, object]]) -> list[str]:

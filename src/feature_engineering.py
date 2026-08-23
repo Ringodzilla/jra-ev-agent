@@ -164,6 +164,9 @@ def build_feature_row(
     current_jockey = str(current.get("current_jockey", "")).strip()
     horse_country = _normalize_country_code(str(current.get("horse_country", "")).strip())
     assigned_weight = _to_float(current.get("assigned_weight"), DEFAULT_WEIGHT)
+    current_body_weight = str(current.get("current_body_weight") or "").strip()
+    body_weight_change = str(current.get("body_weight_change") or "").strip()
+    body_weight_status = str(current.get("body_weight_status") or "unpublished").strip()
     current_odds = _to_float(current.get("current_odds") or current.get("win_odds"), 0.0)
 
     venue_match = _map_score(history_summary.get("venue_map"), target_track)
@@ -262,6 +265,11 @@ def build_feature_row(
         "horse_number": str(current.get("horse_number", "")).strip(),
         "current_jockey": current_jockey,
         "assigned_weight": _fmt_float(assigned_weight),
+        "current_body_weight": current_body_weight,
+        "body_weight_change": body_weight_change,
+        "body_weight_status": body_weight_status,
+        "body_weight_model_usage": "gate_only",
+        "body_weight_adjustment_applied": False,
         "current_odds": _fmt_float(current_odds),
         "current_popularity": str(current.get("current_popularity", "")).strip(),
         "target_track": target_track,

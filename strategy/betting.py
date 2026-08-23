@@ -87,8 +87,7 @@ def generate_tickets(
         win_candidates = [
             row
             for row in enriched
-            if _is_win_candidate_allowed(row)
-            and _win_candidate_ev(row, live_odds) >= min_win_ev
+            if _win_candidate_ev(row, live_odds) >= min_win_ev
             and _live_or_current_win_odds(row, live_odds) > 0
         ]
         place_candidates = _build_place_candidates(
@@ -149,7 +148,7 @@ def generate_tickets(
 
         win_tickets = [
             ticket
-            for row in win_candidates[:per_race_limit]
+            for row in win_candidates
             if (
                 ticket := _build_win_ticket(
                     row,
@@ -161,36 +160,6 @@ def generate_tickets(
             is not None
         ]
 
-        candidate_pool = _rank_ticket_pool(
-            _dedupe_ticket_combos(
-                win_tickets
-                + place_candidates
-                + wide_candidates
-                + wakuren_candidates
-                + exotic_candidates
-                + coverage_candidates
-                + consistency_candidates
-                + win_ev_translation_candidates
-                + marked_coverage_candidates
-            ),
-            prefer_wide=prefer_wide,
-        )
-        candidate_references.extend(candidate_pool)
-        candidate_counts = _candidate_counts_by_type(candidate_pool)
-        for bet_type, count in candidate_counts.items():
-            aggregate_candidate_counts[bet_type] += count
-
-        selection_pool = _calibrate_ticket_probabilities(_dedupe_ticket_combos(
-            win_tickets
-            + place_candidates
-            + wide_candidates[:max_wide_tickets_per_race]
-            + wakuren_candidates
-            + _prioritize_exotic_types(exotic_candidates)[:max_exotic_tickets_per_race]
-            + coverage_candidates
-            + consistency_candidates
-            + win_ev_translation_candidates
-            + marked_coverage_candidates
-        ))
         thresholds = {
             "win": min_win_ev,
             "place": min_place_ev,
@@ -201,9 +170,21 @@ def generate_tickets(
             "sanrenpuku": min_sanrenpuku_ev,
             "sanrentan": min_sanrentan_ev,
         }
-        selection_pool = [
+        all_ticket_candidates = _dedupe_ticket_combos(
+            win_tickets
+            + place_candidates
+            + wide_candidates
+            + wakuren_candidates
+            + exotic_candidates
+            + coverage_candidates
+            + consistency_candidates
+            + win_ev_translation_candidates
+            + marked_coverage_candidates
+        )
+        calibrated_pool = _calibrate_ticket_probabilities(all_ticket_candidates)
+        eligible_pool = [
             ticket
-            for ticket in selection_pool
+            for ticket in calibrated_pool
             if _to_float(ticket.get("ev_current") or ticket.get("ev"))
             >= (
                 min_coverage_ev
@@ -211,6 +192,17 @@ def generate_tickets(
                 else thresholds.get(str(ticket.get("bet_type", "")), min_ev)
             )
         ]
+        candidate_pool = _rank_ticket_pool(all_ticket_candidates, prefer_wide=prefer_wide)
+        candidate_references.extend(candidate_pool)
+        candidate_counts = _candidate_counts_by_type(candidate_pool)
+        for bet_type, count in candidate_counts.items():
+            aggregate_candidate_counts[bet_type] += count
+
+        selection_pool = _limit_eligible_selection_pool(
+            eligible_pool,
+            max_wide_tickets_per_race=max_wide_tickets_per_race,
+            max_exotic_tickets_per_race=max_exotic_tickets_per_race,
+        )
         race_tickets = _select_optimized_tickets(
             selection_pool,
             per_race_limit=per_race_limit,
@@ -343,6 +335,10 @@ def _build_win_ticket(
         "ev_predicted": str(row.get("ev_predicted", "")),
         "fair_odds": str(row.get("fair_odds", "")),
         "model_score": str(row.get("model_score", "")),
+        "consistency": str(row.get("consistency", "")),
+        "history_count": str(row.get("history_count", "")),
+        "probability_band": str(row.get("probability_band") or _probability_band_from_row(row)),
+        "market_shrink_used": str(row.get("market_shrink_used", "")),
         "predicted_odds": str(row.get("predicted_odds", "")),
         "predicted_odds_source": "jra_live" if live else str(row.get("predicted_odds_source", "")),
         "odds_source": "jra_live" if live else "entry",
@@ -1967,6 +1963,61 @@ def _rank_ticket_pool(tickets: list[dict[str, object]], *, prefer_wide: bool) ->
     )
 
 
+def _limit_eligible_selection_pool(
+    tickets: list[dict[str, object]],
+    *,
+    max_wide_tickets_per_race: int,
+    max_exotic_tickets_per_race: int,
+) -> list[dict[str, object]]:
+    """Apply type caps only after calibration so rejected tickets can be refilled."""
+    def calibrated_rank(ticket: dict[str, object]) -> tuple[float, float, float]:
+        return (
+            _to_float(ticket.get("ev_current") or ticket.get("ev")),
+            _to_float(ticket.get("hit_prob") or ticket.get("win_prob")),
+            _to_float(ticket.get("confidence")),
+        )
+
+    regular_wide = sorted(
+        (
+            ticket
+            for ticket in tickets
+            if str(ticket.get("bet_type", "")) == "wide" and not _is_coverage_ticket(ticket)
+        ),
+        key=calibrated_rank,
+        reverse=True,
+    )
+    regular_exotics = sorted(
+        (
+            ticket
+            for ticket in tickets
+            if str(ticket.get("bet_type", "")) in {"umaren", "umatan", "sanrenpuku", "sanrentan"}
+            and not _is_coverage_ticket(ticket)
+        ),
+        key=calibrated_rank,
+        reverse=True,
+    )
+    allowed_wide_ids = {
+        id(ticket) for ticket in regular_wide[: max(0, max_wide_tickets_per_race)]
+    }
+    allowed_exotic_ids = {
+        id(ticket)
+        for ticket in _prioritize_exotic_types(regular_exotics)[: max(0, max_exotic_tickets_per_race)]
+    }
+
+    selection_pool: list[dict[str, object]] = []
+    for ticket in tickets:
+        if _is_coverage_ticket(ticket):
+            selection_pool.append(ticket)
+            continue
+        bet_type = str(ticket.get("bet_type", ""))
+        if bet_type == "wide" and id(ticket) not in allowed_wide_ids:
+            continue
+        if bet_type in {"umaren", "umatan", "sanrenpuku", "sanrentan"} and id(ticket) not in allowed_exotic_ids:
+            continue
+        selection_pool.append(ticket)
+    return selection_pool
+
+
 def _select_optimized_tickets(
     tickets: list[dict[str, object]],
     *,
@@ -2064,12 +2115,13 @@ def _calibrate_ticket_probabilities(tickets: list[dict[str, object]]) -> list[di
     for original in tickets:
         ticket = dict(original)
         bet_type = str(ticket.get("bet_type", ""))
-        shrink = BET_TYPE_MARKET_SHRINK.get(bet_type, 0.65)
-        odds = _to_float(ticket.get("predicted_odds") or ticket.get("win_odds"), 0.0)
+        odds_field = ticket.get("win_odds") if bet_type == "win" else ticket.get("predicted_odds")
+        odds = _to_float(odds_field or ticket.get("predicted_odds") or ticket.get("win_odds"), 0.0)
         raw_prob = _to_float(ticket.get("hit_prob") or ticket.get("win_prob"), 0.0)
         if odds <= 0 or raw_prob <= 0:
             calibrated.append(ticket)
             continue
+        shrink = _ticket_market_shrink(ticket, bet_type=bet_type, odds=odds)
         market_prob = min(1.0, 1.0 / odds)
         calibrated_prob = ((1.0 - shrink) * raw_prob) + (shrink * market_prob)
         calibrated_ev = calibrated_prob * odds
@@ -2083,6 +2135,28 @@ def _calibrate_ticket_probabilities(tickets: list[dict[str, object]]) -> list[di
         ticket["ev_current"] = _fmt(calibrated_ev)
         calibrated.append(ticket)
     return calibrated
+
+
+def _ticket_market_shrink(ticket: dict[str, object], *, bet_type: str, odds: float) -> float:
+    """Continuously increase market shrink for thin, low-evidence win bets."""
+    base_shrink = BET_TYPE_MARKET_SHRINK.get(bet_type, 0.65)
+    if bet_type != "win" or odds <= 15.0:
+        return base_shrink
+
+    consistency = _clamp(_to_float(ticket.get("consistency"), 0.5), minimum=0.0, maximum=1.0)
+    history = _clamp(_to_float(ticket.get("history_count"), 0.0) / 5.0, minimum=0.0, maximum=1.0)
+    evidence = (0.65 * consistency) + (0.35 * history)
+    odds_risk = _clamp(
+        math.log(odds / 15.0) / math.log(200.0 / 15.0),
+        minimum=0.0,
+        maximum=1.0,
+    )
+    longshot_target = 0.97 - (0.03 * evidence)
+    return _clamp(
+        base_shrink + ((longshot_target - base_shrink) * odds_risk),
+        minimum=base_shrink,
+        maximum=0.97,
+    )
 
 
 def _would_exceed_horse_dependency(
@@ -2231,11 +2305,6 @@ def _live_or_current_win_odds(
 ) -> float:
     live = _lookup_live_odds(live_odds, "win", [str(row.get("horse_number", ""))])
     return _live_odds_value(live) or _to_float(row.get("current_odds"))
-
-
-def _is_win_candidate_allowed(row: dict[str, object]) -> bool:
-    """Avoid staking win tickets on very thin model probabilities."""
-    return _to_float(row.get("win_prob")) >= 0.05
 
 
 def _win_candidate_ev(
