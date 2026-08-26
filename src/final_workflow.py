@@ -19,6 +19,7 @@ from src.react_workflow import (
     ReviewerAgent,
     SimulatorAgent,
     WorkflowSettings,
+    apply_ticket_repair_actions,
 )
 
 
@@ -119,8 +120,16 @@ class FinalPredictionWorkflow:
         finally:
             self._close_live_collector()
 
-        merged_rows, lineup = merge_live_entries(baseline_rows, list(live.get("entries") or []))
-        baseline_quality = build_baseline_quality(baseline, baseline_rows)
+        merged_rows, lineup = merge_live_entries(
+            baseline_rows,
+            list(live.get("entries") or []),
+            zero_history_horse_numbers=_configured_zero_history_numbers(race_config),
+        )
+        baseline_quality = build_baseline_quality(
+            baseline,
+            baseline_rows,
+            race_config=race_config,
+        )
         collected = dict(live)
         collected["rows"] = merged_rows
         collected["entries"] = list(live.get("entries") or [])
@@ -138,12 +147,14 @@ class FinalPredictionWorkflow:
         simulated["snapshot_id"] = live.get("snapshot_id", "")
         calculated = self.ev_calculator.run(list(simulated.get("scenario_rows") or []))
         calculated["snapshot_id"] = live.get("snapshot_id", "")
+        scenario_rows = list(simulated.get("scenario_rows") or [])
         bet_plan = self.bet_builder.run(
             list(calculated.get("ev_rows") or []),
             combo_odds=list(live.get("combo_odds") or []),
             race_configs=[race_config],
         )
         bet_plan["snapshot_id"] = live.get("snapshot_id", "")
+        bet_plan["reviewer_ticket_repair_enabled"] = True
         quantitative_review = self.quantitative_reviewer.run(
             collected,
             list(simulated.get("scenario_rows") or []),
@@ -151,6 +162,26 @@ class FinalPredictionWorkflow:
             bet_plan,
             attempt=0,
         )
+        initial_quantitative_review = dict(quantitative_review)
+        repaired_plan = apply_ticket_repair_actions(
+            bet_plan,
+            list(quantitative_review.get("repair_actions") or []),
+        )
+        if repaired_plan is not bet_plan:
+            bet_plan = repaired_plan
+            quantitative_review = self.quantitative_reviewer.run(
+                collected,
+                scenario_rows,
+                list(calculated.get("ev_rows") or []),
+                bet_plan,
+                attempt=0,
+            )
+            quantitative_review["repair_applied"] = True
+            quantitative_review["repair_actions"] = list(
+                initial_quantitative_review.get("repair_actions") or []
+            )
+            quantitative_review["pre_repair_status"] = initial_quantitative_review.get("status", "")
+            quantitative_review["pre_repair_reason"] = initial_quantitative_review.get("reason", "")
         review = self.final_reviewer.run(
             plan=plan,
             collected=collected,
@@ -410,7 +441,12 @@ def extract_baseline_rows(
 def merge_live_entries(
     baseline_rows: list[dict[str, str]],
     live_entries: list[dict[str, object]],
+    *,
+    zero_history_horse_numbers: set[str] | None = None,
 ) -> tuple[list[dict[str, str]], dict[str, object]]:
+    zero_history_horse_numbers = {
+        str(_to_int(value)) for value in (zero_history_horse_numbers or set())
+    }
     live_by_id = {str(row.get("horse_id", "")): row for row in live_entries if row.get("horse_id")}
     live_by_number = {
         str(row.get("horse_number", "")): row for row in live_entries if row.get("horse_number")
@@ -446,6 +482,19 @@ def merge_live_entries(
             row[key] = str(live.get(key, ""))
         merged.append(row)
 
+    baseline_numbers = {
+        str(_to_int(row.get("horse_number")))
+        for row in baseline_rows
+        if str(row.get("horse_number", "")).strip()
+    }
+    neutral_numbers: list[str] = []
+    for live in live_entries:
+        horse_number = str(_to_int(live.get("horse_number")))
+        if horse_number in baseline_numbers or horse_number not in zero_history_horse_numbers:
+            continue
+        merged.append(_neutral_history_row(live))
+        neutral_numbers.append(horse_number)
+
     live_keys = {
         str(row.get("horse_id") or row.get("horse_number"))
         for row in live_entries
@@ -461,28 +510,82 @@ def merge_live_entries(
         for row in merged
         if row.get("horse_id") or row.get("horse_number")
     }
+    allowed_zero_history_keys = {
+        str(row.get("horse_id") or row.get("horse_number"))
+        for row in live_entries
+        if str(_to_int(row.get("horse_number"))) in zero_history_horse_numbers
+    }
+    expected_baseline_horses = baseline_horses | allowed_zero_history_keys
     race_id = str(live_entries[0].get("race_id", "")) if live_entries else ""
     lineup = {
         "race_id": race_id,
-        "matches": bool(live_keys) and represented == live_keys and baseline_horses == live_keys,
+        "matches": bool(live_keys)
+        and represented == live_keys
+        and expected_baseline_horses == live_keys,
         "baseline_horse_count": len(baseline_horses),
         "live_horse_count": len(live_keys),
         "merged_horse_count": len(represented),
         "missing_from_live": sorted(baseline_horses - live_keys),
-        "missing_from_baseline": sorted(live_keys - baseline_horses),
+        "missing_from_baseline": sorted(live_keys - expected_baseline_horses),
+        "neutral_history_horse_numbers": sorted(neutral_numbers, key=int),
     }
     return merged, lineup
+
+
+def _neutral_history_row(live: dict[str, object]) -> dict[str, str]:
+    row = {str(key): str(value) for key, value in live.items()}
+    row.update(
+        {
+            "run_index": "0",
+            "history_count": "0",
+            "neutral_history_fallback": "true",
+            "history_source": "configured_zero_start",
+        }
+    )
+    return row
 
 
 def build_baseline_quality(
     baseline: dict[str, object] | list[dict[str, object]],
     rows: list[dict[str, str]],
+    *,
+    race_config: dict[str, object] | None = None,
 ) -> dict[str, object]:
     counts: dict[str, int] = {}
+    horse_numbers: dict[str, str] = {}
     for row in rows:
         key = str(row.get("horse_id") or row.get("horse_number") or row.get("horse_name"))
         if key:
             counts[key] = counts.get(key, 0) + 1
+            horse_numbers[key] = str(row.get("horse_number", "")).strip()
+
+    configured_career_starts = dict(
+        (race_config or {}).get("career_starts_by_horse_number") or {}
+    )
+    configured_career_starts = {
+        str(_to_int(number)): max(0, _to_int(starts))
+        for number, starts in configured_career_starts.items()
+    }
+    required_counts: dict[str, int] = {}
+    actual_counts = dict(counts)
+    for key in counts:
+        horse_number = horse_numbers.get(key, "")
+        required_counts[key] = (
+            min(5, configured_career_starts[horse_number])
+            if horse_number in configured_career_starts
+            else 5
+        )
+
+    configured_keys: dict[str, str] = {}
+    for horse_number, career_starts in configured_career_starts.items():
+        existing_key = next(
+            (key for key, number in horse_numbers.items() if number == horse_number),
+            "",
+        )
+        key = existing_key or f"horse_number:{horse_number}"
+        configured_keys[horse_number] = key
+        actual_counts.setdefault(key, 0)
+        required_counts[key] = min(5, career_starts)
 
     if isinstance(baseline, list):
         source_kind = "csv_rows"
@@ -511,9 +614,21 @@ def build_baseline_quality(
         "manifest_ok": manifest_ok,
         "high_parser_issue_count": high_issues,
         "parser_quality_ok": parser_quality_ok,
-        "history_counts": counts,
-        "history_complete": bool(counts) and all(count >= 5 for count in counts.values()),
+        "history_counts": actual_counts,
+        "required_history_counts": required_counts,
+        "career_starts_by_horse_number": configured_career_starts,
+        "history_complete": bool(required_counts)
+        and all(actual_counts.get(key, 0) >= required for key, required in required_counts.items()),
         "minimum_history_rows": 5,
+    }
+
+
+def _configured_zero_history_numbers(race_config: dict[str, object]) -> set[str]:
+    configured = dict(race_config.get("career_starts_by_horse_number") or {})
+    return {
+        str(_to_int(number))
+        for number, starts in configured.items()
+        if _to_int(starts) == 0
     }
 
 

@@ -86,7 +86,24 @@ def build_feature_rows(
             ),
             {},
         )
-        feature_rows.append(build_feature_row(current, summary, live_summary=live_summary))
+        feature = build_feature_row(current, summary, live_summary=live_summary)
+        if _is_neutral_history_fallback(current):
+            feature.update(
+                {
+                    "history_count": 0,
+                    "speed_score": 0.5,
+                    "front_rate": 0.5,
+                    "closing_strength": 0.5,
+                    "consistency": 0.5,
+                    "ability_score": 0.5,
+                    "course_score": 0.5,
+                    "pace_score": 0.5,
+                    "weight_score": 0.0,
+                    "jockey_score": 0.5,
+                    "neutral_history_fallback": True,
+                }
+            )
+        feature_rows.append(feature)
 
     return feature_rows
 
@@ -268,6 +285,14 @@ def _safe_int(value: str) -> int:
         return int(value)
     except (TypeError, ValueError):
         return 999
+
+
+def _is_neutral_history_fallback(row: dict[str, str]) -> bool:
+    return str(row.get("neutral_history_fallback", "")).strip().lower() in {
+        "1",
+        "true",
+        "yes",
+    }
 
 
 def _to_float(value: object, default: float = 0.0) -> float:

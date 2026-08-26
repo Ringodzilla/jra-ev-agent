@@ -2,7 +2,7 @@ import unittest
 
 from analysis.ev import EVWeights, build_feature_rows, compute_ev, simulate_race_scenarios
 from src.feature_engineering import build_feature_row
-from src.react_workflow import ReviewerAgent, WorkflowSettings
+from src.react_workflow import ReviewerAgent, WorkflowSettings, apply_ticket_repair_actions
 from strategy.betting import (
     _calibrate_ticket_probabilities,
     _frame_quality_adjustment,
@@ -1668,6 +1668,96 @@ class TestEVPipeline(unittest.TestCase):
             [row["horse_number"] for row in review["missing_eligible_win_candidates"]],
         )
         self.assertEqual("1.2", review["missing_eligible_win_candidates"][0]["win_ev"])
+
+    def test_reviewer_repairs_only_unsafe_tickets_and_rechecks_residual_portfolio(self):
+        reviewer = ReviewerAgent(WorkflowSettings(max_repair_attempts=0))
+        ev_rows = [
+            {"race_id": "r_repair", "horse_number": "2", "horse_name": "H2", "win_prob": "0.207243"},
+            {"race_id": "r_repair", "horse_number": "7", "horse_name": "H7", "win_prob": "0.192909"},
+            {"race_id": "r_repair", "horse_number": "1", "horse_name": "H1", "win_prob": "0.178825"},
+            {"race_id": "r_repair", "horse_number": "10", "horse_name": "H10", "win_prob": "0.167023"},
+            {"race_id": "r_repair", "horse_number": "3", "horse_name": "H3", "win_prob": "0.119301"},
+            {
+                "race_id": "r_repair", "horse_id": "h5", "horse_number": "5",
+                "horse_name": "H5", "win_prob": "0.134699", "current_odds": "78",
+                "predicted_odds": "66.393789", "ev_current": "1.395951",
+                "ev_predicted": "1.188237", "current_popularity": "5",
+            },
+        ]
+
+        def wide(numbers, stake, hit_prob, odds, ev):
+            return {
+                "race_id": "r_repair", "bet_type": "wide",
+                "horse_number": "-".join(numbers), "horse_numbers": numbers,
+                "horse_name": " - ".join(numbers), "stake": stake,
+                "hit_prob": str(hit_prob), "wide_odds_est": str(odds),
+                "win_odds": str(odds), "ev_current": str(ev), "ev": str(ev),
+                "odds_source": "jra_live",
+            }
+
+        tickets = [
+            {
+                "race_id": "r_repair", "bet_type": "win", "horse_id": "h5",
+                "horse_number": 5, "horse_name": "H5", "stake": 100,
+                "hit_prob": "0.014162", "win_odds": "78",
+                "ev_current": "1.104638", "ev": "1.104638", "odds_source": "jra_live",
+            },
+            wide(["7", "3"], 400, 0.208809, 5.2, 1.172653),
+            wide(["10", "3"], 300, 0.193254, 5.5, 1.155014),
+            wide(["2", "3"], 100, 0.227879, 4.6, 1.137447),
+            wide(["1", "10"], 100, 0.248214, 4.0, 1.076377),
+        ]
+        ticket_plan = {
+            "tickets": tickets,
+            "races": [{"race_id": "r_repair", "tickets": tickets}],
+            "reviewer_ticket_repair_enabled": True,
+        }
+        collected = {
+            "entries": [{"horse_number": row["horse_number"]} for row in ev_rows],
+            "quality_report": {"issues_by_severity": {}},
+        }
+
+        initial = reviewer.run(collected, ev_rows, ev_rows, ticket_plan, attempt=0)
+        repaired = apply_ticket_repair_actions(ticket_plan, initial["repair_actions"])
+        final = reviewer.run(collected, ev_rows, ev_rows, repaired, attempt=0)
+
+        self.assertEqual("NG", initial["status"])
+        self.assertEqual("OK", final["status"])
+        self.assertEqual(
+            [("7-3", 400), ("1-10", 400)],
+            [(ticket["horse_number"], ticket["stake"]) for ticket in repaired["tickets"]],
+        )
+        self.assertEqual(800, repaired["portfolio_summary"]["total_stake"])
+        self.assertEqual("1.124515", repaired["portfolio_summary"]["portfolio_ev"])
+        self.assertTrue(repaired["portfolio_summary"]["no_gami"])
+        self.assertEqual(200, repaired["unused_bankroll"])
+        self.assertEqual(
+            repaired["tickets"],
+            repaired["races"][0]["tickets"],
+        )
+
+    def test_reviewer_win_candidate_audit_uses_actionable_ticket_floor(self):
+        reviewer = ReviewerAgent(WorkflowSettings(min_ev=1.05))
+        ev_rows = [{
+            "race_id": "r_floor", "horse_id": "h1", "horse_number": "1",
+            "horse_name": "Below ticket floor", "win_prob": "0.0535",
+        }]
+        review = reviewer.run(
+            {
+                "quality_report": {"issues_by_severity": {}},
+                "entries": [{"race_id": "r_floor", "horse_id": "h1"}],
+                "combo_odds": [{
+                    "race_id": "r_floor", "bet_type": "win", "combination": "1",
+                    "odds": "20.0",
+                }],
+            },
+            scenario_rows=ev_rows,
+            ev_rows=ev_rows,
+            ticket_plan={"tickets": [], "races": [{"race_id": "r_floor", "candidates": []}]},
+            attempt=0,
+        )
+
+        self.assertEqual([], review["missing_eligible_win_candidates"])
 
     def test_compute_ev_calibrates_extreme_longshots_toward_market(self):
         feature_rows = []

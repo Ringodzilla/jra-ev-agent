@@ -4,8 +4,9 @@ from tempfile import TemporaryDirectory
 import unittest
 from zoneinfo import ZoneInfo
 
+from analysis.ev import build_feature_rows
 from src.deadline import DeadlineSettings, build_deadline_plan
-from src.final_workflow import FinalReviewerAgent, merge_live_entries
+from src.final_workflow import FinalReviewerAgent, build_baseline_quality, merge_live_entries
 from src.final_workflow import FinalPredictionWorkflow
 from jra_scraper.config import ScrapeConfig
 
@@ -194,6 +195,90 @@ class MergeLiveEntriesTest(unittest.TestCase):
         self.assertTrue(lineup["matches"])
         self.assertEqual({"3.2"}, {row["current_odds"] for row in rows})
         self.assertEqual({"472"}, {row["current_body_weight"] for row in rows})
+
+    def test_adds_explicit_neutral_row_for_configured_zero_start_horse(self):
+        baseline = [
+            {"race_id": "R1", "horse_id": "h1", "horse_number": "1", "run_index": "1"}
+        ]
+        live = [
+            {"race_id": "R1", "horse_id": "h1", "horse_number": "1"},
+            {
+                "race_id": "R1",
+                "horse_id": "h2",
+                "horse_name": "First Starter",
+                "horse_number": "2",
+                "assigned_weight": "55",
+                "current_odds": "20.0",
+                "target_track": "新潟",
+                "target_surface": "芝",
+                "target_distance": "1600",
+            },
+        ]
+
+        rows, lineup = merge_live_entries(
+            baseline,
+            live,
+            zero_history_horse_numbers={"2"},
+        )
+
+        self.assertTrue(lineup["matches"])
+        self.assertEqual(["2"], lineup["neutral_history_horse_numbers"])
+        neutral = next(row for row in rows if row["horse_number"] == "2")
+        self.assertEqual("0", neutral["history_count"])
+        self.assertEqual("true", neutral["neutral_history_fallback"])
+
+        feature = next(row for row in build_feature_rows(rows) if row["horse_number"] == "2")
+        self.assertEqual(0, feature["history_count"])
+        self.assertEqual(0.5, feature["ability_score"])
+        self.assertEqual(0.5, feature["course_score"])
+        self.assertEqual(0.5, feature["pace_score"])
+        self.assertEqual(0.5, feature["jockey_score"])
+
+
+class BaselineQualityTest(unittest.TestCase):
+    def test_accepts_complete_career_with_fewer_than_five_starts(self):
+        rows = [
+            {"horse_id": "h11", "horse_number": "11", "run_index": str(index)}
+            for index in range(1, 5)
+        ]
+
+        quality = build_baseline_quality(
+            rows,
+            rows,
+            race_config={"career_starts_by_horse_number": {"11": 4}},
+        )
+
+        self.assertTrue(quality["history_complete"])
+        self.assertEqual(4, quality["required_history_counts"]["h11"])
+
+    def test_rejects_history_shorter_than_declared_career(self):
+        rows = [
+            {"horse_id": "h11", "horse_number": "11", "run_index": str(index)}
+            for index in range(1, 4)
+        ]
+
+        quality = build_baseline_quality(
+            rows,
+            rows,
+            race_config={"career_starts_by_horse_number": {"11": 4}},
+        )
+
+        self.assertFalse(quality["history_complete"])
+
+    def test_accepts_explicit_zero_start_without_fabricating_history(self):
+        rows = [
+            {"horse_id": "h1", "horse_number": "1", "run_index": "1"},
+        ]
+
+        quality = build_baseline_quality(
+            rows,
+            rows,
+            race_config={"career_starts_by_horse_number": {"1": 1, "2": 0}},
+        )
+
+        self.assertTrue(quality["history_complete"])
+        self.assertEqual(0, quality["history_counts"]["horse_number:2"])
+        self.assertEqual(0, quality["required_history_counts"]["horse_number:2"])
 
 
 class FinalPredictionWorkflowTest(unittest.TestCase):

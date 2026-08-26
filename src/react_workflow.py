@@ -4,14 +4,26 @@ import csv
 import hashlib
 import json
 from dataclasses import dataclass
+from itertools import combinations, product
 from pathlib import Path
 
 from analysis.ev import EVWeights, build_feature_rows, compute_ev, simulate_race_scenarios
 from jra_scraper.config import ScrapeConfig
 from jra_scraper.pipeline import JRAPipeline
 from report.note import build_note_article
-from strategy.betting import MIN_WIN_EV, generate_tickets
+from strategy.betting import MIN_ACTIONABLE_WIN_EV, generate_tickets
 from strategy.live_odds import build_live_odds_lookup, live_odds_value, lookup_live_odds
+from strategy.portfolio import (
+    portfolio_ev,
+    portfolio_expected_return,
+    portfolio_no_gami,
+    portfolio_summary,
+    portfolio_total_stake,
+    portfolio_total_points,
+    ticket_return_if_hit,
+    ticket_stake_unit,
+    with_adjusted_stake,
+)
 from strategy.win5 import generate_win5_plan, is_win5_mode
 
 
@@ -191,19 +203,24 @@ class ReviewerAgent:
         quality_report = dict(collected.get("quality_report") or {})
         entry_rows = list(collected.get("entries") or [])
         tickets = list(ticket_plan.get("tickets") or [])
+        repair_enabled = bool(ticket_plan.get("reviewer_ticket_repair_enabled"))
+        repaired_plan = bool(ticket_plan.get("reviewer_ticket_repair_applied"))
 
         reasons: list[str] = []
-        repair_actions: list[str] = []
+        repair_actions: list[object] = []
+        ticket_repair_blocked = False
 
         high_issues = int(dict(quality_report.get("issues_by_severity") or {}).get("high", 0))
         if high_issues > 0:
             reasons.append(f"high severity parser issues: {high_issues}")
+            ticket_repair_blocked = True
             if attempt < self.settings.max_repair_attempts:
                 repair_actions.append("retry_aggressive_parse")
 
         missing_odds = int(quality_report.get("missing_current_odds_entries", 0) or 0)
         if entry_rows and missing_odds == len(entry_rows):
             reasons.append("current odds are missing for every entry")
+            ticket_repair_blocked = True
             if attempt < self.settings.max_repair_attempts:
                 repair_actions.append("retry_aggressive_parse")
 
@@ -211,8 +228,10 @@ class ReviewerAgent:
         bad_prob_races = [race_id for race_id, total in prob_sums.items() if abs(total - 1.0) > 0.025]
         if bad_prob_races:
             reasons.append(f"probability normalization drift detected: {bad_prob_races}")
+            ticket_repair_blocked = True
 
         if str(ticket_plan.get("bet_type", "")) == "win5":
+            ticket_repair_blocked = True
             win5_points = int(_to_float(ticket_plan.get("points"), 0.0))
             if win5_points <= 0:
                 reasons.append("WIN5 formation has no valid points")
@@ -245,7 +264,12 @@ class ReviewerAgent:
                 for row in top_rows
                 if str(row.get("horse_number", "")) in ticket_horses
             ]
-            if tickets and top_rows and str(top_rows[0].get("horse_number", "")) not in ticket_horses:
+            top1_missing = bool(
+                tickets
+                and top_rows
+                and str(top_rows[0].get("horse_number", "")) not in ticket_horses
+            )
+            if top1_missing and not repaired_plan:
                 reasons.append("top win-probability horse is missing from every ticket")
             required_top_coverage = min(self.settings.min_top3_ticket_coverage, len(top_rows))
             if tickets and len(covered_top) < required_top_coverage:
@@ -257,6 +281,11 @@ class ReviewerAgent:
                 reasons.append(
                     f"horse ticket dependency ratio is too high: {dependency_ratio:.3f}"
                 )
+
+            if tickets and portfolio_ev(tickets) < self.settings.min_portfolio_ev:
+                reasons.append("ticket portfolio EV is below the configured minimum")
+            if tickets and not portfolio_no_gami(tickets):
+                reasons.append("ticket portfolio contains loss-on-hit tickets")
 
         if str(ticket_plan.get("bet_type", "")) != "win5":
             longshot_overweight = [
@@ -274,12 +303,14 @@ class ReviewerAgent:
             max_ev_delta_ratio=self.settings.max_ev_delta_ratio,
             max_odds_gap_ratio=self.settings.max_odds_gap_ratio,
         )
-        if divergent_rows and str(ticket_plan.get("bet_type", "")) != "win5":
+        selected_divergent_rows = _selected_divergent_rows(tickets, divergent_rows)
+        actionable_divergent_rows = selected_divergent_rows if repaired_plan else divergent_rows
+        if actionable_divergent_rows and str(ticket_plan.get("bet_type", "")) != "win5":
             reasons.append(
                 "predicted/current EV divergence detected: "
                 + ", ".join(
                     f"{row['horse_name']}@{row['race_id']}"
-                    for row in divergent_rows[:3]
+                    for row in actionable_divergent_rows[:3]
                 )
             )
 
@@ -287,7 +318,7 @@ class ReviewerAgent:
             collected,
             ev_rows,
             ticket_plan,
-            minimum_win_ev=max(self.settings.min_ev, MIN_WIN_EV),
+            minimum_win_ev=max(self.settings.min_ev, MIN_ACTIONABLE_WIN_EV),
         )
         if missing_eligible_win_candidates and str(ticket_plan.get("bet_type", "")) != "win5":
             reasons.append(
@@ -298,14 +329,25 @@ class ReviewerAgent:
                 )
             )
 
+        if repair_enabled and tickets and reasons and not ticket_repair_blocked:
+            ticket_repair = _build_ticket_repair_action(
+                tickets,
+                ev_rows=ev_rows,
+                divergent_rows=divergent_rows,
+                settings=self.settings,
+            )
+            if ticket_repair:
+                repair_actions.append(ticket_repair)
+
         status = "OK" if not reasons else "NG"
         return {
             "status": status,
             "reason": "; ".join(reasons) if reasons else "quality gates passed",
-            "fix": "; ".join(repair_actions) if repair_actions else "",
+            "fix": "; ".join(_repair_action_name(action) for action in repair_actions),
             "repair_actions": repair_actions,
             "probability_sums": {race_id: _fmt(total) for race_id, total in prob_sums.items()},
             "divergent_rows": divergent_rows,
+            "selected_divergent_rows": selected_divergent_rows,
             "missing_eligible_win_candidates": missing_eligible_win_candidates,
             "stage_counts": {
                 "entries": len(entry_rows),
@@ -561,6 +603,315 @@ def _probability_sums(ev_rows: list[dict[str, object]]) -> dict[str, float]:
     return totals
 
 
+def apply_ticket_repair_actions(
+    ticket_plan: dict[str, object],
+    repair_actions: list[object],
+) -> dict[str, object]:
+    action = next(
+        (
+            dict(value)
+            for value in repair_actions
+            if isinstance(value, dict) and value.get("action") == "filter_and_reallocate_tickets"
+        ),
+        None,
+    )
+    if action is None:
+        return ticket_plan
+
+    kept_stakes = {
+        str(row.get("ticket_key", "")): int(_to_float(row.get("stake")))
+        for row in list(action.get("kept_tickets") or [])
+        if str(row.get("ticket_key", ""))
+    }
+    original_tickets = [dict(ticket) for ticket in list(ticket_plan.get("tickets") or [])]
+    repaired = [
+        with_adjusted_stake(ticket, kept_stakes[_ticket_repair_key(ticket)])
+        for ticket in original_tickets
+        if _ticket_repair_key(ticket) in kept_stakes
+    ]
+    repaired = _annotate_repaired_portfolio(repaired)
+    removed = [
+        ticket
+        for ticket in original_tickets
+        if _ticket_repair_key(ticket) not in kept_stakes
+    ]
+
+    out = dict(ticket_plan)
+    out["tickets"] = repaired
+    out["invalidated_tickets"] = removed
+    out["portfolio_summary"] = portfolio_summary(repaired)
+    out["ticket_status"] = "repaired_by_reviewer"
+    out["reviewer_ticket_repair_enabled"] = False
+    out["reviewer_ticket_repair_applied"] = True
+    out["repair_action"] = action
+    out["unused_bankroll"] = int(action.get("unused_bankroll", 0) or 0)
+    out["primary_bet_type"] = str(repaired[0].get("bet_type", "")) if repaired else ""
+
+    label_fields = {
+        "win": "tansho",
+        "place": "fukusho",
+        "wide": "wide",
+        "wakuren": "wakuren",
+        "umaren": "umaren",
+        "umatan": "umatan",
+        "sanrenpuku": "sanrenpuku",
+        "sanrentan": "sanrentan",
+    }
+    for bet_type, field in label_fields.items():
+        out[field] = [
+            str(ticket.get("horse_name", ""))
+            for ticket in repaired
+            if str(ticket.get("bet_type", "")) == bet_type
+        ]
+
+    repaired_races: list[dict[str, object]] = []
+    for race in list(ticket_plan.get("races") or []):
+        race_out = dict(race)
+        race_original = [dict(ticket) for ticket in list(race_out.get("tickets") or [])]
+        race_tickets = [
+            with_adjusted_stake(ticket, kept_stakes[_ticket_repair_key(ticket)])
+            for ticket in race_original
+            if _ticket_repair_key(ticket) in kept_stakes
+        ]
+        race_tickets = _annotate_repaired_portfolio(race_tickets)
+        race_out["tickets"] = race_tickets
+        race_out["invalidated_tickets"] = [
+            ticket
+            for ticket in race_original
+            if _ticket_repair_key(ticket) not in kept_stakes
+        ]
+        race_out["portfolio"] = portfolio_summary(race_tickets)
+        race_out["ticket_status"] = "repaired_by_reviewer"
+        repaired_races.append(race_out)
+    out["races"] = repaired_races
+    return out
+
+
+def _build_ticket_repair_action(
+    tickets: list[dict[str, object]],
+    *,
+    ev_rows: list[dict[str, object]],
+    divergent_rows: list[dict[str, str]],
+    settings: WorkflowSettings,
+) -> dict[str, object] | None:
+    mandatory_removed = {
+        _ticket_repair_key(ticket)
+        for ticket in tickets
+        if _ticket_ev(ticket, default=0.0) < _ticket_min_ev(ticket, settings)
+        or _ticket_hit_prob(ticket) < _ticket_min_prob(ticket)
+        or (
+            _ticket_odds(ticket) >= _longshot_odds_threshold(ticket)
+            and int(_to_float(ticket.get("stake"))) > _longshot_stake_threshold(ticket)
+        )
+        or _ticket_matches_divergent_row(ticket, divergent_rows)
+    }
+    eligible = [
+        dict(ticket)
+        for ticket in tickets
+        if _ticket_repair_key(ticket) not in mandatory_removed
+    ]
+    if not eligible:
+        return None
+
+    best: tuple[tuple[float, float, int, int], list[dict[str, object]]] | None = None
+    for size in range(1, len(eligible) + 1):
+        for subset_values in combinations(eligible, size):
+            subset = [dict(ticket) for ticket in subset_values]
+            stake_options = [
+                range(
+                    ticket_stake_unit(ticket),
+                    _review_max_ticket_stake(ticket, settings.bankroll_per_race)
+                    + ticket_stake_unit(ticket),
+                    ticket_stake_unit(ticket),
+                )
+                for ticket in subset
+            ]
+            for stakes in product(*stake_options):
+                allocated = [
+                    with_adjusted_stake(ticket, stake)
+                    for ticket, stake in zip(subset, stakes)
+                ]
+                if portfolio_total_stake(allocated) > settings.bankroll_per_race:
+                    continue
+                if not _repair_portfolio_safe(allocated, ev_rows=ev_rows, settings=settings):
+                    continue
+                expected_profit = portfolio_expected_return(allocated) - portfolio_total_stake(allocated)
+                score = (
+                    expected_profit,
+                    portfolio_ev(allocated),
+                    portfolio_total_stake(allocated),
+                    len(allocated),
+                )
+                if best is None or score > best[0]:
+                    best = (score, allocated)
+
+    if best is None:
+        return None
+
+    repaired = best[1]
+    kept_keys = {_ticket_repair_key(ticket) for ticket in repaired}
+    if kept_keys == {_ticket_repair_key(ticket) for ticket in tickets} and all(
+        int(_to_float(original.get("stake"))) == int(_to_float(replacement.get("stake")))
+        for original in tickets
+        for replacement in repaired
+        if _ticket_repair_key(original) == _ticket_repair_key(replacement)
+    ):
+        return None
+
+    total_stake = portfolio_total_stake(repaired)
+    return {
+        "action": "filter_and_reallocate_tickets",
+        "kept_tickets": [
+            {
+                "ticket_key": _ticket_repair_key(ticket),
+                "stake": int(_to_float(ticket.get("stake"))),
+            }
+            for ticket in repaired
+        ],
+        "removed_ticket_keys": [
+            _ticket_repair_key(ticket)
+            for ticket in tickets
+            if _ticket_repair_key(ticket) not in kept_keys
+        ],
+        "mandatory_removed_ticket_keys": sorted(mandatory_removed),
+        "pre_repair_ticket_count": len(tickets),
+        "post_repair_ticket_count": len(repaired),
+        "post_repair_total_stake": total_stake,
+        "unused_bankroll": max(0, settings.bankroll_per_race - total_stake),
+        "post_repair_portfolio_ev": _fmt(portfolio_ev(repaired)),
+        "post_repair_no_gami": portfolio_no_gami(repaired),
+        "post_repair_dependency_ratio": _fmt(_max_horse_ticket_dependency_ratio(repaired)),
+    }
+
+
+def _repair_portfolio_safe(
+    tickets: list[dict[str, object]],
+    *,
+    ev_rows: list[dict[str, object]],
+    settings: WorkflowSettings,
+) -> bool:
+    if not tickets or portfolio_total_stake(tickets) <= 0:
+        return False
+    if portfolio_ev(tickets) < settings.min_portfolio_ev or not portfolio_no_gami(tickets):
+        return False
+    if _max_horse_ticket_dependency_ratio(tickets) > settings.max_horse_ticket_dependency_ratio:
+        return False
+    if any(
+        _ticket_ev(ticket, default=0.0) < _ticket_min_ev(ticket, settings)
+        or _ticket_hit_prob(ticket) < _ticket_min_prob(ticket)
+        or (
+            _ticket_odds(ticket) >= _longshot_odds_threshold(ticket)
+            and int(_to_float(ticket.get("stake"))) > _longshot_stake_threshold(ticket)
+        )
+        for ticket in tickets
+    ):
+        return False
+
+    top_rows = sorted(
+        ev_rows,
+        key=lambda row: _to_float(row.get("win_prob")),
+        reverse=True,
+    )[:3]
+    ticket_horses = _ticket_horse_numbers(tickets)
+    covered_top = sum(
+        1
+        for row in top_rows
+        if str(row.get("horse_number", "")) in ticket_horses
+    )
+    return covered_top >= min(settings.min_top3_ticket_coverage, len(top_rows))
+
+
+def _review_max_ticket_stake(ticket: dict[str, object], bankroll: int) -> int:
+    bet_type = str(ticket.get("bet_type", ""))
+    if str(ticket.get("ticket_shape", "")) == "formation":
+        share = 0.70
+    elif bet_type in {"place", "wide"}:
+        share = 0.45
+    elif bet_type == "win":
+        share = 0.35
+    elif bet_type in {"wakuren", "umaren"}:
+        share = 0.30
+    elif bet_type in {"umatan", "sanrenpuku"}:
+        share = 0.24
+    else:
+        share = 0.20
+    unit = ticket_stake_unit(ticket)
+    return max(unit, int((bankroll * share) / unit) * unit)
+
+
+def _annotate_repaired_portfolio(tickets: list[dict[str, object]]) -> list[dict[str, object]]:
+    summary = portfolio_summary(tickets)
+    total_stake = int(summary["total_stake"])
+    total_points = portfolio_total_points(tickets)
+    no_gami = bool(summary["no_gami"])
+    annotated: list[dict[str, object]] = []
+    for ticket in tickets:
+        out = dict(ticket)
+        return_if_hit = ticket_return_if_hit(out)
+        out.update(
+            {
+                "portfolio_total_stake": total_stake,
+                "portfolio_total_points": total_points,
+                "portfolio_ev": summary["portfolio_ev"],
+                "portfolio_expected_return": summary["expected_return"],
+                "portfolio_expected_profit": summary["expected_profit"],
+                "portfolio_no_gami": no_gami,
+                "return_if_hit": return_if_hit,
+                "net_return_if_hit": return_if_hit - total_stake,
+            }
+        )
+        annotated.append(out)
+    return annotated
+
+
+def _selected_divergent_rows(
+    tickets: list[dict[str, object]],
+    divergent_rows: list[dict[str, str]],
+) -> list[dict[str, str]]:
+    return [
+        row
+        for row in divergent_rows
+        if any(_ticket_matches_divergent_row(ticket, [row]) for ticket in tickets)
+    ]
+
+
+def _ticket_matches_divergent_row(
+    ticket: dict[str, object],
+    divergent_rows: list[dict[str, str]],
+) -> bool:
+    ticket_ids = {str(ticket.get("horse_id", "")).strip()}
+    ticket_ids.update(str(value).strip() for value in list(ticket.get("horse_ids") or []))
+    ticket_numbers = _ticket_horse_numbers([ticket])
+    return any(
+        (
+            str(row.get("horse_id", "")).strip()
+            and str(row.get("horse_id", "")).strip() in ticket_ids
+        )
+        or (
+            str(row.get("horse_number", "")).strip()
+            and str(row.get("horse_number", "")).strip() in ticket_numbers
+        )
+        for row in divergent_rows
+    )
+
+
+def _ticket_repair_key(ticket: dict[str, object]) -> str:
+    race_id = str(ticket.get("race_id", "")).strip()
+    bet_type = str(ticket.get("bet_type", "")).strip()
+    values = [str(value).strip() for value in list(ticket.get("horse_numbers") or [])]
+    if not values:
+        values = [str(value).strip() for value in list(ticket.get("frame_numbers") or [])]
+    if not values and ticket.get("horse_number") not in (None, ""):
+        values = [str(ticket.get("horse_number", "")).strip()]
+    return f"{race_id}|{bet_type}|{'-'.join(values)}"
+
+
+def _repair_action_name(action: object) -> str:
+    if isinstance(action, dict):
+        return str(action.get("action", "repair"))
+    return str(action)
+
+
 def _find_missing_eligible_win_candidates(
     collected: dict[str, object],
     ev_rows: list[dict[str, object]],
@@ -785,6 +1136,7 @@ def _find_divergent_rows(
                 {
                     "race_id": str(row.get("race_id", "")),
                     "horse_id": str(row.get("horse_id", "")),
+                    "horse_number": str(row.get("horse_number", "")),
                     "horse_name": str(row.get("horse_name", "")),
                     "popularity_band": thresholds["band"],
                     "current_odds": _fmt(current_odds),

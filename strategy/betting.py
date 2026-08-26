@@ -26,6 +26,7 @@ from strategy.portfolio import (
 
 
 MIN_WIN_EV = 1.05
+MIN_ACTIONABLE_WIN_EV = 1.08
 BET_TYPE_MARKET_SHRINK = {
     "win": 0.35,
     "place": 0.45,
@@ -317,7 +318,7 @@ def _build_win_ticket(
     recommended_fraction = max(0.0, min(0.30, full_kelly * kelly_fraction))
     stake = int((bankroll_per_race * recommended_fraction) / 100) * 100
     if stake < 100:
-        stake = 100 if ev >= 1.08 else 0
+        stake = 100 if ev >= MIN_ACTIONABLE_WIN_EV else 0
     if stake <= 0:
         return None
 
@@ -1467,7 +1468,8 @@ def _build_race_longshots(
     value_longs = [
         _with_long_reason(row, "win_ev_threshold")
         for row in rows
-        if _to_float(row.get("current_odds")) >= 10.0 and _to_float(row.get("ev")) >= max(min_win_ev, 1.08)
+        if _to_float(row.get("current_odds")) >= 10.0
+        and _to_float(row.get("ev")) >= max(min_win_ev, MIN_ACTIONABLE_WIN_EV)
     ]
     model_longs = _model_score_longshots(rows)
     merged = _dedupe_rows_by_horse_number(value_longs + model_longs)
@@ -2431,7 +2433,10 @@ def _has_win_standout(rows: list[dict[str, object]]) -> bool:
     if not rows:
         return False
     leader = max(rows, key=lambda row: _to_float(row.get("win_prob")))
-    return _to_float(leader.get("win_prob")) >= 0.20 and _to_float(leader.get("ev")) >= 1.08
+    return (
+        _to_float(leader.get("win_prob")) >= 0.20
+        and _to_float(leader.get("ev")) >= MIN_ACTIONABLE_WIN_EV
+    )
 
 
 def _optimize_portfolio_stakes(
