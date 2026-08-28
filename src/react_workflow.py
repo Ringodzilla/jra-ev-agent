@@ -67,6 +67,7 @@ class WorkflowSettings:
     max_odds_gap_ratio: float = 0.25
     min_top3_ticket_coverage: int = 2
     max_horse_ticket_dependency_ratio: float = 0.50
+    max_horse_stake_dependency_ratio: float = 0.60
 
 
 class DataCollectorAgent:
@@ -184,6 +185,7 @@ class BetBuilderAgent:
             min_portfolio_ev=self.settings.min_portfolio_ev,
             min_coverage_ev=self.settings.min_coverage_ev,
             prefer_wide=self.settings.prefer_wide,
+            max_horse_stake_dependency_ratio=self.settings.max_horse_stake_dependency_ratio,
         )
 
 
@@ -209,6 +211,7 @@ class ReviewerAgent:
         reasons: list[str] = []
         repair_actions: list[object] = []
         ticket_repair_blocked = False
+        stake_dependency_ratio = 0.0
 
         high_issues = int(dict(quality_report.get("issues_by_severity") or {}).get("high", 0))
         if high_issues > 0:
@@ -281,6 +284,18 @@ class ReviewerAgent:
                 reasons.append(
                     f"horse ticket dependency ratio is too high: {dependency_ratio:.3f}"
                 )
+            stake_dependency_ratio = _max_non_core_horse_stake_dependency_ratio(
+                tickets,
+                ev_rows,
+            )
+            if (
+                tickets
+                and stake_dependency_ratio > self.settings.max_horse_stake_dependency_ratio
+            ):
+                reasons.append(
+                    "horse stake dependency ratio is too high: "
+                    f"{stake_dependency_ratio:.3f}"
+                )
 
             if tickets and portfolio_ev(tickets) < self.settings.min_portfolio_ev:
                 reasons.append("ticket portfolio EV is below the configured minimum")
@@ -349,6 +364,11 @@ class ReviewerAgent:
             "divergent_rows": divergent_rows,
             "selected_divergent_rows": selected_divergent_rows,
             "missing_eligible_win_candidates": missing_eligible_win_candidates,
+            "horse_stake_dependency_ratio": _fmt(stake_dependency_ratio),
+            "max_horse_stake_dependency_ratio": _fmt(
+                self.settings.max_horse_stake_dependency_ratio
+            ),
+            "horse_stake_dependency_scope": "outside_top3_win_probability",
             "stage_counts": {
                 "entries": len(entry_rows),
                 "feature_rows": len(scenario_rows),
@@ -781,6 +801,9 @@ def _build_ticket_repair_action(
         "post_repair_portfolio_ev": _fmt(portfolio_ev(repaired)),
         "post_repair_no_gami": portfolio_no_gami(repaired),
         "post_repair_dependency_ratio": _fmt(_max_horse_ticket_dependency_ratio(repaired)),
+        "post_repair_stake_dependency_ratio": _fmt(
+            _max_non_core_horse_stake_dependency_ratio(repaired, ev_rows)
+        ),
     }
 
 
@@ -795,6 +818,11 @@ def _repair_portfolio_safe(
     if portfolio_ev(tickets) < settings.min_portfolio_ev or not portfolio_no_gami(tickets):
         return False
     if _max_horse_ticket_dependency_ratio(tickets) > settings.max_horse_ticket_dependency_ratio:
+        return False
+    if (
+        _max_non_core_horse_stake_dependency_ratio(tickets, ev_rows)
+        > settings.max_horse_stake_dependency_ratio
+    ):
         return False
     if any(
         _ticket_ev(ticket, default=0.0) < _ticket_min_ev(ticket, settings)
@@ -1284,6 +1312,61 @@ def _max_horse_ticket_dependency_ratio(tickets: list[dict[str, object]]) -> floa
         for horse_number in set(part for part in explicit + value.split("-") if part.isdigit()):
             counts[horse_number] = counts.get(horse_number, 0) + 1
     return max(counts.values(), default=0) / len(tickets)
+
+
+def _max_horse_stake_dependency_ratio(
+    tickets: list[dict[str, object]],
+    *,
+    exempt_horse_numbers: set[str] | None = None,
+) -> float:
+    if len(tickets) <= 1:
+        return 0.0
+    total_stake = sum(int(_to_float(ticket.get("stake"))) for ticket in tickets)
+    if total_stake <= 0:
+        return 0.0
+    stakes: dict[str, int] = {}
+    exempt = exempt_horse_numbers or set()
+    for ticket in tickets:
+        stake = int(_to_float(ticket.get("stake")))
+        explicit = [str(value) for value in list(ticket.get("horse_numbers") or [])]
+        value = str(ticket.get("horse_number", "")).replace(">", "-").replace("→", "-")
+        for horse_number in set(part for part in explicit + value.split("-") if part.isdigit()):
+            if horse_number in exempt:
+                continue
+            stakes[horse_number] = stakes.get(horse_number, 0) + stake
+    return max(stakes.values(), default=0) / total_stake
+
+
+def _max_non_core_horse_stake_dependency_ratio(
+    tickets: list[dict[str, object]],
+    ev_rows: list[dict[str, object]],
+) -> float:
+    tickets_by_race: dict[str, list[dict[str, object]]] = {}
+    rows_by_race: dict[str, list[dict[str, object]]] = {}
+    for ticket in tickets:
+        tickets_by_race.setdefault(str(ticket.get("race_id", "")), []).append(ticket)
+    for row in ev_rows:
+        rows_by_race.setdefault(str(row.get("race_id", "")), []).append(row)
+
+    ratios: list[float] = []
+    for race_id, race_tickets in tickets_by_race.items():
+        top_rows = sorted(
+            rows_by_race.get(race_id, []),
+            key=lambda row: _to_float(row.get("win_prob")),
+            reverse=True,
+        )[:3]
+        exempt_horse_numbers = {
+            str(row.get("horse_number", "")).strip()
+            for row in top_rows
+            if str(row.get("horse_number", "")).strip()
+        }
+        ratios.append(
+            _max_horse_stake_dependency_ratio(
+                race_tickets,
+                exempt_horse_numbers=exempt_horse_numbers,
+            )
+        )
+    return max(ratios, default=0.0)
 
 
 def _read_csv(path: Path) -> list[dict[str, str]]:

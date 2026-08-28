@@ -60,6 +60,7 @@ def generate_tickets(
     prefer_wide: bool = False,
     min_portfolio_ev: float = 1.0,
     min_coverage_ev: float = 0.75,
+    max_horse_stake_dependency_ratio: float = 0.60,
 ) -> dict[str, object]:
     by_race: dict[str, list[dict[str, object]]] = defaultdict(list)
     for row in ev_rows:
@@ -193,16 +194,33 @@ def generate_tickets(
                 else thresholds.get(str(ticket.get("bet_type", "")), min_ev)
             )
         ]
-        candidate_pool = _rank_ticket_pool(all_ticket_candidates, prefer_wide=prefer_wide)
-        candidate_references.extend(candidate_pool)
-        candidate_counts = _candidate_counts_by_type(candidate_pool)
-        for bet_type, count in candidate_counts.items():
-            aggregate_candidate_counts[bet_type] += count
-
         selection_pool = _limit_eligible_selection_pool(
             eligible_pool,
             max_wide_tickets_per_race=max_wide_tickets_per_race,
             max_exotic_tickets_per_race=max_exotic_tickets_per_race,
+        )
+        actionable_win_candidate_numbers = {
+            str(row.get("horse_number", "")).strip()
+            for row in enriched
+            if _win_candidate_ev(row, live_odds)
+            >= max(min_win_ev, MIN_ACTIONABLE_WIN_EV)
+            and _live_or_current_win_odds(row, live_odds) > 0
+        }
+        represented_win_candidate_numbers = {
+            str(ticket.get("horse_number", "")).strip()
+            for ticket in all_ticket_candidates
+            if str(ticket.get("bet_type", "")) == "win"
+        }
+        missing_actionable_win_candidate_numbers = sorted(
+            actionable_win_candidate_numbers - represented_win_candidate_numbers,
+            key=lambda value: int(_to_float(value, 999.0)),
+        )
+        if missing_actionable_win_candidate_numbers:
+            selection_pool = []
+        top_win_horse_number = _top_win_probability_horse_number(enriched)
+        stake_dependency_exempt_horse_numbers = _top_win_probability_horse_numbers(
+            enriched,
+            limit=3,
         )
         race_tickets = _select_optimized_tickets(
             selection_pool,
@@ -210,14 +228,60 @@ def generate_tickets(
             prefer_wide=prefer_wide,
             force_win_standout=_has_win_standout(enriched),
             min_portfolio_ev=min_portfolio_ev,
+            required_horse_number=top_win_horse_number,
         )
         race_tickets = _optimize_portfolio_stakes(
             race_tickets,
             bankroll_per_race=bankroll_per_race,
             min_portfolio_ev=min_portfolio_ev,
+            max_horse_stake_dependency_ratio=max_horse_stake_dependency_ratio,
+            stake_dependency_exempt_horse_numbers=(
+                stake_dependency_exempt_horse_numbers
+            ),
         )
         race_tickets = _rebalance_race_stakes(race_tickets, bankroll_per_race=bankroll_per_race)
         race_tickets = _annotate_portfolio_tickets(_prune_gami_tickets(race_tickets))
+        selection_reason = (
+            "actionable_win_candidate_universe_incomplete"
+            if missing_actionable_win_candidate_numbers
+            else "optimized_portfolio"
+        )
+        if race_tickets and top_win_horse_number not in _portfolio_horse_numbers(race_tickets):
+            race_tickets = []
+            selection_reason = "top_win_probability_horse_missing_after_portfolio_checks"
+        if (
+            race_tickets
+            and _max_horse_stake_dependency_ratio(
+                race_tickets,
+                exempt_horse_numbers=stake_dependency_exempt_horse_numbers,
+            )
+            > max_horse_stake_dependency_ratio
+        ):
+            race_tickets = []
+            selection_reason = "horse_stake_dependency_limit_exceeded"
+        if not race_tickets and selection_reason == "optimized_portfolio":
+            if top_win_horse_number and not any(
+                top_win_horse_number in _ticket_horse_numbers(ticket)
+                for ticket in selection_pool
+            ):
+                selection_reason = "top_win_probability_horse_has_no_eligible_ticket"
+            else:
+                selection_reason = "no_safe_portfolio"
+
+        candidate_pool = _rank_ticket_pool(all_ticket_candidates, prefer_wide=prefer_wide)
+        candidate_pool = _annotate_candidate_selection(
+            candidate_pool,
+            selected_tickets=race_tickets,
+            eligible_tickets=eligible_pool,
+            selection_pool=selection_pool,
+            portfolio_failure_reason=(
+                selection_reason if not race_tickets else ""
+            ),
+        )
+        candidate_references.extend(candidate_pool)
+        candidate_counts = _candidate_counts_by_type(candidate_pool)
+        for bet_type, count in candidate_counts.items():
+            aggregate_candidate_counts[bet_type] += count
         flat_tickets.extend(race_tickets)
 
         place_ranked = sorted(
@@ -250,6 +314,26 @@ def generate_tickets(
                 "exotics": exotic_candidates[:max_exotic_tickets_per_race],
                 "tickets": race_tickets,
                 "portfolio": _portfolio_summary(race_tickets),
+                "selection_status": "selected" if race_tickets else "no_bet",
+                "selection_reason": selection_reason,
+                "top_win_probability_horse_number": top_win_horse_number,
+                "horse_stake_dependency_ratio": _fmt(
+                    _max_horse_stake_dependency_ratio(
+                        race_tickets,
+                        exempt_horse_numbers=stake_dependency_exempt_horse_numbers,
+                    )
+                ),
+                "max_horse_stake_dependency_ratio": _fmt(
+                    max_horse_stake_dependency_ratio
+                ),
+                "horse_stake_dependency_scope": "outside_top3_win_probability",
+                "actionable_win_candidate_numbers": sorted(
+                    actionable_win_candidate_numbers,
+                    key=lambda value: int(_to_float(value, 999.0)),
+                ),
+                "missing_actionable_win_candidate_numbers": (
+                    missing_actionable_win_candidate_numbers
+                ),
             }
         )
 
@@ -2027,6 +2111,7 @@ def _select_optimized_tickets(
     prefer_wide: bool,
     force_win_standout: bool,
     min_portfolio_ev: float,
+    required_horse_number: str = "",
 ) -> list[dict[str, object]]:
     ranked = _rank_ticket_pool(_dedupe_ticket_combos(tickets), prefer_wide=prefer_wide)
     value_ranked = [ticket for ticket in ranked if not _is_coverage_ticket(ticket)]
@@ -2052,6 +2137,29 @@ def _select_optimized_tickets(
     type_order = list(_selection_type_order(prefer_wide=prefer_wide))
     selected: list[dict[str, object]] = []
     selected_keys: set[tuple[str, str]] = set()
+
+    if required_horse_number:
+        required_candidates = [
+            ticket
+            for ticket in ranked
+            if required_horse_number in _ticket_horse_numbers(ticket)
+        ]
+        if not required_candidates:
+            return []
+        required_candidates.sort(
+            key=lambda ticket: (
+                _to_float(ticket.get("hit_prob") or ticket.get("win_prob")),
+                _to_float(ticket.get("ev_current") or ticket.get("ev")),
+                _to_float(ticket.get("confidence")),
+            ),
+            reverse=True,
+        )
+        _append_ticket_if_new(
+            selected,
+            selected_keys,
+            required_candidates[0],
+            per_race_limit,
+        )
 
     if force_win_standout and not prefer_wide and by_type["win"]:
         _append_ticket_if_new(selected, selected_keys, by_type["win"][0], per_race_limit)
@@ -2182,6 +2290,102 @@ def _ticket_horse_numbers(ticket: dict[str, object]) -> set[str]:
     value = str(ticket.get("horse_number", "")).strip()
     normalized = value.replace(">", "-").replace("→", "-")
     return {part for part in normalized.split("-") if part.isdigit()}
+
+
+def _portfolio_horse_numbers(tickets: list[dict[str, object]]) -> set[str]:
+    numbers: set[str] = set()
+    for ticket in tickets:
+        numbers.update(_ticket_horse_numbers(ticket))
+    return numbers
+
+
+def _top_win_probability_horse_number(rows: list[dict[str, object]]) -> str:
+    if not rows:
+        return ""
+    leader = max(rows, key=lambda row: _to_float(row.get("win_prob")))
+    return str(leader.get("horse_number", "")).strip()
+
+
+def _top_win_probability_horse_numbers(
+    rows: list[dict[str, object]],
+    *,
+    limit: int,
+) -> set[str]:
+    ranked = sorted(
+        rows,
+        key=lambda row: _to_float(row.get("win_prob")),
+        reverse=True,
+    )
+    return {
+        str(row.get("horse_number", "")).strip()
+        for row in ranked[: max(0, limit)]
+        if str(row.get("horse_number", "")).strip()
+    }
+
+
+def _max_horse_stake_dependency_ratio(
+    tickets: list[dict[str, object]],
+    *,
+    exempt_horse_numbers: set[str] | None = None,
+) -> float:
+    """Return the largest amount-weighted cross-ticket dependency on one horse.
+
+    A single ticket necessarily depends 100% on all of its legs, so this portfolio
+    diversification constraint is only meaningful when multiple tickets exist.
+    """
+    if len(tickets) <= 1:
+        return 0.0
+    total_stake = sum(int(_to_float(ticket.get("stake"), 0.0)) for ticket in tickets)
+    if total_stake <= 0:
+        return 0.0
+    stakes: dict[str, int] = defaultdict(int)
+    exempt = exempt_horse_numbers or set()
+    for ticket in tickets:
+        stake = int(_to_float(ticket.get("stake"), 0.0))
+        for horse_number in _ticket_horse_numbers(ticket):
+            if horse_number in exempt:
+                continue
+            stakes[horse_number] += stake
+    return max(stakes.values(), default=0) / total_stake
+
+
+def _ticket_selection_key(ticket: dict[str, object]) -> tuple[str, str]:
+    return (
+        str(ticket.get("bet_type", "")),
+        str(ticket.get("horse_number", "")),
+    )
+
+
+def _annotate_candidate_selection(
+    candidates: list[dict[str, object]],
+    *,
+    selected_tickets: list[dict[str, object]],
+    eligible_tickets: list[dict[str, object]],
+    selection_pool: list[dict[str, object]],
+    portfolio_failure_reason: str = "",
+) -> list[dict[str, object]]:
+    selected_keys = {_ticket_selection_key(ticket) for ticket in selected_tickets}
+    eligible_keys = {_ticket_selection_key(ticket) for ticket in eligible_tickets}
+    selection_keys = {_ticket_selection_key(ticket) for ticket in selection_pool}
+    annotated: list[dict[str, object]] = []
+    for candidate in candidates:
+        out = dict(candidate)
+        key = _ticket_selection_key(candidate)
+        selected = key in selected_keys
+        out["selected"] = selected
+        out["selection_reason"] = "selected_portfolio" if selected else ""
+        if selected:
+            out["non_selection_reason"] = ""
+        elif key not in eligible_keys:
+            out["non_selection_reason"] = "below_minimum_ev"
+        elif portfolio_failure_reason:
+            out["non_selection_reason"] = portfolio_failure_reason
+        elif key not in selection_keys:
+            out["non_selection_reason"] = "bet_type_limit"
+        else:
+            out["non_selection_reason"] = "portfolio_optimization"
+        annotated.append(out)
+    return annotated
 
 
 def _is_coverage_ticket(ticket: dict[str, object]) -> bool:
@@ -2444,6 +2648,8 @@ def _optimize_portfolio_stakes(
     *,
     bankroll_per_race: int,
     min_portfolio_ev: float,
+    max_horse_stake_dependency_ratio: float = 0.60,
+    stake_dependency_exempt_horse_numbers: set[str] | None = None,
 ) -> list[dict[str, object]]:
     if not tickets or bankroll_per_race <= 0:
         return []
@@ -2485,6 +2691,15 @@ def _optimize_portfolio_stakes(
             if _portfolio_ev(trial) < min_portfolio_ev:
                 continue
             if _portfolio_no_gami(allocated) and not _portfolio_no_gami(trial):
+                continue
+            if (
+                _max_horse_stake_dependency_ratio(trial)
+                if not stake_dependency_exempt_horse_numbers
+                else _max_horse_stake_dependency_ratio(
+                    trial,
+                    exempt_horse_numbers=stake_dependency_exempt_horse_numbers,
+                )
+            ) > max_horse_stake_dependency_ratio:
                 continue
 
             score = _stake_allocation_score(ticket)
