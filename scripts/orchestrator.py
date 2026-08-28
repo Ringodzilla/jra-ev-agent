@@ -12,7 +12,8 @@ if str(ROOT) not in sys.path:
 
 from jra_scraper.config import ScrapeConfig
 from scripts.run_pipeline import load_race_configs
-from src.react_workflow import ReactiveRaceWorkflow, WorkflowSettings
+from src.agents import WorkflowSettings
+from src.react_workflow import ReactiveRaceWorkflow
 
 
 def main() -> None:

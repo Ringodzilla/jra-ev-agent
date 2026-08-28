@@ -91,11 +91,17 @@ JRAのレースデータを取得し、**EVモデリングに直接使える整�
 * `jra_scraper/validation.py`: 型正規化・ID付与・重複除去・5件上限
 * `jra_scraper/pipeline.py`: 増分更新、状態管理、CSV出力
 * `jra_scraper/live_snapshot.py`: 直前用の出馬表・馬体重・天候・馬場・全券種オッズ取得（過去走は取得しない）
+* `src/agents/`: data collector / analyzer / simulator / EV calculator / bet builder / reviewer / article writer の役割別実装
+* `src/react_workflow.py`: 役割別agentの実行順序、再実行条件、stage artifactの検証だけを担当するオーケストレーター
 * `analysis/ev.py`: EV算出
 * `strategy/betting.py`: 買い目生成
 * `report/note.py`: note用Markdown生成
 * `src/deadline.py`: 発走時刻からT-5出力締切と実行モードを算出
 * `src/final_workflow.py`: 事前分析と最新スナップショットを統合し、最終 `GO / NO_GO` を判定
+
+既存コード向けの互換性を保つため、agent classと `WorkflowSettings` は
+`src.react_workflow` からも再公開しています。新規コードでは役割の所有箇所が明確になる
+`src.agents` からのimportを推奨します。
 
 ## Installation
 

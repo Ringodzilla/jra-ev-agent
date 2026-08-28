@@ -4,7 +4,6 @@ from __future__ import annotations
 import argparse
 import csv
 import json
-import os
 import signal
 import sys
 from contextlib import contextmanager
@@ -17,9 +16,11 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from jra_scraper.config import ScrapeConfig
+from src.agents import WorkflowSettings
+from src.artifacts import atomic_write_json as atomic_json
 from src.deadline import DeadlineSettings, build_deadline_plan
 from src.final_workflow import FinalPredictionWorkflow
-from src.react_workflow import WorkflowSettings, validate_canonical_stage_manifest
+from src.react_workflow import validate_canonical_stage_manifest
 
 
 class HardOutputDeadlineExceeded(BaseException):
@@ -224,13 +225,6 @@ def timeout_decision(race_config: dict[str, object], plan) -> dict[str, object]:
         "reason": "hard deadline watchdog stopped final processing before T-5",
         "tickets": [],
     }
-
-
-def atomic_json(path: Path, payload: object) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_name(f".{path.name}.{os.getpid()}.tmp")
-    temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-    os.replace(temporary, path)
 
 
 if __name__ == "__main__":

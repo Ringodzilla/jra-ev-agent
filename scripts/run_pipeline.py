@@ -16,7 +16,8 @@ if str(ROOT) not in sys.path:
 from analysis.ev import save_ev
 from jra_scraper.config import ScrapeConfig
 from report.note import generate_note_markdown, write_note_artifacts
-from src.react_workflow import ReactiveRaceWorkflow, WorkflowSettings, assert_canonical_stage_manifest
+from src.agents import WorkflowSettings
+from src.react_workflow import ReactiveRaceWorkflow, assert_canonical_stage_manifest
 
 
 REQUIRED_CONFIG_KEYS = {
