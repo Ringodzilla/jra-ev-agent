@@ -344,6 +344,16 @@ r1,三連単,1-2-3,,8200
 python -m pytest -q
 ```
 
+## Artifact storage
+
+成果物の保持期間とarchive手順は `docs/storage_policy.md` を正本とします。古い成果物の候補確認は読み取り専用の監査スクリプトで行います。
+
+```bash
+python scripts/audit_artifact_storage.py
+```
+
+次の一歩: `archive-candidate` を月単位にまとめ、checksum確認後にだけ元データを整理します。
+
 ## Review and CI gates
 
 Before committing or pushing changes, run the local review gate:

@@ -1,6 +1,8 @@
 .venv/
 __pycache__/
 *.pyc
+.coverage
+htmlcov/
 .DS_Store
 config/races_from_url.json
 config/race_*.json
