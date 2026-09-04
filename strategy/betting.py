@@ -556,7 +556,8 @@ def _generate_tickets_from_candidate_evaluations(
             ticket
             for ticket in candidate_pool
             if _to_float(ticket.get("robust_ev")) >= thresholds[str(ticket.get("bet_type", ""))]
-            and _to_float(ticket.get("hit_prob")) >= minimum_probabilities[str(ticket.get("bet_type", ""))]
+            and _ticket_decision_probability(ticket)
+            >= minimum_probabilities[str(ticket.get("bet_type", ""))]
             and int(_to_float(ticket.get("stake"))) >= 100
         ]
         selection_pool = _limit_eligible_selection_pool(
@@ -709,8 +710,9 @@ def _canonical_ticket_from_evaluation(
     ticket["bet_type_market_shrink"] = _fmt(shrink)
     market_prob = min(1.0, 1.0 / official_odds)
     calibrated_prob = ((1.0 - shrink) * raw_prob) + (shrink * market_prob)
-    ticket["snapshot_calibrated_hit_prob"] = _fmt(calibrated_prob)
-    ticket["snapshot_ev"] = _fmt(calibrated_prob * official_odds)
+    current_hit_prob = _to_float(_fmt(calibrated_prob))
+    ticket["snapshot_calibrated_hit_prob"] = _fmt(current_hit_prob)
+    ticket["snapshot_ev"] = _fmt(current_hit_prob * official_odds)
     scenario = build_odds_scenarios(
         ticket,
         official_odds,
@@ -721,6 +723,7 @@ def _canonical_ticket_from_evaluation(
     robust_odds = _to_float(scenario.get("robust_odds"))
     robust_prob = _to_float(scenario.get("robust_hit_prob"))
     robust_ev = _to_float(scenario.get("robust_ev"))
+    current_ev = current_hit_prob * official_odds
     stake = _kelly_stake(
         probability=robust_prob,
         odds=robust_odds,
@@ -732,15 +735,17 @@ def _canonical_ticket_from_evaluation(
     ticket.update(
         {
             "stake": stake,
-            "hit_prob": _fmt(robust_prob),
-            "calibrated_hit_prob": _fmt(robust_prob),
-            "market_prob": _fmt(min(1.0, 1.0 / robust_odds)),
+            "hit_prob": _fmt(current_hit_prob),
+            "calibrated_hit_prob": _fmt(current_hit_prob),
+            "market_prob": _fmt(market_prob),
             "robust_odds": _fmt(robust_odds),
+            "robust_hit_prob": _fmt(robust_prob),
             "predicted_odds": _fmt(robust_odds),
-            "win_odds": _fmt(robust_odds),
+            "win_odds": _fmt(official_odds),
             "robust_ev": _fmt(robust_ev),
-            "ev": _fmt(robust_ev),
-            "ev_current": _fmt(robust_ev),
+            "ev": _fmt(current_ev),
+            "ev_current": _fmt(current_ev),
+            "ev_predicted": _fmt(current_hit_prob * robust_odds),
             "confidence": _fmt(raw_prob / max(market_prob, 1e-9)),
             "odds_scenarios": list(scenario.get("scenarios") or []),
             "odds_scenario_audit": dict(scenario.get("audit") or {}),
@@ -764,7 +769,7 @@ def _canonical_ticket_from_evaluation(
         "sanrentan": "combo_prob",
     }.get(bet_type)
     if alias:
-        ticket[alias] = _fmt(robust_prob)
+        ticket[alias] = _fmt(current_hit_prob)
     return ticket
 
 
@@ -2421,13 +2426,32 @@ def _prioritize_exotic_types(tickets: list[dict[str, object]]) -> list[dict[str,
     return out
 
 
+def _ticket_decision_ev(ticket: dict[str, object]) -> float:
+    """Return the conservative EV used for selection without relabeling live EV."""
+    return _to_float(ticket.get("robust_ev") or ticket.get("ev_current") or ticket.get("ev"))
+
+
+def _ticket_decision_probability(ticket: dict[str, object]) -> float:
+    """Return the conservative probability used for selection when available."""
+    return _to_float(
+        ticket.get("robust_hit_prob") or ticket.get("hit_prob") or ticket.get("win_prob")
+    )
+
+
+def _ticket_decision_odds(ticket: dict[str, object]) -> float:
+    """Return conservative scenario odds for allocation, else the current market odds."""
+    return _to_float(
+        ticket.get("robust_odds") or ticket.get("win_odds") or ticket.get("predicted_odds")
+    )
+
+
 def _rank_ticket_pool(tickets: list[dict[str, object]], *, prefer_wide: bool) -> list[dict[str, object]]:
     return sorted(
         tickets,
         key=lambda ticket: (
             _ticket_type_rank(str(ticket.get("bet_type", "")), prefer_wide=prefer_wide),
-            -_to_float(ticket.get("ev_current") or ticket.get("ev")),
-            -_to_float(ticket.get("hit_prob") or ticket.get("win_prob")),
+            -_ticket_decision_ev(ticket),
+            -_ticket_decision_probability(ticket),
             -_to_float(ticket.get("confidence")),
         ),
     )
@@ -2442,8 +2466,8 @@ def _limit_eligible_selection_pool(
     """Apply type caps only after calibration so rejected tickets can be refilled."""
     def calibrated_rank(ticket: dict[str, object]) -> tuple[float, float, float]:
         return (
-            _to_float(ticket.get("ev_current") or ticket.get("ev")),
-            _to_float(ticket.get("hit_prob") or ticket.get("win_prob")),
+            _ticket_decision_ev(ticket),
+            _ticket_decision_probability(ticket),
             _to_float(ticket.get("confidence")),
         )
 
@@ -2532,8 +2556,8 @@ def _select_optimized_tickets(
             return []
         required_candidates.sort(
             key=lambda ticket: (
-                _to_float(ticket.get("hit_prob") or ticket.get("win_prob")),
-                _to_float(ticket.get("ev_current") or ticket.get("ev")),
+                _ticket_decision_probability(ticket),
+                _ticket_decision_ev(ticket),
                 _to_float(ticket.get("confidence")),
             ),
             reverse=True,
@@ -2565,8 +2589,8 @@ def _select_optimized_tickets(
     by_ev = sorted(
         value_ranked,
         key=lambda ticket: (
-            _to_float(ticket.get("ev_current") or ticket.get("ev")),
-            _to_float(ticket.get("hit_prob") or ticket.get("win_prob")),
+            _ticket_decision_ev(ticket),
+            _ticket_decision_probability(ticket),
             _to_float(ticket.get("confidence")),
         ),
         reverse=True,
@@ -2825,9 +2849,9 @@ def _prune_gami_tickets(tickets: list[dict[str, object]]) -> list[dict[str, obje
         drop = min(
             removable,
             key=lambda ticket: (
-                _to_float(ticket.get("ev_current") or ticket.get("ev")),
+                _ticket_decision_ev(ticket),
                 _ticket_return_if_hit(ticket) / max(total_stake, 1),
-                _to_float(ticket.get("hit_prob") or ticket.get("win_prob")),
+                _ticket_decision_probability(ticket),
             ),
         )
         out.remove(drop)
@@ -3123,13 +3147,13 @@ def _ticket_max_portfolio_stake(ticket: dict[str, object], *, bankroll_per_race:
 
 
 def _stake_allocation_score(ticket: dict[str, object]) -> float:
-    ev = _to_float(ticket.get("ev_current") or ticket.get("ev"))
+    ev = _ticket_decision_ev(ticket)
     edge = max(0.0, ev - 1.0)
     if edge <= 0:
         return 0.0
-    hit_prob = _to_float(ticket.get("hit_prob") or ticket.get("win_prob"))
+    hit_prob = _ticket_decision_probability(ticket)
     confidence = _clamp(_to_float(ticket.get("confidence"), 1.0), minimum=0.30, maximum=2.50)
-    odds = max(1.0, _to_float(ticket.get("win_odds") or ticket.get("predicted_odds"), 1.0))
+    odds = max(1.0, _ticket_decision_odds(ticket))
     stability = 1.0 / (1.0 + abs(_to_float(ticket.get("ev_predicted")) - ev))
     shape_bonus = 1.08 if _is_formation_ticket(ticket) else 1.0
     return edge * math.sqrt(max(hit_prob, 0.001)) * confidence * stability * shape_bonus / math.sqrt(odds)
@@ -3158,7 +3182,7 @@ def _rebalance_race_stakes(
         scaled.append(_with_adjusted_stake(ticket, adjusted))
 
     if not scaled:
-        best = dict(max(tickets, key=lambda ticket: _to_float(ticket.get("ev_current") or ticket.get("ev"))))
+        best = dict(max(tickets, key=_ticket_decision_ev))
         best = _with_adjusted_stake(best, min(_ticket_stake_unit(best), bankroll_per_race))
         return [best] if int(_to_float(best.get("stake"), 0.0)) > 0 else []
     return scaled

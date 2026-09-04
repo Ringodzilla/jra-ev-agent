@@ -67,6 +67,19 @@ class TestEVPipeline(unittest.TestCase):
         self.assertNotAlmostEqual(0.1799, float(built["raw_hit_prob"]), places=4)
         self.assertIn("robust_ev", built)
         self.assertEqual(4, len(built["odds_scenarios"]))
+        self.assertEqual(30.0, float(built["win_odds"]))
+        self.assertAlmostEqual(
+            float(built["ev_current"]),
+            float(built["hit_prob"]) * float(built["win_odds"]),
+            places=6,
+        )
+        self.assertEqual(float(built["robust_odds"]), float(built["predicted_odds"]))
+        self.assertAlmostEqual(
+            float(built["ev_predicted"]),
+            float(built["hit_prob"]) * float(built["predicted_odds"]),
+            places=5,
+        )
+        self.assertNotEqual(float(built["win_odds"]), float(built["robust_odds"]))
 
     def test_builder_fails_closed_when_candidate_validation_is_ng(self):
         plan = generate_tickets(
