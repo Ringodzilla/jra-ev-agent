@@ -39,6 +39,21 @@ def build_live_odds_lookup(
     return dict(by_race)
 
 
+def latest_complete_odds_rows(
+    odds_rows: list[dict[str, object]] | list[dict[str, str]],
+) -> list[LiveOddsRow]:
+    """Return one coherent latest snapshot per race for downstream pricing."""
+    rows_by_race: dict[str, list[LiveOddsRow]] = defaultdict(list)
+    for row in odds_rows:
+        race_id = str(row.get("race_id", "")).strip()
+        if race_id:
+            rows_by_race[race_id].append(dict(row))
+    selected: list[LiveOddsRow] = []
+    for race_id in sorted(rows_by_race):
+        selected.extend(_latest_complete_snapshot_rows(rows_by_race[race_id]))
+    return selected
+
+
 def _latest_complete_snapshot_rows(race_rows: list[LiveOddsRow]) -> list[LiveOddsRow]:
     snapshot_rows = [
         row

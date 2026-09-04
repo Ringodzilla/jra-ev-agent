@@ -8,6 +8,7 @@ from analysis.ev import EVWeights
 from jra_scraper.config import ScrapeConfig
 from jra_scraper.live_snapshot import LiveSnapshotCollector, LiveSnapshotDeadlineExceeded
 from strategy.live_odds import live_combo_key
+from analysis.candidate_ev import build_candidate_evaluations
 from src.agents import (
     AnalyzerAgent,
     BetBuilderAgent,
@@ -68,6 +69,8 @@ class FinalPredictionWorkflow:
         race_config: dict[str, object],
         *,
         baseline: dict[str, object] | list[dict[str, object]],
+        fixed_analysis: dict[str, object] | None = None,
+        odds_history: list[dict[str, object]] | list[dict[str, str]] | None = None,
     ) -> dict[str, object]:
         plan = build_deadline_plan(
             race_config,
@@ -96,6 +99,13 @@ class FinalPredictionWorkflow:
                 plan,
                 code="NO_GO_BASELINE_MISSING",
                 reason="cached pre-race history is missing; final mode will not start a full scrape",
+            )
+
+        if fixed_analysis and fixed_analysis.get("_load_error"):
+            return self._finish_early(
+                plan,
+                code="NO_GO_FIXED_ANALYSIS_INVALID",
+                reason=f"fixed analysis could not be loaded: {fixed_analysis['_load_error']}",
             )
 
         try:
@@ -137,26 +147,93 @@ class FinalPredictionWorkflow:
         collected["baseline_quality"] = baseline_quality
         collected["deadline"] = plan.to_dict()
 
-        analyzed = self.analyzer.run(
-            merged_rows,
-            odds_snapshots=list(collected.get("odds_snapshots") or []),
-        )
-        analyzed["snapshot_id"] = live.get("snapshot_id", "")
-        simulated = self.simulator.run(list(analyzed.get("feature_rows") or []))
-        simulated["snapshot_id"] = live.get("snapshot_id", "")
-        calculated = self.ev_calculator.run(list(simulated.get("scenario_rows") or []))
-        calculated["snapshot_id"] = live.get("snapshot_id", "")
-        scenario_rows = list(simulated.get("scenario_rows") or [])
+        analysis_mode = "recomputed"
+        if fixed_analysis is not None:
+            try:
+                ev_rows = build_fixed_analysis_ev_rows(
+                    race_config=race_config,
+                    fixed_analysis=fixed_analysis,
+                    live_entries=list(live.get("entries") or []),
+                    combo_odds=list(live.get("combo_odds") or []),
+                    baseline_rows=baseline_rows,
+                )
+            except ValueError as exc:
+                return self._finish_after_live(
+                    plan,
+                    collected=collected,
+                    code="NO_GO_FIXED_ANALYSIS_INVALID",
+                    reason=str(exc),
+                )
+            analysis_mode = "fixed_reprice"
+            provenance = dict(fixed_analysis.get("provenance") or {})
+            analyzed = {
+                **dict(fixed_analysis.get("analyzer") or {}),
+                "reused": True,
+                "reuse_provenance": provenance.get("analyzer", {}),
+                "snapshot_id": live.get("snapshot_id", ""),
+            }
+            simulated = {
+                **dict(fixed_analysis.get("simulator") or {}),
+                "reused": True,
+                "reuse_provenance": provenance.get("simulator", {}),
+                "snapshot_id": live.get("snapshot_id", ""),
+            }
+            calculated = {
+                "role": "ev_calculator",
+                "mode": "fixed_probability_reprice",
+                "formula": "EV = fixed final win probability * latest official win odds",
+                "probability_source": provenance.get("simulator", {}),
+                "snapshot_id": live.get("snapshot_id", ""),
+                "ev_rows": ev_rows,
+                "ev_table": [
+                    {
+                        "horse_number": row.get("horse_number", ""),
+                        "horse": row.get("horse_name", ""),
+                        "win_prob": row.get("win_prob", ""),
+                        "odds": row.get("current_odds", ""),
+                        "ev": row.get("ev", ""),
+                    }
+                    for row in ev_rows
+                ],
+            }
+            calculated.update(
+                build_candidate_evaluations(
+                    ev_rows,
+                    list(live.get("combo_odds") or []),
+                )
+            )
+        else:
+            analyzed = self.analyzer.run(
+                merged_rows,
+                odds_snapshots=list(collected.get("odds_snapshots") or []),
+            )
+            analyzed["snapshot_id"] = live.get("snapshot_id", "")
+            simulated = self.simulator.run(list(analyzed.get("feature_rows") or []))
+            simulated["snapshot_id"] = live.get("snapshot_id", "")
+            calculated = self.ev_calculator.run(
+                list(simulated.get("scenario_rows") or []),
+                combo_odds=list(live.get("combo_odds") or []),
+            )
+            calculated["snapshot_id"] = live.get("snapshot_id", "")
+
+        scenario_rows = list(simulated.get("scenario_rows") or calculated.get("ev_rows") or [])
         bet_plan = self.bet_builder.run(
             list(calculated.get("ev_rows") or []),
             combo_odds=list(live.get("combo_odds") or []),
+            odds_history=[
+                *list(odds_history or []),
+                *list(live.get("combo_odds") or []),
+            ],
+            candidate_evaluations=list(calculated.get("candidate_evaluations") or []),
+            candidate_validation=dict(calculated.get("validation") or {}),
+            seconds_to_post=max(0.0, plan.seconds_until_output_deadline + 300.0),
             race_configs=[race_config],
         )
         bet_plan["snapshot_id"] = live.get("snapshot_id", "")
         bet_plan["reviewer_ticket_repair_enabled"] = True
         quantitative_review = self.quantitative_reviewer.run(
             collected,
-            list(simulated.get("scenario_rows") or []),
+            scenario_rows,
             list(calculated.get("ev_rows") or []),
             bet_plan,
             attempt=0,
@@ -200,6 +277,7 @@ class FinalPredictionWorkflow:
             "output_deadline": plan.output_deadline.isoformat(),
             "issued_at": review["issued_at"],
             "execution_mode": plan.execution_mode,
+            "analysis_mode": analysis_mode,
             "snapshot_id": live.get("snapshot_id", ""),
             "weather": dict(live.get("conditions") or {}).get("weather", ""),
             "track_condition": dict(live.get("conditions") or {}).get("track_condition", ""),
@@ -213,6 +291,50 @@ class FinalPredictionWorkflow:
             "simulator": simulated,
             "ev_calculator": calculated,
             "bet_builder": bet_plan,
+            "reviewer": review,
+            "final_decision": decision,
+        }
+        self._write_outputs(payload)
+        return payload
+
+    def _finish_after_live(
+        self,
+        plan: DeadlinePlan,
+        *,
+        collected: dict[str, object],
+        code: str,
+        reason: str,
+    ) -> dict[str, object]:
+        issued_at = _as_utc(self._now()).isoformat()
+        review = {
+            "status": "NG",
+            "decision": "NO_GO",
+            "decision_code": code,
+            "reason": reason,
+            "fix": "do not purchase tickets",
+            "issued_at": issued_at,
+            "deadline": plan.to_dict(),
+            "checks": {"fixed_analysis_valid": False},
+        }
+        decision = {
+            "status": "NG",
+            "decision": "NO_GO",
+            "decision_code": code,
+            "post_time": plan.post_time.isoformat(),
+            "output_deadline": plan.output_deadline.isoformat(),
+            "issued_at": issued_at,
+            "execution_mode": plan.execution_mode,
+            "analysis_mode": "fixed_reprice",
+            "reason": reason,
+            "tickets": [],
+        }
+        skipped = {"status": "skipped", "reason": reason}
+        payload = {
+            "data_collector": collected,
+            "analyzer": {"status": "NG", "reason": reason},
+            "simulator": skipped,
+            "ev_calculator": skipped,
+            "bet_builder": {**skipped, "tickets": []},
             "reviewer": review,
             "final_decision": decision,
         }
@@ -284,6 +406,10 @@ class FinalPredictionWorkflow:
             "artifacts": {
                 filename: {"sha256": _file_sha256(self.output_dir / filename)}
                 for filename in FINAL_STAGE_ORDER
+            },
+            "reuse_provenance": {
+                "analyzer": dict(dict(payload.get("analyzer") or {}).get("reuse_provenance") or {}),
+                "simulator": dict(dict(payload.get("simulator") or {}).get("reuse_provenance") or {}),
             },
         }
         _atomic_json(self.output_dir / "run_manifest.json", manifest)
@@ -629,6 +755,219 @@ def _configured_zero_history_numbers(race_config: dict[str, object]) -> set[str]
         for number, starts in configured.items()
         if _to_int(starts) == 0
     }
+
+
+def build_fixed_analysis_ev_rows(
+    *,
+    race_config: dict[str, object],
+    fixed_analysis: dict[str, object],
+    live_entries: list[dict[str, object]],
+    combo_odds: list[dict[str, object]],
+    baseline_rows: list[dict[str, str]],
+) -> list[dict[str, object]]:
+    """Reprice immutable pre-race probabilities with one fresh official snapshot."""
+    analyzer = dict(fixed_analysis.get("analyzer") or {})
+    simulator = dict(fixed_analysis.get("simulator") or {})
+    scores = [dict(row) for row in list(analyzer.get("scores") or [])]
+    probabilities = [dict(row) for row in list(simulator.get("probabilities") or [])]
+    race_id = str(race_config.get("race_id", "")).strip()
+
+    if not race_id or str(analyzer.get("race_id", "")).strip() != race_id:
+        raise ValueError("fixed analyzer race_id does not match the requested race")
+    if str(simulator.get("race_id", "")).strip() != race_id:
+        raise ValueError("fixed simulator race_id does not match the requested race")
+
+    score_by_number = _unique_rows_by_horse_number(scores, label="fixed analyzer scores")
+    probability_by_number = _unique_rows_by_horse_number(
+        probabilities,
+        label="fixed simulator probabilities",
+    )
+    live_by_number = _unique_rows_by_horse_number(live_entries, label="live entries")
+    expected_numbers = set(live_by_number)
+    if not expected_numbers or set(score_by_number) != expected_numbers:
+        raise ValueError("fixed analyzer lineup does not match the live entries")
+    if set(probability_by_number) != expected_numbers:
+        raise ValueError("fixed simulator lineup does not match the live entries")
+
+    for horse_number, score in score_by_number.items():
+        components = sum(
+            _to_float_value(score.get(key))
+            for key in ("ability", "course", "pace", "weight", "jockey")
+        )
+        if abs(components - _to_float_value(score.get("S"))) > 0.011:
+            raise ValueError(f"fixed analyzer S mismatch for horse {horse_number}")
+        if _normalized_name(score.get("horse")) != _normalized_name(
+            live_by_number[horse_number].get("horse_name")
+        ):
+            raise ValueError(f"fixed analyzer horse name mismatch for horse {horse_number}")
+
+    for key in ("high", "mid", "slow", "final"):
+        values = [_to_float_value(row.get(key), default=-1.0) for row in probabilities]
+        if any(value < 0.0 or value > 1.0 for value in values):
+            raise ValueError(f"fixed simulator {key} probability is outside [0, 1]")
+        if abs(sum(values) - 1.0) > 1e-9:
+            raise ValueError(f"fixed simulator {key} probabilities do not sum to 1")
+
+    baseline_by_number: dict[str, dict[str, str]] = {}
+    history_counts: dict[str, int] = {}
+    for row in baseline_rows:
+        horse_number = _horse_number(row.get("horse_number"))
+        if not horse_number:
+            continue
+        baseline_by_number.setdefault(horse_number, row)
+        history_counts[horse_number] = history_counts.get(horse_number, 0) + 1
+    for horse_number in sorted(expected_numbers, key=int):
+        baseline = baseline_by_number.get(horse_number)
+        if baseline is None:
+            raise ValueError(f"baseline row is missing for horse {horse_number}")
+        live = live_by_number[horse_number]
+        for key in (
+            "current_jockey",
+            "assigned_weight",
+            "target_track",
+            "target_surface",
+            "target_distance",
+            "target_track_condition",
+        ):
+            old = str(baseline.get(key, "")).strip()
+            new = str(live.get(key, "")).strip()
+            if old and new and not _same_fixed_value(key, old, new):
+                raise ValueError(
+                    f"live {key} changed for horse {horse_number}; fixed analysis cannot be reused"
+                )
+
+    win_odds: dict[str, float] = {}
+    for row in combo_odds:
+        if str(row.get("race_id", "")).strip() != race_id:
+            continue
+        if str(row.get("bet_type", "")).strip() != "win":
+            continue
+        horse_number = _horse_number(row.get("combination"))
+        odds = _to_float_value(row.get("odds") or row.get("odds_min"))
+        if horse_number and odds > 1.0:
+            if horse_number in win_odds:
+                raise ValueError(f"duplicate official win odds for horse {horse_number}")
+            win_odds[horse_number] = odds
+    if set(win_odds) != expected_numbers:
+        raise ValueError("latest official win odds do not cover the fixed-analysis lineup")
+
+    implied = {number: 1.0 / odds for number, odds in win_odds.items()}
+    implied_total = sum(implied.values())
+    market_probs = {number: value / implied_total for number, value in implied.items()}
+    scenario_weights = dict(dict(simulator.get("method") or {}).get("scenario_weights") or {})
+
+    rows: list[dict[str, object]] = []
+    for horse_number in sorted(expected_numbers, key=int):
+        live = live_by_number[horse_number]
+        score = score_by_number[horse_number]
+        probability = probability_by_number[horse_number]
+        win_prob = _to_float_value(probability.get("final"))
+        odds = win_odds[horse_number]
+        ev = win_prob * odds
+        rows.append(
+            {
+                **live,
+                "race_id": race_id,
+                "horse_number": horse_number,
+                "horse_name": str(live.get("horse_name", "")),
+                "history_count": str(history_counts.get(horse_number, 0)),
+                "consistency": "0.5",
+                "model_score": _format_float(_to_float_value(score.get("S")) / 100.0),
+                "ability_score": _format_float(_to_float_value(score.get("ability")) / 100.0),
+                "course_score": _format_float(_to_float_value(score.get("course")) / 10.0),
+                "pace_score": _format_float(_to_float_value(score.get("pace")) / 8.0),
+                "weight_score": _format_float(_to_float_value(score.get("weight")) / 2.0),
+                "jockey_score": _format_float(_to_float_value(score.get("jockey")) / 6.0),
+                "pace_mix_high": _format_float(
+                    _to_float_value(scenario_weights.get("high"))
+                ),
+                "pace_mix_mid": _format_float(
+                    _to_float_value(scenario_weights.get("mid"))
+                ),
+                "pace_mix_slow": _format_float(
+                    _to_float_value(scenario_weights.get("slow"))
+                ),
+                "scenario_probability_high": _format_float(
+                    _to_float_value(probability.get("high"))
+                ),
+                "scenario_probability_mid": _format_float(
+                    _to_float_value(probability.get("mid"))
+                ),
+                "scenario_probability_slow": _format_float(
+                    _to_float_value(probability.get("slow"))
+                ),
+                "current_odds": _format_float(odds),
+                "win_odds": _format_float(odds),
+                "predicted_odds": _format_float(odds),
+                "predicted_odds_structural": _format_float(odds),
+                "predicted_odds_live": _format_float(odds),
+                "predicted_odds_source": "jra_live",
+                "market_prob": _format_float(market_probs[horse_number]),
+                "market_shrink_used": "0",
+                "win_prob": _format_float(win_prob),
+                "win_prob_mean": _format_float(win_prob),
+                "win_prob_std": "0",
+                "fair_odds": _format_float((1.0 / win_prob) if win_prob > 0 else 0.0),
+                "ev": _format_float(ev),
+                "ev_win": _format_float(ev),
+                "ev_current": _format_float(ev),
+                "ev_predicted": _format_float(ev),
+                "ev_predicted_structural": _format_float(ev),
+                "ev_predicted_live": _format_float(ev),
+                "odds_gap": "0",
+                "odds_gap_ratio": "0",
+                "ev_delta": "0",
+                "ev_delta_ratio": "0",
+                "fixed_probability": True,
+            }
+        )
+    return rows
+
+
+def _unique_rows_by_horse_number(
+    rows: list[dict[str, object]],
+    *,
+    label: str,
+) -> dict[str, dict[str, object]]:
+    by_number: dict[str, dict[str, object]] = {}
+    for row in rows:
+        horse_number = _horse_number(row.get("horse_number"))
+        if not horse_number:
+            raise ValueError(f"{label} contains a missing horse number")
+        if horse_number in by_number:
+            raise ValueError(f"{label} contains duplicate horse {horse_number}")
+        by_number[horse_number] = row
+    if not by_number:
+        raise ValueError(f"{label} is empty")
+    return by_number
+
+
+def _horse_number(value: object) -> str:
+    number = _to_int(value)
+    return str(number) if number > 0 else ""
+
+
+def _normalized_name(value: object) -> str:
+    return "".join(str(value or "").split())
+
+
+def _same_fixed_value(key: str, left: str, right: str) -> bool:
+    if key in {"assigned_weight", "target_distance"}:
+        return abs(_to_float_value(left) - _to_float_value(right)) < 1e-9
+    return _normalized_name(left) == _normalized_name(right)
+
+
+def _to_float_value(value: object, default: float = 0.0) -> float:
+    if value in (None, "", "None"):
+        return default
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def _format_float(value: float) -> str:
+    return f"{value:.12f}".rstrip("0").rstrip(".")
 
 
 def live_odds_snapshots(live: dict[str, object]) -> list[dict[str, object]]:

@@ -18,6 +18,7 @@ from src.agents import (
     WorkflowSettings,
     apply_ticket_repair_actions,
 )
+from strategy.live_odds import latest_complete_odds_rows
 from src.artifacts import atomic_write_json, file_sha256
 
 
@@ -95,10 +96,26 @@ class ReactiveRaceWorkflow:
                 odds_snapshots=list(collected.get("odds_snapshots") or []),
             )
             simulated = self.simulator.run(list(analyzed.get("feature_rows") or []))
-            calculated = self.ev_calculator.run(list(simulated.get("scenario_rows") or []))
+            all_combo_odds = list(collected.get("combo_odds") or [])
+            active_race_ids = {
+                str(row.get("race_id", ""))
+                for row in list(simulated.get("scenario_rows") or [])
+            }
+            current_combo_odds = [
+                row
+                for row in latest_complete_odds_rows(all_combo_odds)
+                if str(row.get("race_id", "")) in active_race_ids
+            ]
+            calculated = self.ev_calculator.run(
+                list(simulated.get("scenario_rows") or []),
+                combo_odds=current_combo_odds,
+            )
             bet_plan = self.bet_builder.run(
                 list(calculated.get("ev_rows") or []),
-                combo_odds=list(collected.get("combo_odds") or []),
+                combo_odds=current_combo_odds,
+                odds_history=all_combo_odds,
+                candidate_evaluations=list(calculated.get("candidate_evaluations") or []),
+                candidate_validation=dict(calculated.get("validation") or {}),
                 race_configs=race_configs,
             )
             review = self.reviewer.run(
