@@ -1,0 +1,34 @@
+{
+  "experiment_id": "20260904_live_combo_ev_consistency",
+  "hypothesis": "Using JRA current odds rather than predicted odds when recalculating calibrated non-win ticket EV will make displayed EV, threshold checks, and portfolio EV consistent and safer.",
+  "conceptual_change": "Separate current and predicted odds inside _calibrate_ticket_probabilities.",
+  "files_tested": [
+    "strategy/betting.py",
+    "tests/test_ev_pipeline.py"
+  ],
+  "leakage_check": "passed",
+  "targeted_tests": {
+    "passed": 18,
+    "failed": 0
+  },
+  "before": {
+    "validation_roi": 0.0,
+    "score": 0.0,
+    "ticket_count": 0,
+    "race_count": 1,
+    "result_bet_types_available": ["win"],
+    "result_label_count": 1
+  },
+  "after": {
+    "validation_roi": 0.0,
+    "score": 0.0,
+    "ticket_count": 0,
+    "race_count": 1,
+    "result_bet_types_available": ["win"],
+    "result_label_count": 1
+  },
+  "decision": "revert",
+  "decision_reason": "Validation ROI tied and score did not improve. The fixed validation fixture contains no evaluated non-win tickets, so it cannot measure this change.",
+  "reverted": true,
+  "follow_up": "Add independently collected multi-race combo-bet validation coverage through the normal dataset governance process before retrying this fix. Do not add the reviewed race directly to validation for the purpose of making this patch pass."
+}

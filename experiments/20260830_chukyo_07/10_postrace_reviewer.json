@@ -1,0 +1,130 @@
+{
+  "schema_version": "1.0",
+  "role": "postrace_reviewer",
+  "race_id": "20260830_中京_07",
+  "status": "NG",
+  "review_scope": {
+    "inputs": [
+      "01_data_collector.json",
+      "02_analyzer.json",
+      "03_simulator.json",
+      "04_ev_calculator.json",
+      "05_bet_builder.json",
+      "06_reviewer.json",
+      "07_result.json",
+      "08_realized_ev.json",
+      "09_ticket_audit.json"
+    ],
+    "independent_review": true,
+    "code_changes_performed": false
+  },
+  "operational_ground_truth": {
+    "scheduled_final_refresh_time_jst": "2026-08-30T15:05:00+09:00",
+    "scheduled_final_refresh_executed": false,
+    "formal_pre_race_decision": "NO_GO",
+    "purchase_authorized": false,
+    "actual_cash_stake_yen": 0,
+    "realized_ev_file_interpretation": "08の投資700円・払戻0円・損益-700円は修正後候補券を購入した場合の反実仮想であり、実損ではない"
+  },
+  "assessments": {
+    "prediction_quality": {
+      "rating": "STRONG_RANKING_SINGLE_RACE_ONLY",
+      "evidence": {
+        "predicted_order": [
+          9,
+          4,
+          7,
+          5,
+          6,
+          3,
+          2,
+          1,
+          8
+        ],
+        "actual_order": [
+          9,
+          4,
+          7,
+          6,
+          3,
+          2,
+          5,
+          1,
+          8
+        ],
+        "top3_exact_order": true,
+        "winner_probability": 0.154131511097185,
+        "winner_probability_rank": 1,
+        "brier_mean_per_horse": 0.08987749781994994,
+        "log_loss": 1.8699490728283252
+      },
+      "conclusion": "上位3頭9-4-7を着順どおり捉えたため順位付けは良好。ただし1レースだけでは確率校正の良否は確定できず、的中結果だけを根拠にモデルを変更してはならない。"
+    },
+    "ev_and_market_shrink": {
+      "rating": "MATERIAL_CROSS_STAGE_INCONSISTENCY",
+      "evidence": [
+        "04のワイド1-9のraw hit_prob=0.08758460999787955に対し、05はraw_hit_prob=0.179892を使用し、縮約後hit_prob=0.103400、EV=2.533309とした。",
+        "04のワイド4-6のraw hit_prob=0.107779359330858に対し、05はraw_hit_prob=0.180750を使用し、縮約後hit_prob=0.110749、EV=2.071011とした。",
+        "12:51:06 JSTの単勝スナップショットから最終まで、1番は75.8倍から137.8倍、6番は22.2倍から34.4倍、9番は2.2倍から1.7倍へ変動した。敗戦組合せの最終ワイド・複勝オッズは07にないため、最終オッズ基準の期待値は検証不能。",
+        "修正後候補4券の反実仮想結果は0/4、投資700円、払戻0円だが、単一レースの不的中だけでは正の事前EVを否定できない。"
+      ],
+      "conclusion": "市場縮約自体は実施されたが、縮約前確率が04と05で不一致のためEV監査可能性が不足した。さらに直前更新未実行により、古い市場価格に基づくEVを購入判断へ昇格できない状態だった。"
+    },
+    "pace": {
+      "rating": "DIRECTIONALLY_GOOD_PORTFOLIO_MISALIGNED",
+      "evidence": [
+        "シミュレータはhigh=0.55を主シナリオとし、high確率上位は9番、7番、4番で、実際の上位3頭セット9-4-7と一致した。",
+        "実ラップは前半3F=34.2秒、後半3F=33.8秒で、4角先頭の6番は4着、2番手群の2番・5番は6着・7着、6番手の9番・7番が1着・3着だった。",
+        "6番のhigh確率0.093263はfinal確率0.115829を下回るのに、修正後候補では6番依存stakeが400/700円だった。"
+      ],
+      "conclusion": "展開シナリオは上位馬抽出に寄与したが、ポートフォリオは主シナリオで相対的に下がる6番へ資金を寄せ、展開情報を配分制約へ十分反映していなかった。"
+    },
+    "data_quality": {
+      "rating": "ADEQUATE_FOR_EARLY_ANALYSIS_INSUFFICIENT_FOR_FINAL_GO",
+      "evidence": [
+        "9頭・全8券種779組の公式オッズは12:51:06 JST時点で揃い、04の確率和、候補数、EV再計算検証はすべてOKだった。",
+        "2歳戦で過去走は各馬1〜3走、9頭中6頭が1走のみだった。",
+        "01では全9頭の馬体重がunpublishedで、過去走13件のpace・weather・oddsが空欄だった。実際には4番+18kg、5番+10kg、9番+8kgなどの当日変動があった。"
+      ],
+      "conclusion": "事前分析用データとしての整合性は高いが、履歴の薄い2歳戦かつ馬体重未発表であり、直前GOに必要な鮮度・完全性は満たしていなかった。"
+    },
+    "operations": {
+      "rating": "SAFE_NO_GO_BUT_SCHEDULE_EXECUTION_FAILED",
+      "evidence": [
+        "15:05の直前処理が実行されず、12:51時点より新しい入力・EV・reviewer成果物が作られなかった。",
+        "事前判断がNO_GOで購入承認がなかったため、古い候補券の誤購入は防止された。"
+      ],
+      "conclusion": "安全側フェイルは機能したが、直前処理の発火・完了保証という運用品質はNG。予測成績とは別問題として最優先で是正すべきである。"
+    }
+  },
+  "root_cause_summary": {
+    "prediction_failure": false,
+    "ticket_selection_failure": true,
+    "probability_lineage_failure": true,
+    "data_collection_completeness_failure": true,
+    "final_refresh_execution_failure": true,
+    "primary_cause": "直前処理が実行されず正式GOへ到達できなかった運用障害",
+    "secondary_cause": "04と05の連系確率不一致、および全選択券が非上位脚1番または6番を必要とする構成"
+  },
+  "prevention_actions": [
+    {
+      "priority": 1,
+      "id": "final_refresh_execution_slo",
+      "action": "15:05の直前処理を日付・race_id付きで自動起動し、各段階のheartbeatと完了artifactを監視する。15:10までに開始記録、T-5の15:30までに最新snapshot・EV・reviewer・final_decisionが揃わなければ、tickets=[]のNO_GOを固定し即時通知する。",
+      "verification": "次回10レースで開始記録率100%、T-5前のfinal_decision生成率100%、欠損時のNO_GO空券化率100%を自動テストと運用ログで確認する。"
+    },
+    {
+      "priority": 2,
+      "id": "single_probability_lineage_contract",
+      "action": "05の全候補について縮約前hit_probを04 candidate_evaluationsの同一race_id・bet_type・combinationからのみ取得し、縮約率・市場確率・縮約後EVの出自を保存する。不一致候補は選択禁止とする。",
+      "verification": "全候補でabs(05.raw_hit_prob-04.hit_prob)<=0.000001かつabs(05.ev_current-05.hit_prob*official_odds)<=0.000001を必須ゲート化する。このレースのワイド1-9と4-6を再入力した検証では旧不一致を確実に検出する。"
+    },
+    {
+      "priority": 3,
+      "id": "scenario_aligned_portfolio_concentration_gate",
+      "action": "主シナリオで確率が低下する非top3馬を含む券への総stake比率と、top3だけで構成される券の有無をポートフォリオ制約に追加する。非top3依存比率が上限を超え、かつEV・no-gamiを満たすtop3-only券を作れない場合はNO_BETとする。",
+      "verification": "上限を70%として履歴外検証し、このレースの修正後候補は1番または6番依存が700/700円=100%のため拒否されることを確認する。導入判断は最低30レースのROI、的中率、最大ドローダウンを現行ルールと比較し、3指標中2指標が悪化しないことを条件とする。"
+    }
+  ],
+  "final_conclusion": "予測順位は成功したが、券構成と確率の系譜には改善余地がある。ただし最重要事項は、15:05処理未実行時に事前NO_GOが維持され、実購入が承認されなかったという運用上の事実である。したがって08の-700円を実運用損失としてモデル評価へ混入させず、直前実行保証、確率系譜、展開整合ポートフォリオの順で再発防止する。"
+}

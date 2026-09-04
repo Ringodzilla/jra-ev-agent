@@ -1,0 +1,92 @@
+{
+  "scenario_weights": {
+    "high": 0.55,
+    "mid": 0.27,
+    "slow": 0.18
+  },
+  "probabilities": [
+    {
+      "horse_number": 1,
+      "horse": "ピコキング",
+      "high": 0.080172441188692,
+      "mid": 0.079493909892231,
+      "slow": 0.100720746110581,
+      "final": 0.083687932624588
+    },
+    {
+      "horse_number": 2,
+      "horse": "バクソウシャチョウ",
+      "high": 0.091618189724393,
+      "mid": 0.069240116551013,
+      "slow": 0.082790456698039,
+      "final": 0.083987118022837
+    },
+    {
+      "horse_number": 3,
+      "horse": "サンタンジェロ",
+      "high": 0.100395243410244,
+      "mid": 0.068527177170315,
+      "slow": 0.08585456821163,
+      "final": 0.089173543989713
+    },
+    {
+      "horse_number": 4,
+      "horse": "シスキンブルーム",
+      "high": 0.143241902900622,
+      "mid": 0.132387789323533,
+      "slow": 0.127100205811051,
+      "final": 0.137405786758685
+    },
+    {
+      "horse_number": 5,
+      "horse": "マルモリムソウ",
+      "high": 0.09658513329561,
+      "mid": 0.159495452938632,
+      "slow": 0.135374470976837,
+      "final": 0.120553000381847
+    },
+    {
+      "horse_number": 6,
+      "horse": "ジャスパートレノ",
+      "high": 0.0932631278402,
+      "mid": 0.151868560560882,
+      "slow": 0.130718322398237,
+      "final": 0.115828529695231
+    },
+    {
+      "horse_number": 7,
+      "horse": "ビスケットサンド",
+      "high": 0.147378606440922,
+      "mid": 0.121619876422568,
+      "slow": 0.112226909278903,
+      "final": 0.134096443846803
+    },
+    {
+      "horse_number": 8,
+      "horse": "ピコジャック",
+      "high": 0.078060161427535,
+      "mid": 0.075573101045638,
+      "slow": 0.098879486198028,
+      "final": 0.081136133583111
+    },
+    {
+      "horse_number": 9,
+      "horse": "ジーティーマイカ",
+      "high": 0.169285193771782,
+      "mid": 0.141794016095188,
+      "slow": 0.126334834316694,
+      "final": 0.154131511097185
+    }
+  ],
+  "validation": {
+    "input_horse_count": 9,
+    "output_horse_count": 9,
+    "horse_numbers_complete": true,
+    "scenario_weight_sum": 1.0,
+    "high_probability_sum": 1.0,
+    "mid_probability_sum": 1.0,
+    "slow_probability_sum": 1.0,
+    "final_probability_sum": 1.0,
+    "all_probability_sums_valid": true
+  }
+}
