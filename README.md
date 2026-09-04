@@ -235,10 +235,14 @@ Codex に改善を回させる場合は、以下を固定して運用します�
 
 ### Keep/revert automation
 
+- 署名鍵をリポジトリ外で生成・保管:
+  - `export EVALUATION_INTEGRITY_KEY="$(openssl rand -hex 32)"`
 - 初回（baseline作成）:
   - `bash scripts/run_codex_experiment.sh data/processed/race_last5.csv`
 - 変更後（候補評価 + keep/revert判定）:
   - `HYPOTHESIS="..." FILES_CHANGED="analysis/ev.py" bash scripts/run_codex_experiment.sh data/processed/race_last5.csv`
+
+同じbaseline系列では同じ署名鍵を使用します。鍵をソース、設定ファイル、ログへ保存してはいけません。
 
 判定結果は `experiments/*.json` に保存され、**validation ROI を主指標**として keep/revert を決定します。
 

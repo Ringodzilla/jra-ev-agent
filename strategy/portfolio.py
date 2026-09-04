@@ -26,6 +26,18 @@ def canonical_ticket_ev(ticket: Ticket) -> float:
             point_count = ticket_point_count(ticket)
             if not points or point_count != len(points):
                 return 0.0
+            stake = _to_float(ticket.get("stake"), -1.0)
+            stake_per_point = _to_float(ticket.get("stake_per_point"), -1.0)
+            if (
+                not math.isfinite(stake)
+                or not math.isfinite(stake_per_point)
+                or not stake.is_integer()
+                or not stake_per_point.is_integer()
+                or stake_per_point <= 0.0
+                or int(stake_per_point) % 100 != 0
+                or stake != point_count * stake_per_point
+            ):
+                return 0.0
             expected_return_multiplier = 0.0
             for raw_point in points:
                 if not isinstance(raw_point, dict):

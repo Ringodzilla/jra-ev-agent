@@ -18,6 +18,12 @@ RESULTS_PATH="${RESULTS_PATH:-}"
 EVAL_MIN_EV="${EVAL_MIN_EV:-1.05}"
 EVAL_MAX_BETS="${EVAL_MAX_BETS:-2}"
 EVAL_STAKE="${EVAL_STAKE:-100}"
+INTEGRITY_KEY_ENV="${INTEGRITY_KEY_ENV:-EVALUATION_INTEGRITY_KEY}"
+
+if [[ -z "${!INTEGRITY_KEY_ENV:-}" ]]; then
+  echo "A signing key is required in ${INTEGRITY_KEY_ENV}." >&2
+  exit 1
+fi
 
 if [[ -z "${RESULTS_PATH}" ]]; then
   if [[ -f "$(dirname "${INPUT_PATH}")/results.csv" ]]; then
@@ -47,11 +53,13 @@ INTEGRITY_ARGS=(
   --file "evaluator=${ROOT_DIR}/scripts/evaluate_strategy.py"
   --file "leakage_guard=${ROOT_DIR}/scripts/check_feature_leakage.py"
   --file "integrity_guard=${ROOT_DIR}/scripts/check_evaluation_integrity.py"
+  --file "candidate_promoter=${ROOT_DIR}/scripts/promote_evaluation_candidate.py"
   --file "experiment_runner=${ROOT_DIR}/scripts/run_codex_experiment.sh"
   --file "constitution=${ROOT_DIR}/CODEX_STRATEGY.md"
   --parameter "min_ev=${EVAL_MIN_EV}"
   --parameter "max_bets_per_race=${EVAL_MAX_BETS}"
   --parameter "stake=${EVAL_STAKE}"
+  --key-env "${INTEGRITY_KEY_ENV}"
 )
 
 mkdir -p "${ROOT_DIR}/report" "${ROOT_DIR}/experiments"
@@ -89,6 +97,15 @@ fi
   --manifest "${INTEGRITY_JSON}" \
   "${INTEGRITY_ARGS[@]}"
 
+PREVIOUS_MANIFEST_SHA256=$("${PYTHON_BIN}" - "${INTEGRITY_JSON}" <<'PY'
+import hashlib
+import sys
+from pathlib import Path
+
+print(hashlib.sha256(Path(sys.argv[1]).read_bytes()).hexdigest())
+PY
+)
+
 echo "[1/4] candidate evaluation"
 EVAL_OUTPUT=$("${PYTHON_BIN}" "${ROOT_DIR}/scripts/evaluate_strategy.py" \
   --input "${INPUT_PATH}" \
@@ -108,31 +125,16 @@ echo "${EVAL_OUTPUT}"
   --manifest "${INTEGRITY_JSON}" \
   "${INTEGRITY_ARGS[@]}"
 
-"${PYTHON_BIN}" - "${EVAL_OUTPUT}" "${CANDIDATE_JSON}" <<'PY'
-import json
-import sys
-
-reported = json.loads(sys.argv[1])
-candidate = json.load(open(sys.argv[2], encoding="utf-8"))
-if reported.get("metrics") != candidate:
-    raise SystemExit("candidate metrics differ from evaluator stdout")
-if candidate.get("label_status") != "available":
-    raise SystemExit("candidate result labels are unavailable")
-if int(candidate.get("result_label_count", 0)) <= 0:
-    raise SystemExit("candidate has no result labels")
-if reported.get("decision") not in {"keep", "revert"}:
-    raise SystemExit("evaluator returned an invalid decision")
-PY
-
-DECISION=$("${PYTHON_BIN}" -c 'import json,sys; print(json.loads(sys.argv[1])["decision"])' "${EVAL_OUTPUT}")
+DECISION=$("${PYTHON_BIN}" "${ROOT_DIR}/scripts/promote_evaluation_candidate.py" \
+  --reported-json "${EVAL_OUTPUT}" \
+  --candidate "${CANDIDATE_JSON}" \
+  --baseline "${BASELINE_JSON}")
 
 if [[ "${DECISION}" == "keep" ]]; then
-  BASELINE_TMP=$(mktemp "${ROOT_DIR}/report/.baseline_eval.XXXXXX")
-  cp "${CANDIDATE_JSON}" "${BASELINE_TMP}"
-  mv "${BASELINE_TMP}" "${BASELINE_JSON}"
   "${PYTHON_BIN}" "${ROOT_DIR}/scripts/check_evaluation_integrity.py" \
     --mode create \
     --replace \
+    --expected-previous-manifest-sha256 "${PREVIOUS_MANIFEST_SHA256}" \
     --manifest "${INTEGRITY_JSON}" \
     "${INTEGRITY_ARGS[@]}"
   echo "[2/4] decision=keep -> baseline updated"
