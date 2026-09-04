@@ -4,7 +4,13 @@ from itertools import combinations, permutations
 
 import pytest
 
-from analysis.candidate_ev import build_candidate_evaluations, canonical_combination
+from analysis.candidate_ev import (
+    _resolve_frame_number,
+    _to_float,
+    _to_int,
+    build_candidate_evaluations,
+    canonical_combination,
+)
 from src.agents.ev_calculator import EVCalculatorAgent
 
 
@@ -157,3 +163,42 @@ def test_range_markets_use_the_official_lower_bound_for_ev() -> None:
     assert candidate["official_odds"] == 12.5
     assert candidate["official_odds_max"] == 20.0
     assert candidate["ev"] == pytest.approx(candidate["hit_prob"] * 12.5)
+
+
+def test_candidate_validation_rejects_every_malformed_input_class() -> None:
+    ev_rows = [
+        {"race_id": "", "horse_number": "x", "win_prob": 0},
+        {"race_id": "R1", "horse_number": 1, "win_prob": 0.6},
+        {"race_id": "R1", "horse_number": 1, "win_prob": 0.4},
+        {"race_id": "R2", "horse_number": 2, "win_prob": 0.5},
+    ]
+    odds = [
+        _odds_row("unsupported", "1"),
+        _odds_row("wide", "1-1"),
+        dict(_odds_row("win", "1"), race_id="MISSING"),
+        dict(_odds_row("win", "1"), odds="0"),
+        _odds_row("win", "99"),
+    ]
+
+    result = build_candidate_evaluations(ev_rows, odds)
+    errors = result["validation"]["errors"]
+
+    assert result["candidate_evaluations"] == []
+    assert any("invalid race_id" in error for error in errors)
+    assert any("duplicate probability" in error for error in errors)
+    assert any("do not sum" in error for error in errors)
+    assert any("unsupported bet type" in error for error in errors)
+    assert any("duplicate leg" in error for error in errors)
+    assert any("no probability race" in error for error in errors)
+    assert any("official odds is invalid" in error for error in errors)
+    assert any("not in the probability universe" in error for error in errors)
+
+
+def test_candidate_helpers_cover_invalid_combinations_frames_and_numbers() -> None:
+    with pytest.raises(ValueError, match="invalid combination"):
+        canonical_combination("win", "0")
+    assert _resolve_frame_number({"horse_number": "3"}, field_size=7) == 3
+    assert _resolve_frame_number({"horse_number": "9"}, field_size=9) == 8
+    assert _resolve_frame_number({"horse_number": "99"}, field_size=9) == 8
+    assert _to_float(object()) == 0.0
+    assert _to_int(object()) == 0

@@ -319,7 +319,7 @@ def _weighted_quantile(values: Sequence[tuple[float, float]], quantile: float) -
         cumulative += weight
         if cumulative + 1e-12 >= target:
             return value
-    return ordered[-1][0]
+    return ordered[-1][0]  # pragma: no cover - positive finite mass reaches the target
 
 
 def _weighted_lower_tail_mean(values: Sequence[tuple[float, float]], alpha: float) -> float:

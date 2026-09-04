@@ -28,5 +28,7 @@ jobs:
       - name: Feature leakage check
         run: python scripts/check_feature_leakage.py
 
-      - name: Unit tests
-        run: python -m pytest -q
+      - name: Unit tests and coverage
+        run: |
+          python -m coverage run -m pytest -q
+          python -m coverage report

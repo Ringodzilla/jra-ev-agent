@@ -1,10 +1,25 @@
 from __future__ import annotations
 
+from datetime import datetime, timezone
 import math
 
 import pytest
 
-from strategy.odds_scenarios import build_odds_scenarios, build_ticket_odds_scenarios
+from strategy.odds_scenarios import (
+    _constituent_odds_ratio,
+    _is_true,
+    _log_slope,
+    _matching_history,
+    _odds_band,
+    _parse_timestamp,
+    _raw_hit_probability,
+    _ticket_combination,
+    _ticket_numbers,
+    _to_float,
+    _weighted_quantile,
+    build_odds_scenarios,
+    build_ticket_odds_scenarios,
+)
 
 
 def _ticket(**overrides: object) -> dict[str, object]:
@@ -115,3 +130,30 @@ def test_public_shorthand_has_the_same_pure_result() -> None:
     args = (_ticket(), 8.0, [], _ev_rows(), 300)
 
     assert build_odds_scenarios(*args) == build_ticket_odds_scenarios(*args)
+
+
+def test_odds_scenario_helpers_cover_fallback_and_validation_edges() -> None:
+    history = [
+        {"race_id": "OTHER", "bet_type": "wide", "combination": "4-9", "odds": 8,
+         "captured_at": "2026-08-30T06:00:00Z"},
+        {"race_id": "R", "bet_type": "", "combination": "4-9", "odds": 8,
+         "captured_at": "2026-08-30T06:00:00"},
+    ]
+    assert len(_matching_history(dict(_ticket(), race_id="R"), history)) == 1
+    assert _constituent_odds_ratio(_ticket(horse_numbers=["99"]), _ev_rows()) == (1.0, 0)
+    assert _raw_hit_probability({"hit_prob": "0.2"}) == 0.2
+    with pytest.raises(ValueError, match="positive mass"):
+        _weighted_quantile([(1.0, 0.0)], 0.5)
+    assert _weighted_quantile([(1.0, 1.0), (2.0, 1.0)], float("nan")) == 2.0
+    same_time = datetime(2026, 1, 1, tzinfo=timezone.utc)
+    assert _log_slope([(same_time, 2.0), (same_time, 3.0)]) == 0.0
+    assert _ticket_combination({"bet_type": "wide", "horse_number": "9-4"}) == "4-9"
+    assert _ticket_numbers({"horse_number": "9-4"}) == ["9", "4"]
+    assert _parse_timestamp("") is None
+    assert _parse_timestamp("invalid") is None
+    assert _parse_timestamp("2026-01-01T00:00:00").tzinfo == timezone.utc
+    assert _odds_band(2.0) == "favorite"
+    assert _odds_band(31.0) == "longshot"
+    assert _is_true("complete")
+    assert _to_float(None, 7.0) == 7.0
+    assert _to_float(object(), 7.0) == 7.0

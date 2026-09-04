@@ -345,8 +345,11 @@ r1,三連単,1-2-3,,8200
 ## Testing
 
 ```bash
-python -m pytest -q
+python -m coverage run -m pytest -q
+python -m coverage report
 ```
+
+Coverage is measured across `analysis`, `jra_scraper`, `report`, `src`, and `strategy` and must remain at 100%.
 
 ## Artifact storage
 
@@ -366,7 +369,7 @@ Before committing or pushing changes, run the local review gate:
 bash scripts/preflight.sh
 ```
 
-This prints the working-tree review summary, checks feature leakage, and runs the full unit test suite.
+This prints the working-tree review summary, checks feature leakage, and runs the full unit test suite with the 100% coverage gate.
 
 To install local Git hooks that surface review context before commit and block push on failing local CI:
 

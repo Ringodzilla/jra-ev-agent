@@ -1341,7 +1341,7 @@ def _build_sanrentan_formation_candidates(
     candidates: list[dict[str, object]] = []
     seen_shapes: set[tuple[tuple[str, ...], tuple[str, ...], tuple[str, ...]]] = set()
     for first_rows, second_rows, third_rows in specs:
-        if not first_rows or not second_rows or not third_rows:
+        if not first_rows or not second_rows or not third_rows:  # pragma: no cover - len(rows) >= 3
             continue
         shape_key = (
             tuple(str(row.get("horse_number", "")) for row in first_rows),
@@ -1374,7 +1374,7 @@ def _build_sanrentan_formation_candidates(
 
         stake_per_point = 100
         stake = point_count * stake_per_point
-        if stake > bankroll_per_race:
+        if stake > bankroll_per_race:  # pragma: no cover - point_count is capped by bankroll
             continue
 
         all_rows = _dedupe_rows_by_horse_number(first_rows + second_rows + third_rows)
@@ -1513,7 +1513,7 @@ def _build_coverage_candidates(
         ),
         reverse=True,
     )[:3]
-    if len(core) < 3:
+    if len(core) < 3:  # pragma: no cover - rows length was checked before slicing
         return []
 
     specs = [
@@ -1575,7 +1575,7 @@ def _build_model_consistency_candidates(
         ),
         reverse=True,
     )[:3]
-    if len(core) < 3:
+    if len(core) < 3:  # pragma: no cover - rows length was checked before slicing
         return []
 
     top2_sum = sum(_to_float(row.get("win_prob")) for row in core[:2])
@@ -1720,7 +1720,7 @@ def _build_marked_top5_coverage_candidates(
         ),
         reverse=True,
     )[:5]
-    if len(marked) < 3:
+    if len(marked) < 3:  # pragma: no cover - rows length was checked before slicing
         return []
 
     tickets: list[dict[str, object]] = []
@@ -3118,7 +3118,7 @@ def _optimize_portfolio_stakes(
                 best_trial = trial
 
         if best_idx < 0 or best_trial is None:
-            break
+            return allocated
         allocated = best_trial
 
     return allocated

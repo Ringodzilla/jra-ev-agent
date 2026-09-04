@@ -458,7 +458,7 @@ def _odds_trend(odds_values: Sequence[float]) -> float:
     recent = sum(positive[:2]) / min(len(positive[:2]), 2)
     prior_slice = positive[2:] or positive[1:]
     prior = sum(prior_slice) / max(len(prior_slice), 1)
-    if prior <= 0:
+    if prior <= 0:  # pragma: no cover - positive is filtered above
         return 0.0
     return max(-0.4, min(0.4, (recent - prior) / prior))
 
@@ -468,7 +468,7 @@ def _odds_volatility(odds_values: Sequence[float]) -> float:
     if len(positive) < 2:
         return 0.0
     average = sum(positive) / len(positive)
-    if average <= 0:
+    if average <= 0:  # pragma: no cover - positive is filtered above
         return 0.0
     return max(0.0, min(1.0, pstdev(positive) / average))
 
