@@ -2225,16 +2225,16 @@ def _calibrate_ticket_probabilities(tickets: list[dict[str, object]]) -> list[di
     for original in tickets:
         ticket = dict(original)
         bet_type = str(ticket.get("bet_type", ""))
-        odds_field = ticket.get("win_odds") if bet_type == "win" else ticket.get("predicted_odds")
-        odds = _to_float(odds_field or ticket.get("predicted_odds") or ticket.get("win_odds"), 0.0)
+        current_odds = _to_float(ticket.get("win_odds") or ticket.get("predicted_odds"), 0.0)
+        predicted_odds = _to_float(ticket.get("predicted_odds") or ticket.get("win_odds"), 0.0)
         raw_prob = _to_float(ticket.get("hit_prob") or ticket.get("win_prob"), 0.0)
-        if odds <= 0 or raw_prob <= 0:
+        if current_odds <= 0 or raw_prob <= 0:
             calibrated.append(ticket)
             continue
-        shrink = _ticket_market_shrink(ticket, bet_type=bet_type, odds=odds)
-        market_prob = min(1.0, 1.0 / odds)
+        shrink = _ticket_market_shrink(ticket, bet_type=bet_type, odds=current_odds)
+        market_prob = min(1.0, 1.0 / current_odds)
         calibrated_prob = ((1.0 - shrink) * raw_prob) + (shrink * market_prob)
-        calibrated_ev = calibrated_prob * odds
+        calibrated_ev = calibrated_prob * current_odds
         ticket["raw_hit_prob"] = _fmt(raw_prob)
         ticket["hit_prob"] = _fmt(calibrated_prob)
         if bet_type == "win":
@@ -2243,6 +2243,7 @@ def _calibrate_ticket_probabilities(tickets: list[dict[str, object]]) -> list[di
         ticket["bet_type_market_shrink"] = _fmt(shrink)
         ticket["ev"] = _fmt(calibrated_ev)
         ticket["ev_current"] = _fmt(calibrated_ev)
+        ticket["ev_predicted"] = _fmt(calibrated_prob * predicted_odds)
         calibrated.append(ticket)
     return calibrated
 

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import math
+
 
 Ticket = dict[str, object]
 
@@ -11,9 +13,28 @@ def portfolio_ev(tickets: list[Ticket]) -> float:
 
 def portfolio_expected_return(tickets: list[Ticket]) -> float:
     return sum(
-        int(_to_float(ticket.get("stake"))) * _to_float(ticket.get("ev_current") or ticket.get("ev"))
+        int(_to_float(ticket.get("stake"))) * canonical_ticket_ev(ticket)
         for ticket in tickets
     )
+
+
+def canonical_ticket_ev(ticket: Ticket) -> float:
+    """Use reproducible JRA-live arithmetic instead of trusting a reported EV."""
+    if (
+        str(ticket.get("odds_source", "")) == "jra_live"
+        and not is_formation_ticket(ticket)
+    ):
+        probability = _to_float(ticket.get("hit_prob"), -1.0)
+        odds = _to_float(ticket.get("win_odds"), -1.0)
+        if (
+            math.isfinite(probability)
+            and math.isfinite(odds)
+            and 0.0 <= probability <= 1.0
+            and odds > 0.0
+        ):
+            return probability * odds
+        return 0.0
+    return _to_float(ticket.get("ev_current") or ticket.get("ev"))
 
 
 def portfolio_no_gami(tickets: list[Ticket]) -> bool:

@@ -1692,7 +1692,7 @@ class TestEVPipeline(unittest.TestCase):
                 "horse_name": " - ".join(numbers), "stake": stake,
                 "hit_prob": str(hit_prob), "wide_odds_est": str(odds),
                 "win_odds": str(odds), "ev_current": str(ev), "ev": str(ev),
-                "odds_source": "jra_live",
+                "odds_source": "estimated",
             }
 
         tickets = [
@@ -1700,7 +1700,7 @@ class TestEVPipeline(unittest.TestCase):
                 "race_id": "r_repair", "bet_type": "win", "horse_id": "h5",
                 "horse_number": 5, "horse_name": "H5", "stake": 100,
                 "hit_prob": "0.014162", "win_odds": "78",
-                "ev_current": "1.104638", "ev": "1.104638", "odds_source": "jra_live",
+                "ev_current": "1.104638", "ev": "1.104638", "odds_source": "estimated",
             },
             wide(["7", "3"], 400, 0.208809, 5.2, 1.172653),
             wide(["10", "3"], 300, 0.193254, 5.5, 1.155014),

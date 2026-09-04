@@ -1,0 +1,37 @@
+{
+  "experiment_id": "20260904_numeric_integrity_guard",
+  "change_type": "safety_integrity",
+  "performance_claim": false,
+  "user_authorization": "Prevent replacing original numbers with different numbers to make results look better.",
+  "controls": [
+    "JRA-live ticket ev_current is recomputed from canonical hit_prob and current odds.",
+    "Reviewer fails closed on missing, non-finite, or inconsistent probability, odds, EV, and portfolio summary values.",
+    "Portfolio expected return uses canonical JRA-live arithmetic instead of reported EV fields.",
+    "Evaluation input, result labels, baseline, evaluator, leakage guard, integrity guard, experiment runner, constitution, and parameters are SHA-256 pinned.",
+    "Baseline and candidate evaluation both require available, non-empty result labels.",
+    "Candidate metrics must exactly match evaluator stdout before baseline promotion.",
+    "Baseline promotion uses atomic replacement and is impossible after an integrity mismatch."
+  ],
+  "known_artifact_check": {
+    "race_id": "20260830_新潟_08",
+    "mismatched_ticket_count": 4,
+    "reported_portfolio_ev": 1.268271,
+    "canonical_portfolio_ev": 1.192799,
+    "canonical_expected_return_yen": 1192,
+    "canonical_expected_profit_yen": 192
+  },
+  "baseline_provenance": {
+    "previous_baseline_status": "INVALIDATED_PROVENANCE_MISMATCH",
+    "previous_baseline_archive": "report/baseline_eval.invalidated_20260904.json",
+    "current_manifest": "report/baseline_eval_integrity.json",
+    "current_snapshot_sha256": "f11764d2ba154a0677bb301a70c897eea8915505bf5402e321eecbd5c12115ab"
+  },
+  "verification": {
+    "full_test_suite": "261 passed",
+    "leakage_check": "passed",
+    "integrity_manifest_verification": "passed",
+    "shell_syntax_check": "passed"
+  },
+  "decision": "keep",
+  "decision_reason": "Explicitly requested fail-closed safety control. This is not an ROI or performance improvement and makes no performance claim."
+}
