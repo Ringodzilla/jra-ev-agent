@@ -672,7 +672,8 @@ class JRAParser:
             if merge_idx is not None and merge_idx + 1 < len(repaired):
                 repaired[merge_idx] = " ".join(part for part in (repaired[merge_idx], repaired.pop(merge_idx + 1)) if part).strip()
             elif aggressive and len(repaired) >= 2:
-                repaired[-2] = " ".join(part for part in (repaired[-2], repaired.pop(-1)) if part).strip()
+                trailing = repaired.pop()
+                repaired[-1] = " ".join(part for part in (repaired[-1], trailing) if part).strip()
             else:
                 repaired.pop()
         return repaired

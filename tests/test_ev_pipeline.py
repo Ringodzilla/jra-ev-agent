@@ -13,6 +13,84 @@ from strategy.betting import (
 
 
 class TestEVPipeline(unittest.TestCase):
+    def test_builder_preserves_stage_04_raw_probability_before_robust_pricing(self):
+        raw_probability = 0.08758460999787955
+        rows = [
+            {
+                "race_id": "R",
+                "horse_number": "1",
+                "horse_name": "A",
+                "frame_number": "1",
+                "win_prob": 0.6,
+                "place_prob": 0.8,
+                "current_odds": 2.0,
+                "predicted_odds": 2.0,
+            },
+            {
+                "race_id": "R",
+                "horse_number": "9",
+                "horse_name": "B",
+                "frame_number": "8",
+                "win_prob": 0.4,
+                "place_prob": 0.7,
+                "current_odds": 3.0,
+                "predicted_odds": 3.0,
+            },
+        ]
+        candidate = {
+            "key": "R|wide|1-9",
+            "race_id": "R",
+            "bet_type": "wide",
+            "canonical_combination": "1-9",
+            "snapshot_id": "S",
+            "captured_at": "2026-08-30T06:05:00+00:00",
+            "hit_prob": raw_probability,
+            "official_odds": 30.0,
+            "ev": raw_probability * 30.0,
+        }
+
+        plan = generate_tickets(
+            rows,
+            candidate_evaluations=[candidate],
+            candidate_validation={"status": "OK"},
+            odds_history=[],
+        )
+        built = plan["candidate_evaluations"][0]
+
+        self.assertEqual("04_ev_calculator", built["probability_source"])
+        self.assertAlmostEqual(raw_probability, float(built["raw_hit_prob"]), places=12)
+        self.assertAlmostEqual(
+            raw_probability,
+            float(built["probability_lineage"]["raw_hit_prob"]),
+            places=12,
+        )
+        self.assertNotAlmostEqual(0.1799, float(built["raw_hit_prob"]), places=4)
+        self.assertIn("robust_ev", built)
+        self.assertEqual(4, len(built["odds_scenarios"]))
+        self.assertEqual(30.0, float(built["win_odds"]))
+        self.assertAlmostEqual(
+            float(built["ev_current"]),
+            float(built["hit_prob"]) * float(built["win_odds"]),
+            places=6,
+        )
+        self.assertEqual(float(built["robust_odds"]), float(built["predicted_odds"]))
+        self.assertAlmostEqual(
+            float(built["ev_predicted"]),
+            float(built["hit_prob"]) * float(built["predicted_odds"]),
+            places=5,
+        )
+        self.assertNotEqual(float(built["win_odds"]), float(built["robust_odds"]))
+
+    def test_builder_fails_closed_when_candidate_validation_is_ng(self):
+        plan = generate_tickets(
+            [],
+            candidate_evaluations=[],
+            candidate_validation={"status": "NG", "errors": ["mixed snapshot"]},
+        )
+        self.assertEqual([], plan["tickets"])
+        self.assertEqual("NO_GO", plan["decision"])
+        self.assertEqual("NO_GO_PROBABILITY_LINEAGE_INVALID", plan["decision_code"])
+
     def test_compute_ev_uses_reproducible_monte_carlo_mean_probability(self):
         rows = [
             {

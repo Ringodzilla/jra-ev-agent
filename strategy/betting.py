@@ -4,11 +4,13 @@ from collections import defaultdict
 from itertools import combinations, permutations
 import math
 
+from analysis.candidate_ev import canonical_combination
 from strategy.live_odds import (
     build_live_odds_lookup as _build_live_odds_lookup,
     live_odds_value as _live_odds_value,
     lookup_live_odds as _lookup_live_odds,
 )
+from strategy.odds_scenarios import build_odds_scenarios
 from strategy.portfolio import (
     is_formation_ticket as _is_formation_ticket,
     portfolio_ev as _portfolio_ev,
@@ -44,6 +46,10 @@ def generate_tickets(
     mode: str = "balanced",
     *,
     odds_rows: list[dict[str, object]] | list[dict[str, str]] | None = None,
+    odds_history: list[dict[str, object]] | list[dict[str, str]] | None = None,
+    candidate_evaluations: list[dict[str, object]] | None = None,
+    candidate_validation: dict[str, object] | None = None,
+    seconds_to_post: float | None = None,
     bankroll_per_race: int = 1000,
     min_ev: float = 1.03,
     min_place_ev: float = 1.01,
@@ -62,6 +68,33 @@ def generate_tickets(
     min_coverage_ev: float = 0.75,
     max_horse_stake_dependency_ratio: float = 0.60,
 ) -> dict[str, object]:
+    if candidate_evaluations is not None:
+        if str(dict(candidate_validation or {}).get("status", "")) != "OK":
+            return _probability_lineage_failure_plan(candidate_validation)
+        return _generate_tickets_from_candidate_evaluations(
+            ev_rows,
+            candidate_evaluations=candidate_evaluations,
+            odds_history=list(odds_history if odds_history is not None else odds_rows or []),
+            mode=mode,
+            bankroll_per_race=bankroll_per_race,
+            min_ev=min_ev,
+            min_place_ev=min_place_ev,
+            min_wide_ev=min_wide_ev,
+            min_wakuren_ev=min_wakuren_ev,
+            min_umaren_ev=min_umaren_ev,
+            min_umatan_ev=min_umatan_ev,
+            min_sanrenpuku_ev=min_sanrenpuku_ev,
+            min_sanrentan_ev=min_sanrentan_ev,
+            max_tickets_per_race=max_tickets_per_race,
+            max_wide_tickets_per_race=max_wide_tickets_per_race,
+            max_exotic_tickets_per_race=max_exotic_tickets_per_race,
+            kelly_fraction=kelly_fraction,
+            prefer_wide=prefer_wide,
+            min_portfolio_ev=min_portfolio_ev,
+            max_horse_stake_dependency_ratio=max_horse_stake_dependency_ratio,
+            seconds_to_post=1800.0 if seconds_to_post is None else seconds_to_post,
+        )
+
     by_race: dict[str, list[dict[str, object]]] = defaultdict(list)
     for row in ev_rows:
         by_race[str(row.get("race_id", ""))].append(row)
@@ -382,6 +415,362 @@ def generate_tickets(
         "sanrenpuku": sanrenpuku_labels[:3],
         "sanrentan": sanrentan_labels[:3],
     }
+
+
+def _probability_lineage_failure_plan(
+    validation: dict[str, object] | None,
+) -> dict[str, object]:
+    return {
+        "core": [],
+        "partner": [],
+        "long": [],
+        "tickets": [],
+        "races": [],
+        "bet_types_considered": list(BET_TYPE_MARKET_SHRINK),
+        "candidate_counts": {},
+        "optimization_mode": "canonical_probability_robust_odds",
+        "selection_status": "no_bet",
+        "selection_reason": "probability_lineage_invalid",
+        "decision": "NO_GO",
+        "decision_code": "NO_GO_PROBABILITY_LINEAGE_INVALID",
+        "probability_lineage": {
+            "status": "NG",
+            "validation": dict(validation or {}),
+        },
+        "portfolio_summary": _portfolio_summary([]),
+    }
+
+
+def _generate_tickets_from_candidate_evaluations(
+    ev_rows: list[dict[str, object]],
+    *,
+    candidate_evaluations: list[dict[str, object]],
+    odds_history: list[dict[str, object]] | list[dict[str, str]],
+    mode: str,
+    bankroll_per_race: int,
+    min_ev: float,
+    min_place_ev: float,
+    min_wide_ev: float,
+    min_wakuren_ev: float,
+    min_umaren_ev: float,
+    min_umatan_ev: float,
+    min_sanrenpuku_ev: float,
+    min_sanrentan_ev: float,
+    max_tickets_per_race: int,
+    max_wide_tickets_per_race: int,
+    max_exotic_tickets_per_race: int,
+    kelly_fraction: float,
+    prefer_wide: bool,
+    min_portfolio_ev: float,
+    max_horse_stake_dependency_ratio: float,
+    seconds_to_post: float,
+) -> dict[str, object]:
+    thresholds = {
+        "win": max(min_ev, MIN_WIN_EV),
+        "place": min_place_ev,
+        "wide": min_wide_ev,
+        "wakuren": min_wakuren_ev,
+        "umaren": min_umaren_ev,
+        "umatan": min_umatan_ev,
+        "sanrenpuku": min_sanrenpuku_ev,
+        "sanrentan": min_sanrentan_ev,
+    }
+    minimum_probabilities = {
+        "win": 0.04,
+        "place": 0.16,
+        "wide": 0.10,
+        "wakuren": 0.035,
+        "umaren": 0.035,
+        "umatan": 0.018,
+        "sanrenpuku": 0.018,
+        "sanrentan": 0.006,
+    }
+    rows_by_race: dict[str, list[dict[str, object]]] = defaultdict(list)
+    for row in ev_rows:
+        rows_by_race[str(row.get("race_id", ""))].append(dict(row))
+    evaluations_by_race: dict[str, list[dict[str, object]]] = defaultdict(list)
+    seen_keys: set[str] = set()
+    lineage_errors: list[str] = []
+    for evaluation in candidate_evaluations:
+        row = dict(evaluation)
+        race_id = str(row.get("race_id", "")).strip()
+        bet_type = str(row.get("bet_type", "")).strip()
+        try:
+            combination = canonical_combination(
+                bet_type,
+                row.get("canonical_combination", ""),
+            )
+        except ValueError as exc:
+            lineage_errors.append(str(exc))
+            continue
+        expected_key = f"{race_id}|{bet_type}|{combination}"
+        if str(row.get("key", "")) != expected_key or expected_key in seen_keys:
+            lineage_errors.append(f"invalid or duplicate candidate key: {expected_key}")
+            continue
+        probability = _to_float(row.get("hit_prob"))
+        odds = _to_float(row.get("official_odds"))
+        if probability <= 0 or probability > 1 or odds <= 1:
+            lineage_errors.append(f"invalid candidate probability or odds: {expected_key}")
+            continue
+        if abs(_to_float(row.get("ev")) - (probability * odds)) > 1e-9:
+            lineage_errors.append(f"candidate EV mismatch: {expected_key}")
+            continue
+        seen_keys.add(expected_key)
+        row["canonical_combination"] = combination
+        evaluations_by_race[race_id].append(row)
+    if lineage_errors:
+        return _probability_lineage_failure_plan(
+            {"status": "NG", "errors": lineage_errors}
+        )
+
+    races: list[dict[str, object]] = []
+    flat_tickets: list[dict[str, object]] = []
+    all_candidates: list[dict[str, object]] = []
+    core: list[dict[str, object]] = []
+    partner: list[dict[str, object]] = []
+    longshots: list[dict[str, object]] = []
+    aggregate_counts: dict[str, int] = defaultdict(int)
+    per_race_limit = max(max_tickets_per_race, 5) if mode == "aggressive" else max_tickets_per_race
+
+    for race_id in sorted(rows_by_race):
+        race_rows = rows_by_race[race_id]
+        row_by_number = {
+            str(int(_to_float(row.get("horse_number")))): row
+            for row in race_rows
+            if _to_float(row.get("horse_number")) > 0
+        }
+        candidate_pool = [
+            _canonical_ticket_from_evaluation(
+                evaluation,
+                row_by_number=row_by_number,
+                odds_history=odds_history,
+                bankroll_per_race=bankroll_per_race,
+                kelly_fraction=kelly_fraction,
+                seconds_to_post=seconds_to_post,
+                min_ev=thresholds[str(evaluation.get("bet_type", ""))],
+            )
+            for evaluation in evaluations_by_race.get(race_id, [])
+        ]
+        candidate_pool = [ticket for ticket in candidate_pool if ticket]
+        eligible_pool = [
+            ticket
+            for ticket in candidate_pool
+            if _to_float(ticket.get("robust_ev")) >= thresholds[str(ticket.get("bet_type", ""))]
+            and _ticket_decision_probability(ticket)
+            >= minimum_probabilities[str(ticket.get("bet_type", ""))]
+            and int(_to_float(ticket.get("stake"))) >= 100
+        ]
+        selection_pool = _limit_eligible_selection_pool(
+            eligible_pool,
+            max_wide_tickets_per_race=max_wide_tickets_per_race,
+            max_exotic_tickets_per_race=max_exotic_tickets_per_race,
+        )
+        top_horse = _top_win_probability_horse_number(race_rows)
+        top3 = _top_win_probability_horse_numbers(race_rows, limit=3)
+        race_tickets = _select_optimized_tickets(
+            selection_pool,
+            per_race_limit=per_race_limit,
+            prefer_wide=prefer_wide,
+            force_win_standout=False,
+            min_portfolio_ev=min_portfolio_ev,
+            required_horse_number=top_horse,
+        )
+        race_tickets = _optimize_portfolio_stakes(
+            race_tickets,
+            bankroll_per_race=bankroll_per_race,
+            min_portfolio_ev=min_portfolio_ev,
+            max_horse_stake_dependency_ratio=max_horse_stake_dependency_ratio,
+            stake_dependency_exempt_horse_numbers=top3,
+        )
+        race_tickets = _rebalance_race_stakes(race_tickets, bankroll_per_race=bankroll_per_race)
+        race_tickets = _annotate_portfolio_tickets(_prune_gami_tickets(race_tickets))
+        if race_tickets and top_horse not in _portfolio_horse_numbers(race_tickets):
+            race_tickets = []
+        annotated = _annotate_candidate_selection(
+            _rank_ticket_pool(candidate_pool, prefer_wide=prefer_wide),
+            selected_tickets=race_tickets,
+            eligible_tickets=eligible_pool,
+            selection_pool=selection_pool,
+            portfolio_failure_reason="" if race_tickets else "no_safe_robust_portfolio",
+        )
+        counts = _candidate_counts_by_type(candidate_pool)
+        for bet_type, count in counts.items():
+            aggregate_counts[bet_type] += count
+        all_candidates.extend(annotated)
+        flat_tickets.extend(race_tickets)
+
+        place_ranked = sorted(
+            race_rows,
+            key=lambda row: (_to_float(row.get("place_prob")), _to_float(row.get("win_prob"))),
+            reverse=True,
+        )
+        race_core = [_horse_summary(row) for row in place_ranked[:2]]
+        race_partner = [_horse_summary(row) for row in place_ranked[2:4]]
+        race_long = _build_race_longshots(race_rows, min_win_ev=thresholds["win"], limit=2)
+        core.extend(race_core)
+        partner.extend(race_partner)
+        longshots.extend(race_long)
+        races.append(
+            {
+                "race_id": race_id,
+                "core": race_core,
+                "partner": race_partner,
+                "long": race_long,
+                "candidate_counts": counts,
+                "candidates": annotated,
+                "tickets": race_tickets,
+                "portfolio": _portfolio_summary(race_tickets),
+                "selection_status": "selected" if race_tickets else "no_bet",
+                "selection_reason": "robust_portfolio" if race_tickets else "no_safe_robust_portfolio",
+                "top_win_probability_horse_number": top_horse,
+            }
+        )
+
+    return {
+        "core": core,
+        "partner": partner,
+        "long": longshots,
+        "tickets": flat_tickets,
+        "races": races,
+        "bet_types_considered": list(BET_TYPE_MARKET_SHRINK),
+        "candidate_counts": dict(aggregate_counts),
+        "candidate_evaluations": all_candidates,
+        "optimization_mode": "canonical_probability_robust_odds",
+        "probability_lineage": {
+            "status": "OK",
+            "source": "04_ev_calculator",
+            "candidate_count": len(candidate_evaluations),
+            "tolerance": 1e-9,
+        },
+        "portfolio_summary": _portfolio_summary(flat_tickets),
+        "primary_bet_type": flat_tickets[0].get("bet_type", "wide") if flat_tickets else "wide",
+    }
+
+
+def _canonical_ticket_from_evaluation(
+    evaluation: dict[str, object],
+    *,
+    row_by_number: dict[str, dict[str, object]],
+    odds_history: list[dict[str, object]] | list[dict[str, str]],
+    bankroll_per_race: int,
+    kelly_fraction: float,
+    seconds_to_post: float,
+    min_ev: float,
+) -> dict[str, object]:
+    bet_type = str(evaluation.get("bet_type", ""))
+    combination = str(evaluation.get("canonical_combination", ""))
+    tokens = combination.replace(">", "-").split("-")
+    if bet_type == "wakuren":
+        frames = tokens
+        horse_numbers = sorted(
+            {
+                number
+                for number, row in row_by_number.items()
+                if str(row.get("frame_number", "")) in frames
+            },
+            key=int,
+        )
+    else:
+        frames = []
+        horse_numbers = tokens
+    horse_names = [
+        str(row_by_number.get(number, {}).get("horse_name", number))
+        for number in horse_numbers
+    ]
+    raw_prob = _to_float(evaluation.get("hit_prob"))
+    official_odds = _to_float(evaluation.get("official_odds"))
+    ticket: dict[str, object] = {
+        "race_id": str(evaluation.get("race_id", "")),
+        "bet_type": bet_type,
+        "horse_number": combination,
+        "horse_numbers": horse_numbers,
+        "horse_names": horse_names,
+        "horse_name": _combo_name(horse_names, bet_type=bet_type),
+        "frame_numbers": frames,
+        "raw_hit_prob": raw_prob,
+        "hit_prob": raw_prob,
+        "official_odds_current": official_odds,
+        "predicted_odds": official_odds,
+        "win_odds": official_odds,
+        "odds_source": "jra_live",
+        "probability_source": "04_ev_calculator",
+        "source_candidate_key": str(evaluation.get("key", "")),
+        "source_snapshot_id": str(evaluation.get("snapshot_id", "")),
+        "source_captured_at": str(evaluation.get("captured_at", "")),
+        "legs": [
+            {
+                "horse_number": number,
+                "horse_name": str(row_by_number.get(number, {}).get("horse_name", number)),
+                "win_prob": str(row_by_number.get(number, {}).get("win_prob", "")),
+            }
+            for number in horse_numbers
+        ],
+    }
+    shrink = _ticket_market_shrink(ticket, bet_type=bet_type, odds=official_odds)
+    ticket["bet_type_market_shrink"] = _fmt(shrink)
+    market_prob = min(1.0, 1.0 / official_odds)
+    calibrated_prob = ((1.0 - shrink) * raw_prob) + (shrink * market_prob)
+    current_hit_prob = _to_float(_fmt(calibrated_prob))
+    ticket["snapshot_calibrated_hit_prob"] = _fmt(current_hit_prob)
+    ticket["snapshot_ev"] = _fmt(current_hit_prob * official_odds)
+    scenario = build_odds_scenarios(
+        ticket,
+        official_odds,
+        odds_history,
+        list(row_by_number.values()),
+        seconds_to_post,
+    )
+    robust_odds = _to_float(scenario.get("robust_odds"))
+    robust_prob = _to_float(scenario.get("robust_hit_prob"))
+    robust_ev = _to_float(scenario.get("robust_ev"))
+    current_ev = current_hit_prob * official_odds
+    stake = _kelly_stake(
+        probability=robust_prob,
+        odds=robust_odds,
+        bankroll_per_race=bankroll_per_race,
+        kelly_fraction=kelly_fraction,
+        min_ev=min_ev,
+        max_fraction=0.30,
+    )
+    ticket.update(
+        {
+            "stake": stake,
+            "hit_prob": _fmt(current_hit_prob),
+            "calibrated_hit_prob": _fmt(current_hit_prob),
+            "market_prob": _fmt(market_prob),
+            "robust_odds": _fmt(robust_odds),
+            "robust_hit_prob": _fmt(robust_prob),
+            "predicted_odds": _fmt(robust_odds),
+            "win_odds": _fmt(official_odds),
+            "robust_ev": _fmt(robust_ev),
+            "ev": _fmt(current_ev),
+            "ev_current": _fmt(current_ev),
+            "ev_predicted": _fmt(current_hit_prob * robust_odds),
+            "confidence": _fmt(raw_prob / max(market_prob, 1e-9)),
+            "odds_scenarios": list(scenario.get("scenarios") or []),
+            "odds_scenario_audit": dict(scenario.get("audit") or {}),
+            "probability_lineage": {
+                "source": "04_ev_calculator",
+                "candidate_key": str(evaluation.get("key", "")),
+                "snapshot_id": str(evaluation.get("snapshot_id", "")),
+                "captured_at": str(evaluation.get("captured_at", "")),
+                "raw_hit_prob": raw_prob,
+                "tolerance": 1e-9,
+            },
+        }
+    )
+    alias = {
+        "place": "place_prob",
+        "wide": "wide_prob",
+        "wakuren": "combo_prob",
+        "umaren": "combo_prob",
+        "umatan": "combo_prob",
+        "sanrenpuku": "combo_prob",
+        "sanrentan": "combo_prob",
+    }.get(bet_type)
+    if alias:
+        ticket[alias] = _fmt(current_hit_prob)
+    return ticket
 
 
 def _build_win_ticket(
@@ -2037,13 +2426,32 @@ def _prioritize_exotic_types(tickets: list[dict[str, object]]) -> list[dict[str,
     return out
 
 
+def _ticket_decision_ev(ticket: dict[str, object]) -> float:
+    """Return the conservative EV used for selection without relabeling live EV."""
+    return _to_float(ticket.get("robust_ev") or ticket.get("ev_current") or ticket.get("ev"))
+
+
+def _ticket_decision_probability(ticket: dict[str, object]) -> float:
+    """Return the conservative probability used for selection when available."""
+    return _to_float(
+        ticket.get("robust_hit_prob") or ticket.get("hit_prob") or ticket.get("win_prob")
+    )
+
+
+def _ticket_decision_odds(ticket: dict[str, object]) -> float:
+    """Return conservative scenario odds for allocation, else the current market odds."""
+    return _to_float(
+        ticket.get("robust_odds") or ticket.get("win_odds") or ticket.get("predicted_odds")
+    )
+
+
 def _rank_ticket_pool(tickets: list[dict[str, object]], *, prefer_wide: bool) -> list[dict[str, object]]:
     return sorted(
         tickets,
         key=lambda ticket: (
             _ticket_type_rank(str(ticket.get("bet_type", "")), prefer_wide=prefer_wide),
-            -_to_float(ticket.get("ev_current") or ticket.get("ev")),
-            -_to_float(ticket.get("hit_prob") or ticket.get("win_prob")),
+            -_ticket_decision_ev(ticket),
+            -_ticket_decision_probability(ticket),
             -_to_float(ticket.get("confidence")),
         ),
     )
@@ -2058,8 +2466,8 @@ def _limit_eligible_selection_pool(
     """Apply type caps only after calibration so rejected tickets can be refilled."""
     def calibrated_rank(ticket: dict[str, object]) -> tuple[float, float, float]:
         return (
-            _to_float(ticket.get("ev_current") or ticket.get("ev")),
-            _to_float(ticket.get("hit_prob") or ticket.get("win_prob")),
+            _ticket_decision_ev(ticket),
+            _ticket_decision_probability(ticket),
             _to_float(ticket.get("confidence")),
         )
 
@@ -2148,8 +2556,8 @@ def _select_optimized_tickets(
             return []
         required_candidates.sort(
             key=lambda ticket: (
-                _to_float(ticket.get("hit_prob") or ticket.get("win_prob")),
-                _to_float(ticket.get("ev_current") or ticket.get("ev")),
+                _ticket_decision_probability(ticket),
+                _ticket_decision_ev(ticket),
                 _to_float(ticket.get("confidence")),
             ),
             reverse=True,
@@ -2181,8 +2589,8 @@ def _select_optimized_tickets(
     by_ev = sorted(
         value_ranked,
         key=lambda ticket: (
-            _to_float(ticket.get("ev_current") or ticket.get("ev")),
-            _to_float(ticket.get("hit_prob") or ticket.get("win_prob")),
+            _ticket_decision_ev(ticket),
+            _ticket_decision_probability(ticket),
             _to_float(ticket.get("confidence")),
         ),
         reverse=True,
@@ -2441,9 +2849,9 @@ def _prune_gami_tickets(tickets: list[dict[str, object]]) -> list[dict[str, obje
         drop = min(
             removable,
             key=lambda ticket: (
-                _to_float(ticket.get("ev_current") or ticket.get("ev")),
+                _ticket_decision_ev(ticket),
                 _ticket_return_if_hit(ticket) / max(total_stake, 1),
-                _to_float(ticket.get("hit_prob") or ticket.get("win_prob")),
+                _ticket_decision_probability(ticket),
             ),
         )
         out.remove(drop)
@@ -2739,13 +3147,13 @@ def _ticket_max_portfolio_stake(ticket: dict[str, object], *, bankroll_per_race:
 
 
 def _stake_allocation_score(ticket: dict[str, object]) -> float:
-    ev = _to_float(ticket.get("ev_current") or ticket.get("ev"))
+    ev = _ticket_decision_ev(ticket)
     edge = max(0.0, ev - 1.0)
     if edge <= 0:
         return 0.0
-    hit_prob = _to_float(ticket.get("hit_prob") or ticket.get("win_prob"))
+    hit_prob = _ticket_decision_probability(ticket)
     confidence = _clamp(_to_float(ticket.get("confidence"), 1.0), minimum=0.30, maximum=2.50)
-    odds = max(1.0, _to_float(ticket.get("win_odds") or ticket.get("predicted_odds"), 1.0))
+    odds = max(1.0, _ticket_decision_odds(ticket))
     stability = 1.0 / (1.0 + abs(_to_float(ticket.get("ev_predicted")) - ev))
     shape_bonus = 1.08 if _is_formation_ticket(ticket) else 1.0
     return edge * math.sqrt(max(hit_prob, 0.001)) * confidence * stability * shape_bonus / math.sqrt(odds)
@@ -2774,7 +3182,7 @@ def _rebalance_race_stakes(
         scaled.append(_with_adjusted_stake(ticket, adjusted))
 
     if not scaled:
-        best = dict(max(tickets, key=lambda ticket: _to_float(ticket.get("ev_current") or ticket.get("ev"))))
+        best = dict(max(tickets, key=_ticket_decision_ev))
         best = _with_adjusted_stake(best, min(_ticket_stake_unit(best), bankroll_per_race))
         return [best] if int(_to_float(best.get("stake"), 0.0)) > 0 else []
     return scaled

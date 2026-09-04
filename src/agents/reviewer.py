@@ -45,6 +45,11 @@ class ReviewerAgent:
         ticket_repair_blocked = False
         stake_dependency_ratio = 0.0
 
+        lineage_errors = _probability_lineage_errors(ticket_plan)
+        if lineage_errors:
+            reasons.append("probability lineage invalid: " + ", ".join(lineage_errors[:3]))
+            ticket_repair_blocked = True
+
         value_integrity_errors = _ticket_value_integrity_errors(tickets, ticket_plan)
         if value_integrity_errors:
             reasons.append(
@@ -208,6 +213,10 @@ class ReviewerAgent:
                 self.settings.max_horse_stake_dependency_ratio
             ),
             "horse_stake_dependency_scope": "outside_top3_win_probability",
+            "probability_lineage": {
+                "status": "NG" if lineage_errors else "OK",
+                "errors": lineage_errors,
+            },
             "value_integrity": {
                 "status": "NG" if value_integrity_errors else "OK",
                 "errors": value_integrity_errors,
@@ -219,6 +228,52 @@ class ReviewerAgent:
                 "tickets": len(tickets),
             },
         }
+
+
+def _probability_lineage_errors(ticket_plan: dict[str, object]) -> list[str]:
+    """Fail closed when the canonical 04 -> 05 probability contract is broken."""
+    if str(ticket_plan.get("optimization_mode", "")) != "canonical_probability_robust_odds":
+        return []
+
+    errors: list[str] = []
+    plan_lineage = dict(ticket_plan.get("probability_lineage") or {})
+    if str(plan_lineage.get("status", "")) != "OK":
+        errors.append("plan status is not OK")
+    if str(ticket_plan.get("decision_code", "")) == "NO_GO_PROBABILITY_LINEAGE_INVALID":
+        errors.append("builder rejected canonical candidates")
+
+    candidates = list(ticket_plan.get("candidate_evaluations") or [])
+    candidate_by_key: dict[str, dict[str, object]] = {}
+    for candidate in candidates:
+        row = dict(candidate)
+        key = str(row.get("source_candidate_key", "")).strip()
+        if not key or key in candidate_by_key:
+            errors.append("missing or duplicate candidate key")
+            continue
+        candidate_by_key[key] = row
+        lineage = dict(row.get("probability_lineage") or {})
+        raw = _to_float(row.get("raw_hit_prob"), -1.0)
+        if (
+            str(row.get("probability_source", "")) != "04_ev_calculator"
+            or str(lineage.get("source", "")) != "04_ev_calculator"
+            or str(lineage.get("candidate_key", "")) != key
+            or abs(raw - _to_float(lineage.get("raw_hit_prob"), -2.0)) > 1e-9
+        ):
+            errors.append(f"candidate raw probability mismatch: {key}")
+
+    for ticket in list(ticket_plan.get("tickets") or []):
+        row = dict(ticket)
+        key = str(row.get("source_candidate_key", "")).strip()
+        source = candidate_by_key.get(key)
+        if source is None:
+            errors.append(f"selected ticket has no canonical candidate: {key or '<missing>'}")
+            continue
+        if abs(
+            _to_float(row.get("raw_hit_prob"), -1.0)
+            - _to_float(source.get("raw_hit_prob"), -2.0)
+        ) > 1e-9:
+            errors.append(f"selected ticket raw probability mismatch: {key}")
+    return errors
 
 
 def _probability_sums(ev_rows: list[dict[str, object]]) -> dict[str, float]:

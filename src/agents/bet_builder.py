@@ -16,6 +16,10 @@ class BetBuilderAgent:
         ev_rows: list[dict[str, object]],
         *,
         combo_odds: list[dict[str, object]] | list[dict[str, str]] | None = None,
+        odds_history: list[dict[str, object]] | list[dict[str, str]] | None = None,
+        candidate_evaluations: list[dict[str, object]] | None = None,
+        candidate_validation: dict[str, object] | None = None,
+        seconds_to_post: float | None = None,
         race_configs: list[dict[str, object]] | None = None,
     ) -> dict[str, object]:
         if is_win5_mode(self.settings.mode):
@@ -30,6 +34,10 @@ class BetBuilderAgent:
         return generate_tickets(
             ev_rows,
             odds_rows=list(combo_odds or []),
+            odds_history=list(odds_history if odds_history is not None else combo_odds or []),
+            candidate_evaluations=candidate_evaluations,
+            candidate_validation=candidate_validation,
+            seconds_to_post=seconds_to_post,
             mode=self.settings.mode,
             bankroll_per_race=self.settings.bankroll_per_race,
             min_ev=self.settings.min_ev,
