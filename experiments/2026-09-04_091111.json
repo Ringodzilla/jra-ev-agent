@@ -1,0 +1,65 @@
+{
+  "experiment_id": "2026-09-04_091111",
+  "timestamp_utc": "2026-09-04T09:11:11.840176+00:00",
+  "git_commit_before": "07b98463bfc4a43971ab8a0621e31b28a14d5141",
+  "git_commit_after": "ed26d4e199decac848c59281b286c91d62945db0",
+  "hypothesis": "Enforce numeric integrity without changing evaluation inputs or criteria",
+  "files_changed": [
+    "strategy/betting.py",
+    "src/agents/reviewer.py",
+    "scripts/check_evaluation_integrity.py",
+    "scripts/run_codex_experiment.sh"
+  ],
+  "before": {
+    "score": 0.0,
+    "validation_roi": 0.0,
+    "roi": 0.0,
+    "hit_rate": 0.0,
+    "sharpe_like": 0.0,
+    "max_drawdown": 0.0,
+    "ticket_count": 0,
+    "hit_ticket_count": 0,
+    "ticket_hit_rate": 0.0,
+    "race_count": 9,
+    "invested": 0,
+    "returned": 0.0,
+    "bet_type_breakdown": {},
+    "result_bet_types_available": [
+      "win",
+      "place",
+      "wide",
+      "wakuren",
+      "umaren",
+      "umatan",
+      "sanrenpuku",
+      "sanrentan"
+    ],
+    "result_label_count": 112,
+    "git_commit": "07b98463bfc4a43971ab8a0621e31b28a14d5141",
+    "label_status": "available"
+  },
+  "after": {
+    "score": 0.0,
+    "validation_roi": 0.0,
+    "roi": 0.0,
+    "hit_rate": 0.0,
+    "sharpe_like": 0.0,
+    "max_drawdown": 0.0,
+    "ticket_count": 0,
+    "hit_ticket_count": 0,
+    "ticket_hit_rate": 0.0,
+    "race_count": 1,
+    "invested": 0,
+    "returned": 0.0,
+    "bet_type_breakdown": {},
+    "result_bet_types_available": [
+      "win"
+    ],
+    "result_label_count": 1,
+    "git_commit": "ed26d4e199decac848c59281b286c91d62945db0",
+    "label_status": "available"
+  },
+  "decision": "revert",
+  "reason": "validation ROI tied and score did not improve",
+  "results_path": "tasks/horse_racing_ev/files/valid/results.csv"
+}
