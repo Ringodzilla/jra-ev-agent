@@ -24,13 +24,19 @@ This runbook defines how to run one-patch-at-a-time strategy optimization safely
 6. Ticket type expansion (last)
 
 ## Experiment procedure (single patch)
-1. Create or confirm baseline:
+1. Generate and externally retain the signing key for this baseline lineage:
+   - `export EVALUATION_INTEGRITY_KEY="$(openssl rand -hex 32)"`
+2. Create or confirm baseline:
    - `bash scripts/run_codex_experiment.sh <input_csv>`
-2. Apply exactly one conceptual change.
-3. Re-run:
+3. Apply exactly one conceptual change.
+4. Re-run with the same signing key:
    - `HYPOTHESIS="..." FILES_CHANGED="analysis/ev.py" bash scripts/run_codex_experiment.sh <input_csv>`
-4. Read decision in `experiments/<experiment_id>.json`.
-5. Confirm leakage check passed (`scripts/check_feature_leakage.py`).
+5. Read decision in `experiments/<experiment_id>.json`.
+6. Confirm leakage check passed (`scripts/check_feature_leakage.py`).
+
+Never store `EVALUATION_INTEGRITY_KEY` in the repository, experiment logs, or shell scripts.
+Unsigned schema-v1 manifests are not accepted. Archive the old local baseline and manifest,
+then bootstrap a new signed baseline under human supervision.
 
 ## Keep / Revert rule
 - Primary: validation ROI (`validation_roi`)

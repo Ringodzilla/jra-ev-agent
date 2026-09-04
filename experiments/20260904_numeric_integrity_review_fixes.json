@@ -1,0 +1,20 @@
+{
+  "experiment_id": "20260904_numeric_integrity_review_fixes",
+  "change_type": "safety_integrity",
+  "performance_claim": false,
+  "review_findings_resolved": [
+    "Candidate validation and baseline promotion now use the same in-memory byte snapshot.",
+    "Integrity manifests require an external HMAC-SHA256 signing key.",
+    "Manifest replacement requires the authenticated previous manifest and its exact SHA-256.",
+    "JRA-live formation tickets require stake = point_count * stake_per_point in 100-yen units."
+  ],
+  "verification": {
+    "full_test_suite": "170 passed",
+    "feature_leakage_check": "passed",
+    "experiment_runner_first_run": "passed",
+    "experiment_runner_verified_rerun": "passed",
+    "shell_syntax_check": "passed"
+  },
+  "decision": "keep",
+  "decision_reason": "Explicit corrective controls for three P1 integrity findings; no ROI or performance claim."
+}
