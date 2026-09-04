@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import math
 from itertools import combinations, product
 
 from strategy.betting import MIN_ACTIONABLE_WIN_EV
 from strategy.live_odds import build_live_odds_lookup, live_odds_value, lookup_live_odds
 from strategy.portfolio import (
+    canonical_ticket_ev,
     portfolio_ev,
     portfolio_expected_return,
     portfolio_no_gami,
@@ -42,6 +44,13 @@ class ReviewerAgent:
         repair_actions: list[object] = []
         ticket_repair_blocked = False
         stake_dependency_ratio = 0.0
+
+        value_integrity_errors = _ticket_value_integrity_errors(tickets, ticket_plan)
+        if value_integrity_errors:
+            reasons.append(
+                "ticket value integrity invalid: " + ", ".join(value_integrity_errors[:3])
+            )
+            ticket_repair_blocked = True
 
         high_issues = int(dict(quality_report.get("issues_by_severity") or {}).get("high", 0))
         if high_issues > 0:
@@ -199,6 +208,10 @@ class ReviewerAgent:
                 self.settings.max_horse_stake_dependency_ratio
             ),
             "horse_stake_dependency_scope": "outside_top3_win_probability",
+            "value_integrity": {
+                "status": "NG" if value_integrity_errors else "OK",
+                "errors": value_integrity_errors,
+            },
             "stage_counts": {
                 "entries": len(entry_rows),
                 "feature_rows": len(scenario_rows),
@@ -759,6 +772,68 @@ def _thresholds_for_popularity(
 
 def _ticket_hit_prob(ticket: dict[str, object]) -> float:
     return _to_float(ticket.get("hit_prob") or ticket.get("wide_prob") or ticket.get("win_prob"))
+
+
+def _ticket_value_integrity_errors(
+    tickets: list[dict[str, object]],
+    ticket_plan: dict[str, object],
+) -> list[str]:
+    """Fail closed when official-live ticket values are not reproducible."""
+    errors: list[str] = []
+    for ticket in tickets:
+        if str(ticket.get("odds_source", "")) != "jra_live":
+            continue
+        label = f"{ticket.get('bet_type', '')}:{ticket.get('horse_number', '')}"
+        ev_current = _to_float(ticket.get("ev_current"), -1.0)
+        if str(ticket.get("ticket_shape", "")) == "formation":
+            expected_ev = canonical_ticket_ev(ticket)
+            if (
+                not math.isfinite(ev_current)
+                or not math.isfinite(expected_ev)
+                or ev_current <= 0
+                or expected_ev <= 0
+            ):
+                errors.append(f"{label} missing canonical formation points or EV")
+                continue
+        else:
+            odds = _to_float(ticket.get("win_odds"), -1.0)
+            probability = _to_float(ticket.get("hit_prob"), -1.0)
+            if (
+                not all(math.isfinite(value) for value in (odds, probability, ev_current))
+                or odds <= 0
+                or not 0 < probability <= 1
+                or ev_current <= 0
+            ):
+                errors.append(f"{label} missing canonical probability, odds, or EV")
+                continue
+            expected_ev = probability * odds
+        tolerance = max(0.00001, abs(expected_ev) * 0.00001)
+        if abs(ev_current - expected_ev) > tolerance:
+            errors.append(
+                f"{label} ev_current={_fmt(ev_current)} != "
+                f"hit_prob*odds={_fmt(expected_ev)}"
+            )
+        displayed_ev = _to_float(ticket.get("ev"), -1.0)
+        if not math.isfinite(displayed_ev) or displayed_ev <= 0:
+            errors.append(f"{label} missing displayed EV")
+            continue
+        if abs(displayed_ev - ev_current) > tolerance:
+            errors.append(
+                f"{label} ev={_fmt(displayed_ev)} != ev_current={_fmt(ev_current)}"
+            )
+
+    declared = dict(ticket_plan.get("portfolio_summary") or {})
+    if tickets and declared:
+        canonical = portfolio_summary(tickets)
+        for key in ("total_stake", "total_points", "expected_return", "expected_profit"):
+            if int(_to_float(declared.get(key), -1)) != int(canonical[key]):
+                errors.append(f"portfolio {key} does not match canonical recomputation")
+        if abs(
+            _to_float(declared.get("portfolio_ev"), -1.0)
+            - _to_float(canonical.get("portfolio_ev"))
+        ) > 0.00001:
+            errors.append("portfolio EV does not match canonical recomputation")
+    return errors
 
 
 def _ticket_odds(ticket: dict[str, object]) -> float:

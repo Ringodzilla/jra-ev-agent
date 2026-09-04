@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import math
+
 
 Ticket = dict[str, object]
 
@@ -11,9 +13,46 @@ def portfolio_ev(tickets: list[Ticket]) -> float:
 
 def portfolio_expected_return(tickets: list[Ticket]) -> float:
     return sum(
-        int(_to_float(ticket.get("stake"))) * _to_float(ticket.get("ev_current") or ticket.get("ev"))
+        int(_to_float(ticket.get("stake"))) * canonical_ticket_ev(ticket)
         for ticket in tickets
     )
+
+
+def canonical_ticket_ev(ticket: Ticket) -> float:
+    """Use reproducible JRA-live arithmetic instead of trusting a reported EV."""
+    if str(ticket.get("odds_source", "")) == "jra_live":
+        if is_formation_ticket(ticket):
+            points = list(ticket.get("points") or [])
+            point_count = ticket_point_count(ticket)
+            if not points or point_count != len(points):
+                return 0.0
+            expected_return_multiplier = 0.0
+            for raw_point in points:
+                if not isinstance(raw_point, dict):
+                    return 0.0
+                probability = _to_float(raw_point.get("hit_prob"), -1.0)
+                odds = _to_float(raw_point.get("odds"), -1.0)
+                if (
+                    str(raw_point.get("odds_source", "")) != "jra_live"
+                    or not math.isfinite(probability)
+                    or not math.isfinite(odds)
+                    or not 0.0 < probability <= 1.0
+                    or odds <= 0.0
+                ):
+                    return 0.0
+                expected_return_multiplier += probability * odds
+            return expected_return_multiplier / point_count
+        probability = _to_float(ticket.get("hit_prob"), -1.0)
+        odds = _to_float(ticket.get("win_odds"), -1.0)
+        if (
+            math.isfinite(probability)
+            and math.isfinite(odds)
+            and 0.0 <= probability <= 1.0
+            and odds > 0.0
+        ):
+            return probability * odds
+        return 0.0
+    return _to_float(ticket.get("ev_current") or ticket.get("ev"))
 
 
 def portfolio_no_gami(tickets: list[Ticket]) -> bool:

@@ -20,6 +20,14 @@ Improve the betting system to maximize out-of-sample expected return (ROI) on hi
 - Do not alter input/output schema unless explicitly requested.
 - Keep outputs reproducible and deterministic when possible.
 
+## Numeric integrity (non-negotiable)
+- Never replace, rescale, omit, or relabel an observed value to make performance look better.
+- Report observed, model-predicted, and hypothetical values as separate fields; never substitute one for another.
+- Compute ticket EV from the canonical probability and the corresponding JRA current odds. Predicted odds may only produce a separately labeled predicted EV.
+- Treat any arithmetic mismatch, missing provenance, changed evaluation input, changed result label, changed evaluation rule, or changed baseline as a hard failure. Do not publish tickets and do not promote a baseline.
+- Preserve invalidated or superseded metrics with an explicit reason instead of silently overwriting their history.
+- A safety or integrity gate may be kept without an ROI increase when explicitly requested, but it must not be described as a performance improvement.
+
 ## Allowed optimization targets
 - feature engineering
 - ability score formula
