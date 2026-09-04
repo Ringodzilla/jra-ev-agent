@@ -47,6 +47,21 @@ class TestJRAParser(unittest.TestCase):
         self.assertEqual("ルメール", horses[1].current_jockey)
         self.assertEqual("4.8", horses[1].current_odds)
 
+    def test_aggressive_repair_merges_only_the_trailing_cells(self):
+        issues = []
+
+        repaired = self.parser._repair_cells(
+            ["a", "b", "c"],
+            2,
+            [],
+            issues,
+            context={},
+            aggressive=True,
+        )
+
+        self.assertEqual(["a", "b c"], repaired)
+        self.assertEqual("row_merge", issues[-1].code)
+
     def test_parse_race_detail_extracts_embedded_history_and_popularity(self):
         html = """
         <html><body>
