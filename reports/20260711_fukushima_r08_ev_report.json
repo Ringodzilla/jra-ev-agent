@@ -1,0 +1,425 @@
+{
+  "race": {
+    "date": "2026-07-11",
+    "course": "福島",
+    "race_number": 8,
+    "post_time": "14:00",
+    "class": "3歳以上1勝クラス",
+    "surface": "ダート",
+    "distance_m": 1150,
+    "direction": "右",
+    "weather": "曇",
+    "track_condition": "良",
+    "source_url": "https://www.jra.go.jp/JRADB/accessD.html?CNAME=pw01dde0103202602050820260711/31"
+  },
+  "model": {
+    "score_formula": "S = ability + course + pace + weight + jockey",
+    "probability_method": "softmax",
+    "softmax_temperature": 8,
+    "ev_formula": "EV = win_prob * odds"
+  },
+  "scores": [
+    {
+      "horse_number": 1,
+      "horse": "ゼファーテソーロ",
+      "ability": 83,
+      "course": 5,
+      "pace": 4,
+      "weight": 1,
+      "jockey": 0,
+      "S": 93,
+      "win_prob": 0.2068,
+      "odds": 9.7,
+      "ev": 2.006,
+      "evidence": "前走福島1150ダ3着0.3差、2-3番手"
+    },
+    {
+      "horse_number": 2,
+      "horse": "ハルノアラシ",
+      "ability": 74,
+      "course": -1,
+      "pace": -3,
+      "weight": -1,
+      "jockey": 0,
+      "S": 69,
+      "win_prob": 0.0103,
+      "odds": 47.3,
+      "ev": 0.487,
+      "evidence": "東京1400ダで差し脚型、福島1150の前受け適性は低め"
+    },
+    {
+      "horse_number": 3,
+      "horse": "チェルシー",
+      "ability": 74,
+      "course": 0,
+      "pace": 4,
+      "weight": 0,
+      "jockey": 0,
+      "S": 78,
+      "win_prob": 0.0317,
+      "odds": 23.2,
+      "ev": 0.735,
+      "evidence": "中山1200ダ2着時は逃げ、近走凡走あり"
+    },
+    {
+      "horse_number": 4,
+      "horse": "イズルード",
+      "ability": 67,
+      "course": 1,
+      "pace": 2,
+      "weight": -1,
+      "jockey": -1,
+      "S": 68,
+      "win_prob": 0.0091,
+      "odds": 69.0,
+      "ev": 0.628,
+      "evidence": "福島1150経験ありも近走大敗"
+    },
+    {
+      "horse_number": 5,
+      "horse": "ダノンリュラ",
+      "ability": 69,
+      "course": -1,
+      "pace": 3,
+      "weight": 3,
+      "jockey": -2,
+      "S": 72,
+      "win_prob": 0.015,
+      "odds": 82.9,
+      "ev": 1.244,
+      "evidence": "近走間隔が空き、直近は芝大敗、過去ダ1200先行歴"
+    },
+    {
+      "horse_number": 6,
+      "horse": "ラエトゥス",
+      "ability": 63,
+      "course": -2,
+      "pace": -1,
+      "weight": 2,
+      "jockey": 0,
+      "S": 62,
+      "win_prob": 0.0043,
+      "odds": 145.0,
+      "ev": 0.624,
+      "evidence": "近走ダ1400以上で大敗"
+    },
+    {
+      "horse_number": 7,
+      "horse": "フラッシュポイント",
+      "ability": 72,
+      "course": 1,
+      "pace": -3,
+      "weight": 0,
+      "jockey": -1,
+      "S": 69,
+      "win_prob": 0.0103,
+      "odds": 32.7,
+      "ev": 0.337,
+      "evidence": "福島1150ダ8着、差し寄り"
+    },
+    {
+      "horse_number": 8,
+      "horse": "アイファーリーベン",
+      "ability": 45,
+      "course": -4,
+      "pace": -4,
+      "weight": 0,
+      "jockey": -2,
+      "S": 35,
+      "win_prob": 0.0001,
+      "odds": 189.3,
+      "ev": 0.019,
+      "evidence": "近走大敗続き"
+    },
+    {
+      "horse_number": 9,
+      "horse": "グラティアム",
+      "ability": 80,
+      "course": 3,
+      "pace": 0,
+      "weight": 2,
+      "jockey": 3,
+      "S": 88,
+      "win_prob": 0.1107,
+      "odds": 5.5,
+      "ev": 0.609,
+      "evidence": "福島1150ダ未勝利勝ち、近走東京1400ダ0.3差"
+    },
+    {
+      "horse_number": 10,
+      "horse": "ミッシオーネ",
+      "ability": 70,
+      "course": -1,
+      "pace": 1,
+      "weight": 0,
+      "jockey": 1,
+      "S": 71,
+      "win_prob": 0.0132,
+      "odds": 70.6,
+      "ev": 0.932,
+      "evidence": "函館1000ダ5着、地方交流2着"
+    },
+    {
+      "horse_number": 11,
+      "horse": "ブーケドリス",
+      "ability": 77,
+      "course": 2,
+      "pace": 4,
+      "weight": 2,
+      "jockey": 1,
+      "S": 86,
+      "win_prob": 0.0862,
+      "odds": 8.3,
+      "ev": 0.715,
+      "evidence": "福島1150ダは0.7差、未勝利1200ダ逃げ勝ち"
+    },
+    {
+      "horse_number": 12,
+      "horse": "ライヴレッドアイ",
+      "ability": 84,
+      "course": 1,
+      "pace": 4,
+      "weight": 5,
+      "jockey": -1,
+      "S": 93,
+      "win_prob": 0.2068,
+      "odds": 5.3,
+      "ev": 1.096,
+      "evidence": "東京1400ダ0.6差、1200ダ重で1.10.5の2着、先行力あり"
+    },
+    {
+      "horse_number": 13,
+      "horse": "エーティータキオン",
+      "ability": 42,
+      "course": -4,
+      "pace": -4,
+      "weight": -1,
+      "jockey": -2,
+      "S": 31,
+      "win_prob": 0.0001,
+      "odds": 228.4,
+      "ev": 0.023,
+      "evidence": "障害帰り、平地短距離の近走内容低調"
+    },
+    {
+      "horse_number": 14,
+      "horse": "ジェイエルキャリア",
+      "ability": 82,
+      "course": 0,
+      "pace": 1,
+      "weight": 1,
+      "jockey": 0,
+      "S": 84,
+      "win_prob": 0.0671,
+      "odds": 14.3,
+      "ev": 0.96,
+      "evidence": "東京1400ダ3着0.2差、時計内容良い"
+    },
+    {
+      "horse_number": 15,
+      "horse": "マサノピンクレディ",
+      "ability": 77,
+      "course": 0,
+      "pace": 4,
+      "weight": 5,
+      "jockey": -2,
+      "S": 84,
+      "win_prob": 0.0671,
+      "odds": 15.5,
+      "ev": 1.04,
+      "evidence": "中山1200ダ未勝利勝ち、前受け、50kg"
+    },
+    {
+      "horse_number": 16,
+      "horse": "アイムインディ",
+      "ability": 85,
+      "course": 0,
+      "pace": 1,
+      "weight": 2,
+      "jockey": 3,
+      "S": 91,
+      "win_prob": 0.1611,
+      "odds": 2.6,
+      "ev": 0.419,
+      "evidence": "東京1300ダ勝ち、中山1200ダ連対、騎手強化"
+    }
+  ],
+  "scenario_probabilities": [
+    {
+      "horse_number": 1,
+      "horse": "ゼファーテソーロ",
+      "high": 0.1386,
+      "mid": 0.1811,
+      "slow": 0.2068,
+      "final": 0.2068
+    },
+    {
+      "horse_number": 12,
+      "horse": "ライヴレッドアイ",
+      "high": 0.1386,
+      "mid": 0.1811,
+      "slow": 0.2068,
+      "final": 0.2068
+    },
+    {
+      "horse_number": 16,
+      "horse": "アイムインディ",
+      "high": 0.212,
+      "mid": 0.1834,
+      "slow": 0.1611,
+      "final": 0.1611
+    },
+    {
+      "horse_number": 9,
+      "horse": "グラティアム",
+      "high": 0.1825,
+      "mid": 0.1376,
+      "slow": 0.1107,
+      "final": 0.1107
+    }
+  ],
+  "bet_builder": {
+    "core": [
+      1
+    ],
+    "partner": [
+      12,
+      16,
+      9,
+      11,
+      14
+    ],
+    "long": [
+      15
+    ],
+    "bet_types_considered": [
+      "単勝",
+      "複勝",
+      "ワイド",
+      "枠連",
+      "馬連",
+      "馬単",
+      "三連複",
+      "三連単"
+    ],
+    "exotic_ev_status": "NG: 出馬表HTMLから連系の実オッズを取得できないため、連系EVは確定しない",
+    "tickets": [
+      {
+        "bet_type": "単勝",
+        "horse_number": "1",
+        "horse_name": "ゼファーテソーロ",
+        "hit_prob": 0.2068,
+        "predicted_odds": 9.7,
+        "ev": 2.006,
+        "stake": 700
+      },
+      {
+        "bet_type": "単勝",
+        "horse_number": "12",
+        "horse_name": "ライヴレッドアイ",
+        "hit_prob": 0.2068,
+        "predicted_odds": 5.3,
+        "ev": 1.096,
+        "stake": 200
+      },
+      {
+        "bet_type": "単勝",
+        "horse_number": "15",
+        "horse_name": "マサノピンクレディ",
+        "hit_prob": 0.0671,
+        "predicted_odds": 15.5,
+        "ev": 1.04,
+        "stake": 100
+      }
+    ],
+    "total_stake": 1000
+  },
+  "reviewer": {
+    "status": "OK",
+    "reason": "単勝EVと連系EVを分離した。16アイムインディはS上位だが単勝EV=0.419で過剰人気として除外。1ゼファーテソーロは福島1150ダ良で前走3着かつ2-3番手の根拠があり、前受け馬を過小評価していない。差し寄りの2、7は福島1150mで過大評価していない。5ダノンリュラは単勝EVが1を超えるがデータ鮮度と直近芝大敗を理由にstake対象外。",
+    "fix": ""
+  },
+  "result": {
+    "finish_order": [
+      12,
+      9,
+      1,
+      11,
+      14
+    ],
+    "win_horse_number": 12,
+    "hit_tickets": [
+      {
+        "bet_type": "単勝",
+        "horse_number": "12",
+        "horse_name": "ライヴレッドアイ",
+        "stake": 200,
+        "odds_used": 3.2,
+        "return": 640
+      }
+    ],
+    "settlement": {
+      "total_stake": 1000,
+      "total_return": 640,
+      "profit": -360,
+      "roi": 0.64
+    },
+    "official_payouts": {
+      "単勝": {
+        "12": 320
+      },
+      "複勝": {
+        "12": 190,
+        "9": 190,
+        "1": 250
+      },
+      "枠連": {
+        "5-6": 800
+      },
+      "馬連": {
+        "9-12": 960
+      },
+      "馬単": {
+        "12-9": 1540
+      },
+      "ワイド": {
+        "9-12": 440,
+        "1-12": 620,
+        "1-9": 790
+      },
+      "三連複": {
+        "1-9-12": 2900
+      },
+      "三連単": {
+        "12-9-1": 10050
+      }
+    },
+    "prediction_review": {
+      "top5_actual_in_model_partners": true,
+      "actual_top5": [
+        12,
+        9,
+        1,
+        11,
+        14
+      ],
+      "model_core_partner_long_covered": [
+        1,
+        12,
+        16,
+        9,
+        11,
+        14,
+        15
+      ],
+      "note": "本線単勝は12で的中。ただし投票時想定オッズ5.3に対して実払戻は320円で、単勝のみの実収支はマイナス。1は3着、9は2着、11と14も掲示板内。16は過剰人気除外判断が有効。"
+    }
+  },
+  "tests": {
+    "recalculation_executed": true,
+    "probability_sum": 1.0,
+    "ev_formula_checked": true,
+    "ticket_total_stake": 1000,
+    "consistency": "OK"
+  }
+}

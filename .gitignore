@@ -8,13 +8,16 @@ config/races_from_url.json
 config/race_*.json
 config/races_*.json
 data/raw/*.html
+data/collected/
 data/processed/*.csv
 data/processed/*.json
 output/
 report/*.json
 report/*.md
 report/*.csv
+report/final_predictions/
 report/stages/
 report/races/
 report/win5/
 tmp/
+experiments/**/01_data_collector_full.json
