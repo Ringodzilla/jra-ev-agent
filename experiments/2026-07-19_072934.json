@@ -1,0 +1,69 @@
+{
+  "experiment_id": "2026-07-19_072934",
+  "timestamp_utc": "2026-07-19T07:29:35.051746+00:00",
+  "git_commit_before": "07b98463bfc4a43971ab8a0621e31b28a14d5141",
+  "git_commit_after": "07b98463bfc4a43971ab8a0621e31b28a14d5141",
+  "hypothesis": "Add small Fukushima turf 1800-2000 front-runner overuse penalty",
+  "files_changed": [
+    "analysis/ev.py"
+  ],
+  "before": {
+    "score": 0.0,
+    "validation_roi": 0.0,
+    "roi": 0.0,
+    "hit_rate": 0.0,
+    "sharpe_like": 0.0,
+    "max_drawdown": 0.0,
+    "ticket_count": 0,
+    "hit_ticket_count": 0,
+    "ticket_hit_rate": 0.0,
+    "race_count": 9,
+    "invested": 0,
+    "returned": 0.0,
+    "bet_type_breakdown": {},
+    "result_bet_types_available": [
+      "win",
+      "place",
+      "wide",
+      "wakuren",
+      "umaren",
+      "umatan",
+      "sanrenpuku",
+      "sanrentan"
+    ],
+    "result_label_count": 112,
+    "git_commit": "07b98463bfc4a43971ab8a0621e31b28a14d5141",
+    "label_status": "available"
+  },
+  "after": {
+    "score": 0.0,
+    "validation_roi": 0.0,
+    "roi": 0.0,
+    "hit_rate": 0.0,
+    "sharpe_like": 0.0,
+    "max_drawdown": 0.0,
+    "ticket_count": 0,
+    "hit_ticket_count": 0,
+    "ticket_hit_rate": 0.0,
+    "race_count": 9,
+    "invested": 0,
+    "returned": 0.0,
+    "bet_type_breakdown": {},
+    "result_bet_types_available": [
+      "win",
+      "place",
+      "wide",
+      "wakuren",
+      "umaren",
+      "umatan",
+      "sanrenpuku",
+      "sanrentan"
+    ],
+    "result_label_count": 112,
+    "git_commit": "07b98463bfc4a43971ab8a0621e31b28a14d5141",
+    "label_status": "available"
+  },
+  "decision": "revert",
+  "reason": "validation ROI tied and score did not improve",
+  "results_path": "data/processed/result_labels.csv"
+}

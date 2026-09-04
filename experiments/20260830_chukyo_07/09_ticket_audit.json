@@ -1,0 +1,745 @@
+{
+  "schema_version": "1.0",
+  "role": "bet_builder_ticket_audit",
+  "race_id": "20260830_中京_07",
+  "scope": {
+    "audit_only": true,
+    "new_bets_created": false,
+    "inputs": [
+      "03_simulator.json",
+      "04_ev_calculator.json",
+      "05_bet_builder_repaired.json",
+      "07_result.json"
+    ],
+    "comparison_funnel": [
+      "04 full official-odds candidate universe",
+      "05 generated candidate pool",
+      "05 repaired selected set",
+      "07 result"
+    ]
+  },
+  "prediction_vs_result": {
+    "ranking": [
+      {
+        "predicted_rank": 1,
+        "horse_number": 9,
+        "horse_name": "ジーティーマイカ",
+        "predicted_win_prob": 0.154131511097185,
+        "actual_finish": 1,
+        "snapshot_win_odds": 2.2,
+        "final_win_odds": 1.7
+      },
+      {
+        "predicted_rank": 2,
+        "horse_number": 4,
+        "horse_name": "シスキンブルーム",
+        "predicted_win_prob": 0.137405786758685,
+        "actual_finish": 2,
+        "snapshot_win_odds": 9.9,
+        "final_win_odds": 9.7
+      },
+      {
+        "predicted_rank": 3,
+        "horse_number": 7,
+        "horse_name": "ビスケットサンド",
+        "predicted_win_prob": 0.134096443846803,
+        "actual_finish": 3,
+        "snapshot_win_odds": 4.0,
+        "final_win_odds": 4.0
+      },
+      {
+        "predicted_rank": 4,
+        "horse_number": 5,
+        "horse_name": "マルモリムソウ",
+        "predicted_win_prob": 0.120553000381847,
+        "actual_finish": 7,
+        "snapshot_win_odds": 10.7,
+        "final_win_odds": 19.0
+      },
+      {
+        "predicted_rank": 5,
+        "horse_number": 6,
+        "horse_name": "ジャスパートレノ",
+        "predicted_win_prob": 0.115828529695231,
+        "actual_finish": 4,
+        "snapshot_win_odds": 22.2,
+        "final_win_odds": 34.4
+      },
+      {
+        "predicted_rank": 6,
+        "horse_number": 3,
+        "horse_name": "サンタンジェロ",
+        "predicted_win_prob": 0.089173543989713,
+        "actual_finish": 5,
+        "snapshot_win_odds": 4.8,
+        "final_win_odds": 5.4
+      },
+      {
+        "predicted_rank": 7,
+        "horse_number": 2,
+        "horse_name": "バクソウシャチョウ",
+        "predicted_win_prob": 0.083987118022837,
+        "actual_finish": 6,
+        "snapshot_win_odds": 12.6,
+        "final_win_odds": 17.4
+      },
+      {
+        "predicted_rank": 8,
+        "horse_number": 1,
+        "horse_name": "ピコキング",
+        "predicted_win_prob": 0.083687932624588,
+        "actual_finish": 8,
+        "snapshot_win_odds": 75.8,
+        "final_win_odds": 137.8
+      },
+      {
+        "predicted_rank": 9,
+        "horse_number": 8,
+        "horse_name": "ピコジャック",
+        "predicted_win_prob": 0.081136133583111,
+        "actual_finish": 9,
+        "snapshot_win_odds": 65.7,
+        "final_win_odds": 151.7
+      }
+    ],
+    "predicted_top3_horse_numbers": [
+      9,
+      4,
+      7
+    ],
+    "actual_top3_horse_numbers": [
+      9,
+      4,
+      7
+    ],
+    "top3_set_exact": true,
+    "top3_order_exact": true
+  },
+  "selected_ticket_audit": [
+    {
+      "bet_type": "wide",
+      "bet_type_ja": "ワイド",
+      "combination": "1-9",
+      "stake_yen": 100,
+      "snapshot_odds_used": 24.5,
+      "calibrated_hit_prob": 0.1034,
+      "calibrated_ev": 2.533309,
+      "horse_finishes": {
+        "1": 8,
+        "9": 1
+      },
+      "leg_final_win_odds": {
+        "1": 137.8,
+        "9": 1.7
+      },
+      "hit": false,
+      "actual_return_yen": 0,
+      "final_ticket_odds": null,
+      "final_ticket_odds_note": "losing combination; 07_result has no final payout odds for non-hit tickets"
+    },
+    {
+      "bet_type": "place",
+      "bet_type_ja": "複勝",
+      "combination": "6",
+      "stake_yen": 300,
+      "snapshot_odds_used": 3.6,
+      "calibrated_hit_prob": 0.300748,
+      "calibrated_ev": 1.082693,
+      "horse_finishes": {
+        "6": 4
+      },
+      "leg_final_win_odds": {
+        "6": 34.4
+      },
+      "hit": false,
+      "actual_return_yen": 0,
+      "final_ticket_odds": null,
+      "final_ticket_odds_note": "losing combination; 07_result has no final payout odds for non-hit tickets"
+    },
+    {
+      "bet_type": "wide",
+      "bet_type_ja": "ワイド",
+      "combination": "4-6",
+      "stake_yen": 100,
+      "snapshot_odds_used": 18.7,
+      "calibrated_hit_prob": 0.110749,
+      "calibrated_ev": 2.071011,
+      "horse_finishes": {
+        "4": 2,
+        "6": 4
+      },
+      "leg_final_win_odds": {
+        "4": 9.7,
+        "6": 34.4
+      },
+      "hit": false,
+      "actual_return_yen": 0,
+      "final_ticket_odds": null,
+      "final_ticket_odds_note": "losing combination; 07_result has no final payout odds for non-hit tickets"
+    },
+    {
+      "bet_type": "place",
+      "bet_type_ja": "複勝",
+      "combination": "1",
+      "stake_yen": 200,
+      "snapshot_odds_used": 7.0,
+      "calibrated_hit_prob": 0.21443,
+      "calibrated_ev": 1.501012,
+      "horse_finishes": {
+        "1": 8
+      },
+      "leg_final_win_odds": {
+        "1": 137.8
+      },
+      "hit": false,
+      "actual_return_yen": 0,
+      "final_ticket_odds": null,
+      "final_ticket_odds_note": "losing combination; 07_result has no final payout odds for non-hit tickets"
+    }
+  ],
+  "realized_portfolio": {
+    "stake_yen": 700,
+    "return_yen": 0,
+    "net_yen": -700,
+    "roi": 0.0,
+    "hits": 0,
+    "ticket_count": 4
+  },
+  "winning_combination_funnel": [
+    {
+      "bet_type": "win",
+      "bet_type_ja": "単勝",
+      "winning_combination": "9",
+      "payout_yen_per_100": 170,
+      "effective_final_odds": 1.7,
+      "ev_calculator_full_universe": {
+        "present": true,
+        "hit_prob": 0.154131511097185,
+        "snapshot_odds": 2.2,
+        "snapshot_odds_max": 2.2,
+        "ev_at_snapshot_lower_odds": 0.33908932441380707,
+        "standard_type_min_ev": 1.05,
+        "below_standard_type_min_ev": true,
+        "ev_at_effective_final_odds_same_probability": 0.2620235688652145,
+        "final_vs_snapshot_lower_odds_ratio": 0.7727272727272726
+      },
+      "bet_builder_candidate_pool": {
+        "present": false,
+        "selected": false,
+        "drop_stage": "builder_candidate_generation",
+        "reason": "not_generated_by_existing_builder; source EV below standard type threshold and combination was not admitted as a coverage candidate",
+        "source_ev_below_standard_threshold": true,
+        "standard_threshold": 1.05
+      },
+      "selected_set": {
+        "present": false
+      },
+      "funnel_outcome": "builder_candidate_generation"
+    },
+    {
+      "bet_type": "place",
+      "bet_type_ja": "複勝",
+      "winning_combination": "9",
+      "payout_yen_per_100": 110,
+      "effective_final_odds": 1.1,
+      "ev_calculator_full_universe": {
+        "present": true,
+        "hit_prob": 0.43913861949961885,
+        "snapshot_odds": 1.1,
+        "snapshot_odds_max": 1.3,
+        "ev_at_snapshot_lower_odds": 0.4830524814495808,
+        "standard_type_min_ev": 1.01,
+        "below_standard_type_min_ev": true,
+        "ev_at_effective_final_odds_same_probability": 0.4830524814495808,
+        "final_vs_snapshot_lower_odds_ratio": 1.0
+      },
+      "bet_builder_candidate_pool": {
+        "present": false,
+        "selected": false,
+        "drop_stage": "builder_candidate_generation",
+        "reason": "not_generated_by_existing_builder; source EV below standard type threshold and combination was not admitted as a coverage candidate",
+        "source_ev_below_standard_threshold": true,
+        "standard_threshold": 1.01
+      },
+      "selected_set": {
+        "present": false
+      },
+      "funnel_outcome": "builder_candidate_generation"
+    },
+    {
+      "bet_type": "place",
+      "bet_type_ja": "複勝",
+      "winning_combination": "4",
+      "payout_yen_per_100": 170,
+      "effective_final_odds": 1.7,
+      "ev_calculator_full_universe": {
+        "present": true,
+        "hit_prob": 0.4010223265370809,
+        "snapshot_odds": 1.9,
+        "snapshot_odds_max": 3.2,
+        "ev_at_snapshot_lower_odds": 0.7619424204204537,
+        "standard_type_min_ev": 1.01,
+        "below_standard_type_min_ev": true,
+        "ev_at_effective_final_odds_same_probability": 0.6817379551130376,
+        "final_vs_snapshot_lower_odds_ratio": 0.8947368421052632
+      },
+      "bet_builder_candidate_pool": {
+        "present": false,
+        "selected": false,
+        "drop_stage": "builder_candidate_generation",
+        "reason": "not_generated_by_existing_builder; source EV below standard type threshold and combination was not admitted as a coverage candidate",
+        "source_ev_below_standard_threshold": true,
+        "standard_threshold": 1.01
+      },
+      "selected_set": {
+        "present": false
+      },
+      "funnel_outcome": "builder_candidate_generation"
+    },
+    {
+      "bet_type": "place",
+      "bet_type_ja": "複勝",
+      "winning_combination": "7",
+      "payout_yen_per_100": 120,
+      "effective_final_odds": 1.2,
+      "ev_calculator_full_universe": {
+        "present": true,
+        "hit_prob": 0.39319340997739205,
+        "snapshot_odds": 1.3,
+        "snapshot_odds_max": 2.0,
+        "ev_at_snapshot_lower_odds": 0.5111514329706097,
+        "standard_type_min_ev": 1.01,
+        "below_standard_type_min_ev": true,
+        "ev_at_effective_final_odds_same_probability": 0.47183209197287046,
+        "final_vs_snapshot_lower_odds_ratio": 0.923076923076923
+      },
+      "bet_builder_candidate_pool": {
+        "present": false,
+        "selected": false,
+        "drop_stage": "builder_candidate_generation",
+        "reason": "not_generated_by_existing_builder; source EV below standard type threshold and combination was not admitted as a coverage candidate",
+        "source_ev_below_standard_threshold": true,
+        "standard_threshold": 1.01
+      },
+      "selected_set": {
+        "present": false
+      },
+      "funnel_outcome": "builder_candidate_generation"
+    },
+    {
+      "bet_type": "wakuren",
+      "bet_type_ja": "枠連",
+      "winning_combination": "4-8",
+      "payout_yen_per_100": 730,
+      "effective_final_odds": 7.3,
+      "ev_calculator_full_universe": {
+        "present": true,
+        "hit_prob": 0.07464729519794018,
+        "snapshot_odds": 8.9,
+        "snapshot_odds_max": 8.9,
+        "ev_at_snapshot_lower_odds": 0.6643609272616676,
+        "standard_type_min_ev": 1.03,
+        "below_standard_type_min_ev": true,
+        "ev_at_effective_final_odds_same_probability": 0.5449252549449634,
+        "final_vs_snapshot_lower_odds_ratio": 0.8202247191011235
+      },
+      "bet_builder_candidate_pool": {
+        "present": false,
+        "selected": false,
+        "drop_stage": "builder_candidate_generation",
+        "reason": "not_generated_by_existing_builder; source EV below standard type threshold and combination was not admitted as a coverage candidate",
+        "source_ev_below_standard_threshold": true,
+        "standard_threshold": 1.03
+      },
+      "selected_set": {
+        "present": false
+      },
+      "funnel_outcome": "builder_candidate_generation"
+    },
+    {
+      "bet_type": "umaren",
+      "bet_type_ja": "馬連",
+      "winning_combination": "4-9",
+      "payout_yen_per_100": 710,
+      "effective_final_odds": 7.1,
+      "ev_calculator_full_universe": {
+        "present": true,
+        "hit_prob": 0.04958982487425405,
+        "snapshot_odds": 8.4,
+        "snapshot_odds_max": 8.4,
+        "ev_at_snapshot_lower_odds": 0.416554528943734,
+        "standard_type_min_ev": 1.04,
+        "below_standard_type_min_ev": true,
+        "ev_at_effective_final_odds_same_probability": 0.3520877566072037,
+        "final_vs_snapshot_lower_odds_ratio": 0.8452380952380951
+      },
+      "bet_builder_candidate_pool": {
+        "present": false,
+        "selected": false,
+        "drop_stage": "builder_candidate_generation",
+        "reason": "not_generated_by_existing_builder; source EV below standard type threshold and combination was not admitted as a coverage candidate",
+        "source_ev_below_standard_threshold": true,
+        "standard_threshold": 1.04
+      },
+      "selected_set": {
+        "present": false
+      },
+      "funnel_outcome": "builder_candidate_generation"
+    },
+    {
+      "bet_type": "wide",
+      "bet_type_ja": "ワイド",
+      "winning_combination": "4-9",
+      "payout_yen_per_100": 270,
+      "effective_final_odds": 2.7,
+      "ev_calculator_full_universe": {
+        "present": true,
+        "hit_prob": 0.14140363797043087,
+        "snapshot_odds": 3.2,
+        "snapshot_odds_max": 3.8,
+        "ev_at_snapshot_lower_odds": 0.4524916415053788,
+        "standard_type_min_ev": 1.01,
+        "below_standard_type_min_ev": true,
+        "ev_at_effective_final_odds_same_probability": 0.38178982252016336,
+        "final_vs_snapshot_lower_odds_ratio": 0.84375
+      },
+      "bet_builder_candidate_pool": {
+        "present": true,
+        "horse_number_format": "9-4",
+        "hit_prob": 0.254725,
+        "snapshot_odds_used": 3.2,
+        "ev": 0.815119,
+        "ticket_role": "coverage",
+        "coverage_reason": "top_model_pair_real_odds",
+        "selected": false,
+        "selection_reason": "",
+        "non_selection_reason": "portfolio_no_gami_guard",
+        "drop_stage": "portfolio_no_gami_guard"
+      },
+      "selected_set": {
+        "present": false
+      },
+      "funnel_outcome": "portfolio_no_gami_guard"
+    },
+    {
+      "bet_type": "wide",
+      "bet_type_ja": "ワイド",
+      "winning_combination": "7-9",
+      "payout_yen_per_100": 160,
+      "effective_final_odds": 1.6,
+      "ev_calculator_full_universe": {
+        "present": true,
+        "hit_prob": 0.13818877826068468,
+        "snapshot_odds": 1.9,
+        "snapshot_odds_max": 2.2,
+        "ev_at_snapshot_lower_odds": 0.26255867869530086,
+        "standard_type_min_ev": 1.01,
+        "below_standard_type_min_ev": true,
+        "ev_at_effective_final_odds_same_probability": 0.2211020452170955,
+        "final_vs_snapshot_lower_odds_ratio": 0.8421052631578948
+      },
+      "bet_builder_candidate_pool": {
+        "present": false,
+        "selected": false,
+        "drop_stage": "builder_candidate_generation",
+        "reason": "not_generated_by_existing_builder; source EV below standard type threshold and combination was not admitted as a coverage candidate",
+        "source_ev_below_standard_threshold": true,
+        "standard_threshold": 1.01
+      },
+      "selected_set": {
+        "present": false
+      },
+      "funnel_outcome": "builder_candidate_generation"
+    },
+    {
+      "bet_type": "wide",
+      "bet_type_ja": "ワイド",
+      "winning_combination": "4-7",
+      "payout_yen_per_100": 400,
+      "effective_final_odds": 4.0,
+      "ev_calculator_full_universe": {
+        "present": true,
+        "hit_prob": 0.12404246298713299,
+        "snapshot_odds": 4.0,
+        "snapshot_odds_max": 4.9,
+        "ev_at_snapshot_lower_odds": 0.49616985194853197,
+        "standard_type_min_ev": 1.01,
+        "below_standard_type_min_ev": true,
+        "ev_at_effective_final_odds_same_probability": 0.49616985194853197,
+        "final_vs_snapshot_lower_odds_ratio": 1.0
+      },
+      "bet_builder_candidate_pool": {
+        "present": true,
+        "horse_number_format": "4-7",
+        "hit_prob": 0.209955,
+        "snapshot_odds_used": 4.0,
+        "ev": 0.83982,
+        "ticket_role": "coverage",
+        "coverage_reason": "top_model_pair_real_odds",
+        "selected": false,
+        "selection_reason": "",
+        "non_selection_reason": "portfolio_optimization",
+        "drop_stage": "portfolio_selection"
+      },
+      "selected_set": {
+        "present": false
+      },
+      "funnel_outcome": "portfolio_selection"
+    },
+    {
+      "bet_type": "umatan",
+      "bet_type_ja": "馬単",
+      "winning_combination": "9-4",
+      "payout_yen_per_100": 940,
+      "effective_final_odds": 9.4,
+      "ev_calculator_full_universe": {
+        "present": true,
+        "hit_prob": 0.025037652808280676,
+        "snapshot_odds": 11.7,
+        "snapshot_odds_max": 11.7,
+        "ev_at_snapshot_lower_odds": 0.2929405378568839,
+        "standard_type_min_ev": 1.07,
+        "below_standard_type_min_ev": true,
+        "ev_at_effective_final_odds_same_probability": 0.23535393639783836,
+        "final_vs_snapshot_lower_odds_ratio": 0.8034188034188035
+      },
+      "bet_builder_candidate_pool": {
+        "present": false,
+        "selected": false,
+        "drop_stage": "builder_candidate_generation",
+        "reason": "not_generated_by_existing_builder; source EV below standard type threshold and combination was not admitted as a coverage candidate",
+        "source_ev_below_standard_threshold": true,
+        "standard_threshold": 1.07
+      },
+      "selected_set": {
+        "present": false
+      },
+      "funnel_outcome": "builder_candidate_generation"
+    },
+    {
+      "bet_type": "sanrenpuku",
+      "bet_type_ja": "3連複",
+      "winning_combination": "4-7-9",
+      "payout_yen_per_100": 660,
+      "effective_final_odds": 6.6,
+      "ev_calculator_full_universe": {
+        "present": true,
+        "hit_prob": 0.02773270191720503,
+        "snapshot_odds": 7.6,
+        "snapshot_odds_max": 7.6,
+        "ev_at_snapshot_lower_odds": 0.2107685345707582,
+        "standard_type_min_ev": 1.06,
+        "below_standard_type_min_ev": true,
+        "ev_at_effective_final_odds_same_probability": 0.1830358326535532,
+        "final_vs_snapshot_lower_odds_ratio": 0.868421052631579
+      },
+      "bet_builder_candidate_pool": {
+        "present": false,
+        "selected": false,
+        "drop_stage": "builder_candidate_generation",
+        "reason": "not_generated_by_existing_builder; source EV below standard type threshold and combination was not admitted as a coverage candidate",
+        "source_ev_below_standard_threshold": true,
+        "standard_threshold": 1.06
+      },
+      "selected_set": {
+        "present": false
+      },
+      "funnel_outcome": "builder_candidate_generation"
+    },
+    {
+      "bet_type": "sanrentan",
+      "bet_type_ja": "3連単",
+      "winning_combination": "9-4-7",
+      "payout_yen_per_100": 2640,
+      "effective_final_odds": 26.4,
+      "ev_calculator_full_universe": {
+        "present": true,
+        "hit_prob": 0.004739078279915314,
+        "snapshot_odds": 30.6,
+        "snapshot_odds_max": 30.6,
+        "ev_at_snapshot_lower_odds": 0.14501579536540862,
+        "standard_type_min_ev": 1.12,
+        "below_standard_type_min_ev": true,
+        "ev_at_effective_final_odds_same_probability": 0.12511166658976428,
+        "final_vs_snapshot_lower_odds_ratio": 0.8627450980392156
+      },
+      "bet_builder_candidate_pool": {
+        "present": false,
+        "selected": false,
+        "drop_stage": "builder_candidate_generation",
+        "reason": "not_generated_by_existing_builder; source EV below standard type threshold and combination was not admitted as a coverage candidate",
+        "source_ev_below_standard_threshold": true,
+        "standard_threshold": 1.12
+      },
+      "selected_set": {
+        "present": false
+      },
+      "funnel_outcome": "builder_candidate_generation"
+    }
+  ],
+  "audit_by_bet_type": {
+    "win": {
+      "bet_type_ja": "単勝",
+      "winning_combinations": [
+        "9"
+      ],
+      "winning_combination_count": 1,
+      "present_in_ev_full_universe": 1,
+      "present_in_builder_candidate_pool": 0,
+      "present_in_selected_set": 0,
+      "drop_stages": {
+        "builder_candidate_generation": 1
+      }
+    },
+    "place": {
+      "bet_type_ja": "複勝",
+      "winning_combinations": [
+        "9",
+        "4",
+        "7"
+      ],
+      "winning_combination_count": 3,
+      "present_in_ev_full_universe": 3,
+      "present_in_builder_candidate_pool": 0,
+      "present_in_selected_set": 0,
+      "drop_stages": {
+        "builder_candidate_generation": 3
+      }
+    },
+    "wide": {
+      "bet_type_ja": "ワイド",
+      "winning_combinations": [
+        "4-9",
+        "7-9",
+        "4-7"
+      ],
+      "winning_combination_count": 3,
+      "present_in_ev_full_universe": 3,
+      "present_in_builder_candidate_pool": 2,
+      "present_in_selected_set": 0,
+      "drop_stages": {
+        "builder_candidate_generation": 1,
+        "portfolio_selection": 1,
+        "portfolio_no_gami_guard": 1
+      }
+    },
+    "wakuren": {
+      "bet_type_ja": "枠連",
+      "winning_combinations": [
+        "4-8"
+      ],
+      "winning_combination_count": 1,
+      "present_in_ev_full_universe": 1,
+      "present_in_builder_candidate_pool": 0,
+      "present_in_selected_set": 0,
+      "drop_stages": {
+        "builder_candidate_generation": 1
+      }
+    },
+    "umaren": {
+      "bet_type_ja": "馬連",
+      "winning_combinations": [
+        "4-9"
+      ],
+      "winning_combination_count": 1,
+      "present_in_ev_full_universe": 1,
+      "present_in_builder_candidate_pool": 0,
+      "present_in_selected_set": 0,
+      "drop_stages": {
+        "builder_candidate_generation": 1
+      }
+    },
+    "umatan": {
+      "bet_type_ja": "馬単",
+      "winning_combinations": [
+        "9-4"
+      ],
+      "winning_combination_count": 1,
+      "present_in_ev_full_universe": 1,
+      "present_in_builder_candidate_pool": 0,
+      "present_in_selected_set": 0,
+      "drop_stages": {
+        "builder_candidate_generation": 1
+      }
+    },
+    "sanrenpuku": {
+      "bet_type_ja": "3連複",
+      "winning_combinations": [
+        "4-7-9"
+      ],
+      "winning_combination_count": 1,
+      "present_in_ev_full_universe": 1,
+      "present_in_builder_candidate_pool": 0,
+      "present_in_selected_set": 0,
+      "drop_stages": {
+        "builder_candidate_generation": 1
+      }
+    },
+    "sanrentan": {
+      "bet_type_ja": "3連単",
+      "winning_combinations": [
+        "9-4-7"
+      ],
+      "winning_combination_count": 1,
+      "present_in_ev_full_universe": 1,
+      "present_in_builder_candidate_pool": 0,
+      "present_in_selected_set": 0,
+      "drop_stages": {
+        "builder_candidate_generation": 1
+      }
+    }
+  },
+  "failure_points": [
+    {
+      "id": "accurate_ranking_not_converted_to_winning_combinations",
+      "evidence": "predicted and actual top3 order was 9-4-7, but no selected ticket matched any payout combination",
+      "stage": "portfolio construction",
+      "rule_assessment": "selection miss; not a simulator ranking miss"
+    },
+    {
+      "id": "selected_value_concentrated_on_non_placing_legs",
+      "evidence": "all four selected tickets required either #1 (8th) or #6 (4th); appearances of #9 and #4 therefore did not close a winning combination",
+      "stage": "portfolio selection/reviewer repair",
+      "rule_assessment": "top3 coverage and dependency limits passed, but those checks did not require a ticket composed only of top-ranked horses"
+    },
+    {
+      "id": "winning_coverage_candidates_not_selected",
+      "evidence": "wide 4-9 reached the builder pool but was removed by no-gami guard; wide 4-7 reached the pool but lost in portfolio optimization",
+      "stage": "portfolio safety/optimization",
+      "rule_assessment": "outcome miss, while recorded no-gami and optimization rules operated as configured"
+    },
+    {
+      "id": "other_winning_combinations_absent_from_builder_pool",
+      "evidence": "10 of 12 payout rows existed in 04 full universe but did not enter 05 generated candidate pool; every one had source EV below its standard type threshold",
+      "stage": "candidate generation",
+      "rule_assessment": "normal threshold/coverage behavior rather than missing odds data"
+    }
+  ],
+  "normal_points": [
+    {
+      "id": "simulator_top3_accuracy",
+      "evidence": "predicted top3 9-4-7 exactly matched actual finish 9-4-7"
+    },
+    {
+      "id": "full_market_coverage",
+      "evidence": "all 12 payout combinations were present in 04 candidate_evaluations"
+    },
+    {
+      "id": "low_ev_winner_exclusion_consistent",
+      "evidence": "all 12 winning payout rows had snapshot EV below their standard type threshold; effective final odds were never higher than the 04 lower-bound odds"
+    },
+    {
+      "id": "reviewer_removals_did_not_remove_a_hit",
+      "evidence": "removed win1, wakuren4-6, and umaren4-6 all lost; reduced place6 also lost"
+    },
+    {
+      "id": "portfolio_safety_operated",
+      "evidence": "repaired portfolio stayed within budget, no-gami, horse-ticket dependency 0.50, stake dependency 0.571429, and top3 coverage count 2"
+    }
+  ],
+  "conclusion": {
+    "primary_failure": "ticket construction favored high modeled EV involving #1/#6 and did not convert the correctly ranked 9-4-7 into a selected hit",
+    "not_a_failure": "the winning low-odds combinations were not omitted from source data and their exclusion was consistent with contemporaneous EV/no-gami rules",
+    "hindsight_bet_recommendation": null
+  }
+}

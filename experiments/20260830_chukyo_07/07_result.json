@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "role": "data_collector/result_collector",
+  "race_id": "20260830_中京_07",
+  "race_name": "第2回中京2歳ステークス",
+  "source": {
+    "provider": "netkeiba",
+    "url": "https://race.netkeiba.com/race/result.html?race_id=202607030407",
+    "retrieved_at": "2026-09-03T23:01:00+09:00"
+  },
+  "race": {
+    "race_id": "20260830_中京_07",
+    "date": "2026-08-30",
+    "track": "中京",
+    "race_number": 7,
+    "winning_time": "1:19.7",
+    "sectionals_seconds": [12.0, 10.7, 11.5, 11.7, 11.5, 11.2, 11.1],
+    "first_3f_seconds": 34.2,
+    "last_3f_seconds": 33.8,
+    "third_corner": "6,2,5(4,3)(7,8,9)-1",
+    "fourth_corner": "6(2,5)4,3(7,9)(1,8)"
+  },
+  "results": [
+    {"finish": 1, "horse_number": 9, "horse_name": "ジーティーマイカ", "time": "1:19.7", "popularity": 1, "final_win_odds": 1.7, "last_3f": 33.0, "passing_order": "6-6", "body_weight": "454(+8)"},
+    {"finish": 2, "horse_number": 4, "horse_name": "シスキンブルーム", "time": "1:20.0", "popularity": 4, "final_win_odds": 9.7, "last_3f": 33.7, "passing_order": "4-4", "body_weight": "472(+18)"},
+    {"finish": 3, "horse_number": 7, "horse_name": "ビスケットサンド", "time": "1:20.3", "popularity": 2, "final_win_odds": 4.0, "last_3f": 33.7, "passing_order": "6-6", "body_weight": "456(+2)"},
+    {"finish": 4, "horse_number": 6, "horse_name": "ジャスパートレノ", "time": "1:20.4", "popularity": 7, "final_win_odds": 34.4, "last_3f": 34.5, "passing_order": "1-1", "body_weight": "482(-2)"},
+    {"finish": 5, "horse_number": 3, "horse_name": "サンタンジェロ", "time": "1:20.5", "popularity": 3, "final_win_odds": 5.4, "last_3f": 34.1, "passing_order": "4-5", "body_weight": "460(0)"},
+    {"finish": 6, "horse_number": 2, "horse_name": "バクソウシャチョウ", "time": "1:20.7", "popularity": 5, "final_win_odds": 17.4, "last_3f": 34.6, "passing_order": "2-2", "body_weight": "462(-8)"},
+    {"finish": 7, "horse_number": 5, "horse_name": "マルモリムソウ", "time": "1:20.9", "popularity": 6, "final_win_odds": 19.0, "last_3f": 34.7, "passing_order": "3-2", "body_weight": "468(+10)"},
+    {"finish": 8, "horse_number": 1, "horse_name": "ピコキング", "time": "1:20.9", "popularity": 8, "final_win_odds": 137.8, "last_3f": 34.0, "passing_order": "9-8", "body_weight": "476(+4)"},
+    {"finish": 9, "horse_number": 8, "horse_name": "ピコジャック", "time": "1:21.7", "popularity": 9, "final_win_odds": 151.7, "last_3f": 34.8, "passing_order": "6-8", "body_weight": "444(-2)"}
+  ],
+  "result": {
+    "payouts": [
+    {"bet_type": "単勝", "combination": "9", "payout_yen_per_100": 170},
+    {"bet_type": "複勝", "combination": "9", "payout_yen_per_100": 110},
+    {"bet_type": "複勝", "combination": "4", "payout_yen_per_100": 170},
+    {"bet_type": "複勝", "combination": "7", "payout_yen_per_100": 120},
+    {"bet_type": "枠連", "combination": "4-8", "payout_yen_per_100": 730},
+    {"bet_type": "馬連", "combination": "4-9", "payout_yen_per_100": 710},
+    {"bet_type": "ワイド", "combination": "4-9", "payout_yen_per_100": 270},
+    {"bet_type": "ワイド", "combination": "7-9", "payout_yen_per_100": 160},
+    {"bet_type": "ワイド", "combination": "4-7", "payout_yen_per_100": 400},
+    {"bet_type": "馬単", "combination": "9-4", "payout_yen_per_100": 940},
+    {"bet_type": "3連複", "combination": "4-7-9", "payout_yen_per_100": 660},
+      {"bet_type": "3連単", "combination": "9-4-7", "payout_yen_per_100": 2640}
+    ]
+  }
+}

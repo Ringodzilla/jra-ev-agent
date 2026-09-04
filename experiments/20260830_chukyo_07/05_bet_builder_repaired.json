@@ -1,0 +1,3833 @@
+{
+  "schema_version": "2.0",
+  "role": "bet_builder",
+  "race_id": "20260830_中京_07",
+  "config": {
+    "budget_yen": 1000,
+    "min_ev": 1.03,
+    "mode": "balanced",
+    "stake_unit_yen": 100,
+    "min_portfolio_ev": 1.0,
+    "require_no_gami": true,
+    "max_tickets_per_race": 5,
+    "max_horse_stake_dependency_ratio": 0.6
+  },
+  "core": [
+    {
+      "race_id": "20260830_中京_07",
+      "horse_id": "pw01dud002024107165/47",
+      "horse_name": "ジーティーマイカ",
+      "horse_number": "9",
+      "win_prob": "0.154131511097185",
+      "place_prob": "0.45032",
+      "ev": "0.33908932441380707",
+      "ev_predicted": "",
+      "current_odds": "2.2",
+      "predicted_odds": "2.2",
+      "predicted_odds_source": "",
+      "model_score": "101.43",
+      "probability_band": "favorite",
+      "long_reason": ""
+    },
+    {
+      "race_id": "20260830_中京_07",
+      "horse_id": "pw01dud002024106603/07",
+      "horse_name": "シスキンブルーム",
+      "horse_number": "4",
+      "win_prob": "0.137405786758685",
+      "place_prob": "0.386551",
+      "ev": "1.3603172889109816",
+      "ev_predicted": "",
+      "current_odds": "9.9",
+      "predicted_odds": "9.9",
+      "predicted_odds_source": "",
+      "model_score": "80.33",
+      "probability_band": "contender",
+      "long_reason": ""
+    }
+  ],
+  "partner": [
+    {
+      "race_id": "20260830_中京_07",
+      "horse_id": "pw01dud002024106262/30",
+      "horse_name": "ビスケットサンド",
+      "horse_number": "7",
+      "win_prob": "0.134096443846803",
+      "place_prob": "0.371173",
+      "ev": "0.536385775387212",
+      "ev_predicted": "",
+      "current_odds": "4.0",
+      "predicted_odds": "4.0",
+      "predicted_odds_source": "",
+      "model_score": "99.43",
+      "probability_band": "favorite",
+      "long_reason": ""
+    },
+    {
+      "race_id": "20260830_中京_07",
+      "horse_id": "pw01dud002024101644/0F",
+      "horse_name": "マルモリムソウ",
+      "horse_number": "5",
+      "win_prob": "0.120553000381847",
+      "place_prob": "0.339262",
+      "ev": "1.2899171040857629",
+      "ev_predicted": "",
+      "current_odds": "10.7",
+      "predicted_odds": "10.7",
+      "predicted_odds_source": "",
+      "model_score": "99.07",
+      "probability_band": "contender",
+      "long_reason": ""
+    }
+  ],
+  "long": [
+    {
+      "race_id": "20260830_中京_07",
+      "horse_id": "pw01dud002024108326/CB",
+      "horse_name": "ピコキング",
+      "horse_number": "1",
+      "win_prob": "0.083687932624588",
+      "place_prob": "0.27299",
+      "ev": "6.34354529294377",
+      "ev_predicted": "",
+      "current_odds": "75.8",
+      "predicted_odds": "75.8",
+      "predicted_odds_source": "",
+      "model_score": "35.17",
+      "probability_band": "outsider",
+      "long_reason": "win_ev_threshold"
+    },
+    {
+      "race_id": "20260830_中京_07",
+      "horse_id": "pw01dud002024108327/3E",
+      "horse_name": "ピコジャック",
+      "horse_number": "8",
+      "win_prob": "0.081136133583111",
+      "place_prob": "0.250977",
+      "ev": "5.330643976410393",
+      "ev_predicted": "",
+      "current_odds": "65.7",
+      "predicted_odds": "65.7",
+      "predicted_odds_source": "",
+      "model_score": "29.53",
+      "probability_band": "contender",
+      "long_reason": "win_ev_threshold"
+    },
+    {
+      "race_id": "20260830_中京_07",
+      "horse_id": "pw01dud002024108325/58",
+      "horse_name": "ジャスパートレノ",
+      "horse_number": "6",
+      "win_prob": "0.115828529695231",
+      "place_prob": "0.319542",
+      "ev": "2.5713933592341283",
+      "ev_predicted": "",
+      "current_odds": "22.2",
+      "predicted_odds": "22.2",
+      "predicted_odds_source": "",
+      "model_score": "95.57",
+      "probability_band": "contender",
+      "long_reason": "selected_ticket"
+    }
+  ],
+  "tickets": [
+    {
+      "race_id": "20260830_中京_07",
+      "bet_type": "wide",
+      "horse_id": "pw01dud002024108326/CB|pw01dud002024107165/47",
+      "horse_name": "ピコキング - ジーティーマイカ",
+      "horse_number": "1-9",
+      "horse_ids": [
+        "pw01dud002024108326/CB",
+        "pw01dud002024107165/47"
+      ],
+      "horse_names": [
+        "ピコキング",
+        "ジーティーマイカ"
+      ],
+      "horse_numbers": [
+        "1",
+        "9"
+      ],
+      "stake": 100,
+      "hit_prob": "0.1034",
+      "win_prob": "0.179892",
+      "wide_prob": "0.179892",
+      "wide_prob_market": "0.094751",
+      "win_odds": "24.5",
+      "wide_odds_est": "24.5",
+      "wide_odds_min": "24.5",
+      "wide_odds_max": "28.2",
+      "predicted_odds": "24.5",
+      "predicted_wide_odds": "24.5",
+      "ev": "2.533309",
+      "ev_current": "2.533309",
+      "ev_predicted": "4.407348",
+      "predicted_odds_source": "jra_live",
+      "odds_source": "jra_live",
+      "ticket_role": "coverage",
+      "coverage_reason": "win_ev_longshot_wide_translation",
+      "confidence": "1.898568",
+      "pace_adjustment": "1",
+      "legs": [
+        {
+          "horse_id": "pw01dud002024108326/CB",
+          "horse_name": "ピコキング",
+          "horse_number": "1",
+          "place_prob": "0.27299",
+          "win_prob": "0.083687932624588"
+        },
+        {
+          "horse_id": "pw01dud002024107165/47",
+          "horse_name": "ジーティーマイカ",
+          "horse_number": "9",
+          "place_prob": "0.45032",
+          "win_prob": "0.154131511097185"
+        }
+      ],
+      "selected": false,
+      "selection_reason": "",
+      "non_selection_reason": "portfolio_optimization",
+      "raw_hit_prob": "0.179892",
+      "market_prob": "0.040816",
+      "bet_type_market_shrink": "0.55",
+      "portfolio_total_stake": 700,
+      "portfolio_total_points": 4,
+      "portfolio_ev": "1.550632",
+      "portfolio_expected_return": 1085,
+      "portfolio_expected_profit": 385,
+      "portfolio_no_gami": true,
+      "return_if_hit": 2450,
+      "net_return_if_hit": 1750
+    },
+    {
+      "race_id": "20260830_中京_07",
+      "bet_type": "place",
+      "horse_id": "pw01dud002024108325/58",
+      "horse_name": "ジャスパートレノ",
+      "horse_number": 6,
+      "stake": 300,
+      "hit_prob": "0.300748",
+      "place_prob": "0.319542",
+      "place_prob_market": "0.161486",
+      "win_prob": "0.115828529695231",
+      "win_odds": "3.6",
+      "place_odds_est": "3.6",
+      "place_odds_min": "3.6",
+      "place_odds_max": "6.5",
+      "predicted_odds": "3.6",
+      "ev": "1.082693",
+      "ev_current": "1.082693",
+      "ev_predicted": "1.150351",
+      "fair_odds": "3.129475",
+      "model_score": "95.57",
+      "predicted_odds_source": "jra_live",
+      "odds_source": "jra_live",
+      "confidence": "1.97876",
+      "legs": [
+        {
+          "horse_id": "pw01dud002024108325/58",
+          "horse_name": "ジャスパートレノ",
+          "horse_number": "6",
+          "win_prob": "0.115828529695231",
+          "place_prob": "0.319542"
+        }
+      ],
+      "raw_hit_prob": "0.319542",
+      "market_prob": "0.277778",
+      "bet_type_market_shrink": "0.45",
+      "portfolio_total_stake": 700,
+      "portfolio_total_points": 4,
+      "portfolio_ev": "1.550632",
+      "portfolio_expected_return": 1085,
+      "portfolio_expected_profit": 385,
+      "portfolio_no_gami": true,
+      "return_if_hit": 1080,
+      "net_return_if_hit": 380
+    },
+    {
+      "race_id": "20260830_中京_07",
+      "bet_type": "wide",
+      "horse_id": "pw01dud002024106603/07|pw01dud002024108325/58",
+      "horse_name": "シスキンブルーム - ジャスパートレノ",
+      "horse_number": "4-6",
+      "horse_ids": [
+        "pw01dud002024106603/07",
+        "pw01dud002024108325/58"
+      ],
+      "horse_names": [
+        "シスキンブルーム",
+        "ジャスパートレノ"
+      ],
+      "horse_numbers": [
+        "4",
+        "6"
+      ],
+      "stake": 100,
+      "hit_prob": "0.110749",
+      "win_prob": "0.18075",
+      "wide_prob": "0.18075",
+      "wide_prob_market": "0.058734",
+      "win_odds": "18.7",
+      "wide_odds_est": "18.7",
+      "wide_odds_min": "18.7",
+      "wide_odds_max": "20.6",
+      "predicted_odds": "18.7",
+      "predicted_wide_odds": "18.7",
+      "ev": "2.071011",
+      "ev_current": "2.071011",
+      "ev_predicted": "3.380023",
+      "predicted_odds_source": "jra_live",
+      "odds_source": "jra_live",
+      "ticket_role": "coverage",
+      "coverage_reason": "marked_top5_pair_real_odds",
+      "confidence": "3.077449",
+      "pace_adjustment": "1",
+      "legs": [
+        {
+          "horse_id": "pw01dud002024106603/07",
+          "horse_name": "シスキンブルーム",
+          "horse_number": "4",
+          "place_prob": "0.386551",
+          "win_prob": "0.137405786758685"
+        },
+        {
+          "horse_id": "pw01dud002024108325/58",
+          "horse_name": "ジャスパートレノ",
+          "horse_number": "6",
+          "place_prob": "0.319542",
+          "win_prob": "0.115828529695231"
+        }
+      ],
+      "raw_hit_prob": "0.18075",
+      "market_prob": "0.053476",
+      "bet_type_market_shrink": "0.55",
+      "portfolio_total_stake": 700,
+      "portfolio_total_points": 4,
+      "portfolio_ev": "1.550632",
+      "portfolio_expected_return": 1085,
+      "portfolio_expected_profit": 385,
+      "portfolio_no_gami": true,
+      "return_if_hit": 1870,
+      "net_return_if_hit": 1170
+    },
+    {
+      "race_id": "20260830_中京_07",
+      "bet_type": "place",
+      "horse_id": "pw01dud002024108326/CB",
+      "horse_name": "ピコキング",
+      "horse_number": 1,
+      "stake": 200,
+      "hit_prob": "0.21443",
+      "place_prob": "0.27299",
+      "place_prob_market": "0.096685",
+      "win_prob": "0.083687932624588",
+      "win_odds": "7",
+      "place_odds_est": "7",
+      "place_odds_min": "7.0",
+      "place_odds_max": "12.6",
+      "predicted_odds": "7",
+      "ev": "1.501012",
+      "ev_current": "1.501012",
+      "ev_predicted": "1.91093",
+      "fair_odds": "3.663139",
+      "model_score": "35.17",
+      "predicted_odds_source": "jra_live",
+      "odds_source": "jra_live",
+      "confidence": "2.823499",
+      "legs": [
+        {
+          "horse_id": "pw01dud002024108326/CB",
+          "horse_name": "ピコキング",
+          "horse_number": "1",
+          "win_prob": "0.083687932624588",
+          "place_prob": "0.27299"
+        }
+      ],
+      "ticket_role": "coverage",
+      "coverage_reason": "win_ev_longshot_place_translation",
+      "raw_hit_prob": "0.27299",
+      "market_prob": "0.142857",
+      "bet_type_market_shrink": "0.45",
+      "portfolio_total_stake": 700,
+      "portfolio_total_points": 4,
+      "portfolio_ev": "1.550632",
+      "portfolio_expected_return": 1085,
+      "portfolio_expected_profit": 385,
+      "portfolio_no_gami": true,
+      "return_if_hit": 1400,
+      "net_return_if_hit": 700
+    }
+  ],
+  "races": [
+    {
+      "race_id": "20260830_中京_07",
+      "core": [
+        {
+          "race_id": "20260830_中京_07",
+          "horse_id": "pw01dud002024107165/47",
+          "horse_name": "ジーティーマイカ",
+          "horse_number": "9",
+          "win_prob": "0.154131511097185",
+          "place_prob": "0.45032",
+          "ev": "0.33908932441380707",
+          "ev_predicted": "",
+          "current_odds": "2.2",
+          "predicted_odds": "2.2",
+          "predicted_odds_source": "",
+          "model_score": "101.43",
+          "probability_band": "favorite",
+          "long_reason": ""
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "horse_id": "pw01dud002024106603/07",
+          "horse_name": "シスキンブルーム",
+          "horse_number": "4",
+          "win_prob": "0.137405786758685",
+          "place_prob": "0.386551",
+          "ev": "1.3603172889109816",
+          "ev_predicted": "",
+          "current_odds": "9.9",
+          "predicted_odds": "9.9",
+          "predicted_odds_source": "",
+          "model_score": "80.33",
+          "probability_band": "contender",
+          "long_reason": ""
+        }
+      ],
+      "partner": [
+        {
+          "race_id": "20260830_中京_07",
+          "horse_id": "pw01dud002024106262/30",
+          "horse_name": "ビスケットサンド",
+          "horse_number": "7",
+          "win_prob": "0.134096443846803",
+          "place_prob": "0.371173",
+          "ev": "0.536385775387212",
+          "ev_predicted": "",
+          "current_odds": "4.0",
+          "predicted_odds": "4.0",
+          "predicted_odds_source": "",
+          "model_score": "99.43",
+          "probability_band": "favorite",
+          "long_reason": ""
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "horse_id": "pw01dud002024101644/0F",
+          "horse_name": "マルモリムソウ",
+          "horse_number": "5",
+          "win_prob": "0.120553000381847",
+          "place_prob": "0.339262",
+          "ev": "1.2899171040857629",
+          "ev_predicted": "",
+          "current_odds": "10.7",
+          "predicted_odds": "10.7",
+          "predicted_odds_source": "",
+          "model_score": "99.07",
+          "probability_band": "contender",
+          "long_reason": ""
+        }
+      ],
+      "long": [
+        {
+          "race_id": "20260830_中京_07",
+          "horse_id": "pw01dud002024108326/CB",
+          "horse_name": "ピコキング",
+          "horse_number": "1",
+          "win_prob": "0.083687932624588",
+          "place_prob": "0.27299",
+          "ev": "6.34354529294377",
+          "ev_predicted": "",
+          "current_odds": "75.8",
+          "predicted_odds": "75.8",
+          "predicted_odds_source": "",
+          "model_score": "35.17",
+          "probability_band": "outsider",
+          "long_reason": "win_ev_threshold"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "horse_id": "pw01dud002024108327/3E",
+          "horse_name": "ピコジャック",
+          "horse_number": "8",
+          "win_prob": "0.081136133583111",
+          "place_prob": "0.250977",
+          "ev": "5.330643976410393",
+          "ev_predicted": "",
+          "current_odds": "65.7",
+          "predicted_odds": "65.7",
+          "predicted_odds_source": "",
+          "model_score": "29.53",
+          "probability_band": "contender",
+          "long_reason": "win_ev_threshold"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "horse_id": "pw01dud002024108325/58",
+          "horse_name": "ジャスパートレノ",
+          "horse_number": "6",
+          "win_prob": "0.115828529695231",
+          "place_prob": "0.319542",
+          "ev": "2.5713933592341283",
+          "ev_predicted": "",
+          "current_odds": "22.2",
+          "predicted_odds": "22.2",
+          "predicted_odds_source": "",
+          "model_score": "95.57",
+          "probability_band": "contender",
+          "long_reason": "selected_ticket"
+        }
+      ],
+      "candidate_counts": {
+        "win": 5,
+        "place": 3,
+        "wide": 19,
+        "wakuren": 7,
+        "umaren": 4,
+        "umatan": 6,
+        "sanrenpuku": 7,
+        "sanrentan": 0
+      },
+      "candidates": [
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002024108326/CB|pw01dud002024101644/0F",
+          "horse_name": "ピコキング - マルモリムソウ",
+          "horse_number": "1-5",
+          "horse_ids": [
+            "pw01dud002024108326/CB",
+            "pw01dud002024101644/0F"
+          ],
+          "horse_names": [
+            "ピコキング",
+            "マルモリムソウ"
+          ],
+          "horse_numbers": [
+            "1",
+            "5"
+          ],
+          "stake": 100,
+          "hit_prob": "0.135527",
+          "win_prob": "0.135527",
+          "wide_prob": "0.135527",
+          "wide_prob_market": "0.031901",
+          "win_odds": "76.4",
+          "wide_odds_est": "76.4",
+          "wide_odds_min": "76.4",
+          "wide_odds_max": "79.8",
+          "predicted_odds": "76.4",
+          "predicted_wide_odds": "76.4",
+          "ev": "10.354248",
+          "ev_current": "10.354248",
+          "ev_predicted": "10.354248",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "win_ev_longshot_wide_translation",
+          "confidence": "4.248376",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024108326/CB",
+              "horse_name": "ピコキング",
+              "horse_number": "1",
+              "place_prob": "0.27299",
+              "win_prob": "0.083687932624588"
+            },
+            {
+              "horse_id": "pw01dud002024101644/0F",
+              "horse_name": "マルモリムソウ",
+              "horse_number": "5",
+              "place_prob": "0.339262",
+              "win_prob": "0.120553000381847"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002024108327/3E|pw01dud002024101644/0F",
+          "horse_name": "ピコジャック - マルモリムソウ",
+          "horse_number": "8-5",
+          "horse_ids": [
+            "pw01dud002024108327/3E",
+            "pw01dud002024101644/0F"
+          ],
+          "horse_names": [
+            "ピコジャック",
+            "マルモリムソウ"
+          ],
+          "horse_numbers": [
+            "8",
+            "5"
+          ],
+          "stake": 100,
+          "hit_prob": "0.124598",
+          "win_prob": "0.124598",
+          "wide_prob": "0.124598",
+          "wide_prob_market": "0.032454",
+          "win_odds": "78.8",
+          "wide_odds_est": "78.8",
+          "wide_odds_min": "78.8",
+          "wide_odds_max": "82.3",
+          "predicted_odds": "78.8",
+          "predicted_wide_odds": "78.8",
+          "ev": "9.818353",
+          "ev_current": "9.818353",
+          "ev_predicted": "9.818353",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "win_ev_longshot_wide_translation",
+          "confidence": "3.839288",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024108327/3E",
+              "horse_name": "ピコジャック",
+              "horse_number": "8",
+              "place_prob": "0.250977",
+              "win_prob": "0.081136133583111"
+            },
+            {
+              "horse_id": "pw01dud002024101644/0F",
+              "horse_name": "マルモリムソウ",
+              "horse_number": "5",
+              "place_prob": "0.339262",
+              "win_prob": "0.120553000381847"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002024108327/3E|pw01dud002024106603/07",
+          "horse_name": "ピコジャック - シスキンブルーム",
+          "horse_number": "8-4",
+          "horse_ids": [
+            "pw01dud002024108327/3E",
+            "pw01dud002024106603/07"
+          ],
+          "horse_names": [
+            "ピコジャック",
+            "シスキンブルーム"
+          ],
+          "horse_numbers": [
+            "8",
+            "4"
+          ],
+          "stake": 100,
+          "hit_prob": "0.141966",
+          "win_prob": "0.141966",
+          "wide_prob": "0.141966",
+          "wide_prob_market": "0.035774",
+          "win_odds": "61.2",
+          "wide_odds_est": "61.2",
+          "wide_odds_min": "61.2",
+          "wide_odds_max": "66.0",
+          "predicted_odds": "61.2",
+          "predicted_wide_odds": "61.2",
+          "ev": "8.688312",
+          "ev_current": "8.688312",
+          "ev_predicted": "8.688312",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "win_ev_longshot_wide_translation",
+          "confidence": "3.96838",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024108327/3E",
+              "horse_name": "ピコジャック",
+              "horse_number": "8",
+              "place_prob": "0.250977",
+              "win_prob": "0.081136133583111"
+            },
+            {
+              "horse_id": "pw01dud002024106603/07",
+              "horse_name": "シスキンブルーム",
+              "horse_number": "4",
+              "place_prob": "0.386551",
+              "win_prob": "0.137405786758685"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002024108326/CB|pw01dud002024108325/58",
+          "horse_name": "ピコキング - ジャスパートレノ",
+          "horse_number": "1-6",
+          "horse_ids": [
+            "pw01dud002024108326/CB",
+            "pw01dud002024108325/58"
+          ],
+          "horse_names": [
+            "ピコキング",
+            "ジャスパートレノ"
+          ],
+          "horse_numbers": [
+            "1",
+            "6"
+          ],
+          "stake": 100,
+          "hit_prob": "0.127649",
+          "win_prob": "0.127649",
+          "wide_prob": "0.127649",
+          "wide_prob_market": "0.019517",
+          "win_odds": "66.7",
+          "wide_odds_est": "66.7",
+          "wide_odds_min": "66.7",
+          "wide_odds_max": "68.3",
+          "predicted_odds": "66.7",
+          "predicted_wide_odds": "66.7",
+          "ev": "8.514199",
+          "ev_current": "8.514199",
+          "ev_predicted": "8.514199",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "win_ev_longshot_wide_translation",
+          "confidence": "6.540545",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024108326/CB",
+              "horse_name": "ピコキング",
+              "horse_number": "1",
+              "place_prob": "0.27299",
+              "win_prob": "0.083687932624588"
+            },
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "place_prob": "0.319542",
+              "win_prob": "0.115828529695231"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002024108326/CB|pw01dud002024106603/07",
+          "horse_name": "ピコキング - シスキンブルーム",
+          "horse_number": "1-4",
+          "horse_ids": [
+            "pw01dud002024108326/CB",
+            "pw01dud002024106603/07"
+          ],
+          "horse_names": [
+            "ピコキング",
+            "シスキンブルーム"
+          ],
+          "horse_numbers": [
+            "1",
+            "4"
+          ],
+          "stake": 100,
+          "hit_prob": "0.154418",
+          "win_prob": "0.154418",
+          "wide_prob": "0.154418",
+          "wide_prob_market": "0.035165",
+          "win_odds": "53.5",
+          "wide_odds_est": "53.5",
+          "wide_odds_min": "53.5",
+          "wide_odds_max": "57.8",
+          "predicted_odds": "53.5",
+          "predicted_wide_odds": "53.5",
+          "ev": "8.261342",
+          "ev_current": "8.261342",
+          "ev_predicted": "8.261342",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "win_ev_longshot_wide_translation",
+          "confidence": "4.391223",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024108326/CB",
+              "horse_name": "ピコキング",
+              "horse_number": "1",
+              "place_prob": "0.27299",
+              "win_prob": "0.083687932624588"
+            },
+            {
+              "horse_id": "pw01dud002024106603/07",
+              "horse_name": "シスキンブルーム",
+              "horse_number": "4",
+              "place_prob": "0.386551",
+              "win_prob": "0.137405786758685"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002024108327/3E|pw01dud002024108325/58",
+          "horse_name": "ピコジャック - ジャスパートレノ",
+          "horse_number": "8-6",
+          "horse_ids": [
+            "pw01dud002024108327/3E",
+            "pw01dud002024108325/58"
+          ],
+          "horse_names": [
+            "ピコジャック",
+            "ジャスパートレノ"
+          ],
+          "horse_numbers": [
+            "8",
+            "6"
+          ],
+          "stake": 100,
+          "hit_prob": "0.117356",
+          "win_prob": "0.117356",
+          "wide_prob": "0.117356",
+          "wide_prob_market": "0.019855",
+          "win_odds": "62.3",
+          "wide_odds_est": "62.3",
+          "wide_odds_min": "62.3",
+          "wide_odds_max": "63.8",
+          "predicted_odds": "62.3",
+          "predicted_wide_odds": "62.3",
+          "ev": "7.311276",
+          "ev_current": "7.311276",
+          "ev_predicted": "7.311276",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "win_ev_longshot_wide_translation",
+          "confidence": "5.910738",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024108327/3E",
+              "horse_name": "ピコジャック",
+              "horse_number": "8",
+              "place_prob": "0.250977",
+              "win_prob": "0.081136133583111"
+            },
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "place_prob": "0.319542",
+              "win_prob": "0.115828529695231"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002024108326/CB|pw01dud002024106262/30",
+          "horse_name": "ピコキング - ビスケットサンド",
+          "horse_number": "1-7",
+          "horse_ids": [
+            "pw01dud002024108326/CB",
+            "pw01dud002024106262/30"
+          ],
+          "horse_names": [
+            "ピコキング",
+            "ビスケットサンド"
+          ],
+          "horse_numbers": [
+            "1",
+            "7"
+          ],
+          "stake": 100,
+          "hit_prob": "0.148274",
+          "win_prob": "0.148274",
+          "wide_prob": "0.148274",
+          "wide_prob_market": "0.065284",
+          "win_odds": "36.2",
+          "wide_odds_est": "36.2",
+          "wide_odds_min": "36.2",
+          "wide_odds_max": "42.1",
+          "predicted_odds": "36.2",
+          "predicted_wide_odds": "36.2",
+          "ev": "5.367536",
+          "ev_current": "5.367536",
+          "ev_predicted": "5.367536",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "win_ev_longshot_wide_translation",
+          "confidence": "2.271239",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024108326/CB",
+              "horse_name": "ピコキング",
+              "horse_number": "1",
+              "place_prob": "0.27299",
+              "win_prob": "0.083687932624588"
+            },
+            {
+              "horse_id": "pw01dud002024106262/30",
+              "horse_name": "ビスケットサンド",
+              "horse_number": "7",
+              "place_prob": "0.371173",
+              "win_prob": "0.134096443846803"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002024108327/3E|pw01dud002024106262/30",
+          "horse_name": "ピコジャック - ビスケットサンド",
+          "horse_number": "8-7",
+          "horse_ids": [
+            "pw01dud002024108327/3E",
+            "pw01dud002024106262/30"
+          ],
+          "horse_names": [
+            "ピコジャック",
+            "ビスケットサンド"
+          ],
+          "horse_numbers": [
+            "8",
+            "7"
+          ],
+          "stake": 100,
+          "hit_prob": "0.136318",
+          "win_prob": "0.136318",
+          "wide_prob": "0.136318",
+          "wide_prob_market": "0.066415",
+          "win_odds": "36.5",
+          "wide_odds_est": "36.5",
+          "wide_odds_min": "36.5",
+          "wide_odds_max": "42.4",
+          "predicted_odds": "36.5",
+          "predicted_wide_odds": "36.5",
+          "ev": "4.975611",
+          "ev_current": "4.975611",
+          "ev_predicted": "4.975611",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "win_ev_longshot_wide_translation",
+          "confidence": "2.052535",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024108327/3E",
+              "horse_name": "ピコジャック",
+              "horse_number": "8",
+              "place_prob": "0.250977",
+              "win_prob": "0.081136133583111"
+            },
+            {
+              "horse_id": "pw01dud002024106262/30",
+              "horse_name": "ビスケットサンド",
+              "horse_number": "7",
+              "place_prob": "0.371173",
+              "win_prob": "0.134096443846803"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002024108326/CB|pw01dud002024107165/47",
+          "horse_name": "ピコキング - ジーティーマイカ",
+          "horse_number": "1-9",
+          "horse_ids": [
+            "pw01dud002024108326/CB",
+            "pw01dud002024107165/47"
+          ],
+          "horse_names": [
+            "ピコキング",
+            "ジーティーマイカ"
+          ],
+          "horse_numbers": [
+            "1",
+            "9"
+          ],
+          "stake": 100,
+          "hit_prob": "0.179892",
+          "win_prob": "0.179892",
+          "wide_prob": "0.179892",
+          "wide_prob_market": "0.094751",
+          "win_odds": "24.5",
+          "wide_odds_est": "24.5",
+          "wide_odds_min": "24.5",
+          "wide_odds_max": "28.2",
+          "predicted_odds": "24.5",
+          "predicted_wide_odds": "24.5",
+          "ev": "4.407348",
+          "ev_current": "4.407348",
+          "ev_predicted": "4.407348",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "win_ev_longshot_wide_translation",
+          "confidence": "1.898568",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024108326/CB",
+              "horse_name": "ピコキング",
+              "horse_number": "1",
+              "place_prob": "0.27299",
+              "win_prob": "0.083687932624588"
+            },
+            {
+              "horse_id": "pw01dud002024107165/47",
+              "horse_name": "ジーティーマイカ",
+              "horse_number": "9",
+              "place_prob": "0.45032",
+              "win_prob": "0.154131511097185"
+            }
+          ],
+          "selected": true,
+          "selection_reason": "selected_portfolio_reviewer_fix",
+          "non_selection_reason": ""
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002024108327/3E|pw01dud002024107165/47",
+          "horse_name": "ピコジャック - ジーティーマイカ",
+          "horse_number": "8-9",
+          "horse_ids": [
+            "pw01dud002024108327/3E",
+            "pw01dud002024107165/47"
+          ],
+          "horse_names": [
+            "ピコジャック",
+            "ジーティーマイカ"
+          ],
+          "horse_numbers": [
+            "8",
+            "9"
+          ],
+          "stake": 100,
+          "hit_prob": "0.165386",
+          "win_prob": "0.165386",
+          "wide_prob": "0.165386",
+          "wide_prob_market": "0.096393",
+          "win_odds": "24.5",
+          "wide_odds_est": "24.5",
+          "wide_odds_min": "24.5",
+          "wide_odds_max": "28.3",
+          "predicted_odds": "24.5",
+          "predicted_wide_odds": "24.5",
+          "ev": "4.051954",
+          "ev_current": "4.051954",
+          "ev_predicted": "4.051954",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "win_ev_longshot_wide_translation",
+          "confidence": "1.715749",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024108327/3E",
+              "horse_name": "ピコジャック",
+              "horse_number": "8",
+              "place_prob": "0.250977",
+              "win_prob": "0.081136133583111"
+            },
+            {
+              "horse_id": "pw01dud002024107165/47",
+              "horse_name": "ジーティーマイカ",
+              "horse_number": "9",
+              "place_prob": "0.45032",
+              "win_prob": "0.154131511097185"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002024101644/0F|pw01dud002024108325/58",
+          "horse_name": "マルモリムソウ - ジャスパートレノ",
+          "horse_number": "5-6",
+          "horse_ids": [
+            "pw01dud002024101644/0F",
+            "pw01dud002024108325/58"
+          ],
+          "horse_names": [
+            "マルモリムソウ",
+            "ジャスパートレノ"
+          ],
+          "horse_numbers": [
+            "5",
+            "6"
+          ],
+          "stake": 100,
+          "hit_prob": "0.158638",
+          "win_prob": "0.158638",
+          "wide_prob": "0.158638",
+          "wide_prob_market": "0.053282",
+          "win_odds": "23.2",
+          "wide_odds_est": "23.2",
+          "wide_odds_min": "23.2",
+          "wide_odds_max": "24.7",
+          "predicted_odds": "23.2",
+          "predicted_wide_odds": "23.2",
+          "ev": "3.680395",
+          "ev_current": "3.680395",
+          "ev_predicted": "3.680395",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "marked_top5_pair_real_odds",
+          "confidence": "2.977339",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024101644/0F",
+              "horse_name": "マルモリムソウ",
+              "horse_number": "5",
+              "place_prob": "0.339262",
+              "win_prob": "0.120553000381847"
+            },
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "place_prob": "0.319542",
+              "win_prob": "0.115828529695231"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002024106603/07|pw01dud002024108325/58",
+          "horse_name": "シスキンブルーム - ジャスパートレノ",
+          "horse_number": "4-6",
+          "horse_ids": [
+            "pw01dud002024106603/07",
+            "pw01dud002024108325/58"
+          ],
+          "horse_names": [
+            "シスキンブルーム",
+            "ジャスパートレノ"
+          ],
+          "horse_numbers": [
+            "4",
+            "6"
+          ],
+          "stake": 100,
+          "hit_prob": "0.18075",
+          "win_prob": "0.18075",
+          "wide_prob": "0.18075",
+          "wide_prob_market": "0.058734",
+          "win_odds": "18.7",
+          "wide_odds_est": "18.7",
+          "wide_odds_min": "18.7",
+          "wide_odds_max": "20.6",
+          "predicted_odds": "18.7",
+          "predicted_wide_odds": "18.7",
+          "ev": "3.380023",
+          "ev_current": "3.380023",
+          "ev_predicted": "3.380023",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "marked_top5_pair_real_odds",
+          "confidence": "3.077449",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024106603/07",
+              "horse_name": "シスキンブルーム",
+              "horse_number": "4",
+              "place_prob": "0.386551",
+              "win_prob": "0.137405786758685"
+            },
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "place_prob": "0.319542",
+              "win_prob": "0.115828529695231"
+            }
+          ],
+          "selected": true,
+          "selection_reason": "selected_portfolio_reviewer_fix",
+          "non_selection_reason": ""
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002024106603/07|pw01dud002024101644/0F",
+          "horse_name": "シスキンブルーム - マルモリムソウ",
+          "horse_number": "4-5",
+          "horse_ids": [
+            "pw01dud002024106603/07",
+            "pw01dud002024101644/0F"
+          ],
+          "horse_names": [
+            "シスキンブルーム",
+            "マルモリムソウ"
+          ],
+          "horse_numbers": [
+            "4",
+            "5"
+          ],
+          "stake": 100,
+          "hit_prob": "0.191905",
+          "win_prob": "0.191905",
+          "wide_prob": "0.191905",
+          "wide_prob_market": "0.096003",
+          "win_odds": "10.5",
+          "wide_odds_est": "10.5",
+          "wide_odds_min": "10.5",
+          "wide_odds_max": "11.8",
+          "predicted_odds": "10.5",
+          "predicted_wide_odds": "10.5",
+          "ev": "2.014998",
+          "ev_current": "2.014998",
+          "ev_predicted": "2.014998",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "marked_core_pair_real_odds",
+          "confidence": "1.99894",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024106603/07",
+              "horse_name": "シスキンブルーム",
+              "horse_number": "4",
+              "place_prob": "0.386551",
+              "win_prob": "0.137405786758685"
+            },
+            {
+              "horse_id": "pw01dud002024101644/0F",
+              "horse_name": "マルモリムソウ",
+              "horse_number": "5",
+              "place_prob": "0.339262",
+              "win_prob": "0.120553000381847"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002024106262/30|pw01dud002024108325/58",
+          "horse_name": "ビスケットサンド - ジャスパートレノ",
+          "horse_number": "7-6",
+          "horse_ids": [
+            "pw01dud002024106262/30",
+            "pw01dud002024108325/58"
+          ],
+          "horse_names": [
+            "ビスケットサンド",
+            "ジャスパートレノ"
+          ],
+          "horse_numbers": [
+            "7",
+            "6"
+          ],
+          "stake": 100,
+          "hit_prob": "0.173559",
+          "win_prob": "0.173559",
+          "wide_prob": "0.173559",
+          "wide_prob_market": "0.109038",
+          "win_odds": "11.6",
+          "wide_odds_est": "11.6",
+          "wide_odds_min": "11.6",
+          "wide_odds_max": "13.7",
+          "predicted_odds": "11.6",
+          "predicted_wide_odds": "11.6",
+          "ev": "2.013286",
+          "ev_current": "2.013286",
+          "ev_predicted": "2.013286",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "marked_top5_pair_real_odds",
+          "confidence": "1.591726",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024106262/30",
+              "horse_name": "ビスケットサンド",
+              "horse_number": "7",
+              "place_prob": "0.371173",
+              "win_prob": "0.134096443846803"
+            },
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "place_prob": "0.319542",
+              "win_prob": "0.115828529695231"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002024107165/47|pw01dud002024108325/58",
+          "horse_name": "ジーティーマイカ - ジャスパートレノ",
+          "horse_number": "9-6",
+          "horse_ids": [
+            "pw01dud002024107165/47",
+            "pw01dud002024108325/58"
+          ],
+          "horse_names": [
+            "ジーティーマイカ",
+            "ジャスパートレノ"
+          ],
+          "horse_numbers": [
+            "9",
+            "6"
+          ],
+          "stake": 100,
+          "hit_prob": "0.210568",
+          "win_prob": "0.210568",
+          "wide_prob": "0.210568",
+          "wide_prob_market": "0.158256",
+          "win_odds": "9",
+          "wide_odds_est": "9",
+          "wide_odds_min": "9.0",
+          "wide_odds_max": "10.5",
+          "predicted_odds": "9",
+          "predicted_wide_odds": "9",
+          "ev": "1.895112",
+          "ev_current": "1.895112",
+          "ev_predicted": "1.895112",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "marked_top5_pair_real_odds",
+          "confidence": "1.330551",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024107165/47",
+              "horse_name": "ジーティーマイカ",
+              "horse_number": "9",
+              "place_prob": "0.45032",
+              "win_prob": "0.154131511097185"
+            },
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "place_prob": "0.319542",
+              "win_prob": "0.115828529695231"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002024106262/30|pw01dud002024101644/0F",
+          "horse_name": "ビスケットサンド - マルモリムソウ",
+          "horse_number": "7-5",
+          "horse_ids": [
+            "pw01dud002024106262/30",
+            "pw01dud002024101644/0F"
+          ],
+          "horse_names": [
+            "ビスケットサンド",
+            "マルモリムソウ"
+          ],
+          "horse_numbers": [
+            "7",
+            "5"
+          ],
+          "stake": 100,
+          "hit_prob": "0.18427",
+          "win_prob": "0.18427",
+          "wide_prob": "0.18427",
+          "wide_prob_market": "0.178229",
+          "win_odds": "7.9",
+          "wide_odds_est": "7.9",
+          "wide_odds_min": "7.9",
+          "wide_odds_max": "9.5",
+          "predicted_odds": "7.9",
+          "predicted_wide_odds": "7.9",
+          "ev": "1.455734",
+          "ev_current": "1.455734",
+          "ev_predicted": "1.455734",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "marked_core_pair_real_odds",
+          "confidence": "1.033897",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024106262/30",
+              "horse_name": "ビスケットサンド",
+              "horse_number": "7",
+              "place_prob": "0.371173",
+              "win_prob": "0.134096443846803"
+            },
+            {
+              "horse_id": "pw01dud002024101644/0F",
+              "horse_name": "マルモリムソウ",
+              "horse_number": "5",
+              "place_prob": "0.339262",
+              "win_prob": "0.120553000381847"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002024107165/47|pw01dud002024101644/0F",
+          "horse_name": "ジーティーマイカ - マルモリムソウ",
+          "horse_number": "9-5",
+          "horse_ids": [
+            "pw01dud002024107165/47",
+            "pw01dud002024101644/0F"
+          ],
+          "horse_names": [
+            "ジーティーマイカ",
+            "マルモリムソウ"
+          ],
+          "horse_numbers": [
+            "9",
+            "5"
+          ],
+          "stake": 100,
+          "hit_prob": "0.223563",
+          "win_prob": "0.223563",
+          "wide_prob": "0.223563",
+          "wide_prob_market": "0.258678",
+          "win_odds": "5.3",
+          "wide_odds_est": "5.3",
+          "wide_odds_min": "5.3",
+          "wide_odds_max": "6.3",
+          "predicted_odds": "5.3",
+          "predicted_wide_odds": "5.3",
+          "ev": "1.184883",
+          "ev_current": "1.184883",
+          "ev_predicted": "1.184883",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "marked_core_pair_real_odds",
+          "confidence": "0.864252",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024107165/47",
+              "horse_name": "ジーティーマイカ",
+              "horse_number": "9",
+              "place_prob": "0.45032",
+              "win_prob": "0.154131511097185"
+            },
+            {
+              "horse_id": "pw01dud002024101644/0F",
+              "horse_name": "マルモリムソウ",
+              "horse_number": "5",
+              "place_prob": "0.339262",
+              "win_prob": "0.120553000381847"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002024106603/07|pw01dud002024106262/30",
+          "horse_name": "シスキンブルーム - ビスケットサンド",
+          "horse_number": "4-7",
+          "horse_ids": [
+            "pw01dud002024106603/07",
+            "pw01dud002024106262/30"
+          ],
+          "horse_names": [
+            "シスキンブルーム",
+            "ビスケットサンド"
+          ],
+          "horse_numbers": [
+            "4",
+            "7"
+          ],
+          "stake": 100,
+          "hit_prob": "0.209955",
+          "win_prob": "0.209955",
+          "wide_prob": "0.209955",
+          "wide_prob_market": "0.196466",
+          "win_odds": "4",
+          "wide_odds_est": "4",
+          "wide_odds_min": "4.0",
+          "wide_odds_max": "4.9",
+          "predicted_odds": "4",
+          "predicted_wide_odds": "4",
+          "ev": "0.83982",
+          "ev_current": "0.83982",
+          "ev_predicted": "0.83982",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "top_model_pair_real_odds",
+          "confidence": "1.06866",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024106603/07",
+              "horse_name": "シスキンブルーム",
+              "horse_number": "4",
+              "place_prob": "0.386551",
+              "win_prob": "0.137405786758685"
+            },
+            {
+              "horse_id": "pw01dud002024106262/30",
+              "horse_name": "ビスケットサンド",
+              "horse_number": "7",
+              "place_prob": "0.371173",
+              "win_prob": "0.134096443846803"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002024107165/47|pw01dud002024106603/07",
+          "horse_name": "ジーティーマイカ - シスキンブルーム",
+          "horse_number": "9-4",
+          "horse_ids": [
+            "pw01dud002024107165/47",
+            "pw01dud002024106603/07"
+          ],
+          "horse_names": [
+            "ジーティーマイカ",
+            "シスキンブルーム"
+          ],
+          "horse_numbers": [
+            "9",
+            "4"
+          ],
+          "stake": 100,
+          "hit_prob": "0.254725",
+          "win_prob": "0.254725",
+          "wide_prob": "0.254725",
+          "wide_prob_market": "0.285147",
+          "win_odds": "3.2",
+          "wide_odds_est": "3.2",
+          "wide_odds_min": "3.2",
+          "wide_odds_max": "3.8",
+          "predicted_odds": "3.2",
+          "predicted_wide_odds": "3.2",
+          "ev": "0.815119",
+          "ev_current": "0.815119",
+          "ev_predicted": "0.815119",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "top_model_pair_real_odds",
+          "confidence": "0.893312",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024107165/47",
+              "horse_name": "ジーティーマイカ",
+              "horse_number": "9",
+              "place_prob": "0.45032",
+              "win_prob": "0.154131511097185"
+            },
+            {
+              "horse_id": "pw01dud002024106603/07",
+              "horse_name": "シスキンブルーム",
+              "horse_number": "4",
+              "place_prob": "0.386551",
+              "win_prob": "0.137405786758685"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_no_gami_guard"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "place",
+          "horse_id": "pw01dud002024108327/3E",
+          "horse_name": "ピコジャック",
+          "horse_number": 8,
+          "stake": 100,
+          "hit_prob": "0.250977",
+          "place_prob": "0.250977",
+          "place_prob_market": "0.09836",
+          "win_prob": "0.081136133583111",
+          "win_odds": "8.1",
+          "place_odds_est": "8.1",
+          "place_odds_min": "8.1",
+          "place_odds_max": "14.7",
+          "predicted_odds": "8.1",
+          "ev": "2.032914",
+          "ev_current": "2.032914",
+          "ev_predicted": "2.032914",
+          "fair_odds": "3.984423",
+          "model_score": "29.53",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "confidence": "2.551617",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024108327/3E",
+              "horse_name": "ピコジャック",
+              "horse_number": "8",
+              "win_prob": "0.081136133583111",
+              "place_prob": "0.250977"
+            }
+          ],
+          "ticket_role": "coverage",
+          "coverage_reason": "win_ev_longshot_place_translation",
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "place",
+          "horse_id": "pw01dud002024108326/CB",
+          "horse_name": "ピコキング",
+          "horse_number": 1,
+          "stake": 100,
+          "hit_prob": "0.27299",
+          "place_prob": "0.27299",
+          "place_prob_market": "0.096685",
+          "win_prob": "0.083687932624588",
+          "win_odds": "7",
+          "place_odds_est": "7",
+          "place_odds_min": "7.0",
+          "place_odds_max": "12.6",
+          "predicted_odds": "7",
+          "ev": "1.91093",
+          "ev_current": "1.91093",
+          "ev_predicted": "1.91093",
+          "fair_odds": "3.663139",
+          "model_score": "35.17",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "confidence": "2.823499",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024108326/CB",
+              "horse_name": "ピコキング",
+              "horse_number": "1",
+              "win_prob": "0.083687932624588",
+              "place_prob": "0.27299"
+            }
+          ],
+          "ticket_role": "coverage",
+          "coverage_reason": "win_ev_longshot_place_translation",
+          "selected": true,
+          "selection_reason": "selected_portfolio_reviewer_fix",
+          "non_selection_reason": ""
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "place",
+          "horse_id": "pw01dud002024108325/58",
+          "horse_name": "ジャスパートレノ",
+          "horse_number": 6,
+          "stake": 100,
+          "hit_prob": "0.319542",
+          "place_prob": "0.319542",
+          "place_prob_market": "0.161486",
+          "win_prob": "0.115828529695231",
+          "win_odds": "3.6",
+          "place_odds_est": "3.6",
+          "place_odds_min": "3.6",
+          "place_odds_max": "6.5",
+          "predicted_odds": "3.6",
+          "ev": "1.150351",
+          "ev_current": "1.150351",
+          "ev_predicted": "1.150351",
+          "fair_odds": "3.129475",
+          "model_score": "95.57",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "confidence": "1.97876",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "win_prob": "0.115828529695231",
+              "place_prob": "0.319542"
+            }
+          ],
+          "selected": true,
+          "selection_reason": "selected_portfolio_reviewer_fix",
+          "non_selection_reason": ""
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wakuren",
+          "horse_id": "frame:4|frame:6",
+          "horse_name": "4枠 - 6枠",
+          "horse_number": "4-6",
+          "frame_numbers": [
+            "4",
+            "6"
+          ],
+          "stake": 100,
+          "hit_prob": "0.036451",
+          "win_prob": "0.036451",
+          "combo_prob": "0.036451",
+          "combo_prob_market": "0.009826",
+          "win_odds": "88.2",
+          "wakuren_odds_est": "88.2",
+          "predicted_odds": "88.2",
+          "ev": "3.214998",
+          "ev_current": "3.214998",
+          "ev_predicted": "3.214998",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "confidence": "3.709721",
+          "frame_quality_adjustment": "1",
+          "legs": [
+            {
+              "frame_number": "4",
+              "horses": [
+                {
+                  "horse_id": "pw01dud002024106603/07",
+                  "horse_name": "シスキンブルーム",
+                  "horse_number": "4",
+                  "win_prob": "0.137405786758685"
+                }
+              ]
+            },
+            {
+              "frame_number": "6",
+              "horses": [
+                {
+                  "horse_id": "pw01dud002024108325/58",
+                  "horse_name": "ジャスパートレノ",
+                  "horse_number": "6",
+                  "win_prob": "0.115828529695231"
+                }
+              ]
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "reviewer_fix"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wakuren",
+          "horse_id": "frame:1|frame:8",
+          "horse_name": "1枠 - 8枠",
+          "horse_number": "1-8",
+          "frame_numbers": [
+            "1",
+            "8"
+          ],
+          "stake": 100,
+          "hit_prob": "0.040365",
+          "win_prob": "0.040365",
+          "combo_prob": "0.040365",
+          "combo_prob_market": "0.017478",
+          "win_odds": "62.7",
+          "wakuren_odds_est": "62.7",
+          "predicted_odds": "62.7",
+          "ev": "2.530868",
+          "ev_current": "2.530868",
+          "ev_predicted": "2.530868",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "confidence": "2.309453",
+          "frame_quality_adjustment": "0.914754",
+          "legs": [
+            {
+              "frame_number": "1",
+              "horses": [
+                {
+                  "horse_id": "pw01dud002024108326/CB",
+                  "horse_name": "ピコキング",
+                  "horse_number": "1",
+                  "win_prob": "0.083687932624588"
+                }
+              ]
+            },
+            {
+              "frame_number": "8",
+              "horses": [
+                {
+                  "horse_id": "pw01dud002024108327/3E",
+                  "horse_name": "ピコジャック",
+                  "horse_number": "8",
+                  "win_prob": "0.081136133583111"
+                },
+                {
+                  "horse_id": "pw01dud002024107165/47",
+                  "horse_name": "ジーティーマイカ",
+                  "horse_number": "9",
+                  "win_prob": "0.154131511097185"
+                }
+              ]
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wakuren",
+          "horse_id": "frame:6|frame:7",
+          "horse_name": "6枠 - 7枠",
+          "horse_number": "6-7",
+          "frame_numbers": [
+            "6",
+            "7"
+          ],
+          "stake": 100,
+          "hit_prob": "0.035505",
+          "win_prob": "0.035505",
+          "combo_prob": "0.035505",
+          "combo_prob_market": "0.026807",
+          "win_odds": "61.8",
+          "wakuren_odds_est": "61.8",
+          "predicted_odds": "61.8",
+          "ev": "2.194178",
+          "ev_current": "2.194178",
+          "ev_predicted": "2.194178",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "confidence": "1.324426",
+          "frame_quality_adjustment": "1",
+          "legs": [
+            {
+              "frame_number": "6",
+              "horses": [
+                {
+                  "horse_id": "pw01dud002024108325/58",
+                  "horse_name": "ジャスパートレノ",
+                  "horse_number": "6",
+                  "win_prob": "0.115828529695231"
+                }
+              ]
+            },
+            {
+              "frame_number": "7",
+              "horses": [
+                {
+                  "horse_id": "pw01dud002024106262/30",
+                  "horse_name": "ビスケットサンド",
+                  "horse_number": "7",
+                  "win_prob": "0.134096443846803"
+                }
+              ]
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wakuren",
+          "horse_id": "frame:4|frame:5",
+          "horse_name": "4枠 - 5枠",
+          "horse_number": "4-5",
+          "frame_numbers": [
+            "4",
+            "5"
+          ],
+          "stake": 100,
+          "hit_prob": "0.038039",
+          "win_prob": "0.038039",
+          "combo_prob": "0.038039",
+          "combo_prob_market": "0.020914",
+          "win_odds": "48.8",
+          "wakuren_odds_est": "48.8",
+          "predicted_odds": "48.8",
+          "ev": "1.856287",
+          "ev_current": "1.856287",
+          "ev_predicted": "1.856287",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "confidence": "1.818787",
+          "frame_quality_adjustment": "1",
+          "legs": [
+            {
+              "frame_number": "4",
+              "horses": [
+                {
+                  "horse_id": "pw01dud002024106603/07",
+                  "horse_name": "シスキンブルーム",
+                  "horse_number": "4",
+                  "win_prob": "0.137405786758685"
+                }
+              ]
+            },
+            {
+              "frame_number": "5",
+              "horses": [
+                {
+                  "horse_id": "pw01dud002024101644/0F",
+                  "horse_name": "マルモリムソウ",
+                  "horse_number": "5",
+                  "win_prob": "0.120553000381847"
+                }
+              ]
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wakuren",
+          "horse_id": "frame:6|frame:8",
+          "horse_name": "6枠 - 8枠",
+          "horse_number": "6-8",
+          "frame_numbers": [
+            "6",
+            "8"
+          ],
+          "stake": 100,
+          "hit_prob": "0.056856",
+          "win_prob": "0.056856",
+          "combo_prob": "0.056856",
+          "combo_prob_market": "0.060393",
+          "win_odds": "25.2",
+          "wakuren_odds_est": "25.2",
+          "predicted_odds": "25.2",
+          "ev": "1.432766",
+          "ev_current": "1.432766",
+          "ev_predicted": "1.432766",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "confidence": "0.941438",
+          "frame_quality_adjustment": "0.914754",
+          "legs": [
+            {
+              "frame_number": "6",
+              "horses": [
+                {
+                  "horse_id": "pw01dud002024108325/58",
+                  "horse_name": "ジャスパートレノ",
+                  "horse_number": "6",
+                  "win_prob": "0.115828529695231"
+                }
+              ]
+            },
+            {
+              "frame_number": "8",
+              "horses": [
+                {
+                  "horse_id": "pw01dud002024108327/3E",
+                  "horse_name": "ピコジャック",
+                  "horse_number": "8",
+                  "win_prob": "0.081136133583111"
+                },
+                {
+                  "horse_id": "pw01dud002024107165/47",
+                  "horse_name": "ジーティーマイカ",
+                  "horse_number": "9",
+                  "win_prob": "0.154131511097185"
+                }
+              ]
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wakuren",
+          "horse_id": "frame:5|frame:7",
+          "horse_name": "5枠 - 7枠",
+          "horse_number": "5-7",
+          "frame_numbers": [
+            "5",
+            "7"
+          ],
+          "stake": 100,
+          "hit_prob": "0.037051",
+          "win_prob": "0.037051",
+          "combo_prob": "0.037051",
+          "combo_prob_market": "0.056926",
+          "win_odds": "32.1",
+          "wakuren_odds_est": "32.1",
+          "predicted_odds": "32.1",
+          "ev": "1.189334",
+          "ev_current": "1.189334",
+          "ev_predicted": "1.189334",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "confidence": "0.650863",
+          "frame_quality_adjustment": "1",
+          "legs": [
+            {
+              "frame_number": "5",
+              "horses": [
+                {
+                  "horse_id": "pw01dud002024101644/0F",
+                  "horse_name": "マルモリムソウ",
+                  "horse_number": "5",
+                  "win_prob": "0.120553000381847"
+                }
+              ]
+            },
+            {
+              "frame_number": "7",
+              "horses": [
+                {
+                  "horse_id": "pw01dud002024106262/30",
+                  "horse_name": "ビスケットサンド",
+                  "horse_number": "7",
+                  "win_prob": "0.134096443846803"
+                }
+              ]
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wakuren",
+          "horse_id": "frame:5|frame:8",
+          "horse_name": "5枠 - 8枠",
+          "horse_number": "5-8",
+          "frame_numbers": [
+            "5",
+            "8"
+          ],
+          "stake": 100,
+          "hit_prob": "0.059333",
+          "win_prob": "0.059333",
+          "combo_prob": "0.059333",
+          "combo_prob_market": "0.127756",
+          "win_odds": "17.6",
+          "wakuren_odds_est": "17.6",
+          "predicted_odds": "17.6",
+          "ev": "1.044252",
+          "ev_current": "1.044252",
+          "ev_predicted": "1.044252",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "confidence": "0.464422",
+          "frame_quality_adjustment": "0.914754",
+          "legs": [
+            {
+              "frame_number": "5",
+              "horses": [
+                {
+                  "horse_id": "pw01dud002024101644/0F",
+                  "horse_name": "マルモリムソウ",
+                  "horse_number": "5",
+                  "win_prob": "0.120553000381847"
+                }
+              ]
+            },
+            {
+              "frame_number": "8",
+              "horses": [
+                {
+                  "horse_id": "pw01dud002024108327/3E",
+                  "horse_name": "ピコジャック",
+                  "horse_number": "8",
+                  "win_prob": "0.081136133583111"
+                },
+                {
+                  "horse_id": "pw01dud002024107165/47",
+                  "horse_name": "ジーティーマイカ",
+                  "horse_number": "9",
+                  "win_prob": "0.154131511097185"
+                }
+              ]
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "below_minimum_ev"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "win",
+          "horse_id": "pw01dud002024108326/CB",
+          "horse_name": "ピコキング",
+          "horse_number": 1,
+          "stake": 100,
+          "win_prob": "0.083688",
+          "win_odds": "75.8",
+          "ev": "6.343545",
+          "ev_current": "6.343545",
+          "ev_predicted": "",
+          "fair_odds": "11.94915406126539",
+          "model_score": "35.17",
+          "consistency": "",
+          "history_count": "1",
+          "probability_band": "outsider",
+          "market_shrink_used": "",
+          "predicted_odds": "75.8",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "reviewer_fix"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "win",
+          "horse_id": "pw01dud002024108327/3E",
+          "horse_name": "ピコジャック",
+          "horse_number": 8,
+          "stake": 100,
+          "win_prob": "0.081136",
+          "win_odds": "65.7",
+          "ev": "5.330644",
+          "ev_current": "5.330644",
+          "ev_predicted": "",
+          "fair_odds": "12.324964918073892",
+          "model_score": "29.53",
+          "consistency": "",
+          "history_count": "1",
+          "probability_band": "contender",
+          "market_shrink_used": "",
+          "predicted_odds": "65.7",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "win",
+          "horse_id": "pw01dud002024108325/58",
+          "horse_name": "ジャスパートレノ",
+          "horse_number": 6,
+          "stake": 100,
+          "win_prob": "0.115829",
+          "win_odds": "22.2",
+          "ev": "2.571393",
+          "ev_current": "2.571393",
+          "ev_predicted": "",
+          "fair_odds": "8.633451556634695",
+          "model_score": "95.57",
+          "consistency": "",
+          "history_count": "1",
+          "probability_band": "contender",
+          "market_shrink_used": "",
+          "predicted_odds": "22.2",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "win",
+          "horse_id": "pw01dud002024106603/07",
+          "horse_name": "シスキンブルーム",
+          "horse_number": 4,
+          "stake": 100,
+          "win_prob": "0.137406",
+          "win_odds": "9.9",
+          "ev": "1.360317",
+          "ev_current": "1.360317",
+          "ev_predicted": "",
+          "fair_odds": "7.277713869185302",
+          "model_score": "80.33",
+          "consistency": "",
+          "history_count": "2",
+          "probability_band": "contender",
+          "market_shrink_used": "",
+          "predicted_odds": "9.9",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "win",
+          "horse_id": "pw01dud002024101644/0F",
+          "horse_name": "マルモリムソウ",
+          "horse_number": 5,
+          "stake": 100,
+          "win_prob": "0.120553",
+          "win_odds": "10.7",
+          "ev": "1.289917",
+          "ev_current": "1.289917",
+          "ev_predicted": "",
+          "fair_odds": "8.295106690273476",
+          "model_score": "99.07",
+          "consistency": "",
+          "history_count": "1",
+          "probability_band": "contender",
+          "market_shrink_used": "",
+          "predicted_odds": "10.7",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "umaren",
+          "horse_id": "pw01dud002024106603/07|pw01dud002024108325/58",
+          "horse_name": "シスキンブルーム - ジャスパートレノ",
+          "horse_number": "4 - 6",
+          "horse_ids": [
+            "pw01dud002024106603/07",
+            "pw01dud002024108325/58"
+          ],
+          "horse_names": [
+            "シスキンブルーム",
+            "ジャスパートレノ"
+          ],
+          "horse_numbers": [
+            "4",
+            "6"
+          ],
+          "stake": 100,
+          "hit_prob": "0.036451",
+          "win_prob": "0.036451",
+          "combo_prob": "0.036451",
+          "combo_prob_market": "0.009826",
+          "win_odds": "90.1",
+          "umaren_odds_est": "90.1",
+          "predicted_odds": "90.1",
+          "ev": "3.284256",
+          "ev_current": "3.284256",
+          "ev_predicted": "3.284256",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "value",
+          "coverage_reason": "",
+          "confidence": "3.709721",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024106603/07",
+              "horse_name": "シスキンブルーム",
+              "horse_number": "4",
+              "win_prob": "0.137405786758685",
+              "place_prob": "0.386551"
+            },
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "win_prob": "0.115828529695231",
+              "place_prob": "0.319542"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "reviewer_fix"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "umaren",
+          "horse_id": "pw01dud002024106262/30|pw01dud002024108325/58",
+          "horse_name": "ビスケットサンド - ジャスパートレノ",
+          "horse_number": "7 - 6",
+          "horse_ids": [
+            "pw01dud002024106262/30",
+            "pw01dud002024108325/58"
+          ],
+          "horse_names": [
+            "ビスケットサンド",
+            "ジャスパートレノ"
+          ],
+          "horse_numbers": [
+            "7",
+            "6"
+          ],
+          "stake": 100,
+          "hit_prob": "0.035505",
+          "win_prob": "0.035505",
+          "combo_prob": "0.035505",
+          "combo_prob_market": "0.026807",
+          "win_odds": "53.1",
+          "umaren_odds_est": "53.1",
+          "predicted_odds": "53.1",
+          "ev": "1.885289",
+          "ev_current": "1.885289",
+          "ev_predicted": "1.885289",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "value",
+          "coverage_reason": "",
+          "confidence": "1.324426",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024106262/30",
+              "horse_name": "ビスケットサンド",
+              "horse_number": "7",
+              "win_prob": "0.134096443846803",
+              "place_prob": "0.371173"
+            },
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "win_prob": "0.115828529695231",
+              "place_prob": "0.319542"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "umaren",
+          "horse_id": "pw01dud002024106603/07|pw01dud002024101644/0F",
+          "horse_name": "シスキンブルーム - マルモリムソウ",
+          "horse_number": "4 - 5",
+          "horse_ids": [
+            "pw01dud002024106603/07",
+            "pw01dud002024101644/0F"
+          ],
+          "horse_names": [
+            "シスキンブルーム",
+            "マルモリムソウ"
+          ],
+          "horse_numbers": [
+            "4",
+            "5"
+          ],
+          "stake": 100,
+          "hit_prob": "0.038039",
+          "win_prob": "0.038039",
+          "combo_prob": "0.038039",
+          "combo_prob_market": "0.020914",
+          "win_odds": "45.1",
+          "umaren_odds_est": "45.1",
+          "predicted_odds": "45.1",
+          "ev": "1.715544",
+          "ev_current": "1.715544",
+          "ev_predicted": "1.715544",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "value",
+          "coverage_reason": "",
+          "confidence": "1.818787",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024106603/07",
+              "horse_name": "シスキンブルーム",
+              "horse_number": "4",
+              "win_prob": "0.137405786758685",
+              "place_prob": "0.386551"
+            },
+            {
+              "horse_id": "pw01dud002024101644/0F",
+              "horse_name": "マルモリムソウ",
+              "horse_number": "5",
+              "win_prob": "0.120553000381847",
+              "place_prob": "0.339262"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "bet_type_limit"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "umaren",
+          "horse_id": "pw01dud002024107165/47|pw01dud002024108325/58",
+          "horse_name": "ジーティーマイカ - ジャスパートレノ",
+          "horse_number": "9 - 6",
+          "horse_ids": [
+            "pw01dud002024107165/47",
+            "pw01dud002024108325/58"
+          ],
+          "horse_names": [
+            "ジーティーマイカ",
+            "ジャスパートレノ"
+          ],
+          "horse_numbers": [
+            "9",
+            "6"
+          ],
+          "stake": 100,
+          "hit_prob": "0.041298",
+          "win_prob": "0.041298",
+          "combo_prob": "0.041298",
+          "combo_prob_market": "0.058978",
+          "win_odds": "30.4",
+          "umaren_odds_est": "30.4",
+          "predicted_odds": "30.4",
+          "ev": "1.255444",
+          "ev_current": "1.255444",
+          "ev_predicted": "1.255444",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "value",
+          "coverage_reason": "",
+          "confidence": "0.700214",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024107165/47",
+              "horse_name": "ジーティーマイカ",
+              "horse_number": "9",
+              "win_prob": "0.154131511097185",
+              "place_prob": "0.45032"
+            },
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "win_prob": "0.115828529695231",
+              "place_prob": "0.319542"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "bet_type_limit"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "umatan",
+          "horse_id": "pw01dud002024108325/58|pw01dud002024106603/07",
+          "horse_name": "ジャスパートレノ → シスキンブルーム",
+          "horse_number": "6 → 4",
+          "horse_ids": [
+            "pw01dud002024108325/58",
+            "pw01dud002024106603/07"
+          ],
+          "horse_names": [
+            "ジャスパートレノ",
+            "シスキンブルーム"
+          ],
+          "horse_numbers": [
+            "6",
+            "4"
+          ],
+          "stake": 100,
+          "hit_prob": "0.018",
+          "win_prob": "0.018",
+          "combo_prob": "0.018",
+          "combo_prob_market": "0.004765",
+          "win_odds": "228.3",
+          "umatan_odds_est": "228.3",
+          "predicted_odds": "228.3",
+          "ev": "4.109509",
+          "ev_current": "4.109509",
+          "ev_predicted": "4.109509",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "value",
+          "coverage_reason": "",
+          "confidence": "3.777941",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "win_prob": "0.115828529695231",
+              "place_prob": "0.319542"
+            },
+            {
+              "horse_id": "pw01dud002024106603/07",
+              "horse_name": "シスキンブルーム",
+              "horse_number": "4",
+              "win_prob": "0.137405786758685",
+              "place_prob": "0.386551"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "umatan",
+          "horse_id": "pw01dud002024106603/07|pw01dud002024108325/58",
+          "horse_name": "シスキンブルーム → ジャスパートレノ",
+          "horse_number": "4 → 6",
+          "horse_ids": [
+            "pw01dud002024106603/07",
+            "pw01dud002024108325/58"
+          ],
+          "horse_names": [
+            "シスキンブルーム",
+            "ジャスパートレノ"
+          ],
+          "horse_numbers": [
+            "4",
+            "6"
+          ],
+          "stake": 100,
+          "hit_prob": "0.018451",
+          "win_prob": "0.018451",
+          "combo_prob": "0.018451",
+          "combo_prob_market": "0.005061",
+          "win_odds": "168.8",
+          "umatan_odds_est": "168.8",
+          "predicted_odds": "168.8",
+          "ev": "3.114487",
+          "ev_current": "3.114487",
+          "ev_predicted": "3.114487",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "value",
+          "coverage_reason": "",
+          "confidence": "3.645499",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024106603/07",
+              "horse_name": "シスキンブルーム",
+              "horse_number": "4",
+              "win_prob": "0.137405786758685",
+              "place_prob": "0.386551"
+            },
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "win_prob": "0.115828529695231",
+              "place_prob": "0.319542"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "umatan",
+          "horse_id": "pw01dud002024108325/58|pw01dud002024107165/47",
+          "horse_name": "ジャスパートレノ → ジーティーマイカ",
+          "horse_number": "6 → 9",
+          "horse_ids": [
+            "pw01dud002024108325/58",
+            "pw01dud002024107165/47"
+          ],
+          "horse_names": [
+            "ジャスパートレノ",
+            "ジーティーマイカ"
+          ],
+          "horse_numbers": [
+            "6",
+            "9"
+          ],
+          "stake": 100,
+          "hit_prob": "0.020192",
+          "win_prob": "0.020192",
+          "combo_prob": "0.020192",
+          "combo_prob_market": "0.021441",
+          "win_odds": "99.3",
+          "umatan_odds_est": "99.3",
+          "predicted_odds": "99.3",
+          "ev": "2.005025",
+          "ev_current": "2.005025",
+          "ev_predicted": "2.005025",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "value",
+          "coverage_reason": "",
+          "confidence": "0.941736",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "win_prob": "0.115828529695231",
+              "place_prob": "0.319542"
+            },
+            {
+              "horse_id": "pw01dud002024107165/47",
+              "horse_name": "ジーティーマイカ",
+              "horse_number": "9",
+              "win_prob": "0.154131511097185",
+              "place_prob": "0.45032"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "bet_type_limit"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "umatan",
+          "horse_id": "pw01dud002024101644/0F|pw01dud002024106603/07",
+          "horse_name": "マルモリムソウ → シスキンブルーム",
+          "horse_number": "5 → 4",
+          "horse_ids": [
+            "pw01dud002024101644/0F",
+            "pw01dud002024106603/07"
+          ],
+          "horse_names": [
+            "マルモリムソウ",
+            "シスキンブルーム"
+          ],
+          "horse_numbers": [
+            "5",
+            "4"
+          ],
+          "stake": 100,
+          "hit_prob": "0.018835",
+          "win_prob": "0.018835",
+          "combo_prob": "0.018835",
+          "combo_prob_market": "0.010413",
+          "win_odds": "99.4",
+          "umatan_odds_est": "99.4",
+          "predicted_odds": "99.4",
+          "ev": "1.872232",
+          "ev_current": "1.872232",
+          "ev_predicted": "1.872232",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "value",
+          "coverage_reason": "",
+          "confidence": "1.808757",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024101644/0F",
+              "horse_name": "マルモリムソウ",
+              "horse_number": "5",
+              "win_prob": "0.120553000381847",
+              "place_prob": "0.339262"
+            },
+            {
+              "horse_id": "pw01dud002024106603/07",
+              "horse_name": "シスキンブルーム",
+              "horse_number": "4",
+              "win_prob": "0.137405786758685",
+              "place_prob": "0.386551"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "bet_type_limit"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "umatan",
+          "horse_id": "pw01dud002024106603/07|pw01dud002024101644/0F",
+          "horse_name": "シスキンブルーム → マルモリムソウ",
+          "horse_number": "4 → 5",
+          "horse_ids": [
+            "pw01dud002024106603/07",
+            "pw01dud002024101644/0F"
+          ],
+          "horse_names": [
+            "シスキンブルーム",
+            "マルモリムソウ"
+          ],
+          "horse_numbers": [
+            "4",
+            "5"
+          ],
+          "stake": 100,
+          "hit_prob": "0.019203",
+          "win_prob": "0.019203",
+          "combo_prob": "0.019203",
+          "combo_prob_market": "0.010501",
+          "win_odds": "92.1",
+          "umatan_odds_est": "92.1",
+          "predicted_odds": "92.1",
+          "ev": "1.768627",
+          "ev_current": "1.768627",
+          "ev_predicted": "1.768627",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "value",
+          "coverage_reason": "",
+          "confidence": "1.828733",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024106603/07",
+              "horse_name": "シスキンブルーム",
+              "horse_number": "4",
+              "win_prob": "0.137405786758685",
+              "place_prob": "0.386551"
+            },
+            {
+              "horse_id": "pw01dud002024101644/0F",
+              "horse_name": "マルモリムソウ",
+              "horse_number": "5",
+              "win_prob": "0.120553000381847",
+              "place_prob": "0.339262"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "bet_type_limit"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "umatan",
+          "horse_id": "pw01dud002024101644/0F|pw01dud002024106262/30",
+          "horse_name": "マルモリムソウ → ビスケットサンド",
+          "horse_number": "5 → 7",
+          "horse_ids": [
+            "pw01dud002024101644/0F",
+            "pw01dud002024106262/30"
+          ],
+          "horse_names": [
+            "マルモリムソウ",
+            "ビスケットサンド"
+          ],
+          "horse_numbers": [
+            "5",
+            "7"
+          ],
+          "stake": 100,
+          "hit_prob": "0.018382",
+          "win_prob": "0.018382",
+          "combo_prob": "0.018382",
+          "combo_prob_market": "0.025773",
+          "win_odds": "74",
+          "umatan_odds_est": "74",
+          "predicted_odds": "74",
+          "ev": "1.360246",
+          "ev_current": "1.360246",
+          "ev_predicted": "1.360246",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "value",
+          "coverage_reason": "",
+          "confidence": "0.71321",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024101644/0F",
+              "horse_name": "マルモリムソウ",
+              "horse_number": "5",
+              "win_prob": "0.120553000381847",
+              "place_prob": "0.339262"
+            },
+            {
+              "horse_id": "pw01dud002024106262/30",
+              "horse_name": "ビスケットサンド",
+              "horse_number": "7",
+              "win_prob": "0.134096443846803",
+              "place_prob": "0.371173"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "bet_type_limit"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "sanrenpuku",
+          "horse_id": "pw01dud002024106603/07|pw01dud002024101644/0F|pw01dud002024108325/58",
+          "horse_name": "シスキンブルーム - マルモリムソウ - ジャスパートレノ",
+          "horse_number": "4 - 5 - 6",
+          "horse_ids": [
+            "pw01dud002024106603/07",
+            "pw01dud002024101644/0F",
+            "pw01dud002024108325/58"
+          ],
+          "horse_names": [
+            "シスキンブルーム",
+            "マルモリムソウ",
+            "ジャスパートレノ"
+          ],
+          "horse_numbers": [
+            "4",
+            "5",
+            "6"
+          ],
+          "stake": 100,
+          "hit_prob": "0.017521",
+          "win_prob": "0.017521",
+          "combo_prob": "0.017521",
+          "combo_prob_market": "0.003306",
+          "win_odds": "197.9",
+          "trio_odds_est": "197.9",
+          "predicted_odds": "197.9",
+          "ev": "3.467374",
+          "ev_current": "3.467374",
+          "ev_predicted": "3.467374",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "marked_top5_trio_real_odds",
+          "confidence": "5.299299",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024106603/07",
+              "horse_name": "シスキンブルーム",
+              "horse_number": "4",
+              "win_prob": "0.137405786758685",
+              "place_prob": "0.386551"
+            },
+            {
+              "horse_id": "pw01dud002024101644/0F",
+              "horse_name": "マルモリムソウ",
+              "horse_number": "5",
+              "win_prob": "0.120553000381847",
+              "place_prob": "0.339262"
+            },
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "win_prob": "0.115828529695231",
+              "place_prob": "0.319542"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "sanrenpuku",
+          "horse_id": "pw01dud002024106262/30|pw01dud002024101644/0F|pw01dud002024108325/58",
+          "horse_name": "ビスケットサンド - マルモリムソウ - ジャスパートレノ",
+          "horse_number": "7 - 5 - 6",
+          "horse_ids": [
+            "pw01dud002024106262/30",
+            "pw01dud002024101644/0F",
+            "pw01dud002024108325/58"
+          ],
+          "horse_names": [
+            "ビスケットサンド",
+            "マルモリムソウ",
+            "ジャスパートレノ"
+          ],
+          "horse_numbers": [
+            "7",
+            "5",
+            "6"
+          ],
+          "stake": 100,
+          "hit_prob": "0.017026",
+          "win_prob": "0.017026",
+          "combo_prob": "0.017026",
+          "combo_prob_market": "0.010086",
+          "win_odds": "133.6",
+          "trio_odds_est": "133.6",
+          "predicted_odds": "133.6",
+          "ev": "2.274621",
+          "ev_current": "2.274621",
+          "ev_predicted": "2.274621",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "marked_top5_trio_real_odds",
+          "confidence": "1.687962",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024106262/30",
+              "horse_name": "ビスケットサンド",
+              "horse_number": "7",
+              "win_prob": "0.134096443846803",
+              "place_prob": "0.371173"
+            },
+            {
+              "horse_id": "pw01dud002024101644/0F",
+              "horse_name": "マルモリムソウ",
+              "horse_number": "5",
+              "win_prob": "0.120553000381847",
+              "place_prob": "0.339262"
+            },
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "win_prob": "0.115828529695231",
+              "place_prob": "0.319542"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "sanrenpuku",
+          "horse_id": "pw01dud002024106603/07|pw01dud002024106262/30|pw01dud002024108325/58",
+          "horse_name": "シスキンブルーム - ビスケットサンド - ジャスパートレノ",
+          "horse_number": "4 - 7 - 6",
+          "horse_ids": [
+            "pw01dud002024106603/07",
+            "pw01dud002024106262/30",
+            "pw01dud002024108325/58"
+          ],
+          "horse_names": [
+            "シスキンブルーム",
+            "ビスケットサンド",
+            "ジャスパートレノ"
+          ],
+          "horse_numbers": [
+            "4",
+            "7",
+            "6"
+          ],
+          "stake": 100,
+          "hit_prob": "0.019829",
+          "win_prob": "0.019829",
+          "combo_prob": "0.019829",
+          "combo_prob_market": "0.011004",
+          "win_odds": "87.9",
+          "trio_odds_est": "87.9",
+          "predicted_odds": "87.9",
+          "ev": "1.742983",
+          "ev_current": "1.742983",
+          "ev_predicted": "1.742983",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "marked_top5_trio_real_odds",
+          "confidence": "1.801934",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024106603/07",
+              "horse_name": "シスキンブルーム",
+              "horse_number": "4",
+              "win_prob": "0.137405786758685",
+              "place_prob": "0.386551"
+            },
+            {
+              "horse_id": "pw01dud002024106262/30",
+              "horse_name": "ビスケットサンド",
+              "horse_number": "7",
+              "win_prob": "0.134096443846803",
+              "place_prob": "0.371173"
+            },
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "win_prob": "0.115828529695231",
+              "place_prob": "0.319542"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "sanrenpuku",
+          "horse_id": "pw01dud002024107165/47|pw01dud002024101644/0F|pw01dud002024108325/58",
+          "horse_name": "ジーティーマイカ - マルモリムソウ - ジャスパートレノ",
+          "horse_number": "9 - 5 - 6",
+          "horse_ids": [
+            "pw01dud002024107165/47",
+            "pw01dud002024101644/0F",
+            "pw01dud002024108325/58"
+          ],
+          "horse_names": [
+            "ジーティーマイカ",
+            "マルモリムソウ",
+            "ジャスパートレノ"
+          ],
+          "horse_numbers": [
+            "9",
+            "5",
+            "6"
+          ],
+          "stake": 100,
+          "hit_prob": "0.020094",
+          "win_prob": "0.020094",
+          "combo_prob": "0.020094",
+          "combo_prob_market": "0.028223",
+          "win_odds": "82.8",
+          "trio_odds_est": "82.8",
+          "predicted_odds": "82.8",
+          "ev": "1.663781",
+          "ev_current": "1.663781",
+          "ev_predicted": "1.663781",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "marked_top5_trio_real_odds",
+          "confidence": "0.71198",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024107165/47",
+              "horse_name": "ジーティーマイカ",
+              "horse_number": "9",
+              "win_prob": "0.154131511097185",
+              "place_prob": "0.45032"
+            },
+            {
+              "horse_id": "pw01dud002024101644/0F",
+              "horse_name": "マルモリムソウ",
+              "horse_number": "5",
+              "win_prob": "0.120553000381847",
+              "place_prob": "0.339262"
+            },
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "win_prob": "0.115828529695231",
+              "place_prob": "0.319542"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "sanrenpuku",
+          "horse_id": "pw01dud002024107165/47|pw01dud002024106603/07|pw01dud002024108325/58",
+          "horse_name": "ジーティーマイカ - シスキンブルーム - ジャスパートレノ",
+          "horse_number": "9 - 4 - 6",
+          "horse_ids": [
+            "pw01dud002024107165/47",
+            "pw01dud002024106603/07",
+            "pw01dud002024108325/58"
+          ],
+          "horse_names": [
+            "ジーティーマイカ",
+            "シスキンブルーム",
+            "ジャスパートレノ"
+          ],
+          "horse_numbers": [
+            "9",
+            "4",
+            "6"
+          ],
+          "stake": 100,
+          "hit_prob": "0.023404",
+          "win_prob": "0.023404",
+          "combo_prob": "0.023404",
+          "combo_prob_market": "0.030843",
+          "win_odds": "52.6",
+          "trio_odds_est": "52.6",
+          "predicted_odds": "52.6",
+          "ev": "1.231048",
+          "ev_current": "1.231048",
+          "ev_predicted": "1.231048",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "marked_top5_trio_real_odds",
+          "confidence": "0.758814",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024107165/47",
+              "horse_name": "ジーティーマイカ",
+              "horse_number": "9",
+              "win_prob": "0.154131511097185",
+              "place_prob": "0.45032"
+            },
+            {
+              "horse_id": "pw01dud002024106603/07",
+              "horse_name": "シスキンブルーム",
+              "horse_number": "4",
+              "win_prob": "0.137405786758685",
+              "place_prob": "0.386551"
+            },
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "win_prob": "0.115828529695231",
+              "place_prob": "0.319542"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "sanrenpuku",
+          "horse_id": "pw01dud002024106603/07|pw01dud002024106262/30|pw01dud002024101644/0F",
+          "horse_name": "シスキンブルーム - ビスケットサンド - マルモリムソウ",
+          "horse_number": "4 - 7 - 5",
+          "horse_ids": [
+            "pw01dud002024106603/07",
+            "pw01dud002024106262/30",
+            "pw01dud002024101644/0F"
+          ],
+          "horse_names": [
+            "シスキンブルーム",
+            "ビスケットサンド",
+            "マルモリムソウ"
+          ],
+          "horse_numbers": [
+            "4",
+            "7",
+            "5"
+          ],
+          "stake": 100,
+          "hit_prob": "0.020761",
+          "win_prob": "0.020761",
+          "combo_prob": "0.020761",
+          "combo_prob_market": "0.024143",
+          "win_odds": "44.3",
+          "trio_odds_est": "44.3",
+          "predicted_odds": "44.3",
+          "ev": "0.919692",
+          "ev_current": "0.919692",
+          "ev_predicted": "0.919692",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "marked_core_trio_real_odds",
+          "confidence": "0.859908",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024106603/07",
+              "horse_name": "シスキンブルーム",
+              "horse_number": "4",
+              "win_prob": "0.137405786758685",
+              "place_prob": "0.386551"
+            },
+            {
+              "horse_id": "pw01dud002024106262/30",
+              "horse_name": "ビスケットサンド",
+              "horse_number": "7",
+              "win_prob": "0.134096443846803",
+              "place_prob": "0.371173"
+            },
+            {
+              "horse_id": "pw01dud002024101644/0F",
+              "horse_name": "マルモリムソウ",
+              "horse_number": "5",
+              "win_prob": "0.120553000381847",
+              "place_prob": "0.339262"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "sanrenpuku",
+          "horse_id": "pw01dud002024107165/47|pw01dud002024106262/30|pw01dud002024108325/58",
+          "horse_name": "ジーティーマイカ - ビスケットサンド - ジャスパートレノ",
+          "horse_number": "9 - 7 - 6",
+          "horse_ids": [
+            "pw01dud002024107165/47",
+            "pw01dud002024106262/30",
+            "pw01dud002024108325/58"
+          ],
+          "horse_names": [
+            "ジーティーマイカ",
+            "ビスケットサンド",
+            "ジャスパートレノ"
+          ],
+          "horse_numbers": [
+            "9",
+            "7",
+            "6"
+          ],
+          "stake": 100,
+          "hit_prob": "0.022742",
+          "win_prob": "0.022742",
+          "combo_prob": "0.022742",
+          "combo_prob_market": "0.101613",
+          "win_odds": "31.6",
+          "trio_odds_est": "31.6",
+          "predicted_odds": "31.6",
+          "ev": "0.718649",
+          "ev_current": "0.718649",
+          "ev_predicted": "0.718649",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "marked_top5_trio_real_odds",
+          "confidence": "0.223811",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024107165/47",
+              "horse_name": "ジーティーマイカ",
+              "horse_number": "9",
+              "win_prob": "0.154131511097185",
+              "place_prob": "0.45032"
+            },
+            {
+              "horse_id": "pw01dud002024106262/30",
+              "horse_name": "ビスケットサンド",
+              "horse_number": "7",
+              "win_prob": "0.134096443846803",
+              "place_prob": "0.371173"
+            },
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "win_prob": "0.115828529695231",
+              "place_prob": "0.319542"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization"
+        }
+      ],
+      "exotics": [
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "umaren",
+          "horse_id": "pw01dud002024106603/07|pw01dud002024108325/58",
+          "horse_name": "シスキンブルーム - ジャスパートレノ",
+          "horse_number": "4 - 6",
+          "horse_ids": [
+            "pw01dud002024106603/07",
+            "pw01dud002024108325/58"
+          ],
+          "horse_names": [
+            "シスキンブルーム",
+            "ジャスパートレノ"
+          ],
+          "horse_numbers": [
+            "4",
+            "6"
+          ],
+          "stake": 100,
+          "hit_prob": "0.036451",
+          "win_prob": "0.036451",
+          "combo_prob": "0.036451",
+          "combo_prob_market": "0.009826",
+          "win_odds": "90.1",
+          "umaren_odds_est": "90.1",
+          "predicted_odds": "90.1",
+          "ev": "3.284256",
+          "ev_current": "3.284256",
+          "ev_predicted": "3.284256",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "value",
+          "coverage_reason": "",
+          "confidence": "3.709721",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024106603/07",
+              "horse_name": "シスキンブルーム",
+              "horse_number": "4",
+              "win_prob": "0.137405786758685",
+              "place_prob": "0.386551"
+            },
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "win_prob": "0.115828529695231",
+              "place_prob": "0.319542"
+            }
+          ]
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "umatan",
+          "horse_id": "pw01dud002024108325/58|pw01dud002024106603/07",
+          "horse_name": "ジャスパートレノ → シスキンブルーム",
+          "horse_number": "6 → 4",
+          "horse_ids": [
+            "pw01dud002024108325/58",
+            "pw01dud002024106603/07"
+          ],
+          "horse_names": [
+            "ジャスパートレノ",
+            "シスキンブルーム"
+          ],
+          "horse_numbers": [
+            "6",
+            "4"
+          ],
+          "stake": 100,
+          "hit_prob": "0.018",
+          "win_prob": "0.018",
+          "combo_prob": "0.018",
+          "combo_prob_market": "0.004765",
+          "win_odds": "228.3",
+          "umatan_odds_est": "228.3",
+          "predicted_odds": "228.3",
+          "ev": "4.109509",
+          "ev_current": "4.109509",
+          "ev_predicted": "4.109509",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "value",
+          "coverage_reason": "",
+          "confidence": "3.777941",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "win_prob": "0.115828529695231",
+              "place_prob": "0.319542"
+            },
+            {
+              "horse_id": "pw01dud002024106603/07",
+              "horse_name": "シスキンブルーム",
+              "horse_number": "4",
+              "win_prob": "0.137405786758685",
+              "place_prob": "0.386551"
+            }
+          ]
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "sanrenpuku",
+          "horse_id": "pw01dud002024106603/07|pw01dud002024106262/30|pw01dud002024108325/58",
+          "horse_name": "シスキンブルーム - ビスケットサンド - ジャスパートレノ",
+          "horse_number": "4 - 7 - 6",
+          "horse_ids": [
+            "pw01dud002024106603/07",
+            "pw01dud002024106262/30",
+            "pw01dud002024108325/58"
+          ],
+          "horse_names": [
+            "シスキンブルーム",
+            "ビスケットサンド",
+            "ジャスパートレノ"
+          ],
+          "horse_numbers": [
+            "4",
+            "7",
+            "6"
+          ],
+          "stake": 100,
+          "hit_prob": "0.019829",
+          "win_prob": "0.019829",
+          "combo_prob": "0.019829",
+          "combo_prob_market": "0.011004",
+          "win_odds": "87.9",
+          "trio_odds_est": "87.9",
+          "predicted_odds": "87.9",
+          "ev": "1.742983",
+          "ev_current": "1.742983",
+          "ev_predicted": "1.742983",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "value",
+          "coverage_reason": "",
+          "confidence": "1.801934",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024106603/07",
+              "horse_name": "シスキンブルーム",
+              "horse_number": "4",
+              "win_prob": "0.137405786758685",
+              "place_prob": "0.386551"
+            },
+            {
+              "horse_id": "pw01dud002024106262/30",
+              "horse_name": "ビスケットサンド",
+              "horse_number": "7",
+              "win_prob": "0.134096443846803",
+              "place_prob": "0.371173"
+            },
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "win_prob": "0.115828529695231",
+              "place_prob": "0.319542"
+            }
+          ]
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "umatan",
+          "horse_id": "pw01dud002024106603/07|pw01dud002024108325/58",
+          "horse_name": "シスキンブルーム → ジャスパートレノ",
+          "horse_number": "4 → 6",
+          "horse_ids": [
+            "pw01dud002024106603/07",
+            "pw01dud002024108325/58"
+          ],
+          "horse_names": [
+            "シスキンブルーム",
+            "ジャスパートレノ"
+          ],
+          "horse_numbers": [
+            "4",
+            "6"
+          ],
+          "stake": 100,
+          "hit_prob": "0.018451",
+          "win_prob": "0.018451",
+          "combo_prob": "0.018451",
+          "combo_prob_market": "0.005061",
+          "win_odds": "168.8",
+          "umatan_odds_est": "168.8",
+          "predicted_odds": "168.8",
+          "ev": "3.114487",
+          "ev_current": "3.114487",
+          "ev_predicted": "3.114487",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "value",
+          "coverage_reason": "",
+          "confidence": "3.645499",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024106603/07",
+              "horse_name": "シスキンブルーム",
+              "horse_number": "4",
+              "win_prob": "0.137405786758685",
+              "place_prob": "0.386551"
+            },
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "win_prob": "0.115828529695231",
+              "place_prob": "0.319542"
+            }
+          ]
+        }
+      ],
+      "tickets": [
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002024108326/CB|pw01dud002024107165/47",
+          "horse_name": "ピコキング - ジーティーマイカ",
+          "horse_number": "1-9",
+          "horse_ids": [
+            "pw01dud002024108326/CB",
+            "pw01dud002024107165/47"
+          ],
+          "horse_names": [
+            "ピコキング",
+            "ジーティーマイカ"
+          ],
+          "horse_numbers": [
+            "1",
+            "9"
+          ],
+          "stake": 100,
+          "hit_prob": "0.1034",
+          "win_prob": "0.179892",
+          "wide_prob": "0.179892",
+          "wide_prob_market": "0.094751",
+          "win_odds": "24.5",
+          "wide_odds_est": "24.5",
+          "wide_odds_min": "24.5",
+          "wide_odds_max": "28.2",
+          "predicted_odds": "24.5",
+          "predicted_wide_odds": "24.5",
+          "ev": "2.533309",
+          "ev_current": "2.533309",
+          "ev_predicted": "4.407348",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "win_ev_longshot_wide_translation",
+          "confidence": "1.898568",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024108326/CB",
+              "horse_name": "ピコキング",
+              "horse_number": "1",
+              "place_prob": "0.27299",
+              "win_prob": "0.083687932624588"
+            },
+            {
+              "horse_id": "pw01dud002024107165/47",
+              "horse_name": "ジーティーマイカ",
+              "horse_number": "9",
+              "place_prob": "0.45032",
+              "win_prob": "0.154131511097185"
+            }
+          ],
+          "selected": false,
+          "selection_reason": "",
+          "non_selection_reason": "portfolio_optimization",
+          "raw_hit_prob": "0.179892",
+          "market_prob": "0.040816",
+          "bet_type_market_shrink": "0.55",
+          "portfolio_total_stake": 700,
+          "portfolio_total_points": 4,
+          "portfolio_ev": "1.550632",
+          "portfolio_expected_return": 1085,
+          "portfolio_expected_profit": 385,
+          "portfolio_no_gami": true,
+          "return_if_hit": 2450,
+          "net_return_if_hit": 1750
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "place",
+          "horse_id": "pw01dud002024108325/58",
+          "horse_name": "ジャスパートレノ",
+          "horse_number": 6,
+          "stake": 300,
+          "hit_prob": "0.300748",
+          "place_prob": "0.319542",
+          "place_prob_market": "0.161486",
+          "win_prob": "0.115828529695231",
+          "win_odds": "3.6",
+          "place_odds_est": "3.6",
+          "place_odds_min": "3.6",
+          "place_odds_max": "6.5",
+          "predicted_odds": "3.6",
+          "ev": "1.082693",
+          "ev_current": "1.082693",
+          "ev_predicted": "1.150351",
+          "fair_odds": "3.129475",
+          "model_score": "95.57",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "confidence": "1.97876",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "win_prob": "0.115828529695231",
+              "place_prob": "0.319542"
+            }
+          ],
+          "raw_hit_prob": "0.319542",
+          "market_prob": "0.277778",
+          "bet_type_market_shrink": "0.45",
+          "portfolio_total_stake": 700,
+          "portfolio_total_points": 4,
+          "portfolio_ev": "1.550632",
+          "portfolio_expected_return": 1085,
+          "portfolio_expected_profit": 385,
+          "portfolio_no_gami": true,
+          "return_if_hit": 1080,
+          "net_return_if_hit": 380
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "wide",
+          "horse_id": "pw01dud002024106603/07|pw01dud002024108325/58",
+          "horse_name": "シスキンブルーム - ジャスパートレノ",
+          "horse_number": "4-6",
+          "horse_ids": [
+            "pw01dud002024106603/07",
+            "pw01dud002024108325/58"
+          ],
+          "horse_names": [
+            "シスキンブルーム",
+            "ジャスパートレノ"
+          ],
+          "horse_numbers": [
+            "4",
+            "6"
+          ],
+          "stake": 100,
+          "hit_prob": "0.110749",
+          "win_prob": "0.18075",
+          "wide_prob": "0.18075",
+          "wide_prob_market": "0.058734",
+          "win_odds": "18.7",
+          "wide_odds_est": "18.7",
+          "wide_odds_min": "18.7",
+          "wide_odds_max": "20.6",
+          "predicted_odds": "18.7",
+          "predicted_wide_odds": "18.7",
+          "ev": "2.071011",
+          "ev_current": "2.071011",
+          "ev_predicted": "3.380023",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "ticket_role": "coverage",
+          "coverage_reason": "marked_top5_pair_real_odds",
+          "confidence": "3.077449",
+          "pace_adjustment": "1",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024106603/07",
+              "horse_name": "シスキンブルーム",
+              "horse_number": "4",
+              "place_prob": "0.386551",
+              "win_prob": "0.137405786758685"
+            },
+            {
+              "horse_id": "pw01dud002024108325/58",
+              "horse_name": "ジャスパートレノ",
+              "horse_number": "6",
+              "place_prob": "0.319542",
+              "win_prob": "0.115828529695231"
+            }
+          ],
+          "raw_hit_prob": "0.18075",
+          "market_prob": "0.053476",
+          "bet_type_market_shrink": "0.55",
+          "portfolio_total_stake": 700,
+          "portfolio_total_points": 4,
+          "portfolio_ev": "1.550632",
+          "portfolio_expected_return": 1085,
+          "portfolio_expected_profit": 385,
+          "portfolio_no_gami": true,
+          "return_if_hit": 1870,
+          "net_return_if_hit": 1170
+        },
+        {
+          "race_id": "20260830_中京_07",
+          "bet_type": "place",
+          "horse_id": "pw01dud002024108326/CB",
+          "horse_name": "ピコキング",
+          "horse_number": 1,
+          "stake": 200,
+          "hit_prob": "0.21443",
+          "place_prob": "0.27299",
+          "place_prob_market": "0.096685",
+          "win_prob": "0.083687932624588",
+          "win_odds": "7",
+          "place_odds_est": "7",
+          "place_odds_min": "7.0",
+          "place_odds_max": "12.6",
+          "predicted_odds": "7",
+          "ev": "1.501012",
+          "ev_current": "1.501012",
+          "ev_predicted": "1.91093",
+          "fair_odds": "3.663139",
+          "model_score": "35.17",
+          "predicted_odds_source": "jra_live",
+          "odds_source": "jra_live",
+          "confidence": "2.823499",
+          "legs": [
+            {
+              "horse_id": "pw01dud002024108326/CB",
+              "horse_name": "ピコキング",
+              "horse_number": "1",
+              "win_prob": "0.083687932624588",
+              "place_prob": "0.27299"
+            }
+          ],
+          "ticket_role": "coverage",
+          "coverage_reason": "win_ev_longshot_place_translation",
+          "raw_hit_prob": "0.27299",
+          "market_prob": "0.142857",
+          "bet_type_market_shrink": "0.45",
+          "portfolio_total_stake": 700,
+          "portfolio_total_points": 4,
+          "portfolio_ev": "1.550632",
+          "portfolio_expected_return": 1085,
+          "portfolio_expected_profit": 385,
+          "portfolio_no_gami": true,
+          "return_if_hit": 1400,
+          "net_return_if_hit": 700
+        }
+      ],
+      "portfolio": {
+        "total_stake": 700,
+        "total_points": 4,
+        "expected_return": 1085,
+        "expected_profit": 385,
+        "portfolio_ev": "1.550632",
+        "no_gami": true
+      },
+      "selection_status": "selected",
+      "selection_reason": "reviewer_fix_applied",
+      "top_win_probability_horse_number": "9",
+      "horse_stake_dependency_ratio": "0.6",
+      "max_horse_stake_dependency_ratio": "0.6",
+      "horse_stake_dependency_scope": "outside_top3_win_probability",
+      "actionable_win_candidate_numbers": [
+        "1",
+        "4",
+        "5",
+        "6",
+        "8"
+      ],
+      "missing_actionable_win_candidate_numbers": []
+    }
+  ],
+  "bet_types_considered": [
+    "win",
+    "place",
+    "wide",
+    "wakuren",
+    "umaren",
+    "umatan",
+    "sanrenpuku",
+    "sanrentan"
+  ],
+  "candidate_counts": {
+    "win": 5,
+    "place": 3,
+    "wide": 19,
+    "wakuren": 7,
+    "umaren": 4,
+    "umatan": 6,
+    "sanrenpuku": 7,
+    "sanrentan": 0
+  },
+  "optimization_mode": "cross_bet_ev_kelly_portfolio",
+  "portfolio_summary": {
+    "total_stake": 700,
+    "total_points": 4,
+    "expected_return": 1085,
+    "expected_profit": 385,
+    "portfolio_ev": "1.550632",
+    "no_gami": true
+  },
+  "primary_bet_type": "wide",
+  "tansho": [],
+  "fukusho": [
+    "ジャスパートレノ",
+    "ピコキング"
+  ],
+  "wide": [
+    "ピコキング - ジーティーマイカ",
+    "シスキンブルーム - ジャスパートレノ"
+  ],
+  "wakuren": [],
+  "umaren": [],
+  "umatan": [
+    "ジャスパートレノ → シスキンブルーム",
+    "シスキンブルーム → ジャスパートレノ",
+    "ジャスパートレノ → ジーティーマイカ"
+  ],
+  "sanrenpuku": [
+    "シスキンブルーム - マルモリムソウ - ジャスパートレノ",
+    "ビスケットサンド - マルモリムソウ - ジャスパートレノ",
+    "シスキンブルーム - ビスケットサンド - ジャスパートレノ"
+  ],
+  "sanrentan": [
+    "ジーティーマイカ → シスキンブルーム → ビスケットサンド"
+  ],
+  "input_candidate_counts": {
+    "win": 9,
+    "place": 9,
+    "wide": 36,
+    "wakuren": 29,
+    "umaren": 36,
+    "umatan": 72,
+    "sanrenpuku": 84,
+    "sanrentan": 504
+  },
+  "validation": {
+    "strict_fix_only_ticket_set": true,
+    "selected_ticket_count": 4,
+    "total_stake_yen": 700,
+    "budget_yen": 1000,
+    "budget_not_exceeded": true,
+    "unused_budget_yen": 300,
+    "all_stakes_100_yen_units": true,
+    "official_odds_checks": [
+      {
+        "bet_type": "wide",
+        "combination": "1-9",
+        "official_odds": 24.5,
+        "used_odds": 24.5,
+        "match": true
+      },
+      {
+        "bet_type": "place",
+        "combination": "6",
+        "official_odds": 3.6,
+        "used_odds": 3.6,
+        "match": true
+      },
+      {
+        "bet_type": "wide",
+        "combination": "4-6",
+        "official_odds": 18.7,
+        "used_odds": 18.7,
+        "match": true
+      },
+      {
+        "bet_type": "place",
+        "combination": "1",
+        "official_odds": 7.0,
+        "used_odds": 7.0,
+        "match": true
+      }
+    ],
+    "all_selected_official_odds_match": true,
+    "all_selected_ev_above_min_ev": true,
+    "portfolio_expected_return_exact": 1085.4423,
+    "portfolio_ev_recalculated": 1.550631857142857,
+    "portfolio_ev_matches_summary": true,
+    "minimum_return_if_hit_yen": 1080,
+    "no_gami_valid": true,
+    "horse_ticket_counts": {
+      "9": 1,
+      "1": 2,
+      "6": 2,
+      "4": 1
+    },
+    "max_horse_ticket_dependency_ratio": 0.5,
+    "horse_ticket_dependency_within_0_50": true,
+    "horse_stakes_yen": {
+      "9": 100,
+      "1": 300,
+      "6": 400,
+      "4": 100
+    },
+    "max_horse_stake_dependency_ratio": 0.5714285714285714,
+    "horse_stake_dependency_within_0_60": true,
+    "top3_win_probability_horse_numbers": [
+      "9",
+      "4",
+      "7"
+    ],
+    "top3_covered_horse_numbers": [
+      "4",
+      "9"
+    ],
+    "top3_coverage_count": 2,
+    "top3_coverage_minimum_2_met": true
+  },
+  "repair": {
+    "source": "experiments/20260830_chukyo_07/06_reviewer.json",
+    "review_status": "NG",
+    "fix_applied_verbatim": "単勝1・枠連4-6・馬連4-6を削除し、複勝6のstakeを400円から300円へ減額。実オッズ付き既存候補のワイド4-6を100円（縮約後hit_prob=0.110749、EV=2.071011）、複勝1を200円（縮約後hit_prob=0.214430、EV=1.501012）で追加する。",
+    "changes_only": [
+      "remove win 1",
+      "remove wakuren 4-6",
+      "remove umaren 4-6",
+      "change place 6 stake 400 to 300",
+      "add wide 4-6 stake 100",
+      "add place 1 stake 200"
+    ]
+  }
+}
