@@ -6,6 +6,7 @@ from itertools import combinations, product
 from strategy.betting import MIN_ACTIONABLE_WIN_EV
 from strategy.live_odds import build_live_odds_lookup, live_odds_value, lookup_live_odds
 from strategy.portfolio import (
+    canonical_ticket_ev,
     portfolio_ev,
     portfolio_expected_return,
     portfolio_no_gami,
@@ -782,21 +783,30 @@ def _ticket_value_integrity_errors(
     for ticket in tickets:
         if str(ticket.get("odds_source", "")) != "jra_live":
             continue
-        if str(ticket.get("ticket_shape", "")) == "formation":
-            continue
         label = f"{ticket.get('bet_type', '')}:{ticket.get('horse_number', '')}"
-        odds = _to_float(ticket.get("win_odds"), -1.0)
-        probability = _to_float(ticket.get("hit_prob"), -1.0)
         ev_current = _to_float(ticket.get("ev_current"), -1.0)
-        if (
-            not all(math.isfinite(value) for value in (odds, probability, ev_current))
-            or odds <= 0
-            or not 0 < probability <= 1
-            or ev_current <= 0
-        ):
-            errors.append(f"{label} missing canonical probability, odds, or EV")
-            continue
-        expected_ev = probability * odds
+        if str(ticket.get("ticket_shape", "")) == "formation":
+            expected_ev = canonical_ticket_ev(ticket)
+            if (
+                not math.isfinite(ev_current)
+                or not math.isfinite(expected_ev)
+                or ev_current <= 0
+                or expected_ev <= 0
+            ):
+                errors.append(f"{label} missing canonical formation points or EV")
+                continue
+        else:
+            odds = _to_float(ticket.get("win_odds"), -1.0)
+            probability = _to_float(ticket.get("hit_prob"), -1.0)
+            if (
+                not all(math.isfinite(value) for value in (odds, probability, ev_current))
+                or odds <= 0
+                or not 0 < probability <= 1
+                or ev_current <= 0
+            ):
+                errors.append(f"{label} missing canonical probability, odds, or EV")
+                continue
+            expected_ev = probability * odds
         tolerance = max(0.00001, abs(expected_ev) * 0.00001)
         if abs(ev_current - expected_ev) > tolerance:
             errors.append(

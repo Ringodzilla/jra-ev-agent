@@ -3,6 +3,7 @@ from __future__ import annotations
 from src.agents.reviewer import ReviewerAgent
 from src.agents.settings import WorkflowSettings
 from strategy.betting import _calibrate_ticket_probabilities
+from strategy.portfolio import canonical_ticket_ev
 
 
 def test_ticket_calibration_uses_current_odds_for_live_wide_ev() -> None:
@@ -85,3 +86,34 @@ def test_reviewer_rejects_non_finite_or_missing_canonical_live_values() -> None:
     assert result["status"] == "NG"
     assert result["value_integrity"]["status"] == "NG"
     assert "missing canonical probability, odds, or EV" in result["reason"]
+
+
+def test_reviewer_recomputes_official_live_formation_ev_from_points() -> None:
+    ticket = {
+        "race_id": "R",
+        "bet_type": "sanrentan",
+        "ticket_shape": "formation",
+        "horse_number": "1 → 2,3 → 2,3",
+        "odds_source": "jra_live",
+        "point_count": 2,
+        "points": [
+            {"hit_prob": "0.02", "odds": "40", "odds_source": "jra_live"},
+            {"hit_prob": "0.01", "odds": "80", "odds_source": "jra_live"},
+        ],
+        "ev": "1.2",
+        "ev_current": "1.2",
+        "stake": 200,
+    }
+    assert canonical_ticket_ev(ticket) == 0.8
+
+    result = ReviewerAgent(WorkflowSettings(max_horse_ticket_dependency_ratio=1.0)).run(
+        {"quality_report": {}, "entries": []},
+        [],
+        [],
+        {"tickets": [ticket]},
+        attempt=0,
+    )
+
+    assert result["status"] == "NG"
+    assert result["value_integrity"]["status"] == "NG"
+    assert "hit_prob*odds=0.8" in result["reason"]

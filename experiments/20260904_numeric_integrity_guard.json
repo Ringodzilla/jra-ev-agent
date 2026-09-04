@@ -5,6 +5,7 @@
   "user_authorization": "Prevent replacing original numbers with different numbers to make results look better.",
   "controls": [
     "JRA-live ticket ev_current is recomputed from canonical hit_prob and current odds.",
+    "JRA-live formation EV is recomputed from every point's hit probability and current odds.",
     "Reviewer fails closed on missing, non-finite, or inconsistent probability, odds, EV, and portfolio summary values.",
     "Portfolio expected return uses canonical JRA-live arithmetic instead of reported EV fields.",
     "Evaluation input, result labels, baseline, evaluator, leakage guard, integrity guard, experiment runner, constitution, and parameters are SHA-256 pinned.",
@@ -27,7 +28,7 @@
     "current_snapshot_sha256": "f11764d2ba154a0677bb301a70c897eea8915505bf5402e321eecbd5c12115ab"
   },
   "verification": {
-    "full_test_suite": "261 passed",
+    "full_test_suite": "166 passed (committed tree)",
     "leakage_check": "passed",
     "integrity_manifest_verification": "passed",
     "shell_syntax_check": "passed"
