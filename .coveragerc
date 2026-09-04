@@ -1,0 +1,13 @@
+[run]
+source =
+    analysis
+    jra_scraper
+    report
+    src
+    strategy
+
+[report]
+fail_under = 100
+precision = 2
+show_missing = True
+skip_covered = True
