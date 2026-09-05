@@ -20,7 +20,6 @@ from strategy.portfolio import (
     portfolio_total_points as _portfolio_total_points,
     portfolio_total_stake as _portfolio_total_stake,
     ticket_max_return_if_hit as _ticket_max_return_if_hit,
-    ticket_point_count as _ticket_point_count,
     ticket_return_if_hit as _ticket_return_if_hit,
     ticket_stake_unit as _ticket_stake_unit,
     with_adjusted_stake as _with_adjusted_stake,

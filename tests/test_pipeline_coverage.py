@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import csv
 from pathlib import Path
-from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
 from jra_scraper.config import ScrapeConfig

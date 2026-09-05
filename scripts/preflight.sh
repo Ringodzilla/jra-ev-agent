@@ -50,8 +50,8 @@ echo "== Staged Diff Summary =="
 git diff --cached --stat
 echo
 
-echo "== Feature Leakage Check =="
-"$PYTHON_BIN" scripts/check_feature_leakage.py
+echo "== Automated Quality Checks =="
+PYTHON_BIN="$PYTHON_BIN" scripts/check_quality.sh
 echo
 
 echo "== Unit Tests and Coverage =="

@@ -1,0 +1,15 @@
+[tool.ruff]
+target-version = "py311"
+extend-exclude = [
+    "data",
+    "experiments",
+    "report/races",
+    "report/stages",
+    "reports",
+    "tasks",
+]
+
+[tool.ruff.lint]
+# Start with correctness errors that the existing codebase can satisfy without a
+# repository-wide formatting rewrite. Expand this set as existing findings are fixed.
+select = ["F"]

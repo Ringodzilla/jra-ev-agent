@@ -111,6 +111,17 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+## Development quality gates
+
+本プロジェクトでは、機械判定できる開発ルールをプロンプトやレビュー担当者の注意力に依存させません。共通の高速チェックと、全テストを含むpreflightを次のコマンドで実行します。
+
+```bash
+scripts/check_quality.sh
+scripts/preflight.sh
+```
+
+ローカルのpre-commit / pre-push hookは `scripts/install_git_hooks.sh` で導入できます。ルールの配置基準、レビューの役割分担、例外方針は [`docs/engineering_quality.md`](docs/engineering_quality.md) を参照してください。
+
 ## One-command analysis pipeline
 
 ```bash
