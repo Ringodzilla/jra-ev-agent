@@ -53,6 +53,18 @@ class BetBuilderAgent:
             max_exotic_tickets_per_race=self.settings.max_exotic_tickets_per_race,
             min_portfolio_ev=self.settings.min_portfolio_ev,
             min_coverage_ev=self.settings.min_coverage_ev,
+            rank_coverage_enabled=self.settings.rank_coverage_enabled,
+            rank_coverage_budget_yen=self.settings.rank_coverage_budget_yen,
+            min_rank_coverage_ev=self.settings.min_rank_coverage_ev,
+            min_rank_coverage_top3_probability=(
+                self.settings.min_rank_coverage_top3_probability
+            ),
+            min_rank_coverage_leader_probability=(
+                self.settings.min_rank_coverage_leader_probability
+            ),
+            min_rank_coverage_third_vs_fourth_ratio=(
+                self.settings.min_rank_coverage_third_vs_fourth_ratio
+            ),
             prefer_wide=self.settings.prefer_wide,
             max_horse_stake_dependency_ratio=self.settings.max_horse_stake_dependency_ratio,
         )

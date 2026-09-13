@@ -4,7 +4,7 @@ from collections import defaultdict
 from itertools import combinations, permutations
 import math
 
-from analysis.candidate_ev import canonical_combination
+from analysis.candidate_ev import PROBABILITY_SUM_TOLERANCE, canonical_combination
 from strategy.live_odds import (
     build_live_odds_lookup as _build_live_odds_lookup,
     live_odds_value as _live_odds_value,
@@ -65,6 +65,12 @@ def generate_tickets(
     prefer_wide: bool = False,
     min_portfolio_ev: float = 1.0,
     min_coverage_ev: float = 0.75,
+    rank_coverage_enabled: bool = True,
+    rank_coverage_budget_yen: int = 300,
+    min_rank_coverage_ev: float = 0.90,
+    min_rank_coverage_top3_probability: float = 0.55,
+    min_rank_coverage_leader_probability: float = 0.25,
+    min_rank_coverage_third_vs_fourth_ratio: float = 1.10,
     max_horse_stake_dependency_ratio: float = 0.60,
 ) -> dict[str, object]:
     if candidate_evaluations is not None:
@@ -90,6 +96,14 @@ def generate_tickets(
             kelly_fraction=kelly_fraction,
             prefer_wide=prefer_wide,
             min_portfolio_ev=min_portfolio_ev,
+            rank_coverage_enabled=rank_coverage_enabled,
+            rank_coverage_budget_yen=rank_coverage_budget_yen,
+            min_rank_coverage_ev=min_rank_coverage_ev,
+            min_rank_coverage_top3_probability=min_rank_coverage_top3_probability,
+            min_rank_coverage_leader_probability=min_rank_coverage_leader_probability,
+            min_rank_coverage_third_vs_fourth_ratio=(
+                min_rank_coverage_third_vs_fourth_ratio
+            ),
             max_horse_stake_dependency_ratio=max_horse_stake_dependency_ratio,
             seconds_to_post=1800.0 if seconds_to_post is None else seconds_to_post,
         )
@@ -461,6 +475,12 @@ def _generate_tickets_from_candidate_evaluations(
     kelly_fraction: float,
     prefer_wide: bool,
     min_portfolio_ev: float,
+    rank_coverage_enabled: bool,
+    rank_coverage_budget_yen: int,
+    min_rank_coverage_ev: float,
+    min_rank_coverage_top3_probability: float,
+    min_rank_coverage_leader_probability: float,
+    min_rank_coverage_third_vs_fourth_ratio: float,
     max_horse_stake_dependency_ratio: float,
     seconds_to_post: float,
 ) -> dict[str, object]:
@@ -530,6 +550,8 @@ def _generate_tickets_from_candidate_evaluations(
     longshots: list[dict[str, object]] = []
     aggregate_counts: dict[str, int] = defaultdict(int)
     per_race_limit = max(max_tickets_per_race, 5) if mode == "aggressive" else max_tickets_per_race
+    rank_coverage_budget = max(0, min(rank_coverage_budget_yen, bankroll_per_race))
+    odds_history_index = _index_odds_history(odds_history)
 
     for race_id in sorted(rows_by_race):
         race_rows = rows_by_race[race_id]
@@ -542,7 +564,14 @@ def _generate_tickets_from_candidate_evaluations(
             _canonical_ticket_from_evaluation(
                 evaluation,
                 row_by_number=row_by_number,
-                odds_history=odds_history,
+                odds_history=odds_history_index.get(
+                    (
+                        str(evaluation.get("race_id", "")).strip(),
+                        str(evaluation.get("bet_type", "")).strip(),
+                        str(evaluation.get("canonical_combination", "")).strip(),
+                    ),
+                    [],
+                ),
                 bankroll_per_race=bankroll_per_race,
                 kelly_fraction=kelly_fraction,
                 seconds_to_post=seconds_to_post,
@@ -550,14 +579,36 @@ def _generate_tickets_from_candidate_evaluations(
             )
             for evaluation in evaluations_by_race.get(race_id, [])
         ]
-        candidate_pool = [ticket for ticket in candidate_pool if ticket]
+        rank_coverage = _promote_top3_rank_coverage_candidates(
+            [ticket for ticket in candidate_pool if ticket],
+            race_rows,
+            enabled=rank_coverage_enabled,
+            budget_yen=rank_coverage_budget,
+            min_robust_ev=min_rank_coverage_ev,
+            min_top3_probability=min_rank_coverage_top3_probability,
+            min_leader_probability=min_rank_coverage_leader_probability,
+            min_third_vs_fourth_ratio=min_rank_coverage_third_vs_fourth_ratio,
+        )
+        candidate_pool = [
+            {
+                **ticket,
+                "eligibility_checks": _candidate_eligibility_checks(
+                    ticket,
+                    minimum_ev=(
+                        min_rank_coverage_ev
+                        if _is_top3_rank_coverage_ticket(ticket)
+                        else thresholds[str(ticket.get("bet_type", ""))]
+                    ),
+                    minimum_hit_probability=minimum_probabilities[str(ticket.get("bet_type", ""))],
+                ),
+            }
+            for ticket in candidate_pool
+            if ticket
+        ]
         eligible_pool = [
             ticket
             for ticket in candidate_pool
-            if _to_float(ticket.get("robust_ev")) >= thresholds[str(ticket.get("bet_type", ""))]
-            and _ticket_decision_probability(ticket)
-            >= minimum_probabilities[str(ticket.get("bet_type", ""))]
-            and int(_to_float(ticket.get("stake"))) >= 100
+            if all(check["passed"] for check in ticket["eligibility_checks"])
         ]
         selection_pool = _limit_eligible_selection_pool(
             eligible_pool,
@@ -622,6 +673,7 @@ def _generate_tickets_from_candidate_evaluations(
                 "selection_status": "selected" if race_tickets else "no_bet",
                 "selection_reason": "robust_portfolio" if race_tickets else "no_safe_robust_portfolio",
                 "top_win_probability_horse_number": top_horse,
+                "rank_coverage": rank_coverage,
             }
         )
 
@@ -639,10 +691,156 @@ def _generate_tickets_from_candidate_evaluations(
             "status": "OK",
             "source": "04_ev_calculator",
             "candidate_count": len(candidate_evaluations),
-            "tolerance": 1e-9,
+            "tolerance": PROBABILITY_SUM_TOLERANCE,
         },
         "portfolio_summary": _portfolio_summary(flat_tickets),
         "primary_bet_type": flat_tickets[0].get("bet_type", "wide") if flat_tickets else "wide",
+        "rank_coverage": {
+            "enabled": rank_coverage_enabled,
+            "budget_yen": rank_coverage_budget,
+            "ticket_count": sum(
+                1 for ticket in flat_tickets if _is_top3_rank_coverage_ticket(ticket)
+            ),
+            "stake": sum(
+                int(_to_float(ticket.get("stake")))
+                for ticket in flat_tickets
+                if _is_top3_rank_coverage_ticket(ticket)
+            ),
+        },
+    }
+
+
+def _index_odds_history(
+    odds_history: list[dict[str, object]] | list[dict[str, str]],
+) -> dict[tuple[str, str, str], list[dict[str, object] | dict[str, str]]]:
+    indexed: dict[
+        tuple[str, str, str],
+        list[dict[str, object] | dict[str, str]],
+    ] = defaultdict(list)
+    for row in odds_history:
+        race_id = str(row.get("race_id", "")).strip()
+        bet_type = str(row.get("bet_type", "")).strip()
+        if not race_id or bet_type not in BET_TYPE_MARKET_SHRINK:
+            continue
+        try:
+            combination = canonical_combination(bet_type, row.get("combination", ""))
+        except (TypeError, ValueError):
+            continue
+        indexed[(race_id, bet_type, combination)].append(row)
+    return dict(indexed)
+
+
+def _promote_top3_rank_coverage_candidates(
+    candidates: list[dict[str, object]],
+    race_rows: list[dict[str, object]],
+    *,
+    enabled: bool,
+    budget_yen: int,
+    min_robust_ev: float,
+    min_top3_probability: float,
+    min_leader_probability: float,
+    min_third_vs_fourth_ratio: float,
+) -> dict[str, object]:
+    """Fund a tiny top-three order cover when the probability ranking is decisive."""
+    ranked = sorted(
+        race_rows,
+        key=lambda row: _to_float(row.get("win_prob")),
+        reverse=True,
+    )
+    top3 = ranked[:3]
+    probabilities = [_to_float(row.get("win_prob")) for row in top3]
+    top3_probability = sum(probabilities)
+    fourth_probability = _to_float(ranked[3].get("win_prob")) if len(ranked) > 3 else 0.0
+    third_vs_fourth_ratio = (
+        probabilities[2] / fourth_probability
+        if len(probabilities) == 3 and fourth_probability > 0
+        else float("inf")
+    )
+    criteria = {
+        "enabled": enabled,
+        "three_ranked_horses": len(top3) == 3,
+        "budget_available": budget_yen >= 100,
+        "top3_probability": _fmt(top3_probability),
+        "min_top3_probability": _fmt(min_top3_probability),
+        "top3_probability_passed": top3_probability >= min_top3_probability,
+        "leader_probability": _fmt(probabilities[0] if probabilities else 0.0),
+        "min_leader_probability": _fmt(min_leader_probability),
+        "leader_probability_passed": bool(probabilities)
+        and probabilities[0] >= min_leader_probability,
+        "third_vs_fourth_ratio": _fmt(third_vs_fourth_ratio),
+        "min_third_vs_fourth_ratio": _fmt(min_third_vs_fourth_ratio),
+        "third_vs_fourth_ratio_passed": len(top3) == 3
+        and third_vs_fourth_ratio >= min_third_vs_fourth_ratio,
+    }
+    triggered = all(
+        bool(criteria[key])
+        for key in (
+            "enabled",
+            "three_ranked_horses",
+            "budget_available",
+            "top3_probability_passed",
+            "leader_probability_passed",
+            "third_vs_fourth_ratio_passed",
+        )
+    )
+    numbers = [str(row.get("horse_number", "")).strip() for row in top3]
+    if not triggered:
+        return {
+            "triggered": False,
+            "top3_horse_numbers": numbers,
+            "criteria": criteria,
+            "candidates": [],
+        }
+
+    leader, second, third = numbers
+    target_keys = [
+        ("sanrenpuku", "-".join(sorted(numbers, key=lambda value: int(_to_float(value))))),
+        ("sanrentan", f"{leader}>{second}>{third}"),
+        ("sanrentan", f"{leader}>{third}>{second}"),
+    ]
+    by_key = {
+        (str(ticket.get("bet_type", "")), str(ticket.get("horse_number", ""))): ticket
+        for ticket in candidates
+    }
+    promoted: list[dict[str, object]] = []
+    remaining = max(0, budget_yen)
+    for key in target_keys:
+        ticket = by_key.get(key)
+        if (
+            ticket is not None
+            and remaining >= 100
+            and str(ticket.get("odds_source", "")) == "jra_live"
+            and _to_float(ticket.get("robust_ev")) >= min_robust_ev
+        ):
+            ticket.update(
+                {
+                    "stake": 100,
+                    "ticket_role": "coverage",
+                    "coverage_reason": "top3_rank_coverage",
+                    "coverage_budget_yen": budget_yen,
+                    "coverage_min_robust_ev": _fmt(min_robust_ev),
+                    "coverage_top3_horse_numbers": numbers,
+                    "coverage_rank_clarity": dict(criteria),
+                }
+            )
+            promoted.append(ticket)
+            remaining -= 100
+
+    return {
+        "triggered": bool(promoted),
+        "top3_horse_numbers": numbers,
+        "criteria": criteria,
+        "budget_yen": budget_yen,
+        "stake": sum(int(_to_float(ticket.get("stake"))) for ticket in promoted),
+        "candidates": [
+            {
+                "bet_type": str(ticket.get("bet_type", "")),
+                "horse_number": str(ticket.get("horse_number", "")),
+                "robust_ev": str(ticket.get("robust_ev", "")),
+                "stake": int(_to_float(ticket.get("stake"))),
+            }
+            for ticket in promoted
+        ],
     }
 
 
@@ -2535,6 +2733,7 @@ def _select_optimized_tickets(
             "marked_top5_trio_real_odds",
             "win_ev_longshot_place_translation",
             "win_ev_longshot_wide_translation",
+            "top3_rank_coverage",
         }
     ]
     by_type: dict[str, list[dict[str, object]]] = defaultdict(list)
@@ -2764,6 +2963,34 @@ def _ticket_selection_key(ticket: dict[str, object]) -> tuple[str, str]:
     )
 
 
+def _candidate_eligibility_checks(
+    ticket: dict[str, object],
+    *,
+    minimum_ev: float,
+    minimum_hit_probability: float,
+) -> list[dict[str, object]]:
+    """Record every canonical eligibility gate, using the exact selection values."""
+    return [
+        {
+            "reason": reason,
+            "metric": metric,
+            "value": value,
+            "minimum": minimum,
+            "passed": value >= minimum,
+        }
+        for reason, metric, value, minimum in (
+            ("below_minimum_ev", "robust_ev", _to_float(ticket.get("robust_ev")), minimum_ev),
+            (
+                "below_minimum_hit_probability",
+                "decision_hit_prob",
+                _ticket_decision_probability(ticket),
+                minimum_hit_probability,
+            ),
+            ("below_minimum_stake", "stake", int(_to_float(ticket.get("stake"))), 100),
+        )
+    ]
+
+
 def _annotate_candidate_selection(
     candidates: list[dict[str, object]],
     *,
@@ -2783,21 +3010,34 @@ def _annotate_candidate_selection(
         out["selected"] = selected
         out["selection_reason"] = "selected_portfolio" if selected else ""
         if selected:
-            out["non_selection_reason"] = ""
+            reasons = []
         elif key not in eligible_keys:
-            out["non_selection_reason"] = "below_minimum_ev"
+            reasons = [
+                check["reason"]
+                for check in candidate.get("eligibility_checks", [])
+                if not check["passed"]
+            ] or ["below_minimum_ev"]
         elif portfolio_failure_reason:
-            out["non_selection_reason"] = portfolio_failure_reason
+            reasons = [portfolio_failure_reason]
         elif key not in selection_keys:
-            out["non_selection_reason"] = "bet_type_limit"
+            reasons = ["bet_type_limit"]
         else:
-            out["non_selection_reason"] = "portfolio_optimization"
+            reasons = ["portfolio_optimization"]
+        out["non_selection_reason"] = reasons[0] if reasons else ""
+        out["non_selection_reasons"] = reasons
         annotated.append(out)
     return annotated
 
 
 def _is_coverage_ticket(ticket: dict[str, object]) -> bool:
     return str(ticket.get("ticket_role", "")) == "coverage"
+
+
+def _is_top3_rank_coverage_ticket(ticket: dict[str, object]) -> bool:
+    return (
+        _is_coverage_ticket(ticket)
+        and str(ticket.get("coverage_reason", "")) == "top3_rank_coverage"
+    )
 
 
 def _is_model_pair_coverage_ticket(ticket: dict[str, object]) -> bool:
@@ -2809,6 +3049,7 @@ def _is_model_pair_coverage_ticket(ticket: dict[str, object]) -> bool:
         "marked_top5_trio_real_odds",
         "win_ev_longshot_place_translation",
         "win_ev_longshot_wide_translation",
+        "top3_rank_coverage",
     }
 
 
@@ -2819,6 +3060,8 @@ def _can_add_coverage_ticket(
     min_portfolio_ev: float,
 ) -> bool:
     portfolio = selected + [ticket]
+    if _is_top3_rank_coverage_ticket(ticket):
+        return _portfolio_no_gami(portfolio)
     if _portfolio_ev(portfolio) < min_portfolio_ev:
         return False
     if str(ticket.get("coverage_reason", "")) in {
@@ -2829,6 +3072,7 @@ def _can_add_coverage_ticket(
         "marked_top5_trio_real_odds",
         "win_ev_longshot_place_translation",
         "win_ev_longshot_wide_translation",
+        "top3_rank_coverage",
     }:
         return True
     return _portfolio_no_gami(portfolio)

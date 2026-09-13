@@ -131,15 +131,47 @@ def test_duplicate_canonical_key_fails_closed() -> None:
     assert result["validation"]["duplicate_keys"] == ["R1|wide|1-2"]  # type: ignore[index]
 
 
-@pytest.mark.parametrize("field", ["snapshot_id", "captured_at"])
-def test_mixed_official_odds_snapshots_fail_closed(field: str) -> None:
+def test_mixed_official_odds_snapshots_fail_closed() -> None:
     odds = [_odds_row("win", "1"), _odds_row("win", "2")]
-    odds[1][field] = "different"
+    odds[1]["snapshot_id"] = "different"
     result = build_candidate_evaluations(_rows(4), odds)
 
     assert result["candidate_evaluations"] == []
     assert result["validation"]["status"] == "NG"  # type: ignore[index]
-    assert any(field in error for error in result["validation"]["errors"])  # type: ignore[index]
+    assert any("snapshot_id" in error for error in result["validation"]["errors"])  # type: ignore[index]
+
+
+def test_one_snapshot_allows_per_page_capture_times() -> None:
+    odds = [_odds_row("win", "1"), _odds_row("win", "2")]
+    odds[1]["captured_at"] = "2026-08-30T03:51:07+00:00"
+
+    result = build_candidate_evaluations(_rows(4), odds)
+
+    assert result["validation"]["status"] == "OK"  # type: ignore[index]
+    assert len(result["candidate_evaluations"]) == 2
+
+
+def test_legacy_rows_with_mixed_capture_times_fail_closed() -> None:
+    odds = [_odds_row("win", "1"), _odds_row("win", "2")]
+    for row in odds:
+        row["snapshot_id"] = ""
+    odds[1]["captured_at"] = "2026-08-30T03:51:07+00:00"
+
+    result = build_candidate_evaluations(_rows(4), odds)
+
+    assert result["validation"]["status"] == "NG"  # type: ignore[index]
+    assert any("captured_at" in error for error in result["validation"]["errors"])  # type: ignore[index]
+
+
+def test_six_decimal_probability_rounding_is_accepted() -> None:
+    rows = _rows(4)
+    rounded = [0.1, 0.2, 0.3, 0.399999]
+    for row, probability in zip(rows, rounded):
+        row["win_prob"] = probability
+
+    result = build_candidate_evaluations(rows, [_odds_row("win", "1")])
+
+    assert result["validation"]["status"] == "OK"  # type: ignore[index]
 
 
 def test_ev_calculator_run_remains_backward_compatible(monkeypatch: pytest.MonkeyPatch) -> None:

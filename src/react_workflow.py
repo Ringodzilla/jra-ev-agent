@@ -106,6 +106,11 @@ class ReactiveRaceWorkflow:
                 for row in latest_complete_odds_rows(all_combo_odds)
                 if str(row.get("race_id", "")) in active_race_ids
             ]
+            active_combo_odds_history = [
+                row
+                for row in all_combo_odds
+                if str(row.get("race_id", "")) in active_race_ids
+            ]
             calculated = self.ev_calculator.run(
                 list(simulated.get("scenario_rows") or []),
                 combo_odds=current_combo_odds,
@@ -113,7 +118,7 @@ class ReactiveRaceWorkflow:
             bet_plan = self.bet_builder.run(
                 list(calculated.get("ev_rows") or []),
                 combo_odds=current_combo_odds,
-                odds_history=all_combo_odds,
+                odds_history=active_combo_odds_history,
                 candidate_evaluations=list(calculated.get("candidate_evaluations") or []),
                 candidate_validation=dict(calculated.get("validation") or {}),
                 race_configs=race_configs,

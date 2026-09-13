@@ -33,6 +33,20 @@ FINAL_STAGE_ORDER = (
     "final_decision.json",
 )
 
+# Only these failures concern the previous ticket allocation or odds snapshot.
+# Input, probability, candidate-integrity, WIN5, and unknown failures stay closed.
+_REVALIDATABLE_BASELINE_REASONS = frozenset({
+    "TICKET_THRESHOLDS_FAILED",
+    "TOP_WIN_HORSE_UNCOVERED",
+    "TOP3_COVERAGE_LOW",
+    "HORSE_TICKET_DEPENDENCY_HIGH",
+    "HORSE_STAKE_DEPENDENCY_HIGH",
+    "PORTFOLIO_EV_LOW",
+    "PORTFOLIO_LOSS_ON_HIT",
+    "LONGSHOT_OVERWEIGHT",
+    "PREDICTED_CURRENT_EV_DIVERGENCE",
+})
+
 
 class FinalPredictionWorkflow:
     """Fast race-day path using cached history and one coherent JRA snapshot."""
@@ -454,6 +468,11 @@ class FinalReviewerAgent:
             and abs(_to_int(row.get("body_weight_change")))
             > self.settings.max_abs_body_weight_change_kg
         ]
+        baseline_revalidated = (
+            baseline_quality.get("review_ok") is False
+            and baseline_quality.get("review_revalidation_allowed") is True
+            and quantitative_review.get("status") == "OK"
+        )
         checks = {
             "deadline": now <= _as_utc(plan.output_deadline),
             "snapshot_complete": bool(collected.get("snapshot_complete")),
@@ -489,7 +508,7 @@ class FinalReviewerAgent:
             "selected_body_weight_change_safe": not extreme_selected,
             "lineup_matches_baseline": bool(lineup.get("matches")),
             "baseline_history_complete": bool(baseline_quality.get("history_complete")),
-            "baseline_review": bool(baseline_quality.get("review_ok")),
+            "baseline_review": bool(baseline_quality.get("review_ok")) or baseline_revalidated,
             "baseline_parser_quality": bool(baseline_quality.get("parser_quality_ok")),
             "baseline_manifest": bool(baseline_quality.get("manifest_ok")),
             "quantitative_review": quantitative_review.get("status") == "OK",
@@ -529,6 +548,17 @@ class FinalReviewerAgent:
             "conditions_age_seconds": conditions_age,
             "extreme_selected_horse_numbers": extreme_selected,
             "quantitative_review": quantitative_review,
+            "baseline_review_resolution": {
+                "original_status": baseline_quality.get("review_status", ""),
+                "original_reason_codes": baseline_quality.get("review_reason_codes", []),
+                "original_reason": baseline_quality.get("review_reason", ""),
+                "revalidation_allowed": baseline_quality.get("review_revalidation_allowed", False),
+                "revalidated": baseline_revalidated,
+                "resolution_code": (
+                    "LATEST_QUANTITATIVE_REVIEW_SUPERSEDES_TICKET_FAILURES"
+                    if baseline_revalidated else "BASELINE_REVIEW_RETAINED"
+                ),
+            },
         }
 
 
@@ -670,6 +700,36 @@ def _neutral_history_row(live: dict[str, object]) -> dict[str, str]:
     return row
 
 
+def _baseline_review_revalidation_allowed(review: dict[str, object]) -> bool:
+    """Require complete structured evidence; legacy/text-only NG is not bypassed."""
+    if review.get("status") != "NG" or review.get("review_schema_version") != 1:
+        return False
+    failures = review.get("failures")
+    codes = review.get("reason_codes")
+    if not isinstance(failures, list) or not failures or not isinstance(codes, list):
+        return False
+    if not all(
+        isinstance(failure, dict)
+        and isinstance(failure.get("code"), str)
+        and failure["code"] in _REVALIDATABLE_BASELINE_REASONS
+        and isinstance(failure.get("message"), str)
+        and bool(failure["message"])
+        for failure in failures
+    ):
+        return False
+    if codes != [failure["code"] for failure in failures]:
+        return False
+    if review.get("reason") != "; ".join(failure["message"] for failure in failures):
+        return False
+    # Contradictory integrity metadata also blocks revalidation.
+    return all(
+        isinstance(review.get(field), dict)
+        and review[field].get("status") == "OK"
+        and review[field].get("errors") == []
+        for field in ("probability_lineage", "value_integrity")
+    )
+
+
 def build_baseline_quality(
     baseline: dict[str, object] | list[dict[str, object]],
     rows: list[dict[str, str]],
@@ -712,6 +772,7 @@ def build_baseline_quality(
         actual_counts.setdefault(key, 0)
         required_counts[key] = min(5, career_starts)
 
+    review = {} if isinstance(baseline, list) else dict(baseline.get("reviewer") or {})
     if isinstance(baseline, list):
         source_kind = "csv_rows"
         review_status = "NOT_APPLICABLE"
@@ -736,6 +797,10 @@ def build_baseline_quality(
         "source_kind": source_kind,
         "review_status": review_status,
         "review_ok": review_ok,
+        "review_reason": review.get("reason", ""),
+        "review_reason_codes": review.get("reason_codes", []),
+        "review_revalidation_allowed": source_kind == "pipeline_run"
+        and _baseline_review_revalidation_allowed(review),
         "manifest_ok": manifest_ok,
         "high_parser_issue_count": high_issues,
         "parser_quality_ok": parser_quality_ok,

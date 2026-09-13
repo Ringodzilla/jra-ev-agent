@@ -20,6 +20,12 @@ class WorkflowSettings:
     max_exotic_tickets_per_race: int = 4
     min_portfolio_ev: float = 1.0
     min_coverage_ev: float = 0.75
+    rank_coverage_enabled: bool = True
+    rank_coverage_budget_yen: int = 300
+    min_rank_coverage_ev: float = 0.90
+    min_rank_coverage_top3_probability: float = 0.55
+    min_rank_coverage_leader_probability: float = 0.25
+    min_rank_coverage_third_vs_fourth_ratio: float = 1.10
     mode: str = "balanced"
     win5_max_points: int | None = None
     win5_stake_yen_per_point: int = 100

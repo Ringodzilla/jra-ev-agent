@@ -67,6 +67,18 @@ def test_live_odds_and_formation_integrity_rejection_edges() -> None:
     ]
     assert [row["race_id"] for row in latest_complete_odds_rows(rows)] == ["A", "B"]
 
+    legacy_rows = [
+        {"race_id": "L", "bet_type": "win", "combination": "1",
+         "captured_at": "2026-01-01T00:00:00Z"},
+        {"race_id": "L", "bet_type": "win", "combination": "1",
+         "captured_at": "2026-01-01T00:10:00Z"},
+        {"race_id": "L", "bet_type": "place", "combination": "1",
+         "captured_at": "2026-01-01T00:10:00Z"},
+    ]
+    latest_legacy = latest_complete_odds_rows(legacy_rows)
+    assert len(latest_legacy) == 2
+    assert {row["bet_type"] for row in latest_legacy} == {"win", "place"}
+
     base = {
         "odds_source": "jra_live",
         "ticket_shape": "formation",

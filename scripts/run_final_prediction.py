@@ -16,6 +16,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from jra_scraper.config import ScrapeConfig
+from jra_scraper.odds_history import load_pre_race_odds_history
 from src.agents import WorkflowSettings
 from src.artifacts import atomic_write_json as atomic_json
 from src.artifacts import file_sha256 as _file_sha256
@@ -79,10 +80,17 @@ def main() -> None:
     output_dir = race_output_dir / run_id
     baseline_path: Path | None = None
     fixed_analysis_dir: Path | None = None
-    odds_history = load_combo_odds_history(Path(args.odds_history_path), race_id=race_id)
+    odds_history: list[dict[str, object]] = []
     try:
         with hard_output_deadline(plan.output_deadline):
             if plan.may_start_network_refresh:
+                odds_history = load_combo_odds_history(
+                    Path(args.odds_history_path),
+                    race_id=race_id,
+                    prior_runs_dir=race_output_dir,
+                    as_of=plan.evaluated_at,
+                    post_time=plan.post_time,
+                )
                 baseline_path = Path(args.baseline_path) if args.baseline_path else discover_baseline(race_id)
                 try:
                     baseline = load_baseline(baseline_path) if baseline_path else {}
@@ -169,19 +177,20 @@ def load_baseline(path: Path) -> dict[str, object] | list[dict[str, object]]:
     return payload
 
 
-def load_combo_odds_history(path: Path, *, race_id: str) -> list[dict[str, str]]:
-    """Load only pre-post rows for the active race; results are never an input."""
-    if not path.exists() or not path.is_file():
-        return []
-    try:
-        with path.open("r", encoding="utf-8", newline="") as file_obj:
-            return [
-                dict(row)
-                for row in csv.DictReader(file_obj)
-                if str(row.get("race_id", "")).strip() == race_id
-            ]
-    except (OSError, csv.Error, UnicodeError):
-        return []
+def load_combo_odds_history(
+    path: Path,
+    *,
+    race_id: str,
+    prior_runs_dir: Path | None = None,
+    as_of: datetime | None = None,
+    post_time: datetime | None = None,
+) -> list[dict[str, object]]:
+    """Load earlier collector snapshots as well as the legacy shared CSV."""
+    now = as_of or datetime.now(timezone.utc)
+    return load_pre_race_odds_history(
+        path, race_id=race_id, prior_runs_dir=prior_runs_dir,
+        as_of=now, post_time=post_time or now,
+    )
 
 
 def load_fixed_analysis(

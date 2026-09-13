@@ -61,7 +61,17 @@ def _latest_complete_snapshot_rows(race_rows: list[LiveOddsRow]) -> list[LiveOdd
         if str(row.get("snapshot_id", "")).strip() and "snapshot_complete" in row
     ]
     if not snapshot_rows:
-        return race_rows
+        latest_captured_at = max(
+            (str(row.get("captured_at", "")).strip() for row in race_rows),
+            default="",
+        )
+        if not latest_captured_at:
+            return race_rows
+        return [
+            row
+            for row in race_rows
+            if str(row.get("captured_at", "")).strip() == latest_captured_at
+        ]
 
     complete_snapshot_ids = {
         str(row.get("snapshot_id", "")).strip()

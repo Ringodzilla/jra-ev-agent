@@ -15,6 +15,7 @@ BET_TYPES = (
     "sanrenpuku",
     "sanrentan",
 )
+PROBABILITY_SUM_TOLERANCE = 2e-6
 UNORDERED_BET_TYPES = {"wide", "wakuren", "umaren", "sanrenpuku"}
 ARITY = {
     "win": 1,
@@ -50,7 +51,7 @@ def build_candidate_evaluations(
         if len(snapshots) > 1:
             errors.append(f"combo_odds contains multiple snapshot_id values: {race_id}")
     for race_id, captured_times in captured_times_by_race.items():
-        if len(captured_times) > 1:
+        if len(captured_times) > 1 and not snapshots_by_race.get(race_id):
             errors.append(f"combo_odds contains multiple captured_at values: {race_id}")
 
     probability_rows: dict[str, dict[int, float]] = defaultdict(dict)
@@ -75,7 +76,8 @@ def build_candidate_evaluations(
             horse_number = _to_int(row.get("horse_number"))
             if horse_number in probabilities:
                 frame_rows[race_id][horse_number] = _resolve_frame_number(row, field_size=field_size)
-        if abs(sum(probabilities.values()) - 1.0) > 1e-9:
+        # Keep the saved-probability tolerance inclusive despite float subtraction error.
+        if abs(sum(probabilities.values()) - 1.0) > PROBABILITY_SUM_TOLERANCE + 1e-12:
             errors.append(f"win probabilities do not sum to 1: {race_id}")
 
     probability_cache = {

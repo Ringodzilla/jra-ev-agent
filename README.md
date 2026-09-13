@@ -67,6 +67,8 @@ JRAのレースデータを取得し、**EVモデリングに直接使える整�
   * 券種別の候補上限は確率補正・EV再計算・閾値判定の後に適用し、除外された候補の枠を次順位で再充填する
   * 保険候補はJRA実オッズあり、EV下限あり、追加後のポートフォリオEVが1.0以上、的中時回収が総投資額以上の場合だけ採用
   * 最終買い目は的中時に総投資額を下回る組み合わせを pruning して、ガミりやすい構成を避ける
+  * 上位3頭が明確な場合は、EV本線と分離した順位カバー枠を最大300円で使用する。既定では上位3頭の勝率合計55%以上、1位勝率25%以上、3位勝率が4位の1.10倍以上、各券の保守EV 0.90以上を必要とし、三連複1点と1着固定の三連単2点を各100円で候補化する
+  * 順位カバー枠はJRA実オッズ、上位3頭の組番、点数、金額、保守EVをreviewerが再検証し、条件外の買い目や300円超過を正式買い目にしない
 * **Verified note artifact output**
 
   * note本文は `report/note.md`、提出用Markdown artifact は `report/note_artifact.md` に同期出力
@@ -178,7 +180,9 @@ python3 scripts/run_final_prediction.py \
 * 事前分析と最新出馬表の頭数・馬IDが一致し、各馬について `min(5, 通算出走数)` 件の過去走がある
   * 2歳戦などで通算出走数が5未満の場合は、configの `career_starts_by_horse_number` に実数を指定する
   * 初出走馬は値を `0` とし、擬似過去走を作らず中立特徴量 `0.5` で最終計算へ含める
-* `pipeline_run.json` 使用時は事前reviewerが `OK` で、stage manifestが一致
+* `pipeline_run.json` 使用時はstage manifestが一致し、事前reviewerが `OK`、または構造化理由コードで確認できる旧買い目・オッズのみの `NG` を最新定量reviewerの `OK` で再検証できる
+  * 履歴不足、パーサー不備、確率・数値の不整合、未知・欠落・矛盾した理由は引き続き見送り。理由コードを持たない旧形式の `NG` は事前パイプラインの再構築が必要
+  * 元の判定を保持し、`06_reviewer.json` の `baseline_review_resolution` に再検証の可否・結果を記録
 * reviewerが `OK`、買い目が存在し、フォーメーションを含む全購入点の組番がJRA実オッズに存在
 
 買い目だけがreviewerの定量条件を満たさない場合は、指示された問題券だけを除外し、100円単位で残存券を再配分します。
@@ -188,6 +192,18 @@ python3 scripts/run_final_prediction.py \
 いずれかが欠ける場合は `NO_GO` となり、`tickets` は必ず空になります。結果は
 `report/final_predictions/<race_id>/<run_id>/final_decision.json` に保存され、最新結果は
 `report/final_predictions/<race_id>/latest_decision.json` から参照できます。
+
+直前オッズの変動評価には、共有CSVに加えて、同じ出力ルート・同じレースの過去実行に保存された
+`01_data_collector.json` を使用します。収集完了・全組番取得・manifestの収集ファイルSHA256一致を確認し、
+各取得時刻と収集完了時刻が今回の評価時刻以前かつ発走前のものだけを読み込みます。
+買い目が `NO_GO` でも収集が正常に完了していれば、そのオッズは次回の履歴に残ります。
+不完全な取得、未来・発走後のデータ、別レースを除外し、券種に応じて組番を正規化して重複を除きます。
+同時刻の同一組番に異なる値がある場合は、その観測を採用しません。共有CSVや過去の予測成果物は書き換えません。
+
+全券種候補の不採用理由は `05_bet_builder.json` の `non_selection_reasons` に記録します。
+`eligibility_checks` には、オッズ下落シナリオのEV、最低的中率、最低投資額それぞれの実値・閾値・合否を保存します。
+現在オッズでの `ev_current` が高くても、判定対象の `robust_ev` などが基準未満なら不採用になります。
+互換フィールド `non_selection_reason` は最初の理由を示します。
 
 ## WIN5 mode
 
