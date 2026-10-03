@@ -30,6 +30,37 @@ class TestJRAParser(unittest.TestCase):
         self.assertTrue(horses[0].horse_id)
         self.assertEqual("1", horses[0].horse_number)
 
+    def test_parse_race_detail_marks_jump_race_surface(self):
+        html = (FIX / "race_detail.html").read_text(encoding="utf-8")
+
+        horses = self.parser.parse_race_detail(
+            html,
+            race_id="20260919_阪神_04",
+            race_name="第28回阪神ジャンプステークス",
+            target_surface="芝",
+        )
+
+        self.assertTrue(horses)
+        self.assertTrue(all(horse.target_surface == "障害" for horse in horses))
+
+    def test_unpublished_odds_are_not_read_from_race_record(self):
+        html = """
+        <table class="race_table_01">
+          <tr><th>枠</th><th>馬番</th><th>馬名 / 単勝オッズ(人気)<br>戦績 / 総賞金 / 馬体重</th><th>騎手</th></tr>
+          <tr><td class="waku">1</td><td class="num">1</td>
+            <td class="horse"><div class="name_line"><div class="name">
+              <a href="/JRADB/accessU.html?CNAME=a1">サンプルホースA</a>
+            </div></div><div class="result_line"><div class="cell result">(4.3.2.13)</div></div></td>
+            <td>横山</td></tr>
+        </table>
+        """
+        for aggressive_repair in (False, True):
+            horses = self.parser.parse_race_detail(
+                html, race_id="20260920_中山_11", race_name="11R",
+                aggressive_repair=aggressive_repair,
+            )
+            self.assertEqual("", horses[0].current_odds)
+
     def test_parse_race_detail_repairs_shifted_rows(self):
         html = """
         <html><body>
@@ -82,7 +113,7 @@ class TestJRAParser(unittest.TestCase):
             </td>
             <td class="past p1">
               <div class="date_line"><div class="date">2026年3月1日</div><div class="rc">阪神</div></div>
-              <div class="race_line"><div class="name"><a href="/JRADB/accessS.html?CNAME=s1">チューリップ賞</a></div></div>
+              <div class="race_line"><div class="name"><a href="/JRADB/accessS.html?CNAME=s1">障害未勝利</a></div></div>
               <div class="place_line"><div class="place">2着</div><div class="num"><span class="pop">3<span>番人気</span></span></div></div>
               <div class="info_line1"><div class="jockey">戸崎 圭太</div><div class="weight">55.0kg</div></div>
               <div class="info_line2"><span class="dist">1600芝</span><p class="time">1:33.9</p><span class="condition">良</span></div>
@@ -100,6 +131,7 @@ class TestJRAParser(unittest.TestCase):
         self.assertEqual(1, len(horses[0].embedded_history))
         self.assertEqual("33.8", horses[0].embedded_history[0]["last_3f"])
         self.assertEqual("3", horses[0].embedded_history[0]["popularity"])
+        self.assertEqual("障害", horses[0].embedded_history[0]["history_surface"])
 
     def test_parse_race_detail_extracts_current_body_weight_without_confusing_assigned_weight(self):
         html = """
@@ -351,6 +383,23 @@ class TestJRAParser(unittest.TestCase):
             horse_url="https://www.jra.go.jp/JRADB/accessU.html?CNAME=x",
         )
         self.assertEqual("36.0", rows[0]["last_3f"])
+
+    def test_parse_horse_last5_overrides_jump_surface_label(self):
+        html = """
+        <table>
+          <tr><th>日付</th><th>レース名</th><th>距離</th><th>着順</th><th>上り</th></tr>
+          <tr><td>2026/08/23</td><td>ソレイユJS</td><td>芝3390</td><td>6</td><td>13.3</td></tr>
+        </table>
+        """
+        rows = self.parser.parse_horse_last5(
+            html,
+            race_id="r1",
+            horse_id="h1",
+            horse_name="サンプルホースA",
+            horse_url="https://www.jra.go.jp/JRADB/accessU.html?CNAME=x",
+        )
+
+        self.assertEqual("障害", rows[0]["history_surface"])
 
 
 if __name__ == "__main__":

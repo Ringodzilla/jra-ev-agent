@@ -6,7 +6,12 @@ from zoneinfo import ZoneInfo
 
 from analysis.ev import build_feature_rows
 from src.deadline import DeadlineSettings, build_deadline_plan
-from src.final_workflow import FinalReviewerAgent, build_baseline_quality, merge_live_entries
+from src.final_workflow import (
+    FinalReviewerAgent,
+    analysis_win_odds_snapshots,
+    build_baseline_quality,
+    merge_live_entries,
+)
 from src.final_workflow import FinalPredictionWorkflow
 from jra_scraper.config import ScrapeConfig
 
@@ -77,7 +82,7 @@ class FinalReviewerTest(unittest.TestCase):
         self.assertEqual("OK", review["status"])
         self.assertEqual("GO", review["decision"])
 
-    def test_unpublished_body_weight_forces_no_go(self):
+    def test_unpublished_body_weight_does_not_block_go(self):
         self.collected["entries"][0]["body_weight_status"] = "unpublished"
         review = FinalReviewerAgent(settings=self.settings, now=lambda: self.now).run(
             plan=self.plan,
@@ -86,9 +91,10 @@ class FinalReviewerTest(unittest.TestCase):
             quantitative_review={"status": "OK"},
         )
 
-        self.assertEqual("NG", review["status"])
-        self.assertEqual("NO_GO", review["decision"])
-        self.assertFalse(review["checks"]["body_weights_released"])
+        self.assertEqual("OK", review["status"])
+        self.assertEqual("GO", review["decision"])
+        self.assertEqual(1, review["body_weight_audit"]["unpublished"])
+        self.assertFalse(review["body_weight_audit"]["used_for_decision"])
 
     def test_estimated_ticket_odds_force_no_go(self):
         self.ticket_plan["tickets"][0]["odds_source"] = "estimated"
@@ -137,7 +143,7 @@ class FinalReviewerTest(unittest.TestCase):
         self.assertEqual("NO_GO", review["decision"])
         self.assertFalse(review["checks"]["baseline_history_complete"])
 
-    def test_wakuren_expands_frames_for_body_weight_safety(self):
+    def test_wakuren_records_extreme_body_weight_without_blocking(self):
         self.collected["entries"] = [
             {
                 "horse_number": "1", "frame_number": "1",
@@ -165,8 +171,31 @@ class FinalReviewerTest(unittest.TestCase):
             quantitative_review={"status": "OK"},
         )
 
-        self.assertEqual("NO_GO", review["decision"])
+        self.assertEqual("GO", review["decision"])
         self.assertEqual(["2"], review["extreme_selected_horse_numbers"])
+
+
+class AnalysisWinOddsSnapshotsTest(unittest.TestCase):
+    def test_combines_saved_win_history_with_current_snapshot(self):
+        live = {
+            "snapshot_id": "S2",
+            "snapshot_complete": True,
+            "official_odds_as_of": "2026-08-08T15:17:00+09:00",
+            "entries": [{
+                "race_id": "R1", "horse_number": "1", "horse_id": "h1",
+                "current_odds": "3.0", "current_popularity": "1",
+            }],
+        }
+        history = [
+            {"race_id": "R1", "bet_type": "win", "combination": "1", "odds": "4.0", "captured_at": "2026-08-08T14:00:00+09:00"},
+            {"race_id": "R1", "bet_type": "wide", "combination": "1-2", "odds": "5.0", "captured_at": "2026-08-08T14:00:00+09:00"},
+            {"race_id": "R2", "bet_type": "win", "combination": "1", "odds": "6.0", "captured_at": "2026-08-08T14:00:00+09:00"},
+        ]
+
+        rows = analysis_win_odds_snapshots(live, odds_history=history)
+
+        self.assertEqual(2, len(rows))
+        self.assertEqual(["4.0", "3.0"], [row["current_odds"] for row in rows])
 
 
 class MergeLiveEntriesTest(unittest.TestCase):

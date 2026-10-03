@@ -1,0 +1,768 @@
+{
+  "schema_version": 1,
+  "sample_role": "n1_observation",
+  "learning_status": "stocked_not_applied",
+  "race": {
+    "race_id": "20260920_中山_11",
+    "race_name": "第72回産経賞オールカマー",
+    "race_date": "2026-09-20",
+    "track": "中山",
+    "race_number": 11,
+    "post_time": "15:45",
+    "weather": "雨",
+    "track_condition": "重",
+    "surface": "芝",
+    "distance": 2200,
+    "direction": "右外"
+  },
+  "sources": {
+    "official_result_url": "https://www.jra.go.jp/JRADB/accessS.html?CNAME=pw01sde1006202604061120260920/71",
+    "official_raw_file": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/experiments/20260920_nakayama_11/official_result.html",
+    "official_raw_sha256": "a215c50c64989e1525a3e5fa8bf7f306d224f72e44fa0b1a1e83e7ce956c4e95",
+    "official_captured_at": "2026-09-20T22:43:34.409130+00:00",
+    "frozen_prediction_dir": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260920_中山_11/20260920T042734Z",
+    "prediction_issued_at": "2026-09-20T04:27:42.988663+00:00",
+    "snapshot_id": "20260920_中山_11_20260920T042736Z_ff5e2474",
+    "artifact_sha256": {
+      "01_data_collector.json": "59c6f067f2d6b930117c1a7de10a869ac07e5fdce31b83103675d38d335c9035",
+      "02_analyzer.json": "3cd34016808887f7687ece0f90601889c8fd3760d6d9a6503780471fe86aba3a",
+      "03_simulator.json": "4ddc5c14850c88d51f33745d9d1d89b00549c6913bd93e6ee240270577ba15a4",
+      "04_ev_calculator.json": "22b064d835bf77f7843cc581c3fec737d840f8980d43e92610eb8f23bbf16e7d",
+      "05_bet_builder.json": "a09696399028be825833ed38e4ff9914c87f2c4e7bf80916c240f3041288e4bc",
+      "06_reviewer.json": "2357e5cb5a115103d04808275ac587eb6d09add85b2d4ef50ddc391839190b6d",
+      "final_decision.json": "3f976d9785c666f2dabcaad5abc402a622ac812c7d6c0284c245b9f9b5204ea8"
+    }
+  },
+  "result": {
+    "finish_order": [
+      8,
+      1,
+      4,
+      7,
+      2,
+      6,
+      13,
+      10,
+      12,
+      3,
+      9,
+      5,
+      11
+    ],
+    "finishers": [
+      {
+        "position": 1,
+        "horse_number": 8,
+        "horse_name": "メイショウゲキリン",
+        "jockey": "田辺 裕信",
+        "time": "2:16.9",
+        "margin": null,
+        "corner_positions": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "last_3f": 37.1,
+        "body_weight": 520,
+        "body_weight_change": -8,
+        "popularity": 9
+      },
+      {
+        "position": 2,
+        "horse_number": 1,
+        "horse_name": "キャントウェイト",
+        "jockey": "横山 典弘",
+        "time": "2:16.9",
+        "margin": "ハナ",
+        "corner_positions": [
+          6,
+          6,
+          7,
+          5
+        ],
+        "last_3f": 36.5,
+        "body_weight": 472,
+        "body_weight_change": -10,
+        "popularity": 6
+      },
+      {
+        "position": 3,
+        "horse_number": 4,
+        "horse_name": "ヴーレヴー",
+        "jockey": "吉田 隼人",
+        "time": "2:17.2",
+        "margin": "１ 3/4",
+        "corner_positions": [
+          3,
+          3,
+          3,
+          3
+        ],
+        "last_3f": 37.1,
+        "body_weight": 496,
+        "body_weight_change": -2,
+        "popularity": 3
+      },
+      {
+        "position": 4,
+        "horse_number": 7,
+        "horse_name": "レガレイラ",
+        "jockey": "戸崎 圭太",
+        "time": "2:17.4",
+        "margin": "１ 1/4",
+        "corner_positions": [
+          3,
+          5,
+          3,
+          3
+        ],
+        "last_3f": 37.3,
+        "body_weight": 490,
+        "body_weight_change": 6,
+        "popularity": 1
+      },
+      {
+        "position": 5,
+        "horse_number": 2,
+        "horse_name": "ワイドエンペラー",
+        "jockey": "C.ルメール",
+        "time": "2:17.7",
+        "margin": "１ 3/4",
+        "corner_positions": [
+          9,
+          9,
+          10,
+          8
+        ],
+        "last_3f": 37.1,
+        "body_weight": 484,
+        "body_weight_change": -8,
+        "popularity": 10
+      },
+      {
+        "position": 6,
+        "horse_number": 6,
+        "horse_name": "パンジャ",
+        "jockey": "丹内 祐次",
+        "time": "2:17.7",
+        "margin": "クビ",
+        "corner_positions": [
+          6,
+          8,
+          7,
+          5
+        ],
+        "last_3f": 37.3,
+        "body_weight": 492,
+        "body_weight_change": 0,
+        "popularity": 7
+      },
+      {
+        "position": 7,
+        "horse_number": 13,
+        "horse_name": "ジューンテイク",
+        "jockey": "武 豊",
+        "time": "2:18.1",
+        "margin": "２ 1/2",
+        "corner_positions": [
+          12,
+          12,
+          7,
+          5
+        ],
+        "last_3f": 37.7,
+        "body_weight": 504,
+        "body_weight_change": 4,
+        "popularity": 4
+      },
+      {
+        "position": 8,
+        "horse_number": 10,
+        "horse_name": "コスモブッドレア",
+        "jockey": "津村 明秀",
+        "time": "2:19.4",
+        "margin": "８",
+        "corner_positions": [
+          11,
+          11,
+          12,
+          10
+        ],
+        "last_3f": 38.6,
+        "body_weight": 486,
+        "body_weight_change": -4,
+        "popularity": 13
+      },
+      {
+        "position": 9,
+        "horse_number": 12,
+        "horse_name": "エセルフリーダ",
+        "jockey": "武藤 雅",
+        "time": "2:19.9",
+        "margin": "２ 1/2",
+        "corner_positions": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "last_3f": 40.0,
+        "body_weight": 488,
+        "body_weight_change": 6,
+        "popularity": 5
+      },
+      {
+        "position": 10,
+        "horse_number": 3,
+        "horse_name": "リビアングラス",
+        "jockey": "西村 淳也",
+        "time": "2:20.0",
+        "margin": "１／２",
+        "corner_positions": [
+          9,
+          9,
+          10,
+          8
+        ],
+        "last_3f": 39.4,
+        "body_weight": 502,
+        "body_weight_change": 10,
+        "popularity": 8
+      },
+      {
+        "position": 11,
+        "horse_number": 9,
+        "horse_name": "コスモキュランダ",
+        "jockey": "横山 武史",
+        "time": "2:21.9",
+        "margin": "大差",
+        "corner_positions": [
+          6,
+          6,
+          6,
+          10
+        ],
+        "last_3f": 41.6,
+        "body_weight": 514,
+        "body_weight_change": -4,
+        "popularity": 2
+      },
+      {
+        "position": 12,
+        "horse_number": 5,
+        "horse_name": "アスクドゥポルテ",
+        "jockey": "岩田 康誠",
+        "time": "2:23.1",
+        "margin": "７",
+        "corner_positions": [
+          13,
+          13,
+          12,
+          10
+        ],
+        "last_3f": 42.4,
+        "body_weight": 480,
+        "body_weight_change": 6,
+        "popularity": 11
+      },
+      {
+        "position": 13,
+        "horse_number": 11,
+        "horse_name": "セイウンプラチナ",
+        "jockey": "内田 博幸",
+        "time": "2:23.3",
+        "margin": "１ 1/2",
+        "corner_positions": [
+          3,
+          3,
+          3,
+          13
+        ],
+        "last_3f": 43.3,
+        "body_weight": 500,
+        "body_weight_change": -6,
+        "popularity": 12
+      }
+    ],
+    "payouts": [
+      {
+        "bet_type": "単勝",
+        "combination": "8",
+        "payout_yen_per_100": 4450
+      },
+      {
+        "bet_type": "複勝",
+        "combination": "8",
+        "payout_yen_per_100": 820
+      },
+      {
+        "bet_type": "複勝",
+        "combination": "1",
+        "payout_yen_per_100": 340
+      },
+      {
+        "bet_type": "複勝",
+        "combination": "4",
+        "payout_yen_per_100": 200
+      },
+      {
+        "bet_type": "枠連",
+        "combination": "1-6",
+        "payout_yen_per_100": 2210
+      },
+      {
+        "bet_type": "ワイド",
+        "combination": "1-8",
+        "payout_yen_per_100": 5210
+      },
+      {
+        "bet_type": "ワイド",
+        "combination": "4-8",
+        "payout_yen_per_100": 2320
+      },
+      {
+        "bet_type": "ワイド",
+        "combination": "1-4",
+        "payout_yen_per_100": 620
+      },
+      {
+        "bet_type": "馬連",
+        "combination": "1-8",
+        "payout_yen_per_100": 30940
+      },
+      {
+        "bet_type": "馬単",
+        "combination": "8-1",
+        "payout_yen_per_100": 73450
+      },
+      {
+        "bet_type": "三連複",
+        "combination": "1-4-8",
+        "payout_yen_per_100": 29440
+      },
+      {
+        "bet_type": "三連単",
+        "combination": "8-1-4",
+        "payout_yen_per_100": 383690
+      }
+    ],
+    "laps_200m_seconds": [
+      12.8,
+      11.8,
+      13.0,
+      12.3,
+      12.5,
+      12.5,
+      12.4,
+      12.5,
+      12.3,
+      12.1,
+      12.7
+    ]
+  },
+  "prediction_review": {
+    "review_status": "NG",
+    "decision": "NO_GO",
+    "decision_code": "NO_GO_FINAL_REVIEW_FAILED",
+    "official_tickets": [],
+    "official_stake_yen": 0,
+    "official_return_yen": 0,
+    "actual_user_purchase_status": "unknown",
+    "failed_checks": [
+      "body_weights_released",
+      "baseline_review",
+      "quantitative_review",
+      "tickets_present",
+      "tickets_use_jra_live_odds"
+    ],
+    "quantitative_review_reason_codes": [
+      "PREDICTED_CURRENT_EV_DIVERGENCE"
+    ],
+    "baseline_review_reason_codes": [
+      "HORSE_TICKET_DEPENDENCY_HIGH",
+      "PREDICTED_CURRENT_EV_DIVERGENCE"
+    ]
+  },
+  "comparison": [
+    {
+      "horse_number": 8,
+      "horse_name": "メイショウゲキリン",
+      "actual_position": 1,
+      "prediction_rank": 8,
+      "predicted_win_probability": 0.034993,
+      "pre_race_win_odds": 29.2,
+      "pre_race_win_ev": 1.02181,
+      "pre_race_front_rate": 0.7092,
+      "pre_race_track_condition_evidence": 0.0
+    },
+    {
+      "horse_number": 1,
+      "horse_name": "キャントウェイト",
+      "actual_position": 2,
+      "prediction_rank": 7,
+      "predicted_win_probability": 0.060379,
+      "pre_race_win_odds": 16.0,
+      "pre_race_win_ev": 0.96606,
+      "pre_race_front_rate": 0.7235,
+      "pre_race_track_condition_evidence": 0.0
+    },
+    {
+      "horse_number": 4,
+      "horse_name": "ヴーレヴー",
+      "actual_position": 3,
+      "prediction_rank": 3,
+      "predicted_win_probability": 0.119046,
+      "pre_race_win_odds": 6.9,
+      "pre_race_win_ev": 0.821416,
+      "pre_race_front_rate": 0.8462,
+      "pre_race_track_condition_evidence": 0.85
+    },
+    {
+      "horse_number": 7,
+      "horse_name": "レガレイラ",
+      "actual_position": 4,
+      "prediction_rank": 1,
+      "predicted_win_probability": 0.229616,
+      "pre_race_win_odds": 2.9,
+      "pre_race_win_ev": 0.665887,
+      "pre_race_front_rate": 0.5227,
+      "pre_race_track_condition_evidence": 1.0
+    },
+    {
+      "horse_number": 2,
+      "horse_name": "ワイドエンペラー",
+      "actual_position": 5,
+      "prediction_rank": 10,
+      "predicted_win_probability": 0.027089,
+      "pre_race_win_odds": 32.7,
+      "pre_race_win_ev": 0.885816,
+      "pre_race_front_rate": 0.3622,
+      "pre_race_track_condition_evidence": 0.0
+    },
+    {
+      "horse_number": 6,
+      "horse_name": "パンジャ",
+      "actual_position": 6,
+      "prediction_rank": 6,
+      "predicted_win_probability": 0.079653,
+      "pre_race_win_odds": 11.7,
+      "pre_race_win_ev": 0.931941,
+      "pre_race_front_rate": 0.6454,
+      "pre_race_track_condition_evidence": 0.0
+    },
+    {
+      "horse_number": 13,
+      "horse_name": "ジューンテイク",
+      "actual_position": 7,
+      "prediction_rank": 5,
+      "predicted_win_probability": 0.088114,
+      "pre_race_win_odds": 10.5,
+      "pre_race_win_ev": 0.925194,
+      "pre_race_front_rate": 0.755,
+      "pre_race_track_condition_evidence": 1.0
+    },
+    {
+      "horse_number": 10,
+      "horse_name": "コスモブッドレア",
+      "actual_position": 8,
+      "prediction_rank": 11,
+      "predicted_win_probability": 0.01271,
+      "pre_race_win_odds": 79.1,
+      "pre_race_win_ev": 1.005352,
+      "pre_race_front_rate": 0.7336,
+      "pre_race_track_condition_evidence": 0.7
+    },
+    {
+      "horse_number": 12,
+      "horse_name": "エセルフリーダ",
+      "actual_position": 9,
+      "prediction_rank": 4,
+      "predicted_win_probability": 0.094855,
+      "pre_race_win_odds": 9.7,
+      "pre_race_win_ev": 0.920096,
+      "pre_race_front_rate": 0.8277,
+      "pre_race_track_condition_evidence": 0.0
+    },
+    {
+      "horse_number": 3,
+      "horse_name": "リビアングラス",
+      "actual_position": 10,
+      "prediction_rank": 9,
+      "predicted_win_probability": 0.029434,
+      "pre_race_win_odds": 29.9,
+      "pre_race_win_ev": 0.880076,
+      "pre_race_front_rate": 0.8412,
+      "pre_race_track_condition_evidence": 0.0
+    },
+    {
+      "horse_number": 9,
+      "horse_name": "コスモキュランダ",
+      "actual_position": 11,
+      "prediction_rank": 2,
+      "predicted_win_probability": 0.202424,
+      "pre_race_win_odds": 3.4,
+      "pre_race_win_ev": 0.68824,
+      "pre_race_front_rate": 0.884,
+      "pre_race_track_condition_evidence": 1.0
+    },
+    {
+      "horse_number": 5,
+      "horse_name": "アスクドゥポルテ",
+      "actual_position": 12,
+      "prediction_rank": 12,
+      "predicted_win_probability": 0.012565,
+      "pre_race_win_odds": 78.5,
+      "pre_race_win_ev": 0.98637,
+      "pre_race_front_rate": 0.3723,
+      "pre_race_track_condition_evidence": 0.0
+    },
+    {
+      "horse_number": 11,
+      "horse_name": "セイウンプラチナ",
+      "actual_position": 13,
+      "prediction_rank": 13,
+      "predicted_win_probability": 0.009122,
+      "pre_race_win_odds": 91.6,
+      "pre_race_win_ev": 0.835575,
+      "pre_race_front_rate": 0.8437,
+      "pre_race_track_condition_evidence": 0.0
+    }
+  ],
+  "winning_candidate_audit": [
+    {
+      "bet_type": "win",
+      "combination": "8",
+      "candidate_found": true,
+      "pre_race_odds": 29.2,
+      "estimated_hit_probability": 0.034615,
+      "pre_race_ev": 1.010758,
+      "robust_ev": 0.937464,
+      "proposed_stake_yen": 0,
+      "rejection_reasons": [
+        "below_minimum_ev",
+        "below_minimum_hit_probability",
+        "below_minimum_stake"
+      ]
+    },
+    {
+      "bet_type": "place",
+      "combination": "8",
+      "candidate_found": true,
+      "pre_race_odds": 4.7,
+      "estimated_hit_probability": 0.161773,
+      "pre_race_ev": 0.760333,
+      "robust_ev": 0.7334,
+      "proposed_stake_yen": 0,
+      "rejection_reasons": [
+        "below_minimum_ev",
+        "below_minimum_stake"
+      ]
+    },
+    {
+      "bet_type": "place",
+      "combination": "1",
+      "candidate_found": true,
+      "pre_race_odds": 2.8,
+      "estimated_hit_probability": 0.271397,
+      "pre_race_ev": 0.759912,
+      "robust_ev": 0.726644,
+      "proposed_stake_yen": 0,
+      "rejection_reasons": [
+        "below_minimum_ev",
+        "below_minimum_stake"
+      ]
+    },
+    {
+      "bet_type": "place",
+      "combination": "4",
+      "candidate_found": true,
+      "pre_race_odds": 1.8,
+      "estimated_hit_probability": 0.452414,
+      "pre_race_ev": 0.814345,
+      "robust_ev": 0.782375,
+      "proposed_stake_yen": 0,
+      "rejection_reasons": [
+        "below_minimum_ev",
+        "below_minimum_stake"
+      ]
+    },
+    {
+      "bet_type": "wakuren",
+      "combination": "1-6",
+      "candidate_found": true,
+      "pre_race_odds": 28.7,
+      "estimated_hit_probability": 0.034014,
+      "pre_race_ev": 0.976202,
+      "robust_ev": 0.930832,
+      "proposed_stake_yen": 0,
+      "rejection_reasons": [
+        "below_minimum_ev",
+        "below_minimum_stake"
+      ]
+    },
+    {
+      "bet_type": "wide",
+      "combination": "1-8",
+      "candidate_found": true,
+      "pre_race_odds": 38.3,
+      "estimated_hit_probability": 0.02118,
+      "pre_race_ev": 0.811194,
+      "robust_ev": 0.769199,
+      "proposed_stake_yen": 0,
+      "rejection_reasons": [
+        "below_minimum_ev",
+        "below_minimum_hit_probability",
+        "below_minimum_stake"
+      ]
+    },
+    {
+      "bet_type": "wide",
+      "combination": "4-8",
+      "candidate_found": true,
+      "pre_race_odds": 18.7,
+      "estimated_hit_probability": 0.042882,
+      "pre_race_ev": 0.801893,
+      "robust_ev": 0.762966,
+      "proposed_stake_yen": 0,
+      "rejection_reasons": [
+        "below_minimum_ev",
+        "below_minimum_hit_probability",
+        "below_minimum_stake"
+      ]
+    },
+    {
+      "bet_type": "wide",
+      "combination": "1-4",
+      "candidate_found": true,
+      "pre_race_odds": 10.2,
+      "estimated_hit_probability": 0.077153,
+      "pre_race_ev": 0.786961,
+      "robust_ev": 0.764141,
+      "proposed_stake_yen": 0,
+      "rejection_reasons": [
+        "below_minimum_ev",
+        "below_minimum_hit_probability",
+        "below_minimum_stake"
+      ]
+    },
+    {
+      "bet_type": "umaren",
+      "combination": "1-8",
+      "candidate_found": true,
+      "pre_race_odds": 220.2,
+      "estimated_hit_probability": 0.004502,
+      "pre_race_ev": 0.99134,
+      "robust_ev": 0.923142,
+      "proposed_stake_yen": 0,
+      "rejection_reasons": [
+        "below_minimum_ev",
+        "below_minimum_hit_probability",
+        "below_minimum_stake"
+      ]
+    },
+    {
+      "bet_type": "umatan",
+      "combination": "8-1",
+      "candidate_found": false,
+      "pre_race_odds": null,
+      "estimated_hit_probability": null,
+      "pre_race_ev": null,
+      "robust_ev": null,
+      "proposed_stake_yen": null,
+      "rejection_reasons": []
+    },
+    {
+      "bet_type": "sanrenpuku",
+      "combination": "1-4-8",
+      "candidate_found": true,
+      "pre_race_odds": 288.3,
+      "estimated_hit_probability": 0.003093,
+      "pre_race_ev": 0.891712,
+      "robust_ev": 0.868156,
+      "proposed_stake_yen": 0,
+      "rejection_reasons": [
+        "below_minimum_ev",
+        "below_minimum_hit_probability",
+        "below_minimum_stake"
+      ]
+    },
+    {
+      "bet_type": "sanrentan",
+      "combination": "8-1-4",
+      "candidate_found": false,
+      "pre_race_odds": null,
+      "estimated_hit_probability": null,
+      "pre_race_ev": null,
+      "robust_ev": null,
+      "proposed_stake_yen": null,
+      "rejection_reasons": []
+    }
+  ],
+  "previously_discussed_reference_trios": [
+    {
+      "combination": "7-8-9",
+      "outcome": "miss"
+    },
+    {
+      "combination": "7-8-12",
+      "outcome": "miss"
+    }
+  ],
+  "metrics": {
+    "winner_prediction_rank": 8,
+    "winner_probability": 0.034993,
+    "predicted_top3_horse_numbers": [
+      7,
+      9,
+      4
+    ],
+    "actual_top3_horse_numbers": [
+      8,
+      1,
+      4
+    ],
+    "top3_set_overlap_count": 1,
+    "multiclass_brier_sum": 1.0678640239539998,
+    "winner_log_loss": 3.3526072374953904,
+    "probability_sum_before_metric_normalization": 1.0,
+    "single_race_calibration_conclusion": "not_determined"
+  },
+  "diagnosis": {
+    "winner_led_all_four_corners": true,
+    "winner_pre_race_front_rate": 0.7092,
+    "winner_pre_race_track_condition_evidence": 0.0,
+    "pace_mix": {
+      "high": 0.440926,
+      "mid": 0.379074,
+      "slow": 0.18
+    },
+    "observed_first_1000_seconds": 62.400000000000006,
+    "observed_last_600_seconds": 37.099999999999994,
+    "observed_pace_label": "not_officially_classified",
+    "notes": [
+      "8番は4角まで先頭。事前の前受け率0.7092に対し勝率順位は8位だった。",
+      "1番・8番の重馬場実績エビデンスはモデル上0で、今回の結果だけで重馬場補正不足とは断定できない。",
+      "13:27の三連複1-4-8は推定EVと採用最低的中確率の両方で基準未達だった。確定配当は事前オッズではない。",
+      "馬体重未発表、baseline reviewer NG、定量reviewer NGのためNO_GO。実購入の有無は未確認。"
+    ]
+  },
+  "learning_policy": {
+    "sample_size": 1,
+    "coefficient_update_applied": false,
+    "reason": "単一レースの結果だけで係数変更を正当化できない。",
+    "future_batch_hypotheses": [
+      "重馬場の中山芝2200mで先行馬の勝率校正を検証する。",
+      "重馬場実績の証拠0の馬について欠損処理と結果の関係を複数レースで検証する。",
+      "買い目見送り閾値と実際の事後的中との関係を時系列の固定評価で確認する。"
+    ]
+  },
+  "validation": {
+    "official_finisher_rows_saved": 13,
+    "payout_rows": 12,
+    "predictions_unchanged": true,
+    "payout_horse_numbers_match_top3": true,
+    "lap_sum_matches_winner_time": true
+  },
+  "reviewed_at": "2026-09-20T22:43:34.425017+00:00"
+}

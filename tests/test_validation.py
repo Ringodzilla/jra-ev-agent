@@ -44,6 +44,7 @@ class TestValidation(unittest.TestCase):
         self.assertEqual([str(i) for i in range(1, 6)], [r["run_index"] for r in validated])
         self.assertEqual("2026-03-01", validated[0]["date"])
         self.assertEqual("2000", validated[0]["distance"])
+        self.assertEqual("芝", validated[0]["history_surface"])
         self.assertEqual("1", validated[0]["position"])
         self.assertEqual("57", validated[0]["weight"])
         self.assertEqual("119.9", validated[0]["time"])
@@ -80,6 +81,57 @@ class TestValidation(unittest.TestCase):
         self.assertEqual("", validated[0]["current_body_weight"])
         self.assertEqual("", validated[0]["body_weight_change"])
         self.assertEqual("unpublished", validated[0]["body_weight_status"])
+
+    def test_validate_rows_normalizes_explicit_and_inferred_history_surfaces(self):
+        rows = [
+            {
+                "race_id": "r1",
+                "horse_id": "h1",
+                "horse_name": "A",
+                "run_index": "1",
+                "history_surface": "ダ",
+                "distance": "1800",
+            },
+            {
+                "race_id": "r1",
+                "horse_id": "h2",
+                "horse_name": "B",
+                "run_index": "1",
+                "distance": "障3000",
+            },
+            {
+                "race_id": "r1",
+                "horse_id": "h3",
+                "horse_name": "C",
+                "run_index": "1",
+                "distance": "ダ1800",
+            },
+            {
+                "race_id": "r1",
+                "horse_id": "h4",
+                "horse_name": "D",
+                "run_index": "1",
+                "race_name": "ソレイユJS",
+                "history_surface": "芝",
+                "distance": "3390",
+            },
+            {
+                "race_id": "r1",
+                "horse_id": "h5",
+                "horse_name": "E",
+                "run_index": "1",
+                "race_name": "障害未勝利",
+                "history_surface": "芝",
+                "distance": "2860",
+            },
+        ]
+
+        validated = validate_rows(rows)
+
+        self.assertEqual(
+            ["ダート", "障害", "ダート", "障害", "障害"],
+            [row["history_surface"] for row in validated],
+        )
 
     def test_build_row_id_stable(self):
         row = {

@@ -33,6 +33,7 @@ OUTPUT_COLUMNS = [
     "race_name",
     "course",
     "distance",
+    "history_surface",
     "position",
     "time",
     "weight",
@@ -161,6 +162,12 @@ def _normalize_row(row: dict[str, str]) -> dict[str, str]:
     data["target_distance"] = _normalize_int(data["target_distance"])
     data["horse_country"] = _normalize_country_code(data["horse_country"])
     data["date"] = _normalize_date(data["date"])
+    if _is_jump_history(data["race_name"], data["distance"]):
+        data["history_surface"] = "障害"
+    else:
+        data["history_surface"] = _normalize_surface(
+            data["history_surface"] or _surface_from_distance(data["distance"])
+        )
     data["distance"] = _normalize_int(data["distance"])
     data["position"] = _normalize_int(data["position"])
     data["weight"] = _normalize_float(data["weight"])
@@ -172,6 +179,33 @@ def _normalize_row(row: dict[str, str]) -> dict[str, str]:
     data["popularity"] = _normalize_int(data["popularity"])
 
     return data
+
+
+def _normalize_surface(value: str) -> str:
+    normalized = str(value).strip()
+    if normalized == "ダ":
+        return "ダート"
+    return normalized if normalized in {"芝", "ダート", "障害"} else ""
+
+
+def _surface_from_distance(value: str) -> str:
+    text = str(value)
+    if "障" in text:
+        return "障害"
+    if "ダ" in text:
+        return "ダート"
+    if "芝" in text:
+        return "芝"
+    return ""
+
+
+def _is_jump_history(race_name: str, distance: str) -> bool:
+    name = str(race_name).strip()
+    if "障害" in name or "ジャンプ" in name:
+        return True
+    distance_match = re.search(r"\d{3,4}", str(distance))
+    distance_value = int(distance_match.group(0)) if distance_match else 0
+    return distance_value >= 2700 and re.search(r"J(?:S)?$", name) is not None
 
 
 def _normalize_horse_id(raw_id: str, horse_name: str) -> str:

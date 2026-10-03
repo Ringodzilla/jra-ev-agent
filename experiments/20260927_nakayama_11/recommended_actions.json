@@ -1,0 +1,49 @@
+{
+  "race_id": "20260927_中山_11",
+  "status": "PARTIALLY_EXECUTED",
+  "actions": [
+    {
+      "id": "fixed_evaluation_dataset",
+      "status": "COMPLETED",
+      "race_count": 8,
+      "history_row_count": 562,
+      "result_label_count": 96,
+      "dataset": "data/evaluation/fixed_race_last5.csv",
+      "results": "data/evaluation/fixed_result_labels.csv",
+      "manifest": "data/evaluation/fixed_race_last5.manifest.json"
+    },
+    {
+      "id": "baseline_evaluation",
+      "status": "COMPLETED_NO_SIGNAL",
+      "validation_roi": 0.0,
+      "ticket_count": 0,
+      "artifact": "report/fixed_eval/baseline.json",
+      "integrity_manifest": "report/fixed_eval/baseline_integrity.json"
+    },
+    {
+      "id": "short_sprint_front_penalty_half",
+      "status": "REVERTED",
+      "before_validation_roi": 0.0,
+      "after_validation_roi": 0.0,
+      "before_ticket_count": 0,
+      "after_ticket_count": 0,
+      "reason": "validation ROI tied and score did not improve",
+      "artifact": "experiments/fixed_eval/20260929_front_penalty_half.json"
+    },
+    {
+      "id": "market_shrink_experiment",
+      "status": "SKIPPED",
+      "reason": "The prerequisite front-penalty experiment was not kept."
+    },
+    {
+      "id": "t15_t5_refresh_runner",
+      "status": "IMPLEMENTED_NOT_SCHEDULED",
+      "script": "scripts/run_final_prediction_windows.py",
+      "reason": "A future race config and an external once-per-minute scheduler are required."
+    }
+  ],
+  "next_action": {
+    "id": "expand_fixed_evaluation_coverage",
+    "reason": "Eleven labeled races have no matching pre-race pipeline artifact, and the current eight-race baseline produces no tickets, so model changes cannot be promoted from ROI evidence."
+  }
+}

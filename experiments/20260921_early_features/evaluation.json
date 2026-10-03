@@ -1,0 +1,477 @@
+{
+  "method": "frozen pre-post probabilities, normalized exponential feature tilt, chronological holdout",
+  "train_through": "2026-09-06",
+  "coefficient_grid": [
+    -0.6,
+    -0.5,
+    -0.4,
+    -0.3,
+    -0.2,
+    -0.1,
+    0.0,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6
+  ],
+  "train_race_ids": [
+    "20260823_新潟_07",
+    "20260823_札幌_11",
+    "20260830_新潟_08",
+    "20260905_中山_11",
+    "20260906_中山_11"
+  ],
+  "test_race_ids": [
+    "20260912_阪神_11",
+    "20260913_中山_11",
+    "20260913_阪神_11",
+    "20260919_中山_11",
+    "20260920_中山_11"
+  ],
+  "baseline": {
+    "train": {
+      "race_count": 5,
+      "mean_log_loss": 2.315923313733318,
+      "mean_brier_sum": 0.9006862645433997,
+      "top1_hits": 1,
+      "by_race": [
+        {
+          "race_id": "20260823_新潟_07",
+          "winner_probability": 0.207243,
+          "winner_rank": 1,
+          "log_loss": 1.5738632611704353,
+          "brier_sum": 0.7454978474169999
+        },
+        {
+          "race_id": "20260823_札幌_11",
+          "winner_probability": 0.073219,
+          "winner_rank": 5,
+          "log_loss": 2.6143003288539473,
+          "brier_sum": 0.984546043971
+        },
+        {
+          "race_id": "20260830_新潟_08",
+          "winner_probability": 0.182587,
+          "winner_rank": 2,
+          "log_loss": 1.700528507222047,
+          "brier_sum": 0.769203423815
+        },
+        {
+          "race_id": "20260905_中山_11",
+          "winner_probability": 0.062762,
+          "winner_rank": 8,
+          "log_loss": 2.768405484193576,
+          "brier_sum": 0.963611266961
+        },
+        {
+          "race_id": "20260906_中山_11",
+          "winner_probability": 0.053798,
+          "winner_rank": 8,
+          "log_loss": 2.922518987226585,
+          "brier_sum": 1.0405727405529999
+        }
+      ]
+    },
+    "test": {
+      "race_count": 5,
+      "mean_log_loss": 2.827900197689959,
+      "mean_brier_sum": 0.9180533838301999,
+      "top1_hits": 1,
+      "by_race": [
+        {
+          "race_id": "20260912_阪神_11",
+          "winner_probability": 0.110161,
+          "winner_rank": 4,
+          "log_loss": 2.2058123468977837,
+          "brier_sum": 0.8896924149360002
+        },
+        {
+          "race_id": "20260913_中山_11",
+          "winner_probability": 0.023646,
+          "winner_rank": 11,
+          "log_loss": 3.7445613115412155,
+          "brier_sum": 1.0662397339509997
+        },
+        {
+          "race_id": "20260913_阪神_11",
+          "winner_probability": 0.334794,
+          "winner_rank": 1,
+          "log_loss": 1.0942398616743558,
+          "brier_sum": 0.508869937625
+        },
+        {
+          "race_id": "20260919_中山_11",
+          "winner_probability": 0.0237,
+          "winner_rank": 11,
+          "log_loss": 3.7422802308410517,
+          "brier_sum": 1.057600808685
+        },
+        {
+          "race_id": "20260920_中山_11",
+          "winner_probability": 0.034993,
+          "winner_rank": 8,
+          "log_loss": 3.3526072374953904,
+          "brier_sum": 1.0678640239539998
+        }
+      ]
+    }
+  },
+  "candidates": {
+    "rest_interval": {
+      "selected_beta_on_train": 0.4,
+      "train": {
+        "race_count": 5,
+        "mean_log_loss": 2.254194753364493,
+        "mean_brier_sum": 0.8989573381973835,
+        "top1_hits": 2,
+        "by_race": [
+          {
+            "race_id": "20260823_新潟_07",
+            "winner_probability": 0.23693923306631443,
+            "winner_rank": 1,
+            "log_loss": 1.4399515712873245,
+            "brier_sum": 0.7074830428554182
+          },
+          {
+            "race_id": "20260823_札幌_11",
+            "winner_probability": 0.06966199682582777,
+            "winner_rank": 6,
+            "log_loss": 2.6641003491403414,
+            "brier_sum": 1.0280399270248615
+          },
+          {
+            "race_id": "20260830_新潟_08",
+            "winner_probability": 0.1966336910181932,
+            "winner_rank": 1,
+            "log_loss": 1.6264127175979834,
+            "brier_sum": 0.7522014092974754
+          },
+          {
+            "race_id": "20260905_中山_11",
+            "winner_probability": 0.04353006250287049,
+            "winner_rank": 8,
+            "log_loss": 3.1343034875616107,
+            "brier_sum": 1.0220500693503185
+          },
+          {
+            "race_id": "20260906_中山_11",
+            "winner_probability": 0.09015673338344801,
+            "winner_rank": 4,
+            "log_loss": 2.406205641235203,
+            "brier_sum": 0.9850122424588444
+          }
+        ]
+      },
+      "test": {
+        "race_count": 5,
+        "mean_log_loss": 3.06384001689408,
+        "mean_brier_sum": 0.9793801245092224,
+        "top1_hits": 1,
+        "by_race": [
+          {
+            "race_id": "20260912_阪神_11",
+            "winner_probability": 0.07359903170100306,
+            "winner_rank": 5,
+            "log_loss": 2.609123409570222,
+            "brier_sum": 0.9773768843620119
+          },
+          {
+            "race_id": "20260913_中山_11",
+            "winner_probability": 0.0232691643088413,
+            "winner_rank": 10,
+            "log_loss": 3.7606262151258254,
+            "brier_sum": 1.0730149453701006
+          },
+          {
+            "race_id": "20260913_阪神_11",
+            "winner_probability": 0.24405059114324465,
+            "winner_rank": 1,
+            "log_loss": 1.4103797344300553,
+            "brier_sum": 0.6733233229823816
+          },
+          {
+            "race_id": "20260919_中山_11",
+            "winner_probability": 0.02816559936417604,
+            "winner_rank": 11,
+            "log_loss": 3.5696539264011706,
+            "brier_sum": 1.0715263004784272
+          },
+          {
+            "race_id": "20260920_中山_11",
+            "winner_probability": 0.018884443351575627,
+            "winner_rank": 11,
+            "log_loss": 3.969416798943125,
+            "brier_sum": 1.101659169353191
+          }
+        ]
+      },
+      "test_delta_mean_log_loss": 0.23593981920412066,
+      "test_delta_mean_brier_sum": 0.06132674067902255
+    },
+    "same_ground_front4": {
+      "selected_beta_on_train": -0.2,
+      "train": {
+        "race_count": 5,
+        "mean_log_loss": 2.2990178093923777,
+        "mean_brier_sum": 0.8924561145278812,
+        "top1_hits": 1,
+        "by_race": [
+          {
+            "race_id": "20260823_新潟_07",
+            "winner_probability": 0.21616619825143418,
+            "winner_rank": 2,
+            "log_loss": 1.5317077308131313,
+            "brier_sum": 0.7305813609714877
+          },
+          {
+            "race_id": "20260823_札幌_11",
+            "winner_probability": 0.05481845154341027,
+            "winner_rank": 8,
+            "log_loss": 2.903728434704709,
+            "brier_sum": 1.021455372047493
+          },
+          {
+            "race_id": "20260830_新潟_08",
+            "winner_probability": 0.18518948642870603,
+            "winner_rank": 1,
+            "log_loss": 1.6863757271249522,
+            "brier_sum": 0.7559024246172832
+          },
+          {
+            "race_id": "20260905_中山_11",
+            "winner_probability": 0.08580340930624523,
+            "winner_rank": 5,
+            "log_loss": 2.455696537773631,
+            "brier_sum": 0.9148954480269915
+          },
+          {
+            "race_id": "20260906_中山_11",
+            "winner_probability": 0.05406433154659019,
+            "winner_rank": 8,
+            "log_loss": 2.917580616545465,
+            "brier_sum": 1.03944596697615
+          }
+        ]
+      },
+      "test": {
+        "race_count": 5,
+        "mean_log_loss": 2.847877015586278,
+        "mean_brier_sum": 0.9540559145013934,
+        "top1_hits": 1,
+        "by_race": [
+          {
+            "race_id": "20260912_阪神_11",
+            "winner_probability": 0.11187543376622082,
+            "winner_rank": 4,
+            "log_loss": 2.1903692251546714,
+            "brier_sum": 0.8985118173157729
+          },
+          {
+            "race_id": "20260913_中山_11",
+            "winner_probability": 0.023321268514092615,
+            "winner_rank": 11,
+            "log_loss": 3.758389523006156,
+            "brier_sum": 1.0635784516925377
+          },
+          {
+            "race_id": "20260913_阪神_11",
+            "winner_probability": 0.24527393309996517,
+            "winner_rank": 1,
+            "log_loss": 1.4053795987537212,
+            "brier_sum": 0.6655023215282256
+          },
+          {
+            "race_id": "20260919_中山_11",
+            "winner_probability": 0.0298867394991638,
+            "winner_rank": 11,
+            "log_loss": 3.510340391969739,
+            "brier_sum": 1.043066533797908
+          },
+          {
+            "race_id": "20260920_中山_11",
+            "winner_probability": 0.034221323363325194,
+            "winner_rank": 8,
+            "log_loss": 3.374906339047103,
+            "brier_sum": 1.0996204481725231
+          }
+        ]
+      },
+      "test_delta_mean_log_loss": 0.019976817896318888,
+      "test_delta_mean_brier_sum": 0.03600253067119352
+    }
+  },
+  "races": [
+    {
+      "race_id": "20260823_新潟_07",
+      "race_date": "2026-08-23",
+      "winner_number": 2,
+      "snapshot_dir": "report/final_predictions/20260823_新潟_07/20260823T055852Z",
+      "ev_sha256": "fa516328ae1eda481bb3061f73a5b78be6d40b6452a9594b8bf5d78747149a52",
+      "collector_sha256": "8e5e356c5ed47e10093d0ac5a29702ede827a8ecf8b651c08f58cbf29d29bdbf",
+      "result_source": "https://www.jra.go.jp/JRADB/accessS.html?CNAME=pw01sde0104202603020720260823/A9",
+      "coverage": {
+        "rest_known": 9,
+        "model_rest_value_differs_from_history": 9,
+        "same_ground_corner_known": 7,
+        "runner_count": 10,
+        "same_ground_history_rows": 10
+      }
+    },
+    {
+      "race_id": "20260823_札幌_11",
+      "race_date": "2026-08-23",
+      "winner_number": 14,
+      "snapshot_dir": "report/final_predictions/20260823_札幌_11/20260823T061028Z",
+      "ev_sha256": "e8e8ba531b5e92480a5cccf2b160265304197ccc9fa87149abf53ee31341efbc",
+      "collector_sha256": "50b5fac434ff06a1e38956bb380cc314e473ab9c48674838bef1b942c49bd857",
+      "result_source": "https://www.jra.go.jp/JRADB/accessS.html?CNAME=pw01sde0101202602021120260823/AE",
+      "coverage": {
+        "rest_known": 16,
+        "model_rest_value_differs_from_history": 16,
+        "same_ground_corner_known": 16,
+        "runner_count": 16,
+        "same_ground_history_rows": 48
+      }
+    },
+    {
+      "race_id": "20260830_新潟_08",
+      "race_date": "2026-08-30",
+      "winner_number": 5,
+      "snapshot_dir": "report/final_predictions/20260830_新潟_08/20260830T035310Z",
+      "ev_sha256": "ae10ac2bbbb15b4601a3e349b7701e0dd2810eaf93b4ae445b8eef52e5cb2543",
+      "collector_sha256": "f7cd4129d93bfe9f7638516344f2b495c04b0f9fa7fcb54664f0dc89d27188cb",
+      "result_source": "data/processed/result_labels.csv",
+      "coverage": {
+        "rest_known": 11,
+        "model_rest_value_differs_from_history": 11,
+        "same_ground_corner_known": 10,
+        "runner_count": 11,
+        "same_ground_history_rows": 33
+      }
+    },
+    {
+      "race_id": "20260905_中山_11",
+      "race_date": "2026-09-05",
+      "winner_number": 8,
+      "snapshot_dir": "report/final_predictions/20260905_中山_11/20260905T043221Z",
+      "ev_sha256": "5ad3e1f757f59ed1f48c186f1602f1b739af4f1fe246dd8d26d39645688a617a",
+      "collector_sha256": "e37ed23d1fcd26bf3750fabdac919d3338b7fffb22e24ca472852331164a4033",
+      "result_source": "https://www.jra.go.jp/JRADB/accessS.html?CNAME=pw01sde0106202604011120260905/50",
+      "coverage": {
+        "rest_known": 16,
+        "model_rest_value_differs_from_history": 16,
+        "same_ground_corner_known": 16,
+        "runner_count": 16,
+        "same_ground_history_rows": 49
+      }
+    },
+    {
+      "race_id": "20260906_中山_11",
+      "race_date": "2026-09-06",
+      "winner_number": 4,
+      "snapshot_dir": "report/final_predictions/20260906_中山_11/20260906T063039Z",
+      "ev_sha256": "44b0b853482de14d0a1d3b1582c1f0d1a434ccafa82df6b25d8c9ab98819e544",
+      "collector_sha256": "8939df3723b1af33b43fd278d6fa00a9ae35aeda47e9959e92365fb7de5f6af9",
+      "result_source": "https://www.jra.go.jp/JRADB/accessS.html?CNAME=pw01sde0106202604021120260906/80",
+      "coverage": {
+        "rest_known": 11,
+        "model_rest_value_differs_from_history": 11,
+        "same_ground_corner_known": 2,
+        "runner_count": 11,
+        "same_ground_history_rows": 2
+      }
+    },
+    {
+      "race_id": "20260912_阪神_11",
+      "race_date": "2026-09-12",
+      "winner_number": 15,
+      "snapshot_dir": "report/final_predictions/20260912_阪神_11/20260912T063604Z",
+      "ev_sha256": "facf244c68f5aea540603779bfb1be2160c8aac598b0420b5eb6ec9b4507f728",
+      "collector_sha256": "6c847b8a357bdba9b71645a7fdafe31355b8c73224da9bde9a5860cbf8a0a32d",
+      "result_source": "data/processed/result_labels.csv",
+      "coverage": {
+        "rest_known": 16,
+        "model_rest_value_differs_from_history": 16,
+        "same_ground_corner_known": 16,
+        "runner_count": 16,
+        "same_ground_history_rows": 56
+      }
+    },
+    {
+      "race_id": "20260913_中山_11",
+      "race_date": "2026-09-13",
+      "winner_number": 7,
+      "snapshot_dir": "report/final_predictions/20260913_中山_11/20260913T063148Z",
+      "ev_sha256": "46f82cd5b6d93d5d3a3979a48234dff0f572a0e0f84cb20e87ac79a8a41c2268",
+      "collector_sha256": "5eb0ee0068ddaaef36127267269aa4c260bfc533acc04ac00a87de9f23d58dc0",
+      "result_source": "data/processed/result_labels.csv",
+      "coverage": {
+        "rest_known": 16,
+        "model_rest_value_differs_from_history": 16,
+        "same_ground_corner_known": 5,
+        "runner_count": 16,
+        "same_ground_history_rows": 6
+      }
+    },
+    {
+      "race_id": "20260913_阪神_11",
+      "race_date": "2026-09-13",
+      "winner_number": 7,
+      "snapshot_dir": "report/final_predictions/20260913_阪神_11/20260913T062118Z",
+      "ev_sha256": "7dd2169b2d1e25232784d967d4ebdca723f00a5d1115c4823b8d80c3d71169c0",
+      "collector_sha256": "4b3bf56b45fc64ff28d517331ba1925373a05ae7dea149ff689d8fd864a669b8",
+      "result_source": "data/processed/result_labels.csv",
+      "coverage": {
+        "rest_known": 12,
+        "model_rest_value_differs_from_history": 12,
+        "same_ground_corner_known": 12,
+        "runner_count": 12,
+        "same_ground_history_rows": 38
+      }
+    },
+    {
+      "race_id": "20260919_中山_11",
+      "race_date": "2026-09-19",
+      "winner_number": 1,
+      "snapshot_dir": "report/final_predictions/20260919_中山_11/20260919T033929Z",
+      "ev_sha256": "e7f30f18650e8524b1fed76000261405f14b72adf076d45047c59b995db9619d",
+      "collector_sha256": "823ff2dae7564cf26a5c06af63537e9b18a0f7bba34e65aa9ad608e445645ab4",
+      "result_source": "data/processed/result_labels.csv",
+      "coverage": {
+        "rest_known": 14,
+        "model_rest_value_differs_from_history": 14,
+        "same_ground_corner_known": 12,
+        "runner_count": 14,
+        "same_ground_history_rows": 34
+      }
+    },
+    {
+      "race_id": "20260920_中山_11",
+      "race_date": "2026-09-20",
+      "winner_number": 8,
+      "snapshot_dir": "report/final_predictions/20260920_中山_11/20260920T042734Z",
+      "ev_sha256": "22b064d835bf77f7843cc581c3fec737d840f8980d43e92610eb8f23bbf16e7d",
+      "collector_sha256": "59c6f067f2d6b930117c1a7de10a869ac07e5fdce31b83103675d38d335c9035",
+      "result_source": "data/processed/result_labels.csv",
+      "coverage": {
+        "rest_known": 13,
+        "model_rest_value_differs_from_history": 13,
+        "same_ground_corner_known": 5,
+        "runner_count": 13,
+        "same_ground_history_rows": 5
+      }
+    }
+  ],
+  "unavailable": {
+    "opponent_strength": "history rows have no verified opponent-strength rating at snapshot time",
+    "cushion_and_moisture": "frozen prediction snapshots store weather and track condition only"
+  },
+  "limitations": [
+    "Small, nonrandom set of races with frozen predictions and result labels.",
+    "Exponential tilt is a probability diagnostic, not an end-to-end ticket backtest.",
+    "Same-ground fourth-corner position overlaps the existing front-rate feature.",
+    "Winning-race outcomes are never used as feature inputs; all history dates are checked."
+  ]
+}

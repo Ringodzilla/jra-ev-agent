@@ -1,0 +1,69 @@
+{
+  "experiment_id": "20260929_front_penalty_half",
+  "timestamp_utc": "2026-09-29T10:54:52.470503+00:00",
+  "git_commit_before": "18cad82c53e1f1b84067b2023609b7662a5fb313",
+  "git_commit_after": "18cad82c53e1f1b84067b2023609b7662a5fb313",
+  "hypothesis": "Short-sprint front-density penalty at 50% improves calibration without suppressing viable forward runners.",
+  "files_changed": [
+    "analysis/ev.py"
+  ],
+  "before": {
+    "score": 0.0,
+    "validation_roi": 0.0,
+    "roi": 0.0,
+    "hit_rate": 0.0,
+    "sharpe_like": 0.0,
+    "max_drawdown": 0.0,
+    "ticket_count": 0,
+    "hit_ticket_count": 0,
+    "ticket_hit_rate": 0.0,
+    "race_count": 8,
+    "invested": 0,
+    "returned": 0.0,
+    "bet_type_breakdown": {},
+    "result_bet_types_available": [
+      "win",
+      "place",
+      "wide",
+      "wakuren",
+      "umaren",
+      "umatan",
+      "sanrenpuku",
+      "sanrentan"
+    ],
+    "result_label_count": 96,
+    "git_commit": "18cad82c53e1f1b84067b2023609b7662a5fb313",
+    "label_status": "available"
+  },
+  "after": {
+    "score": 0.0,
+    "validation_roi": 0.0,
+    "roi": 0.0,
+    "hit_rate": 0.0,
+    "sharpe_like": 0.0,
+    "max_drawdown": 0.0,
+    "ticket_count": 0,
+    "hit_ticket_count": 0,
+    "ticket_hit_rate": 0.0,
+    "race_count": 8,
+    "invested": 0,
+    "returned": 0.0,
+    "bet_type_breakdown": {},
+    "result_bet_types_available": [
+      "win",
+      "place",
+      "wide",
+      "wakuren",
+      "umaren",
+      "umatan",
+      "sanrenpuku",
+      "sanrentan"
+    ],
+    "result_label_count": 96,
+    "git_commit": "18cad82c53e1f1b84067b2023609b7662a5fb313",
+    "label_status": "available"
+  },
+  "decision": "revert",
+  "reason": "validation ROI tied and score did not improve",
+  "results_path": "data/evaluation/fixed_result_labels.csv"
+}

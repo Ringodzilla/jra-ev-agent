@@ -295,16 +295,6 @@ def generate_tickets(
         if race_tickets and top_win_horse_number not in _portfolio_horse_numbers(race_tickets):
             race_tickets = []
             selection_reason = "top_win_probability_horse_missing_after_portfolio_checks"
-        if (
-            race_tickets
-            and _max_horse_stake_dependency_ratio(
-                race_tickets,
-                exempt_horse_numbers=stake_dependency_exempt_horse_numbers,
-            )
-            > max_horse_stake_dependency_ratio
-        ):
-            race_tickets = []
-            selection_reason = "horse_stake_dependency_limit_exceeded"
         if not race_tickets and selection_reason == "optimized_portfolio":
             if top_win_horse_number and not any(
                 top_win_horse_number in _ticket_horse_numbers(ticket)
@@ -372,6 +362,7 @@ def generate_tickets(
                 "max_horse_stake_dependency_ratio": _fmt(
                     max_horse_stake_dependency_ratio
                 ),
+                "horse_dependency_enforced": False,
                 "horse_stake_dependency_scope": "outside_top3_win_probability",
                 "actionable_win_candidate_numbers": sorted(
                     actionable_win_candidate_numbers,
@@ -3303,6 +3294,9 @@ def _optimize_portfolio_stakes(
     max_horse_stake_dependency_ratio: float = 0.60,
     stake_dependency_exempt_horse_numbers: set[str] | None = None,
 ) -> list[dict[str, object]]:
+    # Kept in the signature for configuration compatibility. Horse dependency
+    # is now audit-only and must not reject or cap an otherwise valid portfolio.
+    _ = max_horse_stake_dependency_ratio, stake_dependency_exempt_horse_numbers
     if not tickets or bankroll_per_race <= 0:
         return []
 
@@ -3344,16 +3338,6 @@ def _optimize_portfolio_stakes(
                 continue
             if _portfolio_no_gami(allocated) and not _portfolio_no_gami(trial):
                 continue
-            if (
-                _max_horse_stake_dependency_ratio(trial)
-                if not stake_dependency_exempt_horse_numbers
-                else _max_horse_stake_dependency_ratio(
-                    trial,
-                    exempt_horse_numbers=stake_dependency_exempt_horse_numbers,
-                )
-            ) > max_horse_stake_dependency_ratio:
-                continue
-
             score = _stake_allocation_score(ticket)
             if score > best_score:
                 best_idx = idx

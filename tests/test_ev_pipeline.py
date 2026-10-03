@@ -1628,7 +1628,7 @@ class TestEVPipeline(unittest.TestCase):
         self.assertIn("predicted/current EV divergence", review["reason"])
         self.assertTrue(review["divergent_rows"])
 
-    def test_reviewer_rejects_missing_top_horses_and_dependency(self):
+    def test_reviewer_rejects_missing_top_horse_without_dependency_failure(self):
         reviewer = ReviewerAgent(WorkflowSettings())
         ev_rows = [
             {
@@ -1666,7 +1666,7 @@ class TestEVPipeline(unittest.TestCase):
 
         self.assertEqual("NG", review["status"])
         self.assertIn("top win-probability horse", review["reason"])
-        self.assertIn("dependency ratio", review["reason"])
+        self.assertNotIn("dependency", review["reason"])
 
     def test_reviewer_rejects_eligible_official_win_missing_from_candidate_universe(self):
         reviewer = ReviewerAgent(WorkflowSettings(min_ev=1.05))
@@ -1802,13 +1802,13 @@ class TestEVPipeline(unittest.TestCase):
         self.assertEqual("NG", initial["status"])
         self.assertEqual("OK", final["status"])
         self.assertEqual(
-            [("7-3", 400), ("1-10", 400)],
+            [("7-3", 400), ("10-3", 300), ("2-3", 300)],
             [(ticket["horse_number"], ticket["stake"]) for ticket in repaired["tickets"]],
         )
-        self.assertEqual(800, repaired["portfolio_summary"]["total_stake"])
-        self.assertEqual("1.124515", repaired["portfolio_summary"]["portfolio_ev"])
+        self.assertEqual(1000, repaired["portfolio_summary"]["total_stake"])
+        self.assertEqual("1.156799", repaired["portfolio_summary"]["portfolio_ev"])
         self.assertTrue(repaired["portfolio_summary"]["no_gami"])
-        self.assertEqual(200, repaired["unused_bankroll"])
+        self.assertEqual(0, repaired["unused_bankroll"])
         self.assertEqual(
             repaired["tickets"],
             repaired["races"][0]["tickets"],
@@ -1966,7 +1966,7 @@ class TestEVPipeline(unittest.TestCase):
             -float(decreased["weight_score"]),
         )
 
-    def test_feature_row_preserves_body_weight_as_gate_only_metadata(self):
+    def test_feature_row_preserves_body_weight_as_observation_only_metadata(self):
         current = {
             "race_id": "r_body_weight",
             "horse_id": "h1",
@@ -1982,8 +1982,93 @@ class TestEVPipeline(unittest.TestCase):
         self.assertEqual("472", feature["current_body_weight"])
         self.assertEqual("-2", feature["body_weight_change"])
         self.assertEqual("published", feature["body_weight_status"])
-        self.assertEqual("gate_only", feature["body_weight_model_usage"])
+        self.assertEqual("metadata_only", feature["body_weight_model_usage"])
         self.assertFalse(feature["body_weight_adjustment_applied"])
+
+    def test_rest_interval_uses_jra_japanese_history_date(self):
+        current = {
+            "race_id": "r_rest",
+            "horse_id": "h1",
+            "target_race_date": "2026-09-20",
+        }
+        feature = build_feature_row(current, {"latest_history_date": "2026年8月22日"})
+
+        self.assertEqual("29", feature["days_since_last_run"])
+
+    def test_history_surface_contributes_to_course_fit(self):
+        common = {
+            "race_id": "r_surface",
+            "target_surface": "芝",
+            "target_distance": "1600",
+            "target_race_date": "2026-09-20",
+            "date": "2026-08-20",
+            "distance": "1600",
+            "position": "5",
+            "time": "95",
+            "weight": "55",
+            "last_3f": "35",
+            "track_condition": "良",
+            "run_index": "1",
+        }
+        features = build_feature_rows([
+            {**common, "horse_id": "turf", "horse_number": "1", "history_surface": "芝"},
+            {**common, "horse_id": "dirt", "horse_number": "2", "history_surface": "ダート"},
+        ])
+        by_number = {row["horse_number"]: row for row in features}
+
+        self.assertGreater(by_number["1"]["course_score"], by_number["2"]["course_score"])
+
+    def test_jump_sectional_is_not_treated_as_flat_last_three_furlongs(self):
+        common = {
+            "race_id": "r_jump_history",
+            "horse_id": "h1",
+            "horse_number": "1",
+            "target_surface": "芝",
+            "target_distance": "2200",
+            "target_race_date": "2026-09-20",
+            "date": "2026年8月23日",
+            "course": "中京",
+            "position": "6",
+            "time": "205.4",
+            "weight": "60",
+            "run_index": "1",
+        }
+        feature = build_feature_rows([
+            {
+                **common,
+                "race_name": "障害未勝利",
+                "distance": "3000",
+                "last_3f": "13.7",
+            }
+        ])[0]
+
+        self.assertEqual(36.0, float(feature["avg_last3f"]))
+        self.assertEqual(0.0, float(feature["closing_strength"]))
+
+        abbreviated_jump_history = build_feature_rows([
+            {
+                **common,
+                "race_name": "ソレイユJS",
+                "distance": "3390",
+                "last_3f": "13.3",
+            }
+        ])[0]
+
+        self.assertEqual(36.0, float(abbreviated_jump_history["avg_last3f"]))
+        self.assertEqual(0.0, float(abbreviated_jump_history["closing_strength"]))
+
+        jump_target = build_feature_rows([
+            {
+                **common,
+                "target_surface": "障害",
+                "race_name": "ソレイユJS",
+                "distance": "3390",
+                "last_3f": "13.3",
+            }
+        ])[0]
+
+        self.assertEqual(36.0, float(jump_target["avg_last3f"]))
+        self.assertEqual(0.0, float(jump_target["closing_strength"]))
 
 
 if __name__ == "__main__":

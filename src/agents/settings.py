@@ -34,5 +34,7 @@ class WorkflowSettings:
     max_ev_delta_ratio: float = 0.18
     max_odds_gap_ratio: float = 0.25
     min_top3_ticket_coverage: int = 2
+    # Deprecated compatibility fields. Dependency ratios are audit-only and
+    # no longer reject ticket portfolios.
     max_horse_ticket_dependency_ratio: float = 0.50
     max_horse_stake_dependency_ratio: float = 0.60

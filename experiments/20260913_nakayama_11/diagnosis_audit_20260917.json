@@ -1,0 +1,71 @@
+{
+  "role": "reviewer",
+  "race_id": "20260913_中山_11",
+  "audit_date": "2026-09-17",
+  "status": "OK",
+  "initial_review_status": "NG",
+  "revised_review_status": "OK",
+  "resolution": "親エージェントが更新したreview.jsonを再確認。市場上限の作用、得点順位と勝率順位の区別、単一観測の校正限界、0補正に関する留保を確認した。以下findingsは初版への指摘履歴。",
+  "scope": "保存済み診断の根拠監査。新規の能力評価・馬券生成・係数変更は行わない。",
+  "sources": [
+    "report/races/20260913_中山_11/postrace/review.json",
+    "report/final_predictions/20260913_中山_11/20260913T063148Z/03_simulator.json",
+    "report/final_predictions/20260913_中山_11/20260913T063148Z/04_ev_calculator.json",
+    "src/model.py",
+    "report/races/20260913_中山_11/postrace/official_20260917.json"
+  ],
+  "recalculation": {
+    "method": "保存済みscenario_rowsを現行src.model.estimate_win_probsへ渡して再計算。ModelWeights既定値、乱数seed731、2000反復。ファイル変更なし。",
+    "all_16_displayed_win_probabilities_match_frozen": true,
+    "winner": {
+      "horse_number": 7,
+      "base_raw_softmax_probability": 0.06144208064304458,
+      "normalized_market_probability": 0.0204131155974329,
+      "dynamic_shrink_before_divergence": 0.922008,
+      "shrink_after_divergence": 0.97,
+      "base_blend_before_normalization": 0.021643984548801252,
+      "base_blend_after_normalization_before_cap": 0.025395767203666274,
+      "probability_cap": 0.02364627739889003,
+      "base_probability_after_cap": 0.02364627739889003,
+      "monte_carlo_final_probability_display": "0.023646",
+      "monte_carlo_std_display": "0",
+      "ev_display": "0.91984"
+    },
+    "limits": "rawとbase_blendは無ノイズ基準値。最終値はMonte Carlo平均。表示std=0から真のレース不確実性ゼロとは解釈しない。現行コードとの一致であり、実行当時のコード全体が同一であったことの証明ではない。"
+  },
+  "findings": [
+    {
+      "severity": "correction_required",
+      "field": "pace_diagnosis.diagnosis[2]",
+      "reason": "0.97は人気順位だけで決まらず、人気帯・馬場信頼度・モデル市場乖離の影響を受ける。最終勝率には全頭正規化と市場連動上限も作用する。",
+      "fix": "7番の基準Softmax勝率6.1442%は市場混合と全頭正規化を経て、勝率上限2.3646%に達した。市場依存が強いことは再計算で確認したが、収縮が過大かは複数レースで検証する。"
+    },
+      {
+      "severity": "correction_required",
+      "field": "pace_diagnosis.diagnosis[1]",
+      "reason": "既存資料のスロー判定はユーザー報告で公式ラップ未確認。ハイ43.2885%・スロー18%の予測はスローを排除しておらず、1結果だけで確率予測の誤りや校正不良を断定できない。",
+      "fix": "事前分布の最大値はハイ43.2885%、スロー18%。追加取得された公式ラップは前1000m62.5秒、後1000m58.8秒で、中盤が緩み終盤が加速した。スローというユーザー報告と整合するが、H/M/S分類は公式記載でなく解釈。複数レースでペース確率の妥当性を評価する。"
+    },
+    {
+      "severity": "qualification_required",
+      "field": "pace_diagnosis.diagnosis[3]",
+      "reason": "course_pace_adjustment=0、track_bias_score=0は保存事実だが、非ゼロ補正が必要だったことを当該結果だけでは証明できない。",
+      "fix": "保存済みコース展開補正とトラックバイアスはいずれも0。補正不足だったかは未検証とする。"
+    },
+    {
+      "severity": "accepted_with_limit",
+      "field": "metrics",
+      "reason": "単一レースのBrier score・log loss・順位は個別予測の損失として保存可能。母集団での校正、収縮係数の優劣、期待収益の有意差は評価できない。",
+      "fix": "single_race_calibration_conclusion=not_determinedとcoefficient_update_applied=falseを維持する。スローおよびfront_runnerタグは観測未確定と予測特徴を区別する。"
+    }
+  ],
+  "predictions_modified": false,
+  "model_parameters_modified": false,
+  "official_result_additional_fetch_included": true,
+  "official_result_audit_addendum": {
+    "winner_corner_positions": [2, 3, 4, 3],
+    "winner_last_3f_seconds": 34.2,
+    "pace_classification_official": null,
+    "interpretation": "7番が前方で運んだことは公式通過順で確認できる。先行が勝因であった程度や市場収縮の不適切さは、当該結果だけでは特定できない。"
+  }
+}

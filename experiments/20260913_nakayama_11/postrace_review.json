@@ -1,0 +1,921 @@
+{
+  "schema_version": 1,
+  "sample_role": "n1_observation",
+  "learning_status": "stocked_not_applied",
+  "race": {
+    "race_id": "20260913_中山_11",
+    "race_name": "第80回朝日杯セントライト記念",
+    "race_date": "2026-09-13",
+    "track": "中山",
+    "race_number": 11,
+    "post_time": "15:45",
+    "weather": "曇",
+    "track_condition": "稍重",
+    "surface": "芝",
+    "distance": 2200,
+    "direction": "右外"
+  },
+  "sources": {
+    "official_result_url": "https://www.jra.go.jp/JRADB/accessS.html?CNAME=pw01sde0106202604041120260913/89",
+    "official_captured_at": "2026-09-16T23:43:35.687825+00:00",
+    "official_result_scope": "all16_laps_corners_payouts",
+    "reported_pace": {
+      "value": "slow",
+      "source": "user_report",
+      "official_lap_confirmation": "lap_evidence_obtained_no_official_HMS_label"
+    },
+    "frozen_prediction_dir": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T063148Z",
+    "prediction_issued_at": "2026-09-13T06:32:01.546882+00:00",
+    "snapshot_id": "20260913_中山_11_20260913T063151Z_c0194b4b",
+    "artifact_sha256": {
+      "01_data_collector.json": "5eb0ee0068ddaaef36127267269aa4c260bfc533acc04ac00a87de9f23d58dc0",
+      "02_analyzer.json": "bbae76a1a6f04c3d4506d13e2fc4f68c07844cf77a5162de0d68b9052b3b43bb",
+      "03_simulator.json": "71d830f37343b37f59498c4494049502e05725bbe6ec78b7c52a3f090f952c7d",
+      "04_ev_calculator.json": "46f82cd5b6d93d5d3a3979a48234dff0f572a0e0f84cb20e87ac79a8a41c2268",
+      "05_bet_builder.json": "e083c9d62c28bcdf6f6ae78adbcf4fff8697d5bc431de047432e3c31c6827392",
+      "06_reviewer.json": "61dd1fe2079ade8f646fe74540cbd6f371af8067d2bc82b06ce4b3fdc01f01ee",
+      "final_decision.json": "730eb749cb42bfcd396f998af5ea0290f8a69ef56a785497e421f223c5c31b3a"
+    },
+    "official_raw_sha256": "dd87b71a3548ff71a772d90483754e471610369b655d78e28c1eda4d24e1104c"
+  },
+  "result": {
+    "finish_order": [
+      7,
+      6,
+      2
+    ],
+    "finishers": [
+      {
+        "position": 1,
+        "horse_number": 7,
+        "horse_name": "ジャスティンシカゴ",
+        "frame": 4,
+        "jockey": "原 優介",
+        "time": "2:14.0",
+        "margin": null,
+        "corner_positions": [
+          2,
+          3,
+          4,
+          3
+        ],
+        "last_3f": 34.2,
+        "popularity": 12,
+        "body_weight": 508,
+        "body_weight_change": 2
+      },
+      {
+        "position": 2,
+        "horse_number": 6,
+        "horse_name": "サヴォアフェール",
+        "frame": 3,
+        "jockey": "松山 弘平",
+        "time": "2:14.2",
+        "margin": "１",
+        "corner_positions": [
+          4,
+          3,
+          6,
+          5
+        ],
+        "last_3f": 34.3,
+        "popularity": 2,
+        "body_weight": 498,
+        "body_weight_change": 0
+      },
+      {
+        "position": 3,
+        "horse_number": 2,
+        "horse_name": "アウダーシア",
+        "frame": 1,
+        "jockey": "津村 明秀",
+        "time": "2:14.3",
+        "margin": "１／２",
+        "corner_positions": [
+          9,
+          10,
+          10,
+          8
+        ],
+        "last_3f": 34.0,
+        "popularity": 6,
+        "body_weight": 506,
+        "body_weight_change": 6
+      },
+      {
+        "position": 4,
+        "horse_number": 5,
+        "horse_name": "アスクエジンバラ",
+        "frame": 3,
+        "jockey": "岩田 康誠",
+        "time": "2:14.3",
+        "margin": "クビ",
+        "corner_positions": [
+          2,
+          2,
+          1,
+          1
+        ],
+        "last_3f": 34.8,
+        "popularity": 3,
+        "body_weight": 470,
+        "body_weight_change": 4
+      },
+      {
+        "position": 5,
+        "horse_number": 15,
+        "horse_name": "エリプティクカーブ",
+        "frame": 8,
+        "jockey": "横山 武史",
+        "time": "2:14.4",
+        "margin": "クビ",
+        "corner_positions": [
+          11,
+          11,
+          10,
+          8
+        ],
+        "last_3f": 34.1,
+        "popularity": 9,
+        "body_weight": 474,
+        "body_weight_change": 0
+      },
+      {
+        "position": 6,
+        "horse_number": 8,
+        "horse_name": "ゴーイントゥスカイ",
+        "frame": 4,
+        "jockey": "武 豊",
+        "time": "2:14.4",
+        "margin": "クビ",
+        "corner_positions": [
+          14,
+          13,
+          12,
+          11
+        ],
+        "last_3f": 34.0,
+        "popularity": 1,
+        "body_weight": 502,
+        "body_weight_change": 4
+      },
+      {
+        "position": 7,
+        "horse_number": 12,
+        "horse_name": "ラージアンサンブル",
+        "frame": 6,
+        "jockey": "岩田 望来",
+        "time": "2:14.5",
+        "margin": "３／４",
+        "corner_positions": [
+          6,
+          5,
+          3,
+          3
+        ],
+        "last_3f": 34.8,
+        "popularity": 8,
+        "body_weight": 476,
+        "body_weight_change": 6
+      },
+      {
+        "position": 8,
+        "horse_number": 3,
+        "horse_name": "バドリナート",
+        "frame": 2,
+        "jockey": "丸山 元気",
+        "time": "2:14.6",
+        "margin": "１／２",
+        "corner_positions": [
+          6,
+          7,
+          7,
+          8
+        ],
+        "last_3f": 34.4,
+        "popularity": 10,
+        "body_weight": 496,
+        "body_weight_change": 6
+      },
+      {
+        "position": 9,
+        "horse_number": 13,
+        "horse_name": "フウセン",
+        "frame": 7,
+        "jockey": "鮫島 克駿",
+        "time": "2:14.6",
+        "margin": "アタマ",
+        "corner_positions": [
+          11,
+          11,
+          12,
+          11
+        ],
+        "last_3f": 34.2,
+        "popularity": 15,
+        "body_weight": 462,
+        "body_weight_change": 2
+      },
+      {
+        "position": 10,
+        "horse_number": 4,
+        "horse_name": "リッツパーティー",
+        "frame": 2,
+        "jockey": "丹内 祐次",
+        "time": "2:14.7",
+        "margin": "クビ",
+        "corner_positions": [
+          4,
+          5,
+          4,
+          6
+        ],
+        "last_3f": 34.9,
+        "popularity": 11,
+        "body_weight": 492,
+        "body_weight_change": 6
+      },
+      {
+        "position": 11,
+        "horse_number": 9,
+        "horse_name": "サノノグレーター",
+        "frame": 5,
+        "jockey": "田辺 裕信",
+        "time": "2:14.8",
+        "margin": "１／２",
+        "corner_positions": [
+          13,
+          13,
+          14,
+          11
+        ],
+        "last_3f": 34.2,
+        "popularity": 5,
+        "body_weight": 470,
+        "body_weight_change": 8
+      },
+      {
+        "position": 12,
+        "horse_number": 16,
+        "horse_name": "ラディアントスター",
+        "frame": 8,
+        "jockey": "池添 謙一",
+        "time": "2:14.9",
+        "margin": "１／２",
+        "corner_positions": [
+          9,
+          7,
+          7,
+          6
+        ],
+        "last_3f": 34.8,
+        "popularity": 7,
+        "body_weight": 526,
+        "body_weight_change": 12
+      },
+      {
+        "position": 13,
+        "horse_number": 10,
+        "horse_name": "バステール",
+        "frame": 5,
+        "jockey": "川田 将雅",
+        "time": "2:15.0",
+        "margin": "１",
+        "corner_positions": [
+          15,
+          15,
+          14,
+          15
+        ],
+        "last_3f": 34.3,
+        "popularity": 4,
+        "body_weight": 472,
+        "body_weight_change": 8
+      },
+      {
+        "position": 14,
+        "horse_number": 1,
+        "horse_name": "ウェイクフィールド",
+        "frame": 1,
+        "jockey": "横山 和生",
+        "time": "2:15.0",
+        "margin": "ハナ",
+        "corner_positions": [
+          1,
+          1,
+          2,
+          2
+        ],
+        "last_3f": 35.5,
+        "popularity": 13,
+        "body_weight": 482,
+        "body_weight_change": 0
+      },
+      {
+        "position": 15,
+        "horse_number": 14,
+        "horse_name": "ティラーノ",
+        "frame": 7,
+        "jockey": "石橋 脩",
+        "time": "2:15.5",
+        "margin": "２ 1/2",
+        "corner_positions": [
+          15,
+          16,
+          16,
+          16
+        ],
+        "last_3f": 34.7,
+        "popularity": 16,
+        "body_weight": 470,
+        "body_weight_change": 6
+      },
+      {
+        "position": 16,
+        "horse_number": 11,
+        "horse_name": "ミリオンクラウン",
+        "frame": 6,
+        "jockey": "横山 典弘",
+        "time": "2:18.1",
+        "margin": "大差",
+        "corner_positions": [
+          8,
+          7,
+          7,
+          11
+        ],
+        "last_3f": 37.9,
+        "popularity": 14,
+        "body_weight": 508,
+        "body_weight_change": 2
+      }
+    ],
+    "payouts": [
+      {
+        "bet_type": "単勝",
+        "combination": "7",
+        "payout_yen_per_100": 5060
+      },
+      {
+        "bet_type": "複勝",
+        "combination": "7",
+        "payout_yen_per_100": 960
+      },
+      {
+        "bet_type": "複勝",
+        "combination": "6",
+        "payout_yen_per_100": 220
+      },
+      {
+        "bet_type": "複勝",
+        "combination": "2",
+        "payout_yen_per_100": 390
+      },
+      {
+        "bet_type": "枠連",
+        "combination": "3-4",
+        "payout_yen_per_100": 610
+      },
+      {
+        "bet_type": "ワイド",
+        "combination": "6-7",
+        "payout_yen_per_100": 3570
+      },
+      {
+        "bet_type": "ワイド",
+        "combination": "2-7",
+        "payout_yen_per_100": 6680
+      },
+      {
+        "bet_type": "ワイド",
+        "combination": "2-6",
+        "payout_yen_per_100": 1100
+      },
+      {
+        "bet_type": "馬連",
+        "combination": "6-7",
+        "payout_yen_per_100": 11560
+      },
+      {
+        "bet_type": "馬単",
+        "combination": "7-6",
+        "payout_yen_per_100": 30160
+      },
+      {
+        "bet_type": "三連複",
+        "combination": "2-6-7",
+        "payout_yen_per_100": 32610
+      },
+      {
+        "bet_type": "三連単",
+        "combination": "7-6-2",
+        "payout_yen_per_100": 284140
+      }
+    ],
+    "laps_200m_seconds": [
+      12.3,
+      11.2,
+      12.8,
+      12.9,
+      13.3,
+      12.7,
+      12.2,
+      12.1,
+      11.5,
+      11.4,
+      11.6
+    ],
+    "corner_order_official": {
+      "1コーナー": "1(7,5)(4,6)(3,12)11(2,16)(13,15)9,8(10,14)",
+      "2コーナー": "1,5(7,6)(4,12)(3,11,16)2(13,15)(9,8)-10,14",
+      "3コーナー": "(1,*5)12(7,4)6(3,11,16)(15,2)(13,8)(9,10)14",
+      "4コーナー": "(1,*5)(7,12)6(4,16)(3,15,2)(13,11,9,8)10,14"
+    },
+    "incident_official": "サヴォアフェール号の騎手松山弘平は、最後の直線コースで蛇行したことについて戒告。（被害馬：１５番・２番）"
+  },
+  "prediction_review": {
+    "review_status": "NG",
+    "decision": "NO_GO",
+    "decision_code": "NO_GO_FINAL_REVIEW_FAILED",
+    "official_tickets": [],
+    "actual_user_purchases": false,
+    "actual_stake_yen": 0,
+    "actual_return_yen": 0,
+    "actual_profit_yen": 0,
+    "review_reason_codes": [
+      "PREDICTED_CURRENT_EV_DIVERGENCE"
+    ]
+  },
+  "comparison": [
+    {
+      "position": 1,
+      "horse_number": 7,
+      "horse_name": "ジャスティンシカゴ",
+      "frame": 4,
+      "jockey": "原 優介",
+      "time": "2:14.0",
+      "margin": null,
+      "corner_positions": [
+        2,
+        3,
+        4,
+        3
+      ],
+      "last_3f": 34.2,
+      "popularity": 12,
+      "body_weight": 508,
+      "body_weight_change": 2,
+      "prediction_rank": 11,
+      "predicted_win_probability": 0.023646,
+      "pre_race_win_odds": 38.9,
+      "pre_race_win_ev": 0.91984
+    },
+    {
+      "position": 2,
+      "horse_number": 6,
+      "horse_name": "サヴォアフェール",
+      "frame": 3,
+      "jockey": "松山 弘平",
+      "time": "2:14.2",
+      "margin": "１",
+      "corner_positions": [
+        4,
+        3,
+        6,
+        5
+      ],
+      "last_3f": 34.3,
+      "popularity": 2,
+      "body_weight": 498,
+      "body_weight_change": 0,
+      "prediction_rank": 4,
+      "predicted_win_probability": 0.130565,
+      "pre_race_win_odds": 6.5,
+      "pre_race_win_ev": 0.848675
+    },
+    {
+      "position": 3,
+      "horse_number": 2,
+      "horse_name": "アウダーシア",
+      "frame": 1,
+      "jockey": "津村 明秀",
+      "time": "2:14.3",
+      "margin": "１／２",
+      "corner_positions": [
+        9,
+        10,
+        10,
+        8
+      ],
+      "last_3f": 34.0,
+      "popularity": 6,
+      "body_weight": 506,
+      "body_weight_change": 6,
+      "prediction_rank": 6,
+      "predicted_win_probability": 0.085312,
+      "pre_race_win_odds": 10.7,
+      "pre_race_win_ev": 0.91284
+    },
+    {
+      "position": 4,
+      "horse_number": 5,
+      "horse_name": "アスクエジンバラ",
+      "frame": 3,
+      "jockey": "岩田 康誠",
+      "time": "2:14.3",
+      "margin": "クビ",
+      "corner_positions": [
+        2,
+        2,
+        1,
+        1
+      ],
+      "last_3f": 34.8,
+      "popularity": 3,
+      "body_weight": 470,
+      "body_weight_change": 4,
+      "prediction_rank": 3,
+      "predicted_win_probability": 0.136537,
+      "pre_race_win_odds": 5.2,
+      "pre_race_win_ev": 0.709992
+    },
+    {
+      "position": 5,
+      "horse_number": 15,
+      "horse_name": "エリプティクカーブ",
+      "frame": 8,
+      "jockey": "横山 武史",
+      "time": "2:14.4",
+      "margin": "クビ",
+      "corner_positions": [
+        11,
+        11,
+        10,
+        8
+      ],
+      "last_3f": 34.1,
+      "popularity": 9,
+      "body_weight": 474,
+      "body_weight_change": 0,
+      "prediction_rank": 9,
+      "predicted_win_probability": 0.030527,
+      "pre_race_win_odds": 29.5,
+      "pre_race_win_ev": 0.900542
+    },
+    {
+      "position": 6,
+      "horse_number": 8,
+      "horse_name": "ゴーイントゥスカイ",
+      "frame": 4,
+      "jockey": "武 豊",
+      "time": "2:14.4",
+      "margin": "クビ",
+      "corner_positions": [
+        14,
+        13,
+        12,
+        11
+      ],
+      "last_3f": 34.0,
+      "popularity": 1,
+      "body_weight": 502,
+      "body_weight_change": 4,
+      "prediction_rank": 1,
+      "predicted_win_probability": 0.171761,
+      "pre_race_win_odds": 3.9,
+      "pre_race_win_ev": 0.669868
+    },
+    {
+      "position": 7,
+      "horse_number": 12,
+      "horse_name": "ラージアンサンブル",
+      "frame": 6,
+      "jockey": "岩田 望来",
+      "time": "2:14.5",
+      "margin": "３／４",
+      "corner_positions": [
+        6,
+        5,
+        3,
+        3
+      ],
+      "last_3f": 34.8,
+      "popularity": 8,
+      "body_weight": 476,
+      "body_weight_change": 6,
+      "prediction_rank": 8,
+      "predicted_win_probability": 0.039929,
+      "pre_race_win_odds": 26.9,
+      "pre_race_win_ev": 1.074087
+    },
+    {
+      "position": 8,
+      "horse_number": 3,
+      "horse_name": "バドリナート",
+      "frame": 2,
+      "jockey": "丸山 元気",
+      "time": "2:14.6",
+      "margin": "１／２",
+      "corner_positions": [
+        6,
+        7,
+        7,
+        8
+      ],
+      "last_3f": 34.4,
+      "popularity": 10,
+      "body_weight": 496,
+      "body_weight_change": 6,
+      "prediction_rank": 12,
+      "predicted_win_probability": 0.018455,
+      "pre_race_win_odds": 51.9,
+      "pre_race_win_ev": 0.95779
+    },
+    {
+      "position": 9,
+      "horse_number": 13,
+      "horse_name": "フウセン",
+      "frame": 7,
+      "jockey": "鮫島 克駿",
+      "time": "2:14.6",
+      "margin": "アタマ",
+      "corner_positions": [
+        11,
+        11,
+        12,
+        11
+      ],
+      "last_3f": 34.2,
+      "popularity": 15,
+      "body_weight": 462,
+      "body_weight_change": 2,
+      "prediction_rank": 15,
+      "predicted_win_probability": 0.008832,
+      "pre_race_win_odds": 96.1,
+      "pre_race_win_ev": 0.848761
+    },
+    {
+      "position": 10,
+      "horse_number": 4,
+      "horse_name": "リッツパーティー",
+      "frame": 2,
+      "jockey": "丹内 祐次",
+      "time": "2:14.7",
+      "margin": "クビ",
+      "corner_positions": [
+        4,
+        5,
+        4,
+        6
+      ],
+      "last_3f": 34.9,
+      "popularity": 11,
+      "body_weight": 492,
+      "body_weight_change": 6,
+      "prediction_rank": 10,
+      "predicted_win_probability": 0.024394,
+      "pre_race_win_odds": 37.5,
+      "pre_race_win_ev": 0.914787
+    },
+    {
+      "position": 11,
+      "horse_number": 9,
+      "horse_name": "サノノグレーター",
+      "frame": 5,
+      "jockey": "田辺 裕信",
+      "time": "2:14.8",
+      "margin": "１／２",
+      "corner_positions": [
+        13,
+        13,
+        14,
+        11
+      ],
+      "last_3f": 34.2,
+      "popularity": 5,
+      "body_weight": 470,
+      "body_weight_change": 8,
+      "prediction_rank": 5,
+      "predicted_win_probability": 0.114887,
+      "pre_race_win_odds": 7.6,
+      "pre_race_win_ev": 0.873142
+    },
+    {
+      "position": 12,
+      "horse_number": 16,
+      "horse_name": "ラディアントスター",
+      "frame": 8,
+      "jockey": "池添 謙一",
+      "time": "2:14.9",
+      "margin": "１／２",
+      "corner_positions": [
+        9,
+        7,
+        7,
+        6
+      ],
+      "last_3f": 34.8,
+      "popularity": 7,
+      "body_weight": 526,
+      "body_weight_change": 12,
+      "prediction_rank": 7,
+      "predicted_win_probability": 0.043225,
+      "pre_race_win_odds": 24.2,
+      "pre_race_win_ev": 1.046057
+    },
+    {
+      "position": 13,
+      "horse_number": 10,
+      "horse_name": "バステール",
+      "frame": 5,
+      "jockey": "川田 将雅",
+      "time": "2:15.0",
+      "margin": "１",
+      "corner_positions": [
+        15,
+        15,
+        14,
+        15
+      ],
+      "last_3f": 34.3,
+      "popularity": 4,
+      "body_weight": 472,
+      "body_weight_change": 8,
+      "prediction_rank": 2,
+      "predicted_win_probability": 0.147183,
+      "pre_race_win_odds": 4.8,
+      "pre_race_win_ev": 0.706479
+    },
+    {
+      "position": 14,
+      "horse_number": 1,
+      "horse_name": "ウェイクフィールド",
+      "frame": 1,
+      "jockey": "横山 和生",
+      "time": "2:15.0",
+      "margin": "ハナ",
+      "corner_positions": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "last_3f": 35.5,
+      "popularity": 13,
+      "body_weight": 482,
+      "body_weight_change": 0,
+      "prediction_rank": 13,
+      "predicted_win_probability": 0.011203,
+      "pre_race_win_odds": 75.2,
+      "pre_race_win_ev": 0.842451
+    },
+    {
+      "position": 15,
+      "horse_number": 14,
+      "horse_name": "ティラーノ",
+      "frame": 7,
+      "jockey": "石橋 脩",
+      "time": "2:15.5",
+      "margin": "２ 1/2",
+      "corner_positions": [
+        15,
+        16,
+        16,
+        16
+      ],
+      "last_3f": 34.7,
+      "popularity": 16,
+      "body_weight": 470,
+      "body_weight_change": 6,
+      "prediction_rank": 16,
+      "predicted_win_probability": 0.00397,
+      "pre_race_win_odds": 226.7,
+      "pre_race_win_ev": 0.900094
+    },
+    {
+      "position": 16,
+      "horse_number": 11,
+      "horse_name": "ミリオンクラウン",
+      "frame": 6,
+      "jockey": "横山 典弘",
+      "time": "2:18.1",
+      "margin": "大差",
+      "corner_positions": [
+        8,
+        7,
+        7,
+        11
+      ],
+      "last_3f": 37.9,
+      "popularity": 14,
+      "body_weight": 508,
+      "body_weight_change": 2,
+      "prediction_rank": 14,
+      "predicted_win_probability": 0.009573,
+      "pre_race_win_odds": 88.9,
+      "pre_race_win_ev": 0.850996
+    }
+  ],
+  "pace_diagnosis": {
+    "observed_pace": "slow",
+    "observed_pace_source": "user_report",
+    "predicted_pace_mix": {
+      "high": 0.432885,
+      "mid": 0.387115,
+      "slow": 0.18
+    },
+    "predicted_front_competitor_count": 10,
+    "predicted_front_density": 0.690738,
+    "winner": {
+      "horse_number": 7,
+      "front_rate": 0.8815,
+      "slow_scenario_score": 0.500654,
+      "slow_scenario_rank": 3,
+      "mixed_pace_score": 0.462151,
+      "ability_score": 0.4626,
+      "course_score": 0.3657,
+      "consistency": 0.1969,
+      "weight_score": -0.319,
+      "jockey_score": 0.4436,
+      "market_shrink_used": 0.97,
+      "course_pace_adjustment": 0.0,
+      "track_bias_score": 0.0,
+      "probability_cap": 0.023646
+    },
+    "diagnosis": [
+      "7番のスローシナリオ得点は16頭中3位。得点順位は条件付き勝率順位ではない。",
+      "事前スロー確率18%に対し、公式ラップは中盤が緩み終盤加速。1件では事前確率の校正不良は確定しない。",
+      "7番の最終勝率には市場への収縮0.97と勝率上限の双方が作用。収縮だけが2.3646%を決めたという前回の説明を訂正する。",
+      "コース補正が0である事実だけでは、補正を加えるべきだったとは断定できない。"
+    ]
+  },
+  "metrics": {
+    "winner_prediction_rank": 11,
+    "winner_probability": 0.023646,
+    "predicted_top3_horse_numbers": [
+      8,
+      10,
+      5
+    ],
+    "actual_top3_horse_numbers": [
+      7,
+      6,
+      2
+    ],
+    "top3_set_overlap_count": 0,
+    "multiclass_brier_sum": 1.0662399137227612,
+    "winner_log_loss": 3.7445603115407153,
+    "probability_sum_before_metric_normalization": 0.999999,
+    "single_race_calibration_conclusion": "not_determined"
+  },
+  "learning_policy": {
+    "sample_size": 1,
+    "coefficient_update_applied": false,
+    "reason": "N=1では偶然性と固有要因を分離できないため、モデル係数は変更しない。",
+    "future_batch_keys": [
+      "中山",
+      "芝",
+      "2200m",
+      "稍重",
+      "3歳",
+      "slow",
+      "front_runner",
+      "outsider_winner"
+    ],
+    "hypotheses_to_test": [
+      "先行馬数が多くてもスローになる中山芝2200mの条件を識別できるか。",
+      "スロー適性上位の穴馬に対するmarket_shrinkが過大か。",
+      "古い凡走によるconsistency低下が、近走好走馬を過度に下げていないか。",
+      "市場収縮と勝率上限の各効果を分離し、時系列の未学習レース群で校正・回収率を比較する。"
+    ]
+  },
+  "validation": {
+    "official_finisher_rows_saved": 16,
+    "payout_rows": 12,
+    "predictions_unchanged": true,
+    "payout_horse_numbers_match_top3": true,
+    "frozen_artifact_hashes_saved": true,
+    "official_laps_and_corner_positions_saved": true,
+    "lap_sum_matches_winner_time": true
+  },
+  "generated_at": "2026-09-13T07:00:00Z",
+  "pace_observations": {
+    "first_1000_seconds": 62.5,
+    "last_1000_seconds": 58.8,
+    "race_last_600_seconds": 34.5,
+    "top3_fourth_corner_positions": [
+      3,
+      5,
+      8
+    ],
+    "interpretation": "中盤が緩み終盤に加速。スローとのユーザー報告と整合する。公式H/M/S分類ではない。"
+  },
+  "limitations": [
+    "N=1から過小評価の一般性やルール変更の利益は確定しない。",
+    "勝率上位3頭の集合一致率は複勝確率の評価ではない。",
+    "実購入0円のため実回収率は定義しない。",
+    "最終払戻を当時のEV計算に混ぜない。"
+  ],
+  "reviewed_at": "2026-09-16T23:44:57.388760+00:00",
+  "reviewer_audit_file": "diagnosis_audit_20260917.json"
+}

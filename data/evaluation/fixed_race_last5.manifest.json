@@ -1,0 +1,80 @@
+{
+  "generated_at": "2026-09-29T10:53:59.859467+00:00",
+  "artifacts_root": "report/races",
+  "results": {
+    "path": "data/processed/result_labels.csv",
+    "sha256": "31f6703cb5e1d553e5a9d7c70fc240ef061216eb51c763d64ac79b4077d1be7b"
+  },
+  "output": {
+    "path": "data/evaluation/fixed_race_last5.csv",
+    "sha256": "420d858511e2257c8ad4ee9bf21b6c7dd8e1af01c916d53245a5fa24a551f54b"
+  },
+  "output_results": {
+    "path": "data/evaluation/fixed_result_labels.csv",
+    "sha256": "360e413c38a5ada0be976fe01b308e71af604d2d318167e04d7ecb7e58327849",
+    "row_count": 96
+  },
+  "source_files": [
+    {
+      "path": "report/races/20260802_新潟_07/pipeline_run.json",
+      "sha256": "88c79ef165a62cd1107196f21d5e084e39b8242cd48d45f32056960fd3a9960a"
+    },
+    {
+      "path": "report/races/20260830_新潟_08/pipeline_run.json",
+      "sha256": "51b577cf35c5ec513f444c951be1206dd9a686753a3ded1ee235fedf536560e3"
+    },
+    {
+      "path": "report/races/20260912_阪神_11/pipeline_run.json",
+      "sha256": "bb8724763295818d9fb30874423d78f98d20d058a12d5af7fce84f14c39109f2"
+    },
+    {
+      "path": "report/races/20260913_中山_11/pipeline_run.json",
+      "sha256": "c55a3d70c3c6308327b94ae85fb42d608830d9536de43f70fdbc1513a5ba7ee6"
+    },
+    {
+      "path": "report/races/20260913_阪神_11/pipeline_run.json",
+      "sha256": "0442b36309470ad6ab9a72cb2ef96c44125fb0e2ee4ae1c4b6c5b8a6833fa522"
+    },
+    {
+      "path": "report/races/20260919_中山_11/pipeline_run.json",
+      "sha256": "8644f466437d562cce1f2d765f7f6f8bbe6ef4c2716388e50cf83d8c8460db86"
+    },
+    {
+      "path": "report/races/20260920_中山_11/pipeline_run.json",
+      "sha256": "f1f1a9a581ed3cd7e0b1f5ef9b41acf2c54d9e9c143d88afae60659914af4f92"
+    },
+    {
+      "path": "report/races/20260927_中山_11/pipeline_run.json",
+      "sha256": "688c714fd6c6cd4acaf12c7c39f6032210d1e94962314d49b4e04e29feaa3009"
+    }
+  ],
+  "selected_races": [
+    "20260802_新潟_07",
+    "20260830_新潟_08",
+    "20260912_阪神_11",
+    "20260913_中山_11",
+    "20260913_阪神_11",
+    "20260919_中山_11",
+    "20260920_中山_11",
+    "20260927_中山_11"
+  ],
+  "labeled_races_missing_artifacts": [
+    "20260530_京都_11",
+    "20260607_東京_11",
+    "20260614_阪神_11",
+    "20260621_東京_11",
+    "20260621_阪神_11",
+    "20260628_函館_11",
+    "20260628_福島_11",
+    "20260712_福島_11",
+    "20260719_函館_11",
+    "20260726_中京_07",
+    "20260830_中京_07"
+  ],
+  "race_count": 8,
+  "row_count": 562,
+  "leakage_checks": {
+    "history_strictly_before_target": true,
+    "result_payout_future_fields_absent": true
+  }
+}

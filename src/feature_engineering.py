@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import datetime as _dt
 import math
+import re
 from collections import defaultdict
 from statistics import pstdev
 from typing import Iterable, Sequence
@@ -31,7 +32,7 @@ def summarize_history_rows(
         weights = _recency_weights(len(ordered))
 
         finish_values = [_to_float(row.get("position"), 10.0) for row in ordered]
-        last3f_values = [_to_float(row.get("last_3f"), DEFAULT_LAST3F) for row in ordered]
+        last3f_values = [_comparable_last3f(row) for row in ordered]
         popularity_values = [_to_float(row.get("popularity"), 10.0) for row in ordered]
         weight_values = [_to_float(row.get("weight"), DEFAULT_WEIGHT) for row in ordered]
         distance_values = [_to_float(row.get("distance"), 0.0) for row in ordered]
@@ -55,7 +56,13 @@ def summarize_history_rows(
         top3_rate = _weighted_mean([1.0 if value <= 3.0 else 0.0 for value in finish_values], weights, default=0.0)
         consistency = 1.0 / (1.0 + pstdev(finish_values)) if len(finish_values) >= 2 else 1.0
         venue_map = _weighted_counts((str(row.get("course", "")).strip() for row in ordered), weights)
-        surface_map = _weighted_counts((_surface_from_distance_field(str(row.get("distance", ""))) for row in ordered), weights)
+        surface_map = _weighted_counts(
+            (
+                _history_surface(row)
+                for row in ordered
+            ),
+            weights,
+        )
         jockey_map = _weighted_counts((str(row.get("jockey", "")).strip() for row in ordered), weights)
         track_condition_map = _weighted_counts(
             (str(row.get("track_condition", "")).strip() for row in ordered),
@@ -268,7 +275,7 @@ def build_feature_row(
         "current_body_weight": current_body_weight,
         "body_weight_change": body_weight_change,
         "body_weight_status": body_weight_status,
-        "body_weight_model_usage": "gate_only",
+        "body_weight_model_usage": "metadata_only",
         "body_weight_adjustment_applied": False,
         "current_odds": _fmt_float(current_odds),
         "current_popularity": str(current.get("current_popularity", "")).strip(),
@@ -369,6 +376,32 @@ def _distance_speed_score(row: dict[str, str]) -> float:
         return 0.0
     meters_per_second = distance / time_value
     return max(0.0, (meters_per_second - 14.0) / 3.0)
+
+
+def _comparable_last3f(row: dict[str, str]) -> float:
+    """Return a flat/dirt 3F value, neutralizing non-comparable jump sectionals."""
+    if str(row.get("target_surface", "")).strip() == "障害" or _history_surface(row) == "障害":
+        return DEFAULT_LAST3F
+    return _to_float(row.get("last_3f"), DEFAULT_LAST3F)
+
+
+def _history_surface(row: dict[str, str]) -> str:
+    race_name = str(row.get("race_name", "")).strip()
+    distance = _to_float(row.get("distance"), 0.0)
+    if "障害" in race_name or "ジャンプ" in race_name:
+        return "障害"
+    if distance >= 2700 and re.search(r"J(?:S)?$", race_name):
+        return "障害"
+
+    explicit = str(row.get("history_surface", "")).strip()
+    normalized = _surface_from_distance_field(explicit)
+    if normalized:
+        return normalized
+
+    distance_surface = _surface_from_distance_field(str(row.get("distance", "")))
+    if distance_surface:
+        return distance_surface
+    return ""
 
 
 def _distance_fit_score(avg_distance: float | str, target_distance: float) -> float:
@@ -474,6 +507,10 @@ def _odds_volatility(odds_values: Sequence[float]) -> float:
 
 
 def _days_between(start: str, end: str) -> int:
+    match = re.fullmatch(r"(\d{4})年(\d{1,2})月(\d{1,2})日", start)
+    if match:
+        year, month, day = match.groups()
+        start = f"{year}-{int(month):02d}-{int(day):02d}"
     try:
         start_date = _dt.date.fromisoformat(start)
         end_date = _dt.date.fromisoformat(end)

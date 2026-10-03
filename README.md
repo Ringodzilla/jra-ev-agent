@@ -175,8 +175,8 @@ python3 scripts/run_final_prediction.py \
 * 5分前締切内に完了
 * 8券種が同一 `snapshot_id` で取得され、出走頭数から求めた全組番が欠損なし
 * 公式オッズ、天候、馬場状態が鮮度上限内
-* 馬体重が未発表ではない（JRA公式の「計不」は取得済み状態として区別）
-  * 馬体重は現時点では取得完了と異常値の安全ゲートにのみ使用し、検証済み係数がないため能力点には加減算しない
+* 馬体重の発表を待たずに判定する。取得できた馬体重と増減は監査用に記録し、勝率や `GO / NO_GO` に反映しない
+  * 斤量（負担重量）は別の特徴量として勝率計算に使用する
 * 事前分析と最新出馬表の頭数・馬IDが一致し、各馬について `min(5, 通算出走数)` 件の過去走がある
   * 2歳戦などで通算出走数が5未満の場合は、configの `career_starts_by_horse_number` に実数を指定する
   * 初出走馬は値を `0` とし、擬似過去走を作らず中立特徴量 `0.5` で最終計算へ含める
@@ -186,12 +186,24 @@ python3 scripts/run_final_prediction.py \
 * reviewerが `OK`、買い目が存在し、フォーメーションを含む全購入点の組番がJRA実オッズに存在
 
 買い目だけがreviewerの定量条件を満たさない場合は、指示された問題券だけを除外し、100円単位で残存券を再配分します。
-修復後にportfolio EV、的中時の元返し割れ、馬依存度、上位馬カバー、JRA実オッズを再検証し、すべて合格した場合だけ `GO` へ戻します。
-残額を安全に配分できない場合は無理に使い切りません。データ品質、締切、馬体重、オッズ鮮度のNGは修復対象外です。
+修復後にportfolio EV、的中時の元返し割れ、上位馬カバー、JRA実オッズを再検証し、すべて合格した場合だけ `GO` へ戻します。
+馬ごとの券数・投資額依存度は監査値として記録しますが、購入可否の条件には使用しません。
+残額を安全に配分できない場合は無理に使い切りません。データ品質、締切、オッズ鮮度のNGは修復対象外です。
 
 いずれかが欠ける場合は `NO_GO` となり、`tickets` は必ず空になります。結果は
 `report/final_predictions/<race_id>/<run_id>/final_decision.json` に保存され、最新結果は
 `report/final_predictions/<race_id>/latest_decision.json` から参照できます。
+
+T-15確認とT-5締切向け最終更新を自動化する場合は、次のコマンドを1分ごとに実行します。
+状態ファイルで各窓を一度だけ実行します。最終更新は40秒の取得時間と10秒の出力予約を確保するため、
+既定ではT-6に開始してT-5までに判定を保存します。
+
+```bash
+python3 scripts/run_final_prediction_windows.py \
+  --config-path config/final_prediction.example.json
+```
+
+このコマンド自体は常駐せず、対象時刻以外は `NO_ACTION` を返します。cronやlaunchdなどで毎分起動してください。
 
 直前オッズの変動評価には、共有CSVに加えて、同じ出力ルート・同じレースの過去実行に保存された
 `01_data_collector.json` を使用します。収集完了・全組番取得・manifestの収集ファイルSHA256一致を確認し、
@@ -252,6 +264,16 @@ python scripts/publish_note.py
 ## Codex optimization loop (fixed-eval workflow)
 
 Codex に改善を回させる場合は、以下を固定して運用します。
+
+結果ラベルとレース別 `pipeline_run.json` の共通レースだけを集約し、過去走日が対象日より前であることと
+結果・払戻・未来情報の列がないことを検査した固定評価データを先に作成します。
+
+```bash
+python scripts/build_fixed_evaluation_dataset.py
+python scripts/evaluate_strategy.py \
+  --input data/evaluation/fixed_race_last5.csv \
+  --results data/evaluation/fixed_result_labels.csv
+```
 
 - 憲法ファイル: `CODEX_STRATEGY.md`
 - 実行プロンプト雛形: `CODEX_TASK_PROMPT.md`

@@ -697,6 +697,7 @@ def _rows_from_embedded_history(horse) -> list[dict[str, str]]:
             "course": str(history.get("course", "")),
             "race_name": str(history.get("race_name", "")),
             "distance": str(history.get("distance", "")),
+            "history_surface": str(history.get("history_surface", "")),
             "position": str(history.get("position", "")),
             "time": str(history.get("time", "")),
             "weight": str(history.get("weight", "")),

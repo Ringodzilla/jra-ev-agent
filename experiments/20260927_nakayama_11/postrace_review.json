@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "sample_role": "n1_observation",
+  "learning_status": "stocked_not_applied",
+  "race": {
+    "race_id": "20260927_中山_11",
+    "race_name": "第60回スプリンターズステークス",
+    "race_date": "2026-09-27",
+    "track": "中山",
+    "race_number": 11,
+    "post_time": "15:40",
+    "weather": "曇",
+    "track_condition": "稍重",
+    "surface": "芝",
+    "distance": 1200,
+    "direction": "右外"
+  },
+  "sources": {
+    "official_result_url": "https://www.jra.go.jp/JRADB/accessS.html?CNAME=pw01sde1006202604091120260927/F5",
+    "official_raw_file": "experiments/20260927_nakayama_11/official_result.html",
+    "official_raw_sha256": "a577dd64380a724f3e6fd2f232b7a09172588b500f223be96f6f869247e5dbfd",
+    "official_captured_at": "2026-09-29T10:47:15Z",
+    "frozen_prediction_dir": "report/final_predictions/20260927_中山_11/20260927T031109Z",
+    "prediction_issued_at": "2026-09-27T03:11:23.881617+00:00",
+    "snapshot_id": "20260927_中山_11_20260927T031114Z_8353d46d"
+  },
+  "result": {
+    "finish_order": [16, 6, 5, 9, 1, 14, 8, 4, 7, 3, 2, 15, 10, 11, 13, 12],
+    "pace": "H",
+    "harlon_times": [11.8, 10.6, 11.2, 11.4, 11.6, 12.6],
+    "finishers": [
+      {
+        "position": 1,
+        "horse_number": 16,
+        "horse_name": "ピューロマジック",
+        "corner_positions": [1, 1],
+        "last_3f": 35.6,
+        "body_weight": 464,
+        "body_weight_change": 4,
+        "popularity": 9
+      },
+      {
+        "position": 2,
+        "horse_number": 6,
+        "horse_name": "ワールズエンド",
+        "corner_positions": [3, 3],
+        "last_3f": 35.3,
+        "body_weight": 472,
+        "body_weight_change": 2,
+        "popularity": 5
+      },
+      {
+        "position": 3,
+        "horse_number": 5,
+        "horse_name": "サウンドモリアーナ",
+        "corner_positions": [5, 3],
+        "last_3f": 35.2,
+        "body_weight": 454,
+        "body_weight_change": 0,
+        "popularity": 11
+      }
+    ],
+    "payouts": [
+      {"bet_type": "単勝", "combination": "16", "payout_yen_per_100": 2450},
+      {"bet_type": "複勝", "combination": "16", "payout_yen_per_100": 810},
+      {"bet_type": "複勝", "combination": "6", "payout_yen_per_100": 390},
+      {"bet_type": "複勝", "combination": "5", "payout_yen_per_100": 800},
+      {"bet_type": "枠連", "combination": "3-8", "payout_yen_per_100": 2130},
+      {"bet_type": "ワイド", "combination": "6-16", "payout_yen_per_100": 4850},
+      {"bet_type": "ワイド", "combination": "5-16", "payout_yen_per_100": 8440},
+      {"bet_type": "ワイド", "combination": "5-6", "payout_yen_per_100": 3370},
+      {"bet_type": "馬連", "combination": "6-16", "payout_yen_per_100": 13560},
+      {"bet_type": "馬単", "combination": "16-6", "payout_yen_per_100": 28380},
+      {"bet_type": "三連複", "combination": "5-6-16", "payout_yen_per_100": 73620},
+      {"bet_type": "三連単", "combination": "16-6-5", "payout_yen_per_100": 462120}
+    ]
+  }
+}

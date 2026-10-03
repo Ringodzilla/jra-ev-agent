@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "scope": {
+    "frozen_prediction_races": 11,
+    "runner_rows": 147,
+    "history_rows": 677,
+    "selection": "latest complete pre-race 04_ev_calculator.json per race under report/final_predictions"
+  },
+  "unexpected_uniform_features_fixed": [
+    {
+      "feature": "days_since_last_run",
+      "observed": "35 for every runner in all 11 races",
+      "cause": "JRA Japanese date strings were not parsed by _days_between",
+      "fix": "parse YYYY年M月D日",
+      "verification_20260920": {
+        "before_unique": [
+          "35"
+        ],
+        "after_unique": [
+          "28",
+          "29",
+          "43",
+          "49",
+          "98",
+          "133",
+          "154",
+          "161",
+          "197",
+          "575"
+        ]
+      }
+    },
+    {
+      "feature_group": "live win odds trend",
+      "observed": {
+        "odds_snapshot_count": "1 for every runner",
+        "odds_span_minutes": "0",
+        "slopes": "0"
+      },
+      "cause": "saved win odds history was passed to bet_builder only",
+      "fix": "convert saved win odds to analyzer snapshot schema",
+      "verification_20260920": {
+        "snapshot_count_per_runner": 7,
+        "span_minutes": 440.1348
+      }
+    },
+    {
+      "feature": "history surface match",
+      "observed": "past distance was normalized to a number before feature engineering, so surface_map was empty and surface_match fell back to 0.5",
+      "cause": "no separate history_surface field",
+      "fix": "preserve history_surface before distance normalization and use it in surface_map",
+      "verification": "raw horse history parsed 芝1800/芝1400 as history_surface=芝"
+    }
+  ],
+  "uniform_due_to_missing_inputs": [
+    {
+      "inputs": "past-race odds",
+      "missing_rows": 677,
+      "total_rows": 677,
+      "affected_features": [
+        "avg_odds",
+        "odds_history_trend",
+        "odds_volatility"
+      ],
+      "observed_values": [
+        "0"
+      ],
+      "effect": "historical-odds branch remains inactive"
+    },
+    {
+      "inputs": "past-race pace",
+      "missing_rows": 677,
+      "total_rows": 677,
+      "affected_features": [
+        "pace"
+      ],
+      "effect": "stored but not used by the current win-probability formula"
+    },
+    {
+      "inputs": "past-race weather",
+      "missing_rows": 677,
+      "total_rows": 677,
+      "affected_features": [
+        "weather"
+      ],
+      "effect": "stored but not used; track_condition is separately available"
+    }
+  ],
+  "intentional_or_scope_limited_uniform_features": [
+    {
+      "feature_group": "track bias",
+      "observed": "track_bias_score/strength/frame were 0 in all 11 races",
+      "reason": "no matching configured profile for those track/surface/distance scopes"
+    },
+    {
+      "feature_group": "horse country value",
+      "observed": "horse_country blank and country_value_score 0",
+      "reason": "domestic-race path; overseas adjustment is inactive"
+    },
+    {
+      "feature": "body_weight_adjustment_applied",
+      "observed": false,
+      "reason": "body weight is metadata only after the current change"
+    },
+    {
+      "feature": "pace_mix_slow",
+      "observed": "0.18 in all 11 races",
+      "reason": "0.18 is the scenario base/floor and all audited fields had front density above the slow-pace uplift condition"
+    },
+    {
+      "feature": "short_sprint_front_density_adjustment",
+      "observed": "0 in all 11 races",
+      "reason": "conditional rule only applies to qualifying short sprints and pressure thresholds"
+    }
+  ],
+  "other_data_quality_findings": [
+    {
+      "field": "passing_order",
+      "missing_rows": 131,
+      "total_rows": 677,
+      "fallback": "front-running score 0.5 for missing rows"
+    },
+    {
+      "field": "last_3f",
+      "finding": "fallback value 36.0 is used when unavailable; 20260920 quality report recorded 14 fallback rows out of 65"
+    },
+    {
+      "field": "obstacle last sectional",
+      "finding": "values around 13 seconds are not comparable to flat-race 3F and can inflate closing_strength if obstacle history is mixed into a flat race",
+      "status": "not fixed in this audit"
+    }
+  ],
+  "files_changed": [
+    "src/feature_engineering.py",
+    "src/final_workflow.py",
+    "jra_scraper/parser.py",
+    "jra_scraper/pipeline.py",
+    "jra_scraper/validation.py",
+    "tests/test_ev_pipeline.py",
+    "tests/test_final_workflow.py",
+    "tests/test_validation.py"
+  ],
+  "validation": {
+    "targeted_tests_passed": 75,
+    "quality_checks": "OK"
+  }
+}

@@ -156,7 +156,10 @@ class FinalPredictionWorkflow:
         collected = dict(live)
         collected["rows"] = merged_rows
         collected["entries"] = list(live.get("entries") or [])
-        collected["odds_snapshots"] = live_odds_snapshots(live)
+        collected["odds_snapshots"] = analysis_win_odds_snapshots(
+            live,
+            odds_history=list(odds_history or []),
+        )
         collected["lineup"] = lineup
         collected["baseline_quality"] = baseline_quality
         collected["deadline"] = plan.to_dict()
@@ -459,7 +462,6 @@ class FinalReviewerAgent:
 
         odds_age = _age_seconds(now, collected.get("official_odds_as_of"))
         conditions_age = _age_seconds(now, conditions.get("captured_at"))
-        body_statuses = {str(row.get("body_weight_status", "unpublished")) for row in entries}
         selected_numbers = _ticket_horse_numbers(tickets, entries=entries)
         extreme_selected = [
             str(row.get("horse_number", ""))
@@ -498,14 +500,6 @@ class FinalReviewerAgent:
             "conditions_present": bool(conditions.get("weather")) and bool(conditions.get("track_condition")),
             "conditions_fresh": conditions_age is not None
             and -60 <= conditions_age <= self.settings.conditions_max_age_seconds,
-            "body_weights_released": bool(entries)
-            and body_statuses.issubset({"published", "not_measured"})
-            and all(
-                row.get("body_weight_status") != "published"
-                or _to_int(row.get("current_body_weight")) > 0
-                for row in entries
-            ),
-            "selected_body_weight_change_safe": not extreme_selected,
             "lineup_matches_baseline": bool(lineup.get("matches")),
             "baseline_history_complete": bool(baseline_quality.get("history_complete")),
             "baseline_review": bool(baseline_quality.get("review_ok")) or baseline_revalidated,
@@ -520,7 +514,7 @@ class FinalReviewerAgent:
             code = "GO_ALL_GATES_PASSED"
             decision = "GO"
             status = "OK"
-            reason = "deadline, freshness, body weight, live odds, lineup, and EV gates passed"
+            reason = "deadline, freshness, live odds, lineup, and EV gates passed"
         else:
             decision = "NO_GO"
             status = "NG"
@@ -546,6 +540,13 @@ class FinalReviewerAgent:
             "checks": checks,
             "odds_age_seconds": odds_age,
             "conditions_age_seconds": conditions_age,
+            "body_weight_audit": {
+                "published": sum(row.get("body_weight_status") == "published" for row in entries),
+                "not_measured": sum(row.get("body_weight_status") == "not_measured" for row in entries),
+                "unpublished": sum(row.get("body_weight_status") == "unpublished" for row in entries),
+                "extreme_selected_horse_numbers": extreme_selected,
+                "used_for_decision": False,
+            },
             "extreme_selected_horse_numbers": extreme_selected,
             "quantitative_review": quantitative_review,
             "baseline_review_resolution": {
@@ -1051,6 +1052,45 @@ def live_odds_snapshots(live: dict[str, object]) -> list[dict[str, object]]:
         }
         for row in list(live.get("entries") or [])
     ]
+
+
+def analysis_win_odds_snapshots(
+    live: dict[str, object],
+    *,
+    odds_history: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    """Convert saved win odds to the analyzer schema and append the current snapshot."""
+    race_ids = {str(row.get("race_id", "")).strip() for row in list(live.get("entries") or [])}
+    prior = [
+        {
+            "race_id": str(row.get("race_id", "")).strip(),
+            "horse_number": str(row.get("combination", "")).strip(),
+            "current_odds": row.get("odds", ""),
+            "current_popularity": "",
+            "captured_at": row.get("captured_at", ""),
+        }
+        for row in odds_history
+        if str(row.get("race_id", "")).strip() in race_ids
+        and str(row.get("bet_type", "")).strip() == "win"
+        and str(row.get("combination", "")).strip().isdigit()
+    ]
+    combined = [*prior, *live_odds_snapshots(live)]
+    unique: dict[tuple[str, str, str], dict[str, object]] = {}
+    for row in combined:
+        key = (
+            str(row.get("race_id", "")),
+            str(row.get("horse_number", "")),
+            str(row.get("captured_at", "")),
+        )
+        unique[key] = row
+    return sorted(
+        unique.values(),
+        key=lambda row: (
+            str(row.get("race_id", "")),
+            str(row.get("horse_number", "")),
+            str(row.get("captured_at", "")),
+        ),
+    )
 
 
 def invalidate_ticket_plan(ticket_plan: dict[str, object], reason: str) -> dict[str, object]:

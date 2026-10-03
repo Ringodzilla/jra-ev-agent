@@ -188,8 +188,11 @@ class JRAParser:
         target_date = parsed_date or header_meta.get("race_date", "") or target_race_date
         target_track = parsed_track or header_meta.get("track", "") or target_track
         target_race_number = parsed_race_number or header_meta.get("race_number", "") or target_race_number
+        effective_race_name = self._resolve_race_name(race_name, header_meta.get("race_name", ""))
         parsed_surface, parsed_distance = self._extract_race_conditions(soup)
         target_surface = parsed_surface or header_meta.get("target_surface", "") or target_surface
+        if self._is_jump_race_name(effective_race_name, parsed_distance or target_distance):
+            target_surface = "障害"
         target_distance = parsed_distance or header_meta.get("target_distance", "") or target_distance
         parsed_weather, parsed_track_condition = self._extract_current_race_conditions(
             soup,
@@ -197,8 +200,6 @@ class JRAParser:
         )
         target_weather = parsed_weather or target_weather
         target_track_condition = parsed_track_condition or target_track_condition
-        effective_race_name = self._resolve_race_name(race_name, header_meta.get("race_name", ""))
-
         horses: list[HorseEntry] = []
         for row_index, row in enumerate(rows, start=1):
             raw_cells = [self._norm(td.get_text(" ", strip=True)) for td in row.select("td")]
@@ -338,6 +339,10 @@ class JRAParser:
                 continue
 
             mapped = self._map_row(header_matches, cells)
+            history_surface, _ = self._parse_condition_text(mapped.get("distance", ""))
+            if self._is_jump_race_name(mapped.get("race_name", ""), mapped.get("distance", "")):
+                history_surface = "障害"
+            mapped["history_surface"] = history_surface
             self._apply_last_3f_fallback(
                 mapped,
                 horse_name=horse_name,
@@ -771,12 +776,14 @@ class JRAParser:
             if frame_number:
                 out["frame_number"] = frame_number
 
-        if not out.get("current_odds") and (allow_odds_fallback or aggressive_repair):
+        if not out.get("current_odds") and allow_odds_fallback:
             odds_candidates = []
             for value in texts:
-                normalized = self._normalize_decimal_like(value)
-                if not normalized:
+                # A combined horse cell contains race records such as (4.3.2.13).
+                # Only a standalone numeric cell can supply missing odds.
+                if not re.fullmatch(r"\d+(?:\.\d+)?", value):
                     continue
+                normalized = self._normalize_decimal_like(value)
                 if normalized in {out.get("frame_number", ""), out.get("horse_number", ""), out.get("assigned_weight", "")}:
                     continue
                 if "." not in value and float(normalized) < 2.0:
@@ -996,6 +1003,10 @@ class JRAParser:
             ]
             last3f_text = self._extract_text(cell, ".info_line3 .f3")
             last3f = self._extract_last_3f_value(last3f_text)
+            distance_text = self._extract_text(cell, ".info_line2 .dist")
+            history_surface, _ = self._parse_condition_text(distance_text)
+            if self._is_jump_race_name(race_name, distance_text):
+                history_surface = "障害"
 
             histories.append(
                 {
@@ -1003,7 +1014,8 @@ class JRAParser:
                     "date": date,
                     "course": self._extract_text(cell, ".date_line .rc"),
                     "race_name": race_name,
-                    "distance": self._extract_text(cell, ".info_line2 .dist"),
+                    "distance": distance_text,
+                    "history_surface": history_surface,
                     "position": self._normalize_int_like(self._extract_text(cell, ".place_line .place")),
                     "time": self._extract_text(cell, ".info_line2 .time"),
                     "weight": self._normalize_decimal_like(self._extract_text(cell, ".info_line1 .weight")),
@@ -1033,6 +1045,15 @@ class JRAParser:
             return digits
         cleaned = re.sub(r"\s+", "_", horse_name.lower())
         return re.sub(r"[^a-z0-9_\-ぁ-んァ-ヶ一-龠]", "", cleaned) or "unknown_horse"
+
+    @staticmethod
+    def _is_jump_race_name(race_name: str, distance: str = "") -> bool:
+        name = str(race_name).strip()
+        if "障害" in name or "ジャンプ" in name:
+            return True
+        distance_match = re.search(r"\d{3,4}", str(distance))
+        distance_value = int(distance_match.group(0)) if distance_match else 0
+        return distance_value >= 2700 and re.search(r"J(?:S)?$", name) is not None
 
     @staticmethod
     def _dedupe_races(items: list[RaceLink]) -> list[RaceLink]:

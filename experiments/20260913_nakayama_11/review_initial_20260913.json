@@ -1,0 +1,187 @@
+{
+  "schema_version": 1,
+  "sample_role": "n1_observation",
+  "learning_status": "stocked_not_applied",
+  "race": {
+    "race_id": "20260913_中山_11",
+    "race_name": "第80回朝日杯セントライト記念",
+    "race_date": "2026-09-13",
+    "track": "中山",
+    "race_number": 11,
+    "post_time": "15:45",
+    "weather": "曇",
+    "track_condition": "稍重",
+    "surface": "芝",
+    "distance": 2200,
+    "direction": "右外"
+  },
+  "sources": {
+    "official_result_url": "https://www.jra.go.jp/JRADB/accessS.html?CNAME=pw01sde0106202604041120260913/89",
+    "official_captured_at": "2026-09-13T07:00:00Z",
+    "official_result_scope": "top5_and_payouts",
+    "reported_pace": {
+      "value": "slow",
+      "source": "user_report",
+      "official_lap_confirmation": "pending"
+    },
+    "frozen_prediction_dir": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T063148Z",
+    "prediction_issued_at": "2026-09-13T06:32:01.546882+00:00",
+    "snapshot_id": "20260913_中山_11_20260913T063151Z_c0194b4b",
+    "artifact_sha256": {
+      "01_data_collector.json": "5eb0ee0068ddaaef36127267269aa4c260bfc533acc04ac00a87de9f23d58dc0",
+      "02_analyzer.json": "bbae76a1a6f04c3d4506d13e2fc4f68c07844cf77a5162de0d68b9052b3b43bb",
+      "03_simulator.json": "71d830f37343b37f59498c4494049502e05725bbe6ec78b7c52a3f090f952c7d",
+      "04_ev_calculator.json": "46f82cd5b6d93d5d3a3979a48234dff0f572a0e0f84cb20e87ac79a8a41c2268",
+      "05_bet_builder.json": "e083c9d62c28bcdf6f6ae78adbcf4fff8697d5bc431de047432e3c31c6827392",
+      "06_reviewer.json": "61dd1fe2079ade8f646fe74540cbd6f371af8067d2bc82b06ce4b3fdc01f01ee",
+      "final_decision.json": "730eb749cb42bfcd396f998af5ea0290f8a69ef56a785497e421f223c5c31b3a"
+    }
+  },
+  "result": {
+    "finish_order": [7, 6, 2],
+    "finishers": [
+      {
+        "position": 1,
+        "horse_number": 7,
+        "horse_name": "ジャスティンシカゴ",
+        "jockey": "原 優介",
+        "time": "2:14.0",
+        "margin": null,
+        "body_weight": 508,
+        "body_weight_change": 2,
+        "popularity": 12
+      },
+      {
+        "position": 2,
+        "horse_number": 6,
+        "horse_name": "サヴォアフェール",
+        "jockey": "松山 弘平",
+        "margin": "1",
+        "body_weight": 498,
+        "body_weight_change": 0,
+        "popularity": 2
+      },
+      {
+        "position": 3,
+        "horse_number": 2,
+        "horse_name": "アウダーシア",
+        "jockey": "津村 明秀",
+        "margin": "1/2",
+        "body_weight": 506,
+        "body_weight_change": 6,
+        "popularity": 6
+      },
+      {
+        "position": 4,
+        "horse_number": 5,
+        "horse_name": "アスクエジンバラ",
+        "jockey": "岩田 康誠",
+        "margin": "クビ",
+        "body_weight": 470,
+        "body_weight_change": 4,
+        "popularity": 3
+      },
+      {
+        "position": 5,
+        "horse_number": 15,
+        "horse_name": "エリプティクカーブ",
+        "jockey": "横山 武史",
+        "margin": "クビ",
+        "body_weight": 474,
+        "body_weight_change": 0,
+        "popularity": 9
+      }
+    ],
+    "payouts": [
+      {"bet_type": "単勝", "combination": "7", "payout_yen_per_100": 5060},
+      {"bet_type": "複勝", "combination": "7", "payout_yen_per_100": 960},
+      {"bet_type": "複勝", "combination": "6", "payout_yen_per_100": 220},
+      {"bet_type": "複勝", "combination": "2", "payout_yen_per_100": 390},
+      {"bet_type": "枠連", "combination": "3-4", "payout_yen_per_100": 610},
+      {"bet_type": "ワイド", "combination": "6-7", "payout_yen_per_100": 3570},
+      {"bet_type": "ワイド", "combination": "2-7", "payout_yen_per_100": 6680},
+      {"bet_type": "ワイド", "combination": "2-6", "payout_yen_per_100": 1100},
+      {"bet_type": "馬連", "combination": "6-7", "payout_yen_per_100": 11560},
+      {"bet_type": "馬単", "combination": "7-6", "payout_yen_per_100": 30160},
+      {"bet_type": "三連複", "combination": "2-6-7", "payout_yen_per_100": 32610},
+      {"bet_type": "三連単", "combination": "7-6-2", "payout_yen_per_100": 284140}
+    ]
+  },
+  "prediction_review": {
+    "review_status": "NG",
+    "decision": "NO_GO",
+    "decision_code": "NO_GO_FINAL_REVIEW_FAILED",
+    "official_tickets": [],
+    "actual_user_purchases": false,
+    "actual_stake_yen": 0,
+    "actual_return_yen": 0,
+    "actual_profit_yen": 0,
+    "review_reason_codes": ["PREDICTED_CURRENT_EV_DIVERGENCE"]
+  },
+  "comparison": [
+    {"position": 1, "horse_number": 7, "horse_name": "ジャスティンシカゴ", "prediction_rank": 11, "predicted_win_probability": 0.023646, "pre_race_win_odds": 38.9, "pre_race_win_ev": 0.91984, "model_score": 0.332486},
+    {"position": 2, "horse_number": 6, "horse_name": "サヴォアフェール", "prediction_rank": 4, "predicted_win_probability": 0.130565, "pre_race_win_odds": 6.5, "pre_race_win_ev": 0.848675, "model_score": 0.451235},
+    {"position": 3, "horse_number": 2, "horse_name": "アウダーシア", "prediction_rank": 6, "predicted_win_probability": 0.085312, "pre_race_win_odds": 10.7, "pre_race_win_ev": 0.91284, "model_score": 0.359749},
+    {"position": 4, "horse_number": 5, "horse_name": "アスクエジンバラ", "prediction_rank": 3, "predicted_win_probability": 0.136537, "pre_race_win_odds": 5.2, "pre_race_win_ev": 0.709992, "model_score": 0.366085},
+    {"position": 5, "horse_number": 15, "horse_name": "エリプティクカーブ", "prediction_rank": 9, "predicted_win_probability": 0.030527, "pre_race_win_odds": 29.5, "pre_race_win_ev": 0.900542, "model_score": 0.336685}
+  ],
+  "pace_diagnosis": {
+    "observed_pace": "slow",
+    "observed_pace_source": "user_report",
+    "predicted_pace_mix": {"high": 0.432885, "mid": 0.387115, "slow": 0.18},
+    "predicted_front_competitor_count": 10,
+    "predicted_front_density": 0.690738,
+    "winner": {
+      "horse_number": 7,
+      "front_rate": 0.8815,
+      "slow_scenario_score": 0.500654,
+      "slow_scenario_rank": 3,
+      "mixed_pace_score": 0.462151,
+      "ability_score": 0.4626,
+      "course_score": 0.3657,
+      "consistency": 0.1969,
+      "weight_score": -0.319,
+      "jockey_score": 0.4436,
+      "market_shrink_used": 0.97,
+      "course_pace_adjustment": 0.0,
+      "track_bias_score": 0.0
+    },
+    "diagnosis": [
+      "7番のスロー適性は16頭中3位と評価できていた。",
+      "前受け候補10頭と推定し、ハイペース43.2885%、スロー18%のレース事前分布にしたことが実結果と逆方向だった。",
+      "11番人気の市場情報による0.97の収縮が、スロー適性のシグナルを勝率2.3646%まで押し下げた。",
+      "中山芝2200mの学習済みコース展開補正と当日トラックバイアスがともに0で、スローの前受けを引き上げる根拠が不足していた。"
+    ]
+  },
+  "metrics": {
+    "winner_prediction_rank": 11,
+    "winner_probability": 0.023646,
+    "predicted_top3_horse_numbers": [8, 10, 5],
+    "actual_top3_horse_numbers": [7, 6, 2],
+    "top3_set_overlap_count": 0,
+    "multiclass_brier_sum": 1.0662399137227612,
+    "winner_log_loss": 3.7445603115407153,
+    "probability_sum_before_metric_normalization": 0.999999,
+    "single_race_calibration_conclusion": "not_determined"
+  },
+  "learning_policy": {
+    "sample_size": 1,
+    "coefficient_update_applied": false,
+    "reason": "N=1では偶然性と固有要因を分離できないため、モデル係数は変更しない。",
+    "future_batch_keys": ["中山", "芝", "2200m", "稍重", "3歳", "slow", "front_runner", "outsider_winner"],
+    "hypotheses_to_test": [
+      "先行馬数が多くてもスローになる中山芝2200mの条件を識別できるか。",
+      "スロー適性上位の穴馬に対するmarket_shrinkが過大か。",
+      "古い凡走によるconsistency低下が、近走好走馬を過度に下げていないか。"
+    ]
+  },
+  "validation": {
+    "official_finisher_rows_saved": 5,
+    "payout_rows": 12,
+    "predictions_unchanged": true,
+    "payout_horse_numbers_match_top3": true,
+    "frozen_artifact_hashes_saved": true,
+    "official_laps_and_corner_positions_saved": false
+  },
+  "generated_at": "2026-09-13T07:00:00Z"
+}

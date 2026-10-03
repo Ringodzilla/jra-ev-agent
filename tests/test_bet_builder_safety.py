@@ -1,5 +1,6 @@
 import unittest
 
+from src.agents.reviewer import _max_horse_ticket_dependency_ratio
 from src.react_workflow import ReviewerAgent, WorkflowSettings
 from strategy.betting import (
     _annotate_candidate_selection,
@@ -30,6 +31,9 @@ def _wide(combo, *, stake=100, ev=1.20, odds=12.0, hit_prob=0.10):
 
 
 class TestBetBuilderSafety(unittest.TestCase):
+    def test_empty_portfolio_has_zero_ticket_dependency(self):
+        self.assertEqual(0.0, _max_horse_ticket_dependency_ratio([]))
+
     def test_optimizer_keeps_top_win_probability_horse(self):
         tickets = [
             _wide("2-3", ev=1.40),
@@ -107,7 +111,7 @@ class TestBetBuilderSafety(unittest.TestCase):
         self.assertEqual("portfolio_optimization", by_combo["3-4"]["non_selection_reason"])
         self.assertEqual("below_minimum_ev", by_combo["5-6"]["non_selection_reason"])
 
-    def test_reviewer_rejects_amount_weighted_non_core_dependency(self):
+    def test_reviewer_reports_but_does_not_reject_horse_dependency(self):
         ev_rows = [
             {
                 "race_id": "r_safety",
@@ -150,8 +154,12 @@ class TestBetBuilderSafety(unittest.TestCase):
             attempt=0,
         )
 
+        # Other integrity gates may still reject this synthetic plan, but the
+        # dependency metric itself is informational only.
         self.assertEqual("NG", review["status"])
-        self.assertIn("horse stake dependency ratio", review["reason"])
+        self.assertEqual("0.7", review["horse_stake_dependency_ratio"])
+        self.assertFalse(review["horse_dependency_enforced"])
+        self.assertNotIn("dependency", review["reason"])
 
 
 if __name__ == "__main__":

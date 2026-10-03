@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import unittest
+from copy import deepcopy
 
 from src.react_workflow import BetBuilderAgent, WorkflowSettings
+from src.agents.reviewer import ReviewerAgent, _win5_ticket_integrity_errors
 from strategy.win5 import evaluate_win5_coverage, generate_win5_plan
 
 
@@ -78,6 +80,55 @@ class TestWin5Strategy(unittest.TestCase):
         self.assertFalse(result["hit"])
         self.assertGreaterEqual(result["top5_hit_count"], result["selected_hit_count"])
         self.assertEqual(5, len(result["leg_results"]))
+
+    def test_reviewer_validates_win5_probability_without_payout_odds(self):
+        rows = _ev_rows(probabilities=[0.34, 0.22, 0.16, 0.12, 0.09, 0.07])
+        plan = generate_win5_plan(rows, mode="win5_under_10", max_points=10)
+        collected = {
+            "quality_report": {},
+            "entries": [],
+            "race_configs": [{"race_id": f"r{index}"} for index in range(1, 6)],
+        }
+        reviewer = ReviewerAgent(WorkflowSettings(win5_max_points=10))
+
+        review = reviewer.run(collected, [], rows, plan, attempt=0)
+
+        self.assertEqual("OK", review["status"])
+        self.assertEqual("OK", review["value_integrity"]["status"])
+        self.assertNotIn("expected_return", plan["portfolio_summary"])
+
+        broken_plan = dict(plan, tickets=[dict(ticket) for ticket in plan["tickets"]])
+        broken_plan["tickets"][0]["hit_prob"] = "0.9"
+        broken_review = reviewer.run(collected, [], rows, broken_plan, attempt=0)
+        self.assertEqual("NG", broken_review["status"])
+        self.assertIn("TICKET_VALUE_INTEGRITY_INVALID", broken_review["reason_codes"])
+
+    def test_win5_integrity_rejects_tampered_formation(self):
+        rows = _ev_rows(probabilities=[0.34, 0.22, 0.16, 0.12, 0.09, 0.07])
+        plan = generate_win5_plan(rows, mode="win5_under_10", max_points=10)
+        self.assertEqual([], _win5_ticket_integrity_errors(plan["tickets"], plan))
+
+        mutations = [
+            (lambda p: p.update(points=p["points"] + 1), "point count"),
+            (lambda p: p.update(stake_yen_per_point=50), "100-yen unit"),
+            (lambda p: p.update(total_stake=0), "total stake"),
+            (lambda p: p["tickets"].pop(), "ticket count"),
+            (lambda p: p["portfolio_summary"].update(total_points=0), "portfolio point count"),
+            (lambda p: p["portfolio_summary"].update(total_stake=0), "portfolio stake"),
+            (lambda p: p["tickets"][0].update(horse_number="99-99-99-99-99"), "ticket combinations"),
+            (lambda p: p["tickets"][0].update(bet_type="win"), "wrong bet type"),
+            (lambda p: p["tickets"][0].update(stake=200), "wrong stake"),
+            (lambda p: p.update(estimated_hit_prob="0.9"), "estimated hit probability"),
+            (lambda p: p["portfolio_summary"].update(estimated_hit_prob="0.9"), "portfolio hit probability"),
+        ]
+        for mutate, expected_error in mutations:
+            with self.subTest(error=expected_error):
+                broken = deepcopy(plan)
+                mutate(broken)
+                self.assertTrue(any(
+                    expected_error in error
+                    for error in _win5_ticket_integrity_errors(broken["tickets"], broken)
+                ))
 
 
 def _ev_rows(

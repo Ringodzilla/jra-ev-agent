@@ -1,0 +1,47 @@
+{
+  "key_id": "286b408477f56b17",
+  "schema_version": 2,
+  "signature": "31f71c7e1c8d4f822078866951fde28b697b552cca02d1f29a729327e14ec448",
+  "signature_algorithm": "hmac-sha256",
+  "snapshot": {
+    "files": {
+      "baseline": {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/fixed_eval/baseline.json",
+        "sha256": "355762c28bf02cff9288ce88e3a6d965a12740246130b327a0f7d46bc22da181",
+        "size_bytes": 547
+      },
+      "constitution": {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/CODEX_STRATEGY.md",
+        "sha256": "5aa732d882eb587b5a3e03f0dfbc11bdbbd509731ba44197b9897617a2350240",
+        "size_bytes": 3174
+      },
+      "evaluator": {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/scripts/evaluate_strategy.py",
+        "sha256": "8fdfb5fb4140f22a9557792ce81787e0a34d4f4d09a745607e0ea2d6ccf735be",
+        "size_bytes": 17791
+      },
+      "input": {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/evaluation/fixed_race_last5.csv",
+        "sha256": "420d858511e2257c8ad4ee9bf21b6c7dd8e1af01c916d53245a5fa24a551f54b",
+        "size_bytes": 163449
+      },
+      "leakage_guard": {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/scripts/check_feature_leakage.py",
+        "sha256": "4138edc363f5bf615306080c2e835f28769cc12af7c9a34f19add82e6cd6ec99",
+        "size_bytes": 1472
+      },
+      "results": {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/evaluation/fixed_result_labels.csv",
+        "sha256": "360e413c38a5ada0be976fe01b308e71af604d2d318167e04d7ecb7e58327849",
+        "size_bytes": 3684
+      }
+    },
+    "parameters": {
+      "max_bets_per_race": "2",
+      "min_ev": "1.05",
+      "stake": "100"
+    },
+    "schema_version": 1
+  },
+  "snapshot_sha256": "f3ef0e92181ad1f5065a52471104057dfc8025aa04b0931ac39bd41006c21ee8"
+}

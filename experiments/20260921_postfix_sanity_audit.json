@@ -1,0 +1,112 @@
+{
+  "audit_scope": "latest non-empty frozen prediction per race; analyzer -> simulator -> EV recalculation",
+  "probability_sum_tolerance": 2e-06,
+  "race_count": 11,
+  "runner_count": 147,
+  "closing_strength_global_min": 0.0,
+  "closing_strength_global_max": 1.0667,
+  "ng_races": [],
+  "errors": [],
+  "status": "OK",
+  "races": [
+    {
+      "race_id": "20260823_新潟_07",
+      "runner_count": 10,
+      "win_probability_sum": 0.999999,
+      "closing_strength_min": 0.0459,
+      "closing_strength_max": 1.0667,
+      "nonfinite_fields": [],
+      "status": "OK"
+    },
+    {
+      "race_id": "20260823_札幌_11",
+      "runner_count": 16,
+      "win_probability_sum": 0.999999,
+      "closing_strength_min": 0.3486,
+      "closing_strength_max": 0.7848,
+      "nonfinite_fields": [],
+      "status": "OK"
+    },
+    {
+      "race_id": "20260830_新潟_08",
+      "runner_count": 11,
+      "win_probability_sum": 0.999999,
+      "closing_strength_min": 0.0019,
+      "closing_strength_max": 0.7852,
+      "nonfinite_fields": [],
+      "status": "OK"
+    },
+    {
+      "race_id": "20260905_中山_11",
+      "runner_count": 16,
+      "win_probability_sum": 0.999999,
+      "closing_strength_min": 0.0,
+      "closing_strength_max": 0.7757,
+      "nonfinite_fields": [],
+      "status": "OK"
+    },
+    {
+      "race_id": "20260906_中山_11",
+      "runner_count": 11,
+      "win_probability_sum": 0.999999,
+      "closing_strength_min": 0.1781,
+      "closing_strength_max": 0.8324,
+      "nonfinite_fields": [],
+      "status": "OK"
+    },
+    {
+      "race_id": "20260912_阪神_11",
+      "runner_count": 16,
+      "win_probability_sum": 1.0,
+      "closing_strength_min": 0.0,
+      "closing_strength_max": 0.6443,
+      "nonfinite_fields": [],
+      "status": "OK"
+    },
+    {
+      "race_id": "20260913_中山_11",
+      "runner_count": 16,
+      "win_probability_sum": 0.999999,
+      "closing_strength_min": 0.0,
+      "closing_strength_max": 0.7438,
+      "nonfinite_fields": [],
+      "status": "OK"
+    },
+    {
+      "race_id": "20260913_阪神_11",
+      "runner_count": 12,
+      "win_probability_sum": 1.000001,
+      "closing_strength_min": 0.2205,
+      "closing_strength_max": 0.9085,
+      "nonfinite_fields": [],
+      "status": "OK"
+    },
+    {
+      "race_id": "20260919_中山_11",
+      "runner_count": 14,
+      "win_probability_sum": 1.0,
+      "closing_strength_min": 0.0,
+      "closing_strength_max": 0.4786,
+      "nonfinite_fields": [],
+      "status": "OK"
+    },
+    {
+      "race_id": "20260919_阪神_04",
+      "runner_count": 12,
+      "win_probability_sum": 0.999999,
+      "closing_strength_min": 0.0,
+      "closing_strength_max": 0.021,
+      "nonfinite_fields": [],
+      "status": "OK"
+    },
+    {
+      "race_id": "20260920_中山_11",
+      "runner_count": 13,
+      "win_probability_sum": 1.0,
+      "closing_strength_min": 0.0,
+      "closing_strength_max": 0.6143,
+      "nonfinite_fields": [],
+      "status": "OK"
+    }
+  ]
+}

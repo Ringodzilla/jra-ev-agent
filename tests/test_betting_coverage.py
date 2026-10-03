@@ -308,7 +308,7 @@ def test_generate_tickets_reports_portfolio_failure_reasons() -> None:
         patch.object(betting, "_max_horse_stake_dependency_ratio", return_value=0.9),
     ):
         dependency = betting.generate_tickets([row], max_horse_stake_dependency_ratio=0.6)
-    assert dependency["races"][0]["selection_reason"] == "horse_stake_dependency_limit_exceeded"
+    assert dependency["races"][0]["selection_reason"] == "optimized_portfolio"
 
     with (
         patch.object(betting, "_select_optimized_tickets", return_value=[selected]),

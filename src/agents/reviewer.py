@@ -153,25 +153,10 @@ class ReviewerAgent:
                     "TOP3_COVERAGE_LOW",
                     f"top-3 ticket coverage is too low: {len(covered_top)}/{required_top_coverage}"
                 )
-            dependency_ratio = _max_horse_ticket_dependency_ratio(value_tickets)
-            if value_tickets and dependency_ratio > self.settings.max_horse_ticket_dependency_ratio:
-                reject(
-                    "HORSE_TICKET_DEPENDENCY_HIGH",
-                    f"horse ticket dependency ratio is too high: {dependency_ratio:.3f}"
-                )
             stake_dependency_ratio = _max_non_core_horse_stake_dependency_ratio(
                 value_tickets,
                 ev_rows,
             )
-            if (
-                value_tickets
-                and stake_dependency_ratio > self.settings.max_horse_stake_dependency_ratio
-            ):
-                reject(
-                    "HORSE_STAKE_DEPENDENCY_HIGH",
-                    "horse stake dependency ratio is too high: "
-                    f"{stake_dependency_ratio:.3f}"
-                )
 
             if value_tickets and portfolio_ev(value_tickets) < self.settings.min_portfolio_ev:
                 reject("PORTFOLIO_EV_LOW", "ticket portfolio EV is below the configured minimum")
@@ -253,6 +238,7 @@ class ReviewerAgent:
             "max_horse_stake_dependency_ratio": _fmt(
                 self.settings.max_horse_stake_dependency_ratio
             ),
+            "horse_dependency_enforced": False,
             "horse_stake_dependency_scope": "outside_top3_win_probability",
             "probability_lineage": {
                 "status": "NG" if lineage_errors else "OK",
@@ -593,13 +579,6 @@ def _repair_portfolio_safe(
     if not tickets or portfolio_total_stake(tickets) <= 0:
         return False
     if portfolio_ev(tickets) < settings.min_portfolio_ev or not portfolio_no_gami(tickets):
-        return False
-    if _max_horse_ticket_dependency_ratio(tickets) > settings.max_horse_ticket_dependency_ratio:
-        return False
-    if (
-        _max_non_core_horse_stake_dependency_ratio(tickets, ev_rows)
-        > settings.max_horse_stake_dependency_ratio
-    ):
         return False
     if any(
         _ticket_ev(ticket, default=0.0) < _ticket_min_ev(ticket, settings)
@@ -950,6 +929,9 @@ def _ticket_value_integrity_errors(
     ticket_plan: dict[str, object],
 ) -> list[str]:
     """Fail closed when official-live ticket values are not reproducible."""
+    if str(ticket_plan.get("bet_type", "")) == "win5":
+        return _win5_ticket_integrity_errors(tickets, ticket_plan)
+
     errors: list[str] = []
     for ticket in tickets:
         if str(ticket.get("odds_source", "")) != "jra_live":
@@ -1004,6 +986,61 @@ def _ticket_value_integrity_errors(
             - _to_float(canonical.get("portfolio_ev"))
         ) > 0.00001:
             errors.append("portfolio EV does not match canonical recomputation")
+    return errors
+
+
+def _win5_ticket_integrity_errors(
+    tickets: list[dict[str, object]],
+    ticket_plan: dict[str, object],
+) -> list[str]:
+    """Validate WIN5 formation arithmetic without inventing a pre-race payout."""
+    errors: list[str] = []
+    legs = list(ticket_plan.get("legs") or [])
+    if len(legs) != 5:
+        return errors  # The reviewer reports the leg-count failure separately.
+
+    selections = [list(leg.get("horses") or []) for leg in legs]
+    expected_points = math.prod(len(horses) for horses in selections)
+    stake_per_point = int(_to_float(ticket_plan.get("stake_yen_per_point")))
+    expected_stake = expected_points * stake_per_point
+    declared_summary = dict(ticket_plan.get("portfolio_summary") or {})
+    if expected_points <= 0 or int(_to_float(ticket_plan.get("points"), -1)) != expected_points:
+        errors.append("WIN5 point count does not match selected horses")
+    if stake_per_point < 100 or stake_per_point % 100 != 0:
+        errors.append("WIN5 stake per point must be a positive 100-yen unit")
+    if int(_to_float(ticket_plan.get("total_stake"), -1)) != expected_stake:
+        errors.append("WIN5 total stake does not match selected horses")
+    if len(tickets) != expected_points:
+        errors.append("WIN5 ticket count does not match formation points")
+    if int(_to_float(declared_summary.get("total_points"), -1)) != expected_points:
+        errors.append("WIN5 portfolio point count does not match formation")
+    if int(_to_float(declared_summary.get("total_stake"), -1)) != expected_stake:
+        errors.append("WIN5 portfolio stake does not match formation")
+
+    expected_tickets = {}
+    for horses in product(*selections):
+        numbers = "-".join(str(horse.get("horse_number", "")) for horse in horses)
+        probability = math.prod(_to_float(horse.get("win_prob")) for horse in horses)
+        expected_tickets[numbers] = probability
+    actual_numbers = [str(ticket.get("horse_number", "")) for ticket in tickets]
+    if len(set(actual_numbers)) != len(actual_numbers) or set(actual_numbers) != set(expected_tickets):
+        errors.append("WIN5 ticket combinations do not match selected horses")
+    for ticket in tickets:
+        number = str(ticket.get("horse_number", ""))
+        if str(ticket.get("bet_type", "")) != "win5":
+            errors.append(f"WIN5 ticket {number} has wrong bet type")
+        if int(_to_float(ticket.get("stake"), -1)) != stake_per_point:
+            errors.append(f"WIN5 ticket {number} has wrong stake")
+        if number in expected_tickets and abs(
+            _to_float(ticket.get("hit_prob"), -1) - expected_tickets[number]
+        ) > 0.000001:
+            errors.append(f"WIN5 ticket {number} probability does not match selected horses")
+
+    expected_hit_prob = sum(expected_tickets.values())
+    if abs(_to_float(ticket_plan.get("estimated_hit_prob"), -1) - expected_hit_prob) > 0.000001:
+        errors.append("WIN5 estimated hit probability does not match formation")
+    if abs(_to_float(declared_summary.get("estimated_hit_prob"), -1) - expected_hit_prob) > 0.000001:
+        errors.append("WIN5 portfolio hit probability does not match formation")
     return errors
 
 
