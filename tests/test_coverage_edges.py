@@ -59,13 +59,12 @@ from src.model import (
     ModelWeights,
     _apply_probability_caps,
     _blend_probabilities,
-    _market_divergence_shrink,
+    _front_value_audit,
     _market_probs,
     _monte_carlo_win_probs,
     _normalize_probs,
     _predict_live_odds,
     _predict_structural_odds,
-    _probability_cap,
     _softmax,
     _to_float as model_to_float,
 )
@@ -513,8 +512,19 @@ def test_model_empty_single_iteration_and_calibration_edges() -> None:
     assert _apply_probability_caps([0.5, 0.5], [0.2, 0.3]) == pytest.approx([0.4, 0.6])
     assert _apply_probability_caps([0.0, 0.0], [0.5, 0.5]) == [0.5, 0.5]
     assert sum(_apply_probability_caps([0.99, 0.01], [0.2, 1.0])) == pytest.approx(1.0)
-    assert _market_divergence_shrink(0.0, 0.2, 0.4, band="favorite") == 0.4
-    assert _probability_cap({}, market_prob=0.0, band="favorite") == 1.0
+    front_audit = _front_value_audit(
+        {
+            "front_rate": 0.8,
+            "relative_front_rank": 0.8,
+            "history_count": 5,
+            "current_odds": 20,
+            "pace_mid": 0.5,
+        },
+        structural_win_prob=0.1,
+        market_prob=0.0,
+        current_odds=20,
+    )
+    assert "missing_model_to_market_ratio" in front_audit["front_value_failure_reasons"]
     assert _softmax([]) == []
     assert model_to_float(object(), 7.0) == 7.0
 

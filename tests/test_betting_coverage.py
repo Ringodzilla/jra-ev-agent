@@ -54,6 +54,16 @@ def _ticket(
 def test_ticket_builder_rejection_and_flat_stake_edges() -> None:
     assert betting._build_win_ticket({"win_prob": "0", "current_odds": "10"}, bankroll_per_race=1000, kelly_fraction=0.3) is None
     assert betting._build_win_ticket({"win_prob": "0.1", "current_odds": "10.6"}, bankroll_per_race=100, kelly_fraction=0.01) is None
+    assert betting._build_win_ticket(
+        {
+            "win_prob": "0.05",
+            "current_odds": "200",
+            "history_count": "1",
+            "consistency": "0.1",
+        },
+        bankroll_per_race=1000,
+        kelly_fraction=0.3,
+    ) is None
 
     left, right = _row(1), _row(2)
     with (
