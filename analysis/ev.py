@@ -13,14 +13,14 @@ from src.track_bias import course_pace_adjustment
 
 @dataclass
 class EVWeights:
-    ability: float = 0.42
-    course: float = 0.14
-    pace: float = 0.16
-    weight: float = 0.08
-    jockey: float = 0.08
-    market: float = 0.12
+    ability: float = 0.4772727273
+    course: float = 0.1590909091
+    pace: float = 0.1818181818
+    weight: float = 0.0909090909
+    jockey: float = 0.0909090909
+    market: float = 0.0
     temperature: float = 1.15
-    market_shrink: float = 0.25
+    market_shrink: float = 0.0
     monte_carlo_iterations: int = 2000
     monte_carlo_seed: int = 731
     luck_score_std: float = 0.16

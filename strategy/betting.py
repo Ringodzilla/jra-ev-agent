@@ -29,14 +29,14 @@ from strategy.portfolio import (
 MIN_WIN_EV = 1.05
 MIN_ACTIONABLE_WIN_EV = 1.08
 BET_TYPE_MARKET_SHRINK = {
-    "win": 0.35,
-    "place": 0.45,
-    "wide": 0.55,
-    "wakuren": 0.60,
-    "umaren": 0.62,
-    "umatan": 0.70,
-    "sanrenpuku": 0.76,
-    "sanrentan": 0.82,
+    "win": 0.0,
+    "place": 0.0,
+    "wide": 0.0,
+    "wakuren": 0.0,
+    "umaren": 0.0,
+    "umatan": 0.0,
+    "sanrenpuku": 0.0,
+    "sanrentan": 0.0,
 }
 
 
@@ -118,6 +118,7 @@ def generate_tickets(
     core: list[dict[str, object]] = []
     partner: list[dict[str, object]] = []
     longshots: list[dict[str, object]] = []
+    front_value_candidates: list[dict[str, object]] = []
     candidate_references: list[dict[str, object]] = []
     aggregate_candidate_counts: dict[str, int] = defaultdict(int)
 
@@ -137,6 +138,10 @@ def generate_tickets(
             for row in enriched
             if _win_candidate_ev(row, live_odds) >= min_win_ev
             and _live_or_current_win_odds(row, live_odds) > 0
+            and _win_ticket_evidence_eligible(
+                row,
+                odds=_live_or_current_win_odds(row, live_odds),
+            )
         ]
         place_candidates = _build_place_candidates(
             enriched,
@@ -251,6 +256,10 @@ def generate_tickets(
             if _win_candidate_ev(row, live_odds)
             >= max(min_win_ev, MIN_ACTIONABLE_WIN_EV)
             and _live_or_current_win_odds(row, live_odds) > 0
+            and _win_ticket_evidence_eligible(
+                row,
+                odds=_live_or_current_win_odds(row, live_odds),
+            )
         }
         represented_win_candidate_numbers = {
             str(ticket.get("horse_number", "")).strip()
@@ -328,6 +337,7 @@ def generate_tickets(
         race_core = [_horse_summary(row) for row in place_ranked[:2] if _to_float(row.get("place_prob")) >= 0.22]
         race_partner = [_horse_summary(row) for row in place_ranked[2:4] if _to_float(row.get("place_prob")) >= 0.16]
         race_long = _build_race_longshots(enriched, min_win_ev=min_win_ev, limit=2)
+        race_front_value_candidates = _front_value_candidates(enriched)
         race_core, race_partner, race_long = _reconcile_ticket_classifications(
             race_core,
             race_partner,
@@ -339,12 +349,14 @@ def generate_tickets(
         core.extend(race_core)
         partner.extend(race_partner)
         longshots.extend(race_long)
+        front_value_candidates.extend(race_front_value_candidates)
         races.append(
             {
                 "race_id": race_id,
                 "core": race_core,
                 "partner": race_partner,
                 "long": race_long,
+                "front_value_candidates": race_front_value_candidates,
                 "candidate_counts": candidate_counts,
                 "candidates": candidate_pool,
                 "exotics": exotic_candidates[:max_exotic_tickets_per_race],
@@ -402,6 +414,7 @@ def generate_tickets(
         "core": core,
         "partner": partner,
         "long": longshots,
+        "front_value_candidates": front_value_candidates,
         "tickets": flat_tickets,
         "races": races,
         "bet_types_considered": ["win", "place", "wide", "wakuren", "umaren", "umatan", "sanrenpuku", "sanrentan"],
@@ -428,6 +441,7 @@ def _probability_lineage_failure_plan(
         "core": [],
         "partner": [],
         "long": [],
+        "front_value_candidates": [],
         "tickets": [],
         "races": [],
         "bet_types_considered": list(BET_TYPE_MARKET_SHRINK),
@@ -539,6 +553,7 @@ def _generate_tickets_from_candidate_evaluations(
     core: list[dict[str, object]] = []
     partner: list[dict[str, object]] = []
     longshots: list[dict[str, object]] = []
+    front_value_candidates: list[dict[str, object]] = []
     aggregate_counts: dict[str, int] = defaultdict(int)
     per_race_limit = max(max_tickets_per_race, 5) if mode == "aggressive" else max_tickets_per_race
     rank_coverage_budget = max(0, min(rank_coverage_budget_yen, bankroll_per_race))
@@ -648,15 +663,25 @@ def _generate_tickets_from_candidate_evaluations(
         race_core = [_horse_summary(row) for row in place_ranked[:2]]
         race_partner = [_horse_summary(row) for row in place_ranked[2:4]]
         race_long = _build_race_longshots(race_rows, min_win_ev=thresholds["win"], limit=2)
+        race_front_value_candidates = _front_value_candidates(race_rows)
+        race_core, race_partner, race_long = _reconcile_ticket_classifications(
+            race_core,
+            race_partner,
+            race_long,
+            race_tickets,
+            race_rows,
+        )
         core.extend(race_core)
         partner.extend(race_partner)
         longshots.extend(race_long)
+        front_value_candidates.extend(race_front_value_candidates)
         races.append(
             {
                 "race_id": race_id,
                 "core": race_core,
                 "partner": race_partner,
                 "long": race_long,
+                "front_value_candidates": race_front_value_candidates,
                 "candidate_counts": counts,
                 "candidates": annotated,
                 "tickets": race_tickets,
@@ -672,6 +697,7 @@ def _generate_tickets_from_candidate_evaluations(
         "core": core,
         "partner": partner,
         "long": longshots,
+        "front_value_candidates": front_value_candidates,
         "tickets": flat_tickets,
         "races": races,
         "bet_types_considered": list(BET_TYPE_MARKET_SHRINK),
@@ -865,6 +891,7 @@ def _canonical_ticket_from_evaluation(
         str(row_by_number.get(number, {}).get("horse_name", number))
         for number in horse_numbers
     ]
+    constituent_rows = [row_by_number[number] for number in horse_numbers if number in row_by_number]
     raw_prob = _to_float(evaluation.get("hit_prob"))
     official_odds = _to_float(evaluation.get("official_odds"))
     ticket: dict[str, object] = {
@@ -885,6 +912,14 @@ def _canonical_ticket_from_evaluation(
         "source_candidate_key": str(evaluation.get("key", "")),
         "source_snapshot_id": str(evaluation.get("snapshot_id", "")),
         "source_captured_at": str(evaluation.get("captured_at", "")),
+        "history_count": min(
+            (_to_float(row.get("history_count"), 0.0) for row in constituent_rows),
+            default=0.0,
+        ),
+        "consistency": min(
+            (_to_float(row.get("consistency"), 0.5) for row in constituent_rows),
+            default=0.5,
+        ),
         "legs": [
             {
                 "horse_number": number,
@@ -974,6 +1009,10 @@ def _build_win_ticket(
     ev = prob * odds if odds > 0 else _to_float(row.get("ev"))
     if prob <= 0 or odds <= 1.0 or ev < MIN_WIN_EV:
         return None
+    # Do not rewrite the probability toward the market.  Thin-history extreme
+    # prices are handled as an investment eligibility risk instead.
+    if not _win_ticket_evidence_eligible(row, odds=odds):
+        return None
 
     full_kelly = ((odds * prob) - 1.0) / max(odds - 1.0, 1e-6)
     recommended_fraction = max(0.0, min(0.30, full_kelly * kelly_fraction))
@@ -1005,6 +1044,14 @@ def _build_win_ticket(
         "predicted_odds_source": "jra_live" if live else str(row.get("predicted_odds_source", "")),
         "odds_source": "jra_live" if live else "entry",
     }
+
+
+def _win_ticket_evidence_eligible(row: dict[str, object], *, odds: float) -> bool:
+    if odds <= 30.0:
+        return True
+    history_count = _to_float(row.get("history_count"), 0.0)
+    consistency = _to_float(row.get("consistency"), 0.5)
+    return history_count >= 3.0 and consistency >= 0.30
 
 
 def _build_place_candidates(
@@ -2099,7 +2146,7 @@ def _build_exotic_ticket(
 
 
 def _horse_summary(row: dict[str, object]) -> dict[str, object]:
-    return {
+    summary = {
         "race_id": str(row.get("race_id", "")),
         "horse_id": str(row.get("horse_id", "")),
         "horse_name": str(row.get("horse_name", "")),
@@ -2115,6 +2162,19 @@ def _horse_summary(row: dict[str, object]) -> dict[str, object]:
         "probability_band": str(row.get("probability_band") or _probability_band_from_row(row)),
         "long_reason": str(row.get("long_reason", "")),
     }
+    for key in (
+        "front_value_candidate",
+        "front_value_score",
+        "front_value_reasons",
+        "front_value_failure_reasons",
+        "structural_win_prob",
+        "structural_ev_current",
+        "model_to_market_ratio",
+        "market_prob",
+    ):
+        if key in row:
+            summary[key] = row[key]
+    return summary
 
 
 def _build_race_longshots(
@@ -2126,6 +2186,11 @@ def _build_race_longshots(
     if not rows or limit <= 0:
         return []
 
+    front_longs = [
+        _with_long_reason(row, "front_value_candidate")
+        for row in rows
+        if row.get("front_value_candidate") is True
+    ]
     value_longs = [
         _with_long_reason(row, "win_ev_threshold")
         for row in rows
@@ -2133,10 +2198,14 @@ def _build_race_longshots(
         and _to_float(row.get("ev")) >= max(min_win_ev, MIN_ACTIONABLE_WIN_EV)
     ]
     model_longs = _model_score_longshots(rows)
-    merged = _dedupe_rows_by_horse_number(value_longs + model_longs)
+    merged = _dedupe_rows_by_horse_number(front_longs + value_longs + model_longs)
     merged.sort(
         key=lambda row: (
-            str(row.get("long_reason")) == "top_model_score_longshot",
+            {
+                "front_value_candidate": 2,
+                "top_model_score_longshot": 1,
+            }.get(str(row.get("long_reason")), 0),
+            _to_float(row.get("front_value_score")),
             _to_float(row.get("ev")),
             _to_float(row.get("model_score")),
             _to_float(row.get("win_prob")),
@@ -2144,6 +2213,18 @@ def _build_race_longshots(
         reverse=True,
     )
     return [_horse_summary(row) for row in merged[:limit]]
+
+
+def _front_value_candidates(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    candidates = [row for row in rows if row.get("front_value_candidate") is True]
+    candidates.sort(
+        key=lambda row: (
+            _to_float(row.get("front_value_score")),
+            _to_float(row.get("structural_ev_current") or row.get("ev")),
+        ),
+        reverse=True,
+    )
+    return [_horse_summary(row) for row in candidates]
 
 
 def _reconcile_ticket_classifications(
@@ -2166,9 +2247,11 @@ def _reconcile_ticket_classifications(
             out.append(item)
         return out
 
+    # Preserve every explicitly admitted longshot lane before assigning the
+    # mutually-exclusive core and partner classifications.
+    longshots = unique(longshots)
     core = unique(core)
     partner = unique(partner)
-    longshots = unique(longshots)
     rows_by_number = {str(row.get("horse_number", "")).strip(): row for row in rows}
     ticket_numbers: set[str] = set()
     for ticket in tickets:
@@ -2846,25 +2929,9 @@ def _calibrate_ticket_probabilities(tickets: list[dict[str, object]]) -> list[di
 
 
 def _ticket_market_shrink(ticket: dict[str, object], *, bet_type: str, odds: float) -> float:
-    """Continuously increase market shrink for thin, low-evidence win bets."""
-    base_shrink = BET_TYPE_MARKET_SHRINK.get(bet_type, 0.65)
-    if bet_type != "win" or odds <= 15.0:
-        return base_shrink
-
-    consistency = _clamp(_to_float(ticket.get("consistency"), 0.5), minimum=0.0, maximum=1.0)
-    history = _clamp(_to_float(ticket.get("history_count"), 0.0) / 5.0, minimum=0.0, maximum=1.0)
-    evidence = (0.65 * consistency) + (0.35 * history)
-    odds_risk = _clamp(
-        math.log(odds / 15.0) / math.log(200.0 / 15.0),
-        minimum=0.0,
-        maximum=1.0,
-    )
-    longshot_target = 0.97 - (0.03 * evidence)
-    return _clamp(
-        base_shrink + ((longshot_target - base_shrink) * odds_risk),
-        minimum=base_shrink,
-        maximum=0.97,
-    )
+    """Keep model hit probability independent from market price."""
+    _ = ticket, bet_type, odds
+    return 0.0
 
 
 def _would_exceed_horse_dependency(
@@ -2961,7 +3028,7 @@ def _candidate_eligibility_checks(
     minimum_hit_probability: float,
 ) -> list[dict[str, object]]:
     """Record every canonical eligibility gate, using the exact selection values."""
-    return [
+    checks = [
         {
             "reason": reason,
             "metric": metric,
@@ -2980,6 +3047,21 @@ def _candidate_eligibility_checks(
             ("below_minimum_stake", "stake", int(_to_float(ticket.get("stake"))), 100),
         )
     ]
+    if str(ticket.get("bet_type", "")) == "win":
+        evidence_passed = _win_ticket_evidence_eligible(
+            ticket,
+            odds=_to_float(ticket.get("official_odds_current") or ticket.get("win_odds")),
+        )
+        checks.append(
+            {
+                "reason": "insufficient_win_evidence",
+                "metric": "history_and_consistency",
+                "value": int(evidence_passed),
+                "minimum": 1,
+                "passed": evidence_passed,
+            }
+        )
+    return checks
 
 
 def _annotate_candidate_selection(

@@ -71,14 +71,21 @@ def test_canonical_eligibility_reports_all_failures_without_changing_gates(
             "minimum": 0.04,
             "passed": probability_pass,
         },
-        {
-            "reason": "below_minimum_stake",
-            "metric": "stake",
-            "value": int(ticket["stake"]),
-            "minimum": 100,
-            "passed": stake_pass,
-        },
-    ]
+            {
+                "reason": "below_minimum_stake",
+                "metric": "stake",
+                "value": int(ticket["stake"]),
+                "minimum": 100,
+                "passed": stake_pass,
+            },
+            {
+                "reason": "insufficient_win_evidence",
+                "metric": "history_and_consistency",
+                "value": 1,
+                "minimum": 1,
+                "passed": True,
+            },
+        ]
     assert "eligibility_checks" not in ticket
 
 

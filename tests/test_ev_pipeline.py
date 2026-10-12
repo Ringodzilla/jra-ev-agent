@@ -91,6 +91,57 @@ class TestEVPipeline(unittest.TestCase):
         self.assertEqual("NO_GO", plan["decision"])
         self.assertEqual("NO_GO_PROBABILITY_LINEAGE_INVALID", plan["decision_code"])
 
+    def test_canonical_win_candidate_keeps_low_evidence_auditable_but_not_selected(self):
+        candidate = {
+            "key": "R|win|9",
+            "race_id": "R",
+            "bet_type": "win",
+            "canonical_combination": "9",
+            "snapshot_id": "S",
+            "captured_at": "2026-08-30T06:05:00+00:00",
+            "hit_prob": 0.05,
+            "official_odds": 200.0,
+            "ev": 10.0,
+        }
+
+        def build(history_count: str, consistency: str) -> dict[str, object]:
+            return generate_tickets(
+                [
+                    {
+                        "race_id": "R",
+                        "horse_number": "9",
+                        "horse_name": "Long",
+                        "win_prob": "0.05",
+                        "current_odds": "200",
+                        "history_count": history_count,
+                        "consistency": consistency,
+                    }
+                ],
+                candidate_evaluations=[candidate],
+                candidate_validation={"status": "OK"},
+                odds_history=[],
+            )
+
+        low_evidence = build("1", "0.1")
+        audited = low_evidence["candidate_evaluations"][0]
+        evidence_check = next(
+            check
+            for check in audited["eligibility_checks"]
+            if check["reason"] == "insufficient_win_evidence"
+        )
+        self.assertFalse(evidence_check["passed"])
+        self.assertEqual([], low_evidence["tickets"])
+
+        sufficient_evidence = build("5", "0.7")
+        self.assertTrue(
+            next(
+                check
+                for check in sufficient_evidence["candidate_evaluations"][0]["eligibility_checks"]
+                if check["reason"] == "insufficient_win_evidence"
+            )["passed"]
+        )
+        self.assertTrue(sufficient_evidence["tickets"])
+
     def test_compute_ev_uses_reproducible_monte_carlo_mean_probability(self):
         rows = [
             {
@@ -660,7 +711,7 @@ class TestEVPipeline(unittest.TestCase):
         self.assertGreater(exact["track_condition_confidence"], proxy["track_condition_confidence"])
         self.assertEqual(0.0, proxy["track_condition_evidence"])
 
-    def test_ticket_type_calibration_shrinks_exotics_more_than_win(self):
+    def test_ticket_type_calibration_keeps_model_probability_for_all_bet_types(self):
         win, trifecta = _calibrate_ticket_probabilities(
             [
                 {"bet_type": "win", "horse_number": "1", "hit_prob": "0.20", "predicted_odds": "10"},
@@ -673,8 +724,9 @@ class TestEVPipeline(unittest.TestCase):
             ]
         )
 
-        self.assertGreater(float(win["hit_prob"]), float(trifecta["hit_prob"]))
-        self.assertEqual("0.82", trifecta["bet_type_market_shrink"])
+        self.assertEqual(float(win["hit_prob"]), float(trifecta["hit_prob"]))
+        self.assertEqual("0", win["bet_type_market_shrink"])
+        self.assertEqual("0", trifecta["bet_type_market_shrink"])
 
     def test_unprofiled_track_bias_is_neutral(self):
         row = {
@@ -1837,7 +1889,7 @@ class TestEVPipeline(unittest.TestCase):
 
         self.assertEqual([], review["missing_eligible_win_candidates"])
 
-    def test_compute_ev_calibrates_extreme_longshots_toward_market(self):
+    def test_compute_ev_keeps_structural_longshot_probability_independent_from_market(self):
         feature_rows = []
         odds_ladder = [3.2, 4.1, 6.8, 10.5, 13.2, 18.4, 24.7, 33.0, 55.0, 80.0, 120.0, 260.0]
         score_ladder = [0.86, 0.82, 0.78, 0.74, 0.70, 0.66, 0.62, 0.58, 0.54, 0.60, 0.64, 0.68]
@@ -1869,10 +1921,184 @@ class TestEVPipeline(unittest.TestCase):
         longshot = by_horse["h12"]
 
         self.assertEqual("longshot", longshot["probability_band"])
-        self.assertGreater(float(longshot["market_shrink_used"]), float(favorite["market_shrink_used"]))
-        self.assertLess(float(longshot["win_prob"]) / float(longshot["market_prob"]), 1.2)
+        self.assertEqual(0.0, float(longshot["market_shrink_used"]))
+        self.assertEqual(0.0, float(favorite["market_shrink_used"]))
+        self.assertEqual(1.0, float(longshot["probability_cap"]))
+        self.assertGreater(float(longshot["model_to_market_ratio"]), 1.2)
+        self.assertEqual(longshot["win_prob"], longshot["structural_win_prob"])
         self.assertLess(float(longshot["predicted_odds"]), float(longshot["current_odds"]) * 1.06)
         self.assertLess(float(longshot["win_prob"]), float(favorite["win_prob"]))
+
+    def test_compute_ev_flags_two_evidence_backed_front_value_candidates(self):
+        rows = [
+            {
+                "race_id": "r_front_value",
+                "horse_id": "front_a",
+                "horse_number": "4",
+                "horse_name": "FrontLong",
+                "current_odds": "40",
+                "ability_score": "0.5",
+                "course_score": "0.6",
+                "pace_score": "0.48",
+                "pace_mid": "0.5",
+                "pace_slow": "0.52",
+                "pace_mix_high": "0.4",
+                "weight_score": "0",
+                "jockey_score": "0.5",
+                "market_support": "0.025",
+                "front_rate": "0.72",
+                "relative_front_rank": "0.85",
+                "history_count": "5",
+            },
+            {
+                "race_id": "r_front_value",
+                "horse_id": "front_b",
+                "horse_number": "7",
+                "horse_name": "FrontOutsider",
+                "current_odds": "25",
+                "ability_score": "0.45",
+                "course_score": "0.55",
+                "pace_score": "0.46",
+                "pace_mid": "0.46",
+                "pace_slow": "0.5",
+                "pace_mix_high": "0.4",
+                "weight_score": "0.1",
+                "jockey_score": "0.45",
+                "market_support": "0.04",
+                "front_rate": "0.7",
+                "relative_front_rank": "0.78",
+                "history_count": "5",
+            },
+            {
+                "race_id": "r_front_value",
+                "horse_id": "h1",
+                "horse_number": "1",
+                "horse_name": "Favorite",
+                "current_odds": "2.0",
+                "ability_score": "0.7",
+                "course_score": "0.7",
+                "pace_score": "0.5",
+                "pace_mid": "0.5",
+                "pace_slow": "0.5",
+                "pace_mix_high": "0.4",
+                "weight_score": "0.1",
+                "jockey_score": "0.7",
+                "market_support": "0.5",
+                "front_rate": "0.5",
+                "relative_front_rank": "0.5",
+                "history_count": "5",
+            },
+        ]
+
+        scored = compute_ev(rows, weights=EVWeights(monte_carlo_iterations=1, luck_score_std=0.0))
+        by_number = {row["horse_number"]: row for row in scored}
+
+        self.assertTrue(by_number["4"]["front_value_candidate"])
+        self.assertTrue(by_number["7"]["front_value_candidate"])
+        self.assertFalse(by_number["1"]["front_value_candidate"])
+        self.assertGreater(float(by_number["4"]["structural_ev_current"]), 1.05)
+        self.assertGreater(float(by_number["7"]["model_to_market_ratio"]), 1.25)
+
+    def test_ticket_probability_is_market_independent_across_odds_and_bet_types(self):
+        tickets = [
+            {
+                "bet_type": bet_type,
+                "horse_number": str(index),
+                "hit_prob": "0.05",
+                "win_odds": str(odds),
+                "predicted_odds": str(odds),
+            }
+            for index, (bet_type, odds) in enumerate(
+                [("win", 3.0), ("win", 51.4), ("win", 200.0), ("wide", 20.0), ("sanrentan", 200.0)],
+                start=1,
+            )
+        ]
+
+        calibrated = _calibrate_ticket_probabilities(tickets)
+
+        for ticket in calibrated:
+            self.assertEqual(0.05, float(ticket["hit_prob"]))
+            self.assertEqual(0.0, float(ticket["bet_type_market_shrink"]))
+
+    def test_front_value_candidate_is_reported_as_long_without_forcing_a_ticket(self):
+        rows = [
+            {
+                "race_id": "r_front_report",
+                "horse_id": "h9",
+                "horse_number": "9",
+                "horse_name": "FrontValue",
+                "win_prob": "0.02",
+                "current_odds": "20",
+                "predicted_odds": "20",
+                "ev": "0.4",
+                "ev_current": "0.4",
+                "market_prob": "0.01",
+                "model_score": "0.3",
+                "pace_score": "0.4",
+                "course_score": "0.4",
+                "consistency": "0.5",
+                "history_count": "5",
+                "front_value_candidate": True,
+                "front_value_score": "0.9",
+                "front_value_reasons": ["front_rate", "model_to_market_ratio"],
+            },
+            {
+                "race_id": "r_front_report",
+                "horse_id": "h1",
+                "horse_number": "1",
+                "horse_name": "Favorite",
+                "win_prob": "0.98",
+                "current_odds": "1.1",
+                "predicted_odds": "1.1",
+                "ev": "1.078",
+                "ev_current": "1.078",
+                "market_prob": "0.9",
+                "model_score": "0.8",
+                "pace_score": "0.5",
+                "course_score": "0.5",
+                "consistency": "0.8",
+                "history_count": "5",
+            },
+        ]
+
+        plan = generate_tickets(rows)
+        long_by_number = {str(row["horse_number"]): row for row in plan["long"]}
+
+        self.assertIn("9", long_by_number)
+        self.assertEqual("front_value_candidate", long_by_number["9"]["long_reason"])
+        self.assertTrue(long_by_number["9"]["front_value_candidate"])
+        self.assertFalse([ticket for ticket in plan["tickets"] if str(ticket.get("horse_number")) == "9"])
+
+    def test_all_front_value_candidates_are_audited_while_long_display_keeps_its_limit(self):
+        rows = []
+        for number, score in [("4", "0.9"), ("7", "0.8"), ("9", "0.7")]:
+            rows.append(
+                {
+                    "race_id": "r_front_limit",
+                    "horse_id": f"h{number}",
+                    "horse_number": number,
+                    "horse_name": f"Front{number}",
+                    "win_prob": "0.02",
+                    "current_odds": "20",
+                    "predicted_odds": "20",
+                    "ev": "0.4",
+                    "ev_current": "0.4",
+                    "market_prob": "0.01",
+                    "model_score": "0.3",
+                    "pace_score": "0.4",
+                    "course_score": "0.4",
+                    "consistency": "0.5",
+                    "history_count": "5",
+                    "front_value_candidate": True,
+                    "front_value_score": score,
+                }
+            )
+
+        plan = generate_tickets(rows)
+
+        self.assertEqual(3, len(plan["front_value_candidates"]))
+        self.assertEqual(2, len(plan["long"]))
+        self.assertEqual([], plan["tickets"])
 
     def test_overseas_country_bias_adjusts_market_support(self):
         rows = [

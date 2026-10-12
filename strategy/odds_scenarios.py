@@ -14,14 +14,14 @@ SCENARIO_WEIGHTS = {
 }
 
 DEFAULT_MARKET_SHRINK = {
-    "win": 0.35,
-    "place": 0.45,
-    "wide": 0.55,
-    "wakuren": 0.60,
-    "umaren": 0.62,
-    "umatan": 0.70,
-    "sanrenpuku": 0.76,
-    "sanrentan": 0.82,
+    "win": 0.0,
+    "place": 0.0,
+    "wide": 0.0,
+    "wakuren": 0.0,
+    "umaren": 0.0,
+    "umatan": 0.0,
+    "sanrenpuku": 0.0,
+    "sanrentan": 0.0,
 }
 
 _FORBIDDEN_INPUT_KEYS = {
@@ -70,11 +70,8 @@ def build_ticket_odds_scenarios(
     remaining_seconds = max(0.0, _to_float(seconds_to_post))
     bet_type = str(ticket.get("bet_type", "")).strip()
     raw_prob = _raw_hit_probability(ticket)
-    shrink = _clamp(
-        _to_float(ticket.get("bet_type_market_shrink"), DEFAULT_MARKET_SHRINK.get(bet_type, 0.65)),
-        0.0,
-        0.97,
-    )
+    # Market odds define price scenarios, never the model hit probability.
+    shrink = 0.0
 
     history = _matching_history(ticket, combo_odds_history)
     history_features = _history_features(history, current=current)

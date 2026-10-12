@@ -9,14 +9,16 @@ from dataclasses import dataclass
 
 @dataclass
 class ModelWeights:
-    ability: float = 0.42
-    course: float = 0.14
-    pace: float = 0.16
-    weight: float = 0.08
-    jockey: float = 0.08
-    market: float = 0.12
+    # Structural probability must be independent from the betting market.  The
+    # five weights are the former non-market weights normalized to sum to one.
+    ability: float = 0.4772727273
+    course: float = 0.1590909091
+    pace: float = 0.1818181818
+    weight: float = 0.0909090909
+    jockey: float = 0.0909090909
+    market: float = 0.0
     temperature: float = 1.15
-    market_shrink: float = 0.25
+    market_shrink: float = 0.0
     monte_carlo_iterations: int = 2000
     monte_carlo_seed: int = 731
     luck_score_std: float = 0.16
@@ -40,6 +42,7 @@ def estimate_win_probs(rows: list[dict], weights: ModelWeights | None = None) ->
             race_id=race_id,
         )
 
+        race_rows: list[dict] = []
         for row, prob, probability_std, meta in zip(scored_group, blended_probs, probability_stds, calibration):
             odds = _to_float(row.get("current_odds") or row.get("win_odds"), 0.0)
             fair_odds = (1.0 / prob) if prob > 0 else 0.0
@@ -59,8 +62,16 @@ def estimate_win_probs(rows: list[dict], weights: ModelWeights | None = None) ->
             odds_gap_ratio = (odds_gap / odds) if odds > 0 else 0.0
             ev_gap = ev_predicted - ev_current if ev_current > 0 else 0.0
             ev_gap_ratio = (ev_gap / ev_current) if ev_current > 0 else 0.0
+            market_prob = _to_float(meta["market_prob"], 0.0)
+            model_to_market_ratio = prob / market_prob if market_prob > 0 else 0.0
+            front_value = _front_value_audit(
+                row,
+                structural_win_prob=prob,
+                market_prob=market_prob,
+                current_odds=odds,
+            )
 
-            out.append(
+            race_rows.append(
                 {
                     **row,
                     "current_odds": _fmt(odds),
@@ -71,12 +82,19 @@ def estimate_win_probs(rows: list[dict], weights: ModelWeights | None = None) ->
                     "predicted_odds_source": prediction_source,
                     "win_prob": _fmt(prob),
                     "win_prob_mean": _fmt(prob),
+                    "structural_model_score": str(row.get("model_score", "")),
+                    "structural_win_prob": _fmt(prob),
+                    "structural_fair_odds": _fmt(fair_odds),
+                    "structural_ev_current": _fmt(ev_current),
+                    "structural_probability_formula_version": "structural_ev_v1",
                     "win_prob_std": _fmt(probability_std),
                     "monte_carlo_iterations": str(max(1, int(weights.monte_carlo_iterations))),
                     "monte_carlo_seed": str(int(weights.monte_carlo_seed)),
                     "luck_score_std": _fmt(max(0.0, weights.luck_score_std)),
                     "fair_odds": _fmt(fair_odds),
                     "market_prob": _fmt(meta["market_prob"]),
+                    "market_implied_prob": _fmt(meta["market_prob"]),
+                    "model_to_market_ratio": _fmt(model_to_market_ratio),
                     "market_shrink_used": _fmt(meta["market_shrink"]),
                     "probability_cap": _fmt(meta["probability_cap"]),
                     "probability_band": meta["probability_band"],
@@ -90,8 +108,13 @@ def estimate_win_probs(rows: list[dict], weights: ModelWeights | None = None) ->
                     "odds_gap_ratio": _fmt(odds_gap_ratio),
                     "ev_delta": _fmt(ev_gap),
                     "ev_delta_ratio": _fmt(ev_gap_ratio),
+                    **front_value,
                 }
             )
+
+        for row in race_rows:
+            row["front_value_candidate"] = bool(row.pop("_front_value_eligible", False))
+        out.extend(race_rows)
 
     out.sort(
         key=lambda row: (
@@ -162,15 +185,12 @@ def _score_row(row: dict, weights: ModelWeights) -> dict:
     pace_score = _to_float(out.get("pace_score"), 0.0)
     weight_score = _to_float(out.get("weight_score"), 0.0)
     jockey_score = _to_float(out.get("jockey_score"), 0.0)
-    market_score = _to_float(out.get("market_support"), 0.0)
-
     out["model_score"] = _fmt(
         (weights.ability * ability_score)
         + (weights.course * course_score)
         + (weights.pace * pace_score)
         + (weights.weight * weight_score)
         + (weights.jockey * jockey_score)
-        + (weights.market * market_score)
     )
     return out
 
@@ -195,40 +215,99 @@ def _blend_probabilities(
     if not raw_probs:
         return [], []
 
-    if not market_probs:
-        normalized = _normalize_probs(raw_probs)
-        return normalized, [
-            {
-                "market_prob": 0.0,
-                "market_shrink": 0.0,
-                "probability_cap": 1.0,
-                "probability_band": _probability_band(row),
-            }
-            for row in rows
-        ]
+    normalized = _normalize_probs(raw_probs)
+    effective_market_probs = market_probs if len(market_probs) == len(rows) else [0.0 for _ in rows]
+    return normalized, [
+        {
+            "market_prob": market_prob,
+            "market_shrink": 0.0,
+            "probability_cap": 1.0,
+            "probability_band": _probability_band(row),
+        }
+        for row, market_prob in zip(rows, effective_market_probs)
+    ]
 
-    blended_probs: list[float] = []
-    caps: list[float] = []
-    calibration: list[dict[str, float | str]] = []
-    for row, raw_prob, market_prob in zip(rows, raw_probs, market_probs):
-        band = _probability_band(row)
-        shrink = _dynamic_market_shrink(row, base_shrink=weights.market_shrink, band=band)
-        shrink = _market_divergence_shrink(raw_prob, market_prob, shrink, band=band)
-        blended = ((1.0 - shrink) * raw_prob) + (shrink * market_prob)
-        cap = _probability_cap(row, market_prob=market_prob, band=band)
-        blended_probs.append(blended)
-        caps.append(cap)
-        calibration.append(
-            {
-                "market_prob": market_prob,
-                "market_shrink": shrink,
-                "probability_cap": cap,
-                "probability_band": band,
-            }
-        )
 
-    normalized = _normalize_probs(blended_probs)
-    return _apply_probability_caps(normalized, caps), calibration
+def _front_value_audit(
+    row: dict,
+    *,
+    structural_win_prob: float,
+    market_prob: float,
+    current_odds: float,
+) -> dict[str, object]:
+    """Audit an evidence-backed, market-overlooked front-running candidate.
+
+    This flag is diagnostic only.  Ticket selection continues to require the
+    normal EV, robust-EV, probability and portfolio checks.
+    """
+
+    required = {
+        "front_rate": 0.68,
+        "relative_front_rank": 0.75,
+        "history_count": 4.0,
+        "current_odds": 10.0,
+        "model_to_market_ratio": 1.25,
+        "structural_ev_current": 1.05,
+        "mid_slow_fit": 0.45,
+    }
+    front_rate = _to_float(row.get("front_rate"), 0.0)
+    relative_front_rank = _to_float(row.get("relative_front_rank"), 0.0)
+    history_count = _to_float(row.get("history_count"), 0.0)
+    pace_mid = _to_float(row.get("pace_mid"), 0.0)
+    pace_slow = _to_float(row.get("pace_slow"), 0.0)
+    mid_slow_fit = max(pace_mid, pace_slow)
+    ratio = structural_win_prob / market_prob if market_prob > 0 else 0.0
+    structural_ev = structural_win_prob * current_odds if current_odds > 0 else 0.0
+    values = {
+        "front_rate": front_rate,
+        "relative_front_rank": relative_front_rank,
+        "history_count": history_count,
+        "current_odds": current_odds,
+        "model_to_market_ratio": ratio,
+        "structural_ev_current": structural_ev,
+        "mid_slow_fit": mid_slow_fit,
+    }
+    source_keys = {
+        "front_rate": ("front_rate",),
+        "relative_front_rank": ("relative_front_rank",),
+        "history_count": ("history_count",),
+        "current_odds": ("current_odds", "win_odds"),
+        "model_to_market_ratio": ("current_odds", "win_odds"),
+        "structural_ev_current": ("current_odds", "win_odds"),
+        "mid_slow_fit": ("pace_mid", "pace_slow"),
+    }
+    checks: dict[str, dict[str, object]] = {}
+    failure_reasons: list[str] = []
+    for name, threshold in required.items():
+        present = any(str(row.get(key, "")).strip() not in {"", "None"} for key in source_keys[name])
+        if name == "model_to_market_ratio" and market_prob <= 0:
+            present = False
+        passed = present and values[name] >= threshold
+        checks[name] = {
+            "value": _fmt(values[name]),
+            "threshold": _fmt(threshold),
+            "passed": passed,
+        }
+        if not present:
+            failure_reasons.append(f"missing_{name}")
+        elif not passed:
+            failure_reasons.append(f"below_{name}")
+
+    score = (
+        (0.25 * front_rate)
+        + (0.20 * relative_front_rank)
+        + (0.15 * mid_slow_fit)
+        + (0.20 * min(ratio / 3.0, 1.0))
+        + (0.20 * min(structural_ev / 3.0, 1.0))
+    )
+    return {
+        "mid_slow_fit": _fmt(mid_slow_fit),
+        "front_value_score": _fmt(score),
+        "front_value_checks": checks,
+        "front_value_reasons": [name for name, check in checks.items() if check["passed"]],
+        "front_value_failure_reasons": failure_reasons,
+        "_front_value_eligible": not failure_reasons,
+    }
 
 
 def _predict_structural_odds(row: dict, *, current_odds: float, fair_odds: float) -> float:

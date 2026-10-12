@@ -21,7 +21,8 @@ def test_ticket_calibration_uses_current_odds_for_live_wide_ev() -> None:
 
     hit_prob = float(calibrated["hit_prob"])
     assert abs(float(calibrated["market_prob"]) - (1.0 / 3.0)) < 0.000001
-    assert abs(hit_prob - (((1.0 - 0.55) * 0.30) + (0.55 / 3.0))) < 0.000001
+    assert abs(hit_prob - 0.30) < 0.000001
+    assert float(calibrated["bet_type_market_shrink"]) == 0.0
     assert abs(float(calibrated["ev_current"]) - (hit_prob * 3.0)) < 0.00001
     assert abs(float(calibrated["ev"]) - (hit_prob * 3.0)) < 0.00001
     assert abs(float(calibrated["ev_predicted"]) - (hit_prob * 4.0)) < 0.00001

@@ -77,14 +77,15 @@ def test_falling_history_and_time_to_post_are_auditable() -> None:
     assert result["audit"]["constituent_predicted_to_current_odds_ratio"] == pytest.approx(math.sqrt(0.8 * 0.9))
 
 
-def test_each_scenario_reuses_raw_probability_and_market_shrink_formula() -> None:
+def test_each_scenario_keeps_raw_probability_independent_from_market() -> None:
     result = build_ticket_odds_scenarios(_ticket(), 8.0, [], _ev_rows(), 900)
 
     for row in result["scenarios"]:
         odds = float(row["odds"])
-        expected_probability = (0.45 * 0.18) + (0.55 * (1.0 / odds))
+        expected_probability = 0.18
         assert row["calibrated_hit_prob"] == pytest.approx(expected_probability)
         assert row["ev"] == pytest.approx(expected_probability * odds)
+    assert result["market_shrink"] == 0.0
 
 
 def test_upward_history_never_makes_robust_odds_exceed_current() -> None:
