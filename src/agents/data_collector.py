@@ -6,6 +6,7 @@ from pathlib import Path
 
 from jra_scraper.config import ScrapeConfig
 from jra_scraper.pipeline import JRAPipeline
+from jra_scraper.environment import capture_environment
 
 
 class DataCollectorAgent:
@@ -36,10 +37,22 @@ class DataCollectorAgent:
                 aggressive_repair=effective_aggressive_repair,
                 reprocess_raw=reprocess_raw,
             )
+            environment_snapshots = [capture_environment(
+                pipeline.scraper, cfg, rows, self.config.stages_dir.parent / 'environment_observations',
+                cache_only=reprocess_raw,
+            ) for cfg in race_configs]
+            for snapshot in environment_snapshots:
+                if snapshot.get('weather') and snapshot.get('track_condition'):
+                    for row in rows:
+                        if row.get('race_id') == snapshot['race_id']:
+                            row.update(target_weather=snapshot['weather'],
+                                       target_track_condition=snapshot['track_condition'],
+                                       target_conditions_captured_at=snapshot['weather_captured_at'])
         finally:
             pipeline.close()
 
         return {
+            "environment_snapshots": environment_snapshots,
             "collector_key": self.collector_key,
             "aggressive_repair": effective_aggressive_repair,
             "race_configs": race_configs,

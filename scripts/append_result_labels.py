@@ -170,7 +170,11 @@ def main() -> None:
     review = json.loads(Path(args.review_json).read_text(encoding="utf-8"))
     rows = rows_from_review(review)
     appended = append_rows(Path(args.output), rows)
-    print(json.dumps({"rows": len(rows), "appended": len(appended), "output": args.output}, ensure_ascii=False))
+    from scripts.update_environment_learning import update_learning
+
+    learning = update_learning(labels_path=Path(args.output))
+    print(json.dumps({"rows": len(rows), "appended": len(appended), "output": args.output,
+                      "environment_learning_status": learning['status']}, ensure_ascii=False))
 
 
 if __name__ == "__main__":

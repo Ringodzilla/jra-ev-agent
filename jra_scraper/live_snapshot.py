@@ -13,6 +13,7 @@ from .config import ScrapeConfig
 from .models import ParserIssue, RaceLink
 from .parser import JRAParser
 from .scraper import JRAScraper, safe_filename
+from .environment import capture_environment
 
 
 REQUIRED_BET_TYPES = {
@@ -73,7 +74,7 @@ class LiveSnapshotCollector:
         snapshot_id = _snapshot_id(race.race_id, started_at)
         issues: list[ParserIssue] = []
 
-        self._ensure_budget(deadline_at, emit_reserve_seconds, requests_remaining=8)
+        self._ensure_budget(deadline_at, emit_reserve_seconds, requests_remaining=11)
         race_html = self.scraper.fetch(
             race.race_url,
             raw_name=f"live_{safe_filename(snapshot_id)}_race.html",
@@ -126,11 +127,23 @@ class LiveSnapshotCollector:
             if row.get("bet_type") == "win"
         }
         entries = [_entry_row(horse, win_odds=win_odds, snapshot_id=snapshot_id) for horse in horses]
+        self._ensure_budget(deadline_at, emit_reserve_seconds, requests_remaining=3)
+        environment_snapshot = capture_environment(
+            self.scraper, race_config, entries,
+            self.config.stages_dir.parent / 'environment_observations', now=self._now(),
+        )
+        self._ensure_budget(deadline_at, emit_reserve_seconds, requests_remaining=0)
+        completed_at = _as_utc(self._now())
+        if environment_snapshot.get('weather') and environment_snapshot.get('track_condition'):
+            for entry in entries:
+                entry.update(target_weather=environment_snapshot['weather'],
+                             target_track_condition=environment_snapshot['track_condition'],
+                             target_conditions_captured_at=environment_snapshot['weather_captured_at'])
         severity_counts = Counter(issue.severity for issue in issues)
         conditions = {
             "weather": entries[0].get("target_weather", "") if entries else "",
             "track_condition": entries[0].get("target_track_condition", "") if entries else "",
-            "captured_at": race_captured_at.isoformat(),
+            "captured_at": (entries[0].get('target_conditions_captured_at') if entries else '') or race_captured_at.isoformat(),
         }
         quality_report = {
             "issues_by_severity": dict(severity_counts),
@@ -165,6 +178,7 @@ class LiveSnapshotCollector:
             "official_odds_as_of": official_odds_as_of,
             "official_odds_latest_as_of": max(official_times) if official_times else "",
             "conditions": conditions,
+            "environment_snapshot": environment_snapshot,
             "entries": entries,
             "combo_odds": combo_odds,
             "quality_report": quality_report,

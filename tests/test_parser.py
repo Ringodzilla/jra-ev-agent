@@ -368,6 +368,22 @@ class TestJRAParser(unittest.TestCase):
         self.assertIn("odds", rows[0])
         self.assertIn("popularity", rows[0])
 
+    def test_parse_horse_last5_excludes_non_starts_and_backfills(self):
+        html = '<table><tr><th>日付</th><th>レース名</th><th>距離</th><th>着順</th><th>上り</th></tr>'
+        for day, position in enumerate(("取消", "除外", "中止", "1", "2", "3", "4", "5"), start=1):
+            html += f'<tr><td>2026/03/{day:02d}</td><td>テスト</td><td>芝1800</td><td>{position}</td><td>34.5</td></tr>'
+        rows = self.parser.parse_horse_last5(
+            html + '</table>', race_id="r1", horse_id="h1", horse_name="テスト", horse_url="https://www.jra.go.jp/"
+        )
+        self.assertEqual(["中止", "1", "2", "3", "4"], [r["position"] for r in rows])
+        self.assertEqual(["1", "2", "3", "4", "5"], [r["run_index"] for r in rows])
+
+    def test_embedded_history_excludes_non_starts(self):
+        from bs4 import BeautifulSoup
+
+        html = '<tr><td class="past"><div class="date_line"><span class="date">2026/04/26</span></div><div class="place_line"><span class="place">取消</span></div></td></tr>'
+        self.assertEqual([], self.parser._extract_embedded_history(BeautifulSoup(html, "html.parser")))
+
     def test_parse_horse_last5_fills_last3f_fallback_when_missing(self):
         html = """
         <table>

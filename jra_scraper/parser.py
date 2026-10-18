@@ -325,7 +325,8 @@ class JRAParser:
         body_rows = [tr for tr in table.select("tr") if tr.select("td")]
         out: list[dict[str, str]] = []
 
-        for run_idx, tr in enumerate(body_rows[:5], start=1):
+        for tr in body_rows:
+            run_idx = len(out) + 1
             raw_cells = [self._norm(td.get_text(" ", strip=True)) for td in tr.select("td")]
             cells = self._repair_cells(
                 raw_cells,
@@ -339,6 +340,8 @@ class JRAParser:
                 continue
 
             mapped = self._map_row(header_matches, cells)
+            if any(status in mapped.get("position", "") for status in ("取消", "除外")):
+                continue
             history_surface, _ = self._parse_condition_text(mapped.get("distance", ""))
             if self._is_jump_race_name(mapped.get("race_name", ""), mapped.get("distance", "")):
                 history_surface = "障害"
@@ -383,6 +386,8 @@ class JRAParser:
                     }
                 )
             out.append(row)
+            if len(out) == 5:
+                break
 
         return out
 
@@ -994,6 +999,8 @@ class JRAParser:
             date = self._extract_text(cell, ".date_line .date")
             race_name = self._extract_text(cell, ".race_line .name")
             if not date and not race_name:
+                continue
+            if any(status in self._extract_text(cell, ".place_line .place") for status in ("取消", "除外")):
                 continue
 
             href_node = cell.select_one(".race_line .name a[href]")

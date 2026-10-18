@@ -2,6 +2,7 @@ from datetime import datetime
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import patch
 from zoneinfo import ZoneInfo
 
 from jra_scraper.config import ScrapeConfig
@@ -90,6 +91,23 @@ class FakeParser:
 
 
 class LiveSnapshotCollectorTest(unittest.TestCase):
+    def test_environment_refresh_updates_the_conditions_used_by_final_prediction(self):
+        now = datetime(2026, 8, 8, 15, 18, tzinfo=JST)
+        with TemporaryDirectory() as directory:
+            config = ScrapeConfig(raw_dir=Path(directory) / 'raw', delay_seconds=0, max_retries=1)
+            collector = LiveSnapshotCollector(config, now=lambda: now)
+            collector.scraper = FakeScraper(config)
+            collector.parser = FakeParser()
+            observed = {'weather': '晴', 'track_condition': '良', 'weather_captured_at': now.isoformat()}
+            with patch('jra_scraper.live_snapshot.capture_environment', return_value=observed):
+                result = collector.collect({
+                    'race_id': '20260808_札幌_11', 'race_name': 'エルムS', 'race_date': '2026-08-08',
+                    'track': '札幌', 'race_number': 11, 'surface': 'ダート', 'distance': '1700',
+                    'source_url': 'https://example.test/race',
+                }, deadline_at=datetime(2026, 8, 8, 15, 30, tzinfo=JST))
+            self.assertEqual('晴', result['conditions']['weather'])
+            self.assertEqual('良', result['entries'][0]['target_track_condition'])
+
     def test_collects_body_conditions_and_all_odds_without_horse_history_fetch(self):
         now = datetime(2026, 8, 8, 15, 18, tzinfo=JST)
         with TemporaryDirectory() as directory:
