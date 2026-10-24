@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "record_type": "user_discretionary_purchase",
+  "race": {
+    "race_id": "20261024_東京_11",
+    "date": "2026-10-24",
+    "track": "東京",
+    "race_number": 11,
+    "race_name": "第15回アルテミスステークス",
+    "post_time_jst": "2026-10-24T15:45:00+09:00"
+  },
+  "report": {
+    "reported_at_jst": "2026-10-24T13:27:16+09:00",
+    "reported_by": "user",
+    "purchase_confirmed": true,
+    "purchase_time_jst": null,
+    "purchase_time_status": "not_provided",
+    "decision_origin": "user_discretionary",
+    "must_not_be_reclassified_as_model_ticket": true,
+    "user_statement": "100円を投入しました",
+    "user_rationale": "ベストプラージュの単勝100円。勝率5%・120倍の場合のEVについて検討後に購入報告"
+  },
+  "purchase": {
+    "bet_type": "win",
+    "ticket_shape": "single",
+    "horse_number": "8",
+    "horse_name": "ベストプラージュ",
+    "point_count": 1,
+    "stake_per_point_yen": 100,
+    "total_stake_yen": 100,
+    "final_odds": null,
+    "final_odds_status": "unconfirmed",
+    "tickets": [
+      {
+        "bet_type": "win",
+        "combination": "8",
+        "stake_yen": 100
+      }
+    ]
+  },
+  "pre_race_evidence": {
+    "model_probability": 0.057541,
+    "model_probability_status": "unapproved_reference",
+    "unpromoted_research_probability": 0.05226401880065975,
+    "research_probability_status": "RESEARCH_ONLY_UNPROMOTED",
+    "official_odds_snapshot": 127.1,
+    "snapshot_issued_at_utc": "2026-10-24T02:31:51.748225+00:00",
+    "discussion_odds": 120.0,
+    "discussion_odds_status": "discussion_value_not_verified_purchase_or_final_odds",
+    "model_decision": "NO_GO",
+    "model_formal_tickets": [],
+    "sources": [
+      {
+        "path": "report/final_predictions/20261024_東京_11/20261024T023139Z/04_ev_calculator.json",
+        "sha256": "d0e123cb7fe072f78b4a0ba695cdef9af66198475f18df849169ff2a23732749"
+      },
+      {
+        "path": "report/research/20261024_東京_11/unpromoted_environment_20261024T042359905383Z.json",
+        "sha256": "da99aac701b8750025df2ee9b61d4ffe54f9fb38095ef7e3ddf9705827202c65"
+      },
+      {
+        "path": "report/final_predictions/20261024_東京_11/20261024T023139Z/final_decision.json",
+        "sha256": "ed3dd351afb36b15f7bcc3960c910c09594443da1709418be729d6659750a268"
+      }
+    ]
+  },
+  "retrospective_plan": {
+    "status": "pending_official_result",
+    "evaluations": [
+      "official_finish",
+      "official_win_payout",
+      "gross_return_yen",
+      "net_profit_yen",
+      "return_on_investment",
+      "comparison_with_model_no_go"
+    ],
+    "anti_leakage": "Keep result and payout separate from pre-race inputs."
+  }
+}

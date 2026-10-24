@@ -1,5 +1,25 @@
 # 天候・クッション値・含水率の係数学習
 
+## 運用原則
+
+天候、馬場状態、クッション値、芝・ダート含水率は、予測から切り離された参考情報ではない。
+JRAから取得可能な値、測定時刻、区分、注記、測定履歴、原文の来歴をすべて保存し、
+当日の予測成果物と振り返り学習の双方へ渡す。
+
+ただし「反映する」とは未検証の係数を作ることではない。観測値は常に予測入力として記録し、
+勝率を動かす `environment_score` は時系列の検証・テストを通過して明示的に昇格したモデルだけが生成する。
+昇格前は厳密に0とし、`NO_PROMOTED_ENVIRONMENT_MODEL` を保存する。これにより、データを捨てず、
+かつ振り返り前の思いつきの補正を本番馬券へ混ぜない。
+
+本番の勝率式は次とする。環境係数はMonte Carlo後のbaseline勝率へ、学習時と同じ形で適用する。
+
+```text
+p_base = current structural/pace Monte Carlo probability
+p_final(i) = softmax(log(p_base(i)) + environment_score(i))
+```
+
+`environment_score` はレース共通値の単純加点ではなく、馬別特徴量との交互作用のlogit補正である。
+
 ## 勝率の式
 
 既存モデルの勝率を `p0(i)` とし、候補モデルは次で定義する。
@@ -102,3 +122,17 @@ JRA出馬表の天候・馬場状態も更新し、古い出馬表キャッシ�
 `P(ticket) = Σ[environment,pace] P(environment,pace) × P(ticket | environment,pace)`
 で統合する。平均単勝確率だけから三連複確率を作る近似と区別し、
 モデルの妥当性が確認できるまでは「回収率の最適化に成功した」と評価しない。
+
+## 本番昇格
+
+学習レポートが `ELIGIBLE_FOR_REVIEW` の場合だけ、レビュー後に次を明示実行する。
+
+```bash
+.venv/bin/python scripts/promote_environment_model.py \
+  --training-report data/learning/environment/<dataset>/<code>/training_report.json \
+  --approve
+```
+
+昇格成果物は `data/models/environment_model.json` に保存される。通常分析と直前分析は同じ成果物を読み、
+モデルID・モデルSHA256・観測SHA256・適用可否・未適用理由をstage JSONへ保存する。
+別日値、発走後値、予測値を観測値として補完することは禁止する。

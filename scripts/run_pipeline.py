@@ -53,6 +53,8 @@ def run_analysis_phase(
     mode: str = "balanced",
     win5_max_points: int | None = None,
     win5_stake_yen_per_point: int = 100,
+    enforce_skill_gates: bool = False,
+    integrity_approvals: list[dict] | None = None,
 ) -> dict:
     logging.info("analysis phase started")
 
@@ -68,6 +70,8 @@ def run_analysis_phase(
             win5_stake_yen_per_point=win5_stake_yen_per_point,
         ),
     )
+    workflow.enforce_skill_gates = enforce_skill_gates
+    workflow.integrity_approvals = integrity_approvals or []
     outputs = workflow.run(
         race_configs,
         force_rebuild=force_rebuild,
@@ -220,6 +224,7 @@ def main() -> None:
     )
     parser.add_argument("--win5-max-points", type=int, default=None, help="Maximum WIN5 formation points")
     parser.add_argument("--win5-stake-yen-per-point", type=int, default=100, help="Stake per WIN5 point")
+    parser.add_argument('--integrity-approvals-path', type=Path, help='Explicit user approvals bound to the audited inputs')
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -236,6 +241,8 @@ def main() -> None:
         mode=args.mode,
         win5_max_points=args.win5_max_points,
         win5_stake_yen_per_point=args.win5_stake_yen_per_point,
+        enforce_skill_gates=True,
+        integrity_approvals=(json.loads(args.integrity_approvals_path.read_text()) if args.integrity_approvals_path else []),
     )
     logging.info("outputs ready: %s", payload)
 

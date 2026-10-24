@@ -35,6 +35,8 @@ JRAのレースデータを取得し、**EVモデリングに直接使える整�
   * `date, race_name, course, distance, position, time, weight, jockey`
   * `pace, last_3f, track_condition, weather, passing_order, odds, popularity`
   * 対象レースの最新状態は `target_weather, target_track_condition, target_conditions_captured_at` として過去走列から分離
+  * JRA公式のクッション値、芝・ダート含水率、測定時刻、含水率区分、注記、ページ内測定履歴を環境観測として保存
+  * 環境観測は予測成果物へ必ず伝播し、昇格済み環境モデルがある場合は馬別特徴量との交互作用を `environment_score` として勝率式へ反映
 * **Unique identifiers**
 
   * `race_id` = `YYYYMMDD_track_raceNo`
@@ -63,6 +65,8 @@ JRAのレースデータを取得し、**EVモデリングに直接使える整�
 * **Portfolio EV + no-gami guard**
 
   * 通常候補は券種ごとのEV閾値を満たしたものだけを採用
+  * `balanced` では勝率上位5頭のワイドBOXを10点・各100円の単一ポートフォリオ候補として評価する。全10点にJRA実オッズがある場合だけ生成し、BOX全体の1点以上的中率、3点同時的中率、期待的中本数、current/robust EV、top3全事象のガミ確率とstrict no-gamiを保存する
+  * ワイドBOXの最低的中率は個別10点ではなくBOX全体の1点以上的中率へ適用し、期待収益とEVは10点の総投資額を分母にする
   * 単勝候補には固定の勝率下限を置かず、JRA実オッズとのEVで評価する。高オッズ・根拠薄の候補は、履歴件数と整合度に応じた連続的な市場縮約で抑制する
   * 券種別の候補上限は確率補正・EV再計算・閾値判定の後に適用し、除外された候補の枠を次順位で再充填する
   * 保険候補はJRA実オッズあり、EV下限あり、追加後のポートフォリオEVが1.0以上、的中時回収が総投資額以上の場合だけ採用
@@ -81,6 +85,11 @@ JRAのレースデータを取得し、**EVモデリングに直接使える整�
   * `reviewer` が `NG` の場合、正式な `tickets` は空にし、候補は `invalidated_tickets` として参考扱いへ降格
   * JRA実オッズで単勝EV閾値を満たす馬が明示的な候補集合から漏れた場合、`missing_eligible_win_candidates` を記録して `NG` にする
   * ハイペース時は前受け同士のワイドを減点し、枠連は枠内の弱馬ノイズを補正して過大評価を抑える
+* **Environment data lifecycle**
+  * 取得可能な公式環境データは「参考情報」ではなく予測入力候補として全て保存する
+  * 発走前観測と当時の馬別入力を不変ケースとして残し、結果登録後に時系列分割で環境係数を再学習する
+  * 未検証の係数は使わない。昇格済みモデルがない間は `environment_score=0` と未適用理由を保存し、観測自体は欠落させない
+  * 検証・テスト基準を通過した候補だけを、明示的な昇格操作で `data/models/environment_model.json` へ登録する
 * **Result label accumulation**
 
   * 振り返りJSONから `data/processed/result_labels.csv` にJRA風払戻ラベルを蓄積
@@ -125,6 +134,30 @@ scripts/preflight.sh
 ローカルのpre-commit / pre-push hookは `scripts/install_git_hooks.sh` で導入できます。ルールの配置基準、レビューの役割分担、例外方針は [`docs/engineering_quality.md`](docs/engineering_quality.md) を参照してください。
 
 ## One-command analysis pipeline
+
+### 順序付きスキルと欠損・補完ゲート
+
+競馬作業を14の工程スキルに分割しました。手順と責務は
+[`docs/skill_workflow.md`](docs/skill_workflow.md)、実行順は
+[`config/skill_workflow.json`](config/skill_workflow.json) を参照してください。
+公開CLIは履歴収集後、項目別欠損・原典HTML再解析・補完承認を監査し、不合格ならanalyzerを呼びません。
+承認は入力SHA256・race_id・用途・finding_id一覧・ユーザー発言の証拠に拘束します。
+承認ファイルはユーザーの明示返答がある場合だけ作成し、AIが自動承認することは禁止です。
+`--integrity-approvals-path` で渡せますが、必須項目欠損や原典未確認を承認で解除することはできません。
+
+保存済み入力だけを監査する場合（勝率計算・再取得・予測の上書きなし）：
+
+```bash
+.venv/bin/python scripts/audit_race_inputs.py \
+  --config-path config/20261024_tokyo_11.json \
+  --collected-path report/races/20261024_東京_11/stages/01_data_collector.json \
+  --output-dir report/skill_workflow_audits/20261024_東京_11
+```
+
+工程結果と入力・出力hashは実行ごとの `skill_runs/<run_id>/` に保存します。
+Pythonが行うのはコード処理と決定的検査です。Markdownを読んだだけでAIスキル実行や独立レビューが完了したとは扱いません。
+旧PythonライブラリAPIは互換用でゲート無効が既定です。運用では上記公開CLIを使用してください。
+購入記録・回顧の技能はCodexが個別に実施します。予測CLIが購入や回顧を自動実行することはありません。
 
 ```bash
 python scripts/run_pipeline.py
@@ -193,6 +226,16 @@ python3 scripts/run_final_prediction.py \
 いずれかが欠ける場合は `NO_GO` となり、`tickets` は必ず空になります。結果は
 `report/final_predictions/<race_id>/<run_id>/final_decision.json` に保存され、最新結果は
 `report/final_predictions/<race_id>/latest_decision.json` から参照できます。
+
+正式な `GO` は、既定ではT-6からT-5締切までの最終判定窓だけで返します。それより早い実行は
+データ収集・候補生成まで行いますが、`decision_code=NO_GO_AWAITING_FINAL_WINDOW` とし、正式な
+`tickets` は空にして候補を `withheld_tickets` へ退避します。T-15確認は購入判断ではなく、
+取得状況と候補の事前監査に使用します。
+
+データ品質と定量reviewerが正常でも適格な買い目が0件の場合は、異常終了ではなく正常な見送りです。
+この場合は `status=OK`、`decision=NO_GO`、`decision_code=NO_GO_NO_VALUE_TICKETS` を返します。
+`status=NG` は締切、データ品質、整合性、または定量reviewerの失敗を示します。購入可否は
+`status` ではなく `decision` を正として判定してください。
 
 T-15確認とT-5締切向け最終更新を自動化する場合は、次のコマンドを1分ごとに実行します。
 状態ファイルで各窓を一度だけ実行します。最終更新は40秒の取得時間と10秒の出力予約を確保するため、
@@ -429,6 +472,18 @@ bash scripts/install_git_hooks.sh
 Remote CI is also configured in `.github/workflows/ci.yml` for pushes to `main` and pull requests.
 
 ## Result label accumulation
+
+### User-discretionary purchases
+
+The actual tickets reported by the user must be preserved separately from the
+model's formal `tickets`. Store the immutable pre-race purchase record under
+`data/manual/` with `record_type=user_discretionary_purchase`, expand box bets
+into their individual combinations, and pin the pre-race odds/probability
+evidence used for the later review. Never reclassify these tickets as model
+recommendations. Unknown purchase time or stake must remain `null`; do not
+infer it. After the official result is available, calculate hits, return,
+profit, ROI, coverage efficiency, and the counterfactual against the model's
+decision without overwriting the pre-race record.
 
 After creating a race review JSON, append its payout labels for fixed evaluation:
 

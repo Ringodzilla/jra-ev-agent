@@ -168,7 +168,7 @@ class JRAPipeline:
                 horse_html = self.scraper.fetch(
                     horse.horse_url,
                     raw_name=f"horse_{safe_filename(horse.horse_id)}.html",
-                    use_cache=True,
+                    use_cache=reprocess_raw or not force_rebuild,
                     cache_only=reprocess_raw,
                 )
                 if not horse_html:
@@ -220,16 +220,31 @@ class JRAPipeline:
                     target_race_date=horse.target_race_date,
                 )
                 issues.extend(_issues_for_selected_history(detail_issues, rows))
+                history_table_missing = any(
+                    issue.code == "history_table_missing" for issue in detail_issues
+                )
+                required_history_count = 5
+                repair_reason = "history_sources_exhausted"
+                if force_rebuild and not history_table_missing and len(detail_rows) < 5:
+                    # A successfully parsed, freshly fetched JRA horse profile lists
+                    # every completed start. Young horses with fewer than five starts
+                    # therefore have complete career history rather than missing rows.
+                    required_history_count = min(
+                        5,
+                        max(len(embedded_rows), len(detail_rows)),
+                    )
+                    repair_reason = "official_career_history_complete"
                 repair_result = history_repair.build_result(
                     horse,
                     rows=rows,
-                    reason="history_sources_exhausted",
+                    reason=repair_reason,
                     source_counts={
                         "embedded": len(embedded_rows),
                         "manual": len(manual_rows),
                         "detail": len(detail_rows),
                     },
                     attempted_urls=[horse.horse_url],
+                    required_history_count=required_history_count,
                 )
                 rows = repair_result.rows
                 repair_actions.extend(repair_result.repair_actions)
@@ -375,6 +390,13 @@ class JRAPipeline:
         observed_last3f_count = max(0, len(selected_history_rows) - fallback_count - missing_last3f_count)
         snapshot_rows = self._read_existing_rows(self.config.odds_snapshots_csv)
         combo_odds_rows = self._read_existing_rows(self.config.combo_odds_csv)
+        required_history_counts = {
+            (str(action.get("race_id", "")), str(action.get("horse_id", ""))): int(
+                action.get("required_history_count", 5) or 0
+            )
+            for action in (repair_actions or [])
+            if action.get("type") == "history_gap_repair"
+        }
         payload = {
             "generated_at": datetime.now(timezone.utc).isoformat(),
             "issue_count": len(issues),
@@ -383,7 +405,13 @@ class JRAPipeline:
             "repaired_row_count": sum(1 for issue in issues if issue.code in {"row_padding", "row_merge"}),
             "missing_current_odds_entries": sum(1 for row in entry_rows if not row.get("current_odds")),
             "incomplete_history_entries": sum(
-                1 for row in entry_rows if int(str(row.get("history_count") or "0")) < 5
+                1
+                for row in entry_rows
+                if int(str(row.get("history_count") or "0"))
+                < required_history_counts.get(
+                    (str(row.get("race_id", "")), str(row.get("horse_id", ""))),
+                    5,
+                )
             ),
             "history_row_count": len(selected_history_rows),
             "last3f_observed_rows": observed_last3f_count,

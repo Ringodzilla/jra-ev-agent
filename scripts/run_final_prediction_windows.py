@@ -66,6 +66,7 @@ def run_due_windows(
     bankroll_per_race: int,
     min_ev: float,
     mode: str,
+    final_go_window_seconds: int = 60,
     command_runner: CommandRunner = subprocess.run,
 ) -> dict[str, object]:
     race_config = load_single_race_config(config_path)
@@ -108,6 +109,8 @@ def run_due_windows(
             str(minimum_refresh_seconds),
             "--emit-reserve-seconds",
             str(emit_reserve_seconds),
+            "--final-go-window-seconds",
+            str(final_go_window_seconds),
             "--bankroll-per-race",
             str(bankroll_per_race),
             "--min-ev",
@@ -155,6 +158,7 @@ def main() -> None:
     parser.add_argument("--cutoff-minutes", type=int, default=5)
     parser.add_argument("--minimum-refresh-seconds", type=int, default=40)
     parser.add_argument("--emit-reserve-seconds", type=int, default=10)
+    parser.add_argument("--final-go-window-seconds", type=int, default=60)
     parser.add_argument("--bankroll-per-race", type=int, default=1000)
     parser.add_argument("--min-ev", type=float, default=1.03)
     parser.add_argument("--mode", choices=("balanced", "aggressive"), default="balanced")
@@ -178,6 +182,7 @@ def main() -> None:
         cutoff_minutes=args.cutoff_minutes,
         minimum_refresh_seconds=args.minimum_refresh_seconds,
         emit_reserve_seconds=args.emit_reserve_seconds,
+        final_go_window_seconds=args.final_go_window_seconds,
         bankroll_per_race=args.bankroll_per_race,
         min_ev=args.min_ev,
         mode=args.mode,

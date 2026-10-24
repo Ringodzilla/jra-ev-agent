@@ -46,6 +46,7 @@ def test_cushion_uses_observed_performance_and_shrinks_distant_evidence():
     assert cushion_course_adjustment(history, [], 10)["observed_starts"] == 0
     assert cushion_course_adjustment([dict(history[0], history_surface="ダート")], measurements(), 10)["observed_starts"] == 0
     assert cushion_course_adjustment([dict(history[0], position="中止")], measurements(), 10)["observed_starts"] == 0
+    assert cushion_course_adjustment([dict(history[0], date="2026-03-01")], measurements(), 10)["observed_starts"] == 0
     assert cushion_course_adjustment(history, measurements() + [dict(measurements()[0], cushion=None)], 10)["observed_starts"] == 2
     with pytest.raises(ValueError, match="before"):
         cushion_course_adjustment([dict(history[0], target_race_date="2026-01-01")], measurements(), 10)

@@ -139,6 +139,13 @@ def test_pipeline_full_horse_repair_paths(tmp_path: Path) -> None:
     assert any(row.get("horse_id") == "H1" for row in rows)
     assert any(row.get("horse_id") == "H3" for row in rows)
     assert config.missing_history_requests_path.exists()
+    detail_calls = [
+        call for call in pipeline.scraper.fetch.call_args_list
+        if str(call.args[0]).startswith("https://horse/")
+    ]
+    assert detail_calls
+    assert all(call.kwargs["use_cache"] is False for call in detail_calls)
+    assert all(call.kwargs["cache_only"] is False for call in detail_calls)
 
 
 def test_pipeline_race_resolution_and_combo_odds_paths(tmp_path: Path) -> None:

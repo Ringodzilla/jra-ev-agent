@@ -67,4 +67,5 @@ class BetBuilderAgent:
             ),
             prefer_wide=self.settings.prefer_wide,
             max_horse_stake_dependency_ratio=self.settings.max_horse_stake_dependency_ratio,
+            top5_wide_box_enabled=self.settings.mode == "balanced",
         )

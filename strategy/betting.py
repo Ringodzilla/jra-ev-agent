@@ -13,9 +13,12 @@ from strategy.live_odds import (
 from strategy.odds_scenarios import build_odds_scenarios
 from strategy.portfolio import (
     is_formation_ticket as _is_formation_ticket,
+    is_wide_box_ticket as _is_wide_box_ticket,
     portfolio_ev as _portfolio_ev,
     portfolio_expected_return as _portfolio_expected_return,
     portfolio_no_gami as _portfolio_no_gami,
+    portfolio_robust_ev as _portfolio_robust_ev,
+    portfolio_robust_expected_return as _portfolio_robust_expected_return,
     portfolio_summary as _portfolio_summary,
     portfolio_total_points as _portfolio_total_points,
     portfolio_total_stake as _portfolio_total_stake,
@@ -72,6 +75,7 @@ def generate_tickets(
     min_rank_coverage_leader_probability: float = 0.25,
     min_rank_coverage_third_vs_fourth_ratio: float = 1.10,
     max_horse_stake_dependency_ratio: float = 0.60,
+    top5_wide_box_enabled: bool | None = None,
 ) -> dict[str, object]:
     if candidate_evaluations is not None:
         if str(dict(candidate_validation or {}).get("status", "")) != "OK":
@@ -106,6 +110,11 @@ def generate_tickets(
             ),
             max_horse_stake_dependency_ratio=max_horse_stake_dependency_ratio,
             seconds_to_post=1800.0 if seconds_to_post is None else seconds_to_post,
+            top5_wide_box_enabled=(
+                mode == "balanced"
+                if top5_wide_box_enabled is None
+                else top5_wide_box_enabled
+            ),
         )
 
     by_race: dict[str, list[dict[str, object]]] = defaultdict(list)
@@ -488,6 +497,7 @@ def _generate_tickets_from_candidate_evaluations(
     min_rank_coverage_third_vs_fourth_ratio: float,
     max_horse_stake_dependency_ratio: float,
     seconds_to_post: float,
+    top5_wide_box_enabled: bool,
 ) -> dict[str, object]:
     thresholds = {
         "win": max(min_ev, MIN_WIN_EV),
@@ -585,6 +595,14 @@ def _generate_tickets_from_candidate_evaluations(
             )
             for evaluation in evaluations_by_race.get(race_id, [])
         ]
+        if top5_wide_box_enabled:
+            wide_box = _build_top5_wide_box_candidate(
+                [ticket for ticket in candidate_pool if ticket],
+                race_rows,
+                bankroll_per_race=bankroll_per_race,
+            )
+            if wide_box is not None:
+                candidate_pool.append(wide_box)
         rank_coverage = _promote_top3_rank_coverage_candidates(
             [ticket for ticket in candidate_pool if ticket],
             race_rows,
@@ -994,6 +1012,233 @@ def _canonical_ticket_from_evaluation(
     if alias:
         ticket[alias] = _fmt(current_hit_prob)
     return ticket
+
+
+def _build_top5_wide_box_candidate(
+    candidates: list[dict[str, object]],
+    race_rows: list[dict[str, object]],
+    *,
+    bankroll_per_race: int,
+) -> dict[str, object] | None:
+    """Build one atomic 5-horse wide box from the five highest win probabilities."""
+    point_count = 10
+    stake_per_point = 100
+    total_stake = point_count * stake_per_point
+    if bankroll_per_race < total_stake or len(race_rows) < 5:
+        return None
+
+    top5 = sorted(
+        race_rows,
+        key=lambda row: _to_float(row.get("win_prob")),
+        reverse=True,
+    )[:5]
+    rows_by_number = {
+        str(row.get("horse_number", "")).strip(): row
+        for row in top5
+        if str(row.get("horse_number", "")).strip()
+    }
+    if len(rows_by_number) != 5:
+        return None
+    numbers = sorted(rows_by_number, key=lambda value: int(_to_float(value)))
+    pair_tickets = {
+        str(ticket.get("horse_number", "")): ticket
+        for ticket in candidates
+        if str(ticket.get("bet_type", "")) == "wide"
+        and not _is_wide_box_ticket(ticket)
+    }
+    points: list[dict[str, object]] = []
+    for left, right in combinations(numbers, 2):
+        combination = f"{left}-{right}"
+        source = pair_tickets.get(combination)
+        if (
+            source is None
+            or str(source.get("odds_source", "")) != "jra_live"
+            or _to_float(source.get("official_odds_current")) <= 1.0
+            or _to_float(source.get("robust_odds")) <= 1.0
+        ):
+            return None
+        probability = _to_float(source.get("raw_hit_prob") or source.get("hit_prob"))
+        if probability <= 0.0:
+            return None
+        points.append(
+            {
+                "combination": combination,
+                "horse_numbers": [left, right],
+                "hit_prob": probability,
+                "odds": _to_float(source.get("official_odds_current")),
+                "robust_odds": _to_float(source.get("robust_odds")),
+                "odds_source": "jra_live",
+                "source_candidate_key": str(source.get("source_candidate_key", "")),
+            }
+        )
+    triple_probabilities = {
+        tuple(combo): _combo_hit_prob(
+            [rows_by_number[number] for number in combo],
+            key="win_prob",
+            bet_type="sanrenpuku",
+        )
+        for combo in combinations(numbers, 3)
+    }
+    pair_probability_sum = sum(_to_float(point.get("hit_prob")) for point in points)
+    three_hit_probability = sum(triple_probabilities.values())
+    any_hit_probability = _clamp(
+        pair_probability_sum - (2.0 * three_hit_probability),
+        minimum=0.0,
+        maximum=1.0,
+    )
+    if any_hit_probability <= 0.0:
+        return None
+
+    current_expected_return = sum(
+        stake_per_point * _to_float(point.get("hit_prob")) * _to_float(point.get("odds"))
+        for point in points
+    )
+    robust_expected_return = sum(
+        stake_per_point
+        * _to_float(point.get("hit_prob"))
+        * _to_float(point.get("robust_odds"))
+        for point in points
+    )
+    current_ev = current_expected_return / total_stake
+    robust_ev = robust_expected_return / total_stake
+    outcome_audit = _wide_box_outcome_audit(
+        points,
+        race_rows,
+        total_stake=total_stake,
+        stake_per_point=stake_per_point,
+    )
+    horse_names = [str(rows_by_number[number].get("horse_name", number)) for number in numbers]
+    race_id = str(top5[0].get("race_id", ""))
+    return {
+        "race_id": race_id,
+        "bet_type": "wide",
+        "ticket_shape": "wide_box",
+        "ticket_role": "portfolio_candidate",
+        "horse_number": "-".join(numbers),
+        "horse_numbers": numbers,
+        "horse_names": horse_names,
+        "horse_name": f"ワイドBOX {'-'.join(numbers)}",
+        "points": points,
+        "point_count": point_count,
+        "stake_per_point": stake_per_point,
+        "stake": total_stake,
+        "raw_hit_prob": any_hit_probability,
+        "hit_prob": _fmt(any_hit_probability),
+        "robust_hit_prob": _fmt(any_hit_probability),
+        "wide_prob": _fmt(any_hit_probability),
+        "three_hit_probability": _fmt(three_hit_probability),
+        "expected_hit_count": _fmt(pair_probability_sum),
+        "current_expected_return": _fmt(current_expected_return),
+        "robust_expected_return": _fmt(robust_expected_return),
+        "ev": _fmt(current_ev),
+        "ev_current": _fmt(current_ev),
+        "robust_ev": _fmt(robust_ev),
+        "ev_predicted": _fmt(robust_ev),
+        "official_odds_current": _fmt(current_ev / any_hit_probability),
+        "win_odds": _fmt(current_ev / any_hit_probability),
+        "robust_odds": _fmt(robust_ev / any_hit_probability),
+        "predicted_odds": _fmt(robust_ev / any_hit_probability),
+        "odds_source": "jra_live",
+        "official_odds_complete": True,
+        "probability_source": "04_ev_calculator",
+        "source_candidate_key": f"{race_id}|wide_box|{'-'.join(numbers)}",
+        "source_candidate_keys": [str(point["source_candidate_key"]) for point in points],
+        "confidence": _fmt(current_ev),
+        "minimum_positive_odds_sum": _fmt(outcome_audit["minimum_positive_odds_sum"]),
+        "maximum_odds_sum": _fmt(outcome_audit["maximum_odds_sum"]),
+        "minimum_positive_return": int(outcome_audit["minimum_positive_return"]),
+        "maximum_return": int(outcome_audit["maximum_return"]),
+        "minimum_positive_return_robust": int(
+            outcome_audit["minimum_positive_return_robust"]
+        ),
+        "maximum_return_robust": int(outcome_audit["maximum_return_robust"]),
+        "gami_probability_current": _fmt(outcome_audit["gami_probability_current"]),
+        "gami_probability_robust": _fmt(outcome_audit["gami_probability_robust"]),
+        "strict_no_gami_current": bool(outcome_audit["strict_no_gami_current"]),
+        "strict_no_gami_robust": bool(outcome_audit["strict_no_gami_robust"]),
+        "strict_no_gami": bool(outcome_audit["strict_no_gami"]),
+        "top3_outcome_audit": outcome_audit,
+        "probability_lineage": {
+            "source": "04_ev_calculator",
+            "formula": "sum_pair_wide_prob_minus_2_sum_selected_triple_prob",
+            "pair_probability_sum": pair_probability_sum,
+            "selected_triple_probability_sum": three_hit_probability,
+            "raw_hit_prob": any_hit_probability,
+            "tolerance": 1e-9,
+        },
+    }
+
+
+def _wide_box_outcome_audit(
+    points: list[dict[str, object]],
+    race_rows: list[dict[str, object]],
+    *,
+    total_stake: int,
+    stake_per_point: int,
+) -> dict[str, object]:
+    current_positive_returns: list[float] = []
+    robust_positive_returns: list[float] = []
+    current_gami_probability = 0.0
+    robust_gami_probability = 0.0
+    hit_probability = 0.0
+    three_hit_probability = 0.0
+    outcome_probability_mass = 0.0
+    for top3 in combinations(race_rows, 3):
+        probability = _combo_hit_prob(list(top3), key="win_prob", bet_type="sanrenpuku")
+        outcome_probability_mass += probability
+        numbers = {str(row.get("horse_number", "")).strip() for row in top3}
+        hits = [
+            point
+            for point in points
+            if set(str(value) for value in list(point.get("horse_numbers") or [])) <= numbers
+        ]
+        if not hits:
+            continue
+        hit_probability += probability
+        if len(hits) == 3:
+            three_hit_probability += probability
+        current_return = stake_per_point * sum(_to_float(point.get("odds")) for point in hits)
+        robust_return = stake_per_point * sum(
+            _to_float(point.get("robust_odds")) for point in hits
+        )
+        current_positive_returns.append(current_return)
+        robust_positive_returns.append(robust_return)
+        if current_return < total_stake:
+            current_gami_probability += probability
+        if robust_return < total_stake:
+            robust_gami_probability += probability
+
+    minimum_current = min(current_positive_returns, default=0.0)
+    maximum_current = max(current_positive_returns, default=0.0)
+    minimum_robust = min(robust_positive_returns, default=0.0)
+    maximum_robust = max(robust_positive_returns, default=0.0)
+    return {
+        "outcome_probability_mass": _fmt(outcome_probability_mass),
+        "hit_probability": _fmt(hit_probability),
+        "three_hit_probability": _fmt(three_hit_probability),
+        "gami_probability_current": current_gami_probability,
+        "gami_probability_robust": robust_gami_probability,
+        "gami_probability_current_given_hit": _fmt(
+            current_gami_probability / hit_probability if hit_probability > 0.0 else 0.0
+        ),
+        "gami_probability_robust_given_hit": _fmt(
+            robust_gami_probability / hit_probability if hit_probability > 0.0 else 0.0
+        ),
+        "minimum_positive_odds_sum": minimum_current / stake_per_point,
+        "maximum_odds_sum": maximum_current / stake_per_point,
+        "minimum_positive_return": int(minimum_current),
+        "maximum_return": int(maximum_current),
+        "minimum_positive_return_robust": int(minimum_robust),
+        "maximum_return_robust": int(maximum_robust),
+        "strict_no_gami_current": bool(current_positive_returns)
+        and minimum_current >= total_stake,
+        "strict_no_gami_robust": bool(robust_positive_returns)
+        and minimum_robust >= total_stake,
+        "strict_no_gami": bool(current_positive_returns)
+        and bool(robust_positive_returns)
+        and minimum_current >= total_stake
+        and minimum_robust >= total_stake,
+    }
 
 
 def _build_win_ticket(
@@ -2746,7 +2991,9 @@ def _limit_eligible_selection_pool(
         (
             ticket
             for ticket in tickets
-            if str(ticket.get("bet_type", "")) == "wide" and not _is_coverage_ticket(ticket)
+            if str(ticket.get("bet_type", "")) == "wide"
+            and not _is_coverage_ticket(ticket)
+            and not _is_wide_box_ticket(ticket)
         ),
         key=calibrated_rank,
         reverse=True,
@@ -2771,6 +3018,9 @@ def _limit_eligible_selection_pool(
 
     selection_pool: list[dict[str, object]] = []
     for ticket in tickets:
+        if _is_wide_box_ticket(ticket):
+            selection_pool.append(ticket)
+            continue
         if _is_coverage_ticket(ticket):
             selection_pool.append(ticket)
             continue
@@ -2793,6 +3043,28 @@ def _select_optimized_tickets(
     required_horse_number: str = "",
 ) -> list[dict[str, object]]:
     ranked = _rank_ticket_pool(_dedupe_ticket_combos(tickets), prefer_wide=prefer_wide)
+    safe_wide_boxes = [
+        ticket
+        for ticket in ranked
+        if _is_wide_box_ticket(ticket)
+        and bool(ticket.get("strict_no_gami_current"))
+        and bool(ticket.get("strict_no_gami_robust"))
+        and (
+            not required_horse_number
+            or required_horse_number in _ticket_horse_numbers(ticket)
+        )
+    ]
+    if safe_wide_boxes:
+        return [
+            max(
+                safe_wide_boxes,
+                key=lambda ticket: (
+                    _ticket_decision_ev(ticket),
+                    _ticket_decision_probability(ticket),
+                ),
+            )
+        ]
+    ranked = [ticket for ticket in ranked if not _is_wide_box_ticket(ticket)]
     value_ranked = [ticket for ticket in ranked if not _is_coverage_ticket(ticket)]
     coverage_ranked = [ticket for ticket in ranked if _is_coverage_ticket(ticket)]
     priority_coverage = [
@@ -3180,6 +3452,8 @@ def _annotate_portfolio_tickets(tickets: list[dict[str, object]]) -> list[dict[s
     total_stake = _portfolio_total_stake(tickets)
     portfolio_ev = _portfolio_ev(tickets)
     expected_return = _portfolio_expected_return(tickets)
+    robust_portfolio_ev = _portfolio_robust_ev(tickets)
+    robust_expected_return = _portfolio_robust_expected_return(tickets)
     no_gami = _portfolio_no_gami(tickets)
     total_points = _portfolio_total_points(tickets)
     annotated: list[dict[str, object]] = []
@@ -3191,9 +3465,14 @@ def _annotate_portfolio_tickets(tickets: list[dict[str, object]]) -> list[dict[s
         out["portfolio_ev"] = _fmt(portfolio_ev)
         out["portfolio_expected_return"] = int(expected_return)
         out["portfolio_expected_profit"] = int(expected_return - total_stake)
+        out["robust_portfolio_ev"] = _fmt(robust_portfolio_ev)
+        out["robust_portfolio_expected_return"] = int(robust_expected_return)
+        out["robust_portfolio_expected_profit"] = int(
+            robust_expected_return - total_stake
+        )
         out["portfolio_no_gami"] = no_gami
         out["return_if_hit"] = gross_return
-        if _is_formation_ticket(out):
+        if _is_formation_ticket(out) or _is_wide_box_ticket(out):
             out["return_if_hit_min"] = gross_return
             out["return_if_hit_max"] = _ticket_max_return_if_hit(out)
         out["net_return_if_hit"] = gross_return - total_stake
@@ -3435,7 +3714,7 @@ def _optimize_portfolio_stakes(
 
 def _ticket_max_portfolio_stake(ticket: dict[str, object], *, bankroll_per_race: int) -> int:
     bet_type = str(ticket.get("bet_type", ""))
-    if _is_formation_ticket(ticket):
+    if _is_formation_ticket(ticket) or _is_wide_box_ticket(ticket):
         share = 0.70
     elif bet_type in {"place", "wide"}:
         share = 0.45
@@ -3464,7 +3743,7 @@ def _stake_allocation_score(ticket: dict[str, object]) -> float:
     confidence = _clamp(_to_float(ticket.get("confidence"), 1.0), minimum=0.30, maximum=2.50)
     odds = max(1.0, _ticket_decision_odds(ticket))
     stability = 1.0 / (1.0 + abs(_to_float(ticket.get("ev_predicted")) - ev))
-    shape_bonus = 1.08 if _is_formation_ticket(ticket) else 1.0
+    shape_bonus = 1.08 if _is_formation_ticket(ticket) or _is_wide_box_ticket(ticket) else 1.0
     return edge * math.sqrt(max(hit_prob, 0.001)) * confidence * stability * shape_bonus / math.sqrt(odds)
 
 

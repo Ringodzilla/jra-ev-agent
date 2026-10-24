@@ -15,6 +15,7 @@ class DeadlineSettings:
     emergency_seconds_before_cutoff: int = 120
     emit_reserve_seconds: int = 10
     minimum_live_refresh_seconds: int = 40
+    final_go_window_seconds_before_cutoff: int = 60
     odds_max_age_seconds: int = 180
     conditions_max_age_seconds: int = 300
     max_abs_body_weight_change_kg: int = 20
@@ -25,13 +26,15 @@ class DeadlinePlan:
     post_time: datetime
     output_deadline: datetime
     evaluated_at: datetime
+    final_go_opens_at: datetime
     seconds_until_output_deadline: float
     execution_mode: str
     may_start_network_refresh: bool
+    final_go_window_open: bool
 
     def to_dict(self) -> dict[str, object]:
         payload = asdict(self)
-        for key in ("post_time", "output_deadline", "evaluated_at"):
+        for key in ("post_time", "output_deadline", "evaluated_at", "final_go_opens_at"):
             payload[key] = getattr(self, key).isoformat()
         payload["seconds_until_output_deadline"] = round(self.seconds_until_output_deadline, 3)
         return payload
@@ -63,6 +66,9 @@ def build_deadline_plan(
     post_time = race_post_datetime(race_config)
     evaluated_at = _aware_jst(now or datetime.now(tz=JST))
     output_deadline = post_time - timedelta(minutes=settings.cutoff_minutes_before_post)
+    final_go_opens_at = output_deadline - timedelta(
+        seconds=settings.final_go_window_seconds_before_cutoff
+    )
     remaining = (output_deadline - evaluated_at).total_seconds()
 
     if remaining <= 0:
@@ -84,9 +90,11 @@ def build_deadline_plan(
         post_time=post_time,
         output_deadline=output_deadline,
         evaluated_at=evaluated_at,
+        final_go_opens_at=final_go_opens_at,
         seconds_until_output_deadline=remaining,
         execution_mode=execution_mode,
         may_start_network_refresh=may_start,
+        final_go_window_open=final_go_opens_at <= evaluated_at < output_deadline,
     )
 
 

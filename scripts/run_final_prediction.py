@@ -53,6 +53,7 @@ def main() -> None:
     parser.add_argument("--emergency-seconds", type=int, default=120)
     parser.add_argument("--emit-reserve-seconds", type=int, default=10)
     parser.add_argument("--minimum-refresh-seconds", type=int, default=40)
+    parser.add_argument("--final-go-window-seconds", type=int, default=60)
     parser.add_argument("--odds-max-age-seconds", type=int, default=180)
     parser.add_argument("--conditions-max-age-seconds", type=int, default=300)
     parser.add_argument("--max-body-weight-change-kg", type=int, default=20)
@@ -60,6 +61,7 @@ def main() -> None:
     parser.add_argument("--bankroll-per-race", type=int, default=1000)
     parser.add_argument("--min-ev", type=float, default=1.03)
     parser.add_argument("--mode", choices=["balanced", "aggressive"], default="balanced")
+    parser.add_argument('--integrity-approvals-path', type=Path, help='Explicit user approvals bound to final inputs')
     args = parser.parse_args()
 
     race_config = load_single_race_config(Path(args.config_path))
@@ -70,6 +72,7 @@ def main() -> None:
         emergency_seconds_before_cutoff=args.emergency_seconds,
         emit_reserve_seconds=args.emit_reserve_seconds,
         minimum_live_refresh_seconds=args.minimum_refresh_seconds,
+        final_go_window_seconds_before_cutoff=args.final_go_window_seconds,
         odds_max_age_seconds=args.odds_max_age_seconds,
         conditions_max_age_seconds=args.conditions_max_age_seconds,
         max_abs_body_weight_change_kg=args.max_body_weight_change_kg,
@@ -131,6 +134,8 @@ def main() -> None:
                 ),
                 deadline_settings=deadline_settings,
             )
+            workflow.enforce_skill_gates = True
+            workflow.integrity_approvals = (json.loads(args.integrity_approvals_path.read_text()) if args.integrity_approvals_path else [])
             payload = workflow.run(
                 race_config,
                 baseline=baseline,

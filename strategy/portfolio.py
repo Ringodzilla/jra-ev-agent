@@ -18,10 +18,23 @@ def portfolio_expected_return(tickets: list[Ticket]) -> float:
     )
 
 
+def portfolio_robust_ev(tickets: list[Ticket]) -> float:
+    total_stake = portfolio_total_stake(tickets)
+    return portfolio_robust_expected_return(tickets) / total_stake if total_stake > 0 else 0.0
+
+
+def portfolio_robust_expected_return(tickets: list[Ticket]) -> float:
+    return sum(
+        int(_to_float(ticket.get("stake")))
+        * _to_float(ticket.get("robust_ev"), canonical_ticket_ev(ticket))
+        for ticket in tickets
+    )
+
+
 def canonical_ticket_ev(ticket: Ticket) -> float:
     """Use reproducible JRA-live arithmetic instead of trusting a reported EV."""
     if str(ticket.get("odds_source", "")) == "jra_live":
-        if is_formation_ticket(ticket):
+        if is_multi_point_ticket(ticket):
             points = list(ticket.get("points") or [])
             point_count = ticket_point_count(ticket)
             if not points or point_count != len(points):
@@ -81,6 +94,8 @@ def portfolio_total_points(tickets: list[Ticket]) -> int:
 
 
 def ticket_return_if_hit(ticket: Ticket) -> int:
+    if is_wide_box_ticket(ticket):
+        return int(_to_float(ticket.get("minimum_positive_return")))
     if is_formation_ticket(ticket):
         stake_per_point = int(_to_float(ticket.get("stake_per_point")))
         odds = _to_float(ticket.get("trifecta_odds_min") or ticket.get("win_odds"))
@@ -91,6 +106,8 @@ def ticket_return_if_hit(ticket: Ticket) -> int:
 
 
 def ticket_max_return_if_hit(ticket: Ticket) -> int:
+    if is_wide_box_ticket(ticket):
+        return int(_to_float(ticket.get("maximum_return")))
     if is_formation_ticket(ticket):
         stake = int(_to_float(ticket.get("stake_per_point")))
         odds = _to_float(ticket.get("trifecta_odds_max") or ticket.get("win_odds"))
@@ -99,23 +116,31 @@ def ticket_max_return_if_hit(ticket: Ticket) -> int:
 
 
 def ticket_point_count(ticket: Ticket) -> int:
-    if not is_formation_ticket(ticket):
+    if not is_multi_point_ticket(ticket):
         return 1
     point_count = int(_to_float(ticket.get("point_count")))
     return point_count if point_count > 0 else max(1, len(list(ticket.get("points") or [])))
 
 
 def ticket_stake_unit(ticket: Ticket) -> int:
-    return max(100, ticket_point_count(ticket) * 100) if is_formation_ticket(ticket) else 100
+    return max(100, ticket_point_count(ticket) * 100) if is_multi_point_ticket(ticket) else 100
 
 
 def with_adjusted_stake(ticket: Ticket, stake: int) -> Ticket:
     out = dict(ticket)
     adjusted = int(stake / ticket_stake_unit(ticket)) * ticket_stake_unit(ticket)
     out["stake"] = max(0, adjusted)
-    if is_formation_ticket(out):
+    if is_multi_point_ticket(out):
         stake_per_point = int(out["stake"] / max(ticket_point_count(out), 1))
         out["stake_per_point"] = stake_per_point
+    if is_wide_box_ticket(out):
+        out["minimum_positive_return"] = int(
+            stake_per_point * _to_float(out.get("minimum_positive_odds_sum"))
+        )
+        out["maximum_return"] = int(
+            stake_per_point * _to_float(out.get("maximum_odds_sum"))
+        )
+    elif is_formation_ticket(out):
         min_odds = _to_float(out.get("trifecta_odds_min") or out.get("win_odds"))
         max_odds = _to_float(out.get("trifecta_odds_max") or out.get("win_odds"))
         out["min_return_if_hit"] = int(stake_per_point * min_odds)
@@ -126,18 +151,30 @@ def with_adjusted_stake(ticket: Ticket, stake: int) -> Ticket:
 def portfolio_summary(tickets: list[Ticket]) -> dict[str, object]:
     total_stake = portfolio_total_stake(tickets)
     expected_return = portfolio_expected_return(tickets)
+    robust_expected_return = portfolio_robust_expected_return(tickets)
     return {
         "total_stake": total_stake,
         "total_points": portfolio_total_points(tickets),
         "expected_return": int(expected_return),
         "expected_profit": int(expected_return - total_stake),
         "portfolio_ev": _fmt(portfolio_ev(tickets)),
+        "robust_expected_return": int(robust_expected_return),
+        "robust_expected_profit": int(robust_expected_return - total_stake),
+        "robust_portfolio_ev": _fmt(portfolio_robust_ev(tickets)),
         "no_gami": portfolio_no_gami(tickets) if tickets else False,
     }
 
 
 def is_formation_ticket(ticket: Ticket) -> bool:
     return str(ticket.get("ticket_shape", "")) == "formation"
+
+
+def is_wide_box_ticket(ticket: Ticket) -> bool:
+    return str(ticket.get("ticket_shape", "")) == "wide_box"
+
+
+def is_multi_point_ticket(ticket: Ticket) -> bool:
+    return is_formation_ticket(ticket) or is_wide_box_ticket(ticket)
 
 
 def _fmt(value: float) -> str:

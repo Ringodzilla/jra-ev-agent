@@ -14,6 +14,7 @@ from src.agents.reviewer import (
     _repair_action_name,
     _repair_portfolio_safe,
     _review_max_ticket_stake,
+    _selected_divergent_rows,
     _ticket_min_ev,
     _ticket_min_prob,
     _ticket_value_integrity_errors,
@@ -35,6 +36,20 @@ def _safe_win(*, horse_number: str = "1", stake: int = 100) -> dict[str, object]
         "ev": "1.5",
         "stake": stake,
     }
+
+
+def test_selected_divergence_requires_same_race() -> None:
+    ticket = dict(_safe_win(horse_number="1"), race_id="R1")
+    other_race = {
+        "race_id": "R2",
+        "horse_id": "",
+        "horse_number": "1",
+        "horse_name": "Other race horse",
+    }
+    same_race = dict(other_race, race_id="R1")
+
+    assert _selected_divergent_rows([ticket], [other_race]) == []
+    assert _selected_divergent_rows([ticket], [same_race]) == [same_race]
 
 
 def test_reviewer_win5_quality_and_order_failures() -> None:

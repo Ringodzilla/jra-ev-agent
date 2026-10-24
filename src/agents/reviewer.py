@@ -180,11 +180,7 @@ class ReviewerAgent:
             max_odds_gap_ratio=self.settings.max_odds_gap_ratio,
         )
         selected_divergent_rows = _selected_divergent_rows(value_tickets, divergent_rows)
-        actionable_divergent_rows = (
-            selected_divergent_rows
-            if repaired_plan or rank_coverage_tickets
-            else divergent_rows
-        )
+        actionable_divergent_rows = selected_divergent_rows
         if actionable_divergent_rows and str(ticket_plan.get("bet_type", "")) != "win5":
             reject(
                 "PREDICTED_CURRENT_EV_DIVERGENCE",
@@ -663,17 +659,25 @@ def _ticket_matches_divergent_row(
     ticket: dict[str, object],
     divergent_rows: list[dict[str, str]],
 ) -> bool:
+    ticket_race_id = str(ticket.get("race_id", "")).strip()
     ticket_ids = {str(ticket.get("horse_id", "")).strip()}
     ticket_ids.update(str(value).strip() for value in list(ticket.get("horse_ids") or []))
     ticket_numbers = _ticket_horse_numbers([ticket])
     return any(
         (
-            str(row.get("horse_id", "")).strip()
-            and str(row.get("horse_id", "")).strip() in ticket_ids
+            not ticket_race_id
+            or not str(row.get("race_id", "")).strip()
+            or str(row.get("race_id", "")).strip() == ticket_race_id
         )
-        or (
-            str(row.get("horse_number", "")).strip()
-            and str(row.get("horse_number", "")).strip() in ticket_numbers
+        and (
+            (
+                str(row.get("horse_id", "")).strip()
+                and str(row.get("horse_id", "")).strip() in ticket_ids
+            )
+            or (
+                str(row.get("horse_number", "")).strip()
+                and str(row.get("horse_number", "")).strip() in ticket_numbers
+            )
         )
         for row in divergent_rows
     )

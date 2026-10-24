@@ -41,13 +41,33 @@ class DeadlinePlanTest(unittest.TestCase):
         )
 
         self.assertEqual("normal", normal.execution_mode)
+        self.assertFalse(normal.final_go_window_open)
         self.assertEqual("fast", fast.execution_mode)
+        self.assertFalse(fast.final_go_window_open)
         self.assertEqual("emergency", emergency.execution_mode)
+        self.assertTrue(emergency.final_go_window_open)
         self.assertTrue(emergency.may_start_network_refresh)
         self.assertEqual("emergency", insufficient.execution_mode)
         self.assertFalse(insufficient.may_start_network_refresh)
         self.assertEqual("too_late", too_late.execution_mode)
         self.assertFalse(too_late.may_start_network_refresh)
+        self.assertFalse(too_late.final_go_window_open)
+
+    def test_final_go_window_is_t6_to_t5(self):
+        before = build_deadline_plan(
+            self.race,
+            now=datetime(2026, 8, 8, 15, 18, 59, tzinfo=JST),
+            settings=self.settings,
+        )
+        opens = build_deadline_plan(
+            self.race,
+            now=datetime(2026, 8, 8, 15, 19, tzinfo=JST),
+            settings=self.settings,
+        )
+
+        self.assertFalse(before.final_go_window_open)
+        self.assertTrue(opens.final_go_window_open)
+        self.assertEqual("2026-08-08T15:19:00+09:00", opens.final_go_opens_at.isoformat())
 
     def test_post_time_is_required(self):
         with self.assertRaises(ValueError):

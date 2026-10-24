@@ -139,11 +139,28 @@ class LiveSnapshotCollector:
                 entry.update(target_weather=environment_snapshot['weather'],
                              target_track_condition=environment_snapshot['track_condition'],
                              target_conditions_captured_at=environment_snapshot['weather_captured_at'])
+                for key in (
+                    'environment_schema_version', 'captured_at', 'cushion_measured_at',
+                    'moisture_measured_at', 'cushion', 'turf_moisture_goal',
+                    'turf_moisture_corner4', 'dirt_moisture_goal', 'dirt_moisture_corner4',
+                    'turf_moisture_goal_condition', 'turf_moisture_corner4_condition',
+                    'dirt_moisture_goal_condition', 'dirt_moisture_corner4_condition',
+                    'moisture_note', 'collection_complete', 'eligible_for_learning',
+                ):
+                    entry[f'target_environment_{key}'] = environment_snapshot.get(key, '')
         severity_counts = Counter(issue.severity for issue in issues)
         conditions = {
             "weather": entries[0].get("target_weather", "") if entries else "",
             "track_condition": entries[0].get("target_track_condition", "") if entries else "",
             "captured_at": (entries[0].get('target_conditions_captured_at') if entries else '') or race_captured_at.isoformat(),
+            "cushion": environment_snapshot.get("cushion"),
+            "turf_moisture_goal": environment_snapshot.get("turf_moisture_goal"),
+            "turf_moisture_corner4": environment_snapshot.get("turf_moisture_corner4"),
+            "dirt_moisture_goal": environment_snapshot.get("dirt_moisture_goal"),
+            "dirt_moisture_corner4": environment_snapshot.get("dirt_moisture_corner4"),
+            "cushion_measured_at": environment_snapshot.get("cushion_measured_at", ""),
+            "moisture_measured_at": environment_snapshot.get("moisture_measured_at", ""),
+            "collection_complete": environment_snapshot.get("collection_complete", False),
         }
         quality_report = {
             "issues_by_severity": dict(severity_counts),
@@ -157,6 +174,10 @@ class LiveSnapshotCollector:
                 1 for row in entries if row.get("body_weight_status") == "not_measured"
             ),
             "missing_conditions": [key for key in ("weather", "track_condition") if not conditions[key]],
+            "environment_missing_fields": list(environment_snapshot.get("missing_fields") or []),
+            "environment_errors": list(environment_snapshot.get("errors") or []),
+            "environment_collection_complete": bool(environment_snapshot.get("collection_complete")),
+            "environment_prediction_eligible": bool(environment_snapshot.get("eligible_for_learning")),
             "bet_types_present": bet_types_present,
             "bet_types_missing": sorted(REQUIRED_BET_TYPES - set(bet_types_present)),
             "combo_odds_count": len(combo_odds),

@@ -14,7 +14,7 @@ from src.final_workflow import (
 )
 
 
-NOW = datetime(2026, 9, 12, 15, 30, tzinfo=ZoneInfo("Asia/Tokyo"))
+NOW = datetime(2026, 9, 12, 15, 39, tzinfo=ZoneInfo("Asia/Tokyo"))
 
 
 def _investment_review():
@@ -92,6 +92,8 @@ def test_current_review_must_pass_before_baseline_can_be_superseded(status):
 
 def test_no_value_tickets_keep_specific_decision_after_successful_revalidation():
     final = _final(_quality(_investment_review()), tickets_present=False)
+    assert final["status"] == "OK"
+    assert final["decision"] == "NO_GO"
     assert final["decision_code"] == "NO_GO_NO_VALUE_TICKETS"
     assert final["checks"]["baseline_review"] is True
 

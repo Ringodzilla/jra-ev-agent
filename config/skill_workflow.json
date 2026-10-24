@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "execution_kind": "codex_skill_instructions_and_deterministic_code_gates",
+  "steps": [
+    {
+      "step_id": "intake",
+      "skill_name": "jra-01-intake",
+      "path": "skills/jra-01-intake/SKILL.md"
+    },
+    {
+      "step_id": "collection",
+      "skill_name": "jra-02-official-collection",
+      "path": "skills/jra-02-official-collection/SKILL.md"
+    },
+    {
+      "step_id": "integrity_audit",
+      "skill_name": "jra-03-integrity-audit",
+      "path": "skills/jra-03-integrity-audit/SKILL.md"
+    },
+    {
+      "step_id": "approval_gate",
+      "skill_name": "jra-04-approval-gate",
+      "path": "skills/jra-04-approval-gate/SKILL.md"
+    },
+    {
+      "step_id": "analysis",
+      "skill_name": "jra-05-ability-analysis",
+      "path": "skills/jra-05-ability-analysis/SKILL.md"
+    },
+    {
+      "step_id": "simulation",
+      "skill_name": "jra-06-pace-simulation",
+      "path": "skills/jra-06-pace-simulation/SKILL.md"
+    },
+    {
+      "step_id": "probability",
+      "skill_name": "jra-07-probability-calculation",
+      "path": "skills/jra-07-probability-calculation/SKILL.md"
+    },
+    {
+      "step_id": "ev",
+      "skill_name": "jra-08-ev-calculation",
+      "path": "skills/jra-08-ev-calculation/SKILL.md"
+    },
+    {
+      "step_id": "tickets",
+      "skill_name": "jra-09-ticket-building",
+      "path": "skills/jra-09-ticket-building/SKILL.md"
+    },
+    {
+      "step_id": "review",
+      "skill_name": "jra-10-review",
+      "path": "skills/jra-10-review/SKILL.md"
+    },
+    {
+      "step_id": "decision",
+      "skill_name": "jra-11-final-decision",
+      "path": "skills/jra-11-final-decision/SKILL.md"
+    },
+    {
+      "step_id": "report",
+      "skill_name": "jra-12-report",
+      "path": "skills/jra-12-report/SKILL.md"
+    },
+    {
+      "step_id": "purchase",
+      "skill_name": "jra-13-purchase-record",
+      "path": "skills/jra-13-purchase-record/SKILL.md"
+    },
+    {
+      "step_id": "retrospective",
+      "skill_name": "jra-14-retrospective",
+      "path": "skills/jra-14-retrospective/SKILL.md"
+    }
+  ],
+  "modes": {
+    "prediction": [
+      "intake",
+      "collection",
+      "integrity_audit",
+      "approval_gate",
+      "analysis",
+      "simulation",
+      "probability",
+      "ev",
+      "tickets",
+      "review",
+      "decision",
+      "report"
+    ],
+    "final": [
+      "intake",
+      "collection",
+      "integrity_audit",
+      "approval_gate",
+      "analysis",
+      "simulation",
+      "probability",
+      "ev",
+      "tickets",
+      "review",
+      "decision",
+      "report"
+    ],
+    "purchase": [
+      "purchase"
+    ],
+    "retrospective": [
+      "retrospective"
+    ]
+  }
+}

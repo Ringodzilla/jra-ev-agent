@@ -453,6 +453,29 @@ class TestPipelineEntrypoints(unittest.TestCase):
         self.assertEqual(2, len(result.manual_template_rows))
         self.assertEqual("h1", result.manual_template_rows[0]["horse_id"])
 
+    def test_short_official_career_history_does_not_request_invented_rows(self):
+        horse = SimpleNamespace(
+            race_id="r1", horse_id="h1", horse_name="A", horse_url="https://example.test/h1"
+        )
+        action = MissingHistoryRepairAction(
+            manual_history_csv=Path("manual.csv"),
+            manual_template_csv=Path("manual_template.csv"),
+        )
+
+        result = action.build_result(
+            horse,
+            rows=[{"date": "2026-01-01"}, {"date": "2025-12-01"}, {"date": "2025-11-01"}],
+            reason="official_career_history_complete",
+            source_counts={"embedded": 3, "detail": 3, "manual": 0},
+            required_history_count=3,
+        )
+
+        self.assertFalse(result.requires_manual_input)
+        self.assertEqual("repaired", result.repair_actions[0]["status"])
+        self.assertEqual(3, result.repair_actions[0]["required_history_count"])
+        self.assertEqual(0, result.repair_actions[0]["missing_count"])
+        self.assertEqual([], result.manual_template_rows)
+
     def test_write_manual_history_template_outputs_fillable_csv(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)

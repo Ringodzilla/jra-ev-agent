@@ -194,7 +194,7 @@ class FixedAnalysisRepriceTest(unittest.TestCase):
 
 class FixedAnalysisWorkflowTest(unittest.TestCase):
     def test_skips_analyzer_and_simulator_and_reprices_only(self):
-        now = datetime(2026, 8, 8, 15, 18, tzinfo=JST)
+        now = datetime(2026, 8, 8, 15, 19, tzinfo=JST)
 
         class LiveCollector:
             def collect(self, race_config, **kwargs):

@@ -238,9 +238,11 @@ class TestLiveOddsIntraday(unittest.TestCase):
             attempt=0,
         )
 
-        self.assertEqual("NG", favorite_review["status"])
+        self.assertEqual("OK", favorite_review["status"])
+        self.assertNotIn("PREDICTED_CURRENT_EV_DIVERGENCE", favorite_review["reason_codes"])
         self.assertEqual("OK", longshot_review["status"])
         self.assertEqual("favorite", favorite_review["divergent_rows"][0]["popularity_band"])
+        self.assertEqual([], favorite_review["selected_divergent_rows"])
 
 
 if __name__ == "__main__":

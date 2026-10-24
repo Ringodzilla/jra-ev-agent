@@ -27,6 +27,7 @@ from src.final_workflow import (
     build_fixed_analysis_ev_rows,
     extract_baseline_rows,
     invalidate_ticket_plan,
+    withhold_ticket_plan,
     merge_live_entries,
 )
 
@@ -169,6 +170,42 @@ def test_workflow_applies_quantitative_repair_then_finally_invalidates(tmp_path:
     assert payload["final_decision"]["tickets"] == []
 
 
+def test_workflow_withholds_preview_tickets_until_final_window(tmp_path: Path) -> None:
+    preview_now = datetime(2026, 8, 29, 14, 53, tzinfo=JST)
+    live = _live()
+    live["official_odds_as_of"] = preview_now.isoformat()
+    live["completed_at"] = preview_now.isoformat()
+    live["conditions"]["captured_at"] = preview_now.isoformat()
+    collector = Mock()
+    collector.collect.return_value = live
+    workflow = _workflow(tmp_path, preview_now, collector)
+    workflow.analyzer = Mock()
+    workflow.analyzer.run.return_value = {"feature_rows": [{"x": 1}]}
+    workflow.simulator = Mock()
+    workflow.simulator.run.return_value = {"scenario_rows": [{"x": 1}]}
+    workflow.ev_calculator = Mock()
+    workflow.ev_calculator.run.return_value = {
+        "ev_rows": [{"race_id": "R", "horse_number": "1", "win_prob": "1"}]
+    }
+    candidate = {"bet_type": "win", "horse_number": "1", "odds_source": "jra_live"}
+    workflow.bet_builder = Mock()
+    workflow.bet_builder.run.return_value = {"tickets": [candidate]}
+    workflow.quantitative_reviewer = Mock()
+    workflow.quantitative_reviewer.run.return_value = {
+        "status": "OK", "reason": "valid", "repair_actions": []
+    }
+    baseline = [dict(_baseline()[0], run_index=str(index)) for index in range(1, 6)]
+
+    payload = workflow.run(RACE, baseline=baseline)
+
+    assert payload["final_decision"]["status"] == "OK"
+    assert payload["final_decision"]["decision"] == "NO_GO"
+    assert payload["final_decision"]["decision_code"] == "NO_GO_AWAITING_FINAL_WINDOW"
+    assert payload["final_decision"]["tickets"] == []
+    assert payload["bet_builder"]["withheld_tickets"] == [candidate]
+    assert payload["bet_builder"]["ticket_status"] == "withheld_until_final_window"
+
+
 def _valid_final_inputs() -> tuple[dict[str, object], dict[str, object]]:
     collected = _live()
     collected["lineup"] = {"matches": True}
@@ -190,10 +227,17 @@ def test_final_reviewer_deadline_and_no_value_codes() -> None:
     assert result["decision_code"] == "NO_GO_DEADLINE_MISSED"
 
     collected, _ = _valid_final_inputs()
-    result = FinalReviewerAgent(settings=settings, now=lambda: NOW).run(
+    final_now = datetime(2026, 8, 29, 14, 54, tzinfo=JST)
+    plan = build_deadline_plan(RACE, now=final_now, settings=settings)
+    collected["official_odds_as_of"] = final_now.isoformat()
+    collected["conditions"]["captured_at"] = final_now.isoformat()
+    result = FinalReviewerAgent(settings=settings, now=lambda: final_now).run(
         plan=plan, collected=collected, ticket_plan={"tickets": []}, quantitative_review={"status": "OK"}
     )
+    assert result["status"] == "OK"
+    assert result["decision"] == "NO_GO"
     assert result["decision_code"] == "NO_GO_NO_VALUE_TICKETS"
+    assert result["reason"] == "no value tickets passed selection; all non-ticket final gates passed"
 
 
 def test_baseline_merge_and_quality_dictionary_edges() -> None:
@@ -284,6 +328,9 @@ def test_fixed_and_ticket_low_level_helpers() -> None:
 
     plan = invalidate_ticket_plan({"tickets": [{"horse": "A"}]}, "stop")
     assert plan["tickets"] == [] and plan["invalidated_tickets"] == [{"horse": "A"}]
+    plan = withhold_ticket_plan({"tickets": [{"horse": "A"}]}, "wait")
+    assert plan["tickets"] == [] and plan["withheld_tickets"] == [{"horse": "A"}]
+    assert plan["ticket_status"] == "withheld_until_final_window"
     numbers = _ticket_horse_numbers(
         [{"horse_numbers": ["2"], "legs": [{"horse_number": "3", "horses": [{"horse_number": "4"}]}]}]
     )

@@ -21,6 +21,8 @@ from src.agents import (
 from src.artifacts import atomic_write_json as _atomic_json
 from src.artifacts import file_sha256 as _file_sha256
 from src.deadline import DeadlinePlan, DeadlineSettings, build_deadline_plan
+from src.data_integrity import audit_collected_data
+from src.skill_workflow import SkillSequence, SkillGateBlocked, row_checks, probability_checks, ev_checks, attach_history_sources
 
 
 FINAL_STAGE_ORDER = (
@@ -77,6 +79,10 @@ class FinalPredictionWorkflow:
             settings=self.deadline_settings,
             now=self._now,
         )
+        self.enforce_skill_gates = False
+        self.history_raw_dir = Path('data/raw')
+        self.integrity_approvals: list[dict] = []
+        self.skill_sequence: SkillSequence | None = None
 
     def run(
         self,
@@ -108,7 +114,7 @@ class FinalPredictionWorkflow:
             )
 
         baseline_rows = extract_baseline_rows(baseline, race_config)
-        if not baseline_rows:
+        if not baseline_rows and not _all_configured_horses_are_zero_start(race_config):
             return self._finish_early(
                 plan,
                 code="NO_GO_BASELINE_MISSING",
@@ -163,6 +169,22 @@ class FinalPredictionWorkflow:
         collected["lineup"] = lineup
         collected["baseline_quality"] = baseline_quality
         collected["deadline"] = plan.to_dict()
+
+        if self.enforce_skill_gates:
+            self.skill_sequence = SkillSequence(self.output_dir, mode='final')
+            attach_history_sources(collected, self.history_raw_dir)
+            # Retain original quality evidence even though the live collector only refreshes entries.
+            if isinstance(baseline, dict):
+                collected['quality_report'] = dict(dict(baseline.get('data_collector') or {}).get('quality_report') or {})
+            try:
+                self.skill_sequence.record('intake', {'race_config': race_config}, checks={'race_id_present': bool(race_config.get('race_id'))})
+                self.skill_sequence.record('collection', {'entries': collected['entries'], 'rows': merged_rows}, checks={'entries_present': bool(collected['entries'])})
+                audit = audit_collected_data(collected, [race_config], self.integrity_approvals, purpose='final')
+                collected['data_integrity_audit'] = audit
+                self.skill_sequence.record('integrity_audit', audit, checks={'audit_completed': bool(audit.get('input_sha256'))})
+                self.skill_sequence.record('approval_gate', audit, checks={'integrity_and_approvals_pass': audit.get('gate') == 'PASS'}, failure_code=str(audit.get('gate', 'UNVERIFIED')))
+            except SkillGateBlocked as exc:
+                return self._finish_after_live(plan, collected=collected, code='NO_GO_DATA_INTEGRITY_BLOCKED', reason=str(exc))
 
         analysis_mode = "recomputed"
         if fixed_analysis is not None:
@@ -223,10 +245,21 @@ class FinalPredictionWorkflow:
             analyzed = self.analyzer.run(
                 merged_rows,
                 odds_snapshots=list(collected.get("odds_snapshots") or []),
+                environment_snapshots=[dict(live.get("environment_snapshot") or {})],
             )
             analyzed["snapshot_id"] = live.get("snapshot_id", "")
+            if self.skill_sequence is not None:
+                try:
+                    self.skill_sequence.record('analysis', analyzed, checks=row_checks(list(analyzed.get('feature_rows') or []), list(collected.get('entries') or [])))
+                except SkillGateBlocked as exc:
+                    return self._finish_after_live(plan, collected=collected, code='NO_GO_SKILL_VALIDATION_FAILED', reason=str(exc))
             simulated = self.simulator.run(list(analyzed.get("feature_rows") or []))
             simulated["snapshot_id"] = live.get("snapshot_id", "")
+            if self.skill_sequence is not None:
+                try:
+                    self.skill_sequence.record('simulation', simulated, checks=row_checks(list(simulated.get('scenario_rows') or []), list(analyzed.get('feature_rows') or [])))
+                except SkillGateBlocked as exc:
+                    return self._finish_after_live(plan, collected=collected, code='NO_GO_SKILL_VALIDATION_FAILED', reason=str(exc))
             calculated = self.ev_calculator.run(
                 list(simulated.get("scenario_rows") or []),
                 combo_odds=list(live.get("combo_odds") or []),
@@ -234,6 +267,15 @@ class FinalPredictionWorkflow:
             calculated["snapshot_id"] = live.get("snapshot_id", "")
 
         scenario_rows = list(simulated.get("scenario_rows") or calculated.get("ev_rows") or [])
+        if self.skill_sequence is not None:
+            try:
+                if fixed_analysis is not None:
+                    self.skill_sequence.record('analysis', analyzed, checks=row_checks(list(analyzed.get('feature_rows') or []), list(collected.get('entries') or [])))
+                    self.skill_sequence.record('simulation', simulated, checks=row_checks(scenario_rows, list(analyzed.get('feature_rows') or [])))
+                self.skill_sequence.record('probability', calculated, checks=probability_checks(list(calculated.get('ev_rows') or [])))
+                self.skill_sequence.record('ev', calculated, checks=ev_checks(list(calculated.get('ev_rows') or [])))
+            except SkillGateBlocked as exc:
+                return self._finish_after_live(plan, collected=collected, code='NO_GO_SKILL_VALIDATION_FAILED', reason=str(exc))
         bet_plan = self.bet_builder.run(
             list(calculated.get("ev_rows") or []),
             combo_odds=list(live.get("combo_odds") or []),
@@ -247,6 +289,11 @@ class FinalPredictionWorkflow:
             race_configs=[race_config],
         )
         bet_plan["snapshot_id"] = live.get("snapshot_id", "")
+        if self.skill_sequence is not None:
+            try:
+                self.skill_sequence.record('tickets', bet_plan, checks={'ticket_list_present': isinstance(bet_plan.get('tickets'), list)})
+            except SkillGateBlocked as exc:
+                return self._finish_after_live(plan, collected=collected, code='NO_GO_SKILL_VALIDATION_FAILED', reason=str(exc))
         bet_plan["reviewer_ticket_repair_enabled"] = True
         quantitative_review = self.quantitative_reviewer.run(
             collected,
@@ -275,6 +322,7 @@ class FinalPredictionWorkflow:
             )
             quantitative_review["pre_repair_status"] = initial_quantitative_review.get("status", "")
             quantitative_review["pre_repair_reason"] = initial_quantitative_review.get("reason", "")
+        reviewed_ticket_plan = bet_plan
         review = self.final_reviewer.run(
             plan=plan,
             collected=collected,
@@ -282,7 +330,10 @@ class FinalPredictionWorkflow:
             quantitative_review=quantitative_review,
         )
         if review["decision"] != "GO":
-            bet_plan = invalidate_ticket_plan(bet_plan, str(review.get("reason", "")))
+            if review.get("decision_code") == "NO_GO_AWAITING_FINAL_WINDOW":
+                bet_plan = withhold_ticket_plan(bet_plan, str(review.get("reason", "")))
+            else:
+                bet_plan = invalidate_ticket_plan(bet_plan, str(review.get("reason", "")))
 
         decision = {
             "status": review["status"],
@@ -298,6 +349,7 @@ class FinalPredictionWorkflow:
             "snapshot_id": live.get("snapshot_id", ""),
             "weather": dict(live.get("conditions") or {}).get("weather", ""),
             "track_condition": dict(live.get("conditions") or {}).get("track_condition", ""),
+            "environment": dict(live.get("conditions") or {}),
             "reason": review["reason"],
             "checks": review["checks"],
             "tickets": list(bet_plan.get("tickets") or []),
@@ -311,6 +363,13 @@ class FinalPredictionWorkflow:
             "reviewer": review,
             "final_decision": decision,
         }
+        if self.skill_sequence is not None:
+            try:
+                self.skill_sequence.record('review', {'final_review': review, 'quantitative_review': quantitative_review, 'reviewed_ticket_plan': reviewed_ticket_plan}, checks={'review_has_valid_status': review.get('status') in {'OK', 'NG'}})
+                self.skill_sequence.record('decision', decision, checks={'no_go_has_no_tickets': decision['decision'] == 'GO' or not decision['tickets']})
+                self.skill_sequence.record('report', decision, checks={'issued_at_present': bool(decision.get('issued_at'))})
+            except SkillGateBlocked as exc:
+                return self._finish_after_live(plan, collected=collected, code='NO_GO_SKILL_VALIDATION_FAILED', reason=str(exc))
         self._write_outputs(payload)
         return payload
 
@@ -331,7 +390,7 @@ class FinalPredictionWorkflow:
             "fix": "do not purchase tickets",
             "issued_at": issued_at,
             "deadline": plan.to_dict(),
-            "checks": {"fixed_analysis_valid": False},
+            "checks": {('data_integrity_valid' if code == 'NO_GO_DATA_INTEGRITY_BLOCKED' else 'fixed_analysis_valid'): False},
         }
         decision = {
             "status": "NG",
@@ -341,7 +400,7 @@ class FinalPredictionWorkflow:
             "output_deadline": plan.output_deadline.isoformat(),
             "issued_at": issued_at,
             "execution_mode": plan.execution_mode,
-            "analysis_mode": "fixed_reprice",
+            "analysis_mode": "fixed_reprice" if code == 'NO_GO_FIXED_ANALYSIS_INVALID' else "not_executed",
             "reason": reason,
             "tickets": [],
         }
@@ -419,6 +478,7 @@ class FinalPredictionWorkflow:
         manifest = {
             "schema_version": "1",
             "producer": "src.final_workflow.FinalPredictionWorkflow",
+            "skill_workflow": self.skill_sequence.summary() if self.skill_sequence else {'status': 'LEGACY_LIBRARY_API_NOT_GATED'},
             "stage_order": list(FINAL_STAGE_ORDER),
             "artifacts": {
                 filename: {"sha256": _file_sha256(self.output_dir / filename)}
@@ -477,6 +537,10 @@ class FinalReviewerAgent:
         )
         checks = {
             "deadline": now <= _as_utc(plan.output_deadline),
+            "final_go_window_open": (
+                now >= _as_utc(plan.final_go_opens_at)
+                and now < _as_utc(plan.output_deadline)
+            ),
             "snapshot_complete": bool(collected.get("snapshot_complete")),
             "combination_coverage": bool(
                 dict(quality.get("combination_coverage") or {}).get("complete")
@@ -500,6 +564,12 @@ class FinalReviewerAgent:
             "conditions_present": bool(conditions.get("weather")) and bool(conditions.get("track_condition")),
             "conditions_fresh": conditions_age is not None
             and -60 <= conditions_age <= self.settings.conditions_max_age_seconds,
+            "environment_collection_complete": bool(
+                quality.get("environment_collection_complete", True)
+            ),
+            "environment_prediction_eligible": bool(
+                quality.get("environment_prediction_eligible", True)
+            ),
             "lineup_matches_baseline": bool(lineup.get("matches")),
             "baseline_history_complete": bool(baseline_quality.get("history_complete")),
             "baseline_review": bool(baseline_quality.get("review_ok")) or baseline_revalidated,
@@ -510,22 +580,37 @@ class FinalReviewerAgent:
             "tickets_use_jra_live_odds": _tickets_have_exact_live_odds(tickets, combo_odds),
         }
         failed = [name for name, passed in checks.items() if not passed]
-        if not failed:
+        non_preview_failures = set(failed) - {
+            "final_go_window_open",
+            "tickets_present",
+            "tickets_use_jra_live_odds",
+        }
+        if not checks["deadline"]:
+            code = "NO_GO_DEADLINE_MISSED"
+            decision = "NO_GO"
+            status = "NG"
+            reason = "failed final gates: " + ", ".join(failed)
+        elif not checks["final_go_window_open"] and not non_preview_failures:
+            code = "NO_GO_AWAITING_FINAL_WINDOW"
+            decision = "NO_GO"
+            status = "OK"
+            reason = "preview completed; formal GO is available only during the T-6 to T-5 window"
+        elif not failed:
             code = "GO_ALL_GATES_PASSED"
             decision = "GO"
             status = "OK"
             reason = "deadline, freshness, live odds, lineup, and EV gates passed"
+        elif not checks["tickets_present"] and not (
+            set(failed) - {"tickets_present", "tickets_use_jra_live_odds"}
+        ):
+            code = "NO_GO_NO_VALUE_TICKETS"
+            decision = "NO_GO"
+            status = "OK"
+            reason = "no value tickets passed selection; all non-ticket final gates passed"
         else:
             decision = "NO_GO"
             status = "NG"
-            if not checks["deadline"]:
-                code = "NO_GO_DEADLINE_MISSED"
-            elif not checks["tickets_present"] and not (
-                set(failed) - {"tickets_present", "tickets_use_jra_live_odds"}
-            ):
-                code = "NO_GO_NO_VALUE_TICKETS"
-            else:
-                code = "NO_GO_FINAL_REVIEW_FAILED"
+            code = "NO_GO_FINAL_REVIEW_FAILED"
             reason = "failed final gates: " + ", ".join(failed)
 
         return {
@@ -823,6 +908,11 @@ def _configured_zero_history_numbers(race_config: dict[str, object]) -> set[str]
     }
 
 
+def _all_configured_horses_are_zero_start(race_config: dict[str, object]) -> bool:
+    configured = dict(race_config.get("career_starts_by_horse_number") or {})
+    return bool(configured) and all(_to_int(starts) == 0 for starts in configured.values())
+
+
 def build_fixed_analysis_ev_rows(
     *,
     race_config: dict[str, object],
@@ -1100,6 +1190,16 @@ def invalidate_ticket_plan(ticket_plan: dict[str, object], reason: str) -> dict[
     out["tickets"] = []
     out["ticket_status"] = "invalidated_by_final_reviewer"
     out["invalidation_reason"] = reason
+    return out
+
+
+def withhold_ticket_plan(ticket_plan: dict[str, object], reason: str) -> dict[str, object]:
+    out = dict(ticket_plan)
+    withheld = [dict(ticket) for ticket in list(ticket_plan.get("tickets") or [])]
+    out["withheld_tickets"] = withheld
+    out["tickets"] = []
+    out["ticket_status"] = "withheld_until_final_window"
+    out["withholding_reason"] = reason
     return out
 
 

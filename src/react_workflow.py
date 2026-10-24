@@ -20,6 +20,8 @@ from src.agents import (
 )
 from strategy.live_odds import latest_complete_odds_rows
 from src.artifacts import atomic_write_json, file_sha256
+from src.data_integrity import audit_collected_data
+from src.skill_workflow import SkillSequence, SkillGateBlocked, row_checks, probability_checks, ev_checks, attach_history_sources
 
 
 CANONICAL_STAGE_SCHEMA_VERSION = "1"
@@ -68,8 +70,33 @@ class ReactiveRaceWorkflow:
         self.bet_builder = BetBuilderAgent(self.settings)
         self.reviewer = ReviewerAgent(self.settings)
         self.article_writer = ArticleWriterAgent()
+        self.enforce_skill_gates = False
+        self.integrity_approvals: list[dict] = []
+        self.skill_sequence: SkillSequence | None = None
+        self._audit_collected: dict = {}
 
-    def run(
+    def run(self, race_configs: list[dict[str, object]], **kwargs) -> dict[str, object]:
+        if not self.enforce_skill_gates:
+            return self._run(race_configs, **kwargs)
+        self.skill_sequence = SkillSequence(self.config.stages_dir)
+        try:
+            self.skill_sequence.record('intake', {'race_configs': race_configs}, checks={
+                'race_configs_present': bool(race_configs),
+                'required_race_identity': all(bool(c.get('race_date') and c.get('track') and c.get('race_number') and c.get('source_url')) for c in race_configs),
+            })
+            return self._run(race_configs, **kwargs)
+        except SkillGateBlocked as exc:
+            skipped = {'status': 'skipped', 'reason': str(exc)}
+            payload = {'data_collector': self._audit_collected, 'analyzer': skipped,
+                       'simulator': skipped, 'ev_calculator': skipped,
+                       'bet_builder': {**skipped, 'tickets': []},
+                       'reviewer': {'status': 'NG', 'reason': str(exc), 'reason_codes': ['SKILL_GATE_BLOCKED'], 'repair_actions': []},
+                       'article_writer': {**skipped, 'markdown': ''},
+                       'skill_workflow': self.skill_sequence.summary(), 'attempt': 0}
+            self._write_stage_outputs(payload)
+            return payload
+
+    def _run(
         self,
         race_configs: list[dict[str, object]],
         *,
@@ -91,11 +118,26 @@ class ReactiveRaceWorkflow:
                 aggressive_repair=aggressive_repair,
                 reprocess_raw=reprocess_raw,
             )
+            if self.skill_sequence is not None:
+                self._audit_collected = collected
+                attach_history_sources(collected, self.config.raw_dir)
+                self.skill_sequence.record('collection', {'rows': collected.get('rows'), 'entries': collected.get('entries')},
+                                           checks={'entries_present': bool(collected.get('entries'))})
+                audit = audit_collected_data(collected, race_configs, self.integrity_approvals)
+                collected['data_integrity_audit'] = audit
+                self.skill_sequence.record('integrity_audit', audit, checks={'audit_completed': bool(audit.get('input_sha256'))})
+                self.skill_sequence.record('approval_gate', audit, checks={'integrity_and_approvals_pass': audit.get('gate') == 'PASS'},
+                                           failure_code=str(audit.get('gate', 'UNVERIFIED')))
             analyzed = self.analyzer.run(
                 list(collected.get("rows") or []),
                 odds_snapshots=list(collected.get("odds_snapshots") or []),
+                environment_snapshots=list(collected.get("environment_snapshots") or []),
             )
+            if self.skill_sequence is not None:
+                self.skill_sequence.record('analysis', analyzed, checks=row_checks(list(analyzed.get('feature_rows') or []), list(collected.get('entries') or [])))
             simulated = self.simulator.run(list(analyzed.get("feature_rows") or []))
+            if self.skill_sequence is not None:
+                self.skill_sequence.record('simulation', simulated, checks=row_checks(list(simulated.get('scenario_rows') or []), list(analyzed.get('feature_rows') or [])))
             all_combo_odds = list(collected.get("combo_odds") or [])
             active_race_ids = {
                 str(row.get("race_id", ""))
@@ -115,6 +157,9 @@ class ReactiveRaceWorkflow:
                 list(simulated.get("scenario_rows") or []),
                 combo_odds=current_combo_odds,
             )
+            if self.skill_sequence is not None:
+                self.skill_sequence.record('probability', {'ev_rows': calculated.get('ev_rows')}, checks=probability_checks(list(calculated.get('ev_rows') or [])))
+                self.skill_sequence.record('ev', calculated, checks=ev_checks(list(calculated.get('ev_rows') or [])))
             bet_plan = self.bet_builder.run(
                 list(calculated.get("ev_rows") or []),
                 combo_odds=current_combo_odds,
@@ -123,6 +168,8 @@ class ReactiveRaceWorkflow:
                 candidate_validation=dict(calculated.get("validation") or {}),
                 race_configs=race_configs,
             )
+            if self.skill_sequence is not None:
+                self.skill_sequence.record('tickets', bet_plan, checks={'ticket_list_present': isinstance(bet_plan.get('tickets'), list)})
             review = self.reviewer.run(
                 collected,
                 list(simulated.get("scenario_rows") or []),
@@ -132,6 +179,11 @@ class ReactiveRaceWorkflow:
             )
             if review.get("status") != "OK":
                 bet_plan = _downgrade_ticket_plan_for_review(dict(bet_plan), review)
+            if self.skill_sequence is not None:
+                # A negative review is a valid completed evaluation, never permission to buy.
+                self.skill_sequence.record('review', review, checks={'review_has_valid_status': review.get('status') in {'OK', 'NG'}})
+                self.skill_sequence.record('decision', {'decision': 'NO_GO', 'tickets': [], 'candidate_review': review.get('status')},
+                                           checks={'preliminary_has_no_formal_tickets': True})
             article = self.article_writer.run(
                 race_configs,
                 ev_rows=list(calculated.get("ev_rows") or []),
@@ -140,6 +192,8 @@ class ReactiveRaceWorkflow:
                 quality_report=dict(collected.get("quality_report") or {}),
                 odds_snapshots=list(collected.get("odds_snapshots") or []),
             )
+            if self.skill_sequence is not None:
+                self.skill_sequence.record('report', article, checks={'article_status_present': bool(article.get('status'))})
 
             final_payload = {
                 "data_collector": collected,
@@ -151,9 +205,11 @@ class ReactiveRaceWorkflow:
                 "article_writer": article,
                 "attempt": attempt,
             }
+            if self.skill_sequence is not None:
+                final_payload['skill_workflow'] = self.skill_sequence.summary()
             self._write_stage_outputs(final_payload)
 
-            if review.get("status") == "OK" or not review.get("repair_actions"):
+            if self.skill_sequence is not None or review.get("status") == "OK" or not review.get("repair_actions"):
                 break
 
         return final_payload
@@ -216,6 +272,7 @@ class ReactiveRaceWorkflow:
             "producer": CANONICAL_STAGE_PRODUCER,
             "stage_order": list(CANONICAL_STAGE_ORDER),
             "attempt": payload.get("attempt"),
+            "skill_workflow": payload.get('skill_workflow', {'status': 'LEGACY_LIBRARY_API_NOT_GATED'}),
             "artifacts": {
                 filename: {"sha256": file_sha256(self.config.stages_dir / filename)}
                 for filename in CANONICAL_STAGE_ORDER

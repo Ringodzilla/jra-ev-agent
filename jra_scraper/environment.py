@@ -14,6 +14,7 @@ from .scraper import safe_filename
 from .parser import JRAParser
 
 JST = timezone(timedelta(hours=9))
+ENVIRONMENT_SCHEMA_VERSION = 2
 SOURCES = {"cushion": "https://www.jra.go.jp/keiba/baba/_data_cushion.html",
            "moisture": "https://www.jra.go.jp/keiba/baba/_data_moist.html"}
 
@@ -39,7 +40,8 @@ def capture_environment(scraper, race_config: dict, rows: list[dict], directory:
     captured = now or datetime.now(timezone.utc)
     captured_jst = captured.astimezone(JST)
     day = str(race_config['race_date'])
-    record = {'race_id': race_id, 'track': race_config['track'], 'date': day,
+    record = {'environment_schema_version': ENVIRONMENT_SCHEMA_VERSION,
+              'race_id': race_id, 'track': race_config['track'], 'date': day,
               'captured_at': captured.isoformat(), 'value_type': 'observed',
               'source_url': race_config['source_url'], 'sources': {}, 'errors': []}
     race_html = scraper.fetch(race_config['source_url'],
@@ -54,7 +56,11 @@ def capture_environment(scraper, race_config: dict, rows: list[dict], directory:
     if race_html:
         record['sources']['weather'] = {'url': race_config['source_url'],
                                        'raw_name': f"environment_race_{captured.strftime('%Y%m%dT%H%M%S%f')}.html",
-                                       'sha256': hashlib.sha256(race_html.encode()).hexdigest()}
+                                       'sha256': hashlib.sha256(race_html.encode()).hexdigest(),
+                                       'requested_at': captured.isoformat(),
+                                       'received_at': datetime.now(timezone.utc).isoformat()}
+    else:
+        record['errors'].append('weather_fetch_failed')
     for kind, url in SOURCES.items():
         raw_name = f"environment_{kind}_{captured.strftime('%Y%m%dT%H%M%S%f')}.html"
         html = scraper.fetch(url, raw_name=raw_name, use_cache=False)
@@ -62,7 +68,9 @@ def capture_environment(scraper, race_config: dict, rows: list[dict], directory:
             record['errors'].append(f'{kind}_fetch_failed')
             continue
         record['sources'][kind] = {'url': url, 'raw_name': raw_name,
-                                   'sha256': hashlib.sha256(html.encode()).hexdigest()}
+                                   'sha256': hashlib.sha256(html.encode()).hexdigest(),
+                                   'requested_at': captured.isoformat(),
+                                   'received_at': datetime.now(timezone.utc).isoformat()}
         soup = BeautifulSoup(html, 'html.parser')
         course = next((node for node in soup.select('div[title]') if node.get('title') == race_config['track']), None)
         unit = course.select_one('.unit') if course else None
@@ -78,17 +86,33 @@ def capture_environment(scraper, race_config: dict, rows: list[dict], directory:
                 if not 0 < value <= 20:
                     raise ValueError('Invalid cushion')
                 record['cushion'] = value
+                record['cushion_history'] = _cushion_history(course, int(day[:4]))
             else:
                 for surface in ('turf', 'dirt'):
                     for selector, location in (('mg', 'goal'), ('m4c', 'corner4')):
-                        value = float(unit.select_one(f'.{surface} .{selector}').get_text(strip=True))
+                        node = unit.select_one(f'.{surface} .{selector}')
+                        value = float(node.get_text(strip=True))
                         if not 0 <= value <= 100:
                             raise ValueError('Invalid moisture')
                         record[f'{surface}_moisture_{location}'] = value
+                        record[f'{surface}_moisture_{location}_condition'] = str(
+                            node.get('data-condition', '')
+                        )
+                note = unit.select_one('.moist_caution')
+                record['moisture_note'] = note.get_text(' ', strip=True) if note else ''
+                record['moisture_history'] = _moisture_history(course, int(day[:4]))
         except (ValueError, AttributeError) as exc:
             record['errors'].append(f'{kind}_invalid: {exc}')
-    required = ['weather', 'track_condition', 'weather_captured_at', 'moisture_measured_at',
-                'cushion_measured_at', 'cushion', 'turf_moisture_goal', 'turf_moisture_corner4']
+    surface = str(race_config.get('surface', '芝')).strip()
+    required = ['weather', 'track_condition', 'weather_captured_at', 'moisture_measured_at']
+    if surface in {'芝', '障害'}:
+        required += ['cushion_measured_at', 'cushion',
+                     'turf_moisture_goal', 'turf_moisture_corner4']
+    elif surface in {'ダ', 'ダート'}:
+        required += ['dirt_moisture_goal', 'dirt_moisture_corner4']
+    else:
+        record['errors'].append(f'unsupported_surface: {surface}')
+    record['required_fields_for_surface'] = required
     record['missing_fields'] = [key for key in required if record.get(key) in (None, '')]
     record['same_day_measurements'] = all(str(record.get(f'{kind}_measured_at', '')).startswith(day)
                                            for kind in SOURCES)
@@ -106,8 +130,16 @@ def capture_environment(scraper, race_config: dict, rows: list[dict], directory:
         record['eligibility_reasons'].append('same_day_measurements_required')
     if not weather_valid:
         record['eligibility_reasons'].append('same_day_observed_weather_required')
+    blocking_errors = [
+        error for error in record['errors']
+        if not (surface in {'ダ', 'ダート'} and str(error).startswith('cushion_'))
+    ]
+    record['nonblocking_errors'] = [
+        error for error in record['errors'] if error not in blocking_errors
+    ]
+    record['collection_complete'] = not record['missing_fields'] and not blocking_errors
     record['eligible_for_learning'] = bool(
-        not record['missing_fields'] and not record['errors'] and record['same_day_measurements']
+        record['collection_complete'] and record['same_day_measurements']
         and cutoff and captured_jst < cutoff and weather_valid
     )
     record['status'] = 'COMPLETE' if record['eligible_for_learning'] else 'INCOMPLETE'
@@ -125,3 +157,42 @@ def capture_environment(scraper, race_config: dict, rows: list[dict], directory:
             'rows': history, 'environment_snapshots': [record],
         }}, ensure_ascii=False, indent=2) + '\n')
     return record
+
+
+def _cushion_history(course, year: int) -> list[dict]:
+    history = []
+    for unit in course.select('.unit') if course else []:
+        try:
+            stamp = _measurement_time(unit.select_one('.time').get_text(strip=True), year)
+            value = float(unit.select_one('.cushion').get_text(strip=True))
+            if not 0 < value <= 20:
+                raise ValueError('Invalid cushion')
+            history.append({'measured_at': stamp, 'cushion': value})
+        except (ValueError, AttributeError):
+            continue
+    return history
+
+
+def _moisture_history(course, year: int) -> list[dict]:
+    history = []
+    for unit in course.select('.unit') if course else []:
+        try:
+            item = {'measured_at': _measurement_time(
+                unit.select_one('.time').get_text(strip=True), year
+            )}
+            for surface in ('turf', 'dirt'):
+                for selector, location in (('mg', 'goal'), ('m4c', 'corner4')):
+                    node = unit.select_one(f'.{surface} .{selector}')
+                    value = float(node.get_text(strip=True))
+                    if not 0 <= value <= 100:
+                        raise ValueError('Invalid moisture')
+                    item[f'{surface}_moisture_{location}'] = value
+                    item[f'{surface}_moisture_{location}_condition'] = str(
+                        node.get('data-condition', '')
+                    )
+            note = unit.select_one('.moist_caution')
+            item['note'] = note.get_text(' ', strip=True) if note else ''
+            history.append(item)
+        except (ValueError, AttributeError):
+            continue
+    return history

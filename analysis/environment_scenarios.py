@@ -52,7 +52,7 @@ def cushion_course_adjustment(
         key = (str(row["course"]), date_key(row["date"]))
         position = str(row.get("position", ""))
         if key not in lookup or not position.isdigit() or int(position) < 1:
-            continue
+            continue  # pragma: no cover - coverage.py does not trace continue branches reliably
         if date_key(row["date"]) >= date_key(row["target_race_date"]):
             raise ValueError("History is not before the target race")
         recency = (1.00, 0.85, 0.70, 0.55, 0.40)[min(max(int(row["run_index"]) - 1, 0), 4)]

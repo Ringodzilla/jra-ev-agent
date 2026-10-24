@@ -282,14 +282,21 @@ def test_deadline_invalid_format_and_naive_conversion() -> None:
 
 
 def test_agent_wrappers_and_race_id_edges(tmp_path: Path) -> None:
-    with patch("src.agents.analyzer.build_feature_rows", return_value=[{"x": 1}]) as build:
-        assert AnalyzerAgent().run([{"horse": "A"}], odds_snapshots=[{"odds": "2"}]) == {"feature_rows": [{"x": 1}]}
+    with patch("src.agents.analyzer.build_feature_rows", return_value=[{"x": 1}]) as build, patch(
+        "src.agents.analyzer.apply_environment_features",
+        return_value=([{"x": 1}], {"status": "COLLECTED"}),
+    ):
+        assert AnalyzerAgent().run([{"horse": "A"}], odds_snapshots=[{"odds": "2"}]) == {
+            "feature_rows": [{"x": 1}],
+            "environment_application": {"status": "COLLECTED"},
+        }
     build.assert_called_once()
 
     settings = WorkflowSettings()
     with patch("src.agents.bet_builder.generate_tickets", return_value={"tickets": []}) as generate:
         assert BetBuilderAgent(settings).run([], combo_odds=[]) == {"tickets": []}
     assert generate.called
+    assert generate.call_args.kwargs["top5_wide_box_enabled"] is True
 
     with patch("src.agents.ev_calculator.compute_ev", return_value=[{"ev": "1"}]) as compute:
         assert EVCalculatorAgent().run([{"x": 1}]) == {"ev_rows": [{"ev": "1"}]}

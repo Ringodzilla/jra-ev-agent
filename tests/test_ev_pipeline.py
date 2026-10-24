@@ -1653,19 +1653,31 @@ class TestEVPipeline(unittest.TestCase):
             self.assertTrue(ticket["portfolio_no_gami"])
             self.assertGreaterEqual(int(ticket["return_if_hit"]), int(ticket["portfolio_total_stake"]))
 
-    def test_reviewer_rejects_meaningful_ev_divergence(self):
+    def test_reviewer_audits_unselected_ev_divergence_without_rejecting(self):
         reviewer = ReviewerAgent(WorkflowSettings())
         ev_rows = [
             {
                 "race_id": "r1",
                 "horse_id": "h1",
+                "horse_number": "1",
                 "horse_name": "A",
                 "current_odds": "3.0",
                 "predicted_odds": "4.2",
-                "ev_current": "1.08",
-                "ev_predicted": "1.512",
-                "win_prob": "0.36",
-            }
+                "ev_current": "0.9",
+                "ev_predicted": "1.26",
+                "win_prob": "0.3",
+            },
+            {
+                "race_id": "r1",
+                "horse_id": "h2",
+                "horse_number": "2",
+                "horse_name": "B",
+                "current_odds": "1.2",
+                "predicted_odds": "1.2",
+                "ev_current": "0.84",
+                "ev_predicted": "0.84",
+                "win_prob": "0.7",
+            },
         ]
 
         review = reviewer.run(
@@ -1676,9 +1688,61 @@ class TestEVPipeline(unittest.TestCase):
             attempt=0,
         )
 
-        self.assertEqual("NG", review["status"])
-        self.assertIn("predicted/current EV divergence", review["reason"])
+        self.assertEqual("OK", review["status"])
+        self.assertNotIn("PREDICTED_CURRENT_EV_DIVERGENCE", review["reason_codes"])
         self.assertTrue(review["divergent_rows"])
+        self.assertEqual([], review["selected_divergent_rows"])
+
+    def test_reviewer_rejects_selected_ev_divergence(self):
+        reviewer = ReviewerAgent(WorkflowSettings(min_top3_ticket_coverage=1))
+        ev_rows = [
+            {
+                "race_id": "r1",
+                "horse_id": "h1",
+                "horse_number": "1",
+                "horse_name": "A",
+                "current_odds": "3.0",
+                "predicted_odds": "4.2",
+                "ev_current": "1.08",
+                "ev_predicted": "1.512",
+                "win_prob": "0.36",
+            },
+            {
+                "race_id": "r1",
+                "horse_id": "h2",
+                "horse_number": "2",
+                "horse_name": "B",
+                "current_odds": "1.2",
+                "predicted_odds": "1.2",
+                "ev_current": "0.768",
+                "ev_predicted": "0.768",
+                "win_prob": "0.64",
+            },
+        ]
+        ticket = {
+            "race_id": "r1",
+            "bet_type": "win",
+            "horse_id": "h1",
+            "horse_number": "1",
+            "horse_name": "A",
+            "hit_prob": "0.36",
+            "win_prob": "0.36",
+            "win_odds": "3.0",
+            "ev": "1.08",
+            "stake": 100,
+        }
+
+        review = reviewer.run(
+            {"quality_report": {"issues_by_severity": {}}, "entries": [{"race_id": "r1", "horse_id": "h1"}]},
+            scenario_rows=[{"race_id": "r1", "horse_id": "h1"}],
+            ev_rows=ev_rows,
+            ticket_plan={"tickets": [ticket]},
+            attempt=0,
+        )
+
+        self.assertEqual("NG", review["status"])
+        self.assertIn("PREDICTED_CURRENT_EV_DIVERGENCE", review["reason_codes"])
+        self.assertTrue(review["selected_divergent_rows"])
 
     def test_reviewer_rejects_missing_top_horse_without_dependency_failure(self):
         reviewer = ReviewerAgent(WorkflowSettings())

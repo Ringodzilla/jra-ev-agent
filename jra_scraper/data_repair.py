@@ -55,27 +55,32 @@ class MissingHistoryRepairAction:
         reason: str,
         source_counts: dict[str, int],
         attempted_urls: list[str] | None = None,
+        required_history_count: int = 5,
     ) -> MissingDataRepairResult:
+        required_count = max(0, min(5, int(required_history_count)))
+        missing_count = max(0, required_count - len(rows))
         actions: list[dict[str, object]] = [
             {
                 "type": "history_gap_repair",
                 "race_id": horse.race_id,
                 "horse_id": horse.horse_id,
                 "horse_name": horse.horse_name,
-                "status": "repaired" if len(rows) >= 5 else "manual_required",
+                "status": "repaired" if not missing_count else "manual_required",
                 "reason": reason,
                 "history_count": len(rows),
-                "missing_count": max(0, 5 - len(rows)),
+                "required_history_count": required_count,
+                "missing_count": missing_count,
                 "source_counts": source_counts,
                 "attempted_urls": list(attempted_urls or [horse.horse_url]),
             }
         ]
-        if len(rows) >= 5:
+        if not missing_count:
             return MissingDataRepairResult(rows=rows, repair_actions=actions)
 
         request = missing_history_request(
             horse,
             history_count=len(rows),
+            required_history_count=required_count,
             manual_history_csv=self.manual_history_csv,
             manual_template_csv=self.manual_template_csv,
             reason=reason,
@@ -90,7 +95,8 @@ class MissingHistoryRepairAction:
                 "race_id": horse.race_id,
                 "horse_name": horse.horse_name,
                 "history_count": str(len(rows)),
-                "missing_count": str(max(0, 5 - len(rows))),
+                "required_history_count": str(required_count),
+                "missing_count": str(missing_count),
             },
         )
         return MissingDataRepairResult(
@@ -98,7 +104,7 @@ class MissingHistoryRepairAction:
             issues=[issue],
             manual_requests=[request],
             repair_actions=actions,
-            manual_template_rows=manual_template_rows(horse, max(0, 5 - len(rows))),
+            manual_template_rows=manual_template_rows(horse, missing_count),
         )
 
 
@@ -106,18 +112,21 @@ def missing_history_request(
     horse,
     *,
     history_count: int,
+    required_history_count: int = 5,
     manual_history_csv: Path,
     manual_template_csv: Path,
     reason: str,
     attempted_urls: list[str] | None = None,
 ) -> dict[str, object]:
+    required_count = max(0, min(5, int(required_history_count)))
     return {
         "race_id": horse.race_id,
         "horse_id": horse.horse_id,
         "horse_name": horse.horse_name,
         "horse_url": horse.horse_url,
         "history_count": history_count,
-        "missing_count": max(0, 5 - history_count),
+        "required_history_count": required_count,
+        "missing_count": max(0, required_count - history_count),
         "fallback_score": 0.5,
         "fallback_reason": reason,
         "attempted_urls": list(attempted_urls or [horse.horse_url]),

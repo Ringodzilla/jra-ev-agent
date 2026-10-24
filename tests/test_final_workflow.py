@@ -8,6 +8,7 @@ from analysis.ev import build_feature_rows
 from src.deadline import DeadlineSettings, build_deadline_plan
 from src.final_workflow import (
     FinalReviewerAgent,
+    _all_configured_horses_are_zero_start,
     analysis_win_odds_snapshots,
     build_baseline_quality,
     merge_live_entries,
@@ -21,7 +22,7 @@ JST = ZoneInfo("Asia/Tokyo")
 
 class FinalReviewerTest(unittest.TestCase):
     def setUp(self):
-        self.now = datetime(2026, 8, 8, 15, 18, tzinfo=JST)
+        self.now = datetime(2026, 8, 8, 15, 19, tzinfo=JST)
         self.settings = DeadlineSettings()
         self.plan = build_deadline_plan(
             {"race_date": "2026-08-08", "post_time": "15:25"},
@@ -95,6 +96,27 @@ class FinalReviewerTest(unittest.TestCase):
         self.assertEqual("GO", review["decision"])
         self.assertEqual(1, review["body_weight_audit"]["unpublished"])
         self.assertFalse(review["body_weight_audit"]["used_for_decision"])
+
+    def test_early_preview_cannot_return_formal_go(self):
+        preview_now = datetime(2026, 8, 8, 15, 18, tzinfo=JST)
+        preview_plan = build_deadline_plan(
+            {"race_date": "2026-08-08", "post_time": "15:25"},
+            now=preview_now,
+            settings=self.settings,
+        )
+        self.collected["official_odds_as_of"] = preview_now.isoformat()
+        self.collected["conditions"]["captured_at"] = preview_now.isoformat()
+        review = FinalReviewerAgent(settings=self.settings, now=lambda: preview_now).run(
+            plan=preview_plan,
+            collected=self.collected,
+            ticket_plan=self.ticket_plan,
+            quantitative_review={"status": "OK"},
+        )
+
+        self.assertEqual("OK", review["status"])
+        self.assertEqual("NO_GO", review["decision"])
+        self.assertEqual("NO_GO_AWAITING_FINAL_WINDOW", review["decision_code"])
+        self.assertFalse(review["checks"]["final_go_window_open"])
 
     def test_estimated_ticket_odds_force_no_go(self):
         self.ticket_plan["tickets"][0]["odds_source"] = "estimated"
@@ -265,6 +287,19 @@ class MergeLiveEntriesTest(unittest.TestCase):
 
 
 class BaselineQualityTest(unittest.TestCase):
+    def test_allows_empty_baseline_only_when_every_configured_horse_is_unraced(self):
+        self.assertTrue(
+            _all_configured_horses_are_zero_start(
+                {"career_starts_by_horse_number": {"1": 0, "2": 0}}
+            )
+        )
+        self.assertFalse(
+            _all_configured_horses_are_zero_start(
+                {"career_starts_by_horse_number": {"1": 0, "2": 1}}
+            )
+        )
+        self.assertFalse(_all_configured_horses_are_zero_start({}))
+
     def test_accepts_complete_career_with_fewer_than_five_starts(self):
         rows = [
             {"horse_id": "h11", "horse_number": "11", "run_index": str(index)}
@@ -312,7 +347,7 @@ class BaselineQualityTest(unittest.TestCase):
 
 class FinalPredictionWorkflowTest(unittest.TestCase):
     def test_runs_six_roles_and_persists_go_decision(self):
-        now = datetime(2026, 8, 8, 15, 18, tzinfo=JST)
+        now = datetime(2026, 8, 8, 15, 19, tzinfo=JST)
         events = []
 
         class LiveCollector:

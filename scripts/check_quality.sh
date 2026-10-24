@@ -38,4 +38,8 @@ echo "== Feature Leakage =="
 "$PYTHON_BIN" scripts/check_feature_leakage.py
 echo
 
+echo "== Skill Workflow Contracts =="
+"$PYTHON_BIN" scripts/check_skill_workflow.py
+echo
+
 echo "quality checks: OK"

@@ -41,6 +41,7 @@ def estimate_win_probs(rows: list[dict], weights: ModelWeights | None = None) ->
             weights,
             race_id=race_id,
         )
+        blended_probs = _apply_environment_offsets(scored_group, blended_probs)
 
         race_rows: list[dict] = []
         for row, prob, probability_std, meta in zip(scored_group, blended_probs, probability_stds, calibration):
@@ -86,7 +87,7 @@ def estimate_win_probs(rows: list[dict], weights: ModelWeights | None = None) ->
                     "structural_win_prob": _fmt(prob),
                     "structural_fair_odds": _fmt(fair_odds),
                     "structural_ev_current": _fmt(ev_current),
-                    "structural_probability_formula_version": "structural_ev_v1",
+                    "structural_probability_formula_version": "structural_ev_v2_environment",
                     "win_prob_std": _fmt(probability_std),
                     "monte_carlo_iterations": str(max(1, int(weights.monte_carlo_iterations))),
                     "monte_carlo_seed": str(int(weights.monte_carlo_seed)),
@@ -193,6 +194,19 @@ def _score_row(row: dict, weights: ModelWeights) -> dict:
         + (weights.jockey * jockey_score)
     )
     return out
+
+
+def _apply_environment_offsets(rows: list[dict], baseline_probs: list[float]) -> list[float]:
+    """Apply the promoted model exactly as trained: softmax(log(p0) + offset)."""
+    if not baseline_probs or not any(bool(row.get("environment_adjustment_applied")) for row in rows):
+        return baseline_probs
+    if not all(bool(row.get("environment_adjustment_applied")) for row in rows):
+        raise ValueError("Environment adjustment must cover the complete race field")
+    scores = [
+        math.log(max(probability, 1e-300)) + _to_float(row.get("environment_score"), 0.0)
+        for row, probability in zip(rows, baseline_probs)
+    ]
+    return _softmax(scores)
 
 
 def _market_probs(rows: list[dict]) -> list[float]:

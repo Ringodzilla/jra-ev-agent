@@ -3,8 +3,14 @@ import json
 from unittest.mock import Mock, patch
 
 import pytest
+from bs4 import BeautifulSoup
 
-from jra_scraper.environment import _measurement_time, capture_environment
+from jra_scraper.environment import (
+    _cushion_history,
+    _measurement_time,
+    _moisture_history,
+    capture_environment,
+)
 from jra_scraper.config import ScrapeConfig
 from src.agents.data_collector import DataCollectorAgent
 
@@ -36,6 +42,15 @@ def test_fresh_observations_are_required_and_saved_immutably(tmp_path):
     assert observation['eligible_for_learning'] and observation['status'] == 'COMPLETE'
     assert observation['weather'] == '晴' and observation['cushion'] == 10.8
     assert observation['turf_moisture_goal'] == 6.8
+    assert observation['turf_moisture_goal_condition'] == ''
+    assert observation['collection_complete']
+    assert observation['required_fields_for_surface'][-2:] == [
+        'turf_moisture_goal', 'turf_moisture_corner4'
+    ]
+    assert observation['cushion_history'] == [
+        {'measured_at': '2026-10-18T07:00:00+09:00', 'cushion': 10.8}
+    ]
+    assert observation['moisture_history'][0]['turf_moisture_goal'] == 6.8
     assert len(observation['sources']) == 3
     assert client.fetch.call_count == 3
     assert all(call.kwargs['use_cache'] is False for call in client.fetch.call_args_list)
@@ -87,6 +102,45 @@ def test_unsupported_and_missing_cache_do_not_call_network(tmp_path):
     client.fetch.assert_not_called()
     with pytest.raises(ValueError):
         _measurement_time('unknown', 2026)
+
+
+def test_dirt_requires_dirt_moisture_but_not_turf_cushion(tmp_path):
+    result = capture_environment(
+        scraper(cushion=None, race=RACE.replace('class="turf"', 'class="dirt"')),
+        dict(config(), surface='ダート'),
+        [],
+        tmp_path,
+        now=NOW,
+    )
+    assert result['collection_complete']
+    assert 'cushion_fetch_failed' in result['nonblocking_errors']
+    assert 'cushion' not in result['required_fields_for_surface']
+    assert 'dirt_moisture_goal' in result['required_fields_for_surface']
+
+
+def test_unknown_surface_and_invalid_history_items_are_auditable(tmp_path):
+    unknown = capture_environment(
+        scraper(), dict(config(), surface='海'), [], tmp_path, now=NOW
+    )
+    assert 'unsupported_surface: 海' in unknown['errors']
+    soup = BeautifulSoup(
+        '<div title="京都"><div class="unit"><div class="time">bad</div>'
+        '<div class="cushion">99</div></div></div>',
+        'html.parser',
+    )
+    course = soup.select_one('div[title]')
+    assert _cushion_history(course, 2026) == []
+    assert _moisture_history(course, 2026) == []
+    bad_cushion = BeautifulSoup(
+        '<div title="京都"><div class="unit"><div class="time">10月18日（日曜）7時00分</div>'
+        '<div class="cushion">99</div></div></div>',
+        'html.parser',
+    ).select_one('div[title]')
+    assert _cushion_history(bad_cushion, 2026) == []
+    bad_moisture = BeautifulSoup(
+        MOISTURE.replace('6.8', '101'), 'html.parser'
+    ).select_one('div[title]')
+    assert _moisture_history(bad_moisture, 2026) == []
 
 
 def test_data_collector_updates_model_inputs_from_newly_observed_weather(tmp_path):

@@ -48,8 +48,25 @@ class DataCollectorAgent:
                             row.update(target_weather=snapshot['weather'],
                                        target_track_condition=snapshot['track_condition'],
                                        target_conditions_captured_at=snapshot['weather_captured_at'])
+                            _attach_environment_values(row, snapshot)
         finally:
             pipeline.close()
+
+        quality_report = _read_json(self.config.quality_report_path)
+        quality_report["environment_observations"] = [
+            {
+                "race_id": snapshot.get("race_id", ""),
+                "status": snapshot.get("status", ""),
+                "collection_complete": bool(snapshot.get("collection_complete")),
+                "eligible_for_learning": bool(snapshot.get("eligible_for_learning")),
+                "missing_fields": list(snapshot.get("missing_fields") or []),
+                "errors": list(snapshot.get("errors") or []),
+            }
+            for snapshot in environment_snapshots
+        ]
+        quality_report["environment_collection_complete"] = bool(environment_snapshots) and all(
+            snapshot.get("collection_complete") is True for snapshot in environment_snapshots
+        )
 
         return {
             "environment_snapshots": environment_snapshots,
@@ -60,7 +77,7 @@ class DataCollectorAgent:
             "entries": _read_csv(self.config.entries_csv),
             "odds_snapshots": _read_csv(self.config.odds_snapshots_csv),
             "combo_odds": _read_csv(self.config.combo_odds_csv),
-            "quality_report": _read_json(self.config.quality_report_path),
+            "quality_report": quality_report,
         }
 
 
@@ -72,6 +89,18 @@ class DomesticDataCollectorAgent(DataCollectorAgent):
 class OverseasDataCollectorAgent(DataCollectorAgent):
     collector_key = "overseas"
     default_aggressive_repair = True
+
+
+def _attach_environment_values(row: dict, snapshot: dict) -> None:
+    for key in (
+        'environment_schema_version', 'captured_at', 'cushion_measured_at',
+        'moisture_measured_at', 'cushion', 'turf_moisture_goal',
+        'turf_moisture_corner4', 'dirt_moisture_goal', 'dirt_moisture_corner4',
+        'turf_moisture_goal_condition', 'turf_moisture_corner4_condition',
+        'dirt_moisture_goal_condition', 'dirt_moisture_corner4_condition',
+        'moisture_note', 'collection_complete', 'eligible_for_learning',
+    ):
+        row[f'target_environment_{key}'] = snapshot.get(key, '')
 
 
 def _read_csv(path: Path) -> list[dict[str, str]]:
