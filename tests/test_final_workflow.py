@@ -1,3 +1,6 @@
+import copy
+import hashlib
+
 from datetime import datetime
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -8,6 +11,7 @@ from analysis.ev import build_feature_rows
 from src.deadline import DeadlineSettings, build_deadline_plan
 from src.final_workflow import (
     FinalReviewerAgent,
+    _attach_baseline_history_sources,
     _all_configured_horses_are_zero_start,
     analysis_win_odds_snapshots,
     build_baseline_quality,
@@ -18,6 +22,95 @@ from jra_scraper.config import ScrapeConfig
 
 
 JST = ZoneInfo("Asia/Tokyo")
+
+
+class BaselineHistorySourcesTest(unittest.TestCase):
+    def test_recovered_sources_are_reparsed_for_rows_and_pipeline_baselines(self):
+        from jra_scraper.parser import JRAParser
+        from jra_scraper.validation import _normalize_row
+        from src.data_integrity import audit_collected_data, verify_source_artifacts
+
+        html = Path("tests/fixtures/horse_history.html").read_text()
+        rows = JRAParser(base_url="https://jra.jp").parse_horse_last5(
+            html, "r1", "h1", "A", "https://jra.jp/history")
+        rows = [_normalize_row(row) for row in rows]
+        for row in rows:
+            row["target_race_date"] = "2026-10-24"
+            row["horse_number"] = "1"
+        artifact = dict(kind="horse_history", html=html,
+                        sha256=hashlib.sha256(html.encode()).hexdigest(),
+                        race_id="r1", horse_id="h1", horse_name="A", horse_url="")
+        collector = {"rows": rows, "source_audit": {"status": "PASS", "artifacts": [artifact]}}
+        collector["quality_report"] = {"missing_data_repair_actions": [
+            {"race_id": "r1", "horse_number": "1", "required_history_count": len(rows)}]}
+        with TemporaryDirectory() as directory:
+            for baseline in (collector, {"data_collector": collector, "quality_report": {
+                    "missing_data_repair_actions": [{"horse_number": "1", "required_history_count": 99}]}}):
+                with self.subTest(nested="data_collector" in baseline):
+                    before = copy.deepcopy(baseline)
+                    collected = {"rows": copy.deepcopy(rows)}
+                    _attach_baseline_history_sources(collected, baseline, Path(directory))
+                    self.assertNotIn("status", collected["source_audit"])
+                    collected["entries"] = [dict(race_id="r1", horse_id="h1", horse_number="1",
+                                                 assigned_weight="55", current_popularity="3", current_odds="8")]
+                    audit = audit_collected_data(collected, {}, purpose="final")
+                    self.assertEqual(audit["history_counts"][0]["status"], "COMPLETE")
+                    self.assertEqual(audit["history_counts"][0]["required"], len(rows))
+                    self.assertEqual(audit["gate"], "PASS")
+                    collected["quality_report"] = {}
+                    empty_audit = audit_collected_data(collected, {}, purpose="final")
+                    self.assertIsNone(empty_audit["history_counts"][0]["required"])
+                    self.assertEqual(empty_audit["gate"], "UNVERIFIED")
+                    self.assertEqual(verify_source_artifacts(collected)["status"], "PASS")
+                    # Fresh row matching still rejects edits despite the baseline's PASS.
+                    collected["rows"][0]["passing_order"] = "99-99"
+                    self.assertEqual(verify_source_artifacts(collected)["status"], "MISMATCH")
+                    collected["rows"] = copy.deepcopy(rows)
+                    collected["source_audit"]["artifacts"] = [dict(artifact, html=html + "tampered")]
+                    self.assertEqual(verify_source_artifacts(collected)["status"], "UNVERIFIED")
+                    self.assertEqual(baseline, before)
+
+    def test_live_quality_is_preserved_while_history_audit_evidence_is_merged(self):
+        live_issue = {"code": "current_odds_missing"}
+        history_issue = {"code": "last3f_fallback", "context": {"horse_number": "1"}}
+        live_quality = {"combination_coverage": {"complete": False},
+                        "official_odds_timestamps_complete": False,
+                        "environment_collection_complete": False,
+                        "missing_current_odds_entries": 1,
+                        "issues": [live_issue]}
+        baseline = {"quality_report": {
+            "combination_coverage": {"complete": True},
+            "official_odds_timestamps_complete": True,
+            "environment_collection_complete": True,
+            "missing_current_odds_entries": 0,
+            "last3f_fallback_rows": 1,
+            "missing_data_repair_actions": [{"horse_number": "1", "required_history_count": 5}],
+            "issues": [history_issue]}}
+        collected = {"rows": [], "quality_report": copy.deepcopy(live_quality)}
+        before = copy.deepcopy(baseline)
+        with TemporaryDirectory() as directory:
+            _attach_baseline_history_sources(collected, baseline, Path(directory))
+        quality = collected["quality_report"]
+        for key, value in live_quality.items():
+            if key != "issues":
+                self.assertEqual(quality[key], value)
+        self.assertEqual(quality["issues"], [live_issue, history_issue])
+        self.assertEqual(quality["last3f_fallback_rows"], 1)
+        self.assertEqual(quality["missing_data_repair_actions"],
+                         baseline["quality_report"]["missing_data_repair_actions"])
+        self.assertEqual(baseline, before)
+        self.assertEqual(live_quality["issues"], [live_issue])
+
+    def test_cached_sources_are_preserved_without_trusting_previous_status(self):
+        with TemporaryDirectory() as directory:
+            raw_dir = Path(directory)
+            (raw_dir / "race_r1.html").write_text("cached HTML")
+            for baseline in ([], {"source_audit": {"status": "PASS"}}):
+                collected = {"rows": [{"race_id": "r1"}]}
+                _attach_baseline_history_sources(collected, baseline, raw_dir)
+                self.assertEqual(len(collected["source_audit"]["artifacts"]), 1)
+                self.assertEqual(collected["source_audit"]["artifacts"][0]["html"], "cached HTML")
+                self.assertNotIn("status", collected["source_audit"])
 
 
 class FinalReviewerTest(unittest.TestCase):

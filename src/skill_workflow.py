@@ -7,6 +7,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+from decimal import Decimal, DecimalException, localcontext
 from pathlib import Path
 from uuid import uuid4
 
@@ -135,11 +136,34 @@ def probability_checks(rows: list[dict]) -> dict[str, bool]:
 
 def ev_checks(rows: list[dict]) -> dict[str, bool]:
     try:
-        valid = all(math.isfinite(float(r['ev_current'])) and float(r['current_odds']) > 0
-                    and abs(float(r['ev_current']) - float(r['win_prob']) * float(r['current_odds'])) <= 2e-5 for r in rows)
-    except (ValueError, TypeError, KeyError):
+        with localcontext() as context:
+            context.prec = 50
+            unit = Decimal("0.000001")
+            epsilon = unit / 2
+            valid = bool(rows)
+            for row in rows:
+                probability, odds, ev = (
+                    Decimal(str(row[key])) for key in ("win_prob", "current_odds", "ev_current"))
+                if not all(value.is_finite() for value in (probability, odds, ev)):
+                    valid = False
+                    break
+                if not (0 <= probability <= 1 and odds > 0 and ev >= 0):
+                    valid = False
+                    break
+                # src.model._fmt independently rounds p, odds and p*odds to six
+                # decimals. Reject other precision rather than widening its contract.
+                if any(value != value.quantize(unit) for value in (probability, odds, ev)):
+                    valid = False
+                    break
+                # |E_saved - p_saved*o_saved| <= epsE + |o|epsP
+                #     + |p|epsO + epsP*epsO. Decimal avoids binary boundary noise.
+                bound = epsilon * (1 + abs(odds) + abs(probability)) + epsilon * epsilon
+                if abs(ev - probability * odds) > bound:
+                    valid = False
+                    break
+    except (ValueError, TypeError, KeyError, DecimalException):
         valid = False
-    return {'ev_recalculation_matches': bool(rows) and valid}
+    return {'ev_recalculation_matches': valid}
 
 
 def attach_history_sources(collected: dict, raw_dir: Path) -> None:

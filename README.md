@@ -97,6 +97,8 @@ JRAのレースデータを取得し、**EVモデリングに直接使える整�
 
 ## Architecture
 
+今後のモデル拡張は、これまでの共通関数を基本形として維持し、芝・ダート×距離ごとに検証済みの差分を追加する方針です。設計と採用条件は [`docs/condition_models.md`](docs/condition_models.md) を参照してください。
+
 * `jra_scraper/scraper.py`: HTTP, retry/backoff, raw cache, cache-only再処理
 * `jra_scraper/parser.py`: JRA/JRADB構造の解析と列マッピング
 * `jra_scraper/validation.py`: 型正規化・ID付与・重複除去・5件上限

@@ -1160,6 +1160,7 @@ def _build_top5_wide_box_candidate(
         "top3_outcome_audit": outcome_audit,
         "probability_lineage": {
             "source": "04_ev_calculator",
+            "candidate_key": f"{race_id}|wide_box|{'-'.join(numbers)}",
             "formula": "sum_pair_wide_prob_minus_2_sum_selected_triple_prob",
             "pair_probability_sum": pair_probability_sum,
             "selected_triple_probability_sum": three_hit_probability,

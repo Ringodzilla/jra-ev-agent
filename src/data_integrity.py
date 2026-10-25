@@ -92,6 +92,10 @@ def verify_source_artifacts(collected: dict) -> dict:
                     for history in horse.embedded_history:
                         parsed.append(dict(history, race_id=race_id, horse_id=horse.horse_id,
                                            horse_number=horse.horse_number, horse_name=horse.horse_name))
+            elif artifact.get('kind') == 'history_result':
+                parsed = _history_result_observations(html, artifact)
+            elif artifact.get('kind') == 'history_odds':
+                parsed = _history_odds_observations(html, artifact)
             else:
                 continue
         except (ValueError, TypeError, KeyError):
@@ -131,6 +135,54 @@ def verify_source_artifacts(collected: dict) -> dict:
             detected_imputations.append({'row': row, 'field': 'last_3f', 'method': 'parser_last3f_fallback'})
     return {'status': 'MISMATCH' if mismatches else 'PASS', 'mismatches': mismatches,
             'detected_imputations': detected_imputations}
+
+
+def _history_result_observations(html: str, artifact: dict) -> list[dict]:
+    """Recover observed sectionals from an official historical result, not a default."""
+    from bs4 import BeautifulSoup
+    soup = BeautifulSoup(html, 'html.parser')
+    dates = soup.select('.cell.date')
+    matches = [tr for tr in soup.select('tr') if tr.select_one('td.horse a')
+               and tr.select_one('td.horse a').get_text(strip=True) == artifact.get('horse_name')]
+    if len(dates) != 1 or len(matches) != 1:
+        raise ValueError('Historical result horse/date is not unique')
+    match = re.match(r'(\d{4})年(\d{1,2})月(\d{1,2})日', dates[0].get_text(' ', strip=True))
+    if not match:
+        raise ValueError('Historical result date is unverified')
+    day = dt.date(*(int(value) for value in match.groups())).isoformat()
+    row = matches[0]
+    def cell(selector):
+        node = row.select_one(selector)
+        return node.get_text(' ', strip=True) if node else ''
+    weather = soup.select_one('li.weather .txt')
+    return [dict(race_id=str(artifact.get('race_id', '')), horse_id=str(artifact.get('horse_id', '')),
+                 horse_name=artifact.get('horse_name', ''), date=day,
+                 last_3f=cell('td.f_time'), last_3f_source='official_historical_result',
+                 passing_order='-'.join(node.get_text(strip=True) for node in row.select('td.corner li')),
+                 position=cell('td.place'), time=cell('td.time'), jockey=cell('td.jockey'),
+                 weight=cell('td.weight'), popularity=cell('td.pop'),
+                 weather=weather.get_text(strip=True) if weather else '')]
+
+
+def _history_odds_observations(html: str, artifact: dict) -> list[dict]:
+    """Read a unique horse's observed historical win odds and independent page date."""
+    from bs4 import BeautifulSoup
+    soup = BeautifulSoup(html, 'html.parser')
+    dates = soup.select('.cell.date')
+    matches = [tr for tr in soup.select('tr') if tr.select_one('td.horse')
+               and tr.select_one('td.horse').get_text(strip=True) == artifact.get('horse_name')]
+    if len(dates) != 1 or len(matches) != 1:
+        raise ValueError('Historical odds horse/date is not unique')
+    match = re.match(r'(\d{4})年(\d{1,2})月(\d{1,2})日', dates[0].get_text(' ', strip=True))
+    if not match:
+        raise ValueError('Historical odds date is unverified')
+    day = dt.date(*(int(value) for value in match.groups())).isoformat()
+    odds = matches[0].select_one('td.odds_tan')
+    value = odds.get_text(strip=True).replace(',', '') if odds else ''
+    if not _number(value):
+        raise ValueError('Historical win odds are not observed positive numbers')
+    return [dict(race_id=str(artifact.get('race_id', '')), horse_id=str(artifact.get('horse_id', '')),
+                 horse_name=artifact.get('horse_name', ''), date=day, odds=value)]
 
 
 def audit_collected_data(collected: dict, race_configs: object, approvals: list | None = None,

@@ -119,6 +119,30 @@ def test_top5_wide_box_uses_joint_probability_and_total_stake_ev() -> None:
     assert all(check["passed"] for check in checks)
 
 
+def test_wide_box_lineage_matches_own_key_and_rejects_missing_or_wrong_key() -> None:
+    from copy import deepcopy
+    from src.agents.reviewer import _probability_lineage_errors
+
+    box = _build_top5_wide_box_candidate(_wide_candidates(), _race_rows(), bankroll_per_race=1000)
+    assert box is not None
+    lineage = box["probability_lineage"]
+    assert lineage["candidate_key"] == box["source_candidate_key"]
+    assert lineage["formula"] == "sum_pair_wide_prob_minus_2_sum_selected_triple_prob"
+    assert lineage["raw_hit_prob"] == box["raw_hit_prob"]
+    assert len(box["source_candidate_keys"]) == 10
+    plan = {"optimization_mode": "canonical_probability_robust_odds",
+            "probability_lineage": {"status": "OK"}, "candidate_evaluations": [box], "tickets": []}
+    assert _probability_lineage_errors(plan) == []
+    for bad_key in (None, "wrong|wide_box|1-2-3-4-5"):
+        changed = deepcopy(plan)
+        if bad_key is None:
+            changed["candidate_evaluations"][0]["probability_lineage"].pop("candidate_key")
+        else:
+            changed["candidate_evaluations"][0]["probability_lineage"]["candidate_key"] = bad_key
+        assert f"candidate raw probability mismatch: {box['source_candidate_key']}" in (
+            _probability_lineage_errors(changed))
+
+
 def test_wide_box_portfolio_math_uses_ten_points_as_one_candidate() -> None:
     box = _build_top5_wide_box_candidate(
         _wide_candidates(),

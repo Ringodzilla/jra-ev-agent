@@ -172,10 +172,7 @@ class FinalPredictionWorkflow:
 
         if self.enforce_skill_gates:
             self.skill_sequence = SkillSequence(self.output_dir, mode='final')
-            attach_history_sources(collected, self.history_raw_dir)
-            # Retain original quality evidence even though the live collector only refreshes entries.
-            if isinstance(baseline, dict):
-                collected['quality_report'] = dict(dict(baseline.get('data_collector') or {}).get('quality_report') or {})
+            _attach_baseline_history_sources(collected, baseline, self.history_raw_dir)
             try:
                 self.skill_sequence.record('intake', {'race_config': race_config}, checks={'race_id_present': bool(race_config.get('race_id'))})
                 self.skill_sequence.record('collection', {'entries': collected['entries'], 'rows': merged_rows}, checks={'entries_present': bool(collected['entries'])})
@@ -646,6 +643,32 @@ class FinalReviewerAgent:
                 ),
             },
         }
+
+
+def _attach_baseline_history_sources(
+    collected: dict,
+    baseline: dict | list,
+    raw_dir: Path,
+) -> None:
+    """Retain original HTML evidence for revalidation against the new live input."""
+    attach_history_sources(collected, raw_dir)
+    if isinstance(baseline, dict):
+        collector = dict(baseline.get("data_collector") or {})
+        # Retain history-count evidence; never carry forward a previous audit or approval.
+        history_quality = dict(
+            collector.get("quality_report") or baseline.get("quality_report") or {})
+        quality = dict(collected.get("quality_report") or {})
+        # Live coverage, timestamps and environment eligibility belong to this refresh.
+        # Merge only historical evidence consumed by the integrity audit.
+        for key in ("missing_data_repair_actions", "issues"):
+            quality[key] = list(quality.get(key) or []) + list(history_quality.get(key) or [])
+        quality["last3f_fallback_rows"] = (
+            int(quality.get("last3f_fallback_rows") or 0)
+            + int(history_quality.get("last3f_fallback_rows") or 0))
+        collected["quality_report"] = quality
+        # Copy artifacts only: a previous audit status or approval is not evidence.
+        source = collector.get("source_audit") or baseline.get("source_audit") or {}
+        collected["source_audit"]["artifacts"].extend(source.get("artifacts") or [])
 
 
 def extract_baseline_rows(

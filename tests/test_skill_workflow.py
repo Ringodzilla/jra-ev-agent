@@ -53,6 +53,39 @@ def test_complete_trace_and_numerical_checks(tmp_path):
     assert not all(row_checks(rows, []).values())
 
 
+@pytest.mark.parametrize("probability,odds,ev", [
+    ("0.046002", "224.5", "10.327426"),
+    ("0.052112", "130.4", "6.795458"),
+    # The serialization bound is just above one EV quantum here.
+    ("0", "1", "0.000001"),
+    ("1", "1", "0.999999"),
+])
+def test_ev_checks_accept_six_decimal_rounding(probability, odds, ev):
+    assert ev_checks([dict(win_prob=probability, current_odds=odds, ev_current=ev)]) == {
+        "ev_recalculation_matches": True}
+
+
+@pytest.mark.parametrize("probability,odds,ev", [
+    ("0.046002", "224.5", "10.327626"),
+    ("0.052112", "130.4", "6.795658"),
+    ("0", "1", "0.000002"),
+    ("1", "1", "0.999998"),
+    ("-0.1", "1", "0"),
+    ("1.1", "1", "1.1"),
+    ("0.5", "0", "0"),
+    ("0.5", "-1", "0"),
+    ("0.5", "Infinity", "1"),
+    ("NaN", "2", "1"),
+    ("0.5", "2", "Infinity"),
+    ("0.5000001", "2", "1"),
+    ("0.5", "2.0000001", "1"),
+    ("0.5", "2", "1.0000001"),
+])
+def test_ev_checks_reject_outside_rounding_contract(probability, odds, ev):
+    assert not ev_checks([dict(win_prob=probability, current_odds=odds, ev_current=ev)])[
+        "ev_recalculation_matches"]
+
+
 def test_integrity_blocks_before_analyzer_and_preserves_audit(tmp_path):
     workflow = ReactiveRaceWorkflow(ScrapeConfig(stages_dir=tmp_path / 'stages'))
     workflow.enforce_skill_gates = True
