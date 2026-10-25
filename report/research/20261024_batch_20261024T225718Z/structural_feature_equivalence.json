@@ -1,0 +1,66 @@
+{
+  "record_type": "synthetic_structural_equivalence_verification",
+  "status": "PASS",
+  "synthetic_cases": 60,
+  "exact_fields": [
+    "ability_score",
+    "course_score",
+    "pace_score",
+    "weight_score",
+    "jockey_score",
+    "front_rate",
+    "closing_strength",
+    "speed_score",
+    "track_condition_score",
+    "consistency"
+  ],
+  "current_market_access_trap": "PASS",
+  "input_contract": {
+    "history": [
+      "position",
+      "time",
+      "distance",
+      "last_3f",
+      "passing_order",
+      "weight",
+      "course",
+      "history_surface",
+      "track_condition",
+      "jockey",
+      "date",
+      "run_index",
+      "popularity",
+      "odds",
+      "race_id",
+      "horse_id"
+    ],
+    "target": [
+      "target_track",
+      "target_surface",
+      "target_distance",
+      "target_track_condition",
+      "assigned_weight",
+      "current_jockey",
+      "frame_number",
+      "race_id",
+      "horse_id",
+      "horse_number",
+      "horse_name",
+      "target_race_date"
+    ]
+  },
+  "calculations_performed": [
+    "synthetic feature/component scores only"
+  ],
+  "probability_ev_fit_calls": 0,
+  "code_refs": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/structural_research_features.py",
+      "sha256": "f3f021d739cbc4cf2036aff803b79cb73f402f161e42a3a35d6de25a80038d40"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/feature_engineering.py",
+      "sha256": "f65e6c156bc0bb0902cc4abd989ba9796d68720538f0f8f47f6a7d134cb5ffd2"
+    }
+  ]
+}

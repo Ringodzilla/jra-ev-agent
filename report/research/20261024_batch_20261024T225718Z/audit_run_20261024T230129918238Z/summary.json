@@ -1,0 +1,108 @@
+{
+  "audited_at": "20261024T230129918238Z",
+  "source_manifest_sha256": "b575043345351ed1b0b84b541414981712b172c17d9ab098a69cc35e505e5ef0",
+  "race_count": 8,
+  "expected_race_count": 36,
+  "batch_complete": false,
+  "model_ready_race_ids": [],
+  "races": [
+    {
+      "race_id": "20261024_新潟_01",
+      "numeric_race_id": "20261024_04_01",
+      "gate": "UNVERIFIED",
+      "model_ready": false,
+      "horses": 12,
+      "histories": 18,
+      "findings": 18,
+      "source_mismatches": 0,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_新潟_02",
+      "numeric_race_id": "20261024_04_02",
+      "gate": "BLOCKED_ZERO_HISTORY_NEUTRAL_FORBIDDEN",
+      "model_ready": false,
+      "horses": 18,
+      "histories": 41,
+      "findings": 44,
+      "source_mismatches": 0,
+      "surface_gate": "PASS",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_新潟_03",
+      "numeric_race_id": "20261024_04_03",
+      "gate": "UNVERIFIED",
+      "model_ready": false,
+      "horses": 14,
+      "histories": 28,
+      "findings": 28,
+      "source_mismatches": 0,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_新潟_04",
+      "numeric_race_id": "20261024_04_04",
+      "gate": "UNVERIFIED",
+      "model_ready": false,
+      "horses": 13,
+      "histories": 63,
+      "findings": 90,
+      "source_mismatches": 0,
+      "surface_gate": "PASS",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_新潟_05",
+      "numeric_race_id": "20261024_04_05",
+      "gate": "BLOCKED_ZERO_HISTORY_NEUTRAL_FORBIDDEN",
+      "model_ready": false,
+      "horses": 14,
+      "histories": 0,
+      "findings": 14,
+      "source_mismatches": 0,
+      "surface_gate": "PASS",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_新潟_06",
+      "numeric_race_id": "20261024_04_06",
+      "gate": "UNVERIFIED",
+      "model_ready": false,
+      "horses": 12,
+      "histories": 58,
+      "findings": 87,
+      "source_mismatches": 0,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_新潟_07",
+      "numeric_race_id": "20261024_04_07",
+      "gate": "UNVERIFIED",
+      "model_ready": false,
+      "horses": 12,
+      "histories": 57,
+      "findings": 80,
+      "source_mismatches": 0,
+      "surface_gate": "PASS",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_新潟_08",
+      "numeric_race_id": "20261024_04_08",
+      "gate": "UNVERIFIED",
+      "model_ready": false,
+      "horses": 10,
+      "histories": 50,
+      "findings": 92,
+      "source_mismatches": 0,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "environment_gate": "PASS"
+    }
+  ],
+  "approvals_used": [],
+  "model_calculations_executed": false
+}

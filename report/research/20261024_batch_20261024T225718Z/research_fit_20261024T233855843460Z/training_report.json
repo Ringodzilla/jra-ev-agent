@@ -1,0 +1,172 @@
+{
+  "record_type": "isolated_interim_environment_candidate",
+  "role": "analyzer",
+  "status": "INSUFFICIENT_DATA_RESEARCH_ONLY",
+  "training_races": 3,
+  "training_horses": 31,
+  "family": "linear",
+  "ridge": 100.0,
+  "training_date_max": "2026-10-24",
+  "validation_dates_reserved": [
+    "2026-10-25"
+  ],
+  "validation_status": "NOT_EXECUTED",
+  "test_status": "NOT_EXECUTED_LATER_UNUSED_RACE_DAY_REQUIRED",
+  "train_metrics_in_sample_only": {
+    "baseline": {
+      "race_count": 3,
+      "log_loss": 2.266625251259325,
+      "brier": 0.894973101543596,
+      "top1_hit_rate": 0.0,
+      "win_top1_policy_roi": 0.0
+    },
+    "candidate": {
+      "race_count": 3,
+      "log_loss": 2.184552608312242,
+      "brier": 0.8759507884168464,
+      "top1_hit_rate": 0.0,
+      "win_top1_policy_roi": 0.0
+    }
+  },
+  "baseline_variant": "exact_structural_softmax_temperature1_no_mc_no_market",
+  "minimum_required": {
+    "train": 100,
+    "validation": 20,
+    "test": 20
+  },
+  "source_artifacts": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/simulator_baseline_20261024T233746836103Z/summary.json",
+      "sha256": "4613b1cc315f50f806e126d0673782d56454cd8e1bff2761268cc940f1f0d90c"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/simulator_baseline_20261024T233746836103Z/independent_verification.json",
+      "sha256": "bc679c31c9c0c3e2abc5b8e218c2223d33037a69724698b5efd37d0f5996734d"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/verified_labels_20261024T231632925424Z.json",
+      "sha256": "2a6b3cf42f33fd7de0dfbe897227b1717b404d0e488b19bd7d2847e905da0859"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/simulator_baseline_20261024T233746836103Z/20261024_05_02_baseline.json",
+      "sha256": "34cb24fc460bd0b7e147e19b8b6fb5c00d441c75a287b76e2d1950ce2cf0c430"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_05_02.json",
+      "sha256": "f924fb393bd35d7fc1647b240cae7551f558903d9bced07ae21e5221ccf03c40"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/fe2f691cd1938adc6c158faf523633a6a89b4e44ee862275feda10176472e850.html",
+      "sha256": "4c0dbc0b69beaaf4a90124d0dce0219700750db1ab41438838c7eb149bea43b8"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_environment_reconstruction/observations_20261024T225734690084Z.json",
+      "sha256": "406ff9e65455751a7591e22b769e07f88e0f51f5fb17e99b37d522ccafa917e5"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/simulator_baseline_20261024T233746836103Z/20261024_08_08_baseline.json",
+      "sha256": "2e42ef21b6465d81625bb4df14d07b5cdd9ec15c5c35b3f2825600121e6ca890"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_08_08.json",
+      "sha256": "2bfe207b7dbed9d21895ef60571897e3230ca8182e0cdbbc507d393a80dca8a2"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/ae582216d6e4e555b2835d72da74b33bf913a0c7080d7b54677167564b36b82b.html",
+      "sha256": "f6eb4bcf72ef97f1c5f54ab93e146408e0fee11c0da3dbe59bf4950cef621a37"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_environment_reconstruction/observations_20261024T225734690084Z.json",
+      "sha256": "406ff9e65455751a7591e22b769e07f88e0f51f5fb17e99b37d522ccafa917e5"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/simulator_baseline_20261024T233746836103Z/20261024_08_11_baseline.json",
+      "sha256": "3e03000ea56651f41ea274edbe9e3ce8dec64f269341983baa6f8a0d9e8f6901"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_08_11.json",
+      "sha256": "32461c814ae220ed8b31eafcf6e6fc12d407aa4b1975d45fdff696869d417cb1"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/093f0fa701394e3094d59aa4029ccf606a5b8dc1a301582007c8d064213c4e06.html",
+      "sha256": "06086330f123acca4690d60d134806b72fd47c6e58c915fdabf035305544d384"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_environment_reconstruction/observations_20261024T225734690084Z.json",
+      "sha256": "406ff9e65455751a7591e22b769e07f88e0f51f5fb17e99b37d522ccafa917e5"
+    }
+  ],
+  "checks": [
+    {
+      "race_id": "20261024_東京_02",
+      "input_sha256": "6a8674b9c518137a73c921f64da0ed6cf435a5fb59f270b9d2328b4745607fc2",
+      "horse_count": 7,
+      "measurement_before_post": "PASS",
+      "official_label_binding": "PASS",
+      "track": "東京",
+      "post_time": "2026-10-24T10:35:00+09:00",
+      "retrieved_at": "2026-10-24T22:57:34.338196+00:00"
+    },
+    {
+      "race_id": "20261024_京都_08",
+      "input_sha256": "bb73c7151da007d86bd410a27de625890f96b02fe63c576e9ff4d60a820d1d45",
+      "horse_count": 8,
+      "measurement_before_post": "PASS",
+      "official_label_binding": "PASS",
+      "track": "京都",
+      "post_time": "2026-10-24T13:45:00+09:00",
+      "retrieved_at": "2026-10-24T22:57:34.338196+00:00"
+    },
+    {
+      "race_id": "20261024_京都_11",
+      "input_sha256": "46502472ae0d4a5dca3e8f302433b9ab97e2df0e6f591ce168552ecc6bd68041",
+      "horse_count": 16,
+      "measurement_before_post": "PASS",
+      "official_label_binding": "PASS",
+      "track": "京都",
+      "post_time": "2026-10-24T15:30:00+09:00",
+      "retrieved_at": "2026-10-24T22:57:34.338196+00:00"
+    }
+  ],
+  "code_artifacts": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/fit_priority_research.py",
+      "sha256": "10a9a175d751977e98245a7a10ac6a833f9f0da1b5337b4beacc43b0b4321645"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/environment_model.py",
+      "sha256": "37418a14c524e383f76a1421e3eb31dda1aac6dcf691bc59517d7c9622653216"
+    }
+  ],
+  "candidate_artifact": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/research_fit_20261024T233855843460Z/candidate_model.json",
+    "sha256": "7d6bd274a6f0607998630634c38b7628fca65b686dec199d8be11ce5051d0a7a"
+  },
+  "dataset_artifact": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/research_fit_20261024T233855843460Z/dataset.json",
+    "sha256": "b9d06e74585d277c91d31dcb5afce49de335627eb247d75398ce4f0f529d73fd"
+  },
+  "pre_race_capture": false,
+  "production_learning_eligible": false,
+  "production_model_changed": false,
+  "shared_before": {
+    "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv": "eb8da8bf1c8b168b60d8c4b966e3c8022778bd04b910742258adf64c9618a09a",
+    "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/environment_model/learning_status.json": "7041fc461a27602c4d6ee91707fc2c0ceaae640777822c0f3a8adf80960db7b7",
+    "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/models/environment_model.json": null
+  },
+  "shared_after": {
+    "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv": "eb8da8bf1c8b168b60d8c4b966e3c8022778bd04b910742258adf64c9618a09a",
+    "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/environment_model/learning_status.json": "7041fc461a27602c4d6ee91707fc2c0ceaae640777822c0f3a8adf80960db7b7",
+    "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/models/environment_model.json": null
+  },
+  "defaults_applied": [],
+  "hyperparameter_search_executed": false,
+  "limitations": [
+    "3 races are an interim subset; all Saturday turf races total at most 18, below minimum training size 100.",
+    "Training log loss/Brier/ROI are in-sample and do not establish generalization.",
+    "Posthoc environment reconstruction and result-header weather do not prove pre-race availability.",
+    "Sunday validation and later independent test have not been executed.",
+    "Candidate cannot be promoted or used for production predictions.",
+    "Exact Softmax baseline differs from legacy Monte Carlo baseline; comparisons across variants are invalid."
+  ]
+}

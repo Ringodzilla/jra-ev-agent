@@ -82,9 +82,12 @@ def verify_source_artifacts(collected: dict) -> dict:
             parser = JRAParser(base_url='https://jra.jp')
             race_id = str(artifact.get('race_id', ''))
             if artifact.get('kind') == 'horse_history':
+                target_dates = {str(row.get('target_race_date', '')) for row in collected.get('rows', [])
+                                if str(row.get('race_id', '')) == race_id and row.get('target_race_date')}
                 parsed = parser.parse_horse_last5(
                     html, race_id, str(artifact.get('horse_id', '')),
-                    str(artifact.get('horse_name', '')), str(artifact.get('horse_url', '')))
+                    str(artifact.get('horse_name', '')), str(artifact.get('horse_url', '')),
+                    before_date=next(iter(target_dates)) if len(target_dates) == 1 else None)
             elif artifact.get('kind') == 'race_detail':
                 horses = parser.parse_race_detail(html, race_id, str(artifact.get('race_name', '')))
                 parsed = []

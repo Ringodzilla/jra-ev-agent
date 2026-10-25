@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "family": "linear",
+  "ridge": 100.0,
+  "feature_names": [
+    "front_rate*rain",
+    "front_rate*cloud",
+    "front_rate*snow",
+    "front_rate*cushion",
+    "front_rate*moisture_goal",
+    "front_rate*moisture_corner4",
+    "front_rate*condition",
+    "closing_strength*rain",
+    "closing_strength*cloud",
+    "closing_strength*snow",
+    "closing_strength*cushion",
+    "closing_strength*moisture_goal",
+    "closing_strength*moisture_corner4",
+    "closing_strength*condition",
+    "speed_score*rain",
+    "speed_score*cloud",
+    "speed_score*snow",
+    "speed_score*cushion",
+    "speed_score*moisture_goal",
+    "speed_score*moisture_corner4",
+    "speed_score*condition",
+    "track_condition_score*rain",
+    "track_condition_score*cloud",
+    "track_condition_score*snow",
+    "track_condition_score*cushion",
+    "track_condition_score*moisture_goal",
+    "track_condition_score*moisture_corner4",
+    "track_condition_score*condition"
+  ],
+  "scales": [
+    0.06083293811289246,
+    0.14623263482514165,
+    1.0,
+    1.0,
+    0.10760046414910227,
+    0.148474973921769,
+    0.048744211608380536,
+    0.1287431143521375,
+    0.20319883392596266,
+    1.0,
+    1.0,
+    0.1880790338975279,
+    0.2751648060574497,
+    0.06773294464198756,
+    0.015576119024679029,
+    0.07898430198259283,
+    1.0,
+    1.0,
+    0.047139296666600494,
+    0.05906538532378825,
+    0.026328100660864284,
+    0.049481112162415006,
+    0.039767946344406745,
+    1.0,
+    1.0,
+    0.06211840198008422,
+    0.096310782860511,
+    0.013255982114802244
+  ],
+  "coefficients": [
+    0.0016721416832876643,
+    0.006948069643254219,
+    0.0,
+    0.0,
+    0.006304261927709265,
+    0.00573261502743528,
+    0.00694806964325422,
+    -0.010423645406493647,
+    0.002567052126840823,
+    0.0,
+    0.0,
+    -0.006858423539595496,
+    -0.007912146562182643,
+    0.0025670521268408215,
+    0.008559715156380526,
+    0.00722867142361938,
+    0.0,
+    0.0,
+    0.009984933736904325,
+    0.010515582118803777,
+    0.007228671423619379,
+    -0.0022042660896929712,
+    0.00021846706631349958,
+    0.0,
+    0.0,
+    -0.0019861797817786646,
+    -0.0020647552211684366,
+    0.0002184670663135001
+  ],
+  "training_races": 3,
+  "training_end_date": "2026-10-24",
+  "unsupported_environment_terms": [
+    "snow",
+    "cushion"
+  ],
+  "training_environment_ranges": {
+    "rain": [
+      0.0,
+      1.0
+    ],
+    "cloud": [
+      0.0,
+      1.0
+    ],
+    "snow": [
+      0.0,
+      0.0
+    ],
+    "cushion": [
+      -0.5,
+      -0.5
+    ],
+    "moisture_goal": [
+      0.5499999999999998,
+      1.1749999999999998
+    ],
+    "moisture_corner4": [
+      0.6499999999999999,
+      1.875
+    ],
+    "condition": [
+      0.0,
+      0.3333333333333333
+    ]
+  },
+  "status": "candidate_not_promoted"
+}

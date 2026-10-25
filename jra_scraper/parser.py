@@ -4,6 +4,7 @@ import hashlib
 import logging
 import re
 from dataclasses import dataclass
+from datetime import date
 from typing import Sequence
 from urllib.parse import parse_qs, urljoin, urlparse
 
@@ -292,8 +293,21 @@ class JRAParser:
         current_entry: HorseEntry | None = None,
         issue_sink: list[ParserIssue] | None = None,
         aggressive_repair: bool = False,
+        before_date: str | None = None,
     ) -> list[dict[str, str]]:
+        cutoff = date.fromisoformat(before_date) if before_date else None
         soup = BeautifulSoup(html, "html.parser")
+        history_tables = [table for table in soup.select("table") if table.select_one("caption")
+                          and table.select_one("caption").get_text(strip=True) == "出走レース"]
+        if len(history_tables) == 1 and history_tables[0].select_one(".no_data"):
+            self._issue(
+                issue_sink, stage="parser.horse_history", severity="info",
+                code="history_no_data_reported",
+                message="Official race-history table explicitly reports no data; career count remains separately verified.",
+                context={"race_id": race_id, "horse_id": horse_id, "horse_name": horse_name,
+                         "raw_text": history_tables[0].get_text(" ", strip=True)},
+            )
+            return []
         table = self._select_last5_table(soup)
         if table is None:
             self._issue(
@@ -328,6 +342,15 @@ class JRAParser:
         for tr in body_rows:
             run_idx = len(out) + 1
             raw_cells = [self._norm(td.get_text(" ", strip=True)) for td in tr.select("td")]
+            if any(re.fullmatch(r"JRA(?:へ|より)転[入出]", cell) for cell in raw_cells):
+                self._issue(
+                    issue_sink, stage="parser.horse_history", severity="info",
+                    code="non_race_transfer_event",
+                    message="Preserved a transfer event separately from race starts.",
+                    context={"race_id": race_id, "horse_id": horse_id,
+                             "horse_name": horse_name, "raw_text": tr.get_text(" ", strip=True)},
+                )
+                continue
             cells = self._repair_cells(
                 raw_cells,
                 len(headers),
@@ -342,6 +365,13 @@ class JRAParser:
             mapped = self._map_row(header_matches, cells)
             if any(status in mapped.get("position", "") for status in ("取消", "除外")):
                 continue
+            if cutoff is not None:
+                match = re.search(r'(\d{4})\D+(\d{1,2})\D+(\d{1,2})', mapped.get('date', ''))
+                if match is None:
+                    raise ValueError('Cannot verify horse-history date before retrospective cutoff')
+                observed_date = date(*(int(value) for value in match.groups()))
+                if observed_date >= cutoff:
+                    continue
             history_surface, _ = self._parse_condition_text(mapped.get("distance", ""))
             if self._is_jump_race_name(mapped.get("race_name", ""), mapped.get("distance", "")):
                 history_surface = "障害"

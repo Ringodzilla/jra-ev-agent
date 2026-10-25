@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "step_id": "approval_gate",
+  "skill_name": "jra-04-approval-gate",
+  "status": "BLOCKED",
+  "execution_kind": "deterministic_code_gate",
+  "mode": "prediction",
+  "skill_sha256": "e2640376a195155c4dd5753bbccbc559f941b5d24a22e453145198f3c45f1738",
+  "input_artifacts": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/skill_workflow_audits/20261024_東京_11/skill_runs/d5038a6c39214d108c33ea68feb950a5/03_integrity_audit.json",
+      "sha256": "fb0fce9fae62076c327efe23837f93470f423115d3f32053549c97284b665838"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/skill_workflow_audits/20261024_東京_11/skill_runs/d5038a6c39214d108c33ea68feb950a5/04_approval_gate_output.json",
+      "sha256": "0f2e796ec4acb1f723057d0193bf2aab24a344e71f56a6ad96c1b4275d6ab647"
+    }
+  ],
+  "checks": [
+    {
+      "id": "audit_passed",
+      "status": "FAIL"
+    },
+    {
+      "id": "skill_contract_exists",
+      "status": "PASS"
+    }
+  ],
+  "reason_codes": [
+    "BLOCKED_UNAPPROVED_IMPUTATION"
+  ],
+  "next_action": "STOP"
+}

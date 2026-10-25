@@ -1,0 +1,26 @@
+{
+  "audited_at": "20261024T231925902859Z",
+  "source_manifest_sha256": "63ed80aa15ef1a445eafb3b190e13b56a01b3d40b36d445ed0e0bd619e1ac9b5",
+  "input_directory": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/audit_smoketest_inputs_20261024T231922433137Z/enriched_races",
+  "enriched_mode": true,
+  "race_count": 1,
+  "expected_race_count": 36,
+  "batch_complete": false,
+  "model_ready_race_ids": [],
+  "races": [
+    {
+      "race_id": "20261024_新潟_01",
+      "numeric_race_id": "20261024_04_01",
+      "gate": "UNVERIFIED",
+      "model_ready": false,
+      "horses": 12,
+      "histories": 18,
+      "findings": 18,
+      "source_mismatches": 0,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "environment_gate": "PASS"
+    }
+  ],
+  "approvals_used": [],
+  "model_calculations_executed": false
+}

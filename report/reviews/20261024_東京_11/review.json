@@ -1,0 +1,314 @@
+{
+  "schema_version": 1,
+  "record_type": "post_race_review",
+  "generated_at": "2026-10-24T07:16:52.625249+00:00",
+  "race": {
+    "race_id": "20261024_東京_11",
+    "date": "2026-10-24",
+    "track": "東京",
+    "race_number": 11,
+    "race_name": "第15回アルテミスステークス",
+    "post_time_jst": "2026-10-24T15:45:00+09:00"
+  },
+  "sources": {
+    "official_result_url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde0105202604081120261024/E7",
+    "raw_path": "report/reviews/20261024_東京_11/official_result.html",
+    "raw_sha256": "03c3a80c0cb678d058d0ecd1354e84cc13b45b55b809f7ce328565a1b093c5fb",
+    "purchase_path": "data/manual/20261024_tokyo_11_user_purchase.json",
+    "purchase_sha256": "4488ebca106a5b6e3eecdf9af7cb1bb345c18d05f33461f101f6401b0117acc5",
+    "video_reviewed": false
+  },
+  "result": {
+    "weather": "雨",
+    "track_condition": "稍重",
+    "finish_order": [
+      {
+        "position": 1,
+        "horse_number": "9",
+        "horse_name": "プルヴィナル",
+        "time": "1:35.8",
+        "corner_positions": [
+          4,
+          2
+        ],
+        "last_3f": 34.6,
+        "popularity": 1
+      },
+      {
+        "position": 2,
+        "horse_number": "13",
+        "horse_name": "ローズサルーテ",
+        "time": "1:36.0",
+        "corner_positions": [
+          11,
+          7
+        ],
+        "last_3f": 34.1,
+        "popularity": 10
+      },
+      {
+        "position": 3,
+        "horse_number": "5",
+        "horse_name": "シティオブドリーム",
+        "time": "1:36.2",
+        "corner_positions": [
+          2,
+          4
+        ],
+        "last_3f": 34.5,
+        "popularity": 3
+      },
+      {
+        "position": 4,
+        "horse_number": "3",
+        "horse_name": "ファミーリエ",
+        "time": "1:36.5",
+        "corner_positions": [
+          4,
+          4
+        ],
+        "last_3f": 34.7,
+        "popularity": 9
+      },
+      {
+        "position": 5,
+        "horse_number": "1",
+        "horse_name": "タプティ",
+        "time": "1:36.6",
+        "corner_positions": [
+          9,
+          11
+        ],
+        "last_3f": 34.3,
+        "popularity": 8
+      },
+      {
+        "position": 6,
+        "horse_number": "2",
+        "horse_name": "マリアンデール",
+        "time": "1:36.7",
+        "corner_positions": [
+          6,
+          7
+        ],
+        "last_3f": 34.7,
+        "popularity": 7
+      },
+      {
+        "position": 7,
+        "horse_number": "12",
+        "horse_name": "サトノスプレマシー",
+        "time": "1:36.7",
+        "corner_positions": [
+          9,
+          7
+        ],
+        "last_3f": 34.7,
+        "popularity": 11
+      },
+      {
+        "position": 8,
+        "horse_number": "6",
+        "horse_name": "リスグロワール",
+        "time": "1:36.8",
+        "corner_positions": [
+          2,
+          3
+        ],
+        "last_3f": 35.2,
+        "popularity": 2
+      },
+      {
+        "position": 9,
+        "horse_number": "7",
+        "horse_name": "ホウオウプレマ",
+        "time": "1:36.9",
+        "corner_positions": [
+          6,
+          4
+        ],
+        "last_3f": 35.1,
+        "popularity": 4
+      },
+      {
+        "position": 10,
+        "horse_number": "10",
+        "horse_name": "ジーティーキャリー",
+        "time": "1:37.1",
+        "corner_positions": [
+          1,
+          1
+        ],
+        "last_3f": 35.9,
+        "popularity": 6
+      },
+      {
+        "position": 11,
+        "horse_number": "4",
+        "horse_name": "ピコベリー",
+        "time": "1:37.6",
+        "corner_positions": [
+          8,
+          7
+        ],
+        "last_3f": 35.6,
+        "popularity": 5
+      },
+      {
+        "position": 12,
+        "horse_number": "11",
+        "horse_name": "カナデルペガサス",
+        "time": "1:37.6",
+        "corner_positions": [
+          12,
+          12
+        ],
+        "last_3f": 35.0,
+        "popularity": 12
+      },
+      {
+        "position": 13,
+        "horse_number": "8",
+        "horse_name": "ベストプラージュ",
+        "time": "1:38.4",
+        "corner_positions": [
+          13,
+          13
+        ],
+        "last_3f": 35.4,
+        "popularity": 13
+      }
+    ],
+    "furlong_times": [
+      12.4,
+      11.4,
+      12.4,
+      12.8,
+      12.2,
+      11.7,
+      11.4,
+      11.5
+    ],
+    "first_800_seconds": 49.0,
+    "last_800_seconds": 46.8,
+    "payouts": [
+      {
+        "bet_type": "単勝",
+        "combination": "9",
+        "payout_yen_per_100": 290
+      },
+      {
+        "bet_type": "複勝",
+        "combination": "9",
+        "payout_yen_per_100": 130
+      },
+      {
+        "bet_type": "複勝",
+        "combination": "13",
+        "payout_yen_per_100": 520
+      },
+      {
+        "bet_type": "複勝",
+        "combination": "5",
+        "payout_yen_per_100": 190
+      },
+      {
+        "bet_type": "枠連",
+        "combination": "6-8",
+        "payout_yen_per_100": 2490
+      },
+      {
+        "bet_type": "ワイド",
+        "combination": "9-13",
+        "payout_yen_per_100": 1630
+      },
+      {
+        "bet_type": "ワイド",
+        "combination": "5-9",
+        "payout_yen_per_100": 370
+      },
+      {
+        "bet_type": "ワイド",
+        "combination": "5-13",
+        "payout_yen_per_100": 2620
+      },
+      {
+        "bet_type": "馬連",
+        "combination": "9-13",
+        "payout_yen_per_100": 6200
+      },
+      {
+        "bet_type": "馬単",
+        "combination": "9-13",
+        "payout_yen_per_100": 8810
+      },
+      {
+        "bet_type": "三連複",
+        "combination": "5-9-13",
+        "payout_yen_per_100": 11170
+      },
+      {
+        "bet_type": "三連単",
+        "combination": "9-13-5",
+        "payout_yen_per_100": 67050
+      }
+    ]
+  },
+  "user_purchase_evaluation": {
+    "bet_type": "win",
+    "combination": "8",
+    "stake_yen": 100,
+    "hit": false,
+    "gross_return_yen": 0,
+    "net_profit_yen": -100,
+    "roi": 0.0,
+    "final_odds": null,
+    "final_odds_status": "not_verified",
+    "model_no_go_counterfactual_net_profit_yen": 0,
+    "difference_vs_model_no_go_yen": -100
+  },
+  "pre_race_estimates": {
+    "model_probability": 0.057541,
+    "model_probability_status": "unapproved_reference",
+    "unpromoted_research_probability": 0.05226401880065975,
+    "research_probability_status": "RESEARCH_ONLY_UNPROMOTED",
+    "official_odds_snapshot": 127.1,
+    "snapshot_issued_at_utc": "2026-10-24T02:31:51.748225+00:00",
+    "discussion_odds": 120.0,
+    "discussion_odds_status": "discussion_value_not_verified_purchase_or_final_odds",
+    "model_decision": "NO_GO",
+    "model_formal_tickets": [],
+    "sources": [
+      {
+        "path": "report/final_predictions/20261024_東京_11/20261024T023139Z/04_ev_calculator.json",
+        "sha256": "d0e123cb7fe072f78b4a0ba695cdef9af66198475f18df849169ff2a23732749"
+      },
+      {
+        "path": "report/research/20261024_東京_11/unpromoted_environment_20261024T042359905383Z.json",
+        "sha256": "da99aac701b8750025df2ee9b61d4ffe54f9fb38095ef7e3ddf9705827202c65"
+      },
+      {
+        "path": "report/final_predictions/20261024_東京_11/20261024T023139Z/final_decision.json",
+        "sha256": "ed3dd351afb36b15f7bcc3960c910c09594443da1709418be729d6659750a268"
+      }
+    ]
+  },
+  "scenario_review": {
+    "attrition_midfield_scenario": "not_supported_by_result: rear position at both corners and faster second half",
+    "rain_scenario": "rain and slightly yielding occurred; horse did not reach assumed forward position; does not establish rain effect",
+    "race_level_inference": "back-loaded acceleration race from official sectional times",
+    "unknown_causes": [
+      "start quality",
+      "reason for rear position",
+      "race-level ability adjustment adequacy"
+    ]
+  },
+  "lessons": [
+    "Single defeat cannot reject a 5% probability or establish negative true EV.",
+    "5.75% and research 5.23% remain uncalibrated; previous EV arithmetic was conditional rather than verified value.",
+    "Do not equate more starts or wet-track placings in Morioka with superiority against Tokyo graded competition.",
+    "All five historical corner positions were missing; neutral front_rate=0.5 is not evidence of midfield or forward ability.",
+    "Do not change coefficients based on this single result."
+  ],
+  "anti_leakage": "No pre-race artifacts, purchase record, or formal tickets were modified."
+}

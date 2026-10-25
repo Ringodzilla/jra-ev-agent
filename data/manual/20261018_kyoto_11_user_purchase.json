@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "record_type": "user_discretionary_purchase",
+  "race": {
+    "race_id": "20261018_京都_11",
+    "date": "2026-10-18",
+    "track": "京都",
+    "race_number": 11,
+    "race_name": "秋華賞",
+    "post_time_jst": "2026-10-18T15:40:00+09:00"
+  },
+  "report": {
+    "reported_at_jst": "2026-10-18T15:51:22+09:00",
+    "reported_by": "user",
+    "purchase_confirmed": true,
+    "purchase_time_jst": null,
+    "purchase_time_status": "not_provided",
+    "decision_origin": "user_discretionary",
+    "outside_repository_ticket_rules": true,
+    "user_rationale": "ユーザー独自の考えによる購入",
+    "must_not_be_reclassified_as_model_ticket": true
+  },
+  "purchase": {
+    "bet_type": "wide",
+    "ticket_shape": "box",
+    "horse_numbers_as_reported": [
+      "8",
+      "12",
+      "16",
+      "6",
+      "2"
+    ],
+    "horses": [
+      {"horse_number": "8", "horse_name": "モンローウォーク"},
+      {"horse_number": "12", "horse_name": "カナルサンマルタン"},
+      {"horse_number": "16", "horse_name": "ハヤブササキチャン"},
+      {"horse_number": "6", "horse_name": "ラベルセーヌ"},
+      {"horse_number": "2", "horse_name": "テイエムアイラン"}
+    ],
+    "point_count": 10,
+    "stake_per_point_yen": null,
+    "total_stake_yen": null,
+    "stake_status": "not_provided",
+    "combinations": [
+      "2-6",
+      "2-8",
+      "2-12",
+      "2-16",
+      "6-8",
+      "6-12",
+      "6-16",
+      "8-12",
+      "8-16",
+      "12-16"
+    ]
+  },
+  "pre_race_snapshot": {
+    "official_odds_captured_at_utc": "2026-10-18T06:19:35.621794+00:00",
+    "official_odds_captured_at_jst": "2026-10-18T15:19:35.621794+09:00",
+    "official_odds_source_cname": "pw155ouS308202604071120261018Z/E3",
+    "odds_are_ranges": true,
+    "model_formal_tickets": [],
+    "model_decision": "NO_BET",
+    "model_non_selection_reason": "no_safe_robust_portfolio",
+    "model_top_horse_number": "8",
+    "model_input_horse_numbers": ["8", "12", "16", "6", "2"],
+    "source_artifacts": {
+      "combo_odds_csv": "data/processed/live_combo_odds.csv",
+      "combo_odds_csv_sha256_at_recording": "2fb7550638f693ca618dada9f7935967c71fa25719fd32815839c2019aa6c1e2",
+      "bet_builder_artifact": "report/races/20261018_京都_11/stages/05_bet_builder.json",
+      "bet_builder_artifact_sha256_at_recording": "95d5c46397d943d2d65eed4cb8f4df82200789b58f92e7a4ba7a64c5742afe9d",
+      "note": "bet_builder artifactは発走後のcache-only再処理成果。オッズ値は15:19:35の保存行と同一であることをreviewerで検証済み。"
+    }
+  },
+  "combination_baseline": [
+    {"combination": "2-6", "hit_prob": 0.027844, "official_odds_min": 99.9, "official_odds_max": 108.8, "robust_ev": 2.233825, "model_selected": false, "model_reasons": ["below_minimum_hit_probability"]},
+    {"combination": "2-8", "hit_prob": 0.032196, "official_odds_min": 25.8, "official_odds_max": 28.4, "robust_ev": 0.731411, "model_selected": false, "model_reasons": ["below_minimum_ev", "below_minimum_hit_probability", "below_minimum_stake"]},
+    {"combination": "2-12", "hit_prob": 0.02889, "official_odds_min": 115.2, "official_odds_max": 123.8, "robust_ev": 2.715053, "model_selected": false, "model_reasons": ["below_minimum_hit_probability"]},
+    {"combination": "2-16", "hit_prob": 0.028322, "official_odds_min": 176.9, "official_odds_max": 182.8, "robust_ev": 3.883443, "model_selected": false, "model_reasons": ["below_minimum_hit_probability"]},
+    {"combination": "6-8", "hit_prob": 0.032481, "official_odds_min": 3.6, "official_odds_max": 3.9, "robust_ev": 0.103106, "model_selected": false, "model_reasons": ["below_minimum_ev", "below_minimum_hit_probability", "below_minimum_stake"]},
+    {"combination": "6-12", "hit_prob": 0.029145, "official_odds_min": 11.5, "official_odds_max": 13.2, "robust_ev": 0.301162, "model_selected": false, "model_reasons": ["below_minimum_ev", "below_minimum_hit_probability", "below_minimum_stake"]},
+    {"combination": "6-16", "hit_prob": 0.028572, "official_odds_min": 25.6, "official_odds_max": 28.3, "robust_ev": 0.653315, "model_selected": false, "model_reasons": ["below_minimum_ev", "below_minimum_hit_probability", "below_minimum_stake"]},
+    {"combination": "8-12", "hit_prob": 0.033699, "official_odds_min": 4.2, "official_odds_max": 4.7, "robust_ev": 0.116399, "model_selected": false, "model_reasons": ["below_minimum_ev", "below_minimum_hit_probability", "below_minimum_stake"]},
+    {"combination": "8-16", "hit_prob": 0.033038, "official_odds_min": 9.9, "official_odds_max": 11.0, "robust_ev": 0.293108, "model_selected": false, "model_reasons": ["below_minimum_ev", "below_minimum_hit_probability", "below_minimum_stake"]},
+    {"combination": "12-16", "hit_prob": 0.029645, "official_odds_min": 32.3, "official_odds_max": 35.2, "robust_ev": 0.826781, "model_selected": false, "model_reasons": ["below_minimum_ev", "below_minimum_hit_probability", "below_minimum_stake"]}
+  ],
+  "wide_box_baseline": {
+    "evaluation_unit": "box_portfolio",
+    "stake_assumption_for_comparison_only": {
+      "stake_per_point_yen": 100,
+      "total_stake_yen": 1000,
+      "actual_purchase_stake_still_unknown": true
+    },
+    "probability_formula": {
+      "at_least_one_hit": "sum(pair_wide_probabilities) - 2 * sum(selected_triple_probabilities)",
+      "three_simultaneous_hits": "sum(selected_triple_probabilities)",
+      "expected_hit_count": "sum(pair_wide_probabilities)"
+    },
+    "probabilities": {
+      "zero_hits": 0.745418335916,
+      "at_least_one_hit": 0.254578464297,
+      "exactly_one_hit": 0.229951861171,
+      "three_simultaneous_hits": 0.024626603126,
+      "expected_hit_count": 0.303831670548
+    },
+    "current_odds": {
+      "expected_return_yen_per_1000": 1456.026825,
+      "expected_profit_yen_per_1000": 456.026825,
+      "portfolio_ev": 1.456026825
+    },
+    "robust_odds": {
+      "expected_return_yen_per_1000": 1185.760314,
+      "expected_profit_yen_per_1000": 185.760314,
+      "portfolio_ev": 1.185760314
+    },
+    "risk": {
+      "full_loss_probability": 0.745418335916,
+      "gami_and_at_least_one_hit_probability": 0.07566275208,
+      "return_at_least_total_stake_probability": 0.178915712217,
+      "gami_given_at_least_one_hit_probability": 0.297207983749,
+      "strict_no_gami": false
+    },
+    "original_model_gap": "Individual wide minimum-hit gates rejected every point even though the box-level robust EV exceeded 1.0.",
+    "corrected_evaluation": "Evaluate the box as one multi-point portfolio, including the three simultaneous payouts when all selected top-three horses are covered."
+  },
+  "retrospective_plan": {
+    "status": "pending_official_result",
+    "required_inputs": [
+      "official_finish_order",
+      "official_wide_payouts",
+      "stake_per_point_yen_or_total_stake_yen"
+    ],
+    "evaluations": [
+      "winning_combinations_and_hit_count",
+      "gross_return_yen",
+      "net_profit_yen",
+      "return_on_investment",
+      "coverage_efficiency",
+      "one_hit_vs_three_hit_contribution",
+      "realized_return_vs_box_level_expected_return",
+      "pre_race_portfolio_expected_value",
+      "comparison_with_model_no_bet",
+      "whether_the_top_horse_coverage_rule_helped_or_hurt",
+      "whether_any_learning_change_is_supported_across_accumulated_races"
+    ],
+    "anti_leakage": "結果確定後の値は予測入力に上書きせず、回顧ラベルとして別保存する"
+  }
+}

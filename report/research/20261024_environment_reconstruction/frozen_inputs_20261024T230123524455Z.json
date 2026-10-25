@@ -1,0 +1,33 @@
+{
+  "record_type": "research_input_and_code_freeze",
+  "created_at": "2026-10-24T23:01:23.528065+00:00",
+  "purpose": "environment_training_through_20261024_then_20261025_validation",
+  "refs": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/environment_model/learning_status.json",
+      "sha256": "7041fc461a27602c4d6ee91707fc2c0ceaae640777822c0f3a8adf80960db7b7"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/environment_model.py",
+      "sha256": "37418a14c524e383f76a1421e3eb31dda1aac6dcf691bc59517d7c9622653216"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/model.py",
+      "sha256": "d3b65f83502be1da29a4d6a75e10f8ac043e5c759a6f30446db76e35b413cd47"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/feature_engineering.py",
+      "sha256": "f65e6c156bc0bb0902cc4abd989ba9796d68720538f0f8f47f6a7d134cb5ffd2"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/evaluation/fixed_race_last5.csv",
+      "sha256": "420d858511e2257c8ad4ee9bf21b6c7dd8e1af01c916d53245a5fa24a551f54b"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/evaluation/fixed_result_labels.csv",
+      "sha256": "360e413c38a5ada0be976fe01b308e71af604d2d318167e04d7ecb7e58327849"
+    }
+  ],
+  "validation_outcomes_used": false,
+  "production_model_changed": false
+}

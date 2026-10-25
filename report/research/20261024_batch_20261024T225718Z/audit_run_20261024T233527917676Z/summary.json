@@ -1,0 +1,64 @@
+{
+  "audited_at": "20261024T233527917676Z",
+  "source_manifest_sha256": "1f5ae1e5e2a46fa161058e598cc8cf4955ff4df832466c96e26863822354bda5",
+  "source_manifest_snapshots": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/manifest.json",
+      "sha256": "63ed80aa15ef1a445eafb3b190e13b56a01b3d40b36d445ed0e0bd619e1ac9b5"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/manifest_v2.json",
+      "sha256": "1f5ae1e5e2a46fa161058e598cc8cf4955ff4df832466c96e26863822354bda5"
+    }
+  ],
+  "input_directory": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_v3_priority_20261024T2337",
+  "enriched_mode": false,
+  "race_count": 3,
+  "expected_race_count": 36,
+  "batch_complete": false,
+  "model_ready_race_ids": [
+    "20261024_東京_02",
+    "20261024_京都_08",
+    "20261024_京都_11"
+  ],
+  "races": [
+    {
+      "race_id": "20261024_東京_02",
+      "numeric_race_id": "20261024_05_02",
+      "gate": "PASS",
+      "model_ready": true,
+      "horses": 7,
+      "histories": 10,
+      "findings": 0,
+      "source_mismatches": 0,
+      "surface_gate": "PASS",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_京都_08",
+      "numeric_race_id": "20261024_08_08",
+      "gate": "PASS",
+      "model_ready": true,
+      "horses": 8,
+      "histories": 40,
+      "findings": 0,
+      "source_mismatches": 0,
+      "surface_gate": "PASS",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_京都_11",
+      "numeric_race_id": "20261024_08_11",
+      "gate": "PASS",
+      "model_ready": true,
+      "horses": 16,
+      "histories": 80,
+      "findings": 0,
+      "source_mismatches": 0,
+      "surface_gate": "PASS",
+      "environment_gate": "PASS"
+    }
+  ],
+  "approvals_used": [],
+  "model_calculations_executed": false
+}

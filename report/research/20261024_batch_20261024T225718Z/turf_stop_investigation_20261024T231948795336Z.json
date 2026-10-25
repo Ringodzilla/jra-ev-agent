@@ -1,0 +1,1033 @@
+{
+  "source_audit_directory": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/audit_run_20261024T231948795336Z",
+  "surface": "芝",
+  "race_count": 18,
+  "gates": {
+    "BLOCKED_ZERO_HISTORY_NEUTRAL_FORBIDDEN": 4,
+    "UNVERIFIED": 10,
+    "BLOCKED_UNAPPROVED_IMPUTATION": 4
+  },
+  "findings_by_method": {
+    "exclude_nonpositive_then_default_0": 776,
+    "neutral_history_fallback": 47,
+    "history_average_or_10": 1,
+    "default_0": 8,
+    "parser_last3f_fallback": 13,
+    "neutral_0.5": 47,
+    "default_10": 9,
+    "exclude_empty_from_map": 9,
+    "exclude_empty_from_map_or_neutral_0.5": 3,
+    "default_55": 3
+  },
+  "source_verification_issues": 0,
+  "environment_pass_races": 18,
+  "passing_order_count_reconciliation": {
+    "raw_empty_or_none": 46,
+    "raw_nonempty_dashes": 1,
+    "normalized_missing": 47,
+    "classification": {
+      "straight_1000m_no_corners": 23,
+      "local_race_missing": 20,
+      "nonrace_transfer_event": 3,
+      "stopped_actual_race": 1
+    },
+    "extra_nonempty_dashes": {
+      "horse": "フクノブルーレイク",
+      "date": "2026-08-22",
+      "race": "WASJ2",
+      "official_status": "中止"
+    }
+  },
+  "neutral_history_reconciliation": {
+    "true_zero_history_horses": 46,
+    "cancelled_current_entry_identity_mismatch": 1,
+    "total_findings": 47,
+    "cancelled_entry": {
+      "race_id": "20261024_新潟_04",
+      "horse": "ソロンゴ",
+      "card_number": "取消",
+      "result_number": "4"
+    }
+  },
+  "next_factual_recovery": [
+    "Historical final odds from official accessO pages, date/unique name/horse number bound",
+    "Career completeness by enumerated started rows equals official flat+jump summary totals",
+    "Preserve transfer events outside actual started history and recover older actual run where available",
+    "Preserve official current nonstarter separately and bind result number 4",
+    "Resolve jockey names using official unique jockey identity and raw allowance marker facts, not heuristic text equivalence",
+    "For local racing missing data use official local racing original results; do not infer 4-corner positions"
+  ],
+  "cannot_recover_as_observed": [
+    "Newcomer prior starts do not exist",
+    "Straight 1000m has no 4th corner",
+    "A stopped race may have no finish rank or completion time; retain mandatory stop"
+  ],
+  "approval_policy": "No approvals created. Any residual neutral/default/exclusion requires explicit input-hash-bound user consent; mandatory missing stays blocked.",
+  "races": [
+    {
+      "race_id": "20261024_新潟_02",
+      "gate": "BLOCKED_ZERO_HISTORY_NEUTRAL_FORBIDDEN",
+      "findings": {
+        "exclude_nonpositive_then_default_0": 41,
+        "neutral_history_fallback": 1
+      },
+      "career_unverified_horses": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18"
+      ],
+      "meaningful_conflicts": [
+        {
+          "horse": "テイクケア",
+          "date": "2026-09-19",
+          "field": "jockey",
+          "embedded_or_first": "△ 石神 深道",
+          "detail": "石神 深道",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "テイクケア",
+          "date": "2026-08-16",
+          "field": "jockey",
+          "embedded_or_first": "★ 河原田 菜",
+          "detail": "河原田 菜々",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "ガーシュウィン",
+          "date": "2026-07-18",
+          "field": "jockey",
+          "embedded_or_first": "★ 河原田 菜",
+          "detail": "河原田 菜々",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "ガーシュウィン",
+          "date": "2026-06-28",
+          "field": "jockey",
+          "embedded_or_first": "★ 河原田 菜",
+          "detail": "河原田 菜々",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "ガーシュウィン",
+          "date": "2026-06-14",
+          "field": "jockey",
+          "embedded_or_first": "△ 舟山 瑠泉",
+          "detail": "舟山 瑠泉",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "ワンキャンパス",
+          "date": "2026-09-19",
+          "field": "jockey",
+          "embedded_or_first": "◇ 小林 美駒",
+          "detail": "小林 美駒",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        }
+      ],
+      "source_issues": [],
+      "zero_history": [
+        "12"
+      ],
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_新潟_04",
+      "gate": "UNVERIFIED",
+      "findings": {
+        "exclude_nonpositive_then_default_0": 63,
+        "neutral_history_fallback": 1,
+        "history_average_or_10": 1,
+        "default_0": 1
+      },
+      "career_unverified_horses": [
+        "1",
+        "取消"
+      ],
+      "meaningful_conflicts": [
+        {
+          "horse": "フレキシブル",
+          "date": "2026-06-13",
+          "field": "jockey",
+          "embedded_or_first": "F.ゴンサルベ",
+          "detail": "F.ゴンサルベス",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "フレキシブル",
+          "date": "2026-05-17",
+          "field": "jockey",
+          "embedded_or_first": "F.ゴンサルベ",
+          "detail": "F.ゴンサルベス",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "ソロンゴ",
+          "date": "2026-09-20",
+          "field": "jockey",
+          "embedded_or_first": "☆ 長浜 鴻緒",
+          "detail": "長浜 鴻緒",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "カーヴドヴァン",
+          "date": "2026-09-12",
+          "field": "jockey",
+          "embedded_or_first": "☆ 長浜 鴻緒",
+          "detail": "長浜 鴻緒",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "レーヌマロン",
+          "date": "2026-10-12",
+          "field": "jockey",
+          "embedded_or_first": "★ 河原田 菜",
+          "detail": "河原田 菜々",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "ルージュカエラ",
+          "date": "2026-07-11",
+          "field": "jockey",
+          "embedded_or_first": "☆ 舟山 瑠泉",
+          "detail": "舟山 瑠泉",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "ウィンターガーデン",
+          "date": "2026-06-28",
+          "field": "jockey",
+          "embedded_or_first": "☆ 舟山 瑠泉",
+          "detail": "舟山 瑠泉",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        }
+      ],
+      "source_issues": [],
+      "zero_history": [],
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_新潟_05",
+      "gate": "BLOCKED_ZERO_HISTORY_NEUTRAL_FORBIDDEN",
+      "findings": {
+        "neutral_history_fallback": 14
+      },
+      "career_unverified_horses": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14"
+      ],
+      "meaningful_conflicts": [],
+      "source_issues": [],
+      "zero_history": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14"
+      ],
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_新潟_07",
+      "gate": "UNVERIFIED",
+      "findings": {
+        "exclude_nonpositive_then_default_0": 57,
+        "parser_last3f_fallback": 1,
+        "neutral_0.5": 1,
+        "default_10": 1
+      },
+      "career_unverified_horses": [
+        "7",
+        "12"
+      ],
+      "meaningful_conflicts": [
+        {
+          "horse": "レッドシュトラール",
+          "date": "2026-06-06",
+          "field": "jockey",
+          "embedded_or_first": "△ 舟山 瑠泉",
+          "detail": "舟山 瑠泉",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "アームアンフルール",
+          "date": "2026-06-20",
+          "field": "jockey",
+          "embedded_or_first": "▲ 小林 美駒",
+          "detail": "小林 美駒",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "マイコンチェルト",
+          "date": "2026-09-06",
+          "field": "jockey",
+          "embedded_or_first": "☆ 田山 旺佑",
+          "detail": "田山 旺佑",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "マイコンチェルト",
+          "date": "2026-01-24",
+          "field": "jockey",
+          "embedded_or_first": "◇ 永島 まな",
+          "detail": "永島 まなみ",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "ラヴエナストロ",
+          "date": "2026-08-22",
+          "field": "jockey",
+          "embedded_or_first": "◇ 今村 聖奈",
+          "detail": "今村 聖奈",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "ラヴエナストロ",
+          "date": "2026-07-25",
+          "field": "jockey",
+          "embedded_or_first": "◇ 永島 まな",
+          "detail": "永島 まなみ",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "ラヴエナストロ",
+          "date": "2026-01-25",
+          "field": "jockey",
+          "embedded_or_first": "◇ 今村 聖奈",
+          "detail": "今村 聖奈",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "メイショウタクボク",
+          "date": "2026-10-17",
+          "field": "jockey",
+          "embedded_or_first": "▲ 森田 誠也",
+          "detail": "森田 誠也",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "グランツローゼ",
+          "date": "2026-08-09",
+          "field": "jockey",
+          "embedded_or_first": "★ 河原田 菜",
+          "detail": "河原田 菜々",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "グランツローゼ",
+          "date": "2026-05-03",
+          "field": "jockey",
+          "embedded_or_first": "▲ 森田 誠也",
+          "detail": "森田 誠也",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "メイショウハンター",
+          "date": "2026-10-11",
+          "field": "jockey",
+          "embedded_or_first": "☆ 田山 旺佑",
+          "detail": "田山 旺佑",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        }
+      ],
+      "source_issues": [],
+      "zero_history": [],
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_新潟_09",
+      "gate": "UNVERIFIED",
+      "findings": {
+        "neutral_0.5": 25,
+        "exclude_nonpositive_then_default_0": 80,
+        "parser_last3f_fallback": 3,
+        "default_10": 3,
+        "exclude_empty_from_map": 3,
+        "default_0": 2,
+        "exclude_empty_from_map_or_neutral_0.5": 1,
+        "default_55": 1
+      },
+      "career_unverified_horses": [],
+      "meaningful_conflicts": [
+        {
+          "horse": "ハッピーサプライズ",
+          "date": "2026-10-17",
+          "field": "jockey",
+          "embedded_or_first": "▲ 遠藤 汰月",
+          "detail": "遠藤 汰月",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "ハッピーサプライズ",
+          "date": "2026-05-24",
+          "field": "jockey",
+          "embedded_or_first": "☆ 長浜 鴻緒",
+          "detail": "長浜 鴻緒",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "ゲンテン",
+          "date": "2026-05-24",
+          "field": "jockey",
+          "embedded_or_first": "F.ゴンサルベ",
+          "detail": "F.ゴンサルベス",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "ラブカムーン",
+          "date": "2026-10-17",
+          "field": "jockey",
+          "embedded_or_first": "◇ 古川 奈穂",
+          "detail": "古川 奈穂",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "イングラム",
+          "date": "2026-08-16",
+          "field": "jockey",
+          "embedded_or_first": "☆ 舟山 瑠泉",
+          "detail": "舟山 瑠泉",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "イングラム",
+          "date": "2026-07-19",
+          "field": "jockey",
+          "embedded_or_first": "☆ 舟山 瑠泉",
+          "detail": "舟山 瑠泉",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "イングラム",
+          "date": "2026-06-28",
+          "field": "jockey",
+          "embedded_or_first": "☆ 舟山 瑠泉",
+          "detail": "舟山 瑠泉",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "テンペストヒロイン",
+          "date": "2026-10-18",
+          "field": "jockey",
+          "embedded_or_first": "▲ 佐藤 翔馬",
+          "detail": "佐藤 翔馬",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "テンペストヒロイン",
+          "date": "2026-07-26",
+          "field": "jockey",
+          "embedded_or_first": "▲ 佐藤 翔馬",
+          "detail": "佐藤 翔馬",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "ブラヴィーノ",
+          "date": "2026-04-26",
+          "field": "jockey",
+          "embedded_or_first": "△ 長浜 鴻緒",
+          "detail": "長浜 鴻緒",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "セレブトーチ",
+          "date": "2026-07-12",
+          "field": "jockey",
+          "embedded_or_first": "▲ 川端 海翼",
+          "detail": "川端 海翼",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "セレブトーチ",
+          "date": "2026-06-28",
+          "field": "jockey",
+          "embedded_or_first": "▲ 川端 海翼",
+          "detail": "川端 海翼",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "ピリカサンライズ",
+          "date": "2026-02-21",
+          "field": "jockey",
+          "embedded_or_first": "▲ 古川 奈穂",
+          "detail": "古川 奈穂",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        }
+      ],
+      "source_issues": [],
+      "zero_history": [],
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_新潟_11",
+      "gate": "UNVERIFIED",
+      "findings": {
+        "exclude_nonpositive_then_default_0": 60,
+        "parser_last3f_fallback": 1,
+        "default_10": 1,
+        "default_0": 1,
+        "neutral_0.5": 1
+      },
+      "career_unverified_horses": [],
+      "meaningful_conflicts": [
+        {
+          "horse": "フクノブルーレイク",
+          "date": "2026-05-16",
+          "field": "jockey",
+          "embedded_or_first": "F.ゴンサルベ",
+          "detail": "F.ゴンサルベス",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        }
+      ],
+      "source_issues": [],
+      "zero_history": [],
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_新潟_12",
+      "gate": "UNVERIFIED",
+      "findings": {
+        "exclude_nonpositive_then_default_0": 90,
+        "parser_last3f_fallback": 4,
+        "exclude_empty_from_map": 6,
+        "default_0": 4,
+        "exclude_empty_from_map_or_neutral_0.5": 2,
+        "default_10": 4,
+        "neutral_0.5": 8,
+        "default_55": 2
+      },
+      "career_unverified_horses": [],
+      "meaningful_conflicts": [
+        {
+          "horse": "レインオンミー",
+          "date": "2026-08-15",
+          "field": "jockey",
+          "embedded_or_first": "▲ 森田 誠也",
+          "detail": "森田 誠也",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "レインオンミー",
+          "date": "2026-07-11",
+          "field": "jockey",
+          "embedded_or_first": "△ 田山 旺佑",
+          "detail": "田山 旺佑",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "レインオンミー",
+          "date": "2026-06-27",
+          "field": "jockey",
+          "embedded_or_first": "△ 田山 旺佑",
+          "detail": "田山 旺佑",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "レインオンミー",
+          "date": "2026-04-25",
+          "field": "jockey",
+          "embedded_or_first": "△ 田山 旺佑",
+          "detail": "田山 旺佑",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "フクシマコウヨウ",
+          "date": "2026-05-30",
+          "field": "jockey",
+          "embedded_or_first": "▲ 遠藤 汰月",
+          "detail": "遠藤 汰月",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "アイアムアヒーロー",
+          "date": "2026-04-19",
+          "field": "jockey",
+          "embedded_or_first": "▲ 田山 旺佑",
+          "detail": "田山 旺佑",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "ザバルガド",
+          "date": "2026-05-02",
+          "field": "jockey",
+          "embedded_or_first": "△ 長浜 鴻緒",
+          "detail": "長浜 鴻緒",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "ザバルガド",
+          "date": "2025-10-19",
+          "field": "jockey",
+          "embedded_or_first": "△ 長浜 鴻緒",
+          "detail": "長浜 鴻緒",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "オタルグリーン",
+          "date": "2026-03-28",
+          "field": "jockey",
+          "embedded_or_first": "△ 柴田 裕一",
+          "detail": "柴田 裕一郎",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "オタルグリーン",
+          "date": "2026-03-14",
+          "field": "jockey",
+          "embedded_or_first": "△ 柴田 裕一",
+          "detail": "柴田 裕一郎",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "オタルグリーン",
+          "date": "2025-10-26",
+          "field": "jockey",
+          "embedded_or_first": "△ 柴田 裕一",
+          "detail": "柴田 裕一郎",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        }
+      ],
+      "source_issues": [],
+      "zero_history": [],
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_東京_02",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "findings": {
+        "exclude_nonpositive_then_default_0": 10
+      },
+      "career_unverified_horses": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "meaningful_conflicts": [],
+      "source_issues": [],
+      "zero_history": [],
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_東京_03",
+      "gate": "UNVERIFIED",
+      "findings": {
+        "exclude_nonpositive_then_default_0": 19
+      },
+      "career_unverified_horses": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ],
+      "meaningful_conflicts": [
+        {
+          "horse": "ウマッター",
+          "date": "2026-09-27",
+          "field": "jockey",
+          "embedded_or_first": "▲ 水沼 元輝",
+          "detail": "水沼 元輝",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "ウマッター",
+          "date": "2026-09-05",
+          "field": "jockey",
+          "embedded_or_first": "▲ 水沼 元輝",
+          "detail": "水沼 元輝",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "セールデュクール",
+          "date": "2026-08-29",
+          "field": "jockey",
+          "embedded_or_first": "▲ 和田 陽希",
+          "detail": "和田 陽希",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "リーベラーリア",
+          "date": "2026-07-25",
+          "field": "jockey",
+          "embedded_or_first": "◇ 今村 聖奈",
+          "detail": "今村 聖奈",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        }
+      ],
+      "source_issues": [],
+      "zero_history": [],
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_東京_05",
+      "gate": "BLOCKED_ZERO_HISTORY_NEUTRAL_FORBIDDEN",
+      "findings": {
+        "neutral_history_fallback": 18
+      },
+      "career_unverified_horses": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18"
+      ],
+      "meaningful_conflicts": [],
+      "source_issues": [],
+      "zero_history": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18"
+      ],
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_東京_08",
+      "gate": "UNVERIFIED",
+      "findings": {
+        "exclude_nonpositive_then_default_0": 60
+      },
+      "career_unverified_horses": [
+        "5",
+        "8"
+      ],
+      "meaningful_conflicts": [
+        {
+          "horse": "グランフルス",
+          "date": "2026-09-12",
+          "field": "jockey",
+          "embedded_or_first": "◇ 小林 美駒",
+          "detail": "小林 美駒",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "グランフルス",
+          "date": "2026-08-09",
+          "field": "jockey",
+          "embedded_or_first": "☆ 舟山 瑠泉",
+          "detail": "舟山 瑠泉",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "コスモアチーブ",
+          "date": "2026-07-19",
+          "field": "jockey",
+          "embedded_or_first": "△ 石神 深道",
+          "detail": "石神 深道",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        }
+      ],
+      "source_issues": [],
+      "zero_history": [],
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_東京_09",
+      "gate": "UNVERIFIED",
+      "findings": {
+        "exclude_nonpositive_then_default_0": 65
+      },
+      "career_unverified_horses": [],
+      "meaningful_conflicts": [
+        {
+          "horse": "タナスーペルノーバ",
+          "date": "2026-06-27",
+          "field": "jockey",
+          "embedded_or_first": "◇ 今村 聖奈",
+          "detail": "今村 聖奈",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        }
+      ],
+      "source_issues": [],
+      "zero_history": [],
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "gate": "UNVERIFIED",
+      "findings": {
+        "exclude_nonpositive_then_default_0": 22,
+        "neutral_0.5": 5,
+        "parser_last3f_fallback": 1
+      },
+      "career_unverified_horses": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13"
+      ],
+      "meaningful_conflicts": [
+        {
+          "horse": "カナデルペガサス",
+          "date": "2026-08-15",
+          "field": "jockey",
+          "embedded_or_first": "◇ 今村 聖奈",
+          "detail": "今村 聖奈",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        },
+        {
+          "horse": "ローズサルーテ",
+          "date": "2026-09-22",
+          "field": "jockey",
+          "embedded_or_first": "◇ 小林 美駒",
+          "detail": "小林 美駒",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        }
+      ],
+      "source_issues": [],
+      "zero_history": [],
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_京都_02",
+      "gate": "UNVERIFIED",
+      "findings": {
+        "exclude_nonpositive_then_default_0": 14
+      },
+      "career_unverified_horses": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ],
+      "meaningful_conflicts": [
+        {
+          "horse": "アンバーライト",
+          "date": "2026-10-04",
+          "field": "jockey",
+          "embedded_or_first": "☆ 田山 旺佑",
+          "detail": "田山 旺佑",
+          "classification": "MODEL_INPUT_CONFLICT",
+          "blocks_model": true
+        }
+      ],
+      "source_issues": [],
+      "zero_history": [],
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_京都_05",
+      "gate": "BLOCKED_ZERO_HISTORY_NEUTRAL_FORBIDDEN",
+      "findings": {
+        "neutral_history_fallback": 13
+      },
+      "career_unverified_horses": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13"
+      ],
+      "meaningful_conflicts": [],
+      "source_issues": [],
+      "zero_history": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13"
+      ],
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_京都_08",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "findings": {
+        "exclude_nonpositive_then_default_0": 40
+      },
+      "career_unverified_horses": [],
+      "meaningful_conflicts": [],
+      "source_issues": [],
+      "zero_history": [],
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_京都_10",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "findings": {
+        "exclude_nonpositive_then_default_0": 75,
+        "neutral_0.5": 7,
+        "parser_last3f_fallback": 3
+      },
+      "career_unverified_horses": [],
+      "meaningful_conflicts": [],
+      "source_issues": [],
+      "zero_history": [],
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_京都_11",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "findings": {
+        "exclude_nonpositive_then_default_0": 80
+      },
+      "career_unverified_horses": [],
+      "meaningful_conflicts": [],
+      "source_issues": [],
+      "zero_history": [],
+      "environment_gate": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "record_type": "preregistered_retrospective_research_plan",
+  "created_at": "2026-10-24T22:57:34.690878+00:00",
+  "training_date_max": "2026-10-24",
+  "validation_dates": [
+    "2026-10-25"
+  ],
+  "test_policy": "later separate race day; not yet observed",
+  "family": "linear",
+  "ridge": 100.0,
+  "selection": "fixed before 2026-10-25 outcomes; do not retune on validation",
+  "split_policy": "whole dates disjoint; never chronological_blocks60_20_20 for this experiment",
+  "surface": "芝 only; other surfaces retained but not fit by this model",
+  "input_gate": "all training inputs audited and all substitutions explicitly user-approved; otherwise stop before compute_ev/fit_model",
+  "retrospective_provenance": "retrieved_at remains actual post-race time; never mark as captured pre-race",
+  "production_model_changed": false,
+  "status": "COLLECTION_AND_AUDIT_PENDING"
+}

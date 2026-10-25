@@ -1,0 +1,504 @@
+{
+  "record_type": "retrospective_official_measurements",
+  "target_date": "2026-10-24",
+  "retrieved_at": "2026-10-24T22:57:34.338196+00:00",
+  "value_type": "historical_observed",
+  "pre_race_capture": false,
+  "production_learning_eligible": false,
+  "sources": {
+    "cushion": {
+      "url": "https://www.jra.go.jp/keiba/baba/_data_cushion.html",
+      "raw_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_environment_reconstruction/cushion_20261024T225734509942Z.html",
+      "sha256": "cc4112e23019f2e81d9e8e97f24fd6e1ef335f2add169b639ee80844e5443c85"
+    },
+    "moisture": {
+      "url": "https://www.jra.go.jp/keiba/baba/_data_moist.html",
+      "raw_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_environment_reconstruction/moisture_20261024T225734654747Z.html",
+      "sha256": "ae68a9d280274fa457ad899005f99122ed57ac4cc9f19d73a2b3c7811bf0dfed"
+    }
+  },
+  "tracks": {
+    "東京": {
+      "cushion_history": [
+        {
+          "measured_at": "2026-10-24T07:00:00+09:00",
+          "cushion": 9.5
+        },
+        {
+          "measured_at": "2026-10-23T09:00:00+09:00",
+          "cushion": 9.9
+        },
+        {
+          "measured_at": "2026-10-18T07:00:00+09:00",
+          "cushion": 9.2
+        },
+        {
+          "measured_at": "2026-10-17T07:00:00+09:00",
+          "cushion": 9.4
+        },
+        {
+          "measured_at": "2026-10-16T09:00:00+09:00",
+          "cushion": 9.4
+        },
+        {
+          "measured_at": "2026-10-12T07:00:00+09:00",
+          "cushion": 9.6
+        },
+        {
+          "measured_at": "2026-10-11T07:00:00+09:00",
+          "cushion": 9.4
+        },
+        {
+          "measured_at": "2026-10-10T07:00:00+09:00",
+          "cushion": 9.6
+        },
+        {
+          "measured_at": "2026-10-09T09:00:00+09:00",
+          "cushion": 9.6
+        },
+        {
+          "measured_at": "2026-10-04T07:00:00+09:00",
+          "cushion": 9.7
+        },
+        {
+          "measured_at": "2026-10-03T07:00:00+09:00",
+          "cushion": 9.7
+        },
+        {
+          "measured_at": "2026-10-02T09:00:00+09:00",
+          "cushion": 10.1
+        }
+      ],
+      "moisture_history": [
+        {
+          "measured_at": "2026-10-24T05:00:00+09:00",
+          "turf_moisture_goal": 12.7,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 15.5,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 2.0,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 2.4,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：測定時刻までの当日雨量は0.0ミリメートルでした"
+        },
+        {
+          "measured_at": "2026-10-23T08:30:00+09:00",
+          "turf_moisture_goal": 12.7,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 13.1,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 1.2,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 1.4,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-18T05:30:00+09:00",
+          "turf_moisture_goal": 14.7,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 12.3,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 1.7,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 1.5,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-17T05:00:00+09:00",
+          "turf_moisture_goal": 13.7,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 12.7,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 1.8,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 1.7,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-16T08:30:00+09:00",
+          "turf_moisture_goal": 14.1,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 13.0,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 1.8,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 2.2,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-12T05:30:00+09:00",
+          "turf_moisture_goal": 13.2,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 11.8,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 1.7,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 1.7,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-11T05:00:00+09:00",
+          "turf_moisture_goal": 13.6,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 13.0,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 1.8,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 2.0,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-10T05:30:00+09:00",
+          "turf_moisture_goal": 13.3,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 14.1,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 2.0,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 2.1,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-09T08:30:00+09:00",
+          "turf_moisture_goal": 14.0,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 12.7,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 2.1,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 2.2,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-04T05:30:00+09:00",
+          "turf_moisture_goal": 13.1,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 13.7,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 4.7,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 4.4,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-03T05:00:00+09:00",
+          "turf_moisture_goal": 14.9,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 13.4,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 7.2,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 7.2,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-02T08:30:00+09:00",
+          "turf_moisture_goal": 12.7,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 11.8,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 8.2,
+          "dirt_moisture_goal_condition": "wet",
+          "dirt_moisture_corner4": 8.4,
+          "dirt_moisture_corner4_condition": "wet",
+          "note": "注記：測定時刻までの当日雨量は0.0ミリメートルでした"
+        }
+      ]
+    },
+    "京都": {
+      "cushion_history": [
+        {
+          "measured_at": "2026-10-24T06:00:00+09:00",
+          "cushion": 9.5
+        },
+        {
+          "measured_at": "2026-10-23T10:30:00+09:00",
+          "cushion": 10.8
+        },
+        {
+          "measured_at": "2026-10-18T07:00:00+09:00",
+          "cushion": 10.7
+        },
+        {
+          "measured_at": "2026-10-17T07:00:00+09:00",
+          "cushion": 10.8
+        },
+        {
+          "measured_at": "2026-10-16T10:30:00+09:00",
+          "cushion": 9.9
+        },
+        {
+          "measured_at": "2026-10-12T07:00:00+09:00",
+          "cushion": 10.7
+        },
+        {
+          "measured_at": "2026-10-11T07:00:00+09:00",
+          "cushion": 10.3
+        },
+        {
+          "measured_at": "2026-10-10T07:00:00+09:00",
+          "cushion": 10.4
+        },
+        {
+          "measured_at": "2026-10-09T10:30:00+09:00",
+          "cushion": 9.6
+        },
+        {
+          "measured_at": "2026-10-04T07:00:00+09:00",
+          "cushion": 10.4
+        },
+        {
+          "measured_at": "2026-10-03T07:00:00+09:00",
+          "cushion": 10.6
+        },
+        {
+          "measured_at": "2026-10-02T10:30:00+09:00",
+          "cushion": 9.6
+        }
+      ],
+      "moisture_history": [
+        {
+          "measured_at": "2026-10-24T05:00:00+09:00",
+          "turf_moisture_goal": 10.2,
+          "turf_moisture_goal_condition": "wet",
+          "turf_moisture_corner4": 10.6,
+          "turf_moisture_corner4_condition": "wet",
+          "dirt_moisture_goal": 12.5,
+          "dirt_moisture_goal_condition": "soft",
+          "dirt_moisture_corner4": 12.7,
+          "dirt_moisture_corner4_condition": "soft",
+          "note": "注記：測定時刻までの当日雨量は9.0ミリメートルでした"
+        },
+        {
+          "measured_at": "2026-10-23T10:30:00+09:00",
+          "turf_moisture_goal": 6.0,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 7.8,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 3.3,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 1.8,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-18T06:00:00+09:00",
+          "turf_moisture_goal": 6.7,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 7.3,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 1.5,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 1.7,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-17T06:00:00+09:00",
+          "turf_moisture_goal": 6.8,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 7.7,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 2.5,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 2.0,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-16T10:30:00+09:00",
+          "turf_moisture_goal": 7.8,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 8.6,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 3.0,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 2.4,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-12T06:00:00+09:00",
+          "turf_moisture_goal": 6.6,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 8.2,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 2.0,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 2.0,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-11T06:00:00+09:00",
+          "turf_moisture_goal": 7.5,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 8.6,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 2.5,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 3.0,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-10T06:00:00+09:00",
+          "turf_moisture_goal": 7.9,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 7.1,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 3.9,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 4.0,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-09T10:30:00+09:00",
+          "turf_moisture_goal": 7.9,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 8.5,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 4.5,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 5.2,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-04T06:00:00+09:00",
+          "turf_moisture_goal": 7.6,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 8.3,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 2.7,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 4.0,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-03T06:00:00+09:00",
+          "turf_moisture_goal": 7.8,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 8.1,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 5.4,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 6.0,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-02T10:30:00+09:00",
+          "turf_moisture_goal": 8.6,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 8.6,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 5.5,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 6.6,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        }
+      ]
+    },
+    "新潟": {
+      "cushion_history": [
+        {
+          "measured_at": "2026-10-24T07:00:00+09:00",
+          "cushion": 10.0
+        },
+        {
+          "measured_at": "2026-10-23T10:30:00+09:00",
+          "cushion": 10.0
+        },
+        {
+          "measured_at": "2026-10-18T07:00:00+09:00",
+          "cushion": 9.7
+        },
+        {
+          "measured_at": "2026-10-17T07:00:00+09:00",
+          "cushion": 10.1
+        },
+        {
+          "measured_at": "2026-10-16T10:30:00+09:00",
+          "cushion": 10.2
+        }
+      ],
+      "moisture_history": [
+        {
+          "measured_at": "2026-10-24T05:30:00+09:00",
+          "turf_moisture_goal": 11.1,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 13.2,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 7.7,
+          "dirt_moisture_goal_condition": "wet",
+          "dirt_moisture_corner4": 8.3,
+          "dirt_moisture_corner4_condition": "wet",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-23T10:30:00+09:00",
+          "turf_moisture_goal": 12.7,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 13.5,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 8.4,
+          "dirt_moisture_goal_condition": "wet",
+          "dirt_moisture_corner4": 8.0,
+          "dirt_moisture_corner4_condition": "wet",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-18T05:30:00+09:00",
+          "turf_moisture_goal": 11.1,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 12.0,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 4.7,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 5.8,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-17T05:30:00+09:00",
+          "turf_moisture_goal": 11.0,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 11.1,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 5.3,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 5.9,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        },
+        {
+          "measured_at": "2026-10-16T10:30:00+09:00",
+          "turf_moisture_goal": 11.5,
+          "turf_moisture_goal_condition": "hard",
+          "turf_moisture_corner4": 12.6,
+          "turf_moisture_corner4_condition": "hard",
+          "dirt_moisture_goal": 5.5,
+          "dirt_moisture_goal_condition": "hard",
+          "dirt_moisture_corner4": 6.3,
+          "dirt_moisture_corner4_condition": "hard",
+          "note": "注記：特になし"
+        }
+      ]
+    }
+  }
+}

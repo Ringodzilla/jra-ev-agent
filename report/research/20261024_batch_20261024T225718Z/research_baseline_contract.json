@@ -1,0 +1,97 @@
+{
+  "record_type": "static_research_baseline_contract",
+  "role": "analyzer",
+  "status": "PREPARED_NOT_EXECUTED",
+  "model_components": {
+    "ability": {
+      "weight": 0.4772727273,
+      "feature": "ability_score"
+    },
+    "course": {
+      "weight": 0.1590909091,
+      "feature": "course_score"
+    },
+    "pace": {
+      "weight": 0.1818181818,
+      "feature": "pace_score after simulator"
+    },
+    "weight": {
+      "weight": 0.0909090909,
+      "feature": "weight_score"
+    },
+    "jockey": {
+      "weight": 0.0909090909,
+      "feature": "jockey_score"
+    }
+  },
+  "S_base": "sum(component_weight * component_score)",
+  "baseline_requested": "Softmax(S_base); temperature=1; no Monte Carlo; no market blending",
+  "environment_formula": "Softmax(log(p_base)+environment_score)",
+  "existing_legacy_difference": "src.model.estimate_win_probs uses Monte Carlo and temperature 1.15; it is not exact Softmax(S_base). Research strict baseline must be separately named and saved.",
+  "target_market_input_policy": {
+    "forbidden": [
+      "current_odds",
+      "win_odds",
+      "current_popularity",
+      "live odds snapshots",
+      "posthoc market_support",
+      "popularity_gap"
+    ],
+    "zero_or_average_substitution_permitted": false,
+    "history_odds": "Prior race odds dated before 2026-10-24 may remain observed facts, never substitutes for current race odds."
+  },
+  "static_dependency_findings": {
+    "current_market_used_by_legacy_feature_builder": true,
+    "current_market_used_by_five_component_score_formula": false,
+    "current_market_used_by_four_environment_interaction_features": false,
+    "unused_market_metadata_still_gets_fallbacks_in_legacy_builder": true,
+    "safe_execution_status": "PENDING_EXPLICIT_STRUCTURAL_ONLY_INPUT_CONTRACT_AND_DISPATCH"
+  },
+  "required_structural_input_fields": [
+    "position",
+    "time",
+    "distance",
+    "last_3f",
+    "passing_order",
+    "weight",
+    "course",
+    "history_surface",
+    "track_condition",
+    "jockey",
+    "date",
+    "run_index",
+    "target_track",
+    "target_surface",
+    "target_distance",
+    "target_track_condition",
+    "assigned_weight",
+    "current_jockey",
+    "frame_number"
+  ],
+  "no_defaults_policy": "All required observations must pass audit. Do not drop horses, renormalize partial history, or invent missing observations. Market metadata is not generated in structural-only contract.",
+  "research_limits": [
+    "target weather and track condition remain posthoc observations; retrospective reconstruction only",
+    "strict Softmax baseline differs from frozen existing Monte Carlo learning baseline; no comparative claim across changed baselines",
+    "linear ridge100, train<=2026-10-24, validation entire2026-10-25, later independent test day"
+  ],
+  "code_refs": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/feature_engineering.py",
+      "sha256": "f65e6c156bc0bb0902cc4abd989ba9796d68720538f0f8f47f6a7d134cb5ffd2"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/ev.py",
+      "sha256": "f3ef8e5b0e7308c39ed86b251eee773937202595e04784b4d0a02512f4a55065"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/model.py",
+      "sha256": "d3b65f83502be1da29a4d6a75e10f8ac043e5c759a6f30446db76e35b413cd47"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/environment_model.py",
+      "sha256": "37418a14c524e383f76a1421e3eb31dda1aac6dcf691bc59517d7c9622653216"
+    }
+  ],
+  "calculations_performed": [],
+  "production_model_changed": false
+}

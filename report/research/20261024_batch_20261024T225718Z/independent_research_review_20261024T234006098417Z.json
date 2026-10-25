@@ -1,0 +1,1003 @@
+{
+  "role": "reviewer",
+  "status": "OK_RESEARCH_ONLY",
+  "review_scope": "Only frozen 3-race 31-horse candidate research_fit_20261024T233855843460Z; no other candidates reviewed",
+  "reviewed_at": "2026-10-24T23:40:06.097986+00:00",
+  "checks": [
+    {
+      "race_id": "20261024_東京_02",
+      "horses": 7,
+      "input_digest": "PASS",
+      "model_used_fields_no_imputation": "PASS",
+      "past_date_cutoff": "PASS",
+      "whole_official_result_universe": "PASS",
+      "structural_recalculation": "PASS",
+      "target_market_perturbation_invariance": "PASS",
+      "two_stage_softmax": "PASS",
+      "official_winner": "PASS",
+      "nonmodel_missing_field_counts": {
+        "pace": 10,
+        "weather": 10
+      }
+    },
+    {
+      "race_id": "20261024_京都_08",
+      "horses": 8,
+      "input_digest": "PASS",
+      "model_used_fields_no_imputation": "PASS",
+      "past_date_cutoff": "PASS",
+      "whole_official_result_universe": "PASS",
+      "structural_recalculation": "PASS",
+      "target_market_perturbation_invariance": "PASS",
+      "two_stage_softmax": "PASS",
+      "official_winner": "PASS",
+      "nonmodel_missing_field_counts": {
+        "pace": 40,
+        "weather": 32
+      }
+    },
+    {
+      "race_id": "20261024_京都_11",
+      "horses": 16,
+      "input_digest": "PASS",
+      "model_used_fields_no_imputation": "PASS",
+      "past_date_cutoff": "PASS",
+      "whole_official_result_universe": "PASS",
+      "structural_recalculation": "PASS",
+      "target_market_perturbation_invariance": "PASS",
+      "two_stage_softmax": "PASS",
+      "official_winner": "PASS",
+      "nonmodel_missing_field_counts": {
+        "pace": 80,
+        "weather": 64
+      }
+    }
+  ],
+  "verified_referenced_files": 226,
+  "independent_metrics": {
+    "baseline": {
+      "race_count": 3,
+      "log_loss": 2.266625251259325,
+      "brier": 0.894973101543596,
+      "top1_hit_rate": 0.0,
+      "win_top1_policy_roi": 0.0
+    },
+    "candidate": {
+      "race_count": 3,
+      "log_loss": 2.184552608312242,
+      "brier": 0.8759507884168464,
+      "top1_hit_rate": 0.0,
+      "win_top1_policy_roi": 0.0
+    }
+  },
+  "defaults_applied": [],
+  "shared_state_current_matches_recorded_before_and_after": true,
+  "fit_or_tuning_executed_by_reviewer": false,
+  "production_promotion_allowed": false,
+  "allowed_claims": [
+    "3 races and all 31 official starters were used for one fixed linear ridge100 interim candidate.",
+    "Model-used historical fields are observed and earlier than target date; audit reports nonmodel missing fields separately.",
+    "Target final odds and popularity exist in normalized source but are not projected into structural/model features; independent perturbation leaves all structural values identical.",
+    "Saved baseline and candidate training metrics independently recalculate within 1e-12.",
+    "Training in-sample log loss and Brier decrease; this does not demonstrate predictive improvement."
+  ],
+  "limitations": [
+    "Training race weather and condition come from posthoc result headers; no claim of pre-race capture or strict historical replay validity is permitted.",
+    "3 training races are below required100; Sunday validation and future held-out test remain unexecuted.",
+    "This review verifies recorded source hash chains, not historical availability or correctness of all JRA records.",
+    "Shared state equality is verified for the three explicitly recorded shared artifacts only."
+  ],
+  "reason": "No blocking defect found in the scoped retrospective research calculation. Production or generalization claims remain unsupported.",
+  "fix": [],
+  "verified_artifacts": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/environment_model.py",
+      "sha256": "37418a14c524e383f76a1421e3eb31dda1aac6dcf691bc59517d7c9622653216"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/ev.py",
+      "sha256": "f3ef8e5b0e7308c39ed86b251eee773937202595e04784b4d0a02512f4a55065"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/analyzer_scores_20261024T233700856259Z/20261024_05_02_scores.json",
+      "sha256": "844038dceee834ff8b3560ba1997efb81338684cea2e2fa774d29cffa9dea480"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/analyzer_scores_20261024T233700856259Z/20261024_08_08_scores.json",
+      "sha256": "759ce81dba18dde811682963ffc6ad5584c4b2e7946297631eb8f133c1eee231"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/analyzer_scores_20261024T233700856259Z/20261024_08_11_scores.json",
+      "sha256": "ae35f79c83e4928b5d818e3817676967da8da313161df2f60b0b62fd763425af"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/analyzer_scores_20261024T233700856259Z/summary.json",
+      "sha256": "45e6b1ef0c4d863cee9b7f3977f160091e981034dfbde13fbe7e7742640bd28d"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/audit_run_20261024T233527917676Z/20261024_05_02_audit.json",
+      "sha256": "0148a4606ae03bd6e99bbac98065191dea43e917ba67884657580522ab67c2cb"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/audit_run_20261024T233527917676Z/20261024_05_02_normalized.json",
+      "sha256": "5f7e575bf5a344ccbae56177e059764939e93a55f013170dbe084f3bf4303828"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/audit_run_20261024T233527917676Z/20261024_08_08_audit.json",
+      "sha256": "8f9bff48352cbc205a2684fb58ebea591cf35cbd000421b5be650ce1ae80daa4"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/audit_run_20261024T233527917676Z/20261024_08_08_normalized.json",
+      "sha256": "6764ae7da067467850c9170f8f44cc747bd7ddfbe3001169a9ca7ade5c1782e9"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/audit_run_20261024T233527917676Z/20261024_08_11_audit.json",
+      "sha256": "fe9c649bc00a0a467f955bf03ba709174623851b502a67c1c27a970541e7e920"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/audit_run_20261024T233527917676Z/20261024_08_11_normalized.json",
+      "sha256": "0f743495f0a2260be0eada9bf7caac77403c14887a55102df47f3e0a079ad464"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_04_01.json",
+      "sha256": "2ee3108e8b55714eba00c27bb57ca42aad5ae5733619046e3acd213abbe24af3"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_04_02.json",
+      "sha256": "2ad95a6d005e00a82bb246f46ac695359e0938938255965cf0b5bd9f211e9c10"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_04_03.json",
+      "sha256": "d0d4b2443384d66c5c3efa9045272a6ba3f7203181117d39460cf34960cd53a1"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_04_04.json",
+      "sha256": "39cbe4a1b35537c2ff2057b4217bf89ce913f8f658cca3146365f40c404775a0"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_04_05.json",
+      "sha256": "f29f7abe5b86340c9ff21fad09f9afbb78d2f5451b052ea224aeb9dda86ff840"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_04_06.json",
+      "sha256": "2003c48bc3ce282de6e99afa0e284f19d4177577052df13bc00aa68bdf37ad4a"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_04_07.json",
+      "sha256": "7cb2501b7e1db1aa10e9ba6f2f60a09f57f387689370cb639228a62f01049551"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_04_08.json",
+      "sha256": "576732b68758c848e12357d34218521ebd30e5ddcc74b110c316e80aae8f0e6f"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_04_09.json",
+      "sha256": "99c52ad6d0a681a8a909e32c84af7cfa4833ef81d9232253e2d7063b504f2a39"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_04_10.json",
+      "sha256": "4b96ea56e7791225c3d84c124397fdbee67b4f510821e0b5692eb40e145afd60"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_04_11.json",
+      "sha256": "3bd08e570103c75498115a232abf6abf5f44f94c8810b90daa772ff7515809a8"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_04_12.json",
+      "sha256": "b16355efda2366673116cb59283290016ee0f72260ec7bb5f7488a16474b5f9b"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_05_01.json",
+      "sha256": "46c92590729be0e1f0f93137a17e56e356d1a93eacafc710ffa35d2355eca11f"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_05_02.json",
+      "sha256": "f924fb393bd35d7fc1647b240cae7551f558903d9bced07ae21e5221ccf03c40"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_05_03.json",
+      "sha256": "ea9b9b917b00078e26e9f9ae59905fa0d5dac4525f99d7564c6111ea6f6dcf5b"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_05_04.json",
+      "sha256": "edeba58cbd5fd62c37fd0edb6d6411c839050e8de525627cf892fe81a1772f0c"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_05_05.json",
+      "sha256": "643e47759df8b2d88155c1eda7df9a307bfddbd48425a26d8f3c8d9315c3646b"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_05_06.json",
+      "sha256": "d2a3d439e82f8cd88709d2844a2dc5a202f14c899a47bbab2b3fc0b8a0e217ea"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_05_07.json",
+      "sha256": "cef04d402b14a9a9dd604414931f61de6fa1c40d809bce327ce2a03b81e899b3"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_05_08.json",
+      "sha256": "2cda7382763d89be031457ba0bab9bf8f606ea8d01b447722610cfbcb436931a"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_05_09.json",
+      "sha256": "3335764c7ac35ce44bf39b8d568f3292f82aed4bb27f350cf34645732cbbe944"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_05_10.json",
+      "sha256": "7729317ab054c3f05aaf6aa086755047544c34e20778441c3391ed62f3bdefed"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_05_11.json",
+      "sha256": "d22d02d7875b2ac625b1da0738697ed0df88d978e69dcfc14e0af506c10fd87d"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_05_12.json",
+      "sha256": "47ba5ec2eb9b3b92db64caf7bdfbcfb7e9a0cd2b05051a629866aae754091455"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_08_01.json",
+      "sha256": "5529db1f46ed8505798d60e8eed26489a17f0db6ab4708af3564642d4ae8b7da"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_08_02.json",
+      "sha256": "6f5e03a1189b93f3388b17b0b030f81ea571b41ffe893eb98dc3fee3c0cdbcb9"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_08_03.json",
+      "sha256": "f8b41b41c53260975656cded730e48116e5d2ebefc6e31077ecd08620687ea67"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_08_04.json",
+      "sha256": "f640ce69980fbbb82e532acab90dec089137ee5a94009ac1c8daa73427e7f7f0"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_08_05.json",
+      "sha256": "1449bbf1e3d51b78fc8a823e1d5ffa985790d8e1d81e9fe1be659c048a46f0d5"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_08_06.json",
+      "sha256": "728b9e4e17f5d5a0ef1b31dc2b6a52da85d85454534c659ba96984c487da0c94"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_08_07.json",
+      "sha256": "e339444aa2010b0c207b5c5dfdac7b8467bbde0056a7139f8f261a82e45bed17"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_08_08.json",
+      "sha256": "2bfe207b7dbed9d21895ef60571897e3230ca8182e0cdbbc507d393a80dca8a2"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_08_09.json",
+      "sha256": "72251db9d34013ca36bea19b358fa4e409b32210a55a58844df7b6acd72e6191"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_08_10.json",
+      "sha256": "5f74f573f3b83db985fd74785f79adadf8a4917d7a19037114b8449422215e4d"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_08_11.json",
+      "sha256": "32461c814ae220ed8b31eafcf6e6fc12d407aa4b1975d45fdff696869d417cb1"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_races/20261024_08_12.json",
+      "sha256": "d78978092910f40a7712ade94bf08b0e87d0e6e5b2c35b543e316546e19c7243"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/fit_priority_research.py",
+      "sha256": "10a9a175d751977e98245a7a10ac6a833f9f0da1b5337b4beacc43b0b4321645"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/050629a4199fd2f7973370be572eb85d3d6d0623e75b17d0c72919bbce384dcf.html",
+      "sha256": "a02c159c577902601ee7f6f6ff910d2caeaa0ed51997e00756787f8d868351bb"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/093f0fa701394e3094d59aa4029ccf606a5b8dc1a301582007c8d064213c4e06.html",
+      "sha256": "06086330f123acca4690d60d134806b72fd47c6e58c915fdabf035305544d384"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/0d4551546e1da4c839ef22cb88f7a6324e867c404fbcd3d8500642ef18f8f4c6.html",
+      "sha256": "cc8e262bd37857befa26466a569dfef49c367547ecc47718050ba64a675fbcb3"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/1982a8af9bc632128ee88f3e7208e3fee2d46f37044fb9371a5cd2227a9a4850.html",
+      "sha256": "b25b6b6d6e846677f361acc7934fb4a7056cdd6cfb719372766035d775495a63"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/24e53f32cb9bf2c56a61cfd3d4a92136759afbb4b6a327ac1881a59d3349e2c2.html",
+      "sha256": "6f91f8edabfd6ef010c03b7ceb9382d94612431662542815cad4de52baf778d4"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/2c875e3981c50763cf06a4e5020b36e9b153dc72e2e70c9371ae1bf6f4c0e69c.html",
+      "sha256": "7af59b36c0b66039d1eb4104e00f4174987c148eb35ea8c48457e8da9c0c405b"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/2cc803bc58452ec852f405224e5c17ad658036f377a317d6c767083813595bfb.html",
+      "sha256": "758f8a4fe11c032f8c89fffb6576a2299820e9d11cd7f6d8465328b556d8b9fb"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/303dabf8b0a7bb30848c6bc36d4016957ff9e82f1d32c7bcc78897b9667daf6a.html",
+      "sha256": "ac74332265e50739380e146f3b791d34c708f95376dc62fe6a86266c03a9cabd"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/35ccb41b6875a413955986d7388f5a72f22055a9b21af82c9ab50b4fd34ee915.html",
+      "sha256": "f862c65625b73663f619ea93e0973963efe7f5b397d067885130ad6e8ec69f69"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/4416148015be8e7c52f1027396d86f9f08af59f214921b9189818d14bee1feba.html",
+      "sha256": "9431b7931accc9cc466aaae47306853b51d4746c8b03e28804b03687bd04e7b3"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/475cadf3f1a67f38da8172c2d767616b812641f3d0bd4d814afa9ad43de3ae42.html",
+      "sha256": "f2d8f46c6a8403415836180af84f9770f328dea3ff0272a614c2608e219ea49a"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/4be84bcddd8bd366963bdc260518e31830056965d3baaa4ff3072d307c2ee8a6.html",
+      "sha256": "1f8d4d4a125dccc8b4811dfbbe08c2226ea53c565b9e20a3961528a56fd9f1ce"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/4d64677864c47033e87f361272a21390fa6dff68bc1e0c96b02779971ebe29fe.html",
+      "sha256": "8eee11323c286bbd3e557c7c447cb9dac4a01e74a68d05de0f5e11a4ca41f26a"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/4edc0dbf5b85d85d54b2f6f8b1353d0ff9fff74f39fa3041353cc73b26e12d90.html",
+      "sha256": "394f60fb7fdab74f31dfea6462acead77c1b0366d72f9c5ec627ea7fa5eab832"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/62caf50be109977c7e69a3f3091747f8daf6891e248e4c48b7b1229c455331b4.html",
+      "sha256": "06e27fa89a26841bc838b243dc0620cde72c054fc55fcb93420ce5dfffd8cb46"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/64a812e79f3330e9c10754a5c5c7d3562fdee88bc6b2cb121dcbdcebca7de666.html",
+      "sha256": "e780abf0fb5d06a7eecb43e928473fe7b878b3340892cbb4f8dc44033dc8b5a3"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/684f7571e8a874e72067100fdf01ce64918339313fcede1147d9a2cdccdb2e57.html",
+      "sha256": "f4812bf8277b3576f28c05042087fa82b743a196ab91ae214da19badbc89468f"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/6eb26931592678569bfb6b44aa0a35991b995a3b7cc6ed591663814f60e78048.html",
+      "sha256": "2b7c836691d036bea8338765e84b8d80a9d4e320ad1ef239ef4e9c48b4619bed"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/706ed1caf8efeef4ed1874f643d85335218fa77ffd08b0e7ab0200def203e639.html",
+      "sha256": "4826a989a1e9c517690608cae918df30aa169302d74da2088ff373317b2bef53"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/78f72854ebfae250d26305dcf9ff18fa954adb61a514fe3c3e40f3c52da66d7a.html",
+      "sha256": "59268da9d38f7b9e175f8d13289f8867137c95034bfcd8c6558f9186dcd26d0a"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/82420542e9fe4d83dc60ed390f07276ab0fbea529fc7a327079b81eaed0e6f42.html",
+      "sha256": "b647aa7414a3f02be455d215f89f4a79d3f67761e3578597c0f897d0f1f84941"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/82d224c35b787b535f47bd1f19fa8d2d46ea37d4c431991281f6c60c5b72bd29.html",
+      "sha256": "0b6f877bc3deb1be989d0cae7b0073f0694b145eabae3baaadccc15b4e192e6f"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/86c3b209ed02d0e07b43152f5c118dca52b197aba6c7fcd74f9d32d40dc164a5.html",
+      "sha256": "21c8836f75bd35d3322bf51832cbc38c33197d4d296558e6aae52cbcf9481db3"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/923f23daa94c867cd8aa97f15e67d90de123bdf93ae3ea98c277161de0d44e2c.html",
+      "sha256": "90364ac8bb8bb7885e5ceb1db44ea83b69d01a8a232c8a3fc30f45c6e8c273c6"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/abcfdc1b025827aa12eec5045b4ffd333ee6f96c0394059c314eec0d23c2f0f8.html",
+      "sha256": "1b5ac993c1c7638eaf8beb5f77cbdd0dab3e21f8a96df4bd1341e69feb90afb6"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/ae582216d6e4e555b2835d72da74b33bf913a0c7080d7b54677167564b36b82b.html",
+      "sha256": "f6eb4bcf72ef97f1c5f54ab93e146408e0fee11c0da3dbe59bf4950cef621a37"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/b9dc67dc5de58df907caf65662b36550029adf81b760757093e88918647ae7be.html",
+      "sha256": "043823c7c13336f026f1b429fedf681de24a04da8c5cdea44a2f434daa366144"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/bc1405669c500e66eb3aba4f42711d5c4a1ce7ab4d9a2dd71bf6fbe64c22b578.html",
+      "sha256": "7696d9e2f756daa9a1ace7f874ee9cc3e04b40b2b909248e438bd451c4c0d702"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/ca3e4a6be81a6f2aec8e0df4dad117f87e4bc83bf539cded2275a2d113a71383.html",
+      "sha256": "ee7945580e65671d1b3b0d64af2778c780e48130641d8d2a2b6870cb957d70c1"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/cf6710477bb883916d349fd48923e034014f64760b736e22efa27cb608538e26.html",
+      "sha256": "23339db870904c4dd3a42fce7f072ba3ccfc034ac7ef4528d0a57bf9640431f5"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/d2414db9ca9eddf313aa79226f18f1cafd04d9b65a2fe613cf620dcc643e5066.html",
+      "sha256": "60c399ce1b710aad729b2861930cb410752f31cf7e8790422319e1bf27385785"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/d2d6ede2a0c15e49b7d119209752468f58e653bd259358436cc15b749b773eb5.html",
+      "sha256": "48c371510f658c2305ec9eabdd6bafb61b076682039f96ca68a27097b2bda990"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/d78c1038678c285a11c4b35ff088b88499559d5fcc119b1417d7626486caa797.html",
+      "sha256": "affdcd86a74f7c2f16b21e552184dccd0eb1a0cae6a35b4725c708466fdbdc7a"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/e455cdbc4075c5b9d50d4427508c583f72b41d7d542b004dc7ab437c4d0f96a9.html",
+      "sha256": "167f20cd63bd81312212aa40681f016c32de919145c7db59bef072904dc78f4c"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/e5e022a05ac18b8f0f1b9d8b88900beec2a222205f9793ac9bfc41ec83d291a2.html",
+      "sha256": "3506e51b6a80c80c3c038fceba23986abfe15d68e26697ce9d984cfaf2499350"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/f47d200a9396176347b50267f98787362f46d9cf42b8258b6d47c556961b87e0.html",
+      "sha256": "8f733fb981ded28cda31d63a45669efa62bdc154bb8b698d6e5d5102bdb3559a"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/fe2f691cd1938adc6c158faf523633a6a89b4e44ee862275feda10176472e850.html",
+      "sha256": "4c0dbc0b69beaaf4a90124d0dce0219700750db1ab41438838c7eb149bea43b8"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_03d7cabf767c610ab8819e3459057e17f245ba218bcf5b641cf4d1ae9f867840.html",
+      "sha256": "73502e4161f5a9489472129e6d088d940fea3f189bebe0efea64a8b80f163018"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_0754ca5d5bb29c46aa2fe314e2734f465da6cbe392b2d9fa601058a3722596b3.html",
+      "sha256": "b05f3239af69e2f486d73737858beea0841a25dc6a0e1208ac8ade9efcffd64a"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_0c117782439525148b2c4544ea4b4b6d0ca697a7fecbdb3d6a58dc03d9cae9d6.html",
+      "sha256": "1d6e18523f8040e9c5990c3394ecd79271470634f63db0e7ce419dd16f6426a6"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_118596e08e4dd72345989fbfef160fe320f255fc3f110c159c7196c2b1b1f6e2.html",
+      "sha256": "7907bd53ae3db5dc2185d9b675683d2a9f693554537364b61500d584d1b19e0d"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_313559a33b530f8e8298f48c24a5e139daddd413c5f670b2bd34a9b204bc8d13.html",
+      "sha256": "fb71a66a2bdcfade2cebd6faaf20c3239489184a252fcd6195c8eec1cd9ab8bb"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_37833d8cfc4f9f37ad547310849ea0b470a601b8cf421d1f405a9f3b6aa7c223.html",
+      "sha256": "83de1a47e6a7b07842041b7cf0b1a0664357bd7438eb9fcade0fe303724941c2"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_3881f5a06e582dfe9e745c7d19e0071555001892f67387ade7ed1f30829189e1.html",
+      "sha256": "bf740cdfdedce075dc82e03a7b77230d59ba7e580463fc93b04fb54db319c7b6"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_3ba6e39710a1b2906edc93e622d9c106439a9ac31b5f1e2c44a8656948a57502.html",
+      "sha256": "0b7dfd7e7f11d5ddfd8661a4417b0a69f5b4c2366fe798a3b43f902c9988bb97"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_5c2ccb0c7e83a19e3d4b6d26916e90c7e00a3a489825139304cf4e57554985ad.html",
+      "sha256": "1fe062ae20413810e05c998bc71611d1f77e9945a14f76354defafe55a55e4e5"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_6cf546e3883838dd9efa0e93e8c19d5fa29b49d292642d4e0024250dc1a21f33.html",
+      "sha256": "3bb27bcdae3b848ed9f2a88dba7c431867261fbb8b8ee63c6220ac0956380b42"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_79a90412400a90715b991ea98a9ae156ca148ae25b754e6e0f35c5ecba6a9f12.html",
+      "sha256": "f0ed56d3c154fd004300802dd3e83a181d18a603c6137bcde029cec13783ff37"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_8334677c3054bf8fd3823fe0d42d80b54ba15836748712f7034700582d2e33dd.html",
+      "sha256": "c793b4240c34d14ade1f51f8440feff827d67ffd46d66c015ff55d1a748d6588"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_88374f6281121b9477df3c9e109f8bf6f89cdca9e3f8cb955b59aea3f89bc689.html",
+      "sha256": "226df27c53ca4186cacccb1557e3a5fa220595d5a81fd71c0f63effa85624587"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_8f2eff78c651bcd855429c2286b8d004b7ac08a6e522c4d8190dd4b8b05335f5.html",
+      "sha256": "85266c513340c4a200032a83dd8e04e89c9a82707bcb155a4dfb5b7c4ec4c0d1"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_99692fe6363d066c6fd3aeef37c869ee87aef63d36c45f11087322bb96389891.html",
+      "sha256": "727fff3772542f436406e3720fa9c06db21ec4d9d8da39df83817a9ab90a2ea5"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_9b661f13eb2dedf3d0cf9873b7d17b8b322fd48c6e295499dc43ca3b1b5af51c.html",
+      "sha256": "c198e32ce0fc130a54a1aa03d75757d838b1bc04e4ec9a634d0b7c48f9861d01"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_a30d4981656e0fd20066c8399760dbf7e4b8f3d5e1b358d5b73c42ec920e61c1.html",
+      "sha256": "b7f6397ad2c7adc267234e7197a7f8d788b0786898d10b8e45429de2790c0e52"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_ab5e740d9166f099f6d64f231ee14c3cfada71635add715d42566d5c653adfc6.html",
+      "sha256": "f52723e98e0c8883852c9f16e9b2f6d9add1b66cab4f32d6dfa5c67c15525e5b"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_bacfb5529e8894f17249ac53e3e54ab155f52deb66c9b439dc63db1dda2fdc31.html",
+      "sha256": "2ed7758015ab049200e0e93d529811ac9a16ea4cde2403af7f2b3af4ac7b959c"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_ce8c61d01cf67969a413f9d39ca032751a1978d1885b97fdb37d605fc9bc8228.html",
+      "sha256": "3c61b3ef121e66f3351febaffff3ca70ee8b0c3e9bc67723451eb617aa8fb300"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_cf3ee7930e803c73b14d82c2b868446630d936e075eae9210465cfb6f68f2dfa.html",
+      "sha256": "6eb1f3afb91db3a3bf0d16d52d17c267e10d9e5ccf2e42301c376be492a60967"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_d40e197b3da3ded89b56ff5ce53236687d9c4cb7f2fd302b7ff790ce99100f58.html",
+      "sha256": "590f2dc7c172c88d9d3ec173f653b5336e75e11cdedb41f06cb0079dab07941d"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_e41382d471aec766dbc208e472cba5663bc91dde3f28b9290f93dc057e3f91b0.html",
+      "sha256": "8065d0846c2a904d183b41b206fe2ea26059de23800ccc4ed730bb505f65e699"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_f9223c1b8c7fbe01fcc9079741c45d23f46fad39647e9cc7b04adafd849ee681.html",
+      "sha256": "392a197e8db1f8a231df789ef74ca1d2350645cda15721bd0366f2356c6cc1f5"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_029459b24877febcb8333da2820fde2127e131538921ee6a4961718c0062a4ca.html",
+      "sha256": "43ccf71018c2195f3a7ad475101421f58a4c5857b1e95b27372ec86b49a53e60"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_03d52a71dd06de13576d18b20d35d4a3539bdd8ceab158cd7108e951a1b7285b.html",
+      "sha256": "b4faf721d322c7f2ddd30b86cdbb20b6e9b530de3fb0930581c5de37de3dba20"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_0477950395efcd46f64eb3f67aa174bdc6d40a1b5f1616a07036c244cf9fc4f7.html",
+      "sha256": "ccf096f103afa3ee90d24ae87d85213f91209e7ac403f8bd1791cf369d985d78"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_099b7351daa4a99e42a2a093ba70631026b22cb8bb6f7a7cf79946f6165bd894.html",
+      "sha256": "47a05b03c823f2e36e77e3f36c3d535f005aa0ba84cb242cbc0b927c25cc0225"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_0cd5d29dba3e53a9eae3553e341047c106bb6fb84ae5840c0138193ba73a6f57.html",
+      "sha256": "f108585a5ffba5ee0c0d10d927c034f3c189b8b84dbf9a2722fa650531224e15"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_0ebd82e8be258ca27c03685daa3c09c841af112e25350983ffb59bd752eaac03.html",
+      "sha256": "da349badc466caa4cc0162928cd7a20c37149622f20043ed39264f943b733eaa"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_1507262816a9351ce79c841bee27e2e34b94e39c22567e5e75f51f7b7c0bd7d0.html",
+      "sha256": "101e4b2dc03162ef7a9c253f5d0f434ee7081cc9873965fac4fb442a7a1184dd"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_16285dd6a89ef0185a73ada0cad72bfaba45444e1fb89de809ee3926909a99c5.html",
+      "sha256": "3bcb5fc1a47a42d1d13128cc277a4315631496d7b5feb6fd0e6541e9058c96ce"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_1938c735441b451cf89a2ad3b2d735ac585861e1b69764fbca41151dd3026470.html",
+      "sha256": "2dc5c505122603eb7abc1bc7d2cca9399830c96def4aff288c6811082039d8c7"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_1af8d92253ad9dad196d49243273df8c59daea370dcb91c9298c41bc4af89f7f.html",
+      "sha256": "3bcd9e4c6d683142f0dc3ef046af94a313a3fcdb60318c00dd3a9851cfd3c44d"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_1cf44dded52fc42616bfc194d9d5003a989e39a674ff9c905a09958b82c11e51.html",
+      "sha256": "ff4bc8fc0b4feea5d22570bce3b4e19285aa2e1900eb3cd3c696383a43429754"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_1fa668bc89e742d83b2d3a2852967952d1b44b5139952c007bb522ea7f34da16.html",
+      "sha256": "be1cbbbc989b0e7a3cfd8b819f750b768747d21047347080b9b826ece3a06f0a"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_1fe3fb322384b36736cc72c4a4d3a256c718b53f6c7911d8e74a4b725cb4716e.html",
+      "sha256": "5cae402c328df4cad9b58830781e1d1f935dceeafebabfbd5c236200c51c701d"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_217c27f511d06258726b929b978ebba0cc2330675e8ca8ba92220e66166d1d28.html",
+      "sha256": "28e2fb58a8cb42e37f4129260e97dfa2e4bf254ad63d20b6429a45c83d9d71a5"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_23c17208ed495c73e4f247bf8237a5c466d2d100e2c327888f99be995727873c.html",
+      "sha256": "650f0d31f03ed404e76a4e67e32916930b55ae039b1ae312724b6b7d390d4874"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_23de729f0ddeb4e488e4976779a1cafd3f69b31b299c3cda1f642472eb1ebccc.html",
+      "sha256": "d3bb58562782df74817f8e709cde5dbb16a0ad1311a75faa968958105ff809e9"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_24cfbf0741d0ef3024ec68cb6d623ec7b62db22677ecd96a6e2ddf0f6d4385dd.html",
+      "sha256": "27328eb53cd1005d1bc8dee01bf533c5da5675a33b8501e3eb9179053df05e5e"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_25ad9fe8228b777c8e31a0afdfa20293a95f3702dbf67892ab1bcc494d808db0.html",
+      "sha256": "4f837ebd5ffb613785119d1bd31a2fb381d81d27e3f4144e075dd7cb43912243"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_26cc1f2f58802ac3d59894e9a66bbd83b34bfe688f1f0450497a4e1867e5d0c0.html",
+      "sha256": "4e45ad5bd5ed1c6a4a3f3fb80a62077ca98daacdf932def8c8ff39dc310e18eb"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_28f4493c3483c8da2fb0bac28d79e2b538cc12254d0081339d0215daa833f87a.html",
+      "sha256": "023f84c11c5f0f1b445677e6e27349931c1429f48faf0a8708f4f74692087877"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_29f53a9fa18a88d507343457f48f1065198d559da35f674919807768907b2637.html",
+      "sha256": "a878986125267ef7933c29094cc833e70355c62c42fcfa682bc819a87d5b2bd9"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_2b153c53c8c340809769183390fa9d3685b32f476d060dd097fb4b4f994ac277.html",
+      "sha256": "3cf946649c9cdbb1332eb385a208d0941b5eaf5c704d028ab4dc296f0508e5ac"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_2c5f5b0e683d75f2566063d556017759a09b29d7a3952a508b3099f8f583de6a.html",
+      "sha256": "75d8329f70316b18294e688409cd1e79a97dc42f774f8ad46663a4e4831db41b"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_2c6f755fe79a0464cb764662f13fdee5c52ee0893cf1912aec26142b8c9bd716.html",
+      "sha256": "cf419a4c7835ceb9807822d741d11558d1adbc491543cd5d2baf2de9ba8c5ece"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_2ea5b1c698d51a0b92e50926c054f49675302f265eeb62fea889503045253e9d.html",
+      "sha256": "8fd85c78ff2afdf6ea255c1480867b9cc3e40131dda1b2db58deeeaab14ba57b"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_2eb8f7df76762328ed52a95bef978d1a62d57ad07cf5fbbac6958f44c42cc5d9.html",
+      "sha256": "c1e32429898705ce8eef31dd2c9f7f2362eccae0e4400632d84896f3da6d4cf7"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_38af489b9282d4069077e2f939f37e54cd5a81c2555233563ea5fb1945c02a3a.html",
+      "sha256": "12801461ee4aa94f8a40cf1478d7253c209d7926191e606156ceeacb647a9b6c"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_3b09f020a9a34a8a9c65947bbc3b9df4379cf41b526e19afb11c4407973e280e.html",
+      "sha256": "5223c39a2ca5edf5eea20680791c80af3ecdb4e59474860ba3d56fd6ecc9a64f"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_3b15d31d595b8304d4211f40d2b899ae7cf3f152c6635edb8295915fd63c5bdd.html",
+      "sha256": "6810b3e609d7ed349d6c27e391d8f4cefd74f316d45428e55ce592b3b1ad7b93"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_3c48f00cf33fbe912df33ad62c90e91743e5c6a298d7a2897ae3afdf6689ab20.html",
+      "sha256": "42c5b6289944d72d1cb9a6eb36c74f0c8eda7b352dc0a5ed5b6d17feea56b3a5"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_3c491a72592e1575794a7812637e0d02fc3d1af69106d4b39d73ec10b5e7f106.html",
+      "sha256": "8381b22072db11f9547c4c0bff63a3690a4e180c05523bc8a9af8773037bf54e"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_3fd0546a049060cf9d021eb60acb88d620d4790cacb6246496c32aaec53dece1.html",
+      "sha256": "21b30cd42b100a56f2479cb1933324cca995e3bebf600e7daa16fae64577e7d0"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_40b8be66650ee2f0e8ef7d2bf9a24c7c43bcb11ddabbbfbacdf5607929e95d02.html",
+      "sha256": "db88227714ecf387da6ab9cbcd64ede066da379bdffd4df57d436dae888519e0"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_434aa029ce72bf081dd9ff9032ba3ceb0f5f8ee479194b16db85a046bf683022.html",
+      "sha256": "6872f64eedea145bee4eb26468a69499b563f18e1a47490f07217fe3b69b4a9b"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_43a7e235cd169e4296fc0919eb7d5feaf6eacec4b8b4403b2224509be0868b02.html",
+      "sha256": "9e283cba3e0ba816694533b17f950c05f79e182e02abbd7ef063b046f5945db6"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_43c981856fdc6353febfeb7da5121981aad8f7a2a25bdcf8f472169b3c031bec.html",
+      "sha256": "11fa14275063206d45755bba3e2d21f2b512d5bd9b7c250b96f8c2d427a059fc"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_4a69292f15076e49d9145a0335582a6c48df28f7ce2d72d03284a1cb8ded4071.html",
+      "sha256": "f5ef67ce4dbaa21bd6f6dd53d0bb10d2251f1a558efb5bf280b4182720fb61e4"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_4ac2c0e1c47df7de31b8b78b2a21c8ace88da0757b2c866dda3163da5fc4c835.html",
+      "sha256": "66ec6ba103b1333fbf5244762d89339fb8af9e1b54bdb8657ea73341932259d7"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_4b159180ab016bf4a1ec0df703d9e999f5002c08f2b48033e20900f7d9934738.html",
+      "sha256": "1f9bcf45fb9241db7d293634dde92869cd970420c93334e89238fee4329680b6"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_51c88c3c26d243ba015ff8d755dcd56b8d10100becdbb09ca700852660e0448c.html",
+      "sha256": "24eebe80108876fdbf5f1c2117b101a1082470a0878071fb88c5d7f329f9df6a"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_57a4ce7a6f290d6d24a6b5505ca813a2de678ee12d0a78f4aeb590eafc8d0b3e.html",
+      "sha256": "e3d17bbd20c0cd1beaaff00ee402a75e69085d5db158566a66806d56b4c054b1"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_5cefbbc6a26aa6e51631310a58f393e38e113dcec90a9b3382f0339f31d36918.html",
+      "sha256": "bdae6578152012cf9f122d1d38a6244aa35c0ef25c32048c0570329675ca758d"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_5d153d7320aa293f04dfb51b93001bb68e3f4ac9802f9116f789fe767088350f.html",
+      "sha256": "927b9f7e05790ede5c6b22e1b6b8e18ee218e8b4a3cc9d3b9cba0560b7493003"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_5d599b99badff75818a3a244ffca0730b8566065392c0f1a13c3c6034023dae6.html",
+      "sha256": "ce2232e4acaecd294ba8381fb89ff8747d0a1a643bc7a42c14737bb178fce6d2"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_5dc757b8423ec74794d2e4d6c1722de812b40bf68198ef031da2999d326beb24.html",
+      "sha256": "83d115e1c815d7adf176ba86a422b05dd48d05ca0b5313a192b883ae9043e3da"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_68d9cdae45a41c17de572b8f78a68fe3977bb845efef1deaa0bc140e41856f1d.html",
+      "sha256": "009bf3e56c1b30d101242cc534937e0d3783b6f42f112fc82d56700e9eab870d"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_6e851b715e815c40853efb7ed3c4de57db348cfe00fd9e59a95b30c8a6a6b047.html",
+      "sha256": "c53f3f95dccbb910f9968ac6e74032a116987113d5aa001cfa78b46738777fcd"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_70bca39c6afaa7e3168ea7c3a6b8105ef4ffb8da9ed05c4d2f03df0f52bb6656.html",
+      "sha256": "f88bb97bfd0b4aa87119500ceab5c997cc935de4dad01a5b3768465b1e0e115d"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_74b4f3b2618acc922e3df4c77191e7e3402560d679b8633ba7a2071ac1a545e4.html",
+      "sha256": "7ac9c9a270a6bea48b8bd149c78b345ceb24e0616b4b3b74ebed2f00107c00d7"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_78848c67cc901a90b9b04a0a9868b92cbd3ed9473bc7efc81fb6ce106ff44deb.html",
+      "sha256": "64d8352de44d8f98a014cceda27b4bffd47d31f458174a2e5e4acb99464fab54"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_7c74d36a3114693559e9c9cb79dec4e29d5e18f84f096681fd35384c81ab2c66.html",
+      "sha256": "0869133c915b5572fcc9350d5e89304324a81558a6e2659a69ce221755eeeb66"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_83bb61873e51431236f57f5677f9bcea10efd719253d13db55e03772a7509356.html",
+      "sha256": "29102afd3b67423deff3af003edbb55f45800f7fd7ceaa122ac84836e58e4a7b"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_8cc7d8b05125cd0f514f0d1796e0d9089419277b58c4b0544020d8a6b47df3e4.html",
+      "sha256": "6338d07738a20fec9af7f9471aca1c23d103eedfbb3b93d41b114315c898c6a8"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_8d732ef02eaf12592d66dd7c924d18510e6d9fcccaab527386510f70f1ad418e.html",
+      "sha256": "2203719f579e7006ac5a948c880d7ce915dbea3e77a1b80e2f8d2402aa98835b"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_9347a07390e28ce27231269030fe845286d7cc9063a2362f17095d4507905a32.html",
+      "sha256": "9df19499557aa76cbdc8fe2dcd3ef76971a5e7fa4843ecdc6171a6f721c535e5"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_934efe8ce32178502f48541dfbec1a6875efae9bb4f0ca6bb857268315b59001.html",
+      "sha256": "25d9a823b11bea3f61eab583dce83bdd561f15bb64616b336e441c93aebac08c"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_95fc1eba61d397a5a253e5495e0506ee3f3f04e2b1de5aa9ad4a64ce4476ba82.html",
+      "sha256": "7e5a5e7359097c61ba261ee43d674d4ab99a551f57ea2e85a27e02ccc0df53af"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_9613bff2bbe886a04e290daf49e1b8490d6ea8f34001beb4dcf7caded34a8be3.html",
+      "sha256": "3d38b9b99754e2e5cc78b8bb87388f128616fd6c7baff97c365c2707b41ffeca"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_9b3ff0af3e80463d34c298742204bf79a160309a1ebde6faa07d1d28daeb2bfc.html",
+      "sha256": "96996ab85ab50a8001d4e15703cea2e524c690c7711794f3a83420335ed54845"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_9f421dab7a7fb6d716ec83e4f68dbb37f1c6267162efa69df4cec68259c57925.html",
+      "sha256": "544d8ee56440c613029b0572c066521b5390c963fe7ab92f3c8030b3690c43d6"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_9f97d7223caaebd2f62340e3fea2c65b38dfe08ae2644d3f1c380aeae33e595a.html",
+      "sha256": "3f82c166b6906ebf4f81487fe253f18fe8f0ba42ea6815d54ba9764dd28a7cd4"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_a08cd290c38c9673adccb297981fb3a8c2218b064ac013c8569cc76b1193a32f.html",
+      "sha256": "512f025ceb277fb7dc39f36a0bb26241b4a1f1f0f4285849e5bcca1faa171003"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_a16a51fb86b38999b74c9da10076d88e470c84e03021111b1c23606c867eed03.html",
+      "sha256": "2072a73ae30842f09705082b82a5a01010a1f435e76c2bef96051ee6bbd5201f"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_a26aacdee8d4519728afe759288931110c035746a771093a5e3b5baf5fe6217a.html",
+      "sha256": "264b94a67ce68ee01161438fa8cb6c06d35e4d8501e3782f82c5d50efbf6f8f1"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_a4cf52246de19b11121aa571d91e3fc9f7d8882acb3bec00d53835ea68791d66.html",
+      "sha256": "fcff1bf314d54d6f613d060c0613025abf53f79f2a8fdcde741e77832f50b6a9"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_a8f290bc7ff5818404211e11dd3e01de5f7506244329d1320f0078e58f1c93e4.html",
+      "sha256": "5ab0fbb0a755f4e513fa1882c47e47e5ed3dcf4d8a5f0a3b4370d3f861b5fb3d"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_aeecde0321fcb88ec10f6c4a3432d9ca3bcc05c9a27d7f179546b7740cb113c8.html",
+      "sha256": "be720d280c95036a0d15d6c04f3ae70c742c62f900a8f66d8a211cb184d8432c"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_b1219e11f4890a2e6bd045fb87a3568c630b67e98872eb9ce350353d575bcc85.html",
+      "sha256": "30e8913cf9cbf618af19fdf7d7c6f2ff3abd1d5ad995d0e073ae20bb040ee9d5"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_b26c8e9322db0809ccb3d4e4f00fe76a9f118b441a363f2f1e01908a55018caf.html",
+      "sha256": "75a63aef4ed13fad1c2656c65d0384a4ae99bbcd53cbbecb96027c0f0aaaf008"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_b39dfdf700e6a98890a48960da378c3614096bd7dcc6a2493a2be39506a6b2a3.html",
+      "sha256": "5e41eca5407978295157b653d5f696513c2dbcea9d707903c4ec6fb8b48c4bdb"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_b482ba2d24d963de4d433d1f9d273b2291725fbc86579bc436bdff0ea524439b.html",
+      "sha256": "ad006e4b920520c60ebc5ffb49aba472e616b389866c4c18a3ddf70f68cd9f1e"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_b73354fd58ef5e7199c76215bd9efbf6ab06ab5f97beb44b4259f9dcfc73a94b.html",
+      "sha256": "49d80ca61993db58354759a51e85292bab70494d1d2290d7c4d3aba8b5055e6d"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_b7941258ad685aad316bc5910b029e3f696ecf119044c477eea2a864f417ef21.html",
+      "sha256": "6fd0fdb38f466662c6baac57b2b14494add7bdb377783901b566f7c8904b2d5c"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_b7c1ed0852630298ee586d778ee7556a67b7646950a3702b087900a835da4fd3.html",
+      "sha256": "848907fa9551c9b925f4c2db9a3d9eccca4252c19c8f66d6f1f7f4494761364b"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_bfc2d25ca56a9e85c157ae30ad0a6aed0d46216b3a3b8a1e1a4d2ba2591e0e0c.html",
+      "sha256": "45f7574788c451b944ed566d42a87ed9692ff84a35103f1588cce9d29b892015"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_c1527cbb6d0d1c0a02f171260cd4932253b7ad5e6e81987748e038a655249122.html",
+      "sha256": "b9618eedc5a718aa5c039c6386a75cfb8dfb1bdee0a82b3a8c97020f6ef8bfbc"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_c253856c643a4c57a15e2c581ee1b7ea4ff05efdca8abeea6e7ff16ac684442d.html",
+      "sha256": "01199472b65c92bbe2bf8348a0d86715eee070eee203493d2c70d71be0e73d77"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_c3d92fa2d0aff5fa7b4d14ee3253fcf4c0f58ca2dc1b117a99a9c5d39ba50bb3.html",
+      "sha256": "c3dbbcaae564bdee72ff4978a4dd7a1a6206b5349ea6b671db03d84ab31162b5"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_c4bb01b949e7f60cfa16841c5a22bf4dd594a09a1a6b8238c9c8e67a11499a10.html",
+      "sha256": "f6770a5f748b5b7d1f600616760c27fe94ed996a07d6a4eaefea0b499ee4509f"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_c890692350aa5109e60254dabe8b623494589d34a9df2eceb2d3b7032e24f98d.html",
+      "sha256": "ea1d178f827a281edeb5713a82463b06fcf747c9bc3130dfc0b4e54b26ec77c0"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_c97d2bc3efc4f132f15194a025fc0f2076012644515629ec9fe4327c5c0a7f0e.html",
+      "sha256": "f251ccfbfe204489cd6f646662ce0a2fb153acb8049463d38290c949d909ceff"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_c9c83c85b720123fb60aa4209ef73116d2b0040d034d0a6f695bbadd1605005a.html",
+      "sha256": "405d5053de8cbe0696e6f0358cc4d5d17093ed377ffa9e5b00b895c1a6f0d640"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_caecc0235858fb8547bc47788f089bb7dbaad431955c2b83657bc37da2c9c859.html",
+      "sha256": "1f40510fa6428a901129b21f77d499d0c06dd79f20c572e230239020a25bc192"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_ce5a7c6800977c0d9997e2313e91e7fbe27d67b5acf145a229eee3eaa617a5f0.html",
+      "sha256": "d8e4ffbb3840e9133a6f82e8d84083f144ce151520f6dd3a2e7646b108e19c43"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_d1b352b20613ce10a61df8f0c8e17aed1fc18406f98c8de333cde3569efbd3af.html",
+      "sha256": "bca4cb1143434628344cc57548653ea55c4d681ab5005e645cc404d8b9a6eac4"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_d7aef6604249151439e57118d14c7c77cbb83d77ea180f5401fa98393b480c04.html",
+      "sha256": "10fcdee71cb386d99054e8deee8a4f0e9d0ae3230947ac1a6fa55f1c335f2466"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_d7b4fac82b8a538a6a95daa9cbc6b75f0c0ee3eb95880608fde5277e3a37a915.html",
+      "sha256": "e52268564b9a8be16845432e46eac9b62b567e944e60af3710cb348f5ff2d109"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_d8d7cb89272abca01c07d591022e8d9382bc62955d14c416f708d879bd535c88.html",
+      "sha256": "d5f03cfd7f5c074069b1fb0a9a48649e763eddf70ada4b32a07d8f5f1d6d8fc6"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_dc3ac04469cf755786dbb6feedb2e6ce3cd939f842cddd5e29fc101baa158bcb.html",
+      "sha256": "b33b1ef58107d227d670ad64988d1cd65bb8028b4c23b1d8606f47a0056cc84d"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_e359f465ad52bf783535281c062fcf35c51bb22d281714499e6956e4f6201c03.html",
+      "sha256": "008f187fd48349736a620a377e72b66073ef48215c6988f68019b0a25056c762"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_e587c8ae5f868f2e6778bf6318753ef7e5e8c10f65f06f4bb58f5d4f58435af0.html",
+      "sha256": "d33bf7ddcf34a2b43e63d95554200c4c83dfef2dbba85d924511ed0d33be4513"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_e755ff325b56d862c708173152f933dd4b9bda753502ae93b69f68f989e786fe.html",
+      "sha256": "88faf5a5f621514c947014baaed905da1291fdc20807ee4f4487cdb55e92d601"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_e7dff8f695d48ea1abd9c99356ebe447d5f710d3bc623e1b9e9eb4fe6b67597f.html",
+      "sha256": "8d6afc0f0c782637d01476bff24a21ee94c9a535f53eb6125ffddde8e562d3d6"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_eaaa21d4fdd82ce46e967b8dae0e351a7fc7068a6f127a000fc55f4a5204eb4b.html",
+      "sha256": "573331ee25332ea37bfff84d273f29ac8b28eb09010c392baf82c06afc5b3abc"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_eb8ae90e50c910d48fbfcfaab28d7cba17eb67a436aedf36053d8816bbc7c742.html",
+      "sha256": "b610eb4c51e7e3f0017ed510cf12135038509f2b89dd7feed1cf0d89fc259570"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_f130c60e23b798b8901d118aff3aed5b51d7164e07425b8e19000e7dbdb2a328.html",
+      "sha256": "3526fb3962b311bc1a72de1d0d87e942d7b66b5c63e0dabdceee1b64d6a14d25"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_f14366a26bccacbb81f8d380f3eda09b9c07de62d525f03a692972d49453925a.html",
+      "sha256": "e9fc82d73b86719487122b52d1ec361e2792ea0e7df38bbc17d0b0a7bbc4ef8c"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_f829d14141b0a6a42511768fc5d415d3aae46ca3c56b28aaf53efc21128b6066.html",
+      "sha256": "d2d36bd66a1104cd3dcc273dffc5a24ced460cb43d7791ddd93b30a60d5451ec"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_f84fb044ace500ce3b6eb5ac3da0e6a20786e302bfb3347fa243799b9263488e.html",
+      "sha256": "8a2fe2597c311267dbe1c7b40deafbd3afd5230b7a9be3af7b0014a1f77701ac"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_fba68d9ce8dd33895c714fed3661bad2f9124db0e70b54f18212e59038425855.html",
+      "sha256": "0371beb60922d4db7c543cd93bcaf5d9a83f45e4b65b944323117b4f27d1eb00"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_fc37c0710d5f0d5079eca91cb9c8d8c23c640faf1108985bbf4b54f6424a1f24.html",
+      "sha256": "564764da978b6fb6b2ab037a7e10d4127749e165dd0c48b796e144d22a2c9126"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/research_fit_20261024T233855843460Z/candidate_model.json",
+      "sha256": "7d6bd274a6f0607998630634c38b7628fca65b686dec199d8be11ce5051d0a7a"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/research_fit_20261024T233855843460Z/dataset.json",
+      "sha256": "b9d06e74585d277c91d31dcb5afce49de335627eb247d75398ce4f0f529d73fd"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/run_simulator_baseline.py",
+      "sha256": "195f4c7899a64b8628ec7ad354aa0e2868ef60b97280345597525bbfd3a232ea"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/run_structural_research_scores.py",
+      "sha256": "d1327f6d7f1b2f105133c27874429e189dcb056204fb027d27028008c11c1a1e"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/simulator_baseline_20261024T233746836103Z/20261024_05_02_baseline.json",
+      "sha256": "34cb24fc460bd0b7e147e19b8b6fb5c00d441c75a287b76e2d1950ce2cf0c430"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/simulator_baseline_20261024T233746836103Z/20261024_08_08_baseline.json",
+      "sha256": "2e42ef21b6465d81625bb4df14d07b5cdd9ec15c5c35b3f2825600121e6ca890"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/simulator_baseline_20261024T233746836103Z/20261024_08_11_baseline.json",
+      "sha256": "3e03000ea56651f41ea274edbe9e3ce8dec64f269341983baa6f8a0d9e8f6901"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/simulator_baseline_20261024T233746836103Z/independent_verification.json",
+      "sha256": "bc679c31c9c0c3e2abc5b8e218c2223d33037a69724698b5efd37d0f5996734d"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/simulator_baseline_20261024T233746836103Z/summary.json",
+      "sha256": "4613b1cc315f50f806e126d0673782d56454cd8e1bff2761268cc940f1f0d90c"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/structural_research_features.py",
+      "sha256": "f3f021d739cbc4cf2036aff803b79cb73f402f161e42a3a35d6de25a80038d40"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/verified_labels_20261024T231632925424Z.json",
+      "sha256": "2a6b3cf42f33fd7de0dfbe897227b1717b404d0e488b19bd7d2847e905da0859"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_environment_reconstruction/observations_20261024T225734690084Z.json",
+      "sha256": "406ff9e65455751a7591e22b769e07f88e0f51f5fb17e99b37d522ccafa917e5"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/agents/simulator.py",
+      "sha256": "47354eab85d537e90a421d07e0c75b9bdb4b0b828e63400af92c592b4eac4c90"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/feature_engineering.py",
+      "sha256": "f65e6c156bc0bb0902cc4abd989ba9796d68720538f0f8f47f6a7d134cb5ffd2"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/track_bias.py",
+      "sha256": "cf305428e50e6b47cb1ffe937122a4063619708379db744665ac0f26790ab750"
+    }
+  ],
+  "raw_manifest_sha_verification": {
+    "artifacts": 791,
+    "hash_errors": 0,
+    "environment_originals": 2
+  }
+}

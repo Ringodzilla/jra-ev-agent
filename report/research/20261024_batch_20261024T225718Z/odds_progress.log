@@ -1,0 +1,73 @@
+/Users/konishi/Documents/Playground/projects/jra-ev-agent/.venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+PLAN {'target_rows': 1478, 'linked_rows': 1433, 'missing_links': 45, 'urls': 1062, 'recovered_passing_order': 0, 'recovered_last_3f': 0, 'recovered_weather': 0, 'unmatched': [], 'errors': []}
+/Users/konishi/Documents/Playground/projects/jra-ev-agent/.venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+PLAN {'target_rows': 1478, 'linked_rows': 1433, 'missing_links': 45, 'urls': 1062, 'recovered_passing_order': 0, 'recovered_last_3f': 0, 'recovered_weather': 0, 'unmatched': [], 'errors': []}
+FETCH 20 1062 pages 20 errors 0
+FETCH 40 1062 pages 40 errors 0
+Traceback (most recent call last):
+  File "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enrich_v2_odds.py", line 57, in <module>
+    rs,rm=getsoup(u);ls=official_odds_links(rs)
+  File "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enrich_v2_odds.py", line 46, in getsoup
+    m=fetch(u);return soup_source(m),m
+  File "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enrich_v2_odds.py", line 43, in fetch
+    time.sleep(.35);parts=urlsplit(u);qs=parse_qs(parts.query);r=session.post('https://jra.jp'+parts.path,data={'cname':qs['CNAME'][0]},timeout=25);r.raise_for_status();r.encoding=r.apparent_encoding
+KeyboardInterrupt
+/Users/konishi/Documents/Playground/projects/jra-ev-agent/.venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+PLAN {'target_rows': 1478, 'linked_rows': 1433, 'missing_links': 45, 'urls': 1062, 'recovered_passing_order': 0, 'recovered_last_3f': 0, 'recovered_weather': 0, 'unmatched': [], 'errors': []}
+FETCH 20 1062 pages 20 errors 0
+FETCH 40 1062 pages 40 errors 0
+FETCH 60 1062 pages 60 errors 0
+FETCH 80 1062 pages 80 errors 0
+FETCH 100 1062 pages 100 errors 0
+FETCH 120 1062 pages 120 errors 0
+FETCH 140 1062 pages 140 errors 0
+FETCH 160 1062 pages 160 errors 0
+FETCH 180 1062 pages 180 errors 0
+FETCH 200 1062 pages 200 errors 0
+FETCH 220 1062 pages 220 errors 0
+FETCH 240 1062 pages 240 errors 0
+FETCH 260 1062 pages 260 errors 0
+FETCH 280 1062 pages 280 errors 0
+FETCH 300 1062 pages 300 errors 0
+FETCH 320 1062 pages 319 errors 1
+FETCH 340 1062 pages 339 errors 1
+FETCH 360 1062 pages 359 errors 1
+FETCH 380 1062 pages 379 errors 1
+FETCH 400 1062 pages 399 errors 1
+FETCH 420 1062 pages 419 errors 1
+FETCH 440 1062 pages 439 errors 1
+FETCH 460 1062 pages 459 errors 1
+FETCH 480 1062 pages 479 errors 1
+FETCH 500 1062 pages 499 errors 1
+FETCH 520 1062 pages 519 errors 1
+FETCH 540 1062 pages 539 errors 1
+FETCH 560 1062 pages 559 errors 1
+FETCH 580 1062 pages 579 errors 1
+FETCH 600 1062 pages 599 errors 1
+FETCH 620 1062 pages 619 errors 1
+FETCH 640 1062 pages 639 errors 1
+FETCH 660 1062 pages 659 errors 1
+FETCH 680 1062 pages 679 errors 1
+FETCH 700 1062 pages 699 errors 1
+FETCH 720 1062 pages 719 errors 1
+FETCH 740 1062 pages 739 errors 1
+FETCH 760 1062 pages 759 errors 1
+FETCH 780 1062 pages 779 errors 1
+FETCH 800 1062 pages 799 errors 1
+FETCH 820 1062 pages 819 errors 1
+FETCH 840 1062 pages 839 errors 1
+FETCH 860 1062 pages 859 errors 1
+FETCH 880 1062 pages 879 errors 1
+FETCH 900 1062 pages 899 errors 1
+FETCH 920 1062 pages 919 errors 1
+FETCH 940 1062 pages 939 errors 1
+FETCH 960 1062 pages 959 errors 1
+FETCH 980 1062 pages 979 errors 1
+FETCH 1000 1062 pages 999 errors 1
+FETCH 1020 1062 pages 1019 errors 1
+FETCH 1040 1062 pages 1039 errors 1
+FETCH 1060 1062 pages 1059 errors 1
+DONE {'total_urls': 1062, 'processed': 1062, 'odds_pages': 1061, 'recovered_rows': 1432, 'unmatched': [], 'errors': [{'url': 'https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1004202601061220260517/E4', 'error': '503 Server Error: Service Unavailable for url: https://jra.jp/JRADB/accessS.html'}], 'date_conflicts': []}

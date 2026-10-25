@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "mode": "prediction",
+  "directory": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/skill_workflow_audits/20261024_東京_11/skill_runs/d5038a6c39214d108c33ea68feb950a5",
+  "completed_steps": [
+    "intake",
+    "collection",
+    "integrity_audit"
+  ],
+  "blocked_step": "approval_gate",
+  "not_executed": [
+    "analysis",
+    "simulation",
+    "probability",
+    "ev",
+    "tickets",
+    "review",
+    "decision",
+    "report"
+  ],
+  "execution_kind": "deterministic_code_gates_not_llm_skill_execution"
+}

@@ -1,0 +1,5680 @@
+{
+  "race_id": "20261024_東京_07",
+  "numeric_race_id": "20261024_05_07",
+  "gate": "UNVERIFIED",
+  "model_ready": false,
+  "record_type": "retrospective_reconstructed",
+  "production_learning_eligible": false,
+  "lineup_audit": {
+    "card_entries": 12,
+    "explicit_status_markers": [],
+    "withdrawal_completeness": "UNVERIFIED",
+    "note": "Collector entries retained; cancellation/exclusion coverage requires independent lineup comparison."
+  },
+  "metadata_origin": "posthoc_official_result_header",
+  "post_time": "2026-10-24T13:25:00+09:00",
+  "metadata_source": {
+    "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1005202604080720261024/B2",
+    "method": "POST",
+    "captured_at": "2026-10-24T23:03:56.100372+00:00",
+    "sha256": "cd1e0663f1658ea321b0637eda1d61f29fab9a87beb6e88e3b55584ef97dada0",
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/6b4c014e65873c1edc27a52674149be92413c85db97660078727da494a85b6e5.html",
+    "encoding": "SHIFT_JIS"
+  },
+  "source_issues": [],
+  "history_conflicts": [
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-10-10",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-10-10",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800"
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-10-10",
+      "field": "last_3f",
+      "embedded_or_first": "39.2",
+      "detail": "36.0"
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-10-10",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-08-16",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-08-16",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800"
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-08-16",
+      "field": "last_3f",
+      "embedded_or_first": "39.8",
+      "detail": "36.0"
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-08-16",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-05-17",
+      "field": "race_name",
+      "embedded_or_first": "牝未勝利",
+      "detail": "3歳未勝利"
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-05-17",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800"
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-05-17",
+      "field": "last_3f",
+      "embedded_or_first": "39.6",
+      "detail": "36.0"
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-05-17",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-05-02",
+      "field": "race_name",
+      "embedded_or_first": "牝未勝利",
+      "detail": "3歳未勝利"
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-05-02",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800"
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-05-02",
+      "field": "last_3f",
+      "embedded_or_first": "41.6",
+      "detail": "36.0"
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-05-02",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-10-12",
+      "field": "race_name",
+      "embedded_or_first": "1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-10-12",
+      "field": "distance",
+      "embedded_or_first": "1300ダ",
+      "detail": "ダ1300"
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-10-12",
+      "field": "last_3f",
+      "embedded_or_first": "37.0",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-10-12",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-09-05",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-09-05",
+      "field": "distance",
+      "embedded_or_first": "1200ダ",
+      "detail": "ダ1200"
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-09-05",
+      "field": "last_3f",
+      "embedded_or_first": "37.1",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-09-05",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-06-03",
+      "field": "distance",
+      "embedded_or_first": "1500ダ",
+      "detail": "ダ1500"
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-04-12",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "4歳上1勝クラス"
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-04-12",
+      "field": "distance",
+      "embedded_or_first": "1200ダ",
+      "detail": "ダ1200"
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-04-12",
+      "field": "last_3f",
+      "embedded_or_first": "36.8",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-04-12",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-08-08",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-08-08",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800"
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-08-08",
+      "field": "jockey",
+      "embedded_or_first": "△ 石神 深道",
+      "detail": "石神 深道"
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-08-08",
+      "field": "last_3f",
+      "embedded_or_first": "39.8",
+      "detail": "36.0"
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-08-08",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-07-11",
+      "field": "race_name",
+      "embedded_or_first": "牝未勝利",
+      "detail": "3歳未勝利"
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-07-11",
+      "field": "distance",
+      "embedded_or_first": "1700ダ",
+      "detail": "ダ1700"
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-07-11",
+      "field": "jockey",
+      "embedded_or_first": "▲ 石神 深道",
+      "detail": "石神 深道"
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-07-11",
+      "field": "last_3f",
+      "embedded_or_first": "37.7",
+      "detail": "36.0"
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-07-11",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-05-17",
+      "field": "race_name",
+      "embedded_or_first": "牝未勝利",
+      "detail": "3歳未勝利"
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-05-17",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800"
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-05-17",
+      "field": "jockey",
+      "embedded_or_first": "▲ 石神 深道",
+      "detail": "石神 深道"
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-05-17",
+      "field": "last_3f",
+      "embedded_or_first": "39.0",
+      "detail": "36.0"
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-05-17",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-04-25",
+      "field": "race_name",
+      "embedded_or_first": "牝未勝利",
+      "detail": "3歳未勝利"
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-04-25",
+      "field": "distance",
+      "embedded_or_first": "1700ダ",
+      "detail": "ダ1700"
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-04-25",
+      "field": "jockey",
+      "embedded_or_first": "▲ 石神 深道",
+      "detail": "石神 深道"
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-04-25",
+      "field": "last_3f",
+      "embedded_or_first": "38.9",
+      "detail": "36.0"
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-04-25",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2026-09-06",
+      "field": "race_name",
+      "embedded_or_first": "1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2026-09-06",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800"
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2026-09-06",
+      "field": "last_3f",
+      "embedded_or_first": "38.9",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2026-09-06",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2026-08-08",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2026-08-08",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800"
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2026-08-08",
+      "field": "last_3f",
+      "embedded_or_first": "39.5",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2026-08-08",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2025-12-21",
+      "field": "race_name",
+      "embedded_or_first": "1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2025-12-21",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800"
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2025-12-21",
+      "field": "last_3f",
+      "embedded_or_first": "38.2",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2025-12-21",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2025-11-23",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2025-11-23",
+      "field": "distance",
+      "embedded_or_first": "1600ダ",
+      "detail": "ダ1600"
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2025-11-23",
+      "field": "last_3f",
+      "embedded_or_first": "36.8",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2025-11-23",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-10-10",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-10-10",
+      "field": "distance",
+      "embedded_or_first": "1600ダ",
+      "detail": "ダ1600"
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-10-10",
+      "field": "jockey",
+      "embedded_or_first": "◇ 小林 美駒",
+      "detail": "小林 美駒"
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-10-10",
+      "field": "last_3f",
+      "embedded_or_first": "36.8",
+      "detail": "36.0"
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-10-10",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-09-05",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-09-05",
+      "field": "distance",
+      "embedded_or_first": "1800芝",
+      "detail": "芝1800"
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-09-05",
+      "field": "last_3f",
+      "embedded_or_first": "36.9",
+      "detail": "36.0"
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-09-05",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-06-07",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-06-07",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800"
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-06-07",
+      "field": "last_3f",
+      "embedded_or_first": "38.8",
+      "detail": "36.0"
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-06-07",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-05-31",
+      "field": "race_name",
+      "embedded_or_first": "牝未勝利",
+      "detail": "3歳未勝利"
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-05-31",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800"
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-05-31",
+      "field": "jockey",
+      "embedded_or_first": "△ 田山 旺佑",
+      "detail": "田山 旺佑"
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-05-31",
+      "field": "last_3f",
+      "embedded_or_first": "37.8",
+      "detail": "36.0"
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-05-31",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "タイヨウノユビワ",
+      "date": "2026-07-29",
+      "field": "distance",
+      "embedded_or_first": "1500ダ",
+      "detail": "ダ1500"
+    },
+    {
+      "horse": "タイヨウノユビワ",
+      "date": "2026-05-31",
+      "field": "race_name",
+      "embedded_or_first": "未勝利",
+      "detail": "3歳未勝利"
+    },
+    {
+      "horse": "タイヨウノユビワ",
+      "date": "2026-05-31",
+      "field": "distance",
+      "embedded_or_first": "1400ダ",
+      "detail": "ダ1400"
+    },
+    {
+      "horse": "タイヨウノユビワ",
+      "date": "2026-05-31",
+      "field": "last_3f",
+      "embedded_or_first": "37.8",
+      "detail": "36.0"
+    },
+    {
+      "horse": "タイヨウノユビワ",
+      "date": "2026-05-31",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "タイヨウノユビワ",
+      "date": "2025-12-27",
+      "field": "race_name",
+      "embedded_or_first": "新馬",
+      "detail": "2歳新馬"
+    },
+    {
+      "horse": "タイヨウノユビワ",
+      "date": "2025-12-27",
+      "field": "distance",
+      "embedded_or_first": "1600芝",
+      "detail": "芝1600"
+    },
+    {
+      "horse": "タイヨウノユビワ",
+      "date": "2025-12-27",
+      "field": "last_3f",
+      "embedded_or_first": "37.0",
+      "detail": "36.0"
+    },
+    {
+      "horse": "タイヨウノユビワ",
+      "date": "2025-12-27",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-10-03",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-10-03",
+      "field": "distance",
+      "embedded_or_first": "1400ダ",
+      "detail": "ダ1400"
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-10-03",
+      "field": "last_3f",
+      "embedded_or_first": "36.4",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-10-03",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-08-30",
+      "field": "race_name",
+      "embedded_or_first": "1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-08-30",
+      "field": "distance",
+      "embedded_or_first": "1200ダ",
+      "detail": "ダ1200"
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-08-30",
+      "field": "last_3f",
+      "embedded_or_first": "36.8",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-08-30",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-07-26",
+      "field": "race_name",
+      "embedded_or_first": "1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-07-26",
+      "field": "distance",
+      "embedded_or_first": "1200ダ",
+      "detail": "ダ1200"
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-07-26",
+      "field": "last_3f",
+      "embedded_or_first": "35.5",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-07-26",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-06-07",
+      "field": "race_name",
+      "embedded_or_first": "1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-06-07",
+      "field": "distance",
+      "embedded_or_first": "1400ダ",
+      "detail": "ダ1400"
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-06-07",
+      "field": "last_3f",
+      "embedded_or_first": "37.1",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-06-07",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-10-10",
+      "field": "race_name",
+      "embedded_or_first": "1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-10-10",
+      "field": "distance",
+      "embedded_or_first": "2000芝",
+      "detail": "芝2000"
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-10-10",
+      "field": "last_3f",
+      "embedded_or_first": "34.4",
+      "detail": "36.0"
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-10-10",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-09-06",
+      "field": "race_name",
+      "embedded_or_first": "未勝利",
+      "detail": "3歳未勝利"
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-09-06",
+      "field": "distance",
+      "embedded_or_first": "2000芝",
+      "detail": "芝2000"
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-09-06",
+      "field": "last_3f",
+      "embedded_or_first": "35.9",
+      "detail": "36.0"
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-09-06",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-05-09",
+      "field": "race_name",
+      "embedded_or_first": "未勝利",
+      "detail": "3歳未勝利"
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-05-09",
+      "field": "distance",
+      "embedded_or_first": "2400芝",
+      "detail": "芝2400"
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-05-09",
+      "field": "last_3f",
+      "embedded_or_first": "35.3",
+      "detail": "36.0"
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-05-09",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-08-08",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-08-08",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800"
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-08-08",
+      "field": "last_3f",
+      "embedded_or_first": "39.3",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-08-08",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-06-21",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-06-21",
+      "field": "distance",
+      "embedded_or_first": "1600ダ",
+      "detail": "ダ1600"
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-06-21",
+      "field": "last_3f",
+      "embedded_or_first": "37.3",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-06-21",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-03-29",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "4歳上1勝クラス"
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-03-29",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800"
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-03-29",
+      "field": "last_3f",
+      "embedded_or_first": "37.1",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-03-29",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-03-01",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "4歳上1勝クラス"
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-03-01",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800"
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-03-01",
+      "field": "last_3f",
+      "embedded_or_first": "38.4",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-03-01",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-10-15",
+      "field": "distance",
+      "embedded_or_first": "1600ダ",
+      "detail": "ダ1600"
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-05-30",
+      "field": "race_name",
+      "embedded_or_first": "1勝クラス",
+      "detail": "4歳上1勝クラス"
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-05-30",
+      "field": "distance",
+      "embedded_or_first": "1600ダ",
+      "detail": "ダ1600"
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-05-30",
+      "field": "last_3f",
+      "embedded_or_first": "38.0",
+      "detail": "36.0"
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-05-30",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-05-16",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "4歳上1勝クラス"
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-05-16",
+      "field": "distance",
+      "embedded_or_first": "1600ダ",
+      "detail": "ダ1600"
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-05-16",
+      "field": "last_3f",
+      "embedded_or_first": "37.2",
+      "detail": "36.0"
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-05-16",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-04-25",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "4歳上1勝クラス"
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-04-25",
+      "field": "distance",
+      "embedded_or_first": "1400ダ",
+      "detail": "ダ1400"
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-04-25",
+      "field": "last_3f",
+      "embedded_or_first": "37.5",
+      "detail": "36.0"
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-04-25",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-08-22",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-08-22",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800"
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-08-22",
+      "field": "last_3f",
+      "embedded_or_first": "38.4",
+      "detail": "36.0"
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-08-22",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-08-08",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-08-08",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800"
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-08-08",
+      "field": "last_3f",
+      "embedded_or_first": "39.7",
+      "detail": "36.0"
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-08-08",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-06-07",
+      "field": "race_name",
+      "embedded_or_first": "1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-06-07",
+      "field": "distance",
+      "embedded_or_first": "1600芝",
+      "detail": "芝1600"
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-06-07",
+      "field": "jockey",
+      "embedded_or_first": "▲ 上里 直汰",
+      "detail": "上里 直汰"
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-06-07",
+      "field": "last_3f",
+      "embedded_or_first": "35.5",
+      "detail": "36.0"
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-06-07",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-04-12",
+      "field": "race_name",
+      "embedded_or_first": "1勝クラス",
+      "detail": "4歳上1勝クラス"
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-04-12",
+      "field": "distance",
+      "embedded_or_first": "1600芝",
+      "detail": "芝1600"
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-04-12",
+      "field": "last_3f",
+      "embedded_or_first": "35.8",
+      "detail": "36.0"
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-04-12",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-10-10",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-10-10",
+      "field": "distance",
+      "embedded_or_first": "1600ダ",
+      "detail": "ダ1600"
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-10-10",
+      "field": "last_3f",
+      "embedded_or_first": "39.5",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-10-10",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-07-05",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-07-05",
+      "field": "distance",
+      "embedded_or_first": "1700ダ",
+      "detail": "ダ1700"
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-07-05",
+      "field": "last_3f",
+      "embedded_or_first": "39.6",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-07-05",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-06-21",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス"
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-06-21",
+      "field": "distance",
+      "embedded_or_first": "1600ダ",
+      "detail": "ダ1600"
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-06-21",
+      "field": "last_3f",
+      "embedded_or_first": "37.3",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-06-21",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-05-03",
+      "field": "race_name",
+      "embedded_or_first": "牝未勝利",
+      "detail": "3歳未勝利"
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-05-03",
+      "field": "distance",
+      "embedded_or_first": "1600ダ",
+      "detail": "ダ1600"
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-05-03",
+      "field": "last_3f",
+      "embedded_or_first": "37.3",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-05-03",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    }
+  ],
+  "history_conflict_classification": [
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-10-10",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-10-10",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-10-10",
+      "field": "last_3f",
+      "embedded_or_first": "39.2",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-10-10",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-08-16",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-08-16",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-08-16",
+      "field": "last_3f",
+      "embedded_or_first": "39.8",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-08-16",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-05-17",
+      "field": "race_name",
+      "embedded_or_first": "牝未勝利",
+      "detail": "3歳未勝利",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-05-17",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-05-17",
+      "field": "last_3f",
+      "embedded_or_first": "39.6",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-05-17",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-05-02",
+      "field": "race_name",
+      "embedded_or_first": "牝未勝利",
+      "detail": "3歳未勝利",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-05-02",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-05-02",
+      "field": "last_3f",
+      "embedded_or_first": "41.6",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "オーケーリアン",
+      "date": "2026-05-02",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-10-12",
+      "field": "race_name",
+      "embedded_or_first": "1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-10-12",
+      "field": "distance",
+      "embedded_or_first": "1300ダ",
+      "detail": "ダ1300",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-10-12",
+      "field": "last_3f",
+      "embedded_or_first": "37.0",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-10-12",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-09-05",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-09-05",
+      "field": "distance",
+      "embedded_or_first": "1200ダ",
+      "detail": "ダ1200",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-09-05",
+      "field": "last_3f",
+      "embedded_or_first": "37.1",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-09-05",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-06-03",
+      "field": "distance",
+      "embedded_or_first": "1500ダ",
+      "detail": "ダ1500",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-04-12",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "4歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-04-12",
+      "field": "distance",
+      "embedded_or_first": "1200ダ",
+      "detail": "ダ1200",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-04-12",
+      "field": "last_3f",
+      "embedded_or_first": "36.8",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブエナディオサ",
+      "date": "2026-04-12",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-08-08",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-08-08",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-08-08",
+      "field": "jockey",
+      "embedded_or_first": "△ 石神 深道",
+      "detail": "石神 深道",
+      "classification": "MODEL_INPUT_CONFLICT",
+      "blocks_model": true
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-08-08",
+      "field": "last_3f",
+      "embedded_or_first": "39.8",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-08-08",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-07-11",
+      "field": "race_name",
+      "embedded_or_first": "牝未勝利",
+      "detail": "3歳未勝利",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-07-11",
+      "field": "distance",
+      "embedded_or_first": "1700ダ",
+      "detail": "ダ1700",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-07-11",
+      "field": "jockey",
+      "embedded_or_first": "▲ 石神 深道",
+      "detail": "石神 深道",
+      "classification": "MODEL_INPUT_CONFLICT",
+      "blocks_model": true
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-07-11",
+      "field": "last_3f",
+      "embedded_or_first": "37.7",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-07-11",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-05-17",
+      "field": "race_name",
+      "embedded_or_first": "牝未勝利",
+      "detail": "3歳未勝利",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-05-17",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-05-17",
+      "field": "jockey",
+      "embedded_or_first": "▲ 石神 深道",
+      "detail": "石神 深道",
+      "classification": "MODEL_INPUT_CONFLICT",
+      "blocks_model": true
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-05-17",
+      "field": "last_3f",
+      "embedded_or_first": "39.0",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-05-17",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-04-25",
+      "field": "race_name",
+      "embedded_or_first": "牝未勝利",
+      "detail": "3歳未勝利",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-04-25",
+      "field": "distance",
+      "embedded_or_first": "1700ダ",
+      "detail": "ダ1700",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-04-25",
+      "field": "jockey",
+      "embedded_or_first": "▲ 石神 深道",
+      "detail": "石神 深道",
+      "classification": "MODEL_INPUT_CONFLICT",
+      "blocks_model": true
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-04-25",
+      "field": "last_3f",
+      "embedded_or_first": "38.9",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-04-25",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2026-09-06",
+      "field": "race_name",
+      "embedded_or_first": "1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2026-09-06",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2026-09-06",
+      "field": "last_3f",
+      "embedded_or_first": "38.9",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2026-09-06",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2026-08-08",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2026-08-08",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2026-08-08",
+      "field": "last_3f",
+      "embedded_or_first": "39.5",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2026-08-08",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2025-12-21",
+      "field": "race_name",
+      "embedded_or_first": "1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2025-12-21",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2025-12-21",
+      "field": "last_3f",
+      "embedded_or_first": "38.2",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2025-12-21",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2025-11-23",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2025-11-23",
+      "field": "distance",
+      "embedded_or_first": "1600ダ",
+      "detail": "ダ1600",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2025-11-23",
+      "field": "last_3f",
+      "embedded_or_first": "36.8",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ラヴアンドライク",
+      "date": "2025-11-23",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-10-10",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-10-10",
+      "field": "distance",
+      "embedded_or_first": "1600ダ",
+      "detail": "ダ1600",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-10-10",
+      "field": "jockey",
+      "embedded_or_first": "◇ 小林 美駒",
+      "detail": "小林 美駒",
+      "classification": "MODEL_INPUT_CONFLICT",
+      "blocks_model": true
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-10-10",
+      "field": "last_3f",
+      "embedded_or_first": "36.8",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-10-10",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-09-05",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-09-05",
+      "field": "distance",
+      "embedded_or_first": "1800芝",
+      "detail": "芝1800",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-09-05",
+      "field": "last_3f",
+      "embedded_or_first": "36.9",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-09-05",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-06-07",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-06-07",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-06-07",
+      "field": "last_3f",
+      "embedded_or_first": "38.8",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-06-07",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-05-31",
+      "field": "race_name",
+      "embedded_or_first": "牝未勝利",
+      "detail": "3歳未勝利",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-05-31",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-05-31",
+      "field": "jockey",
+      "embedded_or_first": "△ 田山 旺佑",
+      "detail": "田山 旺佑",
+      "classification": "MODEL_INPUT_CONFLICT",
+      "blocks_model": true
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-05-31",
+      "field": "last_3f",
+      "embedded_or_first": "37.8",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-05-31",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "タイヨウノユビワ",
+      "date": "2026-07-29",
+      "field": "distance",
+      "embedded_or_first": "1500ダ",
+      "detail": "ダ1500",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "タイヨウノユビワ",
+      "date": "2026-05-31",
+      "field": "race_name",
+      "embedded_or_first": "未勝利",
+      "detail": "3歳未勝利",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "タイヨウノユビワ",
+      "date": "2026-05-31",
+      "field": "distance",
+      "embedded_or_first": "1400ダ",
+      "detail": "ダ1400",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "タイヨウノユビワ",
+      "date": "2026-05-31",
+      "field": "last_3f",
+      "embedded_or_first": "37.8",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "タイヨウノユビワ",
+      "date": "2026-05-31",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "タイヨウノユビワ",
+      "date": "2025-12-27",
+      "field": "race_name",
+      "embedded_or_first": "新馬",
+      "detail": "2歳新馬",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "タイヨウノユビワ",
+      "date": "2025-12-27",
+      "field": "distance",
+      "embedded_or_first": "1600芝",
+      "detail": "芝1600",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "タイヨウノユビワ",
+      "date": "2025-12-27",
+      "field": "last_3f",
+      "embedded_or_first": "37.0",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "タイヨウノユビワ",
+      "date": "2025-12-27",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-10-03",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-10-03",
+      "field": "distance",
+      "embedded_or_first": "1400ダ",
+      "detail": "ダ1400",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-10-03",
+      "field": "last_3f",
+      "embedded_or_first": "36.4",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-10-03",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-08-30",
+      "field": "race_name",
+      "embedded_or_first": "1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-08-30",
+      "field": "distance",
+      "embedded_or_first": "1200ダ",
+      "detail": "ダ1200",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-08-30",
+      "field": "last_3f",
+      "embedded_or_first": "36.8",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-08-30",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-07-26",
+      "field": "race_name",
+      "embedded_or_first": "1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-07-26",
+      "field": "distance",
+      "embedded_or_first": "1200ダ",
+      "detail": "ダ1200",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-07-26",
+      "field": "last_3f",
+      "embedded_or_first": "35.5",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-07-26",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-06-07",
+      "field": "race_name",
+      "embedded_or_first": "1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-06-07",
+      "field": "distance",
+      "embedded_or_first": "1400ダ",
+      "detail": "ダ1400",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-06-07",
+      "field": "last_3f",
+      "embedded_or_first": "37.1",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ガンバレベアー",
+      "date": "2026-06-07",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-10-10",
+      "field": "race_name",
+      "embedded_or_first": "1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-10-10",
+      "field": "distance",
+      "embedded_or_first": "2000芝",
+      "detail": "芝2000",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-10-10",
+      "field": "last_3f",
+      "embedded_or_first": "34.4",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-10-10",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-09-06",
+      "field": "race_name",
+      "embedded_or_first": "未勝利",
+      "detail": "3歳未勝利",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-09-06",
+      "field": "distance",
+      "embedded_or_first": "2000芝",
+      "detail": "芝2000",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-09-06",
+      "field": "last_3f",
+      "embedded_or_first": "35.9",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-09-06",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-05-09",
+      "field": "race_name",
+      "embedded_or_first": "未勝利",
+      "detail": "3歳未勝利",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-05-09",
+      "field": "distance",
+      "embedded_or_first": "2400芝",
+      "detail": "芝2400",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-05-09",
+      "field": "last_3f",
+      "embedded_or_first": "35.3",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "サンクレゾン",
+      "date": "2026-05-09",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-08-08",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-08-08",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-08-08",
+      "field": "last_3f",
+      "embedded_or_first": "39.3",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-08-08",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-06-21",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-06-21",
+      "field": "distance",
+      "embedded_or_first": "1600ダ",
+      "detail": "ダ1600",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-06-21",
+      "field": "last_3f",
+      "embedded_or_first": "37.3",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-06-21",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-03-29",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "4歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-03-29",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-03-29",
+      "field": "last_3f",
+      "embedded_or_first": "37.1",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-03-29",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-03-01",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "4歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-03-01",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-03-01",
+      "field": "last_3f",
+      "embedded_or_first": "38.4",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ディペンダブル",
+      "date": "2026-03-01",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-10-15",
+      "field": "distance",
+      "embedded_or_first": "1600ダ",
+      "detail": "ダ1600",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-05-30",
+      "field": "race_name",
+      "embedded_or_first": "1勝クラス",
+      "detail": "4歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-05-30",
+      "field": "distance",
+      "embedded_or_first": "1600ダ",
+      "detail": "ダ1600",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-05-30",
+      "field": "last_3f",
+      "embedded_or_first": "38.0",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-05-30",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-05-16",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "4歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-05-16",
+      "field": "distance",
+      "embedded_or_first": "1600ダ",
+      "detail": "ダ1600",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-05-16",
+      "field": "last_3f",
+      "embedded_or_first": "37.2",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-05-16",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-04-25",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "4歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-04-25",
+      "field": "distance",
+      "embedded_or_first": "1400ダ",
+      "detail": "ダ1400",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-04-25",
+      "field": "last_3f",
+      "embedded_or_first": "37.5",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "コルヴィル",
+      "date": "2026-04-25",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-08-22",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-08-22",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-08-22",
+      "field": "last_3f",
+      "embedded_or_first": "38.4",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-08-22",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-08-08",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-08-08",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-08-08",
+      "field": "last_3f",
+      "embedded_or_first": "39.7",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-08-08",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-06-07",
+      "field": "race_name",
+      "embedded_or_first": "1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-06-07",
+      "field": "distance",
+      "embedded_or_first": "1600芝",
+      "detail": "芝1600",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-06-07",
+      "field": "jockey",
+      "embedded_or_first": "▲ 上里 直汰",
+      "detail": "上里 直汰",
+      "classification": "MODEL_INPUT_CONFLICT",
+      "blocks_model": true
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-06-07",
+      "field": "last_3f",
+      "embedded_or_first": "35.5",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-06-07",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-04-12",
+      "field": "race_name",
+      "embedded_or_first": "1勝クラス",
+      "detail": "4歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-04-12",
+      "field": "distance",
+      "embedded_or_first": "1600芝",
+      "detail": "芝1600",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-04-12",
+      "field": "last_3f",
+      "embedded_or_first": "35.8",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-04-12",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-10-10",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-10-10",
+      "field": "distance",
+      "embedded_or_first": "1600ダ",
+      "detail": "ダ1600",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-10-10",
+      "field": "last_3f",
+      "embedded_or_first": "39.5",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-10-10",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-07-05",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-07-05",
+      "field": "distance",
+      "embedded_or_first": "1700ダ",
+      "detail": "ダ1700",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-07-05",
+      "field": "last_3f",
+      "embedded_or_first": "39.6",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-07-05",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-06-21",
+      "field": "race_name",
+      "embedded_or_first": "牝1勝クラス",
+      "detail": "3歳上1勝クラス",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-06-21",
+      "field": "distance",
+      "embedded_or_first": "1600ダ",
+      "detail": "ダ1600",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-06-21",
+      "field": "last_3f",
+      "embedded_or_first": "37.3",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-06-21",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-05-03",
+      "field": "race_name",
+      "embedded_or_first": "牝未勝利",
+      "detail": "3歳未勝利",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-05-03",
+      "field": "distance",
+      "embedded_or_first": "1600ダ",
+      "detail": "ダ1600",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-05-03",
+      "field": "last_3f",
+      "embedded_or_first": "37.3",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ブルーサーマル",
+      "date": "2026-05-03",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    }
+  ],
+  "blocking_history_conflicts": [
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-08-08",
+      "field": "jockey",
+      "embedded_or_first": "△ 石神 深道",
+      "detail": "石神 深道",
+      "classification": "MODEL_INPUT_CONFLICT",
+      "blocks_model": true
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-07-11",
+      "field": "jockey",
+      "embedded_or_first": "▲ 石神 深道",
+      "detail": "石神 深道",
+      "classification": "MODEL_INPUT_CONFLICT",
+      "blocks_model": true
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-05-17",
+      "field": "jockey",
+      "embedded_or_first": "▲ 石神 深道",
+      "detail": "石神 深道",
+      "classification": "MODEL_INPUT_CONFLICT",
+      "blocks_model": true
+    },
+    {
+      "horse": "サイモンセレーノ",
+      "date": "2026-04-25",
+      "field": "jockey",
+      "embedded_or_first": "▲ 石神 深道",
+      "detail": "石神 深道",
+      "classification": "MODEL_INPUT_CONFLICT",
+      "blocks_model": true
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-10-10",
+      "field": "jockey",
+      "embedded_or_first": "◇ 小林 美駒",
+      "detail": "小林 美駒",
+      "classification": "MODEL_INPUT_CONFLICT",
+      "blocks_model": true
+    },
+    {
+      "horse": "グロリアス",
+      "date": "2026-05-31",
+      "field": "jockey",
+      "embedded_or_first": "△ 田山 旺佑",
+      "detail": "田山 旺佑",
+      "classification": "MODEL_INPUT_CONFLICT",
+      "blocks_model": true
+    },
+    {
+      "horse": "イージーブリージー",
+      "date": "2026-06-07",
+      "field": "jockey",
+      "embedded_or_first": "▲ 上里 直汰",
+      "detail": "上里 直汰",
+      "classification": "MODEL_INPUT_CONFLICT",
+      "blocks_model": true
+    }
+  ],
+  "zero_history_horse_numbers": [],
+  "career_audit": [
+    {
+      "horse_number": "1",
+      "status": "VERIFIED_HISTORY_LOWER_BOUND",
+      "count": null,
+      "reason": "Five distinct pre-target dates reproduced from hash-verified official source artifacts; total career remains unknown.",
+      "lower_bound": 5,
+      "required_history_count": 5
+    },
+    {
+      "horse_number": "2",
+      "status": "VERIFIED_HISTORY_LOWER_BOUND",
+      "count": null,
+      "reason": "Five distinct pre-target dates reproduced from hash-verified official source artifacts; total career remains unknown.",
+      "lower_bound": 5,
+      "required_history_count": 5
+    },
+    {
+      "horse_number": "3",
+      "status": "VERIFIED_HISTORY_LOWER_BOUND",
+      "count": null,
+      "reason": "Five distinct pre-target dates reproduced from hash-verified official source artifacts; total career remains unknown.",
+      "lower_bound": 5,
+      "required_history_count": 5
+    },
+    {
+      "horse_number": "4",
+      "status": "VERIFIED_HISTORY_LOWER_BOUND",
+      "count": null,
+      "reason": "Five distinct pre-target dates reproduced from hash-verified official source artifacts; total career remains unknown.",
+      "lower_bound": 5,
+      "required_history_count": 5
+    },
+    {
+      "horse_number": "5",
+      "status": "VERIFIED_HISTORY_LOWER_BOUND",
+      "count": null,
+      "reason": "Five distinct pre-target dates reproduced from hash-verified official source artifacts; total career remains unknown.",
+      "lower_bound": 5,
+      "required_history_count": 5
+    },
+    {
+      "horse_number": "6",
+      "status": "UNVERIFIED",
+      "count": null,
+      "reason": "No unambiguous pre-target career tuple in own card row"
+    },
+    {
+      "horse_number": "7",
+      "status": "VERIFIED_HISTORY_LOWER_BOUND",
+      "count": null,
+      "reason": "Five distinct pre-target dates reproduced from hash-verified official source artifacts; total career remains unknown.",
+      "lower_bound": 5,
+      "required_history_count": 5
+    },
+    {
+      "horse_number": "8",
+      "status": "UNVERIFIED",
+      "count": null,
+      "reason": "No unambiguous pre-target career tuple in own card row"
+    },
+    {
+      "horse_number": "9",
+      "status": "VERIFIED_HISTORY_LOWER_BOUND",
+      "count": null,
+      "reason": "Five distinct pre-target dates reproduced from hash-verified official source artifacts; total career remains unknown.",
+      "lower_bound": 5,
+      "required_history_count": 5
+    },
+    {
+      "horse_number": "10",
+      "status": "VERIFIED_HISTORY_LOWER_BOUND",
+      "count": null,
+      "reason": "Five distinct pre-target dates reproduced from hash-verified official source artifacts; total career remains unknown.",
+      "lower_bound": 5,
+      "required_history_count": 5
+    },
+    {
+      "horse_number": "11",
+      "status": "VERIFIED_HISTORY_LOWER_BOUND",
+      "count": null,
+      "reason": "Five distinct pre-target dates reproduced from hash-verified official source artifacts; total career remains unknown.",
+      "lower_bound": 5,
+      "required_history_count": 5
+    },
+    {
+      "horse_number": "12",
+      "status": "VERIFIED_HISTORY_LOWER_BOUND",
+      "count": null,
+      "reason": "Five distinct pre-target dates reproduced from hash-verified official source artifacts; total career remains unknown.",
+      "lower_bound": 5,
+      "required_history_count": 5
+    }
+  ],
+  "required_history_evidence": [
+    {
+      "race_id": "20261024_東京_07",
+      "horse_id": "pw01dud002023105544/0E",
+      "horse_number": "1",
+      "required_history_count": 5,
+      "evidence": "VERIFIED_HISTORY_LOWER_BOUND",
+      "source_check": "PASS",
+      "verified_dates": [
+        "2026-03-15",
+        "2026-05-02",
+        "2026-05-17",
+        "2026-08-16",
+        "2026-10-10"
+      ],
+      "career_total": null
+    },
+    {
+      "race_id": "20261024_東京_07",
+      "horse_id": "pw01dud002019106938/5A",
+      "horse_number": "2",
+      "required_history_count": 5,
+      "evidence": "VERIFIED_HISTORY_LOWER_BOUND",
+      "source_check": "PASS",
+      "verified_dates": [
+        "2026-03-15",
+        "2026-04-12",
+        "2026-06-03",
+        "2026-09-05",
+        "2026-10-12"
+      ],
+      "career_total": null
+    },
+    {
+      "race_id": "20261024_東京_07",
+      "horse_id": "pw01dud002023105097/C2",
+      "horse_number": "3",
+      "required_history_count": 5,
+      "evidence": "VERIFIED_HISTORY_LOWER_BOUND",
+      "source_check": "PASS",
+      "verified_dates": [
+        "2026-02-01",
+        "2026-04-25",
+        "2026-05-17",
+        "2026-07-11",
+        "2026-08-08"
+      ],
+      "career_total": null
+    },
+    {
+      "race_id": "20261024_東京_07",
+      "horse_id": "pw01dud002022104570/F7",
+      "horse_number": "4",
+      "required_history_count": 5,
+      "evidence": "VERIFIED_HISTORY_LOWER_BOUND",
+      "source_check": "PASS",
+      "verified_dates": [
+        "2025-10-11",
+        "2025-11-23",
+        "2025-12-21",
+        "2026-08-08",
+        "2026-09-06"
+      ],
+      "career_total": null
+    },
+    {
+      "race_id": "20261024_東京_07",
+      "horse_id": "pw01dud002023102891/CB",
+      "horse_number": "5",
+      "required_history_count": 5,
+      "evidence": "VERIFIED_HISTORY_LOWER_BOUND",
+      "source_check": "PASS",
+      "verified_dates": [
+        "2026-05-10",
+        "2026-05-31",
+        "2026-06-07",
+        "2026-09-05",
+        "2026-10-10"
+      ],
+      "career_total": null
+    },
+    {
+      "race_id": "20261024_東京_07",
+      "horse_id": "pw01dud002022101141/A9",
+      "horse_number": "7",
+      "required_history_count": 5,
+      "evidence": "VERIFIED_HISTORY_LOWER_BOUND",
+      "source_check": "PASS",
+      "verified_dates": [
+        "2026-05-10",
+        "2026-06-07",
+        "2026-07-26",
+        "2026-08-30",
+        "2026-10-03"
+      ],
+      "career_total": null
+    },
+    {
+      "race_id": "20261024_東京_07",
+      "horse_id": "pw01dud002022105685/66",
+      "horse_number": "9",
+      "required_history_count": 5,
+      "evidence": "VERIFIED_HISTORY_LOWER_BOUND",
+      "source_check": "PASS",
+      "verified_dates": [
+        "2025-12-21",
+        "2026-03-01",
+        "2026-03-29",
+        "2026-06-21",
+        "2026-08-08"
+      ],
+      "career_total": null
+    },
+    {
+      "race_id": "20261024_東京_07",
+      "horse_id": "pw01dud002021104511/7E",
+      "horse_number": "10",
+      "required_history_count": 5,
+      "evidence": "VERIFIED_HISTORY_LOWER_BOUND",
+      "source_check": "PASS",
+      "verified_dates": [
+        "2026-03-28",
+        "2026-04-25",
+        "2026-05-16",
+        "2026-05-30",
+        "2026-10-15"
+      ],
+      "career_total": null
+    },
+    {
+      "race_id": "20261024_東京_07",
+      "horse_id": "pw01dud002021105035/64",
+      "horse_number": "11",
+      "required_history_count": 5,
+      "evidence": "VERIFIED_HISTORY_LOWER_BOUND",
+      "source_check": "PASS",
+      "verified_dates": [
+        "2026-01-24",
+        "2026-04-12",
+        "2026-06-07",
+        "2026-08-08",
+        "2026-08-22"
+      ],
+      "career_total": null
+    },
+    {
+      "race_id": "20261024_東京_07",
+      "horse_id": "pw01dud002023101107/A7",
+      "horse_number": "12",
+      "required_history_count": 5,
+      "evidence": "VERIFIED_HISTORY_LOWER_BOUND",
+      "source_check": "PASS",
+      "verified_dates": [
+        "2026-03-15",
+        "2026-05-03",
+        "2026-06-21",
+        "2026-07-05",
+        "2026-10-10"
+      ],
+      "career_total": null
+    }
+  ],
+  "surface_gate": "NOT_SUPPORTED_SURFACE",
+  "environment_gate": "PASS",
+  "environment": {
+    "cushion": {
+      "measured_at": "2026-10-24T07:00:00+09:00",
+      "cushion": 9.5
+    },
+    "moisture": {
+      "measured_at": "2026-10-24T05:00:00+09:00",
+      "turf_moisture_goal": 12.7,
+      "turf_moisture_goal_condition": "hard",
+      "turf_moisture_corner4": 15.5,
+      "turf_moisture_corner4_condition": "hard",
+      "dirt_moisture_goal": 2.0,
+      "dirt_moisture_goal_condition": "hard",
+      "dirt_moisture_corner4": 2.4,
+      "dirt_moisture_corner4_condition": "hard",
+      "note": "注記：測定時刻までの当日雨量は0.0ミリメートルでした"
+    }
+  },
+  "environment_source_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_environment_reconstruction/observations_20261024T225734690084Z.json",
+  "collected_audit": {
+    "schema_version": 1,
+    "status": "BLOCKED_UNAPPROVED_IMPUTATION",
+    "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+    "purpose": "environment_training",
+    "verification_issues": [],
+    "recovered_imputation_provenance": [],
+    "input_sha256": "309a28fc869e576a19cf4bb70b6d5216bbc062fbd7d17372fd4a2711b5ad0c7d",
+    "race_ids": [
+      "20261024_東京_07"
+    ],
+    "findings": [
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023105544/0E",
+        "horse_number": "1",
+        "run_index": "1",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "82bb4a5ebe117d31094ce67e",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023105544/0E",
+        "horse_number": "1",
+        "run_index": "2",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "ebbf05af7d642da32841da78",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023105544/0E",
+        "horse_number": "1",
+        "run_index": "3",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "ac2c57d44f8187cf368d778f",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023105544/0E",
+        "horse_number": "1",
+        "run_index": "4",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "82298687ec1ce7526dcc82f9",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023105544/0E",
+        "horse_number": "1",
+        "run_index": "5",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "9b66fa410794428396ee282f",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002019106938/5A",
+        "horse_number": "2",
+        "run_index": "1",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "2ccdcce49095c76eb413eb1f",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002019106938/5A",
+        "horse_number": "2",
+        "run_index": "2",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "866a16f08c7f17112616de51",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002019106938/5A",
+        "horse_number": "2",
+        "run_index": "3",
+        "field": "last_3f",
+        "method": "parser_last3f_fallback",
+        "finding_id": "14801e0bc7f40548af45baf5",
+        "feature_impact": "closing_strength,pace_score",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002019106938/5A",
+        "horse_number": "2",
+        "run_index": "3",
+        "field": "passing_order",
+        "method": "neutral_0.5",
+        "finding_id": "e461c841c596fafcf8db9005",
+        "feature_impact": "front_rate,pace_score,track_bias_score",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002019106938/5A",
+        "horse_number": "2",
+        "run_index": "3",
+        "field": "popularity",
+        "method": "default_10",
+        "finding_id": "8d024b16dd2de690795fdf97",
+        "feature_impact": "avg_popularity,popularity_gap",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002019106938/5A",
+        "horse_number": "2",
+        "run_index": "3",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "c58905e2ae0e81e86491a983",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002019106938/5A",
+        "horse_number": "2",
+        "run_index": "4",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "9d4f9fed22a749a97ef1a64e",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002019106938/5A",
+        "horse_number": "2",
+        "run_index": "5",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "38bacc11a68993c6b6d141b8",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023105097/C2",
+        "horse_number": "3",
+        "run_index": "1",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "f4f3a5973b0854a11cd714d2",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023105097/C2",
+        "horse_number": "3",
+        "run_index": "2",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "3661a377a7a2bb203da8adb2",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023105097/C2",
+        "horse_number": "3",
+        "run_index": "3",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "dfcd699c0ad1aa336954b6c2",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023105097/C2",
+        "horse_number": "3",
+        "run_index": "4",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "55cf25765cc6fb73bd6fa582",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023105097/C2",
+        "horse_number": "3",
+        "run_index": "5",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "5c9beb895714c4662de94fbe",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002022104570/F7",
+        "horse_number": "4",
+        "run_index": "1",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "f02f870b9dc91e8ef57a59ce",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002022104570/F7",
+        "horse_number": "4",
+        "run_index": "2",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "cd674e5afd2ee018ee74395b",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002022104570/F7",
+        "horse_number": "4",
+        "run_index": "3",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "df3b9f21bc34c7ab02ca5fcb",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002022104570/F7",
+        "horse_number": "4",
+        "run_index": "4",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "bd3411adcfbdf1c41640b7c0",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002022104570/F7",
+        "horse_number": "4",
+        "run_index": "5",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "e730eb14f2d34f129723a285",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023102891/CB",
+        "horse_number": "5",
+        "run_index": "1",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "ea6f74a15036b9da915eff19",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023102891/CB",
+        "horse_number": "5",
+        "run_index": "2",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "2829e3a1ff840787dfa0bbc0",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023102891/CB",
+        "horse_number": "5",
+        "run_index": "3",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "2a272ffad42648fcd6dea7c4",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023102891/CB",
+        "horse_number": "5",
+        "run_index": "4",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "428f64419bfae4286895ddce",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023102891/CB",
+        "horse_number": "5",
+        "run_index": "5",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "c4c3983ec63d7823bc1c0cd5",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023106521/84",
+        "horse_number": "6",
+        "run_index": "1",
+        "field": "last_3f",
+        "method": "parser_last3f_fallback",
+        "finding_id": "51ed6b7a0ced9c2f430f71be",
+        "feature_impact": "closing_strength,pace_score",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023106521/84",
+        "horse_number": "6",
+        "run_index": "1",
+        "field": "passing_order",
+        "method": "neutral_0.5",
+        "finding_id": "210696161764c6efc849033f",
+        "feature_impact": "front_rate,pace_score,track_bias_score",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023106521/84",
+        "horse_number": "6",
+        "run_index": "1",
+        "field": "popularity",
+        "method": "default_10",
+        "finding_id": "9edeca092520a7cb872aa66f",
+        "feature_impact": "avg_popularity,popularity_gap",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023106521/84",
+        "horse_number": "6",
+        "run_index": "1",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "32a16bd144e27997885584a6",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023106521/84",
+        "horse_number": "6",
+        "run_index": "2",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "65936605be2dd2ee5a2fb3a0",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023106521/84",
+        "horse_number": "6",
+        "run_index": "3",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "4cf39d5e2514d2c342e0297d",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002022101141/A9",
+        "horse_number": "7",
+        "run_index": "1",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "5eb6d1595409353bf4fd6184",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002022101141/A9",
+        "horse_number": "7",
+        "run_index": "2",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "6fc0913ec81a618401bb2b17",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002022101141/A9",
+        "horse_number": "7",
+        "run_index": "3",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "4beb38b9c37eed346b7448bf",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002022101141/A9",
+        "horse_number": "7",
+        "run_index": "4",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "b2eaff1d6c83cf1c1fea92c1",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002022101141/A9",
+        "horse_number": "7",
+        "run_index": "5",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "7e8f46466cfb4091c169d49d",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023103780/06",
+        "horse_number": "8",
+        "run_index": "1",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "2bf125d1a6a1aadc5d18cc5c",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023103780/06",
+        "horse_number": "8",
+        "run_index": "2",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "effa0b2013e97b37b3252654",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023103780/06",
+        "horse_number": "8",
+        "run_index": "3",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "72edb19c5c6dce332b23f0c4",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002022105685/66",
+        "horse_number": "9",
+        "run_index": "1",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "40f59774b814e17de73f9bc1",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002022105685/66",
+        "horse_number": "9",
+        "run_index": "2",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "5c944075ea7a4c0ad8f4e68d",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002022105685/66",
+        "horse_number": "9",
+        "run_index": "3",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "2ea31ab90519a38ed780eae4",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002022105685/66",
+        "horse_number": "9",
+        "run_index": "4",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "79dab2fb01cf548f310c71fa",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002022105685/66",
+        "horse_number": "9",
+        "run_index": "5",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "eefb7b2e62cf365af32c0433",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002021104511/7E",
+        "horse_number": "10",
+        "run_index": "1",
+        "field": "last_3f",
+        "method": "parser_last3f_fallback",
+        "finding_id": "25bd185c1f0f3c2a2ee267c0",
+        "feature_impact": "closing_strength,pace_score",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002021104511/7E",
+        "horse_number": "10",
+        "run_index": "1",
+        "field": "passing_order",
+        "method": "neutral_0.5",
+        "finding_id": "f42afdaf413f61aff4835b4a",
+        "feature_impact": "front_rate,pace_score,track_bias_score",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002021104511/7E",
+        "horse_number": "10",
+        "run_index": "1",
+        "field": "popularity",
+        "method": "default_10",
+        "finding_id": "eb4f67ec2ad972e277ce9d4b",
+        "feature_impact": "avg_popularity,popularity_gap",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002021104511/7E",
+        "horse_number": "10",
+        "run_index": "1",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "34af6fbce65f8af61b8c316b",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002021104511/7E",
+        "horse_number": "10",
+        "run_index": "2",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "05e5f3acd09f3eeb5aa899fe",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002021104511/7E",
+        "horse_number": "10",
+        "run_index": "3",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "87ff5dff6ad65c006049bdc7",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002021104511/7E",
+        "horse_number": "10",
+        "run_index": "4",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "7524e70ead1f8e08538c9196",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002021104511/7E",
+        "horse_number": "10",
+        "run_index": "5",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "e84dac454026be462e1e6e28",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002021105035/64",
+        "horse_number": "11",
+        "run_index": "1",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "973139a81d19e022006a314f",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002021105035/64",
+        "horse_number": "11",
+        "run_index": "2",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "8bbbc6feaee1386a1a2f801d",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002021105035/64",
+        "horse_number": "11",
+        "run_index": "3",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "29cb1901134307bc70dc5ea8",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002021105035/64",
+        "horse_number": "11",
+        "run_index": "4",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "116fd5de28885a14fb6d8505",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002021105035/64",
+        "horse_number": "11",
+        "run_index": "5",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "be2c3556737584bd005557ce",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023101107/A7",
+        "horse_number": "12",
+        "run_index": "1",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "fb727fb8280003eca89fe5f9",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023101107/A7",
+        "horse_number": "12",
+        "run_index": "2",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "7ad64d5529b7715a50ff6bdb",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023101107/A7",
+        "horse_number": "12",
+        "run_index": "3",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "1d1559bdaf8950e0d1f70d07",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023101107/A7",
+        "horse_number": "12",
+        "run_index": "4",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "58fe2280cddce784e3767306",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_id": "pw01dud002023101107/A7",
+        "horse_number": "12",
+        "run_index": "5",
+        "field": "odds",
+        "method": "exclude_nonpositive_then_default_0",
+        "finding_id": "fb1235a2b9bb676781013c4c",
+        "feature_impact": "avg_odds,odds_trend,odds_volatility",
+        "required_missing": false,
+        "approved": false
+      }
+    ],
+    "missing_fields": [
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "1",
+        "run_index": "1",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "1",
+        "run_index": "1",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "1",
+        "run_index": "1",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "1",
+        "run_index": "2",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "1",
+        "run_index": "2",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "1",
+        "run_index": "2",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "1",
+        "run_index": "3",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "1",
+        "run_index": "3",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "1",
+        "run_index": "3",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "1",
+        "run_index": "4",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "1",
+        "run_index": "4",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "1",
+        "run_index": "4",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "1",
+        "run_index": "5",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "1",
+        "run_index": "5",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "2",
+        "run_index": "1",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "2",
+        "run_index": "1",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "2",
+        "run_index": "1",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "2",
+        "run_index": "2",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "2",
+        "run_index": "2",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "2",
+        "run_index": "2",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "2",
+        "run_index": "3",
+        "field": "passing_order",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "2",
+        "run_index": "3",
+        "field": "popularity",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "2",
+        "run_index": "3",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "2",
+        "run_index": "3",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "2",
+        "run_index": "3",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "2",
+        "run_index": "4",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "2",
+        "run_index": "4",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "2",
+        "run_index": "4",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "2",
+        "run_index": "5",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "2",
+        "run_index": "5",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "3",
+        "run_index": "1",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "3",
+        "run_index": "1",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "3",
+        "run_index": "1",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "3",
+        "run_index": "2",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "3",
+        "run_index": "2",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "3",
+        "run_index": "2",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "3",
+        "run_index": "3",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "3",
+        "run_index": "3",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "3",
+        "run_index": "3",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "3",
+        "run_index": "4",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "3",
+        "run_index": "4",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "3",
+        "run_index": "4",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "3",
+        "run_index": "5",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "3",
+        "run_index": "5",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "4",
+        "run_index": "1",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "4",
+        "run_index": "1",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "4",
+        "run_index": "1",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "4",
+        "run_index": "2",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "4",
+        "run_index": "2",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "4",
+        "run_index": "2",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "4",
+        "run_index": "3",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "4",
+        "run_index": "3",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "4",
+        "run_index": "3",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "4",
+        "run_index": "4",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "4",
+        "run_index": "4",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "4",
+        "run_index": "4",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "4",
+        "run_index": "5",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "4",
+        "run_index": "5",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "5",
+        "run_index": "1",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "5",
+        "run_index": "1",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "5",
+        "run_index": "1",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "5",
+        "run_index": "2",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "5",
+        "run_index": "2",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "5",
+        "run_index": "2",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "5",
+        "run_index": "3",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "5",
+        "run_index": "3",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "5",
+        "run_index": "3",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "5",
+        "run_index": "4",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "5",
+        "run_index": "4",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "5",
+        "run_index": "4",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "5",
+        "run_index": "5",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "5",
+        "run_index": "5",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "6",
+        "run_index": "1",
+        "field": "passing_order",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "6",
+        "run_index": "1",
+        "field": "popularity",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "6",
+        "run_index": "1",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "6",
+        "run_index": "1",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "6",
+        "run_index": "1",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "6",
+        "run_index": "2",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "6",
+        "run_index": "2",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "6",
+        "run_index": "2",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "6",
+        "run_index": "3",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "6",
+        "run_index": "3",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "6",
+        "run_index": "3",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "7",
+        "run_index": "1",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "7",
+        "run_index": "1",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "7",
+        "run_index": "1",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "7",
+        "run_index": "2",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "7",
+        "run_index": "2",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "7",
+        "run_index": "2",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "7",
+        "run_index": "3",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "7",
+        "run_index": "3",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "7",
+        "run_index": "3",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "7",
+        "run_index": "4",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "7",
+        "run_index": "4",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "7",
+        "run_index": "4",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "7",
+        "run_index": "5",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "7",
+        "run_index": "5",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "8",
+        "run_index": "1",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "8",
+        "run_index": "1",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "8",
+        "run_index": "1",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "8",
+        "run_index": "2",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "8",
+        "run_index": "2",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "8",
+        "run_index": "2",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "8",
+        "run_index": "3",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "8",
+        "run_index": "3",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "8",
+        "run_index": "3",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "9",
+        "run_index": "1",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "9",
+        "run_index": "1",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "9",
+        "run_index": "1",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "9",
+        "run_index": "2",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "9",
+        "run_index": "2",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "9",
+        "run_index": "2",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "9",
+        "run_index": "3",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "9",
+        "run_index": "3",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "9",
+        "run_index": "3",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "9",
+        "run_index": "4",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "9",
+        "run_index": "4",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "9",
+        "run_index": "4",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "9",
+        "run_index": "5",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "9",
+        "run_index": "5",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "10",
+        "run_index": "1",
+        "field": "passing_order",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "10",
+        "run_index": "1",
+        "field": "popularity",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "10",
+        "run_index": "1",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "10",
+        "run_index": "1",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "10",
+        "run_index": "1",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "10",
+        "run_index": "2",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "10",
+        "run_index": "2",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "10",
+        "run_index": "2",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "10",
+        "run_index": "3",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "10",
+        "run_index": "3",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "10",
+        "run_index": "3",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "10",
+        "run_index": "4",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "10",
+        "run_index": "4",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "10",
+        "run_index": "4",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "10",
+        "run_index": "5",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "10",
+        "run_index": "5",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "11",
+        "run_index": "1",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "11",
+        "run_index": "1",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "11",
+        "run_index": "1",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "11",
+        "run_index": "2",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "11",
+        "run_index": "2",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "11",
+        "run_index": "2",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "11",
+        "run_index": "3",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "11",
+        "run_index": "3",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "11",
+        "run_index": "3",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "11",
+        "run_index": "4",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "11",
+        "run_index": "4",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "11",
+        "run_index": "4",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "11",
+        "run_index": "5",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "11",
+        "run_index": "5",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "12",
+        "run_index": "1",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "12",
+        "run_index": "1",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "12",
+        "run_index": "1",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "12",
+        "run_index": "2",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "12",
+        "run_index": "2",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "12",
+        "run_index": "2",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "12",
+        "run_index": "3",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "12",
+        "run_index": "3",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "12",
+        "run_index": "3",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "12",
+        "run_index": "4",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "12",
+        "run_index": "4",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "12",
+        "run_index": "4",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "12",
+        "run_index": "5",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "12",
+        "run_index": "5",
+        "field": "odds",
+        "state": "missing",
+        "model_used": true
+      }
+    ],
+    "missing_field_counts": {
+      "pace": 56,
+      "weather": 46,
+      "odds": 56,
+      "passing_order": 3,
+      "popularity": 3
+    },
+    "history_counts": [
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "1",
+        "collected": 5,
+        "required": 5,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "2",
+        "collected": 5,
+        "required": 5,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "3",
+        "collected": 5,
+        "required": 5,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "4",
+        "collected": 5,
+        "required": 5,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "5",
+        "collected": 5,
+        "required": 5,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "6",
+        "collected": 3,
+        "required": null,
+        "status": "UNVERIFIED"
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "7",
+        "collected": 5,
+        "required": 5,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "8",
+        "collected": 3,
+        "required": null,
+        "status": "UNVERIFIED"
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "9",
+        "collected": 5,
+        "required": 5,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "10",
+        "collected": 5,
+        "required": 5,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "11",
+        "collected": 5,
+        "required": 5,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_07",
+        "horse_number": "12",
+        "collected": 5,
+        "required": 5,
+        "status": "COMPLETE"
+      }
+    ],
+    "history_counts_verified": false,
+    "unapproved_finding_count": 65,
+    "source_audit_status": "VERIFIED_REPARSE",
+    "raw_provenance_status": "VERIFIED_REPARSE",
+    "limitations": [
+      "Normalized inputs only; original-source parser omissions are not verified.",
+      "Collector quality flags and nonempty numeric values do not prove observed origin.",
+      "Raw history reparse verifies reproducibility, not independent parser completeness or current entry provenance."
+    ]
+  },
+  "source_provenance": [
+    {
+      "url": "https://jra.jp/JRADB/accessD.html?CNAME=pw01dde1005202604080720261024/F6",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:03:56.823007+00:00",
+      "sha256": "8cb0e77856035b7e1bc7d59d5fde2dc65e5b38235450c934ebcb02d039ba15dd",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/d8590256856414b3305beba5a8278bfaacf261de98d2b9e2e6251b4bcb06dd8f.html",
+      "encoding": "CP932"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202601080120260315/C5",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:14:16.466106+00:00",
+      "sha256": "8931e08d2ae633b3e92cc511eac2b4957d5146835bfb97f28aedf525f24c96af",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_ac59df72ef60d8b00438dc6c8fa9125034925558ec5890d79e9ca966ab48d705.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002023105544/0E",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:03:58.046802+00:00",
+      "sha256": "8693b8b62fa4ec32500f1cf3757c1755b1c5477eb33ece0cc081a332278a1ee3",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/93c2d231e0c2bbf3b022c423d06719b24cd146e24167437825e141780924d9ed.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1006202602061220260315/39",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:12:59.919642+00:00",
+      "sha256": "c639ebf4eeb1cded843e54c59a58bdd6e6844fbaa8ead91a05e918991d2f2e64",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_d5f35d2cb2237fe0dcb56e59d10cec5d5061c575455d19329a3ffe49bf93866d.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002019106938/5A",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:03:58.904145+00:00",
+      "sha256": "c3303c1192afa974f410f8c022fd7f736fdc3cb613b6dece827e8d76b052fd39",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/bb871543c73996bb0638fddd04fa236c5b616938f32a6c4ff4d9927d2df24233.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1005202601020320260201/8C",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:12:25.351202+00:00",
+      "sha256": "1421887ef3848357e1e980134651466847f8bd74ef25aff5a59befd26117ee8b",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_fe525b9e2102dd0bcd505b72bcab5eff314e0c840ed5657a3aaa385faf3b68f3.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002023105097/C2",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:03:59.953801+00:00",
+      "sha256": "eb914440610c6a9770a5d91fcb7774ad444a753b565ac96af0d45b4e15ed20c4",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/440423ce8ae02a103358d8cae60eafd2f92b93a2ac3f643a021ac972d5b585c8.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1005202504030820251011/90",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:12:14.933534+00:00",
+      "sha256": "b265839737cdf47f0facd611118194a2ef29d71f180700782fa3c03ecddccda5",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_437b826910195bc3f0157754a9f11fffee0eef643cf34f2e6ad7caca2d6cbe9e.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002022104570/F7",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:04:01.219242+00:00",
+      "sha256": "c5a8c076634564722984ba6ce21f8e9a725bc6a048185104222d58a6e1a3f82b",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/09b45ccc17cbe0004d7a17d8e58f79e312eceb038d6ad4b3b741dc9947644e10.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202603060120260510/3C",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:13:57.046974+00:00",
+      "sha256": "311e6d22308f1e53b274b8898609edd61cf9e772af9ac583f3929a6c00cf1bfe",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_56bb1ed7cb0396d72d6a7604f41643a2efa28af7f6c9654682850c9ed7fce10c.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002023102891/CB",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:04:02.204578+00:00",
+      "sha256": "398228960883f1b90b2270226ad2358037225ffd7ef8b1d54a1cdae5c93c2818",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/e129d179b7844a2890452c799100301e293f879e22f30aa2fc2b771ee6ccd92e.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002023106521/84",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:04:03.014549+00:00",
+      "sha256": "ebcd253731bb7183b65ceb594d32c5462b0b049b1c24a8f03ab847f28d1a7a4b",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/9004fa23003f979fd71c9696d1aabc64585b4bb01d4b5b575d3afdfc2088f5fd.html",
+      "encoding": "CP932"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1005202602060720260510/6B",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:12:39.654932+00:00",
+      "sha256": "ee5879aa53762dc65bc6933ae5f1c8c9cc990f4c41e8ddb87db3a0f56ab47660",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_ba3f61cb59bbf33a0e8d0be4ba15f9d6b9f7d864a75e3d60b12ce25cd9edbfb2.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002022101141/A9",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:04:03.888839+00:00",
+      "sha256": "c895f01bd15274345856e5d1a23cbc151dce792ce50d8a6c8b82489233248ef5",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/5f17db83ad013f0d80099a136537f4733b07869a78d6cb7841b0b32a651258fb.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002023103780/06",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:04:04.680183+00:00",
+      "sha256": "bb77bfc27a65abf42e17549ef3bf863a710d74ab5ac144258653724b3f5ddd83",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/def99484139a07dcf71d2355efe7dfe5d3739a3ec2c63ec46e5df155ee5c8cb4.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1007202505060320251221/75",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:13:17.010555+00:00",
+      "sha256": "f05c6942fac705d90387e746b55a2bb07fa619d593af326dcfb19c23d7e436ea",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_8b515acea92262276dc1a9139ae546417c3135399d2366314b52752357fab40f.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002022105685/66",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:04:05.457199+00:00",
+      "sha256": "9b7673ea34fc06e97fda544f69c39fa249874f13b45573fa2f01031c64b4ec9a",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/79963c6dc10f9986524ca7f4ec6b3b08d40439fd79f19d49ec5888041fc6c6b8.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1007202601050620260328/F2",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:13:24.602599+00:00",
+      "sha256": "8a4b8c00e45d0864fdc36c954e049e36ebcdad9c3772f311253146a12110dbdf",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_6ce6fb3bb6d06c49828010366c5cb8b991fe247a48e5fc2f8c7293f8f15e2383.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002021104511/7E",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:04:06.381055+00:00",
+      "sha256": "6d68c61c6cdbe77184261f5a9f1b086c51c70696015e5e93f4cf37e35fefd427",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/2b53d604e12cab2985c71eda7479e840c300325430951d74e1e41a057b60323d.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1006202601081220260124/95",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:12:55.636171+00:00",
+      "sha256": "2463336c46258f698c0a565fe320bb03d2bd736b9ddcf993b3cc2c64d06f88f6",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_56d3bd025eb1d092d32e3d0fd41347f365cc72f2d3bd59230c9e297d619b9bfe.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002021105035/64",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:04:07.265969+00:00",
+      "sha256": "7ab781026ebb6d970e31581bbe1115dd1061878107f73d2b36a5b77d63c145f1",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/e7fbcf817cba21fdfeecd74291faffd8b4942089bbebd70e51e74c04ffe81117.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1006202602060420260315/51",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:12:59.102553+00:00",
+      "sha256": "51bcb49c4c90b7058d3aed68c5154de20c55388b7f66a6e02b5d9d7a0ed52954",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/past_result_68743a9956ed90db715b114f1a9be711dac7a2d67ff99564b35ab4baedb9c43a.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002023101107/A7",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:04:07.987365+00:00",
+      "sha256": "a5081a6a85e014921f3ef392a55803a7f0e1183e8eda334054fef7e90c5addbe",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/68d682f733342e1b277db20c24f6cb50122946289730c58d6009c7ea73d9f9c9.html",
+      "encoding": "SHIFT_JIS"
+    }
+  ]
+}

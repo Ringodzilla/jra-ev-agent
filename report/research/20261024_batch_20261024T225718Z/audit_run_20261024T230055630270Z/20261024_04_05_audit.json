@@ -1,0 +1,558 @@
+{
+  "race_id": "20261024_新潟_05",
+  "numeric_race_id": "20261024_04_05",
+  "gate": "BLOCKED_ZERO_HISTORY_NEUTRAL_FORBIDDEN",
+  "model_ready": false,
+  "record_type": "retrospective_reconstructed",
+  "production_learning_eligible": false,
+  "metadata_origin": "posthoc_official_result_header",
+  "post_time": "2026-10-24T12:05:00+09:00",
+  "metadata_source": {
+    "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1004202604030520261024/BF",
+    "method": "POST",
+    "captured_at": "2026-10-24T23:00:33.930760+00:00",
+    "sha256": "587c3a7f28a3665d90a4f7585e5908861b9b63927f35097fee9f10f993413f74",
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/6786cd8e263e2653e3c5b835eb99fc212de1fbef1b2e1c3edc819626efc7dfd7.html",
+    "encoding": "SHIFT_JIS"
+  },
+  "source_issues": [],
+  "history_conflicts": [],
+  "zero_history_horse_numbers": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14"
+  ],
+  "career_audit": [
+    {
+      "horse_number": "1",
+      "status": "UNVERIFIED",
+      "count": null,
+      "reason": "No unambiguous pre-target career tuple in own card row"
+    },
+    {
+      "horse_number": "2",
+      "status": "UNVERIFIED",
+      "count": null,
+      "reason": "No unambiguous pre-target career tuple in own card row"
+    },
+    {
+      "horse_number": "3",
+      "status": "UNVERIFIED",
+      "count": null,
+      "reason": "No unambiguous pre-target career tuple in own card row"
+    },
+    {
+      "horse_number": "4",
+      "status": "UNVERIFIED",
+      "count": null,
+      "reason": "No unambiguous pre-target career tuple in own card row"
+    },
+    {
+      "horse_number": "5",
+      "status": "UNVERIFIED",
+      "count": null,
+      "reason": "No unambiguous pre-target career tuple in own card row"
+    },
+    {
+      "horse_number": "6",
+      "status": "UNVERIFIED",
+      "count": null,
+      "reason": "No unambiguous pre-target career tuple in own card row"
+    },
+    {
+      "horse_number": "7",
+      "status": "UNVERIFIED",
+      "count": null,
+      "reason": "No unambiguous pre-target career tuple in own card row"
+    },
+    {
+      "horse_number": "8",
+      "status": "UNVERIFIED",
+      "count": null,
+      "reason": "No unambiguous pre-target career tuple in own card row"
+    },
+    {
+      "horse_number": "9",
+      "status": "UNVERIFIED",
+      "count": null,
+      "reason": "No unambiguous pre-target career tuple in own card row"
+    },
+    {
+      "horse_number": "10",
+      "status": "UNVERIFIED",
+      "count": null,
+      "reason": "No unambiguous pre-target career tuple in own card row"
+    },
+    {
+      "horse_number": "11",
+      "status": "UNVERIFIED",
+      "count": null,
+      "reason": "No unambiguous pre-target career tuple in own card row"
+    },
+    {
+      "horse_number": "12",
+      "status": "UNVERIFIED",
+      "count": null,
+      "reason": "No unambiguous pre-target career tuple in own card row"
+    },
+    {
+      "horse_number": "13",
+      "status": "UNVERIFIED",
+      "count": null,
+      "reason": "No unambiguous pre-target career tuple in own card row"
+    },
+    {
+      "horse_number": "14",
+      "status": "UNVERIFIED",
+      "count": null,
+      "reason": "No unambiguous pre-target career tuple in own card row"
+    }
+  ],
+  "surface_gate": "PASS",
+  "environment_gate": "PASS",
+  "environment": {
+    "cushion": {
+      "measured_at": "2026-10-24T07:00:00+09:00",
+      "cushion": 10.0
+    },
+    "moisture": {
+      "measured_at": "2026-10-24T05:30:00+09:00",
+      "turf_moisture_goal": 11.1,
+      "turf_moisture_goal_condition": "hard",
+      "turf_moisture_corner4": 13.2,
+      "turf_moisture_corner4_condition": "hard",
+      "dirt_moisture_goal": 7.7,
+      "dirt_moisture_goal_condition": "wet",
+      "dirt_moisture_corner4": 8.3,
+      "dirt_moisture_corner4_condition": "wet",
+      "note": "注記：特になし"
+    }
+  },
+  "environment_source_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_environment_reconstruction/observations_20261024T225734690084Z.json",
+  "collected_audit": {
+    "schema_version": 1,
+    "status": "BLOCKED_UNAPPROVED_IMPUTATION",
+    "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+    "purpose": "environment_training",
+    "verification_issues": [],
+    "recovered_imputation_provenance": [],
+    "input_sha256": "7a33028939d643befe4fa329054936c8ac70b78df736db0de5c2ef06bb6b85c1",
+    "race_ids": [
+      "20261024_新潟_05"
+    ],
+    "findings": [
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_id": "pw01dud002024107044/83",
+        "horse_number": "1",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "ffbc51598b955c53a873da0a",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_id": "pw01dud002024103488/97",
+        "horse_number": "2",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "579755607ffdfc38aca05f51",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_id": "pw01dud002024107040/B7",
+        "horse_number": "3",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "89b6507c7660fde4044f5ff6",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_id": "pw01dud002024105903/AB",
+        "horse_number": "4",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "a34e57be1633d1bb4d7a9db0",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_id": "pw01dud002024105983/2B",
+        "horse_number": "5",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "1f7a9a93f2991f23b8b7a20a",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_id": "pw01dud002024103447/E4",
+        "horse_number": "6",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "cccd4d41a11581e7f869a082",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_id": "pw01dud002024103360/AE",
+        "horse_number": "7",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "396e3b10a33c7d0b4967f0c3",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_id": "pw01dud002024102788/3B",
+        "horse_number": "8",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "a7eea9035e416aa383c8ec41",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_id": "pw01dud002024106259/45",
+        "horse_number": "9",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "18832901f243dc5c89fc4717",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_id": "pw01dud002024106884/5C",
+        "horse_number": "10",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "ab92a273fe23a9308a034aed",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_id": "pw01dud002024103577/45",
+        "horse_number": "11",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "f992980de14748dc8d859b43",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_id": "pw01dud002024106084/D4",
+        "horse_number": "12",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "6f024dd83180641f6b0092ed",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_id": "pw01dud002024104190/6B",
+        "horse_number": "13",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "c0837ff1978ada6ace242cf4",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_id": "pw01dud002024100420/D2",
+        "horse_number": "14",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "b28838cecd47d9d761af889e",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      }
+    ],
+    "missing_fields": [],
+    "missing_field_counts": {},
+    "history_counts": [
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_number": "1",
+        "collected": 0,
+        "required": null,
+        "status": "UNVERIFIED"
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_number": "2",
+        "collected": 0,
+        "required": null,
+        "status": "UNVERIFIED"
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_number": "3",
+        "collected": 0,
+        "required": null,
+        "status": "UNVERIFIED"
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_number": "4",
+        "collected": 0,
+        "required": null,
+        "status": "UNVERIFIED"
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_number": "5",
+        "collected": 0,
+        "required": null,
+        "status": "UNVERIFIED"
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_number": "6",
+        "collected": 0,
+        "required": null,
+        "status": "UNVERIFIED"
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_number": "7",
+        "collected": 0,
+        "required": null,
+        "status": "UNVERIFIED"
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_number": "8",
+        "collected": 0,
+        "required": null,
+        "status": "UNVERIFIED"
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_number": "9",
+        "collected": 0,
+        "required": null,
+        "status": "UNVERIFIED"
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_number": "10",
+        "collected": 0,
+        "required": null,
+        "status": "UNVERIFIED"
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_number": "11",
+        "collected": 0,
+        "required": null,
+        "status": "UNVERIFIED"
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_number": "12",
+        "collected": 0,
+        "required": null,
+        "status": "UNVERIFIED"
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_number": "13",
+        "collected": 0,
+        "required": null,
+        "status": "UNVERIFIED"
+      },
+      {
+        "race_id": "20261024_新潟_05",
+        "horse_number": "14",
+        "collected": 0,
+        "required": null,
+        "status": "UNVERIFIED"
+      }
+    ],
+    "history_counts_verified": false,
+    "unapproved_finding_count": 14,
+    "source_audit_status": "UNVERIFIED",
+    "raw_provenance_status": "UNVERIFIED",
+    "limitations": [
+      "Normalized inputs only; original-source parser omissions are not verified.",
+      "Collector quality flags and nonempty numeric values do not prove observed origin.",
+      "Raw history reparse verifies reproducibility, not independent parser completeness or current entry provenance."
+    ]
+  },
+  "source_provenance": [
+    {
+      "url": "https://jra.jp/JRADB/accessD.html?CNAME=pw01dde1004202604030520261024/03",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:00:34.650293+00:00",
+      "sha256": "65b9d85fac7bff836c6030ff26120889fec0e156b37e0bcfcefc7b6a3e2f2993",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/762e0a2c824b8a198bbe95a1aea6584ab5b88644c4f00d432c82629cffa508cf.html",
+      "encoding": "CP932"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024107044/83",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:00:35.562830+00:00",
+      "sha256": "9ff47d38d232976aa234882afc354e2316e29fd0bfafa3d471a2b50075563716",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/290d2e5881fcebf057cbd52f5ee51e421655bb1b21a0c22444f409f47933947f.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024103488/97",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:00:36.240812+00:00",
+      "sha256": "5921cf0862a709d92de2d9bea2eb3dfa98670bf40bfe263557f08a69dc817b36",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/7bc700975b7fe804e4e13a7471e4bd1904dc6bcaf96a942e1a32d97c29921824.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024107040/B7",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:00:36.984461+00:00",
+      "sha256": "870bc99f2eeff9074d2f9abe2513854ca82d4aec6ce91d775820eee6e2663304",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/544c99a5911120e09202c72c6d2b0227f58025773726eddf026e14824f917133.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105903/AB",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:00:37.768710+00:00",
+      "sha256": "655e3f9ef94e2b81384da87dac85c1bba6c6fe4b56e2e4b55b14d6bb69012697",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/56f5d19a869b257d6c4290d894695db55a7e1ccde718ff4b511163e06de52a10.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105983/2B",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:00:38.498566+00:00",
+      "sha256": "bda24c5dee4984a55bf8808ef4a234d7576b6e3b78978b486b034d8e051c96f6",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/616ed4893b58bef272a97741171694daec375c5cc7764260df59210f41c1961c.html",
+      "encoding": "CP932"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024103447/E4",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:00:39.232451+00:00",
+      "sha256": "913d25ae273385130fb5aa5c3e4afe9e1d344099acb264b456102f1b1784fbe4",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/affa9b1feb708dc9f500ae0cde30c65b0edcd7c1b9f9a7d4c430b1e29e8707e4.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024103360/AE",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:00:40.013750+00:00",
+      "sha256": "4230a55a0f31ba0d78e7e6c89f1a195d771b1601b5c882a444079875622cf009",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/18805942824ef6b295e2a1e745598641c303fe581167931374176a169f99477e.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102788/3B",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:00:40.827424+00:00",
+      "sha256": "05d0d17de85dc6f45c29df8d28249e8becaa64d8cf482348a82ea52fb09f2036",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/15eb4d187bcdc2aea045041c7f31dc02ac3610792d6da284a34032c75c80daca.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106259/45",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:00:41.671424+00:00",
+      "sha256": "d08ba59c0c2b29f3d6c3b06d812e45f88d9ea979e068ac116b366a8b56964517",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/e887264133f5050c8618e6fe9a1e88795dab04b644633458b6359331570168ae.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106884/5C",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:00:42.379668+00:00",
+      "sha256": "d53f75dded8d01c777dcc2e6bd32c1f17e9be2f91fb447549520c0ac58c52ea1",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/7b418bdff4c68fb7ded38baa1756f5c6c5e83dbd727f148c7791e91c49018d99.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024103577/45",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:00:43.239332+00:00",
+      "sha256": "3cd463f6518f1344f853739f4a0d48aadc000e77b2d124c78bab178350795074",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/e3c79b5042ed85a9712d815cd07dff4c0f3fbf25db22329ff9f49225665a73bc.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106084/D4",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:00:44.008777+00:00",
+      "sha256": "012723e08b99465d42ce866069d24ae2ec111b26c703ae47073c8bf36c5eecf1",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/1586f76986ef1600c6ad813a826d1598609379faba254cbeca0085573b25f742.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104190/6B",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:00:44.831133+00:00",
+      "sha256": "725456c5641c6d0b1f08b18d04aa7f7f5d4c133310eb939d7827fbbb1b0de5cc",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/e6ec334030bb646429f7026d513f552f44ccd1133677ca470ce7599b4e12af83.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024100420/D2",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:00:45.651714+00:00",
+      "sha256": "589e033ae40b8c19c73ddf44f2edfba98ea614fb11ecba7e40a052d16adb1e57",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/a3ac873ebadd76c195d8e24b12716a4b04e27df272d0cdc7976d371816c6f55a.html",
+      "encoding": "SHIFT_JIS"
+    }
+  ]
+}

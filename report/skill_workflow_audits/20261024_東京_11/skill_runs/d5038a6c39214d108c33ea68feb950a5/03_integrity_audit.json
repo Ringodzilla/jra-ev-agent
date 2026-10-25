@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "step_id": "integrity_audit",
+  "skill_name": "jra-03-integrity-audit",
+  "status": "PASS",
+  "execution_kind": "deterministic_code_gate",
+  "mode": "prediction",
+  "skill_sha256": "473cbe7a51aab15c4378483a92a3e4499b30c1cd7f284d4905dbb0406c942e65",
+  "input_artifacts": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/skill_workflow_audits/20261024_東京_11/skill_runs/d5038a6c39214d108c33ea68feb950a5/02_collection.json",
+      "sha256": "fc41d514a0bd1997ff6c000fc98dfb473bef5127ecea3e91e91d0f88f1c2db46"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/skill_workflow_audits/20261024_東京_11/skill_runs/d5038a6c39214d108c33ea68feb950a5/03_integrity_audit_output.json",
+      "sha256": "0f2e796ec4acb1f723057d0193bf2aab24a344e71f56a6ad96c1b4275d6ab647"
+    }
+  ],
+  "checks": [
+    {
+      "id": "audit_completed",
+      "status": "PASS"
+    },
+    {
+      "id": "skill_contract_exists",
+      "status": "PASS"
+    }
+  ],
+  "reason_codes": [],
+  "next_action": "approval_gate"
+}

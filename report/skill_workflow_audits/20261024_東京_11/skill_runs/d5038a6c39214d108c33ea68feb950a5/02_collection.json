@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "step_id": "collection",
+  "skill_name": "jra-02-official-collection",
+  "status": "PASS",
+  "execution_kind": "deterministic_code_gate",
+  "mode": "prediction",
+  "skill_sha256": "273cc6543d6dd0409bedd97e577bd64d22fe27d7f16a5c9a1d5f585857dcbd42",
+  "input_artifacts": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/skill_workflow_audits/20261024_東京_11/skill_runs/d5038a6c39214d108c33ea68feb950a5/01_intake.json",
+      "sha256": "651e2da4a908664135980a064f41f38d36d06fa841453cf88f529720903a7289"
+    }
+  ],
+  "output_artifacts": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/skill_workflow_audits/20261024_東京_11/skill_runs/d5038a6c39214d108c33ea68feb950a5/02_collection_output.json",
+      "sha256": "dc08f172e96390b0c084b2ba708723b8db48f187f2488a5b16efc5bd019adf87"
+    }
+  ],
+  "checks": [
+    {
+      "id": "saved_collector_present",
+      "status": "PASS"
+    },
+    {
+      "id": "skill_contract_exists",
+      "status": "PASS"
+    }
+  ],
+  "reason_codes": [],
+  "next_action": "integrity_audit"
+}

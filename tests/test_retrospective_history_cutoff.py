@@ -5,6 +5,28 @@ import pytest
 from jra_scraper.parser import JRAParser
 
 
+def test_cutoff_is_applied_before_five_start_cap():
+    html = Path('tests/fixtures/horse_history.html').read_text()
+    parser = JRAParser('https://jra.jp')
+    rows = parser.parse_horse_last5(html, 'R', 'H', 'A', '', before_date='2026-03-01')
+    assert len(rows) == 5
+    assert rows[0]['date'] == '2026/02/01'
+    assert rows[-1]['date'] == '2025/09/12'
+    assert [row['run_index'] for row in rows] == ['1', '2', '3', '4', '5']
+    assert parser.parse_horse_last5(html, 'R', 'H', 'A', '')[0]['date'] == '2026/03/01'
+
+
+def test_cutoff_rejects_unknown_or_invalid_dates_instead_of_inventing_them():
+    html = Path('tests/fixtures/horse_history.html').read_text()
+    parser = JRAParser('https://jra.jp')
+    with pytest.raises(ValueError, match='Cannot verify'):
+        parser.parse_horse_last5(html.replace('2026/03/01', 'unknown'), 'R', 'H', 'A', '', before_date='2026-03-01')
+    with pytest.raises(ValueError):
+        parser.parse_horse_last5(html.replace('2026/03/01', '2026/13/01'), 'R', 'H', 'A', '', before_date='2026-03-01')
+    with pytest.raises(ValueError):
+        parser.parse_horse_last5(html, 'R', 'H', 'A', '', before_date='unknown')
+
+
 def test_historical_result_fields_are_observed_and_unique():
     from src.data_integrity import _history_result_observations
     html = '''<div class="cell date">2026年10月11日（日曜）4回京都4日</div>
@@ -24,6 +46,7 @@ def test_historical_result_fields_are_observed_and_unique():
     with pytest.raises(ValueError, match='date is unverified'):
         _history_result_observations(html.replace('2026年10月11日', 'unknown'), {'horse_name': 'A'})
 
+
 def test_source_audit_accepts_recovered_observation_from_historical_result():
     import hashlib
     from src.data_integrity import verify_source_artifacts
@@ -41,6 +64,7 @@ def test_source_audit_accepts_recovered_observation_from_historical_result():
     assert audit['status'] == 'PASS'
     assert audit['detected_imputations'] == []
 
+
 def test_historical_odds_require_unique_horse_date_and_positive_observation():
     from src.data_integrity import _history_odds_observations
     html = '''<div class="cell date">2025年8月2日（土曜） 1回札幌3日</div>
@@ -53,6 +77,7 @@ def test_historical_odds_require_unique_horse_date_and_positive_observation():
                     html.replace('8月2日', '13月2日')]:
         with pytest.raises(ValueError):
             _history_odds_observations(invalid, artifact)
+
 
 def test_source_audit_accepts_observed_historical_odds():
     import hashlib
@@ -68,3 +93,35 @@ def test_source_audit_accepts_observed_historical_odds():
                  for kind, source in [('horse_history', html), ('history_odds', odds_html)]]
     audit = verify_source_artifacts({'rows': [row], 'source_audit': {'artifacts': artifacts}})
     assert audit['status'] == 'PASS'
+
+
+@pytest.mark.parametrize('event', ['JRAへ転入', 'JRAへ転出', 'JRAより転出'])
+@pytest.mark.parametrize('insert_before', ['2026/03/01', '2025/12/05'])
+def test_transfer_events_are_preserved_separately_and_do_not_consume_starts(event, insert_before):
+    from bs4 import BeautifulSoup
+    html = Path('tests/fixtures/horse_history.html').read_text()
+    soup = BeautifulSoup(html, 'html.parser')
+    target = next(tr for tr in soup.select('tr') if insert_before in tr.get_text())
+    fragment = BeautifulSoup(f'<tr><td>2026/01/01</td><td>{event}</td></tr>', 'html.parser')
+    target.insert_before(fragment.tr)
+    issues = []
+    rows = JRAParser('https://jra.jp').parse_horse_last5(
+        str(soup), 'R', 'H', 'A', '', before_date='2026-03-01', issue_sink=issues)
+    assert len(rows) == 5
+    assert rows[-1]['date'] == '2025/09/12'
+    saved = [issue for issue in issues if issue.code == 'non_race_transfer_event']
+    assert len(saved) == 1
+    assert event in saved[0].context['raw_text']
+
+
+def test_explicit_empty_race_history_does_not_parse_other_summary_tables():
+    html = '''<table><caption>平地レース合計</caption><tr><th>日付</th><th>距離</th>
+    <th>着順</th></tr><tr><td>unknown</td><td>1400</td><td>1</td></tr></table>
+    <table><caption class="h3"><div class="main">出走レース</div></caption><tbody>
+    <tr><td><div class="caution no_data">該当するデータがありません。</div></td></tr></tbody></table>'''
+    issues = []
+    rows = JRAParser('https://jra.jp').parse_horse_last5(
+        html, 'R', 'H', 'A', '', before_date='2026-10-24', issue_sink=issues)
+    assert rows == []
+    assert issues[0].code == 'history_no_data_reported'
+    assert '該当するデータがありません。' in issues[0].context['raw_text']

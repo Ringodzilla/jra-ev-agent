@@ -1,0 +1,217 @@
+{
+  "source_directory": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/audit_run_20261024T234329115263Z",
+  "reference_only": true,
+  "reason": "Core/scripts changed during execution; final stable frozen audit required",
+  "races": [
+    {
+      "race_id": "20261024_新潟_02",
+      "gate": "BLOCKED_ZERO_HISTORY_NEUTRAL_FORBIDDEN",
+      "non_odds": {
+        "neutral_history_fallback": 1
+      },
+      "unknown": 1,
+      "conflicts": 0,
+      "source_issues": 0,
+      "mismatches": 0
+    },
+    {
+      "race_id": "20261024_新潟_04",
+      "gate": "UNVERIFIED",
+      "non_odds": {},
+      "unknown": 0,
+      "conflicts": 13,
+      "source_issues": 0,
+      "mismatches": 0
+    },
+    {
+      "race_id": "20261024_新潟_05",
+      "gate": "BLOCKED_ZERO_HISTORY_NEUTRAL_FORBIDDEN",
+      "non_odds": {
+        "neutral_history_fallback": 14
+      },
+      "unknown": 14,
+      "conflicts": 0,
+      "source_issues": 0,
+      "mismatches": 0
+    },
+    {
+      "race_id": "20261024_新潟_07",
+      "gate": "UNVERIFIED",
+      "non_odds": {
+        "parser_last3f_fallback": 1,
+        "neutral_0.5": 1,
+        "default_10": 1
+      },
+      "unknown": 0,
+      "conflicts": 6,
+      "source_issues": 0,
+      "mismatches": 0
+    },
+    {
+      "race_id": "20261024_新潟_09",
+      "gate": "UNVERIFIED",
+      "non_odds": {
+        "neutral_0.5": 25,
+        "parser_last3f_fallback": 3,
+        "default_10": 1
+      },
+      "unknown": 0,
+      "conflicts": 6,
+      "source_issues": 0,
+      "mismatches": 0
+    },
+    {
+      "race_id": "20261024_新潟_11",
+      "gate": "UNVERIFIED",
+      "non_odds": {
+        "parser_last3f_fallback": 1,
+        "default_10": 1,
+        "default_0": 1,
+        "neutral_0.5": 1
+      },
+      "unknown": 0,
+      "conflicts": 1,
+      "source_issues": 0,
+      "mismatches": 0
+    },
+    {
+      "race_id": "20261024_新潟_12",
+      "gate": "UNVERIFIED",
+      "non_odds": {
+        "neutral_0.5": 8,
+        "parser_last3f_fallback": 4
+      },
+      "unknown": 0,
+      "conflicts": 7,
+      "source_issues": 0,
+      "mismatches": 0
+    },
+    {
+      "race_id": "20261024_東京_02",
+      "gate": "PASS",
+      "non_odds": {},
+      "unknown": 0,
+      "conflicts": 0,
+      "source_issues": 0,
+      "mismatches": 0
+    },
+    {
+      "race_id": "20261024_東京_03",
+      "gate": "UNVERIFIED",
+      "non_odds": {},
+      "unknown": 0,
+      "conflicts": 2,
+      "source_issues": 0,
+      "mismatches": 0
+    },
+    {
+      "race_id": "20261024_東京_05",
+      "gate": "BLOCKED_ZERO_HISTORY_NEUTRAL_FORBIDDEN",
+      "non_odds": {
+        "neutral_history_fallback": 18
+      },
+      "unknown": 18,
+      "conflicts": 0,
+      "source_issues": 0,
+      "mismatches": 0
+    },
+    {
+      "race_id": "20261024_東京_08",
+      "gate": "UNVERIFIED",
+      "non_odds": {},
+      "unknown": 0,
+      "conflicts": 1,
+      "source_issues": 0,
+      "mismatches": 0
+    },
+    {
+      "race_id": "20261024_東京_09",
+      "gate": "UNVERIFIED",
+      "non_odds": {},
+      "unknown": 0,
+      "conflicts": 1,
+      "source_issues": 0,
+      "mismatches": 0
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "gate": "UNVERIFIED",
+      "non_odds": {
+        "neutral_0.5": 5,
+        "parser_last3f_fallback": 1
+      },
+      "unknown": 0,
+      "conflicts": 1,
+      "source_issues": 0,
+      "mismatches": 0
+    },
+    {
+      "race_id": "20261024_京都_02",
+      "gate": "UNVERIFIED",
+      "non_odds": {},
+      "unknown": 0,
+      "conflicts": 1,
+      "source_issues": 0,
+      "mismatches": 0
+    },
+    {
+      "race_id": "20261024_京都_05",
+      "gate": "BLOCKED_ZERO_HISTORY_NEUTRAL_FORBIDDEN",
+      "non_odds": {
+        "neutral_history_fallback": 13
+      },
+      "unknown": 13,
+      "conflicts": 0,
+      "source_issues": 0,
+      "mismatches": 0
+    },
+    {
+      "race_id": "20261024_京都_08",
+      "gate": "PASS",
+      "non_odds": {},
+      "unknown": 0,
+      "conflicts": 0,
+      "source_issues": 0,
+      "mismatches": 0
+    },
+    {
+      "race_id": "20261024_京都_10",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "non_odds": {
+        "neutral_0.5": 7,
+        "parser_last3f_fallback": 3
+      },
+      "unknown": 0,
+      "conflicts": 0,
+      "source_issues": 0,
+      "mismatches": 0
+    },
+    {
+      "race_id": "20261024_京都_11",
+      "gate": "PASS",
+      "non_odds": {},
+      "unknown": 0,
+      "conflicts": 0,
+      "source_issues": 0,
+      "mismatches": 0
+    }
+  ],
+  "findings_by_method": {
+    "exclude_nonpositive_then_default_0": 353,
+    "neutral_history_fallback": 46,
+    "parser_last3f_fallback": 13,
+    "neutral_0.5": 47,
+    "default_10": 3,
+    "default_0": 1
+  },
+  "unknown_career_count": 46,
+  "conflicts_by_field": {
+    "jockey": 31,
+    "last_3f": 4,
+    "last_3f_source": 4
+  },
+  "notes": [
+    "Nonstarter-only residual conflicts in Niigata4 corrected in the next script version",
+    "Sugoijan verified zero career in next repair version; neutral-history calculation remains blocked"
+  ]
+}

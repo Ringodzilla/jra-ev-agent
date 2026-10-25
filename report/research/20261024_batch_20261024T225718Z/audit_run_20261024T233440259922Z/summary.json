@@ -1,0 +1,60 @@
+{
+  "audited_at": "20261024T233440259922Z",
+  "source_manifest_sha256": "bf124f29bcf11767552772b44c76211fc93c2d3ec1782889ec27417fecfb4ca3",
+  "source_manifest_snapshots": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/manifest.json",
+      "sha256": "63ed80aa15ef1a445eafb3b190e13b56a01b3d40b36d445ed0e0bd619e1ac9b5"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/manifest_v2.json",
+      "sha256": "bf124f29bcf11767552772b44c76211fc93c2d3ec1782889ec27417fecfb4ca3"
+    }
+  ],
+  "input_directory": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/enriched_v3_priority_20261024T2331",
+  "enriched_mode": false,
+  "race_count": 3,
+  "expected_race_count": 36,
+  "batch_complete": false,
+  "model_ready_race_ids": [],
+  "races": [
+    {
+      "race_id": "20261024_東京_02",
+      "numeric_race_id": "20261024_05_02",
+      "gate": "UNVERIFIED",
+      "model_ready": false,
+      "horses": 7,
+      "histories": 10,
+      "findings": 0,
+      "source_mismatches": 10,
+      "surface_gate": "PASS",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_京都_08",
+      "numeric_race_id": "20261024_08_08",
+      "gate": "UNVERIFIED",
+      "model_ready": false,
+      "horses": 8,
+      "histories": 40,
+      "findings": 9,
+      "source_mismatches": 31,
+      "surface_gate": "PASS",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_京都_11",
+      "numeric_race_id": "20261024_08_11",
+      "gate": "UNVERIFIED",
+      "model_ready": false,
+      "horses": 16,
+      "histories": 80,
+      "findings": 22,
+      "source_mismatches": 58,
+      "surface_gate": "PASS",
+      "environment_gate": "PASS"
+    }
+  ],
+  "approvals_used": [],
+  "model_calculations_executed": false
+}

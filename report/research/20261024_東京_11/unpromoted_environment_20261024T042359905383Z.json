@@ -1,0 +1,126 @@
+{
+  "status": "RESEARCH_ONLY_UNPROMOTED",
+  "baseline_issued_at": "2026-10-24T02:31:51.748225+00:00",
+  "model_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/learning/environment/419769220ad729c65669bf009bdd9b9e100a82e8363afc2582c518f14056606d/37418a14c524e383f76a1421e3eb31dda1aac6dcf691bc59517d7c9622653216/training_report.json",
+  "model_sha256": "a5f0848159d96063afe0fcfbe6f0c022f6453c6a104159ac55a38c4662c33854",
+  "baseline_sha256": "d0e123cb7fe072f78b4a0ba695cdef9af66198475f18df849169ff2a23732749",
+  "environment": {
+    "weather": "雨",
+    "track_condition": "良",
+    "captured_at": "2026-10-24T02:31:50.104654+00:00",
+    "cushion": 9.5,
+    "turf_moisture_goal": 12.7,
+    "turf_moisture_corner4": 15.5,
+    "dirt_moisture_goal": 2.0,
+    "dirt_moisture_corner4": 2.4,
+    "cushion_measured_at": "2026-10-24T07:00:00+09:00",
+    "moisture_measured_at": "2026-10-24T05:00:00+09:00",
+    "collection_complete": true
+  },
+  "training_weather_counts": {
+    "晴": 0,
+    "曇": 3,
+    "雨": 0
+  },
+  "blocks": {
+    "train": 3,
+    "validation": 2,
+    "test": 1
+  },
+  "probability_sum": 0.9999999999999999,
+  "rain_vs_clear_max_probability_difference": 0.0,
+  "rows": [
+    {
+      "horse_number": "8",
+      "horse_name": "ベストプラージュ",
+      "baseline_probability": 0.057541,
+      "research_probability": 0.05226401880065975,
+      "environment_score": -0.09071475223355802
+    },
+    {
+      "horse_number": "11",
+      "horse_name": "カナデルペガサス",
+      "baseline_probability": 0.076978,
+      "research_probability": 0.07772414369846474,
+      "environment_score": 0.015121099763276486
+    },
+    {
+      "horse_number": "1",
+      "horse_name": "タプティ",
+      "baseline_probability": 0.064372,
+      "research_probability": 0.06226251239477104,
+      "environment_score": -0.02784441079400458
+    },
+    {
+      "horse_number": "12",
+      "horse_name": "サトノスプレマシー",
+      "baseline_probability": 0.067766,
+      "research_probability": 0.06936536685817235,
+      "environment_score": 0.028801939777336936
+    },
+    {
+      "horse_number": "3",
+      "horse_name": "ファミーリエ",
+      "baseline_probability": 0.090179,
+      "research_probability": 0.09147550630697542,
+      "environment_score": 0.01974948950363191
+    },
+    {
+      "horse_number": "13",
+      "horse_name": "ローズサルーテ",
+      "baseline_probability": 0.072195,
+      "research_probability": 0.06082202176895749,
+      "environment_score": -0.16594404019232412
+    },
+    {
+      "horse_number": "10",
+      "horse_name": "ジーティーキャリー",
+      "baseline_probability": 0.077973,
+      "research_probability": 0.07997959166725128,
+      "environment_score": 0.03088371274160434
+    },
+    {
+      "horse_number": "2",
+      "horse_name": "マリアンデール",
+      "baseline_probability": 0.07117,
+      "research_probability": 0.0727798675867704,
+      "environment_score": 0.02784281919835862
+    },
+    {
+      "horse_number": "4",
+      "horse_name": "ピコベリー",
+      "baseline_probability": 0.088824,
+      "research_probability": 0.09084630066832988,
+      "environment_score": 0.027987018835421616
+    },
+    {
+      "horse_number": "7",
+      "horse_name": "ホウオウプレマ",
+      "baseline_probability": 0.084656,
+      "research_probability": 0.08693355832251243,
+      "environment_score": 0.03202297097502221
+    },
+    {
+      "horse_number": "5",
+      "horse_name": "シティオブドリーム",
+      "baseline_probability": 0.075583,
+      "research_probability": 0.07770450329681869,
+      "environment_score": 0.03315665069811229
+    },
+    {
+      "horse_number": "9",
+      "horse_name": "プルヴィナル",
+      "baseline_probability": 0.087199,
+      "research_probability": 0.08959949971858225,
+      "environment_score": 0.03263170119811061
+    },
+    {
+      "horse_number": "6",
+      "horse_name": "リスグロワール",
+      "baseline_probability": 0.085564,
+      "research_probability": 0.08824310891173422,
+      "environment_score": 0.036305800529011785
+    }
+  ],
+  "tickets": []
+}

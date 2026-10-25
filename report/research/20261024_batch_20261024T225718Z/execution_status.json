@@ -1,0 +1,76 @@
+{
+  "updated_at": "2026-10-24T23:45:18.187675+00:00",
+  "status": "INTERIM_RESEARCH_FIT_COMPLETE_CONTINUING_COLLECTION",
+  "target_date": "2026-10-24",
+  "collection": {
+    "races": 36,
+    "horses": 468,
+    "pre_target_history_rows": 1478
+  },
+  "initial_recovery": {
+    "target_rows": 311,
+    "linked_rows": 266,
+    "missing_links": 45,
+    "urls": 236,
+    "recovered_passing_order": 241,
+    "recovered_last_3f": 240,
+    "recovered_weather": 266,
+    "unmatched": [],
+    "errors": []
+  },
+  "last_completed_audit": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/audit_run_20261024T231948795336Z/summary.json",
+    "sha256": "be16f98edb1db39b76f57556ee2e3e7554feea750d4dc641b88a202b2993d6a2",
+    "model_ready_races": 0
+  },
+  "model_calculations_executed": true,
+  "imputation_approvals_used": [],
+  "production_model_changed": false,
+  "training_date_max": "2026-10-24",
+  "reserved_validation_date": "2026-10-25",
+  "retrospective_reconstruction": true,
+  "pre_race_capture": false,
+  "verification": {
+    "command": "scripts/preflight.sh",
+    "tests_passed": 545,
+    "coverage_percent": 100,
+    "status": "PASS"
+  },
+  "next_action": "Recover historical win odds from linked official pages, repair transfer-event classification and verify complete careers, then re-audit each completed race before any model calculation.",
+  "last_completed_priority_audit": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/audit_run_20261024T233527917676Z/summary.json",
+    "model_ready_races": 3,
+    "race_ids": [
+      "20261024_東京_02",
+      "20261024_京都_08",
+      "20261024_京都_11"
+    ],
+    "unapproved_imputations": 0
+  },
+  "interim_training": {
+    "report": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/research_fit_20261024T233855843460Z/training_report.json",
+    "races": 3,
+    "horses": 31,
+    "status": "INSUFFICIENT_DATA_RESEARCH_ONLY",
+    "validation_executed": false,
+    "test_executed": false,
+    "independent_review": {
+      "status": "OK_RESEARCH_ONLY",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/independent_research_review_20261024T234006098417Z.json"
+    }
+  },
+  "odds_recovery_progress": {
+    "total_urls": 1062,
+    "processed": 600,
+    "odds_pages": 599,
+    "recovered_rows": 832,
+    "unmatched": [],
+    "errors": [
+      {
+        "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1004202601061220260517/E4",
+        "error": "503 Server Error: Service Unavailable for url: https://jra.jp/JRADB/accessS.html"
+      }
+    ],
+    "date_conflicts": []
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "step_id": "intake",
+  "skill_name": "jra-01-intake",
+  "status": "PASS",
+  "execution_kind": "deterministic_code_gate",
+  "mode": "prediction",
+  "skill_sha256": "2e0c17ba9661340f49cae03d2627f6716240e8d77ccf7311ff343a20596ba867",
+  "input_artifacts": [],
+  "output_artifacts": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/skill_workflow_audits/20261024_東京_11/skill_runs/75f3de34d43542719beb0378d0c0519c/01_intake_output.json",
+      "sha256": "a1529cc1fd900a9641b7a5704a1c24b8efc1e5f7c3dee5625f629810bde017b2"
+    }
+  ],
+  "checks": [
+    {
+      "id": "configs_present",
+      "status": "PASS"
+    },
+    {
+      "id": "skill_contract_exists",
+      "status": "PASS"
+    }
+  ],
+  "reason_codes": [],
+  "next_action": "collection"
+}

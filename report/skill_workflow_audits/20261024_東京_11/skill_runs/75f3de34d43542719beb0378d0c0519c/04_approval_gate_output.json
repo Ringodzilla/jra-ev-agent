@@ -1,0 +1,1758 @@
+{
+  "schema_version": 1,
+  "status": "BLOCKED_UNAPPROVED_IMPUTATION",
+  "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+  "purpose": "prediction",
+  "input_sha256": "39fef75dc6aad29fba43e78098b18ff24ac96d5c2f3d33582d0778513c5aba84",
+  "race_ids": [
+    "20261024_東京_11"
+  ],
+  "findings": [
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024100713/AE",
+      "horse_number": "4",
+      "run_index": "1",
+      "field": "odds",
+      "method": "exclude_nonpositive_then_default_0",
+      "finding_id": "7dc0049576c5b722111e45f8",
+      "feature_impact": "avg_odds,odds_trend,odds_volatility",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024100935/16",
+      "horse_number": "1",
+      "run_index": "1",
+      "field": "odds",
+      "method": "exclude_nonpositive_then_default_0",
+      "finding_id": "923f50b75d3f73818d7f270c",
+      "feature_impact": "avg_odds,odds_trend,odds_volatility",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024100935/16",
+      "horse_number": "1",
+      "run_index": "2",
+      "field": "odds",
+      "method": "exclude_nonpositive_then_default_0",
+      "finding_id": "d4c16e31a9de34b56a9fa294",
+      "feature_impact": "avg_odds,odds_trend,odds_volatility",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101108/A6",
+      "horse_number": "11",
+      "run_index": "1",
+      "field": "odds",
+      "method": "exclude_nonpositive_then_default_0",
+      "finding_id": "337752e5e77cb8b9193ba409",
+      "feature_impact": "avg_odds,odds_trend,odds_volatility",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101469/0C",
+      "horse_number": "8",
+      "run_index": "1",
+      "field": "passing_order",
+      "method": "neutral_0.5",
+      "finding_id": "c2cc61402fa9e695ba4d84c7",
+      "feature_impact": "front_rate,pace_score,track_bias_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101469/0C",
+      "horse_number": "8",
+      "run_index": "1",
+      "field": "odds",
+      "method": "exclude_nonpositive_then_default_0",
+      "finding_id": "b3bfe7ecd3fa7ae379f4605b",
+      "feature_impact": "avg_odds,odds_trend,odds_volatility",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101469/0C",
+      "horse_number": "8",
+      "run_index": "2",
+      "field": "passing_order",
+      "method": "neutral_0.5",
+      "finding_id": "d3ee5e096cd8d175681856f1",
+      "feature_impact": "front_rate,pace_score,track_bias_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101469/0C",
+      "horse_number": "8",
+      "run_index": "2",
+      "field": "odds",
+      "method": "exclude_nonpositive_then_default_0",
+      "finding_id": "d22a40d8733a626c0b165735",
+      "feature_impact": "avg_odds,odds_trend,odds_volatility",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101469/0C",
+      "horse_number": "8",
+      "run_index": "3",
+      "field": "passing_order",
+      "method": "neutral_0.5",
+      "finding_id": "26efdd3db12e1ea3685b124a",
+      "feature_impact": "front_rate,pace_score,track_bias_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101469/0C",
+      "horse_number": "8",
+      "run_index": "3",
+      "field": "odds",
+      "method": "exclude_nonpositive_then_default_0",
+      "finding_id": "1129fed3d2983a2efb5cb0fa",
+      "feature_impact": "avg_odds,odds_trend,odds_volatility",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101469/0C",
+      "horse_number": "8",
+      "run_index": "4",
+      "field": "passing_order",
+      "method": "neutral_0.5",
+      "finding_id": "444cc8d79d643039eca4fed3",
+      "feature_impact": "front_rate,pace_score,track_bias_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101469/0C",
+      "horse_number": "8",
+      "run_index": "4",
+      "field": "odds",
+      "method": "exclude_nonpositive_then_default_0",
+      "finding_id": "9f7c74f6d7034df993d750dc",
+      "feature_impact": "avg_odds,odds_trend,odds_volatility",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101469/0C",
+      "horse_number": "8",
+      "run_index": "5",
+      "field": "passing_order",
+      "method": "neutral_0.5",
+      "finding_id": "7466e88c780d8b5670ac459b",
+      "feature_impact": "front_rate,pace_score,track_bias_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101469/0C",
+      "horse_number": "8",
+      "run_index": "5",
+      "field": "odds",
+      "method": "exclude_nonpositive_then_default_0",
+      "finding_id": "7eee6925fe59e33984ac9c85",
+      "feature_impact": "avg_odds,odds_trend,odds_volatility",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024103478/87",
+      "horse_number": "3",
+      "run_index": "1",
+      "field": "odds",
+      "method": "exclude_nonpositive_then_default_0",
+      "finding_id": "b485d58acae328c3edb0b639",
+      "feature_impact": "avg_odds,odds_trend,odds_volatility",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024103955/03",
+      "horse_number": "2",
+      "run_index": "1",
+      "field": "odds",
+      "method": "exclude_nonpositive_then_default_0",
+      "finding_id": "f4aa3cc9d4558de2a392ed53",
+      "feature_impact": "avg_odds,odds_trend,odds_volatility",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024103955/03",
+      "horse_number": "2",
+      "run_index": "2",
+      "field": "odds",
+      "method": "exclude_nonpositive_then_default_0",
+      "finding_id": "b2662b0ba710af47fa85425a",
+      "feature_impact": "avg_odds,odds_trend,odds_volatility",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024104587/44",
+      "horse_number": "13",
+      "run_index": "1",
+      "field": "odds",
+      "method": "exclude_nonpositive_then_default_0",
+      "finding_id": "10ee80fe701a24ae07b35dc1",
+      "feature_impact": "avg_odds,odds_trend,odds_volatility",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024104953/0C",
+      "horse_number": "5",
+      "run_index": "1",
+      "field": "odds",
+      "method": "exclude_nonpositive_then_default_0",
+      "finding_id": "7f65152860d9931d5cd62405",
+      "feature_impact": "avg_odds,odds_trend,odds_volatility",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024104953/0C",
+      "horse_number": "5",
+      "run_index": "2",
+      "field": "odds",
+      "method": "exclude_nonpositive_then_default_0",
+      "finding_id": "f9b54230eb1459e52c737d78",
+      "feature_impact": "avg_odds,odds_trend,odds_volatility",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024106287/8F",
+      "horse_number": "9",
+      "run_index": "1",
+      "field": "odds",
+      "method": "exclude_nonpositive_then_default_0",
+      "finding_id": "140cb863e44db5e950bdaf1b",
+      "feature_impact": "avg_odds,odds_trend,odds_volatility",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024106597/32",
+      "horse_number": "7",
+      "run_index": "1",
+      "field": "odds",
+      "method": "exclude_nonpositive_then_default_0",
+      "finding_id": "96fdd1e54e0e48462dabf4db",
+      "feature_impact": "avg_odds,odds_trend,odds_volatility",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024106677/43",
+      "horse_number": "10",
+      "run_index": "1",
+      "field": "odds",
+      "method": "exclude_nonpositive_then_default_0",
+      "finding_id": "fb3c82a5c2cfc81248fcb042",
+      "feature_impact": "avg_odds,odds_trend,odds_volatility",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024106677/43",
+      "horse_number": "10",
+      "run_index": "2",
+      "field": "odds",
+      "method": "exclude_nonpositive_then_default_0",
+      "finding_id": "3d09206f77dffdd7c1ab5ba1",
+      "feature_impact": "avg_odds,odds_trend,odds_volatility",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024106690/3E",
+      "horse_number": "6",
+      "run_index": "1",
+      "field": "odds",
+      "method": "exclude_nonpositive_then_default_0",
+      "finding_id": "8019cf675f3d13e98ab90c03",
+      "feature_impact": "avg_odds,odds_trend,odds_volatility",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024107260/39",
+      "horse_number": "12",
+      "run_index": "1",
+      "field": "odds",
+      "method": "exclude_nonpositive_then_default_0",
+      "finding_id": "a9689d25d56e80d55909e8c6",
+      "feature_impact": "avg_odds,odds_trend,odds_volatility",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024107260/39",
+      "horse_number": "12",
+      "run_index": "2",
+      "field": "odds",
+      "method": "exclude_nonpositive_then_default_0",
+      "finding_id": "00b6ffdabe314b543ead2236",
+      "feature_impact": "avg_odds,odds_trend,odds_volatility",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101469/0C",
+      "horse_number": "8",
+      "run_index": "5",
+      "field": "last_3f",
+      "method": "parser_last3f_fallback",
+      "finding_id": "49808154a611c761e688920e",
+      "feature_impact": "closing_strength,pace_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024100713/AE",
+      "horse_number": "4",
+      "run_index": "1",
+      "field": "last_3f",
+      "method": "raw_source_mismatch",
+      "finding_id": "55bcef8ba86595a516a2d748",
+      "feature_impact": "closing_strength,pace_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024100713/AE",
+      "horse_number": "4",
+      "run_index": "1",
+      "field": "race_name",
+      "method": "raw_source_mismatch",
+      "finding_id": "b636b6bfaf3155f10c63c93c",
+      "feature_impact": "raw_metadata",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024100713/AE",
+      "horse_number": "4",
+      "run_index": "1",
+      "field": "passing_order",
+      "method": "raw_source_mismatch",
+      "finding_id": "048324de6cf98a5b0023920b",
+      "feature_impact": "front_rate,pace_score,track_bias_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024100935/16",
+      "horse_number": "1",
+      "run_index": "1",
+      "field": "last_3f",
+      "method": "raw_source_mismatch",
+      "finding_id": "f1a8b02015a819688bfcc350",
+      "feature_impact": "closing_strength,pace_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024100935/16",
+      "horse_number": "1",
+      "run_index": "1",
+      "field": "race_name",
+      "method": "raw_source_mismatch",
+      "finding_id": "c0bcff1110b6c3b8b208c15c",
+      "feature_impact": "raw_metadata",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024100935/16",
+      "horse_number": "1",
+      "run_index": "1",
+      "field": "passing_order",
+      "method": "raw_source_mismatch",
+      "finding_id": "6d6f5eda40dfa75102d49ef2",
+      "feature_impact": "front_rate,pace_score,track_bias_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024100935/16",
+      "horse_number": "1",
+      "run_index": "2",
+      "field": "last_3f",
+      "method": "raw_source_mismatch",
+      "finding_id": "8cf3ef88d02e1e148a823dc9",
+      "feature_impact": "closing_strength,pace_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024100935/16",
+      "horse_number": "1",
+      "run_index": "2",
+      "field": "race_name",
+      "method": "raw_source_mismatch",
+      "finding_id": "67106b3238a449babe8e269a",
+      "feature_impact": "raw_metadata",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024100935/16",
+      "horse_number": "1",
+      "run_index": "2",
+      "field": "passing_order",
+      "method": "raw_source_mismatch",
+      "finding_id": "8d4286cc9edaa0c6563a70e6",
+      "feature_impact": "front_rate,pace_score,track_bias_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101108/A6",
+      "horse_number": "11",
+      "run_index": "1",
+      "field": "last_3f",
+      "method": "raw_source_mismatch",
+      "finding_id": "5f21d7b5ab504147666bd69a",
+      "feature_impact": "closing_strength,pace_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101108/A6",
+      "horse_number": "11",
+      "run_index": "1",
+      "field": "race_name",
+      "method": "raw_source_mismatch",
+      "finding_id": "273d5a3168aa237060dc0831",
+      "feature_impact": "raw_metadata",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101108/A6",
+      "horse_number": "11",
+      "run_index": "1",
+      "field": "passing_order",
+      "method": "raw_source_mismatch",
+      "finding_id": "341010fb494078e40e494d7b",
+      "feature_impact": "front_rate,pace_score,track_bias_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101108/A6",
+      "horse_number": "11",
+      "run_index": "1",
+      "field": "jockey",
+      "method": "raw_source_mismatch",
+      "finding_id": "abd203dc3cae09b7ca18c165",
+      "feature_impact": "jockey_match,jockey_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101469/0C",
+      "horse_number": "8",
+      "run_index": "1",
+      "field": "last_3f",
+      "method": "raw_source_mismatch",
+      "finding_id": "448b2032fee5098635733d9f",
+      "feature_impact": "closing_strength,pace_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101469/0C",
+      "horse_number": "8",
+      "run_index": "1",
+      "field": "race_name",
+      "method": "raw_source_mismatch",
+      "finding_id": "4beaf9740b0a0d4e9e2faf58",
+      "feature_impact": "raw_metadata",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101469/0C",
+      "horse_number": "8",
+      "run_index": "2",
+      "field": "last_3f",
+      "method": "raw_source_mismatch",
+      "finding_id": "c5663694fb4116ee89a110ff",
+      "feature_impact": "closing_strength,pace_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101469/0C",
+      "horse_number": "8",
+      "run_index": "2",
+      "field": "race_name",
+      "method": "raw_source_mismatch",
+      "finding_id": "54363bc63d605be67a6d2d48",
+      "feature_impact": "raw_metadata",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101469/0C",
+      "horse_number": "8",
+      "run_index": "3",
+      "field": "last_3f",
+      "method": "raw_source_mismatch",
+      "finding_id": "2c19d9fb2aef3ee7346490e0",
+      "feature_impact": "closing_strength,pace_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101469/0C",
+      "horse_number": "8",
+      "run_index": "3",
+      "field": "race_name",
+      "method": "raw_source_mismatch",
+      "finding_id": "ea07a9fbe087cad2bded0a19",
+      "feature_impact": "raw_metadata",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101469/0C",
+      "horse_number": "8",
+      "run_index": "4",
+      "field": "last_3f",
+      "method": "raw_source_mismatch",
+      "finding_id": "b12e3a88a199d74d1288bc47",
+      "feature_impact": "closing_strength,pace_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101469/0C",
+      "horse_number": "8",
+      "run_index": "4",
+      "field": "race_name",
+      "method": "raw_source_mismatch",
+      "finding_id": "027990a1accd21d027b0b0e2",
+      "feature_impact": "raw_metadata",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024101469/0C",
+      "horse_number": "8",
+      "run_index": "5",
+      "field": "last_3f",
+      "method": "raw_source_mismatch",
+      "finding_id": "7ba619908089808dfeca3df5",
+      "feature_impact": "closing_strength,pace_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024103478/87",
+      "horse_number": "3",
+      "run_index": "1",
+      "field": "last_3f",
+      "method": "raw_source_mismatch",
+      "finding_id": "4a5c81bfafbcead082178ab8",
+      "feature_impact": "closing_strength,pace_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024103478/87",
+      "horse_number": "3",
+      "run_index": "1",
+      "field": "race_name",
+      "method": "raw_source_mismatch",
+      "finding_id": "7fb3705c3816a98f21cf7e25",
+      "feature_impact": "raw_metadata",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024103478/87",
+      "horse_number": "3",
+      "run_index": "1",
+      "field": "passing_order",
+      "method": "raw_source_mismatch",
+      "finding_id": "69aae7b4765feaee7b425486",
+      "feature_impact": "front_rate,pace_score,track_bias_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024103955/03",
+      "horse_number": "2",
+      "run_index": "1",
+      "field": "last_3f",
+      "method": "raw_source_mismatch",
+      "finding_id": "d1edb535f1ab82768738f45d",
+      "feature_impact": "closing_strength,pace_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024103955/03",
+      "horse_number": "2",
+      "run_index": "1",
+      "field": "race_name",
+      "method": "raw_source_mismatch",
+      "finding_id": "3179199928d15b1f49c60422",
+      "feature_impact": "raw_metadata",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024103955/03",
+      "horse_number": "2",
+      "run_index": "1",
+      "field": "passing_order",
+      "method": "raw_source_mismatch",
+      "finding_id": "8d7c6b4d504cec414657d7a1",
+      "feature_impact": "front_rate,pace_score,track_bias_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024103955/03",
+      "horse_number": "2",
+      "run_index": "2",
+      "field": "last_3f",
+      "method": "raw_source_mismatch",
+      "finding_id": "99c2642757174bb8c0990a86",
+      "feature_impact": "closing_strength,pace_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024103955/03",
+      "horse_number": "2",
+      "run_index": "2",
+      "field": "race_name",
+      "method": "raw_source_mismatch",
+      "finding_id": "ace1cb4dc4ef78c1ff07a36a",
+      "feature_impact": "raw_metadata",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024103955/03",
+      "horse_number": "2",
+      "run_index": "2",
+      "field": "passing_order",
+      "method": "raw_source_mismatch",
+      "finding_id": "73571d314b2935b96f3a6f20",
+      "feature_impact": "front_rate,pace_score,track_bias_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024104587/44",
+      "horse_number": "13",
+      "run_index": "1",
+      "field": "last_3f",
+      "method": "raw_source_mismatch",
+      "finding_id": "d5a4bcb832c1508f29a0ca99",
+      "feature_impact": "closing_strength,pace_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024104587/44",
+      "horse_number": "13",
+      "run_index": "1",
+      "field": "race_name",
+      "method": "raw_source_mismatch",
+      "finding_id": "efd1a33c97291491eebe1fd0",
+      "feature_impact": "raw_metadata",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024104587/44",
+      "horse_number": "13",
+      "run_index": "1",
+      "field": "passing_order",
+      "method": "raw_source_mismatch",
+      "finding_id": "69c602aa6f138c476c68e6aa",
+      "feature_impact": "front_rate,pace_score,track_bias_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024104587/44",
+      "horse_number": "13",
+      "run_index": "1",
+      "field": "jockey",
+      "method": "raw_source_mismatch",
+      "finding_id": "d0e84fea37dda1ac0a0dbae1",
+      "feature_impact": "jockey_match,jockey_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024104953/0C",
+      "horse_number": "5",
+      "run_index": "1",
+      "field": "last_3f",
+      "method": "raw_source_mismatch",
+      "finding_id": "bd1ef499573c0bfff17567bc",
+      "feature_impact": "closing_strength,pace_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024104953/0C",
+      "horse_number": "5",
+      "run_index": "1",
+      "field": "passing_order",
+      "method": "raw_source_mismatch",
+      "finding_id": "665fd02fa292b827e66614e0",
+      "feature_impact": "front_rate,pace_score,track_bias_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024104953/0C",
+      "horse_number": "5",
+      "run_index": "2",
+      "field": "last_3f",
+      "method": "raw_source_mismatch",
+      "finding_id": "114c02347e443741fd2f9353",
+      "feature_impact": "closing_strength,pace_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024104953/0C",
+      "horse_number": "5",
+      "run_index": "2",
+      "field": "race_name",
+      "method": "raw_source_mismatch",
+      "finding_id": "3362b070163e5ade7bcd4161",
+      "feature_impact": "raw_metadata",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024104953/0C",
+      "horse_number": "5",
+      "run_index": "2",
+      "field": "passing_order",
+      "method": "raw_source_mismatch",
+      "finding_id": "cff1cfe9f486998dab7c9e30",
+      "feature_impact": "front_rate,pace_score,track_bias_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024106287/8F",
+      "horse_number": "9",
+      "run_index": "1",
+      "field": "last_3f",
+      "method": "raw_source_mismatch",
+      "finding_id": "b460d1d9f85d1380e00483a7",
+      "feature_impact": "closing_strength,pace_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024106287/8F",
+      "horse_number": "9",
+      "run_index": "1",
+      "field": "race_name",
+      "method": "raw_source_mismatch",
+      "finding_id": "7035dad8a8f2c7dd6280b7d0",
+      "feature_impact": "raw_metadata",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024106287/8F",
+      "horse_number": "9",
+      "run_index": "1",
+      "field": "passing_order",
+      "method": "raw_source_mismatch",
+      "finding_id": "a09e85b442434958f5515b42",
+      "feature_impact": "front_rate,pace_score,track_bias_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024106597/32",
+      "horse_number": "7",
+      "run_index": "1",
+      "field": "last_3f",
+      "method": "raw_source_mismatch",
+      "finding_id": "295328fbe88f65ce6d40c437",
+      "feature_impact": "closing_strength,pace_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024106597/32",
+      "horse_number": "7",
+      "run_index": "1",
+      "field": "race_name",
+      "method": "raw_source_mismatch",
+      "finding_id": "fa69eb2f115eecce382edb27",
+      "feature_impact": "raw_metadata",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024106597/32",
+      "horse_number": "7",
+      "run_index": "1",
+      "field": "passing_order",
+      "method": "raw_source_mismatch",
+      "finding_id": "c0dd26b40c108f353aa5c272",
+      "feature_impact": "front_rate,pace_score,track_bias_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024106677/43",
+      "horse_number": "10",
+      "run_index": "1",
+      "field": "last_3f",
+      "method": "raw_source_mismatch",
+      "finding_id": "6600cbd50b91da7b51bd4d30",
+      "feature_impact": "closing_strength,pace_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024106677/43",
+      "horse_number": "10",
+      "run_index": "1",
+      "field": "race_name",
+      "method": "raw_source_mismatch",
+      "finding_id": "a5c0994b5b951159e22883c3",
+      "feature_impact": "raw_metadata",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024106677/43",
+      "horse_number": "10",
+      "run_index": "1",
+      "field": "passing_order",
+      "method": "raw_source_mismatch",
+      "finding_id": "effdd139e2056e31b9aa1183",
+      "feature_impact": "front_rate,pace_score,track_bias_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024106677/43",
+      "horse_number": "10",
+      "run_index": "2",
+      "field": "last_3f",
+      "method": "raw_source_mismatch",
+      "finding_id": "43bd3b874cb1f8722c2ffd11",
+      "feature_impact": "closing_strength,pace_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024106677/43",
+      "horse_number": "10",
+      "run_index": "2",
+      "field": "race_name",
+      "method": "raw_source_mismatch",
+      "finding_id": "ce1064043b251d053f6688ed",
+      "feature_impact": "raw_metadata",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024106677/43",
+      "horse_number": "10",
+      "run_index": "2",
+      "field": "passing_order",
+      "method": "raw_source_mismatch",
+      "finding_id": "12970133572857cdbb0c5431",
+      "feature_impact": "front_rate,pace_score,track_bias_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024106690/3E",
+      "horse_number": "6",
+      "run_index": "1",
+      "field": "last_3f",
+      "method": "raw_source_mismatch",
+      "finding_id": "ed08be1a20c0756d6df2ac3f",
+      "feature_impact": "closing_strength,pace_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024106690/3E",
+      "horse_number": "6",
+      "run_index": "1",
+      "field": "race_name",
+      "method": "raw_source_mismatch",
+      "finding_id": "4b06aa11e26d818d9de67acc",
+      "feature_impact": "raw_metadata",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024106690/3E",
+      "horse_number": "6",
+      "run_index": "1",
+      "field": "passing_order",
+      "method": "raw_source_mismatch",
+      "finding_id": "78c9c040240ccc40d4b155df",
+      "feature_impact": "front_rate,pace_score,track_bias_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024107260/39",
+      "horse_number": "12",
+      "run_index": "1",
+      "field": "last_3f",
+      "method": "raw_source_mismatch",
+      "finding_id": "dac738d321ace8539eff8574",
+      "feature_impact": "closing_strength,pace_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024107260/39",
+      "horse_number": "12",
+      "run_index": "1",
+      "field": "race_name",
+      "method": "raw_source_mismatch",
+      "finding_id": "f799b7a80620b1f24a66e46c",
+      "feature_impact": "raw_metadata",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024107260/39",
+      "horse_number": "12",
+      "run_index": "1",
+      "field": "passing_order",
+      "method": "raw_source_mismatch",
+      "finding_id": "35ce61cc05ea52a30768a5cc",
+      "feature_impact": "front_rate,pace_score,track_bias_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024107260/39",
+      "horse_number": "12",
+      "run_index": "2",
+      "field": "last_3f",
+      "method": "raw_source_mismatch",
+      "finding_id": "2969e1204d800f4e3749157e",
+      "feature_impact": "closing_strength,pace_score",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024107260/39",
+      "horse_number": "12",
+      "run_index": "2",
+      "field": "race_name",
+      "method": "raw_source_mismatch",
+      "finding_id": "59e1e78ea0083cc8439d7aa3",
+      "feature_impact": "raw_metadata",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_id": "pw01dud002024107260/39",
+      "horse_number": "12",
+      "run_index": "2",
+      "field": "passing_order",
+      "method": "raw_source_mismatch",
+      "finding_id": "311c00a9ce2ade5335612540",
+      "feature_impact": "front_rate,pace_score,track_bias_score",
+      "required_missing": false,
+      "approved": false
+    }
+  ],
+  "missing_fields": [
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "4",
+      "run_index": "1",
+      "field": "pace",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "4",
+      "run_index": "1",
+      "field": "weather",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "4",
+      "run_index": "1",
+      "field": "odds",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "1",
+      "run_index": "1",
+      "field": "pace",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "1",
+      "run_index": "1",
+      "field": "weather",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "1",
+      "run_index": "1",
+      "field": "odds",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "1",
+      "run_index": "2",
+      "field": "pace",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "1",
+      "run_index": "2",
+      "field": "weather",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "1",
+      "run_index": "2",
+      "field": "odds",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "11",
+      "run_index": "1",
+      "field": "pace",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "11",
+      "run_index": "1",
+      "field": "weather",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "11",
+      "run_index": "1",
+      "field": "odds",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "8",
+      "run_index": "1",
+      "field": "passing_order",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "8",
+      "run_index": "1",
+      "field": "pace",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "8",
+      "run_index": "1",
+      "field": "weather",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "8",
+      "run_index": "1",
+      "field": "odds",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "8",
+      "run_index": "2",
+      "field": "passing_order",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "8",
+      "run_index": "2",
+      "field": "pace",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "8",
+      "run_index": "2",
+      "field": "weather",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "8",
+      "run_index": "2",
+      "field": "odds",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "8",
+      "run_index": "3",
+      "field": "passing_order",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "8",
+      "run_index": "3",
+      "field": "pace",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "8",
+      "run_index": "3",
+      "field": "weather",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "8",
+      "run_index": "3",
+      "field": "odds",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "8",
+      "run_index": "4",
+      "field": "passing_order",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "8",
+      "run_index": "4",
+      "field": "pace",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "8",
+      "run_index": "4",
+      "field": "weather",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "8",
+      "run_index": "4",
+      "field": "odds",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "8",
+      "run_index": "5",
+      "field": "passing_order",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "8",
+      "run_index": "5",
+      "field": "pace",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "8",
+      "run_index": "5",
+      "field": "weather",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "8",
+      "run_index": "5",
+      "field": "odds",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "3",
+      "run_index": "1",
+      "field": "pace",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "3",
+      "run_index": "1",
+      "field": "weather",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "3",
+      "run_index": "1",
+      "field": "odds",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "2",
+      "run_index": "1",
+      "field": "pace",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "2",
+      "run_index": "1",
+      "field": "weather",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "2",
+      "run_index": "1",
+      "field": "odds",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "2",
+      "run_index": "2",
+      "field": "pace",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "2",
+      "run_index": "2",
+      "field": "weather",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "2",
+      "run_index": "2",
+      "field": "odds",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "13",
+      "run_index": "1",
+      "field": "pace",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "13",
+      "run_index": "1",
+      "field": "weather",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "13",
+      "run_index": "1",
+      "field": "odds",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "5",
+      "run_index": "1",
+      "field": "pace",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "5",
+      "run_index": "1",
+      "field": "weather",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "5",
+      "run_index": "1",
+      "field": "odds",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "5",
+      "run_index": "2",
+      "field": "pace",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "5",
+      "run_index": "2",
+      "field": "weather",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "5",
+      "run_index": "2",
+      "field": "odds",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "9",
+      "run_index": "1",
+      "field": "pace",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "9",
+      "run_index": "1",
+      "field": "weather",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "9",
+      "run_index": "1",
+      "field": "odds",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "7",
+      "run_index": "1",
+      "field": "pace",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "7",
+      "run_index": "1",
+      "field": "weather",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "7",
+      "run_index": "1",
+      "field": "odds",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "10",
+      "run_index": "1",
+      "field": "pace",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "10",
+      "run_index": "1",
+      "field": "weather",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "10",
+      "run_index": "1",
+      "field": "odds",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "10",
+      "run_index": "2",
+      "field": "pace",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "10",
+      "run_index": "2",
+      "field": "weather",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "10",
+      "run_index": "2",
+      "field": "odds",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "6",
+      "run_index": "1",
+      "field": "pace",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "6",
+      "run_index": "1",
+      "field": "weather",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "6",
+      "run_index": "1",
+      "field": "odds",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "12",
+      "run_index": "1",
+      "field": "pace",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "12",
+      "run_index": "1",
+      "field": "weather",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "12",
+      "run_index": "1",
+      "field": "odds",
+      "state": "missing",
+      "model_used": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "12",
+      "run_index": "2",
+      "field": "pace",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "12",
+      "run_index": "2",
+      "field": "weather",
+      "state": "missing",
+      "model_used": false
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "12",
+      "run_index": "2",
+      "field": "odds",
+      "state": "missing",
+      "model_used": true
+    }
+  ],
+  "missing_field_counts": {
+    "pace": 22,
+    "weather": 22,
+    "odds": 22,
+    "passing_order": 5
+  },
+  "history_counts": [
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "4",
+      "collected": 1,
+      "required": 1,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "1",
+      "collected": 2,
+      "required": 2,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "11",
+      "collected": 1,
+      "required": 1,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "8",
+      "collected": 5,
+      "required": 5,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "3",
+      "collected": 1,
+      "required": 1,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "2",
+      "collected": 2,
+      "required": 2,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "13",
+      "collected": 1,
+      "required": 1,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "5",
+      "collected": 2,
+      "required": 2,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "9",
+      "collected": 1,
+      "required": 1,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "7",
+      "collected": 1,
+      "required": 1,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "10",
+      "collected": 2,
+      "required": 2,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "6",
+      "collected": 1,
+      "required": 1,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "horse_number": "12",
+      "collected": 2,
+      "required": 2,
+      "status": "COMPLETE"
+    }
+  ],
+  "history_counts_verified": true,
+  "unapproved_finding_count": 89,
+  "source_audit_status": "UNVERIFIED",
+  "raw_provenance_status": "UNVERIFIED",
+  "limitations": [
+    "Normalized inputs only; original-source parser omissions are not verified.",
+    "Collector quality flags and nonempty numeric values do not prove observed origin.",
+    "Raw history reparse verifies reproducibility, not independent parser completeness or current entry provenance."
+  ]
+}

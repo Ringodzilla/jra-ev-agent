@@ -1,0 +1,154 @@
+/Users/konishi/Documents/Playground/projects/jra-ev-agent/.venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+DISCOVERED 0 results 0 cards
+CARDS 0
+DONE
+/Users/konishi/Documents/Playground/projects/jra-ev-agent/.venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+DISCOVERED 0 results 0 cards
+CARDS 0
+DONE
+/Users/konishi/Documents/Playground/projects/jra-ev-agent/.venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+DISCOVERED 0 results 0 cards
+CARDS 0
+DONE
+/Users/konishi/Documents/Playground/projects/jra-ev-agent/.venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+DISCOVERED 36 results 36 cards
+CARDS 36
+ERROR https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1004202604030120261024/EB TypeError('expected string or bytes-like object')
+ERROR https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1004202604030220261024/A0 TypeError('expected string or bytes-like object')
+ERROR https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1004202604030320261024/55 TypeError('expected string or bytes-like object')
+ERROR https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1004202604030420261024/0A TypeError('expected string or bytes-like object')
+ERROR https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1004202604030520261024/BF TypeError('expected string or bytes-like object')
+ERROR https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1004202604030620261024/74 TypeError('expected string or bytes-like object')
+ERROR https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1004202604030720261024/29 TypeError('expected string or bytes-like object')
+Traceback (most recent call last):
+  File "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/collect.py", line 63, in <module>
+    ch=fetch(cu);issues=[]; horses=parser.parse_race_detail(ch,rid,'',target_race_date='2026-10-24',issue_sink=issues)
+  File "/Users/konishi/Documents/Playground/projects/jra-ev-agent/jra_scraper/parser.py", line 185, in parse_race_detail
+    rows = [tr for tr in table.select("tr") if tr.select("td")]
+  File "/Users/konishi/Documents/Playground/projects/jra-ev-agent/jra_scraper/parser.py", line 185, in <listcomp>
+    rows = [tr for tr in table.select("tr") if tr.select("td")]
+  File "/Users/konishi/Documents/Playground/projects/jra-ev-agent/.venv/lib/python3.9/site-packages/bs4/element.py", line 3149, in select
+    return self.css.select(selector, namespaces, limit, **kwargs)
+  File "/Users/konishi/Documents/Playground/projects/jra-ev-agent/.venv/lib/python3.9/site-packages/bs4/css.py", line 194, in select
+    self.api.select(
+  File "/Users/konishi/Documents/Playground/projects/jra-ev-agent/.venv/lib/python3.9/site-packages/soupsieve/__init__.py", line 147, in select
+    return compile(select, namespaces, flags, **kwargs).select(tag, limit)
+  File "/Users/konishi/Documents/Playground/projects/jra-ev-agent/.venv/lib/python3.9/site-packages/soupsieve/css_match.py", line 1636, in select
+    return list(self.iselect(tag, limit))
+  File "/Users/konishi/Documents/Playground/projects/jra-ev-agent/.venv/lib/python3.9/site-packages/soupsieve/css_match.py", line 1641, in iselect
+    yield from CSSMatch(self.selectors, tag, self.namespaces, self.flags).select(limit)
+  File "/Users/konishi/Documents/Playground/projects/jra-ev-agent/.venv/lib/python3.9/site-packages/soupsieve/css_match.py", line 1538, in select
+    if self.match(child):
+  File "/Users/konishi/Documents/Playground/projects/jra-ev-agent/.venv/lib/python3.9/site-packages/soupsieve/css_match.py", line 1568, in match
+    return not self.is_doc(el) and self.is_tag(el) and self.match_selectors(el, self.selectors)
+KeyboardInterrupt
+/Users/konishi/Documents/Playground/projects/jra-ev-agent/.venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+DISCOVERED 36 results 36 cards
+CARDS 36
+Traceback (most recent call last):
+  File "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/collect.py", line 63, in <module>
+    ch=fetch(cu);issues=[]; horses=parser.parse_race_detail(ch,rid,'',target_race_date='2026-10-24',issue_sink=issues)
+  File "/Users/konishi/Documents/Playground/projects/jra-ev-agent/jra_scraper/parser.py", line 251, in parse_race_detail
+    HorseEntry(
+  File "<string>", line 2, in __init__
+KeyboardInterrupt
+/Users/konishi/Documents/Playground/projects/jra-ev-agent/.venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+DISCOVERED 36 results 36 cards
+CARDS 36
+RACE 1 36 20261024_04_01 12
+RACE 2 36 20261024_04_02 18
+RACE 3 36 20261024_04_03 14
+Traceback (most recent call last):
+  File "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/collect.py", line 62, in <module>
+    rid=code(u);h=fetch(u);s=BeautifulSoup(h,'html.parser');cu=next((v for v in cards if code(v)==rid),None)
+  File "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/collect.py", line 15, in fetch
+    time.sleep(.4); parts=urlsplit(url); query=parse_qs(parts.query); r=(session.post(BASE+parts.path,data={'cname':query['CNAME'][0]},timeout=40) if 'CNAME' in query else session.get(url,timeout=40));r.raise_for_status();r.encoding=r.apparent_encoding
+KeyboardInterrupt
+/Users/konishi/Documents/Playground/projects/jra-ev-agent/.venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+DISCOVERED 36 results 36 cards
+CARDS 36
+RACE 1 36 20261024_04_01 12
+RACE 2 36 20261024_04_02 18
+RACE 3 36 20261024_04_03 14
+RACE 4 36 20261024_04_04 13
+RACE 5 36 20261024_04_05 14
+RACE 6 36 20261024_04_06 12
+RACE 7 36 20261024_04_07 12
+RACE 8 36 20261024_04_08 10
+RACE 9 36 20261024_04_09 16
+RACE 10 36 20261024_04_10 15
+RACE 11 36 20261024_04_11 12
+RACE 12 36 20261024_04_12 18
+RACE 13 36 20261024_05_01 14
+RACE 14 36 20261024_05_02 7
+RACE 15 36 20261024_05_03 10
+RACE 16 36 20261024_05_04 16
+RACE 17 36 20261024_05_05 18
+RACE 18 36 20261024_05_06 16
+RACE 19 36 20261024_05_07 12
+RACE 20 36 20261024_05_08 13
+RACE 21 36 20261024_05_09 13
+RACE 22 36 20261024_05_10 16
+RACE 23 36 20261024_05_11 13
+RACE 24 36 20261024_05_12 11
+RACE 25 36 20261024_08_01 11
+RACE 26 36 20261024_08_02 10
+RACE 27 36 20261024_08_03 16
+RACE 28 36 20261024_08_04 10
+RACE 29 36 20261024_08_05 13
+RACE 30 36 20261024_08_06 12
+RACE 31 36 20261024_08_07 11
+RACE 32 36 20261024_08_08 8
+RACE 33 36 20261024_08_09 9
+RACE 34 36 20261024_08_10 15
+RACE 35 36 20261024_08_11 16
+RACE 36 36 20261024_08_12 12
+DONE
+/Users/konishi/Documents/Playground/projects/jra-ev-agent/.venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+DISCOVERED 36 results 36 cards
+CARDS 36
+RACE 1 36 20261024_04_01 12
+RACE 2 36 20261024_04_02 18
+RACE 3 36 20261024_04_03 14
+RACE 4 36 20261024_04_04 13
+RACE 5 36 20261024_04_05 14
+RACE 6 36 20261024_04_06 12
+RACE 7 36 20261024_04_07 12
+RACE 8 36 20261024_04_08 10
+RACE 9 36 20261024_04_09 16
+RACE 10 36 20261024_04_10 15
+RACE 11 36 20261024_04_11 12
+RACE 12 36 20261024_04_12 18
+RACE 13 36 20261024_05_01 14
+RACE 14 36 20261024_05_02 7
+RACE 15 36 20261024_05_03 10
+RACE 16 36 20261024_05_04 16
+RACE 17 36 20261024_05_05 18
+RACE 18 36 20261024_05_06 16
+RACE 19 36 20261024_05_07 12
+RACE 20 36 20261024_05_08 13
+RACE 21 36 20261024_05_09 13
+RACE 22 36 20261024_05_10 16
+RACE 23 36 20261024_05_11 13
+RACE 24 36 20261024_05_12 11
+RACE 25 36 20261024_08_01 11
+RACE 26 36 20261024_08_02 10
+RACE 27 36 20261024_08_03 16
+RACE 28 36 20261024_08_04 10
+RACE 29 36 20261024_08_05 13
+RACE 30 36 20261024_08_06 12
+RACE 31 36 20261024_08_07 11
+RACE 32 36 20261024_08_08 8
+RACE 33 36 20261024_08_09 9
+RACE 34 36 20261024_08_10 15
+RACE 35 36 20261024_08_11 16
+RACE 36 36 20261024_08_12 12
+DONE

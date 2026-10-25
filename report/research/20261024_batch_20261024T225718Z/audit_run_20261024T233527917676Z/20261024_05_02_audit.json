@@ -1,0 +1,1425 @@
+{
+  "race_id": "20261024_東京_02",
+  "numeric_race_id": "20261024_05_02",
+  "gate": "PASS",
+  "model_ready": true,
+  "record_type": "retrospective_reconstructed",
+  "production_learning_eligible": false,
+  "lineup_audit": {
+    "card_entries": 7,
+    "active_entries": 7,
+    "official_nonstarters": [],
+    "explicit_status_markers": [],
+    "withdrawal_completeness": "UNVERIFIED",
+    "note": "Collector entries retained; cancellation/exclusion coverage requires independent lineup comparison."
+  },
+  "metadata_origin": "posthoc_official_result_header",
+  "post_time": "2026-10-24T10:35:00+09:00",
+  "metadata_source": {
+    "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1005202604080220261024/29",
+    "method": "POST",
+    "captured_at": "2026-10-24T23:02:46.576160+00:00",
+    "sha256": "4c0dbc0b69beaaf4a90124d0dce0219700750db1ab41438838c7eb149bea43b8",
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/fe2f691cd1938adc6c158faf523633a6a89b4e44ee862275feda10176472e850.html",
+    "encoding": "SHIFT_JIS"
+  },
+  "source_issues": [],
+  "history_conflicts": [
+    {
+      "horse": "サントシャペル",
+      "date": "2026-10-12",
+      "field": "race_name",
+      "embedded_or_first": "牝新馬",
+      "detail": "2歳新馬"
+    },
+    {
+      "horse": "サントシャペル",
+      "date": "2026-10-12",
+      "field": "distance",
+      "embedded_or_first": "1600芝",
+      "detail": "芝1600"
+    },
+    {
+      "horse": "サントシャペル",
+      "date": "2026-10-12",
+      "field": "last_3f",
+      "embedded_or_first": "34.2",
+      "detail": "36.0"
+    },
+    {
+      "horse": "サントシャペル",
+      "date": "2026-10-12",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ビタークレス",
+      "date": "2026-10-03",
+      "field": "race_name",
+      "embedded_or_first": "新馬",
+      "detail": "2歳新馬"
+    },
+    {
+      "horse": "ビタークレス",
+      "date": "2026-10-03",
+      "field": "distance",
+      "embedded_or_first": "1800芝",
+      "detail": "芝1800"
+    },
+    {
+      "horse": "ビタークレス",
+      "date": "2026-10-03",
+      "field": "last_3f",
+      "embedded_or_first": "35.5",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ビタークレス",
+      "date": "2026-10-03",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "エムアイブレイズ",
+      "date": "2026-07-04",
+      "field": "race_name",
+      "embedded_or_first": "未勝利",
+      "detail": "2歳未勝利"
+    },
+    {
+      "horse": "エムアイブレイズ",
+      "date": "2026-07-04",
+      "field": "distance",
+      "embedded_or_first": "1800芝",
+      "detail": "芝1800"
+    },
+    {
+      "horse": "エムアイブレイズ",
+      "date": "2026-07-04",
+      "field": "last_3f",
+      "embedded_or_first": "35.6",
+      "detail": "36.0"
+    },
+    {
+      "horse": "エムアイブレイズ",
+      "date": "2026-07-04",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "エムアイブレイズ",
+      "date": "2026-06-21",
+      "field": "race_name",
+      "embedded_or_first": "新馬",
+      "detail": "2歳新馬"
+    },
+    {
+      "horse": "エムアイブレイズ",
+      "date": "2026-06-21",
+      "field": "distance",
+      "embedded_or_first": "1400芝",
+      "detail": "芝1400"
+    },
+    {
+      "horse": "エムアイブレイズ",
+      "date": "2026-06-21",
+      "field": "last_3f",
+      "embedded_or_first": "33.6",
+      "detail": "36.0"
+    },
+    {
+      "horse": "エムアイブレイズ",
+      "date": "2026-06-21",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-10-04",
+      "field": "race_name",
+      "embedded_or_first": "未勝利",
+      "detail": "2歳未勝利"
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-10-04",
+      "field": "distance",
+      "embedded_or_first": "1800芝",
+      "detail": "芝1800"
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-10-04",
+      "field": "last_3f",
+      "embedded_or_first": "34.6",
+      "detail": "36.0"
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-10-04",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-09-19",
+      "field": "race_name",
+      "embedded_or_first": "未勝利",
+      "detail": "2歳未勝利"
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-09-19",
+      "field": "distance",
+      "embedded_or_first": "1600芝",
+      "detail": "芝1600"
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-09-19",
+      "field": "last_3f",
+      "embedded_or_first": "35.3",
+      "detail": "36.0"
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-09-19",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-07-25",
+      "field": "race_name",
+      "embedded_or_first": "新馬",
+      "detail": "2歳新馬"
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-07-25",
+      "field": "distance",
+      "embedded_or_first": "1200ダ",
+      "detail": "ダ1200"
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-07-25",
+      "field": "last_3f",
+      "embedded_or_first": "38.3",
+      "detail": "36.0"
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-07-25",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ホウオウビースト",
+      "date": "2026-10-12",
+      "field": "race_name",
+      "embedded_or_first": "新馬",
+      "detail": "2歳新馬"
+    },
+    {
+      "horse": "ホウオウビースト",
+      "date": "2026-10-12",
+      "field": "distance",
+      "embedded_or_first": "1800芝",
+      "detail": "芝1800"
+    },
+    {
+      "horse": "ホウオウビースト",
+      "date": "2026-10-12",
+      "field": "last_3f",
+      "embedded_or_first": "34.8",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ホウオウビースト",
+      "date": "2026-10-12",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ミツカネリゲル",
+      "date": "2026-08-22",
+      "field": "race_name",
+      "embedded_or_first": "新馬",
+      "detail": "2歳新馬"
+    },
+    {
+      "horse": "ミツカネリゲル",
+      "date": "2026-08-22",
+      "field": "distance",
+      "embedded_or_first": "1600芝",
+      "detail": "芝1600"
+    },
+    {
+      "horse": "ミツカネリゲル",
+      "date": "2026-08-22",
+      "field": "last_3f",
+      "embedded_or_first": "33.3",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ミツカネリゲル",
+      "date": "2026-08-22",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ファーストアライヴ",
+      "date": "2026-08-02",
+      "field": "race_name",
+      "embedded_or_first": "新馬",
+      "detail": "2歳新馬"
+    },
+    {
+      "horse": "ファーストアライヴ",
+      "date": "2026-08-02",
+      "field": "distance",
+      "embedded_or_first": "1600芝",
+      "detail": "芝1600"
+    },
+    {
+      "horse": "ファーストアライヴ",
+      "date": "2026-08-02",
+      "field": "last_3f",
+      "embedded_or_first": "34.0",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ファーストアライヴ",
+      "date": "2026-08-02",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    }
+  ],
+  "history_conflict_classification": [
+    {
+      "horse": "サントシャペル",
+      "date": "2026-10-12",
+      "field": "race_name",
+      "embedded_or_first": "牝新馬",
+      "detail": "2歳新馬",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "サントシャペル",
+      "date": "2026-10-12",
+      "field": "distance",
+      "embedded_or_first": "1600芝",
+      "detail": "芝1600",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "サントシャペル",
+      "date": "2026-10-12",
+      "field": "last_3f",
+      "embedded_or_first": "34.2",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "サントシャペル",
+      "date": "2026-10-12",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ビタークレス",
+      "date": "2026-10-03",
+      "field": "race_name",
+      "embedded_or_first": "新馬",
+      "detail": "2歳新馬",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ビタークレス",
+      "date": "2026-10-03",
+      "field": "distance",
+      "embedded_or_first": "1800芝",
+      "detail": "芝1800",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ビタークレス",
+      "date": "2026-10-03",
+      "field": "last_3f",
+      "embedded_or_first": "35.5",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ビタークレス",
+      "date": "2026-10-03",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "エムアイブレイズ",
+      "date": "2026-07-04",
+      "field": "race_name",
+      "embedded_or_first": "未勝利",
+      "detail": "2歳未勝利",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "エムアイブレイズ",
+      "date": "2026-07-04",
+      "field": "distance",
+      "embedded_or_first": "1800芝",
+      "detail": "芝1800",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "エムアイブレイズ",
+      "date": "2026-07-04",
+      "field": "last_3f",
+      "embedded_or_first": "35.6",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "エムアイブレイズ",
+      "date": "2026-07-04",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "エムアイブレイズ",
+      "date": "2026-06-21",
+      "field": "race_name",
+      "embedded_or_first": "新馬",
+      "detail": "2歳新馬",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "エムアイブレイズ",
+      "date": "2026-06-21",
+      "field": "distance",
+      "embedded_or_first": "1400芝",
+      "detail": "芝1400",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "エムアイブレイズ",
+      "date": "2026-06-21",
+      "field": "last_3f",
+      "embedded_or_first": "33.6",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "エムアイブレイズ",
+      "date": "2026-06-21",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-10-04",
+      "field": "race_name",
+      "embedded_or_first": "未勝利",
+      "detail": "2歳未勝利",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-10-04",
+      "field": "distance",
+      "embedded_or_first": "1800芝",
+      "detail": "芝1800",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-10-04",
+      "field": "last_3f",
+      "embedded_or_first": "34.6",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-10-04",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-09-19",
+      "field": "race_name",
+      "embedded_or_first": "未勝利",
+      "detail": "2歳未勝利",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-09-19",
+      "field": "distance",
+      "embedded_or_first": "1600芝",
+      "detail": "芝1600",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-09-19",
+      "field": "last_3f",
+      "embedded_or_first": "35.3",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-09-19",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-07-25",
+      "field": "race_name",
+      "embedded_or_first": "新馬",
+      "detail": "2歳新馬",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-07-25",
+      "field": "distance",
+      "embedded_or_first": "1200ダ",
+      "detail": "ダ1200",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-07-25",
+      "field": "last_3f",
+      "embedded_or_first": "38.3",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "イニシャルポイント",
+      "date": "2026-07-25",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ホウオウビースト",
+      "date": "2026-10-12",
+      "field": "race_name",
+      "embedded_or_first": "新馬",
+      "detail": "2歳新馬",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ホウオウビースト",
+      "date": "2026-10-12",
+      "field": "distance",
+      "embedded_or_first": "1800芝",
+      "detail": "芝1800",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ホウオウビースト",
+      "date": "2026-10-12",
+      "field": "last_3f",
+      "embedded_or_first": "34.8",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ホウオウビースト",
+      "date": "2026-10-12",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ミツカネリゲル",
+      "date": "2026-08-22",
+      "field": "race_name",
+      "embedded_or_first": "新馬",
+      "detail": "2歳新馬",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ミツカネリゲル",
+      "date": "2026-08-22",
+      "field": "distance",
+      "embedded_or_first": "1600芝",
+      "detail": "芝1600",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ミツカネリゲル",
+      "date": "2026-08-22",
+      "field": "last_3f",
+      "embedded_or_first": "33.3",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ミツカネリゲル",
+      "date": "2026-08-22",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ファーストアライヴ",
+      "date": "2026-08-02",
+      "field": "race_name",
+      "embedded_or_first": "新馬",
+      "detail": "2歳新馬",
+      "classification": "NAME_LABEL_VARIANT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ファーストアライヴ",
+      "date": "2026-08-02",
+      "field": "distance",
+      "embedded_or_first": "1600芝",
+      "detail": "芝1600",
+      "classification": "NORMALIZED_EQUIVALENT",
+      "blocks_model": false
+    },
+    {
+      "horse": "ファーストアライヴ",
+      "date": "2026-08-02",
+      "field": "last_3f",
+      "embedded_or_first": "34.0",
+      "detail": "36.0",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    },
+    {
+      "horse": "ファーストアライヴ",
+      "date": "2026-08-02",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback",
+      "classification": "REJECTED_FALLBACK_CANDIDATE",
+      "blocks_model": false
+    }
+  ],
+  "blocking_history_conflicts": [],
+  "zero_history_horse_numbers": [],
+  "career_audit": [
+    {
+      "horse_number": "1",
+      "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+      "count": 1,
+      "source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106156/BB",
+        "method": "POST",
+        "captured_at": "2026-10-24T23:02:48.589047+00:00",
+        "sha256": "043823c7c13336f026f1b429fedf681de24a04da8c5cdea44a2f434daa366144",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/b9dc67dc5de58df907caf65662b36550029adf81b760757093e88918647ae7be.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "proof": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 1,
+        "official_totals": {
+          "平地レース合計": 1,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 1,
+        "before_target_count": 1,
+        "started_rows": [
+          {
+            "date": "2026年10月12日",
+            "course": "東京",
+            "race_name": "2歳新馬",
+            "distance": "芝1600",
+            "track_condition": "良",
+            "popularity": "1",
+            "position": "3",
+            "jockey": "荻野 極",
+            "weight": "55.0",
+            "time": "1:36.5",
+            "raw_text": "2026年10月12日 東京 2歳新馬 芝1600 良 12 1 3 荻野 極 55.0 454 1:36.5 スパリエーラ",
+            "normalized_date": "2026-10-12"
+          }
+        ],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      }
+    },
+    {
+      "horse_number": "2",
+      "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+      "count": 1,
+      "source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102346/51",
+        "method": "POST",
+        "captured_at": "2026-10-24T23:02:49.602527+00:00",
+        "sha256": "ac74332265e50739380e146f3b791d34c708f95376dc62fe6a86266c03a9cabd",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/303dabf8b0a7bb30848c6bc36d4016957ff9e82f1d32c7bcc78897b9667daf6a.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "proof": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 1,
+        "official_totals": {
+          "平地レース合計": 1,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 1,
+        "before_target_count": 1,
+        "started_rows": [
+          {
+            "date": "2026年10月3日",
+            "course": "東京",
+            "race_name": "2歳新馬",
+            "distance": "芝1800",
+            "track_condition": "良",
+            "popularity": "11",
+            "position": "8",
+            "jockey": "木幡 巧也",
+            "weight": "56.0",
+            "time": "1:49.5",
+            "raw_text": "2026年10月3日 東京 2歳新馬 芝1800 良 11 11 8 木幡 巧也 56.0 508 1:49.5 ヴァルカモニカ",
+            "normalized_date": "2026-10-03"
+          }
+        ],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      }
+    },
+    {
+      "horse_number": "3",
+      "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+      "count": 2,
+      "source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024101005/1C",
+        "method": "POST",
+        "captured_at": "2026-10-24T23:02:50.466429+00:00",
+        "sha256": "b25b6b6d6e846677f361acc7934fb4a7056cdd6cfb719372766035d775495a63",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/1982a8af9bc632128ee88f3e7208e3fee2d46f37044fb9371a5cd2227a9a4850.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "proof": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 2,
+        "official_totals": {
+          "平地レース合計": 2,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 2,
+        "before_target_count": 2,
+        "started_rows": [
+          {
+            "date": "2026年7月4日",
+            "course": "福島",
+            "race_name": "2歳未勝利",
+            "distance": "芝1800",
+            "track_condition": "稍重",
+            "popularity": "5",
+            "position": "5",
+            "jockey": "原 優介",
+            "weight": "55.0",
+            "time": "1:49.0",
+            "raw_text": "2026年7月4日 福島 2歳未勝利 芝1800 稍重 8 5 5 原 優介 55.0 446 1:49.0 コスモハナミズキ",
+            "normalized_date": "2026-07-04"
+          },
+          {
+            "date": "2026年6月21日",
+            "course": "東京",
+            "race_name": "2歳新馬",
+            "distance": "芝1400",
+            "track_condition": "稍重",
+            "popularity": "6",
+            "position": "4",
+            "jockey": "原 優介",
+            "weight": "55.0",
+            "time": "1:26.6",
+            "raw_text": "2026年6月21日 東京 2歳新馬 芝1400 稍重 10 6 4 原 優介 55.0 452 1:26.6 タクティシアン",
+            "normalized_date": "2026-06-21"
+          }
+        ],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      }
+    },
+    {
+      "horse_number": "4",
+      "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+      "count": 3,
+      "source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024108217/FD",
+        "method": "POST",
+        "captured_at": "2026-10-24T23:02:51.218544+00:00",
+        "sha256": "6f91f8edabfd6ef010c03b7ceb9382d94612431662542815cad4de52baf778d4",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/24e53f32cb9bf2c56a61cfd3d4a92136759afbb4b6a327ac1881a59d3349e2c2.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "proof": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 3,
+        "official_totals": {
+          "平地レース合計": 3,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 3,
+        "before_target_count": 3,
+        "started_rows": [
+          {
+            "date": "2026年10月4日",
+            "course": "東京",
+            "race_name": "2歳未勝利",
+            "distance": "芝1800",
+            "track_condition": "良",
+            "popularity": "5",
+            "position": "2",
+            "jockey": "丹内 祐次",
+            "weight": "55.0",
+            "time": "1:47.1",
+            "raw_text": "2026年10月4日 東京 2歳未勝利 芝1800 良 12 5 2 丹内 祐次 55.0 440 1:47.1 ダノンダックス",
+            "normalized_date": "2026-10-04"
+          },
+          {
+            "date": "2026年9月19日",
+            "course": "中山",
+            "race_name": "2歳未勝利",
+            "distance": "芝1600",
+            "track_condition": "良",
+            "popularity": "5",
+            "position": "5",
+            "jockey": "丹内 祐次",
+            "weight": "55.0",
+            "time": "1:35.7",
+            "raw_text": "2026年9月19日 中山 2歳未勝利 芝1600 良 12 5 5 丹内 祐次 55.0 442 1:35.7 トルタパスカリーナ",
+            "normalized_date": "2026-09-19"
+          },
+          {
+            "date": "2026年7月25日",
+            "course": "新潟",
+            "race_name": "2歳新馬",
+            "distance": "ダ1200",
+            "track_condition": "稍重",
+            "popularity": "3",
+            "position": "2",
+            "jockey": "原 優介",
+            "weight": "55.0",
+            "time": "1:13.2",
+            "raw_text": "2026年7月25日 新潟 2歳新馬 ダ1200 稍重 14 3 2 原 優介 55.0 442 1:13.2 ミカミッチー",
+            "normalized_date": "2026-07-25"
+          }
+        ],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      }
+    },
+    {
+      "horse_number": "5",
+      "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+      "count": 1,
+      "source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105897/D6",
+        "method": "POST",
+        "captured_at": "2026-10-24T23:02:51.947109+00:00",
+        "sha256": "1f8d4d4a125dccc8b4811dfbbe08c2226ea53c565b9e20a3961528a56fd9f1ce",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/4be84bcddd8bd366963bdc260518e31830056965d3baaa4ff3072d307c2ee8a6.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "proof": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 1,
+        "official_totals": {
+          "平地レース合計": 1,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 1,
+        "before_target_count": 1,
+        "started_rows": [
+          {
+            "date": "2026年10月12日",
+            "course": "京都",
+            "race_name": "2歳新馬",
+            "distance": "芝1800",
+            "track_condition": "良",
+            "popularity": "2",
+            "position": "3",
+            "jockey": "坂井 瑠星",
+            "weight": "56.0",
+            "time": "1:48.5",
+            "raw_text": "2026年10月12日 京都 2歳新馬 芝1800 良 9 2 3 坂井 瑠星 56.0 460 1:48.5 レインインザスカイ",
+            "normalized_date": "2026-10-12"
+          }
+        ],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      }
+    },
+    {
+      "horse_number": "6",
+      "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+      "count": 1,
+      "source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024109029/80",
+        "method": "POST",
+        "captured_at": "2026-10-24T23:02:52.728005+00:00",
+        "sha256": "4826a989a1e9c517690608cae918df30aa169302d74da2088ff373317b2bef53",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/706ed1caf8efeef4ed1874f643d85335218fa77ffd08b0e7ab0200def203e639.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "proof": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 1,
+        "official_totals": {
+          "平地レース合計": 1,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 1,
+        "before_target_count": 1,
+        "started_rows": [
+          {
+            "date": "2026年8月22日",
+            "course": "新潟",
+            "race_name": "2歳新馬",
+            "distance": "芝1600",
+            "track_condition": "良",
+            "popularity": "5",
+            "position": "4",
+            "jockey": "石橋 脩",
+            "weight": "55.0",
+            "time": "1:36.4",
+            "raw_text": "2026年8月22日 新潟 2歳新馬 芝1600 良 12 5 4 石橋 脩 55.0 458 1:36.4 ジップスパーク",
+            "normalized_date": "2026-08-22"
+          }
+        ],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      }
+    },
+    {
+      "horse_number": "7",
+      "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+      "count": 1,
+      "source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106697/63",
+        "method": "POST",
+        "captured_at": "2026-10-24T23:02:53.456767+00:00",
+        "sha256": "758f8a4fe11c032f8c89fffb6576a2299820e9d11cd7f6d8465328b556d8b9fb",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/2cc803bc58452ec852f405224e5c17ad658036f377a317d6c767083813595bfb.html",
+        "encoding": "CP932"
+      },
+      "proof": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 1,
+        "official_totals": {
+          "平地レース合計": 1,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 1,
+        "before_target_count": 1,
+        "started_rows": [
+          {
+            "date": "2026年8月2日",
+            "course": "新潟",
+            "race_name": "2歳新馬",
+            "distance": "芝1600",
+            "track_condition": "良",
+            "popularity": "1",
+            "position": "2",
+            "jockey": "荻野 極",
+            "weight": "55.0",
+            "time": "1:36.7",
+            "raw_text": "2026年8月2日 新潟 2歳新馬 芝1600 良 13 1 2 荻野 極 55.0 506 1:36.7 ニシノトラノスケ",
+            "normalized_date": "2026-08-02"
+          }
+        ],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      }
+    }
+  ],
+  "required_history_evidence": [],
+  "surface_gate": "PASS",
+  "environment_gate": "PASS",
+  "environment": {
+    "cushion": {
+      "measured_at": "2026-10-24T07:00:00+09:00",
+      "cushion": 9.5
+    },
+    "moisture": {
+      "measured_at": "2026-10-24T05:00:00+09:00",
+      "turf_moisture_goal": 12.7,
+      "turf_moisture_goal_condition": "hard",
+      "turf_moisture_corner4": 15.5,
+      "turf_moisture_corner4_condition": "hard",
+      "dirt_moisture_goal": 2.0,
+      "dirt_moisture_goal_condition": "hard",
+      "dirt_moisture_corner4": 2.4,
+      "dirt_moisture_corner4_condition": "hard",
+      "note": "注記：測定時刻までの当日雨量は0.0ミリメートルでした"
+    }
+  },
+  "environment_source_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_environment_reconstruction/observations_20261024T225734690084Z.json",
+  "collected_audit": {
+    "schema_version": 1,
+    "status": "PASS",
+    "gate": "PASS",
+    "purpose": "environment_training",
+    "verification_issues": [],
+    "recovered_imputation_provenance": [],
+    "input_sha256": "6a8674b9c518137a73c921f64da0ed6cf435a5fb59f270b9d2328b4745607fc2",
+    "race_ids": [
+      "20261024_東京_02"
+    ],
+    "findings": [],
+    "missing_fields": [
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "1",
+        "run_index": "1",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "1",
+        "run_index": "1",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "2",
+        "run_index": "1",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "2",
+        "run_index": "1",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "3",
+        "run_index": "1",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "3",
+        "run_index": "1",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "3",
+        "run_index": "2",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "3",
+        "run_index": "2",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "4",
+        "run_index": "1",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "4",
+        "run_index": "1",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "4",
+        "run_index": "2",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "4",
+        "run_index": "2",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "4",
+        "run_index": "3",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "4",
+        "run_index": "3",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "5",
+        "run_index": "1",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "5",
+        "run_index": "1",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "6",
+        "run_index": "1",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "6",
+        "run_index": "1",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "7",
+        "run_index": "1",
+        "field": "pace",
+        "state": "missing",
+        "model_used": false
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "7",
+        "run_index": "1",
+        "field": "weather",
+        "state": "missing",
+        "model_used": false
+      }
+    ],
+    "missing_field_counts": {
+      "pace": 10,
+      "weather": 10
+    },
+    "history_counts": [
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "1",
+        "collected": 1,
+        "required": 1,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "2",
+        "collected": 1,
+        "required": 1,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "3",
+        "collected": 2,
+        "required": 2,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "4",
+        "collected": 3,
+        "required": 3,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "5",
+        "collected": 1,
+        "required": 1,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "6",
+        "collected": 1,
+        "required": 1,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "horse_number": "7",
+        "collected": 1,
+        "required": 1,
+        "status": "COMPLETE"
+      }
+    ],
+    "history_counts_verified": true,
+    "unapproved_finding_count": 0,
+    "source_audit_status": "VERIFIED_REPARSE",
+    "raw_provenance_status": "VERIFIED_REPARSE",
+    "limitations": [
+      "Normalized inputs only; original-source parser omissions are not verified.",
+      "Collector quality flags and nonempty numeric values do not prove observed origin.",
+      "Raw history reparse verifies reproducibility, not independent parser completeness or current entry provenance."
+    ]
+  },
+  "source_provenance": [
+    {
+      "url": "https://jra.jp/JRADB/accessD.html?CNAME=pw01dde1005202604080220261024/6D",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:02:47.365519+00:00",
+      "sha256": "60c399ce1b710aad729b2861930cb410752f31cf7e8790422319e1bf27385785",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/d2414db9ca9eddf313aa79226f18f1cafd04d9b65a2fe613cf620dcc643e5066.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessO.html?CNAME=pw151ou1005202604050520261012Z/5D",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:33:27.439614+00:00",
+      "sha256": "be1cbbbc989b0e7a3cfd8b819f750b768747d21047347080b9b826ece3a06f0a",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_1fa668bc89e742d83b2d3a2852967952d1b44b5139952c007bb522ea7f34da16.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106156/BB",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:02:48.589047+00:00",
+      "sha256": "043823c7c13336f026f1b429fedf681de24a04da8c5cdea44a2f434daa366144",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/b9dc67dc5de58df907caf65662b36550029adf81b760757093e88918647ae7be.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessO.html?CNAME=pw151ou1005202604010520261003Z/F4",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:33:24.855277+00:00",
+      "sha256": "49d80ca61993db58354759a51e85292bab70494d1d2290d7c4d3aba8b5055e6d",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_b73354fd58ef5e7199c76215bd9efbf6ab06ab5f97beb44b4259f9dcfc73a94b.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102346/51",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:02:49.602527+00:00",
+      "sha256": "ac74332265e50739380e146f3b791d34c708f95376dc62fe6a86266c03a9cabd",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/303dabf8b0a7bb30848c6bc36d4016957ff9e82f1d32c7bcc78897b9667daf6a.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessO.html?CNAME=pw151ou1003202602030120260704Z/12",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:32:53.011165+00:00",
+      "sha256": "6338d07738a20fec9af7f9471aca1c23d103eedfbb3b93d41b114315c898c6a8",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_8cc7d8b05125cd0f514f0d1796e0d9089419277b58c4b0544020d8a6b47df3e4.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessO.html?CNAME=pw151ou1005202603060420260621Z/51",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:33:23.459029+00:00",
+      "sha256": "be720d280c95036a0d15d6c04f3ae70c742c62f900a8f66d8a211cb184d8432c",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_aeecde0321fcb88ec10f6c4a3432d9ca3bcc05c9a27d7f179546b7740cb113c8.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024101005/1C",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:02:50.466429+00:00",
+      "sha256": "b25b6b6d6e846677f361acc7934fb4a7056cdd6cfb719372766035d775495a63",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/1982a8af9bc632128ee88f3e7208e3fee2d46f37044fb9371a5cd2227a9a4850.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessO.html?CNAME=pw151ou1005202604020120261004Z/50",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:33:26.100352+00:00",
+      "sha256": "3526fb3962b311bc1a72de1d0d87e942d7b66b5c63e0dabdceee1b64d6a14d25",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_f130c60e23b798b8901d118aff3aed5b51d7164e07425b8e19000e7dbdb2a328.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessO.html?CNAME=pw151ou1006202604050320260919Z/A3",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:33:40.294754+00:00",
+      "sha256": "d33bf7ddcf34a2b43e63d95554200c4c83dfef2dbba85d924511ed0d33be4513",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_e587c8ae5f868f2e6778bf6318753ef7e5e8c10f65f06f4bb58f5d4f58435af0.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessO.html?CNAME=pw151ou1004202602010220260725Z/9C",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:32:58.423425+00:00",
+      "sha256": "7e5a5e7359097c61ba261ee43d674d4ab99a551f57ea2e85a27e02ccc0df53af",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_95fc1eba61d397a5a253e5495e0506ee3f3f04e2b1de5aa9ad4a64ce4476ba82.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024108217/FD",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:02:51.218544+00:00",
+      "sha256": "6f91f8edabfd6ef010c03b7ceb9382d94612431662542815cad4de52baf778d4",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/24e53f32cb9bf2c56a61cfd3d4a92136759afbb4b6a327ac1881a59d3349e2c2.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessO.html?CNAME=pw151ou1008202604050520261012Z/3B",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:34:19.549440+00:00",
+      "sha256": "1f40510fa6428a901129b21f77d499d0c06dd79f20c572e230239020a25bc192",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_caecc0235858fb8547bc47788f089bb7dbaad431955c2b83657bc37da2c9c859.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105897/D6",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:02:51.947109+00:00",
+      "sha256": "1f8d4d4a125dccc8b4811dfbbe08c2226ea53c565b9e20a3961528a56fd9f1ce",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/4be84bcddd8bd366963bdc260518e31830056965d3baaa4ff3072d307c2ee8a6.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessO.html?CNAME=pw151ou1004202603010320260822Z/C6",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:33:06.284550+00:00",
+      "sha256": "b4faf721d322c7f2ddd30b86cdbb20b6e9b530de3fb0930581c5de37de3dba20",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_03d52a71dd06de13576d18b20d35d4a3539bdd8ceab158cd7108e951a1b7285b.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024109029/80",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:02:52.728005+00:00",
+      "sha256": "4826a989a1e9c517690608cae918df30aa169302d74da2088ff373317b2bef53",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/706ed1caf8efeef4ed1874f643d85335218fa77ffd08b0e7ab0200def203e639.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessO.html?CNAME=pw151ou1004202602040320260802Z/3A",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:33:01.338884+00:00",
+      "sha256": "512f025ceb277fb7dc39f36a0bb26241b4a1f1f0f4285849e5bcca1faa171003",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_a08cd290c38c9673adccb297981fb3a8c2218b064ac013c8569cc76b1193a32f.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106697/63",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:02:53.456767+00:00",
+      "sha256": "758f8a4fe11c032f8c89fffb6576a2299820e9d11cd7f6d8465328b556d8b9fb",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/2cc803bc58452ec852f405224e5c17ad658036f377a317d6c767083813595bfb.html",
+      "encoding": "CP932"
+    }
+  ]
+}
