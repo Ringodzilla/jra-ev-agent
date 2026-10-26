@@ -1,0 +1,1319 @@
+{
+  "schema_version": 1,
+  "role": "data_integrity_auditor",
+  "created_at": "2026-10-25T21:57:11.464499+00:00",
+  "scope": "read-only saved pre-race output inventory, no new prediction, no post-result reconstruction, no eligibility relaxation",
+  "label_files": {
+    "processed": {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "rows": 245,
+      "races": 21,
+      "win_races": 20
+    }
+  },
+  "candidate_runs": 27,
+  "candidate_races": 8,
+  "eligible_runs": 0,
+  "eligible_races": 0,
+  "runs": [
+    {
+      "race_id": "20261024_東京_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20261024_東京_11/20261024T023139Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20261024_東京_11/20261024T023139Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "9",
+      "horse_count": 13,
+      "issued_at": "2026-10-24T02:31:51.748225+00:00",
+      "post_time": "2026-10-24T15:45:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20261024_東京_11/20261024T023139Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "80b4a7cda8dd6525a9f9a4015d110dd8466b58339baff39b1b3d31a1afbe3be8",
+          "actual_sha256": "80b4a7cda8dd6525a9f9a4015d110dd8466b58339baff39b1b3d31a1afbe3be8",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20261024_東京_11/20261024T023139Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "f3d4e6c7df8f16dc22ee8208e6dc661252993c932addc8ec2240944cb29394be",
+          "actual_sha256": "f3d4e6c7df8f16dc22ee8208e6dc661252993c932addc8ec2240944cb29394be",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20261024_東京_11/20261024T023139Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "d0e123cb7fe072f78b4a0ba695cdef9af66198475f18df849169ff2a23732749",
+          "actual_sha256": "d0e123cb7fe072f78b4a0ba695cdef9af66198475f18df849169ff2a23732749",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20261024_東京_11/20261024T023139Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "f826a9a5b6c32d69189f150920592de71d776cd343becb85f22b656815ba4d87",
+          "actual_sha256": "ed3dd351afb36b15f7bcc3960c910c09594443da1709418be729d6659750a268",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20261024_東京_11/20261024T023114Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20261024_東京_11/20261024T023114Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "9",
+      "horse_count": 13,
+      "issued_at": "2026-10-24T02:31:30.434923+00:00",
+      "post_time": "2026-10-24T15:45:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20261024_東京_11/20261024T023114Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "29436371ce0df6869282325322cb20dac6668d7ef98c35ad332351278e1a1f98",
+          "actual_sha256": "29436371ce0df6869282325322cb20dac6668d7ef98c35ad332351278e1a1f98",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20261024_東京_11/20261024T023114Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "12ea8a9f05206f4224222f7c220a2bdcd2f50903541722a98aaf1bec1c473173",
+          "actual_sha256": "12ea8a9f05206f4224222f7c220a2bdcd2f50903541722a98aaf1bec1c473173",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20261024_東京_11/20261024T023114Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "aca79e55ca66dc9e74543aeb0befaaa480cfcec231c97ded176bf98f8e7bc080",
+          "actual_sha256": "aca79e55ca66dc9e74543aeb0befaaa480cfcec231c97ded176bf98f8e7bc080",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20261024_東京_11/20261024T023114Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "8f9a043fbb1758feebb0fa1083e065aed476c8508ca14df4df8b6818b4967274",
+          "actual_sha256": "e9056edab82fd5f0b804f2de7ced6f327d217787d6776797b9b0027ffb56b3d4",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260912_阪神_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T063604Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T063604Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "15",
+      "horse_count": 16,
+      "issued_at": "2026-09-12T06:36:14.109088+00:00",
+      "post_time": "2026-09-12T15:45:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T063604Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "30bd45ecd23685576a2416cf77e1f849bce4befbccebe91582f6433ad05ee631",
+          "actual_sha256": "30bd45ecd23685576a2416cf77e1f849bce4befbccebe91582f6433ad05ee631",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T063604Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "395373a27bba8acc245d38cdc78db52f6a84c9eb658036f83378eab44a32e77b",
+          "actual_sha256": "395373a27bba8acc245d38cdc78db52f6a84c9eb658036f83378eab44a32e77b",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T063604Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "facf244c68f5aea540603779bfb1be2160c8aac598b0420b5eb6ec9b4507f728",
+          "actual_sha256": "facf244c68f5aea540603779bfb1be2160c8aac598b0420b5eb6ec9b4507f728",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T063604Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "6517d687b0d7eb27297f77124c8b9677b77c100ee11f799ab4fc3a0dc2b1cab0",
+          "actual_sha256": "ad0e9d9ca4c920abc1b19545e179f9473c2b3dc39a8307a497c8db96736e6a76",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260912_阪神_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T042043Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T042043Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "15",
+      "horse_count": 16,
+      "issued_at": "2026-09-12T04:20:52.873657+00:00",
+      "post_time": "2026-09-12T15:45:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T042043Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "845d23140cfb66ae5ee4c92d3c0c277e358a1842d59b4783b99ea91af15d9f6b",
+          "actual_sha256": "845d23140cfb66ae5ee4c92d3c0c277e358a1842d59b4783b99ea91af15d9f6b",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T042043Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "12fbba7c31569465f8060a7cec12f1e92573dce36981106c450dd681c600bacb",
+          "actual_sha256": "12fbba7c31569465f8060a7cec12f1e92573dce36981106c450dd681c600bacb",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T042043Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "d56d5d1b7b3ec6d97a354f7f37c178e1eba6c5b6f1f1d8f3107b4d9fca82ad27",
+          "actual_sha256": "d56d5d1b7b3ec6d97a354f7f37c178e1eba6c5b6f1f1d8f3107b4d9fca82ad27",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T042043Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "2ef88bfe81fd761e86d694d66e6a6e8c9a34e48c55b6803268e68dbd34749826",
+          "actual_sha256": "e2be5f6f77795e62e2804f962c9519584e89f4c7d15fd6aefeb6ce57ddde7271",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260912_阪神_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T054748Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T054748Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "15",
+      "horse_count": 16,
+      "issued_at": "2026-09-12T05:47:57.474755+00:00",
+      "post_time": "2026-09-12T15:45:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T054748Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "03657c6733625cd0d67d464d5b331467a514db183edf69f28820fe88b89d08a1",
+          "actual_sha256": "03657c6733625cd0d67d464d5b331467a514db183edf69f28820fe88b89d08a1",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T054748Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "e95c225d7bffea3de251d03d88d2308370e08f5d947f95eec64402c568e9f71e",
+          "actual_sha256": "e95c225d7bffea3de251d03d88d2308370e08f5d947f95eec64402c568e9f71e",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T054748Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "3db401396a0ad24317a7e7607d5a3f063446dd7e363a480a222351d6cec30f82",
+          "actual_sha256": "3db401396a0ad24317a7e7607d5a3f063446dd7e363a480a222351d6cec30f82",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T054748Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "6e9c589f54589cfe328870522fab82a48b7f6ea5b8c259324b5795c9d206db4f",
+          "actual_sha256": "e6d2935ee0ea90b65228805536826247b6e3cb6685a8f51bdd62f01d0e1a6766",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260927_中山_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T022819Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T022819Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "16",
+      "horse_count": 16,
+      "issued_at": "2026-09-27T02:28:32.307682+00:00",
+      "post_time": "2026-09-27T15:40:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T022819Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "9faa3824a27b9a0d016aefd0dd6136f1802661807c861513ed4f9e32b2f43e98",
+          "actual_sha256": "9faa3824a27b9a0d016aefd0dd6136f1802661807c861513ed4f9e32b2f43e98",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T022819Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "629f4ff60efc35b78c8aa6f4a2ba41c3f1e254d1f1ba56e1b2394ed38c84dba8",
+          "actual_sha256": "629f4ff60efc35b78c8aa6f4a2ba41c3f1e254d1f1ba56e1b2394ed38c84dba8",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T022819Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "abd3a8e48dd99c00befc12a7f6161bd1d0a9e0fce7b6dd20d92aa0072136c434",
+          "actual_sha256": "abd3a8e48dd99c00befc12a7f6161bd1d0a9e0fce7b6dd20d92aa0072136c434",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T022819Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "2a1f443901473b0069feab0fbdd8c6bee7362a1329f243f912286ac1a8fe4795",
+          "actual_sha256": "de0decb63708745db16a5aabac2089775d641c737719bfc09fdf95089e9521b1",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260927_中山_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T031109Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T031109Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "16",
+      "horse_count": 16,
+      "issued_at": "2026-09-27T03:11:23.881617+00:00",
+      "post_time": "2026-09-27T15:40:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T031109Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "f35719b6a760918c4d15b770551fb3d8dddfeaa56c5d5fe9405d30f32fb16623",
+          "actual_sha256": "f35719b6a760918c4d15b770551fb3d8dddfeaa56c5d5fe9405d30f32fb16623",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T031109Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "8cf0d9801fce480b3800c101708316e0608e6e0a9d76b071d948bbd172648b38",
+          "actual_sha256": "8cf0d9801fce480b3800c101708316e0608e6e0a9d76b071d948bbd172648b38",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T031109Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "8d093647ef025c160601416edb9aad0a4684bf82303370cdb5f3c26c95d5475e",
+          "actual_sha256": "8d093647ef025c160601416edb9aad0a4684bf82303370cdb5f3c26c95d5475e",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T031109Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "b2715f995601fc1a0604641921ef28add7ff8be5f8432d2d2e0290443a43ea7d",
+          "actual_sha256": "48ddb1ec032c2f1d3c417e1c1a1564314f44d76b65a5961f67626f9c90224ed4",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260927_中山_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T022755Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T022755Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "16",
+      "horse_count": 16,
+      "issued_at": "2026-09-27T02:28:09.149098+00:00",
+      "post_time": "2026-09-27T15:40:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T022755Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "db41f3416fbc87df8ab96c8d493342ddf2a84ca3bd55305f3d995a207757b4c2",
+          "actual_sha256": "db41f3416fbc87df8ab96c8d493342ddf2a84ca3bd55305f3d995a207757b4c2",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T022755Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "efe79bfea30b3cc4ec9b537e73493624bef24f791c3f2ba9b8155fa9c6ce649b",
+          "actual_sha256": "efe79bfea30b3cc4ec9b537e73493624bef24f791c3f2ba9b8155fa9c6ce649b",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T022755Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "6dc3b9c21e373bf26ea7dcf73dbb8a726490ad23c33e86879ca2b9f415213376",
+          "actual_sha256": "6dc3b9c21e373bf26ea7dcf73dbb8a726490ad23c33e86879ca2b9f415213376",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T022755Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "07725432d8a43cf7b30a4a4e9057355812e998b3f5ad32d058e1f3016e045f84",
+          "actual_sha256": "8d37e048aaf77fdcb8f2b8df55b03feaba5f3cd09f2a981e889b4d69e28dda89",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260927_中山_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T022505Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T022505Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "16",
+      "horse_count": 16,
+      "issued_at": "2026-09-27T02:25:17.435771+00:00",
+      "post_time": "2026-09-27T15:40:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T022505Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "7994f523f36ee418eebd7684af178f59731f25ebb0859d45775611edba3082ea",
+          "actual_sha256": "7994f523f36ee418eebd7684af178f59731f25ebb0859d45775611edba3082ea",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T022505Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "556bb70a99e8701ad80c978dd137b46658876d2dc3aadceb3db6d364ce00749a",
+          "actual_sha256": "556bb70a99e8701ad80c978dd137b46658876d2dc3aadceb3db6d364ce00749a",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T022505Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "3a90e60b8bb631eccee9a1a836ac94507f60e02b424a63557d545b44622e2563",
+          "actual_sha256": "3a90e60b8bb631eccee9a1a836ac94507f60e02b424a63557d545b44622e2563",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260927_中山_11/20260927T022505Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "98905a3614586665584a0b0a4b5f7c3cf2ffa0cbb507590d1a27511df1425fda",
+          "actual_sha256": "b021f6241ab2bcc6e147bc5cad39da4cc7b767df4bee22ccbbe42191cca5f29a",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260913_阪神_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T041738Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T041738Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "7",
+      "horse_count": 12,
+      "issued_at": "2026-09-13T04:17:46.022842+00:00",
+      "post_time": "2026-09-13T15:30:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T041738Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "3692979687378209e32f14fc743532f938a58844a547616fc4bc580e317b2193",
+          "actual_sha256": "3692979687378209e32f14fc743532f938a58844a547616fc4bc580e317b2193",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T041738Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "05795ffdce684119216272b794cd22bdf0a1a72084d7dfa2f6b923eebca3c042",
+          "actual_sha256": "05795ffdce684119216272b794cd22bdf0a1a72084d7dfa2f6b923eebca3c042",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T041738Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "1f9a7634f9096559c842b9c1877ff059dd900fc42551770d2c2fcc81d400ecfa",
+          "actual_sha256": "1f9a7634f9096559c842b9c1877ff059dd900fc42551770d2c2fcc81d400ecfa",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T041738Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "97305528abdad4c39317a750a749b9888d1a16c22ea5bce1ae5c91c9478e93bf",
+          "actual_sha256": "8a9a711568bdfbc9ee2dfbf25e3f69a6d5bcbd84d56be08bb58446276a2fb3c5",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260913_阪神_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T062053Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T062053Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "7",
+      "horse_count": 12,
+      "issued_at": "2026-09-13T06:21:00.582792+00:00",
+      "post_time": "2026-09-13T15:30:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T062053Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "00f70e4c8207d7b4358372960e7bcee3f7b5774c7c31529bfea3bd323fabb505",
+          "actual_sha256": "00f70e4c8207d7b4358372960e7bcee3f7b5774c7c31529bfea3bd323fabb505",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T062053Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "532f222a1cbe362fb8f08dece9e08947b1f2880d600aef515903217494f70fd4",
+          "actual_sha256": "532f222a1cbe362fb8f08dece9e08947b1f2880d600aef515903217494f70fd4",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T062053Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "9c7f6885fc48f81caf5a793e63d70ca4246f94fd8f6d7b9988d193679082cfec",
+          "actual_sha256": "9c7f6885fc48f81caf5a793e63d70ca4246f94fd8f6d7b9988d193679082cfec",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T062053Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "b55f0753c647de2db330322cfeb4bac1c1c270db21804192907bd2955f594957",
+          "actual_sha256": "eb9ec8fa103204d31641b769705fdc7edd38118346b199cfabc90534c372b430",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260913_阪神_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T060627Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T060627Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "7",
+      "horse_count": 12,
+      "issued_at": "2026-09-13T06:06:34.247914+00:00",
+      "post_time": "2026-09-13T15:30:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T060627Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "f74fc8f6b22294381c02e415143106cb4b606c86e467bfb34aa93ed5a5d59af0",
+          "actual_sha256": "f74fc8f6b22294381c02e415143106cb4b606c86e467bfb34aa93ed5a5d59af0",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T060627Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "ee89413a6910c451dd1ed1f3dd7d12c98f13b02b8901c91c752fe2e9cf283570",
+          "actual_sha256": "ee89413a6910c451dd1ed1f3dd7d12c98f13b02b8901c91c752fe2e9cf283570",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T060627Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "5c9a957a40f495313237b9c5aa6d36a4fc8560330909c2d1272baeb340ae22b1",
+          "actual_sha256": "5c9a957a40f495313237b9c5aa6d36a4fc8560330909c2d1272baeb340ae22b1",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T060627Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "2aa4e9e5807b53966e0acc45be37e46d4a697da580b778a9d76840bcc670485c",
+          "actual_sha256": "865321285be5b1457667d9db6e9f1cf701e95a105dea13d17b8ee532f07252b0",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260913_阪神_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T062118Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T062118Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "7",
+      "horse_count": 12,
+      "issued_at": "2026-09-13T06:21:26.186444+00:00",
+      "post_time": "2026-09-13T15:30:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T062118Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "7deb391c954e05bf3a5bc2923ac9fd917765d8ff2d1643634710725a00088f47",
+          "actual_sha256": "7deb391c954e05bf3a5bc2923ac9fd917765d8ff2d1643634710725a00088f47",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T062118Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "3596f19df43a4aa3023581789eec8fe31a43256ac8c605d0f9f9513b0439064d",
+          "actual_sha256": "3596f19df43a4aa3023581789eec8fe31a43256ac8c605d0f9f9513b0439064d",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T062118Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "7dd2169b2d1e25232784d967d4ebdca723f00a5d1115c4823b8d80c3d71169c0",
+          "actual_sha256": "7dd2169b2d1e25232784d967d4ebdca723f00a5d1115c4823b8d80c3d71169c0",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T062118Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "6540c803b0caa2a3f0b11306e0c585b25e35470ec9dcfb410824abf14a277c3d",
+          "actual_sha256": "78558feb52e0138ae32ff6f831ab57684172d3150d65af6a2c75bd0db788ebca",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260913_阪神_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T060555Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T060555Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "7",
+      "horse_count": 12,
+      "issued_at": "2026-09-13T06:06:03.231755+00:00",
+      "post_time": "2026-09-13T15:30:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T060555Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "7749aae5c8c7189a111beec1aabb9feeb6655eb5d6de3587fc3171a4c1ae734e",
+          "actual_sha256": "7749aae5c8c7189a111beec1aabb9feeb6655eb5d6de3587fc3171a4c1ae734e",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T060555Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "b6f695a7b9beb999a700b66ba81e94623cbfcabe17bd3ffb5d456945946e114c",
+          "actual_sha256": "b6f695a7b9beb999a700b66ba81e94623cbfcabe17bd3ffb5d456945946e114c",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T060555Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "f4915aea67486ee0b79beaf9233d6897fe6e577b3f82d73e80d1b7179c917247",
+          "actual_sha256": "f4915aea67486ee0b79beaf9233d6897fe6e577b3f82d73e80d1b7179c917247",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_阪神_11/20260913T060555Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "3c11189e2ea66fec6e6ffdf82a4172c1716184e4f14de02bbe284f9d6c7c7210",
+          "actual_sha256": "93746fc7aa9745ceeb59c64e5d5165bf335f58966e81dc721b8cf80fb1271c37",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260920_中山_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260920_中山_11/20260920T042734Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260920_中山_11/20260920T042734Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "8",
+      "horse_count": 13,
+      "issued_at": "2026-09-20T04:27:42.988663+00:00",
+      "post_time": "2026-09-20T15:45:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260920_中山_11/20260920T042734Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "3cd34016808887f7687ece0f90601889c8fd3760d6d9a6503780471fe86aba3a",
+          "actual_sha256": "3cd34016808887f7687ece0f90601889c8fd3760d6d9a6503780471fe86aba3a",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260920_中山_11/20260920T042734Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "4ddc5c14850c88d51f33745d9d1d89b00549c6913bd93e6ee240270577ba15a4",
+          "actual_sha256": "4ddc5c14850c88d51f33745d9d1d89b00549c6913bd93e6ee240270577ba15a4",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260920_中山_11/20260920T042734Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "22b064d835bf77f7843cc581c3fec737d840f8980d43e92610eb8f23bbf16e7d",
+          "actual_sha256": "22b064d835bf77f7843cc581c3fec737d840f8980d43e92610eb8f23bbf16e7d",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260920_中山_11/20260920T042734Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "94a79db02189701e6601789480811ca4c2dfc43cd18c2c5d681e5a65a39710c9",
+          "actual_sha256": "3f976d9785c666f2dabcaad5abc402a622ac812c7d6c0284c245b9f9b5204ea8",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260920_中山_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260920_中山_11/20260919T205822Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260920_中山_11/20260919T205822Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "8",
+      "horse_count": 13,
+      "issued_at": "2026-09-19T20:58:30.175167+00:00",
+      "post_time": "2026-09-20T15:45:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260920_中山_11/20260919T205822Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "682ab2f6131d7ddcce37c6ad90fb805afdccf20d3bef9543dcfadb6847bb890c",
+          "actual_sha256": "682ab2f6131d7ddcce37c6ad90fb805afdccf20d3bef9543dcfadb6847bb890c",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260920_中山_11/20260919T205822Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "3eada52cdab01c3548d83e1850da36922c75fa43642a307cecc9b94f5af8089a",
+          "actual_sha256": "3eada52cdab01c3548d83e1850da36922c75fa43642a307cecc9b94f5af8089a",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260920_中山_11/20260919T205822Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "c0dc5ae69f526998c088ab046897a7471ea328086df958ac9dd499b8ba5f1819",
+          "actual_sha256": "c0dc5ae69f526998c088ab046897a7471ea328086df958ac9dd499b8ba5f1819",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260920_中山_11/20260919T205822Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "be576d9c8eb00845af4a281b96912cfa33b6ce9699c510d1a5cfbd13bd677180",
+          "actual_sha256": "c753eb8ade5e9a357f9b5193c9f093c5d0f51bd186c8aca0cd17e13d3702abe6",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260920_中山_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260920_中山_11/20260920T042227Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260920_中山_11/20260920T042227Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "8",
+      "horse_count": 13,
+      "issued_at": "2026-09-20T04:22:37.674559+00:00",
+      "post_time": "2026-09-20T15:45:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260920_中山_11/20260920T042227Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "9bbcc72361670507812328f612b7107571d6569e91c21b61aa58c19603b440bd",
+          "actual_sha256": "9bbcc72361670507812328f612b7107571d6569e91c21b61aa58c19603b440bd",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260920_中山_11/20260920T042227Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "7a2cc1bde31b22b66ae58716da3f2cd5ee59cda11cc4ef26f92762be18d3364f",
+          "actual_sha256": "7a2cc1bde31b22b66ae58716da3f2cd5ee59cda11cc4ef26f92762be18d3364f",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260920_中山_11/20260920T042227Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "c8adbeb5be8170e3dbaaf2717167dd6d540c86852cd04af9c178b6d6f6c97f8d",
+          "actual_sha256": "c8adbeb5be8170e3dbaaf2717167dd6d540c86852cd04af9c178b6d6f6c97f8d",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260920_中山_11/20260920T042227Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "f0ac373460c599a6e2a222513347688241a0c4821f8676f98f7f981cfa11e783",
+          "actual_sha256": "91906047c9d8aee40403acf1e1d34900be9d4aa0be40ba1d682ca893589e47dc",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260830_新潟_08",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260830_新潟_08/20260830T035310Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260830_新潟_08/20260830T035310Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "5",
+      "horse_count": 11,
+      "issued_at": "2026-08-30T03:53:15.590352+00:00",
+      "post_time": "2026-08-30T15:45:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260830_新潟_08/20260830T035310Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "378bdfc6de4d75015ce94b3a60a173fbd0486b98a57011784fc6668f0b15c709",
+          "actual_sha256": "378bdfc6de4d75015ce94b3a60a173fbd0486b98a57011784fc6668f0b15c709",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260830_新潟_08/20260830T035310Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "69398e215eda49863c3e678221bcdc78403fe9092d67b504da7870d2c7c740f5",
+          "actual_sha256": "69398e215eda49863c3e678221bcdc78403fe9092d67b504da7870d2c7c740f5",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260830_新潟_08/20260830T035310Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "ae10ac2bbbb15b4601a3e349b7701e0dd2810eaf93b4ae445b8eef52e5cb2543",
+          "actual_sha256": "ae10ac2bbbb15b4601a3e349b7701e0dd2810eaf93b4ae445b8eef52e5cb2543",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260830_新潟_08/20260830T035310Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "40915d05c9047a7d2795361995978e67a18a5adb73de2049d397d92d288c0e3e",
+          "actual_sha256": "4ce562db11f87a5d4e1c08b9b5bad04e7cf486375dd6f73b864ca7e6d17346a9",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260919_中山_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T032632Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T032632Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "1",
+      "horse_count": 14,
+      "issued_at": "2026-09-19T03:26:40.439216+00:00",
+      "post_time": "2026-09-19T15:45:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T032632Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "bd316f2b16f0c8009d49fb4c5b0cf0f5fb8eeeeffb6a5d2fff5a8eb58f769687",
+          "actual_sha256": "bd316f2b16f0c8009d49fb4c5b0cf0f5fb8eeeeffb6a5d2fff5a8eb58f769687",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T032632Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "12dc19269b648a896d09daf573686468ea1623c14a6965ab3952357752bce60d",
+          "actual_sha256": "12dc19269b648a896d09daf573686468ea1623c14a6965ab3952357752bce60d",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T032632Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "84b94447d8f74d0c31b604a625c64d357c4b88cabb6c1f7264a960338d5c4b89",
+          "actual_sha256": "84b94447d8f74d0c31b604a625c64d357c4b88cabb6c1f7264a960338d5c4b89",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T032632Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "7910fb8239be30d3caaddff754f417ab28fcec951585522ffda494b4a6569705",
+          "actual_sha256": "feb55bb157875f63266b65a50bfc581560aa71a756284555ddc9e20f5883f05c",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260919_中山_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T033929Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T033929Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "1",
+      "horse_count": 14,
+      "issued_at": "2026-09-19T03:39:38.242253+00:00",
+      "post_time": "2026-09-19T15:45:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T033929Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "554d938bf0646d100f941d77025b93f4a8cf122e148293e42caf391d15bfbf45",
+          "actual_sha256": "554d938bf0646d100f941d77025b93f4a8cf122e148293e42caf391d15bfbf45",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T033929Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "2e0541c06c10b7d9d9ecec414da7071146206cc706e9fde528b233963fe7ea22",
+          "actual_sha256": "2e0541c06c10b7d9d9ecec414da7071146206cc706e9fde528b233963fe7ea22",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T033929Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "e7f30f18650e8524b1fed76000261405f14b72adf076d45047c59b995db9619d",
+          "actual_sha256": "e7f30f18650e8524b1fed76000261405f14b72adf076d45047c59b995db9619d",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T033929Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "0e3148a8b914d766e30f069d5531aa92232511f25afa1de067e0eae7f68d9300",
+          "actual_sha256": "2c64b13cc9433f22e3310bf0c105aee6631d19947f231f9745d71ed07d702022",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260919_中山_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T032752Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T032752Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "1",
+      "horse_count": 14,
+      "issued_at": "2026-09-19T03:28:00.752921+00:00",
+      "post_time": "2026-09-19T15:45:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T032752Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "a152b5ffad43e58bd4ca69c4a3134ea6c54072836eecc76fb60fc93ed357668b",
+          "actual_sha256": "a152b5ffad43e58bd4ca69c4a3134ea6c54072836eecc76fb60fc93ed357668b",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T032752Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "8114af927c97303fc3b58bf554109d1ab9aeb492f0160c125aa79f2363556ce0",
+          "actual_sha256": "8114af927c97303fc3b58bf554109d1ab9aeb492f0160c125aa79f2363556ce0",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T032752Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "4a530dfa7818fcd956eca1850c92bff0ca2ca3e8d4ad568236ea3f38f631ab60",
+          "actual_sha256": "4a530dfa7818fcd956eca1850c92bff0ca2ca3e8d4ad568236ea3f38f631ab60",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T032752Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "2b3e8b0bf346bf384440b97b439bfe7aadb9321924d6b21a7b063076b787a5d4",
+          "actual_sha256": "3578b97efeb210233e7b09ccb602bd5efc65490e3a50de717028c6d6450c3ff3",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260919_中山_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T020626Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T020626Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "1",
+      "horse_count": 14,
+      "issued_at": "2026-09-19T02:06:33.319027+00:00",
+      "post_time": "2026-09-19T15:45:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T020626Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "676ee938ea0ec9f8a992e8bbf40618b439fac7a6b199dc4e6555260954a99513",
+          "actual_sha256": "676ee938ea0ec9f8a992e8bbf40618b439fac7a6b199dc4e6555260954a99513",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T020626Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "b4cf6475f23d08c9f2a908c1f29b9c7cd5c077ec0c711d2643736d30da96e253",
+          "actual_sha256": "b4cf6475f23d08c9f2a908c1f29b9c7cd5c077ec0c711d2643736d30da96e253",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T020626Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "93877ed4f74fa77edd6d3d21b8bf108ea812bdf08e9605a88294b00fcb16613e",
+          "actual_sha256": "93877ed4f74fa77edd6d3d21b8bf108ea812bdf08e9605a88294b00fcb16613e",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T020626Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "5024a47fa53027a7dff760125e701fc51351da6cba9c2f25d3d80ee771fc0b46",
+          "actual_sha256": "c98a28bae74532e58b7fb19bd31b34d8987193d2a9f84a91fb61605544ba836b",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260919_中山_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T020506Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T020506Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "1",
+      "horse_count": 14,
+      "issued_at": "2026-09-19T02:05:14.449918+00:00",
+      "post_time": "2026-09-19T15:45:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T020506Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "0169e74bf0fc6cdf019b5bf58a60ae785bf3befb2c11fba1b43136cfbfa76f67",
+          "actual_sha256": "0169e74bf0fc6cdf019b5bf58a60ae785bf3befb2c11fba1b43136cfbfa76f67",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T020506Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "b98c37698453f2e45ce4d9318dc6bf7700a3f1a38ea3cb11429e242e8414208d",
+          "actual_sha256": "b98c37698453f2e45ce4d9318dc6bf7700a3f1a38ea3cb11429e242e8414208d",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T020506Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "3ae2f0e49b3b00e5a8b81a0c1ce1c6477d99f9c7ddc1fd3c4f975c26184d4eec",
+          "actual_sha256": "3ae2f0e49b3b00e5a8b81a0c1ce1c6477d99f9c7ddc1fd3c4f975c26184d4eec",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260919_中山_11/20260919T020506Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "852e60f8d2c7534a5a68faaebb6a993140ecda12fd103fefa0a4b80d10f422a9",
+          "actual_sha256": "252ab7402064f998fe9e7571c6ba7065628d95212e150b03b6b728b993e07e68",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260913_中山_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T061655Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T061655Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "7",
+      "horse_count": 16,
+      "issued_at": "2026-09-13T06:17:07.512937+00:00",
+      "post_time": "2026-09-13T15:45:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T061655Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "cb5e0bde55c45447a2f9ed2304b4057e425fe2cfa8375b5444511ced93cfa7f2",
+          "actual_sha256": "cb5e0bde55c45447a2f9ed2304b4057e425fe2cfa8375b5444511ced93cfa7f2",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T061655Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "fefc04827c6bc94b85ea2ad86de18aa998d3a9e6262ceadc896390931ace1bd7",
+          "actual_sha256": "fefc04827c6bc94b85ea2ad86de18aa998d3a9e6262ceadc896390931ace1bd7",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T061655Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "0242d37896ecbb76e0d8b444c56036e9578aa8635e6187f10c45682717accc95",
+          "actual_sha256": "0242d37896ecbb76e0d8b444c56036e9578aa8635e6187f10c45682717accc95",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T061655Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "04d1d4d3fe13ad7cc63a506f46b9cb0476831666f2041b533d6acd8359330a73",
+          "actual_sha256": "7b41f4e7ad9b87c096e8bd4d6089ae7ac989d96746a34c1bf57e418803ea72f8",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260913_中山_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T041814Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T041814Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "7",
+      "horse_count": 16,
+      "issued_at": "2026-09-13T04:18:24.742378+00:00",
+      "post_time": "2026-09-13T15:45:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T041814Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "2975ea1a514d50e99c9c9cb543e36aea015671866f0df3149617d561023d6e45",
+          "actual_sha256": "2975ea1a514d50e99c9c9cb543e36aea015671866f0df3149617d561023d6e45",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T041814Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "655e0b904e5dd5e68d8fe5ba2564b1540b9a01e5fc57fd019cf6ea6483b08a46",
+          "actual_sha256": "655e0b904e5dd5e68d8fe5ba2564b1540b9a01e5fc57fd019cf6ea6483b08a46",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T041814Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "4fec12d6414ec838c2cfd0420b737c779c5c4f6c5be27fd4f3360ea2e1c39a4b",
+          "actual_sha256": "4fec12d6414ec838c2cfd0420b737c779c5c4f6c5be27fd4f3360ea2e1c39a4b",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T041814Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "11afaedfc5885fe6e190bf9752a156c371f12eb9bea846d5e6e45842bc532e30",
+          "actual_sha256": "4b98cec2403eb5218b5e073fa6f0d3635bf60f491a3866acf920678b6e8ecd93",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260913_中山_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T063148Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T063148Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "7",
+      "horse_count": 16,
+      "issued_at": "2026-09-13T06:32:01.546882+00:00",
+      "post_time": "2026-09-13T15:45:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T063148Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "bbae76a1a6f04c3d4506d13e2fc4f68c07844cf77a5162de0d68b9052b3b43bb",
+          "actual_sha256": "bbae76a1a6f04c3d4506d13e2fc4f68c07844cf77a5162de0d68b9052b3b43bb",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T063148Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "71d830f37343b37f59498c4494049502e05725bbe6ec78b7c52a3f090f952c7d",
+          "actual_sha256": "71d830f37343b37f59498c4494049502e05725bbe6ec78b7c52a3f090f952c7d",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T063148Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "46f82cd5b6d93d5d3a3979a48234dff0f572a0e0f84cb20e87ac79a8a41c2268",
+          "actual_sha256": "46f82cd5b6d93d5d3a3979a48234dff0f572a0e0f84cb20e87ac79a8a41c2268",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T063148Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "6c70f745f60cf1fe720fa04824daf026c5cd28c496314a63ccca0a8e850d55ed",
+          "actual_sha256": "730eb749cb42bfcd396f998af5ea0290f8a69ef56a785497e421f223c5c31b3a",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    },
+    {
+      "race_id": "20260913_中山_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T042024Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T042024Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "7",
+      "horse_count": 16,
+      "issued_at": "2026-09-13T04:20:34.879785+00:00",
+      "post_time": "2026-09-13T15:45:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T042024Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "94cfb9e575c41b10bed4b98037684548caac3153f0d98f07ab625625271eac46",
+          "actual_sha256": "94cfb9e575c41b10bed4b98037684548caac3153f0d98f07ab625625271eac46",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T042024Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "01c01ccddf439e06cd6f79ca3d1dace8d6331b14786e11a797cf2d5ca6b68445",
+          "actual_sha256": "01c01ccddf439e06cd6f79ca3d1dace8d6331b14786e11a797cf2d5ca6b68445",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T042024Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "f54f303bf3b0a9702facf92ad1c7223630a272c9d107c430202797bdc9c7825f",
+          "actual_sha256": "f54f303bf3b0a9702facf92ad1c7223630a272c9d107c430202797bdc9c7825f",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260913_中山_11/20260913T042024Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "be9b69c42e8f6fd18d42bb8debe564f1f5b6c5cefe79cd05978670bc4dc42ad4",
+          "actual_sha256": "63b8b130571a69e2de2753b64df02c7c8210ded3806f02dc1163d1dc56449060",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    }
+  ],
+  "exact_schema_check": {
+    "manifest_schema_version": "1",
+    "producer": "src.final_workflow.FinalPredictionWorkflow",
+    "confirmed_key_pattern": "artifacts.<filename>.sha256",
+    "example": {
+      "race_id": "20260912_阪神_11",
+      "run_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T054748Z",
+      "manifest_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T054748Z/run_manifest.json",
+      "label_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv",
+      "winner": "15",
+      "horse_count": 16,
+      "issued_at": "2026-09-12T05:47:57.474755+00:00",
+      "post_time": "2026-09-12T15:45:00+09:00",
+      "hash_checks": [
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T054748Z/02_analyzer.json",
+          "manifest_key": "artifacts.02_analyzer.json.sha256",
+          "expected_sha256": "03657c6733625cd0d67d464d5b331467a514db183edf69f28820fe88b89d08a1",
+          "actual_sha256": "03657c6733625cd0d67d464d5b331467a514db183edf69f28820fe88b89d08a1",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T054748Z/03_simulator.json",
+          "manifest_key": "artifacts.03_simulator.json.sha256",
+          "expected_sha256": "e95c225d7bffea3de251d03d88d2308370e08f5d947f95eec64402c568e9f71e",
+          "actual_sha256": "e95c225d7bffea3de251d03d88d2308370e08f5d947f95eec64402c568e9f71e",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T054748Z/04_ev_calculator.json",
+          "manifest_key": "artifacts.04_ev_calculator.json.sha256",
+          "expected_sha256": "3db401396a0ad24317a7e7607d5a3f063446dd7e363a480a222351d6cec30f82",
+          "actual_sha256": "3db401396a0ad24317a7e7607d5a3f063446dd7e363a480a222351d6cec30f82",
+          "status": "PASS"
+        },
+        {
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20260912_阪神_11/20260912T054748Z/final_decision.json",
+          "manifest_key": "artifacts.final_decision.json.sha256",
+          "expected_sha256": "6e9c589f54589cfe328870522fab82a48b7f6ea5b8c259324b5795c9d206db4f",
+          "actual_sha256": "e6d2935ee0ea90b65228805536826247b6e3cb6685a8f51bdd62f01d0e1a6766",
+          "status": "MISMATCH"
+        }
+      ],
+      "status": "INELIGIBLE",
+      "reason_codes": [
+        "MANIFEST_FINAL_DECISION_HASH_MISMATCH",
+        "HISTORICAL_ACQUISITION_APPROVAL_NOT_REVALIDATED"
+      ],
+      "frozen_input_not_reconstructed": true
+    }
+  },
+  "exclusion_explanation": "All 27 label-joinable final runs across 8 races have an actual final_decision file SHA that differs from the exact manifest artifacts.final_decision.json.sha256. Analyzer/simulator/EV hashes match in these runs, but this does not repair whole-run lineage or certify collection completeness/consent. No multi-race independent validation is claimed.",
+  "limitations": [
+    "Outcome CSV rows carry no per-row official source artifact hash; stored retrospective provenance needs independent join before trusted outcome validation.",
+    "Runs cover multiple changing code versions; even restored lineage would not make them one frozen model test.",
+    "The existing result label CSV contains no 20261025_京都_11 winner; root uses that races independently hash-bound retrospective for a separate single-race diagnostic."
+  ]
+}

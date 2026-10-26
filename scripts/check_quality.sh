@@ -42,4 +42,8 @@ echo "== Skill Workflow Contracts =="
 "$PYTHON_BIN" scripts/check_skill_workflow.py
 echo
 
+echo "== Skill Gate Regression Tests =="
+"$PYTHON_BIN" -m pytest -q tests/test_skill_stage_contracts.py tests/test_acquisition_coverage.py tests/test_skill_gate_adversarial.py
+echo
+
 echo "quality checks: OK"

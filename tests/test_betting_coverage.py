@@ -63,7 +63,7 @@ def test_ticket_builder_rejection_and_flat_stake_edges() -> None:
         },
         bankroll_per_race=1000,
         kelly_fraction=0.3,
-    ) is None
+    ) is not None
 
     left, right = _row(1), _row(2)
     with (

@@ -78,13 +78,6 @@ def test_canonical_eligibility_reports_all_failures_without_changing_gates(
                 "minimum": 100,
                 "passed": stake_pass,
             },
-            {
-                "reason": "insufficient_win_evidence",
-                "metric": "history_and_consistency",
-                "value": 1,
-                "minimum": 1,
-                "passed": True,
-            },
         ]
     assert "eligibility_checks" not in ticket
 

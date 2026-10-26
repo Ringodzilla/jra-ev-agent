@@ -30,21 +30,23 @@ def main() -> None:
     attach_history_sources(collected, args.raw_dir)
     approvals = json.loads(args.approvals_path.read_text()) if args.approvals_path else []
     audit = audit_collected_data(collected, configs, approvals)
+    audit['approval_evidence'] = approvals
     sequence = SkillSequence(args.output_dir)
-    sequence.record('intake', {'configs': configs}, checks={'configs_present': bool(configs)})
-    sequence.record('collection', {'source_path': str(args.collected_path.resolve())}, checks={'saved_collector_present': bool(collected)})
-    sequence.record('integrity_audit', audit, checks={'audit_completed': True})
+    effective_gate = audit['gate']
     try:
-        sequence.record('approval_gate', audit, checks={'audit_passed': audit['gate'] == 'PASS'}, failure_code=audit['gate'])
+        sequence.record('intake', sequence.bind({'race_configs': configs}), checks={'configs_present': bool(configs)})
+        sequence.record('collection', sequence.bind(collected), checks={'saved_collector_present': bool(collected)})
+        sequence.record('integrity_audit', sequence.bind(audit), checks={'audit_completed': True})
+        sequence.record('approval_gate', sequence.bind(audit), checks={'audit_passed': audit['gate'] == 'PASS'}, failure_code=audit['gate'])
     except SkillGateBlocked:
-        pass
+        effective_gate = audit['gate'] if audit['gate'] != 'PASS' else 'BLOCKED_SKILL_EVIDENCE'
     # Each invocation has its own directory; previous audit evidence stays intact.
     atomic_write_json(sequence.directory / 'audit.json', audit)
-    print(json.dumps({'gate': audit['gate'], 'input_sha256': audit['input_sha256'],
+    print(json.dumps({'gate': effective_gate, 'input_sha256': audit['input_sha256'],
                       'missing_field_counts': audit['missing_field_counts'],
                       'unapproved_finding_count': audit['unapproved_finding_count'],
                       'audit_path': str((sequence.directory / 'audit.json').resolve()),
-                      'next_action': 'analyze_after_all_gates_pass' if audit['gate'] == 'PASS' else 'resolve_findings_and_obtain_explicit_user_approval'}, ensure_ascii=False))
+                      'next_action': 'analyze_after_all_gates_pass' if effective_gate == 'PASS' else 'resolve_findings_and_obtain_explicit_user_approval'}, ensure_ascii=False))
 
 
 if __name__ == '__main__':

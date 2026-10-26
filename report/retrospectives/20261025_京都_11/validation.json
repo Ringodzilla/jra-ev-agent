@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "checks": {
+    "finish_count_18": true,
+    "places_unique": true,
+    "same_horse_numbers": true,
+    "all_names_match": true,
+    "official_lap_sum_matches_winner_time": true,
+    "payout_rows_12": true,
+    "official_tickets_empty": true,
+    "top5_no_top3": true,
+    "raw_sha256_matches": true,
+    "frozen_latest_matches": true
+  },
+  "output_artifacts": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/retrospectives/20261025_京都_11/retrospective.json",
+      "sha256": "00da86223cd2fa7305e41ea54a927744490809bc7c76104db6562fa9fd1b90d4"
+    }
+  ]
+}

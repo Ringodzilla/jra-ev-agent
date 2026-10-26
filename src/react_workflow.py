@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from dataclasses import asdict
+
 import json
 from pathlib import Path
 
@@ -80,7 +82,7 @@ class ReactiveRaceWorkflow:
             return self._run(race_configs, **kwargs)
         self.skill_sequence = SkillSequence(self.config.stages_dir)
         try:
-            self.skill_sequence.record('intake', {'race_configs': race_configs}, checks={
+            self.skill_sequence.record('intake', self.skill_sequence.bind({'race_configs': race_configs, 'workflow_settings': asdict(self.settings), 'ev_weights': asdict(self.ev_calculator.weights)}), checks={
                 'race_configs_present': bool(race_configs),
                 'required_race_identity': all(bool(c.get('race_date') and c.get('track') and c.get('race_number') and c.get('source_url')) for c in race_configs),
             })
@@ -121,12 +123,13 @@ class ReactiveRaceWorkflow:
             if self.skill_sequence is not None:
                 self._audit_collected = collected
                 attach_history_sources(collected, self.config.raw_dir)
-                self.skill_sequence.record('collection', {'rows': collected.get('rows'), 'entries': collected.get('entries')},
+                self.skill_sequence.record('collection', self.skill_sequence.bind(collected),
                                            checks={'entries_present': bool(collected.get('entries'))})
                 audit = audit_collected_data(collected, race_configs, self.integrity_approvals)
+                audit['approval_evidence'] = self.integrity_approvals
                 collected['data_integrity_audit'] = audit
-                self.skill_sequence.record('integrity_audit', audit, checks={'audit_completed': bool(audit.get('input_sha256'))})
-                self.skill_sequence.record('approval_gate', audit, checks={'integrity_and_approvals_pass': audit.get('gate') == 'PASS'},
+                self.skill_sequence.record('integrity_audit', self.skill_sequence.bind(audit), checks={'audit_completed': bool(audit.get('input_sha256'))})
+                self.skill_sequence.record('approval_gate', self.skill_sequence.bind(audit), checks={'integrity_and_approvals_pass': audit.get('gate') == 'PASS'},
                                            failure_code=str(audit.get('gate', 'UNVERIFIED')))
             analyzed = self.analyzer.run(
                 list(collected.get("rows") or []),
@@ -134,10 +137,10 @@ class ReactiveRaceWorkflow:
                 environment_snapshots=list(collected.get("environment_snapshots") or []),
             )
             if self.skill_sequence is not None:
-                self.skill_sequence.record('analysis', analyzed, checks=row_checks(list(analyzed.get('feature_rows') or []), list(collected.get('entries') or [])))
+                self.skill_sequence.record('analysis', self.skill_sequence.bind(analyzed), checks=row_checks(list(analyzed.get('feature_rows') or []), list(collected.get('entries') or [])))
             simulated = self.simulator.run(list(analyzed.get("feature_rows") or []))
             if self.skill_sequence is not None:
-                self.skill_sequence.record('simulation', simulated, checks=row_checks(list(simulated.get('scenario_rows') or []), list(analyzed.get('feature_rows') or [])))
+                self.skill_sequence.record('simulation', self.skill_sequence.bind(simulated), checks=row_checks(list(simulated.get('scenario_rows') or []), list(analyzed.get('feature_rows') or [])))
             all_combo_odds = list(collected.get("combo_odds") or [])
             active_race_ids = {
                 str(row.get("race_id", ""))
@@ -158,8 +161,8 @@ class ReactiveRaceWorkflow:
                 combo_odds=current_combo_odds,
             )
             if self.skill_sequence is not None:
-                self.skill_sequence.record('probability', {'ev_rows': calculated.get('ev_rows')}, checks=probability_checks(list(calculated.get('ev_rows') or [])))
-                self.skill_sequence.record('ev', calculated, checks=ev_checks(list(calculated.get('ev_rows') or [])))
+                self.skill_sequence.record('probability', self.skill_sequence.bind(calculated), checks=probability_checks(list(calculated.get('ev_rows') or [])))
+                self.skill_sequence.record('ev', self.skill_sequence.bind(calculated), checks=ev_checks(list(calculated.get('ev_rows') or [])))
             bet_plan = self.bet_builder.run(
                 list(calculated.get("ev_rows") or []),
                 combo_odds=current_combo_odds,
@@ -169,7 +172,7 @@ class ReactiveRaceWorkflow:
                 race_configs=race_configs,
             )
             if self.skill_sequence is not None:
-                self.skill_sequence.record('tickets', bet_plan, checks={'ticket_list_present': isinstance(bet_plan.get('tickets'), list)})
+                self.skill_sequence.record('tickets', self.skill_sequence.bind(bet_plan), checks={'ticket_list_present': isinstance(bet_plan.get('tickets'), list)})
             review = self.reviewer.run(
                 collected,
                 list(simulated.get("scenario_rows") or []),
@@ -181,8 +184,8 @@ class ReactiveRaceWorkflow:
                 bet_plan = _downgrade_ticket_plan_for_review(dict(bet_plan), review)
             if self.skill_sequence is not None:
                 # A negative review is a valid completed evaluation, never permission to buy.
-                self.skill_sequence.record('review', review, checks={'review_has_valid_status': review.get('status') in {'OK', 'NG'}})
-                self.skill_sequence.record('decision', {'decision': 'NO_GO', 'tickets': [], 'candidate_review': review.get('status')},
+                self.skill_sequence.record('review', self.skill_sequence.bind(review), checks={'review_has_valid_status': review.get('status') in {'OK', 'NG'}})
+                self.skill_sequence.record('decision', self.skill_sequence.bind({'decision': 'NO_GO', 'tickets': [], 'candidate_review': review.get('status')}),
                                            checks={'preliminary_has_no_formal_tickets': True})
             article = self.article_writer.run(
                 race_configs,
@@ -193,7 +196,7 @@ class ReactiveRaceWorkflow:
                 odds_snapshots=list(collected.get("odds_snapshots") or []),
             )
             if self.skill_sequence is not None:
-                self.skill_sequence.record('report', article, checks={'article_status_present': bool(article.get('status'))})
+                self.skill_sequence.record('report', self.skill_sequence.bind(article), checks={'article_status_present': bool(article.get('status'))})
 
             final_payload = {
                 "data_collector": collected,

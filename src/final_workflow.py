@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from dataclasses import asdict
+
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable
@@ -174,12 +176,13 @@ class FinalPredictionWorkflow:
             self.skill_sequence = SkillSequence(self.output_dir, mode='final')
             _attach_baseline_history_sources(collected, baseline, self.history_raw_dir)
             try:
-                self.skill_sequence.record('intake', {'race_config': race_config}, checks={'race_id_present': bool(race_config.get('race_id'))})
-                self.skill_sequence.record('collection', {'entries': collected['entries'], 'rows': merged_rows}, checks={'entries_present': bool(collected['entries'])})
+                self.skill_sequence.record('intake', self.skill_sequence.bind({'race_configs': [race_config], 'workflow_settings': asdict(self.workflow_settings), 'ev_weights': asdict(self.ev_calculator.weights), 'deadline_settings': asdict(self.deadline_settings)}), checks={'race_id_present': bool(race_config.get('race_id'))})
+                self.skill_sequence.record('collection', self.skill_sequence.bind(collected), checks={'entries_present': bool(collected['entries'])})
                 audit = audit_collected_data(collected, [race_config], self.integrity_approvals, purpose='final')
+                audit['approval_evidence'] = self.integrity_approvals
                 collected['data_integrity_audit'] = audit
-                self.skill_sequence.record('integrity_audit', audit, checks={'audit_completed': bool(audit.get('input_sha256'))})
-                self.skill_sequence.record('approval_gate', audit, checks={'integrity_and_approvals_pass': audit.get('gate') == 'PASS'}, failure_code=str(audit.get('gate', 'UNVERIFIED')))
+                self.skill_sequence.record('integrity_audit', self.skill_sequence.bind(audit), checks={'audit_completed': bool(audit.get('input_sha256'))})
+                self.skill_sequence.record('approval_gate', self.skill_sequence.bind(audit), checks={'integrity_and_approvals_pass': audit.get('gate') == 'PASS'}, failure_code=str(audit.get('gate', 'UNVERIFIED')))
             except SkillGateBlocked as exc:
                 return self._finish_after_live(plan, collected=collected, code='NO_GO_DATA_INTEGRITY_BLOCKED', reason=str(exc))
 
@@ -247,14 +250,14 @@ class FinalPredictionWorkflow:
             analyzed["snapshot_id"] = live.get("snapshot_id", "")
             if self.skill_sequence is not None:
                 try:
-                    self.skill_sequence.record('analysis', analyzed, checks=row_checks(list(analyzed.get('feature_rows') or []), list(collected.get('entries') or [])))
+                    self.skill_sequence.record('analysis', self.skill_sequence.bind(analyzed), checks=row_checks(list(analyzed.get('feature_rows') or []), list(collected.get('entries') or [])))
                 except SkillGateBlocked as exc:
                     return self._finish_after_live(plan, collected=collected, code='NO_GO_SKILL_VALIDATION_FAILED', reason=str(exc))
             simulated = self.simulator.run(list(analyzed.get("feature_rows") or []))
             simulated["snapshot_id"] = live.get("snapshot_id", "")
             if self.skill_sequence is not None:
                 try:
-                    self.skill_sequence.record('simulation', simulated, checks=row_checks(list(simulated.get('scenario_rows') or []), list(analyzed.get('feature_rows') or [])))
+                    self.skill_sequence.record('simulation', self.skill_sequence.bind(simulated), checks=row_checks(list(simulated.get('scenario_rows') or []), list(analyzed.get('feature_rows') or [])))
                 except SkillGateBlocked as exc:
                     return self._finish_after_live(plan, collected=collected, code='NO_GO_SKILL_VALIDATION_FAILED', reason=str(exc))
             calculated = self.ev_calculator.run(
@@ -267,10 +270,10 @@ class FinalPredictionWorkflow:
         if self.skill_sequence is not None:
             try:
                 if fixed_analysis is not None:
-                    self.skill_sequence.record('analysis', analyzed, checks=row_checks(list(analyzed.get('feature_rows') or []), list(collected.get('entries') or [])))
-                    self.skill_sequence.record('simulation', simulated, checks=row_checks(scenario_rows, list(analyzed.get('feature_rows') or [])))
-                self.skill_sequence.record('probability', calculated, checks=probability_checks(list(calculated.get('ev_rows') or [])))
-                self.skill_sequence.record('ev', calculated, checks=ev_checks(list(calculated.get('ev_rows') or [])))
+                    self.skill_sequence.record('analysis', self.skill_sequence.bind(analyzed), checks=row_checks(list(analyzed.get('feature_rows') or []), list(collected.get('entries') or [])))
+                    self.skill_sequence.record('simulation', self.skill_sequence.bind(simulated), checks=row_checks(scenario_rows, list(analyzed.get('feature_rows') or [])))
+                self.skill_sequence.record('probability', self.skill_sequence.bind(calculated), checks=probability_checks(list(calculated.get('ev_rows') or [])))
+                self.skill_sequence.record('ev', self.skill_sequence.bind(calculated), checks=ev_checks(list(calculated.get('ev_rows') or [])))
             except SkillGateBlocked as exc:
                 return self._finish_after_live(plan, collected=collected, code='NO_GO_SKILL_VALIDATION_FAILED', reason=str(exc))
         bet_plan = self.bet_builder.run(
@@ -288,7 +291,7 @@ class FinalPredictionWorkflow:
         bet_plan["snapshot_id"] = live.get("snapshot_id", "")
         if self.skill_sequence is not None:
             try:
-                self.skill_sequence.record('tickets', bet_plan, checks={'ticket_list_present': isinstance(bet_plan.get('tickets'), list)})
+                self.skill_sequence.record('tickets', self.skill_sequence.bind(bet_plan), checks={'ticket_list_present': isinstance(bet_plan.get('tickets'), list)})
             except SkillGateBlocked as exc:
                 return self._finish_after_live(plan, collected=collected, code='NO_GO_SKILL_VALIDATION_FAILED', reason=str(exc))
         bet_plan["reviewer_ticket_repair_enabled"] = True
@@ -362,9 +365,9 @@ class FinalPredictionWorkflow:
         }
         if self.skill_sequence is not None:
             try:
-                self.skill_sequence.record('review', {'final_review': review, 'quantitative_review': quantitative_review, 'reviewed_ticket_plan': reviewed_ticket_plan}, checks={'review_has_valid_status': review.get('status') in {'OK', 'NG'}})
-                self.skill_sequence.record('decision', decision, checks={'no_go_has_no_tickets': decision['decision'] == 'GO' or not decision['tickets']})
-                self.skill_sequence.record('report', decision, checks={'issued_at_present': bool(decision.get('issued_at'))})
+                self.skill_sequence.record('review', self.skill_sequence.bind({'final_review': review, 'quantitative_review': quantitative_review, 'reviewed_ticket_plan': reviewed_ticket_plan}), checks={'review_has_valid_status': review.get('status') in {'OK', 'NG'}})
+                self.skill_sequence.record('decision', self.skill_sequence.bind(decision), checks={'no_go_has_no_tickets': decision['decision'] == 'GO' or not decision['tickets']})
+                self.skill_sequence.record('report', self.skill_sequence.bind(decision), checks={'issued_at_present': bool(decision.get('issued_at'))})
             except SkillGateBlocked as exc:
                 return self._finish_after_live(plan, collected=collected, code='NO_GO_SKILL_VALIDATION_FAILED', reason=str(exc))
         self._write_outputs(payload)
@@ -669,6 +672,7 @@ def _attach_baseline_history_sources(
         # Copy artifacts only: a previous audit status or approval is not evidence.
         source = collector.get("source_audit") or baseline.get("source_audit") or {}
         collected["source_audit"]["artifacts"].extend(source.get("artifacts") or [])
+        collected["source_audit"].setdefault("attempts", []).extend(source.get("attempts") or [])
 
 
 def extract_baseline_rows(

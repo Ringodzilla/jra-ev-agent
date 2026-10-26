@@ -1,0 +1,59 @@
+{
+  "status": "DIAGNOSIS_COMPLETE_PRODUCTION_MODEL_UNCHANGED",
+  "race_id": "20261025_京都_11",
+  "findings": [
+    {
+      "code": "UNIFORM_HIGH_EV_SET_IDENTICAL",
+      "threshold": 1.1,
+      "model_count": 14,
+      "uniform_count": 14,
+      "overlap_count": 14
+    },
+    {
+      "code": "LOW_OBSERVED_LOGIT_SPREAD",
+      "saved_model_score_min": 0.242392,
+      "saved_model_score_max": 0.649163,
+      "inverse_temperature_multiplier": 1.15,
+      "noiseless_probability_ratio": 1.596457,
+      "scope": "Only these saved scores without Gaussian noise; not a bound for MC or all races"
+    },
+    {
+      "code": "MULTIRACE_VALIDATION_INPUTS_NOT_ELIGIBLE",
+      "inspected_runs": 27,
+      "unique_races": 8,
+      "eligible_runs": 0,
+      "reason": "final decision SHA256 differs from own manifest"
+    }
+  ],
+  "validation": {
+    "tests_passed": 660,
+    "source_coverage_percent": 100,
+    "check_quality": "PASS",
+    "independent_review": "PASS"
+  },
+  "production_model_changed": false,
+  "additional_longshot_filter_added": false,
+  "next_step": "Establish immutable verified pre-race validation snapshots before fitting or promoting scale/condition changes",
+  "input_artifacts": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/retrospectives/20261025_京都_11/probability_diagnostic.json",
+      "sha256": "d583ceda685c42a7e9a3215158b6b496f71b79b67cdcb95e98ca4b8ad888634d"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/model_diagnostics/20261026/frozen_run_inventory.json",
+      "sha256": "fa0d3410d30eaf07833236e26a0fc32e3c838b01f99c89973cb9a7d59518e26f"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/model.py",
+      "sha256": "d3b65f83502be1da29a4d6a75e10f8ac043e5c759a6f30446db76e35b413cd47"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/ev.py",
+      "sha256": "f3ef8e5b0e7308c39ed86b251eee773937202595e04784b4d0a02512f4a55065"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/scripts/diagnose_saved_probabilities.py",
+      "sha256": "98a1e87f319cf2c05f44033e24f9bafaa185bdb62155df58d0e994f556c491a1"
+    }
+  ]
+}

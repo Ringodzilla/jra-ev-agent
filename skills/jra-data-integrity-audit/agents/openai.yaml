@@ -1,0 +1,4 @@
+interface:
+  display_name: "競馬データ欠損・補完監査"
+  short_description: "競馬分析の項目別欠損と中立値補完を追跡し、ユーザー承認の有無を確認する"
+  default_prompt: "$jra-data-integrity-audit で、このレースの項目別欠損と未承認の中立値・代替値採用を監査してください。"

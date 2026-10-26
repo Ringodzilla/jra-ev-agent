@@ -108,5 +108,70 @@
     "retrospective": [
       "retrospective"
     ]
+  },
+  "research_branch": {
+    "mode": "environment_research",
+    "executor": "skills/jra-environment-research/scripts/research_gate.py",
+    "skill": "skills/jra-environment-research/SKILL.md",
+    "steps": [
+      {
+        "step_id": "intake",
+        "role": "orchestrator",
+        "skill_name": "jra-01-intake"
+      },
+      {
+        "step_id": "collection",
+        "role": "data_collector",
+        "skill_name": "jra-02-official-collection"
+      },
+      {
+        "step_id": "integrity_audit",
+        "role": "data_integrity_auditor",
+        "skill_name": "jra-03-integrity-audit"
+      },
+      {
+        "step_id": "approval_gate",
+        "role": "approval_gate",
+        "skill_name": "jra-04-approval-gate"
+      },
+      {
+        "step_id": "analysis",
+        "role": "analyzer",
+        "skill_name": "jra-05-ability-analysis"
+      },
+      {
+        "step_id": "simulation",
+        "role": "simulator",
+        "skill_name": "jra-06-pace-simulation"
+      },
+      {
+        "step_id": "probability",
+        "role": "simulator",
+        "skill_name": "jra-07-probability-calculation"
+      },
+      {
+        "step_id": "fit",
+        "role": "analyzer",
+        "skill_name": "jra-environment-research"
+      },
+      {
+        "step_id": "review",
+        "role": "reviewer",
+        "skill_name": "jra-10-review"
+      },
+      {
+        "step_id": "report",
+        "role": "reporter",
+        "skill_name": "jra-12-report"
+      }
+    ],
+    "not_applicable": [
+      "ev",
+      "tickets",
+      "decision",
+      "purchase"
+    ],
+    "production_skillsequence_equivalent": false,
+    "production_changes_allowed": false
   }
 }

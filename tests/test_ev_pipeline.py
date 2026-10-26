@@ -91,7 +91,7 @@ class TestEVPipeline(unittest.TestCase):
         self.assertEqual("NO_GO", plan["decision"])
         self.assertEqual("NO_GO_PROBABILITY_LINEAGE_INVALID", plan["decision_code"])
 
-    def test_canonical_win_candidate_keeps_low_evidence_auditable_but_not_selected(self):
+    def test_canonical_win_candidate_does_not_veto_high_odds_low_consistency(self):
         candidate = {
             "key": "R|win|9",
             "race_id": "R",
@@ -124,23 +124,11 @@ class TestEVPipeline(unittest.TestCase):
 
         low_evidence = build("1", "0.1")
         audited = low_evidence["candidate_evaluations"][0]
-        evidence_check = next(
-            check
-            for check in audited["eligibility_checks"]
-            if check["reason"] == "insufficient_win_evidence"
-        )
-        self.assertFalse(evidence_check["passed"])
-        self.assertEqual([], low_evidence["tickets"])
-
+        self.assertNotIn("insufficient_win_evidence", [c["reason"] for c in audited["eligibility_checks"]])
+        self.assertTrue(low_evidence["tickets"])
         sufficient_evidence = build("5", "0.7")
-        self.assertTrue(
-            next(
-                check
-                for check in sufficient_evidence["candidate_evaluations"][0]["eligibility_checks"]
-                if check["reason"] == "insufficient_win_evidence"
-            )["passed"]
-        )
         self.assertTrue(sufficient_evidence["tickets"])
+        self.assertEqual(audited["raw_hit_prob"], sufficient_evidence["candidate_evaluations"][0]["raw_hit_prob"])
 
     def test_compute_ev_uses_reproducible_monte_carlo_mean_probability(self):
         rows = [
@@ -1261,7 +1249,7 @@ class TestEVPipeline(unittest.TestCase):
         self.assertIn("marked_core_pair_real_odds", reasons)
         self.assertIn("marked_core_trio_real_odds", reasons)
 
-    def test_generate_tickets_calibrates_extreme_low_evidence_win_ticket_out_of_selection(self):
+    def test_generate_tickets_keeps_extreme_odds_candidate_without_evidence_veto(self):
         ev_rows = [
             {
                 "race_id": "r_low_win",
@@ -1318,7 +1306,7 @@ class TestEVPipeline(unittest.TestCase):
 
         plan = generate_tickets(ev_rows, prefer_wide=False)
 
-        self.assertFalse(
+        self.assertTrue(
             [
                 ticket
                 for ticket in plan["tickets"]
@@ -1427,7 +1415,7 @@ class TestEVPipeline(unittest.TestCase):
             if ticket["bet_type"] == "win"
         }
 
-        self.assertEqual({"3", "4"}, selected_win_numbers)
+        self.assertEqual({"1", "4"}, selected_win_numbers)
 
     def test_selection_caps_rank_the_post_calibration_eligible_pool(self):
         low_ev_first = {

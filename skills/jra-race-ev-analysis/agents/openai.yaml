@@ -1,0 +1,4 @@
+interface:
+  display_name: "JRA Race EV Analysis"
+  short_description: "JRAレースの欠損監査、事前分析、直前GO/NO_GO判定"
+  default_prompt: "指定されたJRAレースの公式データを回収・監査し、馬の強弱と展開を評価して、確率とオッズに基づく買う／見送る判断まで実行してください。未承認の補完や独自の足切りは追加しないでください。"

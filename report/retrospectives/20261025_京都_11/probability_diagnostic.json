@@ -1,0 +1,222 @@
+{
+  "race_id": "20261025_京都_11",
+  "field_size": 18,
+  "metrics": {
+    "saved_model": {
+      "winner_log_loss": 2.8924168497146026,
+      "multiclass_brier_sum": 0.9453870643291832,
+      "entropy": 2.8841662918706463,
+      "effective_field_size": 17.88864746605208,
+      "min_probability": 0.04600204600204601,
+      "max_probability": 0.07347107347107347
+    },
+    "uniform": {
+      "winner_log_loss": 2.890371757896165,
+      "multiclass_brier_sum": 0.9444444444444444,
+      "entropy": 2.890371757896165,
+      "effective_field_size": 18.000000000000004,
+      "min_probability": 0.05555555555555555,
+      "max_probability": 0.05555555555555555
+    },
+    "normalized_pre_race_market": {
+      "winner_log_loss": 2.678649882315822,
+      "multiclass_brier_sum": 1.1306808735304892,
+      "entropy": 1.8745998845745653,
+      "effective_field_size": 6.518210561910631,
+      "min_probability": 0.003373177068959159,
+      "max_probability": 0.46847476822426903
+    }
+  },
+  "high_ev_comparison": {
+    "threshold": 1.1,
+    "model_count": 14,
+    "uniform_count": 14,
+    "overlap_count": 14,
+    "model_only": [],
+    "uniform_only": []
+  },
+  "horses": [
+    {
+      "horse_number": "4",
+      "horse_name": "ショウナンガルフ",
+      "saved_win_prob": 0.046002,
+      "saved_odds": 236.1,
+      "saved_probability_times_odds": 10.8610722,
+      "uniform_probability_times_odds": 13.116666666666667,
+      "finish": 18
+    },
+    {
+      "horse_number": "18",
+      "horse_name": "ナリタエスペランサ",
+      "saved_win_prob": 0.049888,
+      "saved_odds": 150.4,
+      "saved_probability_times_odds": 7.5031552,
+      "uniform_probability_times_odds": 8.355555555555556,
+      "finish": 16
+    },
+    {
+      "horse_number": "7",
+      "horse_name": "ラージアンサンブル",
+      "saved_win_prob": 0.051362,
+      "saved_odds": 140.4,
+      "saved_probability_times_odds": 7.2112248,
+      "uniform_probability_times_odds": 7.800000000000001,
+      "finish": 12
+    },
+    {
+      "horse_number": "17",
+      "horse_name": "チャリングクロス",
+      "saved_win_prob": 0.051085,
+      "saved_odds": 140.4,
+      "saved_probability_times_odds": 7.172334,
+      "uniform_probability_times_odds": 7.800000000000001,
+      "finish": 11
+    },
+    {
+      "horse_number": "12",
+      "horse_name": "サノノグレーター",
+      "saved_win_prob": 0.052112,
+      "saved_odds": 136.9,
+      "saved_probability_times_odds": 7.1341328,
+      "uniform_probability_times_odds": 7.605555555555556,
+      "finish": 4
+    },
+    {
+      "horse_number": "13",
+      "horse_name": "キンググローリー",
+      "saved_win_prob": 0.050582,
+      "saved_odds": 84.3,
+      "saved_probability_times_odds": 4.2640626,
+      "uniform_probability_times_odds": 4.683333333333334,
+      "finish": 15
+    },
+    {
+      "horse_number": "15",
+      "horse_name": "シートゥサミット",
+      "saved_win_prob": 0.059586,
+      "saved_odds": 62.5,
+      "saved_probability_times_odds": 3.724125,
+      "uniform_probability_times_odds": 3.4722222222222223,
+      "finish": 5
+    },
+    {
+      "horse_number": "14",
+      "horse_name": "マジョレルブルー",
+      "saved_win_prob": 0.065055,
+      "saved_odds": 48.9,
+      "saved_probability_times_odds": 3.1811895,
+      "uniform_probability_times_odds": 2.716666666666667,
+      "finish": 7
+    },
+    {
+      "horse_number": "16",
+      "horse_name": "ショウナンハヤナミ",
+      "saved_win_prob": 0.057504,
+      "saved_odds": 49.0,
+      "saved_probability_times_odds": 2.8176959999999998,
+      "uniform_probability_times_odds": 2.7222222222222223,
+      "finish": 6
+    },
+    {
+      "horse_number": "6",
+      "horse_name": "バステール",
+      "saved_win_prob": 0.05433,
+      "saved_odds": 39.9,
+      "saved_probability_times_odds": 2.167767,
+      "uniform_probability_times_odds": 2.216666666666667,
+      "finish": 2
+    },
+    {
+      "horse_number": "1",
+      "horse_name": "エムズビギン",
+      "saved_win_prob": 0.049888,
+      "saved_odds": 42.9,
+      "saved_probability_times_odds": 2.1401952,
+      "uniform_probability_times_odds": 2.3833333333333333,
+      "finish": 13
+    },
+    {
+      "horse_number": "11",
+      "horse_name": "アスクエジンバラ",
+      "saved_win_prob": 0.052337,
+      "saved_odds": 26.8,
+      "saved_probability_times_odds": 1.4026316,
+      "uniform_probability_times_odds": 1.488888888888889,
+      "finish": 17
+    },
+    {
+      "horse_number": "2",
+      "horse_name": "コンジェスタス",
+      "saved_win_prob": 0.057191,
+      "saved_odds": 21.9,
+      "saved_probability_times_odds": 1.2524829,
+      "uniform_probability_times_odds": 1.2166666666666666,
+      "finish": 8
+    },
+    {
+      "horse_number": "3",
+      "horse_name": "アウダーシア",
+      "saved_win_prob": 0.056405,
+      "saved_odds": 21.7,
+      "saved_probability_times_odds": 1.2239885,
+      "uniform_probability_times_odds": 1.2055555555555555,
+      "finish": 9
+    },
+    {
+      "horse_number": "5",
+      "horse_name": "ジャスティンシカゴ",
+      "saved_win_prob": 0.061823,
+      "saved_odds": 15.5,
+      "saved_probability_times_odds": 0.9582565000000001,
+      "uniform_probability_times_odds": 0.8611111111111112,
+      "finish": 10
+    },
+    {
+      "horse_number": "9",
+      "horse_name": "ゴーイントゥスカイ",
+      "saved_win_prob": 0.055442,
+      "saved_odds": 11.6,
+      "saved_probability_times_odds": 0.6431272,
+      "uniform_probability_times_odds": 0.6444444444444444,
+      "finish": 1
+    },
+    {
+      "horse_number": "10",
+      "horse_name": "ダノンヒストリー",
+      "saved_win_prob": 0.055936,
+      "saved_odds": 4.2,
+      "saved_probability_times_odds": 0.2349312,
+      "uniform_probability_times_odds": 0.23333333333333334,
+      "finish": 3
+    },
+    {
+      "horse_number": "8",
+      "horse_name": "ロブチェン",
+      "saved_win_prob": 0.073471,
+      "saved_odds": 1.7,
+      "saved_probability_times_odds": 0.12490069999999999,
+      "uniform_probability_times_odds": 0.09444444444444444,
+      "finish": 14
+    }
+  ],
+  "limitations": [
+    "One race cannot establish calibration, long-run EV, or a promotion decision.",
+    "Baselines are evaluation references, not production probabilities or purchase recommendations.",
+    "Saved model inputs are not re-imputed, inferred or recomputed by this diagnostic."
+  ],
+  "kind": "POST_RACE_FROZEN_OUTPUT_DIAGNOSTIC_NOT_NEW_PREDICTION",
+  "input_artifacts": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20261025_京都_11/20261025T055235Z/04_ev_calculator.json",
+      "sha256": "f752eb5c7c7ada39b2eb2592bacbae9373e5fc6e48755e696b8115c885a38f7b"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20261025_京都_11/20261025T055235Z/final_decision.json",
+      "sha256": "4a6d99cb60052381e07801b90f8fd0e6a3f3a9c70e7a809c55f011d2a0043118"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/retrospectives/20261025_京都_11/retrospective.json",
+      "sha256": "00da86223cd2fa7305e41ea54a927744490809bc7c76104db6562fa9fd1b90d4"
+    }
+  ]
+}

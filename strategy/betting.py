@@ -147,10 +147,6 @@ def generate_tickets(
             for row in enriched
             if _win_candidate_ev(row, live_odds) >= min_win_ev
             and _live_or_current_win_odds(row, live_odds) > 0
-            and _win_ticket_evidence_eligible(
-                row,
-                odds=_live_or_current_win_odds(row, live_odds),
-            )
         ]
         place_candidates = _build_place_candidates(
             enriched,
@@ -265,10 +261,6 @@ def generate_tickets(
             if _win_candidate_ev(row, live_odds)
             >= max(min_win_ev, MIN_ACTIONABLE_WIN_EV)
             and _live_or_current_win_odds(row, live_odds) > 0
-            and _win_ticket_evidence_eligible(
-                row,
-                odds=_live_or_current_win_odds(row, live_odds),
-            )
         }
         represented_win_candidate_numbers = {
             str(ticket.get("horse_number", "")).strip()
@@ -1255,11 +1247,6 @@ def _build_win_ticket(
     ev = prob * odds if odds > 0 else _to_float(row.get("ev"))
     if prob <= 0 or odds <= 1.0 or ev < MIN_WIN_EV:
         return None
-    # Do not rewrite the probability toward the market.  Thin-history extreme
-    # prices are handled as an investment eligibility risk instead.
-    if not _win_ticket_evidence_eligible(row, odds=odds):
-        return None
-
     full_kelly = ((odds * prob) - 1.0) / max(odds - 1.0, 1e-6)
     recommended_fraction = max(0.0, min(0.30, full_kelly * kelly_fraction))
     stake = int((bankroll_per_race * recommended_fraction) / 100) * 100
@@ -1290,14 +1277,6 @@ def _build_win_ticket(
         "predicted_odds_source": "jra_live" if live else str(row.get("predicted_odds_source", "")),
         "odds_source": "jra_live" if live else "entry",
     }
-
-
-def _win_ticket_evidence_eligible(row: dict[str, object], *, odds: float) -> bool:
-    if odds <= 30.0:
-        return True
-    history_count = _to_float(row.get("history_count"), 0.0)
-    consistency = _to_float(row.get("consistency"), 0.5)
-    return history_count >= 3.0 and consistency >= 0.30
 
 
 def _build_place_candidates(
@@ -3320,20 +3299,6 @@ def _candidate_eligibility_checks(
             ("below_minimum_stake", "stake", int(_to_float(ticket.get("stake"))), 100),
         )
     ]
-    if str(ticket.get("bet_type", "")) == "win":
-        evidence_passed = _win_ticket_evidence_eligible(
-            ticket,
-            odds=_to_float(ticket.get("official_odds_current") or ticket.get("win_odds")),
-        )
-        checks.append(
-            {
-                "reason": "insufficient_win_evidence",
-                "metric": "history_and_consistency",
-                "value": int(evidence_passed),
-                "minimum": 1,
-                "passed": evidence_passed,
-            }
-        )
     return checks
 
 

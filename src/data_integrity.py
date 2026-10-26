@@ -8,6 +8,8 @@ import math
 import re
 from collections import Counter
 
+from src.acquisition_coverage import field_coverage, missing_source_coverage
+
 _RAW_FIELDS = ('date', 'course', 'race_name', 'distance', 'history_surface', 'track_condition',
                'position', 'time', 'last_3f', 'passing_order', 'popularity', 'weight',
                'jockey', 'pace', 'weather', 'odds')
@@ -77,7 +79,8 @@ def verify_source_artifacts(collected: dict) -> dict:
     for artifact in artifacts:
         html = artifact.get('html')
         if not isinstance(html, str) or hashlib.sha256(html.encode()).hexdigest() != artifact.get('sha256'):
-            return {'status': 'UNVERIFIED', 'mismatches': []}
+            return {'status': 'UNVERIFIED', 'mismatches': [],
+                    'acquisition_coverage': missing_source_coverage(collected, _RAW_FIELDS)}
         try:
             parser = JRAParser(base_url='https://jra.jp')
             race_id = str(artifact.get('race_id', ''))
@@ -102,18 +105,23 @@ def verify_source_artifacts(collected: dict) -> dict:
             else:
                 continue
         except (ValueError, TypeError, KeyError):
-            return {'status': 'UNVERIFIED', 'mismatches': []}
+            return {'status': 'UNVERIFIED', 'mismatches': [],
+                    'acquisition_coverage': missing_source_coverage(collected, _RAW_FIELDS)}
         for raw_row in parsed:
             row = _normalize_row(raw_row)
             row['date'] = _date_key(row.get('date'))
             row['_raw_last3f_source'] = raw_row.get('last_3f_source', '')
+            row['_pace_missing_reason'] = raw_row.get('pace_missing_reason', '')
+            row['_source_artifact'] = {k: artifact.get(k, '') for k in ('path', 'sha256', 'kind')}
             key = tuple(str(row.get(k, '')) for k in ('race_id', 'horse_id', 'date'))
             reparsed.setdefault(key, []).append(row)
     rows = collected.get('rows', [])
     if not rows:
-        return {'status': 'UNVERIFIED', 'mismatches': []}
+        return {'status': 'UNVERIFIED', 'mismatches': [],
+                'acquisition_coverage': missing_source_coverage(collected, _RAW_FIELDS)}
     mismatches = []
     detected_imputations = []
+    acquisition = []
     for row in rows:
         normalized_input = _normalize_row(row)
         normalized_input['date'] = _date_key(normalized_input.get('date'))
@@ -121,23 +129,34 @@ def verify_source_artifacts(collected: dict) -> dict:
         originals = reparsed.get(key, [])
         target_date = normalized_input.get('target_race_date', '')
         if not target_date:
+            acquisition.extend(missing_source_coverage({'rows': [row]}, _RAW_FIELDS)['records'])
             mismatches.append({'row': row, 'field': 'target_race_date', 'source_value': 'missing_cutoff'})
             continue
         if target_date:
             originals = [r for r in originals if r.get('date', '') < target_date]
         if not originals:
+            acquisition.extend(missing_source_coverage({'rows': [row]}, _RAW_FIELDS)['records'])
             mismatches.append({'row': row, 'field': 'source_row', 'source_value': 'unmatched_horse_date_or_after_target'})
             continue
         for field in _RAW_FIELDS:
             value = str(normalized_input.get(field) or '').strip()
             values = [str(original.get(field) or '').strip() for original in originals]
+            record = field_coverage(row, normalized_input, field, originals, collected)
+            acquisition.append(record)
+            if record['state'] == 'AVAILABLE_BUT_NOT_COLLECTED':
+                mismatches.append({'row': row, 'field': field, 'source_value': values,
+                                   'reason_code': 'AVAILABLE_BUT_NOT_COLLECTED'})
+                continue
             if value not in values:
                 mismatches.append({'row': row, 'field': field, 'source_value': values})
         if (all(r.get('_raw_last3f_source') == 'fallback' for r in originals)
                 and row.get('last_3f_source') != 'fallback'):
             detected_imputations.append({'row': row, 'field': 'last_3f', 'method': 'parser_last3f_fallback'})
+    coverage = {'status': 'PASS' if all(r['state'] in {'OBSERVED', 'NOT_MEASURED', 'SUBSTITUTED'} for r in acquisition)
+                else 'BLOCKED', 'records': acquisition,
+                'counts': dict(Counter(r['state'] for r in acquisition))}
     return {'status': 'MISMATCH' if mismatches else 'PASS', 'mismatches': mismatches,
-            'detected_imputations': detected_imputations}
+            'detected_imputations': detected_imputations, 'acquisition_coverage': coverage}
 
 
 def _history_result_observations(html: str, artifact: dict) -> list[dict]:
@@ -158,7 +177,10 @@ def _history_result_observations(html: str, artifact: dict) -> list[dict]:
         node = row.select_one(selector)
         return node.get_text(' ', strip=True) if node else ''
     weather = soup.select_one('li.weather .txt')
-    return [dict(race_id=str(artifact.get('race_id', '')), horse_id=str(artifact.get('horse_id', '')),
+    from jra_scraper.history_pace import parse_official_opening_600m
+    pace = parse_official_opening_600m(html)
+    return [dict(pace=pace['pace'], pace_missing_reason=pace['pace_missing_reason'],
+                 pace_source=pace['pace_source'], pace_scope=pace['pace_scope'], race_id=str(artifact.get('race_id', '')), horse_id=str(artifact.get('horse_id', '')),
                  horse_name=artifact.get('horse_name', ''), date=day,
                  last_3f=cell('td.f_time'), last_3f_source='official_historical_result',
                  passing_order='-'.join(node.get_text(strip=True) for node in row.select('td.corner li')),
@@ -317,14 +339,18 @@ def audit_collected_data(collected: dict, race_configs: object, approvals: list 
             for f in race_findings:
                 f['approved'] = True
     unapproved = [f for f in findings if not f['approved']]
+    coverage = source_check['acquisition_coverage']
     source_verified = source_check['status'] == 'PASS'
     gate = 'BLOCKED_MISSING_DATA' if required_missing else (
         'BLOCKED_UNAPPROVED_IMPUTATION' if unapproved else (
-            'PASS' if source_verified and not unknown_counts else 'UNVERIFIED'))
+            'BLOCKED_ACQUISITION_INCOMPLETE' if coverage['status'] == 'BLOCKED' and (
+                source_verified or coverage['counts'].get('AVAILABLE_BUT_NOT_COLLECTED')) else (
+                'PASS' if source_verified and not unknown_counts else 'UNVERIFIED')))
     return {'schema_version': 1, 'status': gate, 'gate': gate, 'purpose': purpose,
             'verification_issues': source_check['mismatches'],
             'recovered_imputation_provenance': source_check.get('detected_imputations', []),
             'input_sha256': digest, 'race_ids': race_ids, 'findings': findings,
+            'acquisition_coverage': coverage,
             'missing_fields': missing, 'missing_field_counts': dict(Counter(m['field'] for m in missing)),
             'history_counts': counts, 'history_counts_verified': not unknown_counts,
             'unapproved_finding_count': len(unapproved), 'source_audit_status': 'VERIFIED_REPARSE' if source_verified else 'UNVERIFIED',
