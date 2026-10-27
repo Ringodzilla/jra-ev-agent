@@ -13,6 +13,7 @@ from bs4 import BeautifulSoup
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT))
 from jra_scraper.parser import JRAParser
+from jra_scraper.validation import _normalize_row
 
 
 def day(value):
@@ -151,6 +152,10 @@ def main():
         manifest = json.loads(original_bytes) + manifest
         manifest_snapshots.insert(0, {'path': str((base / 'manifest.json').resolve()),
                                       'sha256': hashlib.sha256(original_bytes).hexdigest()})
+    input_snapshot_manifest = base / args.input_dir / 'snapshot_manifest.json'
+    if input_snapshot_manifest.is_file():
+        manifest_snapshots.append({'path': str(input_snapshot_manifest.resolve()),
+                                  'sha256': hashlib.sha256(input_snapshot_manifest.read_bytes()).hexdigest()})
     indexed = {item['url']: item for item in manifest}
     cache = {}
 
@@ -169,7 +174,13 @@ def main():
                    if re.fullmatch(r'\d{8}_\d{2}_\d{2}\.json', p.name)
                    and (not args.race_id or p.stem in args.race_id)]
     input_hashes = {str(p.resolve()): hashlib.sha256(p.read_bytes()).hexdigest() for p in input_paths}
-    code_paths = [Path(__file__).resolve(), ROOT / 'jra_scraper/parser.py']
+    code_paths = [Path(__file__).resolve()]
+    for package in ('src', 'jra_scraper', 'analysis', 'strategy'):
+        code_paths.extend(sorted((ROOT / package).glob('*.py')))
+    code_paths.extend(ROOT / path for path in ('AGENTS.md', 'README.md', 'docs/skill_workflow.md',
+        'docs/condition_models.md', 'docs/environment_model.md', 'config/skill_workflow.json',
+        'skills/jra-03-integrity-audit/SKILL.md'))
+    code_paths.append(Path('/Users/konishi/.codex/skills/jra-data-integrity-audit/SKILL.md'))
     code_hashes = {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in code_paths}
     status_path = output / 'repair_snapshot_status.json'
     def write_status(value):
@@ -190,6 +201,19 @@ def main():
         race = json.loads(input_bytes)
         declared_entry_set = [dict(horse_id=h['horse_id'], horse_name=h['horse_name'],
                                    declared_horse_number=h.get('horse_number')) for h in race['horses']]
+        official_conflicts = [copy.deepcopy(c) for h in race['horses']
+                              for history in h.get('history_pre_target', [])
+                              for c in history.get('observation_conflicts_v4', [])]
+        race['official_observation_conflicts_v4'] = official_conflicts
+        history_conflicts = race.setdefault('history_conflicts', [])
+        for conflict in official_conflicts:
+            if conflict.get('field') != 'jockey':
+                continue
+            adapted = dict(horse=conflict['horse_name'], date=conflict['date'], field='jockey',
+                           embedded_or_first=conflict['existing_value'], detail=conflict['observed_value'],
+                           v4_source_provenance=conflict.get('provenance'))
+            if not any(all(c.get(k) == adapted[k] for k in ('horse', 'date', 'field', 'embedded_or_first', 'detail')) for c in history_conflicts):
+                history_conflicts.append(adapted)
         nonstarters = []
         result_html, result_source = source(race['result_url'])
         active = []
@@ -273,6 +297,20 @@ def main():
                 action='NONRACE_OR_NONSTARTER_REMOVED_FROM_STARTED_HISTORY',
                 before=old, after=copy.deepcopy(rebuilt), removed=removed,
                 source=detail_source, parser_issues=[i.to_dict() for i in issue_sink]))
+        for conflict in official_conflicts:
+            field = conflict['field']
+            left = _normalize_row({field: conflict['existing_value']}).get(field, '')
+            right = _normalize_row({field: conflict['observed_value']}).get(field, '')
+            selected = [history for h in active if h['horse_name'] == conflict['horse_name']
+                        for history in h.get('history_pre_target', []) if day(history.get('date')) == conflict['date']]
+            if field != 'jockey' and left == right:
+                conflict['fact_classification'] = 'VERIFIED_EQUIVALENT_NORMALIZATION'
+            elif field == 'jockey' and selected and all(h.get('jockey_identity_verification', {}).get('status') == 'VERIFIED_SAME_OFFICIAL_JOCKEY_ID' for h in selected):
+                conflict['fact_classification'] = 'VERIFIED_SAME_OFFICIAL_JOCKEY_ID'
+            elif any(h['horse_name'] == conflict['horse_name'] for h in nonstarters):
+                conflict['fact_classification'] = 'OFFICIAL_NONSTARTER_METADATA_ONLY'
+            else:
+                conflict['fact_classification'] = 'UNRESOLVED_OFFICIAL_OBSERVATION_CONFLICT'
         race['horses'] = active
         race['non_starters'] = nonstarters
         race['declared_entry_set_original'] = declared_entry_set

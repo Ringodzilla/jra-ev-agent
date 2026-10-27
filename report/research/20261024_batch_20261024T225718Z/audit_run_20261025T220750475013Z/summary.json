@@ -1,0 +1,244 @@
+{
+  "audited_at": "20261025T220750475013Z",
+  "source_manifest_sha256": "7132b136979b255bde8c4e55af5501cc9438b105725711561d52b4874baa2cde",
+  "source_manifest_snapshots": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/manifest.json",
+      "sha256": "63ed80aa15ef1a445eafb3b190e13b56a01b3d40b36d445ed0e0bd619e1ac9b5"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/parallel_audit_20261025T220750105328Z/manifest_snapshot.json",
+      "sha256": "7132b136979b255bde8c4e55af5501cc9438b105725711561d52b4874baa2cde"
+    }
+  ],
+  "input_directory": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01",
+  "enriched_mode": false,
+  "race_count": 18,
+  "expected_race_count": 36,
+  "batch_complete": false,
+  "model_ready_race_ids": [
+    "20261024_東京_03",
+    "20261024_東京_09",
+    "20261024_京都_11"
+  ],
+  "races": [
+    {
+      "race_id": "20261024_新潟_01",
+      "numeric_race_id": "20261024_04_01",
+      "gate": "UNVERIFIED",
+      "model_ready": false,
+      "horses": 12,
+      "histories": 18,
+      "findings": 0,
+      "source_mismatches": 0,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_新潟_03",
+      "numeric_race_id": "20261024_04_03",
+      "gate": "BLOCKED_ACQUISITION_INCOMPLETE",
+      "model_ready": false,
+      "horses": 14,
+      "histories": 28,
+      "findings": 0,
+      "source_mismatches": 0,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_新潟_05",
+      "numeric_race_id": "20261024_04_05",
+      "gate": "BLOCKED_ZERO_HISTORY_NEUTRAL_FORBIDDEN",
+      "model_ready": false,
+      "horses": 14,
+      "histories": 0,
+      "findings": 14,
+      "source_mismatches": 0,
+      "surface_gate": "PASS",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_新潟_07",
+      "numeric_race_id": "20261024_04_07",
+      "gate": "UNVERIFIED",
+      "model_ready": false,
+      "horses": 12,
+      "histories": 57,
+      "findings": 4,
+      "source_mismatches": 0,
+      "surface_gate": "PASS",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_新潟_09",
+      "numeric_race_id": "20261024_04_09",
+      "gate": "UNVERIFIED",
+      "model_ready": false,
+      "horses": 16,
+      "histories": 80,
+      "findings": 32,
+      "source_mismatches": 0,
+      "surface_gate": "PASS",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_新潟_11",
+      "numeric_race_id": "20261024_04_11",
+      "gate": "UNVERIFIED",
+      "model_ready": false,
+      "horses": 12,
+      "histories": 60,
+      "findings": 4,
+      "source_mismatches": 0,
+      "surface_gate": "PASS",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_東京_01",
+      "numeric_race_id": "20261024_05_01",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "model_ready": false,
+      "horses": 14,
+      "histories": 27,
+      "findings": 1,
+      "source_mismatches": 0,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_東京_03",
+      "numeric_race_id": "20261024_05_03",
+      "gate": "PASS",
+      "model_ready": true,
+      "horses": 10,
+      "histories": 19,
+      "findings": 0,
+      "source_mismatches": 0,
+      "surface_gate": "PASS",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_東京_05",
+      "numeric_race_id": "20261024_05_05",
+      "gate": "BLOCKED_ZERO_HISTORY_NEUTRAL_FORBIDDEN",
+      "model_ready": false,
+      "horses": 18,
+      "histories": 0,
+      "findings": 18,
+      "source_mismatches": 0,
+      "surface_gate": "PASS",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_東京_07",
+      "numeric_race_id": "20261024_05_07",
+      "gate": "UNVERIFIED",
+      "model_ready": false,
+      "horses": 12,
+      "histories": 56,
+      "findings": 12,
+      "source_mismatches": 0,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_東京_09",
+      "numeric_race_id": "20261024_05_09",
+      "gate": "PASS",
+      "model_ready": true,
+      "horses": 13,
+      "histories": 65,
+      "findings": 0,
+      "source_mismatches": 0,
+      "surface_gate": "PASS",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_東京_11",
+      "numeric_race_id": "20261024_05_11",
+      "gate": "UNVERIFIED",
+      "model_ready": false,
+      "horses": 13,
+      "histories": 22,
+      "findings": 11,
+      "source_mismatches": 0,
+      "surface_gate": "PASS",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_京都_01",
+      "numeric_race_id": "20261024_08_01",
+      "gate": "NOT_SUPPORTED_SURFACE",
+      "model_ready": false,
+      "horses": 11,
+      "histories": 16,
+      "findings": 0,
+      "source_mismatches": 0,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_京都_03",
+      "numeric_race_id": "20261024_08_03",
+      "gate": "BLOCKED_ZERO_HISTORY_NEUTRAL_FORBIDDEN",
+      "model_ready": false,
+      "horses": 16,
+      "histories": 0,
+      "findings": 16,
+      "source_mismatches": 0,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_京都_05",
+      "numeric_race_id": "20261024_08_05",
+      "gate": "BLOCKED_ZERO_HISTORY_NEUTRAL_FORBIDDEN",
+      "model_ready": false,
+      "horses": 13,
+      "histories": 0,
+      "findings": 13,
+      "source_mismatches": 0,
+      "surface_gate": "PASS",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_京都_07",
+      "numeric_race_id": "20261024_08_07",
+      "gate": "BLOCKED_MISSING_DATA",
+      "model_ready": false,
+      "horses": 10,
+      "histories": 46,
+      "findings": 4,
+      "source_mismatches": 0,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_京都_09",
+      "numeric_race_id": "20261024_08_09",
+      "gate": "BLOCKED_ACQUISITION_INCOMPLETE",
+      "model_ready": false,
+      "horses": 9,
+      "histories": 18,
+      "findings": 0,
+      "source_mismatches": 0,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "environment_gate": "PASS"
+    },
+    {
+      "race_id": "20261024_京都_11",
+      "numeric_race_id": "20261024_08_11",
+      "gate": "PASS",
+      "model_ready": true,
+      "horses": 16,
+      "histories": 80,
+      "findings": 0,
+      "source_mismatches": 0,
+      "surface_gate": "PASS",
+      "environment_gate": "PASS"
+    }
+  ],
+  "approvals_used": [],
+  "model_calculations_executed": false
+}

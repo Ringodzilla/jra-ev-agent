@@ -59,6 +59,12 @@ def main():
     code_paths = [Path(__file__).resolve(), audit_script, base / 'repair_official_facts.py',
                   ROOT / 'src/data_integrity.py', ROOT / 'jra_scraper/parser.py',
                   ROOT / 'jra_scraper/validation.py', ROOT / 'src/feature_engineering.py']
+    for package in ('src', 'jra_scraper', 'analysis', 'strategy'):
+        code_paths.extend(sorted((ROOT / package).glob('*.py')))
+    code_paths.extend(ROOT / path for path in ('AGENTS.md', 'README.md', 'docs/skill_workflow.md',
+        'docs/condition_models.md', 'docs/environment_model.md', 'config/skill_workflow.json',
+        'skills/jra-03-integrity-audit/SKILL.md', 'skills/jra-environment-research/SKILL.md'))
+    code_paths.append(Path('/Users/konishi/.codex/skills/jra-data-integrity-audit/SKILL.md'))
     code_hashes = {str(p): sha(p) for p in code_paths}
     write(output / 'input_snapshot.json', dict(input_files=input_hashes, code_files=code_hashes,
                                               source_manifests=manifest_sources, frozen_manifest_sha256=sha(frozen_manifest)))

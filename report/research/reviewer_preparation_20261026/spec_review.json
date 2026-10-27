@@ -1,0 +1,42 @@
+{
+  "role": "reviewer",
+  "status": "SPEC_REVIEW_PENDING_IMPLEMENTATION",
+  "sources": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/AGENTS.md",
+      "sha256": "4d0e16073e953da8503508a9628dc4f753e1910e8e8c63a7e1cace40d4832263"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-environment-research/SKILL.md",
+      "sha256": "58bd64a290cd30cba69397b8a893d25053ccfc4b7c853109bd25197e43c89c60"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/docs/skill_workflow.md",
+      "sha256": "7e94f963788e9d9b2a46dd4912d7290009f287da48a9d77c3cf079e371b87acf"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/docs/condition_models.md",
+      "sha256": "cef0f974e453f69286a3a84e25f307b3174afa7418862395835a1125a316585f"
+    }
+  ],
+  "aligned_contracts": [
+    "role separation",
+    "current integrity audit and acquisition coverage",
+    "no unauthorized imputation",
+    "retrospective observations are not pre-race capture",
+    "preserve common baseline and identify changed variants",
+    "no production promotion",
+    "shared state hash invariance",
+    "independent numerical recalculation"
+  ],
+  "clarifications_requested": [
+    {
+      "id": "RESEARCH_BRANCH_CONTRACT",
+      "reason": "Current AGENTS and workflow docs designate config/skill_workflow.json as mode and stage source of truth. New skill introduces an independent research branch without explicit config/docs stage mapping.",
+      "fix": "Record research stage IDs, responsible roles, mappings for existing stages01-07 and excluded EV/tickets/decision stages in config or explicit workflow research branch contract."
+    }
+  ],
+  "real_data_calculation_executed": false,
+  "gate_attack_checks": "AWAITING_IMPLEMENTATION",
+  "old_3race_fit": "Historical research record only; not current gate-compliant or production eligible"
+}

@@ -1,0 +1,997 @@
+{
+  "race_id": "20261024_東京_04",
+  "numeric_race_id": "20261024_05_04",
+  "gate": "BLOCKED_ZERO_HISTORY_NEUTRAL_FORBIDDEN",
+  "model_ready": false,
+  "record_type": "retrospective_reconstructed",
+  "production_learning_eligible": false,
+  "lineup_audit": {
+    "card_entries": 16,
+    "active_entries": 16,
+    "official_nonstarters": [],
+    "explicit_status_markers": [],
+    "withdrawal_completeness": "UNVERIFIED",
+    "note": "Collector entries retained; cancellation/exclusion coverage requires independent lineup comparison."
+  },
+  "metadata_origin": "posthoc_official_result_header",
+  "post_time": "2026-10-24T11:35:00+09:00",
+  "metadata_source": {
+    "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1005202604080420261024/93",
+    "method": "POST",
+    "captured_at": "2026-10-24T23:03:05.801551+00:00",
+    "sha256": "d37b6286d108dc5e0ff8d613c5f1593a6ca6967b680c31cb2923f34ae4455f18",
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/226768301337c293273a094b6ff80984eeb0fcf6f33354ad71a30e8be328744d.html",
+    "encoding": "SHIFT_JIS"
+  },
+  "source_issues": [],
+  "history_conflicts": [],
+  "history_conflict_classification": [],
+  "blocking_history_conflicts": [],
+  "official_observation_conflicts_v4": [],
+  "unresolved_official_observation_conflicts_v4": [],
+  "zero_history_horse_numbers": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16"
+  ],
+  "career_audit": [
+    {
+      "horse_number": "1",
+      "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+      "count": 0,
+      "source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024107083/50",
+        "method": "POST",
+        "captured_at": "2026-10-24T23:03:07.641441+00:00",
+        "sha256": "1db0cb028e2de382fe9b241b0979955bbacd46114053e98dca58b615db937a1a",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/b3c22bfe46fa321aac3603e57cdd97f18ca85f7ddf35e65fd6f330e3a14e29e2.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "proof": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 0,
+        "official_totals": {
+          "平地レース合計": 0,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 0,
+        "before_target_count": 0,
+        "started_rows": [],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      }
+    },
+    {
+      "horse_number": "2",
+      "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+      "count": 0,
+      "source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024103357/C3",
+        "method": "POST",
+        "captured_at": "2026-10-24T23:03:08.458783+00:00",
+        "sha256": "62d1e7159333845af720213916433268ad4891cc010bf2cb1c85b49f641d62ab",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/fa9f9fba2cd512c013aa662d5e8666bdf37b39bcc1d740bcb837ed62b790da40.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "proof": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 0,
+        "official_totals": {
+          "平地レース合計": 0,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 0,
+        "before_target_count": 0,
+        "started_rows": [],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      }
+    },
+    {
+      "horse_number": "3",
+      "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+      "count": 0,
+      "source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024103849/8E",
+        "method": "POST",
+        "captured_at": "2026-10-24T23:03:09.304999+00:00",
+        "sha256": "0c50eaa5b9cac305b06ec982eae1af38f7c8b4ed3351a629cf16cd00320207c5",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/03be2f9839dafd7aeaefe369194767fda985d52af6dc0fbd0946909423b82e0d.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "proof": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 0,
+        "official_totals": {
+          "平地レース合計": 0,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 0,
+        "before_target_count": 0,
+        "started_rows": [],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      }
+    },
+    {
+      "horse_number": "4",
+      "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+      "count": 0,
+      "source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024101276/61",
+        "method": "POST",
+        "captured_at": "2026-10-24T23:03:10.104198+00:00",
+        "sha256": "2bc3d6539e337ec1427442688b17070d4ccceb2f83eaf4483d41d204606935ca",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/56c986a8dd35d62365e15232af752c661b599f3c60efe077382c50d580fda1d5.html",
+        "encoding": "CP932"
+      },
+      "proof": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 0,
+        "official_totals": {
+          "平地レース合計": 0,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 0,
+        "before_target_count": 0,
+        "started_rows": [],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      }
+    },
+    {
+      "horse_number": "5",
+      "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+      "count": 0,
+      "source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104819/4D",
+        "method": "POST",
+        "captured_at": "2026-10-24T23:03:10.959971+00:00",
+        "sha256": "2474efc8ccf6c4a7aefc3b1e72c7f456bc2179d15f4d1ce625159ce65c781c50",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/a80b2fa93b4508d6e8a8ac05ec034810345f82326f5b0421274e796ae9bbb714.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "proof": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 0,
+        "official_totals": {
+          "平地レース合計": 0,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 0,
+        "before_target_count": 0,
+        "started_rows": [],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      }
+    },
+    {
+      "horse_number": "6",
+      "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+      "count": 0,
+      "source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024108133/20",
+        "method": "POST",
+        "captured_at": "2026-10-24T23:03:12.002367+00:00",
+        "sha256": "8401a091b2773f9cf1ddbb0ad57e10d614ebf6d501d059628eba3f8f076cc815",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/ce845351d4e293d7366f2092b48f92c6f39ba98ebfc944d6d04494d1456206e8.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "proof": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 0,
+        "official_totals": {
+          "平地レース合計": 0,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 0,
+        "before_target_count": 0,
+        "started_rows": [],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      }
+    },
+    {
+      "horse_number": "7",
+      "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+      "count": 0,
+      "source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102357/D4",
+        "method": "POST",
+        "captured_at": "2026-10-24T23:03:12.771084+00:00",
+        "sha256": "cc2ead320316ba6a624136e9380445baae80b4c9db1708f3b5901bd8c6b62b5f",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/f8dd0556d9c95f3b1c2e6f005d24541574ee8b611543b94bb4b84196d04311ba.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "proof": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 0,
+        "official_totals": {
+          "平地レース合計": 0,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 0,
+        "before_target_count": 0,
+        "started_rows": [],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      }
+    },
+    {
+      "horse_number": "8",
+      "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+      "count": 0,
+      "source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102005/0B",
+        "method": "POST",
+        "captured_at": "2026-10-24T23:03:13.621864+00:00",
+        "sha256": "63d84cf7eb77b7adeca89e4f70bb02d9936bde39b94f104348b5ad7d5e0498be",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/1bfa9bc80710fd40dc4fb8d3bb8a54c3de9ab3276973a63224c5353ac81fa052.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "proof": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 0,
+        "official_totals": {
+          "平地レース合計": 0,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 0,
+        "before_target_count": 0,
+        "started_rows": [],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      }
+    },
+    {
+      "horse_number": "9",
+      "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+      "count": 0,
+      "source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104103/34",
+        "method": "POST",
+        "captured_at": "2026-10-24T23:03:16.324163+00:00",
+        "sha256": "d0e3b0eccb405b5fabda761de3613da39bed573f2849bea5a710dc5e01d97f69",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/2f15e2bfc4a0ace006b82ebf63539c98bb3bcbb0695ff98338555691b896267e.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "proof": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 0,
+        "official_totals": {
+          "平地レース合計": 0,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 0,
+        "before_target_count": 0,
+        "started_rows": [],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      }
+    },
+    {
+      "horse_number": "10",
+      "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+      "count": 0,
+      "source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106527/C2",
+        "method": "POST",
+        "captured_at": "2026-10-24T23:03:17.363925+00:00",
+        "sha256": "208c02911093f9180c068e63ea7fc45a67fb2563143850bd1e2c132fdb31431f",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/c6f01837a06e15c9b3a17e1952c9cc7ce90f595be857481022e1c69123d07e6b.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "proof": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 0,
+        "official_totals": {
+          "平地レース合計": 0,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 0,
+        "before_target_count": 0,
+        "started_rows": [],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      }
+    },
+    {
+      "horse_number": "11",
+      "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+      "count": 0,
+      "source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024100258/38",
+        "method": "POST",
+        "captured_at": "2026-10-24T23:03:18.072918+00:00",
+        "sha256": "5e77138e5f0ad5b385c2547c4194d6edbd6a42c4c64724328bbd719a8515bd45",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/5c4c1657779fc795ee3e07ec68eeee3730c05f3feb52622c84cdf59510243740.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "proof": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 0,
+        "official_totals": {
+          "平地レース合計": 0,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 0,
+        "before_target_count": 0,
+        "started_rows": [],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      }
+    },
+    {
+      "horse_number": "12",
+      "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+      "count": 0,
+      "source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105929/7D",
+        "method": "POST",
+        "captured_at": "2026-10-24T23:03:18.776906+00:00",
+        "sha256": "ba262c699ad52bb8a84a1fa34dd72801e5339a75f585e344b2f231881d878134",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/3b63413d6343aa49aca52bcd83f7162017e9f365f234c6af8a0050607c146214.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "proof": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 0,
+        "official_totals": {
+          "平地レース合計": 0,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 0,
+        "before_target_count": 0,
+        "started_rows": [],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      }
+    },
+    {
+      "horse_number": "13",
+      "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+      "count": 0,
+      "source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024101097/92",
+        "method": "POST",
+        "captured_at": "2026-10-24T23:03:19.865854+00:00",
+        "sha256": "3ae8f7140acbe75fd87527207fed1e6226a7e789186684a15329d46eb2b86cd6",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/556cbf6467fd686133ecb0927dc96bc3087b8707865f799a042c221b9df98c23.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "proof": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 0,
+        "official_totals": {
+          "平地レース合計": 0,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 0,
+        "before_target_count": 0,
+        "started_rows": [],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      }
+    },
+    {
+      "horse_number": "14",
+      "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+      "count": 0,
+      "source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024107102/8E",
+        "method": "POST",
+        "captured_at": "2026-10-24T23:03:20.750432+00:00",
+        "sha256": "9c7b58af8cf48d2b5837d2196bc1055bd8afb2466ab5b1804977942aaee1fc51",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/f2f436d5659f42c17f90e45280957d808856ae96b0edd646cb27044f936e1ea5.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "proof": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 0,
+        "official_totals": {
+          "平地レース合計": 0,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 0,
+        "before_target_count": 0,
+        "started_rows": [],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      }
+    },
+    {
+      "horse_number": "15",
+      "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+      "count": 0,
+      "source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102668/EA",
+        "method": "POST",
+        "captured_at": "2026-10-24T23:03:21.481730+00:00",
+        "sha256": "ce80e4987e1179bc2c9119cfb28df3999d7b7fb522807b2a9783bac329bbc0b2",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/7c3b995abc8944848ca5ccec4d7c758049230cc0b3cc4a4d206e7a80a1463e81.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "proof": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 0,
+        "official_totals": {
+          "平地レース合計": 0,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 0,
+        "before_target_count": 0,
+        "started_rows": [],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      }
+    },
+    {
+      "horse_number": "16",
+      "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+      "count": 0,
+      "source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102504/8D",
+        "method": "POST",
+        "captured_at": "2026-10-24T23:03:22.200639+00:00",
+        "sha256": "a0baedc154ff15e627207d9fc9493bad3a049c397634d2191416721c814bb44b",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/ac92326d45f4ef70bbd9b9d077ee38d234d3f309dcd211db9f25e1d6d1620514.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "proof": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 0,
+        "official_totals": {
+          "平地レース合計": 0,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 0,
+        "before_target_count": 0,
+        "started_rows": [],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      }
+    }
+  ],
+  "required_history_evidence": [],
+  "surface_gate": "NOT_SUPPORTED_SURFACE",
+  "environment_gate": "PASS",
+  "environment": {
+    "cushion": {
+      "measured_at": "2026-10-24T07:00:00+09:00",
+      "cushion": 9.5
+    },
+    "moisture": {
+      "measured_at": "2026-10-24T05:00:00+09:00",
+      "turf_moisture_goal": 12.7,
+      "turf_moisture_goal_condition": "hard",
+      "turf_moisture_corner4": 15.5,
+      "turf_moisture_corner4_condition": "hard",
+      "dirt_moisture_goal": 2.0,
+      "dirt_moisture_goal_condition": "hard",
+      "dirt_moisture_corner4": 2.4,
+      "dirt_moisture_corner4_condition": "hard",
+      "note": "注記：測定時刻までの当日雨量は0.0ミリメートルでした"
+    }
+  },
+  "environment_source_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_environment_reconstruction/observations_20261024T225734690084Z.json",
+  "collected_audit": {
+    "schema_version": 1,
+    "status": "BLOCKED_UNAPPROVED_IMPUTATION",
+    "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+    "purpose": "environment_training",
+    "verification_issues": [],
+    "recovered_imputation_provenance": [],
+    "input_sha256": "de38da9e443c8df30f882ebbd17655e17d90cc5e704150f3d4b5c11fbb61616a",
+    "race_ids": [
+      "20261024_東京_04"
+    ],
+    "findings": [
+      {
+        "race_id": "20261024_東京_04",
+        "horse_id": "pw01dud002024107083/50",
+        "horse_number": "1",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "d5124a7544eacc59a76c826f",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_id": "pw01dud002024103357/C3",
+        "horse_number": "2",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "917a8c83f98e88a7261155d5",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_id": "pw01dud002024103849/8E",
+        "horse_number": "3",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "a648512ed77b9ba6dbd67f92",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_id": "pw01dud002024101276/61",
+        "horse_number": "4",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "aaaf4acb00fed92139b4a2d9",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_id": "pw01dud002024104819/4D",
+        "horse_number": "5",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "a5b5bf7f8aeb49c5df1c746f",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_id": "pw01dud002024108133/20",
+        "horse_number": "6",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "3aefd1f1fb823be2d5245112",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_id": "pw01dud002024102357/D4",
+        "horse_number": "7",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "44a53548550bef06baa62fc9",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_id": "pw01dud002024102005/0B",
+        "horse_number": "8",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "29c6163df70f606244cbc2e2",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_id": "pw01dud002024104103/34",
+        "horse_number": "9",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "aeb35d15c86e714ce43cd189",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_id": "pw01dud002024106527/C2",
+        "horse_number": "10",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "32aef0e8b242dd3dca835f6f",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_id": "pw01dud002024100258/38",
+        "horse_number": "11",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "fc8fecd01bf828bfa3cd8524",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_id": "pw01dud002024105929/7D",
+        "horse_number": "12",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "cb6791c40eb53c133f53422a",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_id": "pw01dud002024101097/92",
+        "horse_number": "13",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "9a6fc73aaf6b6d667087c5c9",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_id": "pw01dud002024107102/8E",
+        "horse_number": "14",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "b0fee239c142835d7064997d",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_id": "pw01dud002024102668/EA",
+        "horse_number": "15",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "21178197bad9067601cbbaa6",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_id": "pw01dud002024102504/8D",
+        "horse_number": "16",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "c58803ec83689eeeb94caeaa",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      }
+    ],
+    "acquisition_coverage": {
+      "status": "BLOCKED",
+      "records": [],
+      "counts": {}
+    },
+    "missing_fields": [],
+    "missing_field_counts": {},
+    "history_counts": [
+      {
+        "race_id": "20261024_東京_04",
+        "horse_number": "1",
+        "collected": 0,
+        "required": 0,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_number": "2",
+        "collected": 0,
+        "required": 0,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_number": "3",
+        "collected": 0,
+        "required": 0,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_number": "4",
+        "collected": 0,
+        "required": 0,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_number": "5",
+        "collected": 0,
+        "required": 0,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_number": "6",
+        "collected": 0,
+        "required": 0,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_number": "7",
+        "collected": 0,
+        "required": 0,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_number": "8",
+        "collected": 0,
+        "required": 0,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_number": "9",
+        "collected": 0,
+        "required": 0,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_number": "10",
+        "collected": 0,
+        "required": 0,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_number": "11",
+        "collected": 0,
+        "required": 0,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_number": "12",
+        "collected": 0,
+        "required": 0,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_number": "13",
+        "collected": 0,
+        "required": 0,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_number": "14",
+        "collected": 0,
+        "required": 0,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_number": "15",
+        "collected": 0,
+        "required": 0,
+        "status": "COMPLETE"
+      },
+      {
+        "race_id": "20261024_東京_04",
+        "horse_number": "16",
+        "collected": 0,
+        "required": 0,
+        "status": "COMPLETE"
+      }
+    ],
+    "history_counts_verified": true,
+    "unapproved_finding_count": 16,
+    "source_audit_status": "UNVERIFIED",
+    "raw_provenance_status": "UNVERIFIED",
+    "limitations": [
+      "Normalized inputs only; original-source parser omissions are not verified.",
+      "Collector quality flags and nonempty numeric values do not prove observed origin.",
+      "Raw history reparse verifies reproducibility, not independent parser completeness or current entry provenance."
+    ]
+  },
+  "verified_field_collection_attempts": [],
+  "source_provenance": [
+    {
+      "url": "https://jra.jp/JRADB/accessD.html?CNAME=pw01dde1005202604080420261024/D7",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:03:06.701252+00:00",
+      "sha256": "d3664895b978ed980606800e871cecc4c92ffd54262413593a1a3270bf640bf7",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/039d01205b434b38a46adebfa2800e3fb3626f823107842f4447851b67e89141.html",
+      "encoding": "CP932"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024107083/50",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:03:07.641441+00:00",
+      "sha256": "1db0cb028e2de382fe9b241b0979955bbacd46114053e98dca58b615db937a1a",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/b3c22bfe46fa321aac3603e57cdd97f18ca85f7ddf35e65fd6f330e3a14e29e2.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024103357/C3",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:03:08.458783+00:00",
+      "sha256": "62d1e7159333845af720213916433268ad4891cc010bf2cb1c85b49f641d62ab",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/fa9f9fba2cd512c013aa662d5e8666bdf37b39bcc1d740bcb837ed62b790da40.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024103849/8E",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:03:09.304999+00:00",
+      "sha256": "0c50eaa5b9cac305b06ec982eae1af38f7c8b4ed3351a629cf16cd00320207c5",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/03be2f9839dafd7aeaefe369194767fda985d52af6dc0fbd0946909423b82e0d.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024101276/61",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:03:10.104198+00:00",
+      "sha256": "2bc3d6539e337ec1427442688b17070d4ccceb2f83eaf4483d41d204606935ca",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/56c986a8dd35d62365e15232af752c661b599f3c60efe077382c50d580fda1d5.html",
+      "encoding": "CP932"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104819/4D",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:03:10.959971+00:00",
+      "sha256": "2474efc8ccf6c4a7aefc3b1e72c7f456bc2179d15f4d1ce625159ce65c781c50",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/a80b2fa93b4508d6e8a8ac05ec034810345f82326f5b0421274e796ae9bbb714.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024108133/20",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:03:12.002367+00:00",
+      "sha256": "8401a091b2773f9cf1ddbb0ad57e10d614ebf6d501d059628eba3f8f076cc815",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/ce845351d4e293d7366f2092b48f92c6f39ba98ebfc944d6d04494d1456206e8.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102357/D4",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:03:12.771084+00:00",
+      "sha256": "cc2ead320316ba6a624136e9380445baae80b4c9db1708f3b5901bd8c6b62b5f",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/f8dd0556d9c95f3b1c2e6f005d24541574ee8b611543b94bb4b84196d04311ba.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102005/0B",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:03:13.621864+00:00",
+      "sha256": "63d84cf7eb77b7adeca89e4f70bb02d9936bde39b94f104348b5ad7d5e0498be",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/1bfa9bc80710fd40dc4fb8d3bb8a54c3de9ab3276973a63224c5353ac81fa052.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104103/34",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:03:16.324163+00:00",
+      "sha256": "d0e3b0eccb405b5fabda761de3613da39bed573f2849bea5a710dc5e01d97f69",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/2f15e2bfc4a0ace006b82ebf63539c98bb3bcbb0695ff98338555691b896267e.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106527/C2",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:03:17.363925+00:00",
+      "sha256": "208c02911093f9180c068e63ea7fc45a67fb2563143850bd1e2c132fdb31431f",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/c6f01837a06e15c9b3a17e1952c9cc7ce90f595be857481022e1c69123d07e6b.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024100258/38",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:03:18.072918+00:00",
+      "sha256": "5e77138e5f0ad5b385c2547c4194d6edbd6a42c4c64724328bbd719a8515bd45",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/5c4c1657779fc795ee3e07ec68eeee3730c05f3feb52622c84cdf59510243740.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105929/7D",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:03:18.776906+00:00",
+      "sha256": "ba262c699ad52bb8a84a1fa34dd72801e5339a75f585e344b2f231881d878134",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/3b63413d6343aa49aca52bcd83f7162017e9f365f234c6af8a0050607c146214.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024101097/92",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:03:19.865854+00:00",
+      "sha256": "3ae8f7140acbe75fd87527207fed1e6226a7e789186684a15329d46eb2b86cd6",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/556cbf6467fd686133ecb0927dc96bc3087b8707865f799a042c221b9df98c23.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024107102/8E",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:03:20.750432+00:00",
+      "sha256": "9c7b58af8cf48d2b5837d2196bc1055bd8afb2466ab5b1804977942aaee1fc51",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/f2f436d5659f42c17f90e45280957d808856ae96b0edd646cb27044f936e1ea5.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102668/EA",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:03:21.481730+00:00",
+      "sha256": "ce80e4987e1179bc2c9119cfb28df3999d7b7fb522807b2a9783bac329bbc0b2",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/7c3b995abc8944848ca5ccec4d7c758049230cc0b3cc4a4d206e7a80a1463e81.html",
+      "encoding": "SHIFT_JIS"
+    },
+    {
+      "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102504/8D",
+      "method": "POST",
+      "captured_at": "2026-10-24T23:03:22.200639+00:00",
+      "sha256": "a0baedc154ff15e627207d9fc9493bad3a049c397634d2191416721c814bb44b",
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/ac92326d45f4ef70bbd9b9d077ee38d234d3f309dcd211db9f25e1d6d1620514.html",
+      "encoding": "SHIFT_JIS"
+    }
+  ]
+}

@@ -1,0 +1,247 @@
+{
+  "schema_version": 1,
+  "run_id": "d834ce2eabc447339d745df7b576a41c",
+  "stage": "intake",
+  "status": "PASS",
+  "reason": null,
+  "manifest": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/reviewer_preparation_20261026/artificial_attack_hvs6tmn2/run/manifest.json",
+    "sha256": "7a7140aa3d03b01d2a586eef6d54b9b6fed710230c355645271e4ac2dfa9474b"
+  },
+  "freeze": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/candidate_ev.py",
+      "sha256": "cbc14759b5110027db6368d9f7811a7acea455204e5627f7b49fd550bc3cc16a"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/environment_model.py",
+      "sha256": "37418a14c524e383f76a1421e3eb31dda1aac6dcf691bc59517d7c9622653216"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/environment_scenarios.py",
+      "sha256": "371309e54647901ffbbb2634667dee766ca07764ebfb752fde7d4f37e9a0b85e"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/ev.py",
+      "sha256": "f3ef8e5b0e7308c39ed86b251eee773937202595e04784b4d0a02512f4a55065"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/jra_scraper/__init__.py",
+      "sha256": "7ed7afb3c43ca9e53bfdce6b9a512405a2f39882512b538706c0548faf2c60ae"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/jra_scraper/config.py",
+      "sha256": "186470e74aa94e4caf0237e7287158944043f6bfd56e2e2974c5e9289be175ec"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/jra_scraper/data_repair.py",
+      "sha256": "ff17834e2b2875c2495db0d7868a68df0fd94a95fd820258c8481b0db641784f"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/jra_scraper/environment.py",
+      "sha256": "92327289eb8a8f92538f8e6a1997f8f0182abf1cf2211c0c1b7b9d2b6bd13cc7"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/jra_scraper/history_pace.py",
+      "sha256": "c5a9e89be2ac095cbaa6d66c8dffdd1fd057ef81b72b7a8c5b3d0ced065cf7ae"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/jra_scraper/live_snapshot.py",
+      "sha256": "ed0560b02ec5c0d697df2d1e602c7b2c4d6a898aa159d43d12f68800cca12d4c"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/jra_scraper/models.py",
+      "sha256": "274d11db95c1215c8db4a4770cdc3093a10dc8c91dbb8542538177f9d5247651"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/jra_scraper/odds_history.py",
+      "sha256": "c6f6414c39962905c677ce37c44d4e76936a32eeca7344b4d3490bf521f2a507"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/jra_scraper/parser.py",
+      "sha256": "0d50b81a48ce66358e771bf9161724a14449592c754cf10e01b0e5a1aae1855c"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/jra_scraper/pipeline.py",
+      "sha256": "b1ee0b19d4f342b391b08d1763d502481bf20e5bc8f1362c1376a99ee7e2ef5f"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/jra_scraper/scraper.py",
+      "sha256": "b442c5077355254b489605b4db9be9b1a1d28ae78d520da185c82fe35f964b5b"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/jra_scraper/validation.py",
+      "sha256": "d400981352261adb12d07d205ae9a97bffbfbb7363138bd578a7cff8177ad135"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-01-intake/SKILL.md",
+      "sha256": "4614fd6e7404ab3e8a552d79437d811c8175a971e23a60fc4a955e8f8be641d1"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-02-official-collection/SKILL.md",
+      "sha256": "236aaffeda4edaa992ac2329e6f95f35335040cd73a24b840b66b705aa964015"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-03-integrity-audit/SKILL.md",
+      "sha256": "a663552d340d14ae4781fe8a5b8761e71994eddd1391a85e094e61f4f66643a7"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-04-approval-gate/SKILL.md",
+      "sha256": "f775b8c2971ce86848d09a2754a6a4fd7f3f0dce4ac69341485890585d8e9678"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-05-ability-analysis/SKILL.md",
+      "sha256": "5d4b679c990f255fe94d646e5e32fb8b039b6cc83ba937e307f7935e92925f1e"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-06-pace-simulation/SKILL.md",
+      "sha256": "c30b392d002d47be7fa7806c34e0bc5ab55c24fd94d63ec65a4f8ef84ae6d99c"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-07-probability-calculation/SKILL.md",
+      "sha256": "d1b98bd7faab8b679717a0dd4d8c6b428db59375a63aed3e3e4a927fe3733105"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-10-review/SKILL.md",
+      "sha256": "a29e8486b08e1421d70a63f6f2dfed643e41778a1b8c972d34c122607a7451ee"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-12-report/SKILL.md",
+      "sha256": "781468c4a25ffe9d47a3e67d89c5a6eabc92c00710649b0fd845f5f9d10a5803"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-environment-research/SKILL.md",
+      "sha256": "58bd64a290cd30cba69397b8a893d25053ccfc4b7c853109bd25197e43c89c60"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-environment-research/scripts/research_gate.py",
+      "sha256": "3402bcff068eebfb10f7a8ddab78112202bf02e8da65d84c60953120e694a03e"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/__init__.py",
+      "sha256": "635e2b37d86b9dceca2cd3dc479856f302b7fa97a78aac9791ca7fb2fc6dde83"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/acquisition_coverage.py",
+      "sha256": "94f350531418e66f2a913373fc057ee0f2f3f98a647b075a860cfc29003e025a"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/agents/__init__.py",
+      "sha256": "a904c832d3b4a7811e9c20dbbf69f7746d38d345577a7504126ae434e96d2778"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/agents/analyzer.py",
+      "sha256": "5ee0aa7fe0e6f28ebfa644cbbdecc9a13e2d05c70ec0149c7427552d61c0ba24"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/agents/article_writer.py",
+      "sha256": "add52dd6135cfad6537c103bffc2e3a02d2d4926a23e8e68bf9890968fa78285"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/agents/bet_builder.py",
+      "sha256": "71573799e822ebfd532c6728691f6d47baf813b8a5f3857e6cbf4e7fab7dae29"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/agents/data_collector.py",
+      "sha256": "9c042aa57fc8c7d13ce9ac7f60ff674081e2fa2acd68631157eade402f716ce2"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/agents/ev_calculator.py",
+      "sha256": "e8b867807876e0ea282839b123d65b318c174dc13a09fbdd2b2cb3184ea43ad2"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/agents/race_utils.py",
+      "sha256": "1cb03db0d677027cba7afd7dae92877dc95f6c9b9710579ffc433a1d055a2d9c"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/agents/reviewer.py",
+      "sha256": "a1f5dc7862fe8d8f4836ec55eb5d25f8bd2b1864a3277ce4a588f00e8653fe16"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/agents/settings.py",
+      "sha256": "0a874f95342e386cd29394046590938c65602e93cf73ab219bef14ec0279e3fe"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/agents/simulator.py",
+      "sha256": "47354eab85d537e90a421d07e0c75b9bdb4b0b828e63400af92c592b4eac4c90"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/artifacts.py",
+      "sha256": "20dc56ec439760664bc1ff89811e903a4bdd4c01bc877273e1c082110cc0e560"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/betting.py",
+      "sha256": "bdc3583c8a44a7a0b6a14268ed6c1945daaa1cc3748e8d45693affb90dd50f65"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/data_integrity.py",
+      "sha256": "849096c0c8bb5cd5de42a243ed4ebc519f7bd7c0f1aa9b60ab81ff8faacfeb2b"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/deadline.py",
+      "sha256": "42952eec0df01fdca703b8018904d1cdf079375f877be6d3d4a14ab0fe916e31"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/environment_prediction.py",
+      "sha256": "10987a6eb3329111ebc741280302f6e06f5e25606157cb89ade1d68703e6bdbd"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/evaluator.py",
+      "sha256": "53aaf4d91828fffdd00ddac92661889740c99e2a7947bdaa89f8b59b36e49a23"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/feature_engineering.py",
+      "sha256": "f65e6c156bc0bb0902cc4abd989ba9796d68720538f0f8f47f6a7d134cb5ffd2"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/features.py",
+      "sha256": "d80915757ec5f0fd329c9d025309c1d79267457dec8325218509df361c1fc53b"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/final_workflow.py",
+      "sha256": "8fdae19df8f394eddb7b2c83350270824356738abac80a9ae8b3b674cba8d290"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/model.py",
+      "sha256": "d3b65f83502be1da29a4d6a75e10f8ac043e5c759a6f30446db76e35b413cd47"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/react_workflow.py",
+      "sha256": "08ccfa72d7131a2ff9da1729fe09d2e08b75c6e5ff2cbbb5026d146897ab0260"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/skill_stage_contracts.py",
+      "sha256": "99c09b6041617cbb357839616e55f34e087044bce0d0ecb8f8c89e07e44f0960"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/skill_workflow.py",
+      "sha256": "5801b407204641353a6c19287a27f75afe2e97c4739feb8e2df8ab8c1b3d4fc0"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/track_bias.py",
+      "sha256": "cf305428e50e6b47cb1ffe937122a4063619708379db744665ac0f26790ab750"
+    }
+  ],
+  "input_digest": "32f53642b17a99dd290c1f5a25b37c17ce047c8182419453f51aa7293d4b150f",
+  "previous_record": null,
+  "skill": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-01-intake/SKILL.md",
+    "sha256": "4614fd6e7404ab3e8a552d79437d811c8175a971e23a60fc4a955e8f8be641d1"
+  },
+  "evidence": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/reviewer_preparation_20261026/artificial_attack_hvs6tmn2/input.json",
+      "sha256": "efa82530f0281abdf7bff98dbf617ee4427f964100fa5fe3f2e8673792b268cf"
+    }
+  ],
+  "output": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/reviewer_preparation_20261026/artificial_attack_hvs6tmn2/run/01_output.json",
+    "sha256": "4ddf2b533d7ce79bf73cd838cd02e8a1b9278062587729d1854e5e04006fffde"
+  },
+  "checks": {
+    "independent_attack": true,
+    "fixed_plan": true,
+    "no_production": true
+  },
+  "execution_kind": "deterministic_research_artifact_verification"
+}

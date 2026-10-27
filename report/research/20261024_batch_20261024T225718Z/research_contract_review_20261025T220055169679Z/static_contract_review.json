@@ -1,0 +1,162 @@
+{
+  "record_type": "current_research_contract_static_review",
+  "status": "PREPARATION_ONLY_NOT_READY_TO_EXECUTE",
+  "head": "72f0ab8bc27dccd3e91fa26da943f257abc50cf2",
+  "references": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/AGENTS.md",
+      "sha256": "4d0e16073e953da8503508a9628dc4f753e1910e8e8c63a7e1cace40d4832263"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/docs/skill_workflow.md",
+      "sha256": "7e94f963788e9d9b2a46dd4912d7290009f287da48a9d77c3cf079e371b87acf"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/docs/condition_models.md",
+      "sha256": "cef0f974e453f69286a3a84e25f307b3174afa7418862395835a1125a316585f"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/acquisition_coverage.py",
+      "sha256": "94f350531418e66f2a913373fc057ee0f2f3f98a647b075a860cfc29003e025a"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/data_integrity.py",
+      "sha256": "849096c0c8bb5cd5de42a243ed4ebc519f7bd7c0f1aa9b60ab81ff8faacfeb2b"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/skill_workflow.py",
+      "sha256": "5801b407204641353a6c19287a27f75afe2e97c4739feb8e2df8ab8c1b3d4fc0"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/skill_stage_contracts.py",
+      "sha256": "99c09b6041617cbb357839616e55f34e087044bce0d0ecb8f8c89e07e44f0960"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/feature_engineering.py",
+      "sha256": "f65e6c156bc0bb0902cc4abd989ba9796d68720538f0f8f47f6a7d134cb5ffd2"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/ev.py",
+      "sha256": "f3ef8e5b0e7308c39ed86b251eee773937202595e04784b4d0a02512f4a55065"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/environment_model.py",
+      "sha256": "37418a14c524e383f76a1421e3eb31dda1aac6dcf691bc59517d7c9622653216"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-01-intake/SKILL.md",
+      "sha256": "2e0c17ba9661340f49cae03d2627f6716240e8d77ccf7311ff343a20596ba867"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-02-official-collection/SKILL.md",
+      "sha256": "ce07728ab513174a51c17888512659e5e5bd3ba78a9f477f651d62c74a1ef1b8"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-03-integrity-audit/SKILL.md",
+      "sha256": "473cbe7a51aab15c4378483a92a3e4499b30c1cd7f284d4905dbb0406c942e65"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-04-approval-gate/SKILL.md",
+      "sha256": "e2640376a195155c4dd5753bbccbc559f941b5d24a22e453145198f3c45f1738"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-05-ability-analysis/SKILL.md",
+      "sha256": "5f61919521d9ff9f769b63e820ed1797b504a5df9cad7937e3b78e49884d6af6"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-06-pace-simulation/SKILL.md",
+      "sha256": "2650d7d2a1c1f12496b2faf06960cb9f1dd4309418936ba289b82d4a540ec378"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-07-probability-calculation/SKILL.md",
+      "sha256": "f39c48ff1e75f0cb78516e2271ca1d17e3ab9b7495118d9ac0f58c0f6eba5517"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-10-review/SKILL.md",
+      "sha256": "bc505015feba972e4ffb484874088506a5c79c3edfdc33a0c6e368ab078dbf62"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-12-report/SKILL.md",
+      "sha256": "a66f4a7bd51ca180d2faafb413211f013d488c7bc0348377d33a5d916336e1ad"
+    }
+  ],
+  "synthetic_equivalence": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/research_contract_review_20261025T220055169679Z/current_structural_feature_equivalence.json",
+    "sha256": "2c2c13950dd979e2bae762bc9e70fefeee6a67d126c9dd627cafed41cd316d9d",
+    "cases": 60,
+    "status": "PASS"
+  },
+  "findings": [
+    {
+      "id": "CURRENT_ACQUISITION_GATE_REQUIRED",
+      "detail": "Old three-race audit predates acquisition_coverage. Only a fresh current-code 36-race audit is eligible. Missing unused pace/weather cannot bypass acquisition checks."
+    },
+    {
+      "id": "SAVED_AUDIT_NOT_RECOMPUTED_BY_SCORE_SCRIPT",
+      "detail": "Existing isolated score/fit scripts check saved PASS and input hashes but do not require current audit code hashes or acquisition_coverage PASS. They can accept stale PASS; keep execution prohibited pending new chain."
+    },
+    {
+      "id": "APPROVAL_STAGE_NOT_SEPARATE",
+      "detail": "Existing scripts directly score after audit PASS. Separate stage04 bound to stage03 is required even with zero findings and zero requested approvals."
+    },
+    {
+      "id": "SKILL_HASH_CHAIN_ABSENT",
+      "detail": "Existing artifacts bind code hashes but lack skill/previous-stage hashes, strict order, and terminal BLOCKED checks. They do not establish completion of current public CLI gates."
+    },
+    {
+      "id": "COMMON_BASE_EQUIVALENCE_PASS",
+      "detail": "60 synthetic fully observed cases reproduce current baseline components and environmental features exactly; current-market access trap PASS. Unvalidated condition differences are zero. Pace remains observed but unused by baseline features, not learned merely because collected."
+    },
+    {
+      "id": "LEGACY_BASELINE_VARIANT_SEPARATE",
+      "detail": "Keep exact two-stage Softmax research variant separate from legacy Monte Carlo baseline; do not mix comparative metrics."
+    }
+  ],
+  "research_chain_proposal": {
+    "directory": "isolated research output/skill_runs/<new_run_id>/",
+    "stage_order": [
+      "01_intake",
+      "02_collection",
+      "03_integrity_audit",
+      "04_approval_gate",
+      "05_analysis",
+      "06_simulation",
+      "07_probability",
+      "research_fit",
+      "independent_review",
+      "research_report"
+    ],
+    "event_fields": [
+      "run_id",
+      "research_variant",
+      "race_ids",
+      "config_sha256",
+      "input_sha256",
+      "previous_event_sha256",
+      "skill_path",
+      "skill_sha256",
+      "input_artifact_refs",
+      "output_artifact_refs",
+      "checks",
+      "role",
+      "execution_kind",
+      "status",
+      "reason_codes"
+    ],
+    "rules": [
+      "Freeze complete 36-race audit and eligible/excluded universe in intake; no Sunday outcomes or old seed inputs.",
+      "Bind collection to enriched_v4/raw manifest/environment originals; bind audit to current auditor code hashes, acquisition coverage PASS, normalized input hashes.",
+      "Stage04 binds identical stage03. With findings0, approved_imputations/blocked_imputations/approval_evidence are empty. Otherwise require direct scoped human evidence and halt while unverified.",
+      "Stage05 validates entire01-04 chain before structural-only feature function; save common-base hashes, no differences and nonapplication reasons.",
+      "Separate simulator role owns06/07 and independent probability verification; fit needs07 PASS plus explicit root dispatch.",
+      "Research validator must verify order, every prior artifact and skill hash, substantive checks, and terminal blocked state; self-declared PASS is insufficient.",
+      "Public SkillSequence supports prediction/final only and invokes production probability/EV recalculation; do not masquerade as those modes. Separate research chain does not replace public CLI prediction gates.",
+      "Production EV/ticket/GO stages are outside this research branch and remain unexecuted, tickets=[]; research report is not completed prediction stage12.",
+      "Fit all fresh eligible inputs exactly once from scratch, linear ridge100; preserve shared state/labels/model hashes.",
+      "No new real-data score/probability/fit until root dispatch."
+    ]
+  },
+  "real_data_calculations": [],
+  "core_files_edited": [],
+  "old_artifacts_modified": false
+}

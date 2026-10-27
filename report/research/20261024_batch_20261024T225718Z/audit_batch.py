@@ -99,9 +99,10 @@ def main():
         target_date = horses[0].get('target_race_date', '2026-10-24') if horses else '2026-10-24'
         post_time = f'{target_date}T{int(time_match[1]):02d}:{int(time_match[2]):02d}:00+09:00' if time_match else ''
         rows, entries, career, career_audit, artifacts = [], [], {}, [], []
+        collection_attempts = []
         if card:
             artifacts.append(dict(kind='race_detail', html=card, sha256=hashlib.sha256(card.encode()).hexdigest(),
-                                  race_id=race_id, original_source=card_meta))
+                                  race_id=race_id, path=card_meta.get('path', ''), original_source=card_meta))
         zero_history = []
         for horse in horses:
             number = str(horse['horse_number'])
@@ -147,8 +148,15 @@ def main():
                 row = _normalize_row({**entry, **{k:v for k,v in history.items() if k not in entry or k in {'date','course','race_name','distance','history_surface','position','time','weight','jockey','pace','last_3f','track_condition','weather','passing_order','odds','popularity'}}, 'run_index': str(index)})
                 row['date'] = historical_date
                 row['last_3f_source'] = history.get('last_3f_source', '')
+                for metadata_field in ('pace_missing_reason', 'pace_source', 'pace_scope', 'interval_seconds',
+                                       'interval_lengths_m', 'pace_metadata', 'field_provenance', 'field_collection_attempts'):
+                    if metadata_field in history:
+                        row[metadata_field] = history[metadata_field]
                 rows.append(row)
-                for field, provenance in history.get('field_provenance', {}).items():
+                provenance_items = list(history.get('field_provenance', {}).items())
+                provenance_items += [(field, attempt) for attempt in history.get('field_collection_attempts', [])
+                                     for field in attempt.get('fields', [])]
+                for field, provenance in provenance_items:
                     source_url = provenance.get('url')
                     source_kind = provenance.get('source_kind')
                     if source_kind not in {'official_past_result_observation', 'official_historical_final_odds'} or not source_url:
@@ -182,10 +190,15 @@ def main():
                     if match.get('match_count') != 1 or not same_name or not same_registration:
                         issues.append(dict(code='RECOVERY_HORSE_MATCH_UNVERIFIED', horse_number=number, date=historical_date, field=field, match=match))
                         continue
+                    html_sha256 = hashlib.sha256(recovered_html.encode()).hexdigest()
+                    collection_attempts.append(dict(race_id=race_id, horse_id=horse['horse_id'],
+                        horse_number=number, date=historical_date, fields=[field], artifact_sha256=html_sha256,
+                        declared_state=provenance.get('state'), reason=provenance.get('reason'),
+                        source_url=source_url, original_bytes_sha256=recovered_meta.get('sha256')))
                     if source_url not in recovered_artifact_urls:
                         artifacts.append(dict(kind=artifact_kind, html=recovered_html,
                             sha256=hashlib.sha256(recovered_html.encode()).hexdigest(), race_id=race_id,
-                            horse_id=horse['horse_id'], horse_name=horse['horse_name'], original_source=recovered_meta))
+                            horse_id=horse['horse_id'], horse_name=horse['horse_name'], path=recovered_meta.get('path', ''), original_source=recovered_meta))
                         recovered_artifact_urls.add(source_url)
             detail_url = horse.get('horse_detail_url') or horse.get('horse_url')
             # Full embedded histories may legitimately avoid a horse-detail request.
@@ -196,10 +209,10 @@ def main():
             if detail:
                 artifacts.append(dict(kind='horse_history', html=detail, sha256=hashlib.sha256(detail.encode()).hexdigest(),
                     race_id=race_id, horse_id=horse['horse_id'], horse_name=horse['horse_name'], horse_url=detail_url,
-                    original_source=detail_meta))
+                    path=detail_meta.get('path', ''), original_source=detail_meta))
         config = dict(race_id=race_id, career_starts_by_horse_number=career)
         collected = dict(rows=rows, entries=entries, quality_report={'issues': race.get('parser_issues', [])},
-                         source_audit={'artifacts': artifacts})
+                         source_audit={'artifacts': artifacts, 'attempts': collection_attempts})
         repair_actions = []
         pre_source_check = verify_source_artifacts(collected)
         mismatched_horse_dates = {(str(item['row'].get('horse_id', '')), date_key(item['row'].get('date')))
@@ -327,10 +340,12 @@ def main():
             conflict_audit.append(checked)
             if blocks:
                 blocking_conflicts.append(checked)
+        v4_conflicts = race.get('official_observation_conflicts_v4', [])
+        unresolved_v4 = [c for c in v4_conflicts if c.get('fact_classification') == 'UNRESOLVED_OFFICIAL_OBSERVATION_CONFLICT']
         gate = audit['gate']
         if zero_history:
             gate = 'BLOCKED_ZERO_HISTORY_NEUTRAL_FORBIDDEN'
-        elif issues or blocking_conflicts:
+        elif issues or blocking_conflicts or unresolved_v4:
             gate = 'UNVERIFIED'
         elif gate == 'PASS' and surface_gate != 'PASS':
             gate = surface_gate
@@ -350,9 +365,11 @@ def main():
             metadata_origin='posthoc_official_result_header', post_time=post_time,
             metadata_source=result_meta, source_issues=issues, history_conflicts=conflicts,
             history_conflict_classification=conflict_audit, blocking_history_conflicts=blocking_conflicts,
+            official_observation_conflicts_v4=v4_conflicts, unresolved_official_observation_conflicts_v4=unresolved_v4,
             zero_history_horse_numbers=zero_history, career_audit=career_audit, required_history_evidence=repair_actions,
             surface_gate=surface_gate, environment_gate=environment_gate, environment=selected,
             environment_source_path=str(environment_path), collected_audit=audit,
+            verified_field_collection_attempts=collection_attempts,
             source_provenance=[a['original_source'] for a in artifacts])
         dump(output / (race_path.stem + '_audit.json'), payload)
         # Input artifact retains all horses, including unsupported surfaces and zero histories.

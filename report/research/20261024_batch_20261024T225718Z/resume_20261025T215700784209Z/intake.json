@@ -1,0 +1,53 @@
+{
+  "status": "OFFICIAL_FIELD_RECOVERY_BEFORE_CURRENT_AUDIT",
+  "client_date": "2026-10-26",
+  "recorded_at": "20261025T215700784209Z",
+  "head": "72f0ab8bc27dccd3e91fa26da943f257abc50cf2",
+  "policy_files": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/AGENTS.md",
+      "sha256": "4d0e16073e953da8503508a9628dc4f753e1910e8e8c63a7e1cace40d4832263"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/docs/skill_workflow.md",
+      "sha256": "7e94f963788e9d9b2a46dd4912d7290009f287da48a9d77c3cf079e371b87acf"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/docs/condition_models.md",
+      "sha256": "cef0f974e453f69286a3a84e25f307b3174afa7418862395835a1125a316585f"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/data_integrity.py",
+      "sha256": "849096c0c8bb5cd5de42a243ed4ebc519f7bd7c0f1aa9b60ab81ff8faacfeb2b"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/acquisition_coverage.py",
+      "sha256": "94f350531418e66f2a913373fc057ee0f2f3f98a647b075a860cfc29003e025a"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/jra_scraper/history_pace.py",
+      "sha256": "c5a9e89be2ac095cbaa6d66c8dffdd1fd057ef81b72b7a8c5b3d0ced065cf7ae"
+    }
+  ],
+  "collection_summary": {
+    "total_urls": 1062,
+    "processed": 1062,
+    "odds_pages": 1062,
+    "recovered_rows": 1433,
+    "unmatched": [],
+    "errors": [],
+    "date_conflicts": [],
+    "initial_errors": [
+      {
+        "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1004202601061220260517/E4",
+        "error": "503 Server Error: Service Unavailable for url: https://jra.jp/JRADB/accessS.html"
+      }
+    ]
+  },
+  "previous_three_race_candidate": "Historical research artifact; current acquisition gates have not yet been passed.",
+  "new_probability_or_fit_executed": false,
+  "imputation_approvals_used": [],
+  "validation_date_reserved": "2026-10-25",
+  "validation_status": "NOT_EXECUTED",
+  "production_changes": false
+}

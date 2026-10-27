@@ -1,0 +1,135 @@
+{
+  "status": "PASS_NUMERICAL_COMPONENT_TESTS_ONLY",
+  "gate_sha256": "d2874eb334310d15449dbf898f90c0e10bdff719fe145f21fe3b7b65ca8b2145",
+  "numeric_sha256": "4abeec7d361332a642bdef29a6e9b4b54037da052ad7576272c3e04f3667e385",
+  "cases": [
+    {
+      "case": "analysis_positive",
+      "expected": "ACCEPT",
+      "observed": "ACCEPT"
+    },
+    {
+      "case": "analysis_score_change",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "case": "analysis_horse_deletion",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "case": "analysis_environment_smuggle",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "case": "analysis_race_change",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "case": "simulation_positive",
+      "expected": "ACCEPT",
+      "observed": "ACCEPT"
+    },
+    {
+      "case": "simulation_score_change",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "case": "simulation_horse_deletion",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "case": "simulation_environment_smuggle",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "case": "simulation_race_change",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "case": "probability_positive",
+      "expected": "ACCEPT",
+      "observed": "ACCEPT"
+    },
+    {
+      "case": "probability_score_change",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "case": "probability_horse_deletion",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "case": "probability_environment_smuggle",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "case": "probability_race_change",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "case": "probability_change",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "case": "fit_analytic_zero_positive_no_optimizer",
+      "expected": "ACCEPT",
+      "observed": "ACCEPT"
+    },
+    {
+      "case": "coefficients",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "case": "metrics",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "case": "dataset_race_deletion",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "case": "dataset_horse_deletion",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "case": "review_positive",
+      "expected": "ACCEPT",
+      "observed": "ACCEPT"
+    },
+    {
+      "case": "review_forgery",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    },
+    {
+      "case": "report_positive",
+      "expected": "ACCEPT",
+      "observed": "ACCEPT"
+    },
+    {
+      "case": "report_forgery",
+      "expected": "REJECT",
+      "observed": "REJECT"
+    }
+  ],
+  "real_data_used": false,
+  "optimizer_or_fit_called": false,
+  "scope_limit": "Direct independent numeric validator checks; not a full ResearchSequence01-10 positive fixture"
+}
