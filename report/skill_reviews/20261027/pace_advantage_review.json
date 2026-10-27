@@ -1,0 +1,114 @@
+{
+  "review_kind": "skill_revision_user_intent",
+  "independent_reviewer": "/root/kikka_ability_review",
+  "evaluated_at": "2026-10-26T23:52:48.128460+00:00",
+  "user_intent": "Require statistical pace advantage before fixing mainline; add MC trials when simulation sampling evidence is insufficient.",
+  "status": "NG",
+  "component_verdict": "OK_STATIC_REVIEW",
+  "objective_verdict": "ACTUAL_RACE_CALIBRATION_NOT_ESTABLISHED",
+  "targets": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/pace_advantage.py",
+      "sha256": "886107cfdcdb7ad43f140a919ac4fcd9d1c94bd4854719ce2c1f4ec71dcb7e86"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/adaptive_pace.py",
+      "sha256": "6364257987b82a4fae050d00ce045d10b70ab895211b38d44eabbe2aed260460"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/pace_conditioning.py",
+      "sha256": "b46b783782e2fb20874a9f31203cc133837a1e8bfc6dfcbd085e32e0bf2773ce"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/pace_candidates.py",
+      "sha256": "e7f744c08b6fbb8c55f777e5c77beb19bc2bfa48dcf4e9e678097118f2a33028"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/strategy/pace_selection.py",
+      "sha256": "76659b0a5baee37bdf8a44e207ad627a1b31307d9110df551eb8154fe072f2d2"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/tests/test_pace_advantage.py",
+      "sha256": "e92caf7716b7b51b78c779cc5bffaadbf435471e00b205db929173c932dce51a"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/tests/test_adaptive_pace.py",
+      "sha256": "bcc5007b857eebf1431f35ac0767b97af116435ad941731acec7518e91490ca3"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/tests/test_adaptive_pace_selection.py",
+      "sha256": "058168566a43bd511107a91f4ef35fcf20a56e3e168b250acbc7582ad973ace0"
+    }
+  ],
+  "evaluated_checks": [
+    {
+      "id": "hoeffding_math",
+      "status": "PASS_STATIC",
+      "evidence": "Y=I(a)-I(b) in [-1,1] has one-sided radius sqrt(2log(1/delta)/n). Confirm requires lower gap > min_gap against both alternatives; sign correct."
+    },
+    {
+      "id": "optional_stopping",
+      "status": "PASS_STATIC",
+      "evidence": "At look k each of six ordered pairs spends alpha/[6k(k+1)]. Sum across pairs and all looks <=alpha. Even displayed upper bounds are covered via reversed pairs. Fixed initial/batch/max define deterministic cumulative looks; stop only on confirmation or max."
+    },
+    {
+      "id": "same_ensemble_prefix",
+      "status": "PASS_STATIC",
+      "evidence": "One random.Random(seed) stream extended; final integration reruns same seed once and verifies source trial ID prefix plus counts. No sample discard/resampling after unfavorable look."
+    },
+    {
+      "id": "manual_request",
+      "status": "PASS_STATIC_ADAPTIVE",
+      "evidence": "Adaptive selected_pace never overrides statistical confirmed pace; mismatch returns no fixed mainline. Requested conditional summaries remain available for hypothesis comparison."
+    },
+    {
+      "id": "limits",
+      "status": "PASS_STATIC",
+      "evidence": "Explicitly conditional on iid fixed empirical ensemble; not real-race accuracy, training adequacy or correlated-draw validity. More bootstrap draws reduce sampling error only, not source data/model bias."
+    },
+    {
+      "id": "confirmed_selector_evidence_recomputation",
+      "status": "PASS_STATIC",
+      "evidence": "Each scheduled look comparison independently recomputed from counts and parameters. Inconsistent saved comparisons, continued sampling after stop, wrong totals/frequencies, unsupported confirmation flags, requested mismatch rejected. Raw API manual hypotheses explicitly not confirmed."
+    }
+  ],
+  "findings": [
+    {
+      "id": "RAW_SELECTOR_CONFIRMATION_BYPASS",
+      "priority": 2,
+      "status": "RESOLVED",
+      "scene": "raw simulate_pace_conditioned mainline.pace contains provisional most-frequent or caller-fixed pace. Passing that string directly to select_pace_candidates yields eligible_candidates without checking fixing_status or statistical_confirmation.",
+      "evidence": "Adapter sets selected_pace=None absent statistical_confirmation, but selector accepts arbitrary pace string and returns status EVALUATED with no confirmation/hypothesis qualifier.",
+      "fix": "Mark direct selector results explicitly as unconfirmed hypothesis comparisons, or add an evidence-aware confirmed-selection wrapper that enforces confirmation and confirmed pace identity. Keep manual requested scenarios hypothetical. Add raw-provisional-to-selector regression coverage. Do not add a production refusal threshold from this research rule.",
+      "resolution": "Raw conditional mainline.pace/summary now None; suggested/requested scenarios live in hypothesis fields only. Lower selector emits statistical_confirmation=false,hypothesis_only=true. Confirmed selector recomputes every look using fixed schedule/counts/alpha/min_gap and validates stopping, final frequency, confirmed/requested pace and flags before transferring mainline."
+    },
+    {
+      "id": "REAL_CALIBRATED_SOURCE_DRAWS",
+      "status": "INCOMPLETE",
+      "reason": "A bootstrap may precisely identify the most frequent pace in a biased or tiny empirical draw pool. 100->1000 confirmation and near-tie100->10000 exhaustion are synthetic behavior checks, not actual-race evidence.",
+      "fix": "Retain incomplete status for actual data-driven pace learning and date-separated calibration. Distinguish additional MC samples from additional independent race/training observations."
+    }
+  ],
+  "reason": "Original raw-selector confirmation ambiguity resolved in static readback. Statistical procedure remains valid under fixed-iid empirical ensemble and predeclared schedule assumptions. Full actual-race draw calibration remains incomplete.",
+  "fix": "No further scoped component fix identified. Complete actual data-driven source draws and chronological calibration before claiming real-race predictive performance.",
+  "scope": {
+    "new_probabilities": false,
+    "network": false,
+    "tests_executed": false,
+    "static_tests_read": true,
+    "production_gate_changed": false
+  },
+  "recheck": {
+    "at": "2026-10-27T10:28:03.549213+00:00",
+    "static_readback": true,
+    "tests_executed": false,
+    "resolved": [
+      "RAW_SELECTOR_CONFIRMATION_BYPASS"
+    ],
+    "limits": [
+      "Confirmed selector verifies internal consistency only, not input authenticity or source-draw calibration.",
+      "Source trial counts are not independently reconstructed by selector; upstream artifact/hash/role provenance remains necessary.",
+      "Synthetic connection tests are not actual-race validation."
+    ]
+  }
+}

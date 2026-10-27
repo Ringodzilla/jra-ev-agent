@@ -1,0 +1,83 @@
+{
+  "kind": "RESEARCH_PACE_ADVANTAGE_IMPLEMENTATION",
+  "created_at": "2026-10-27T10:28:18.494575+00:00",
+  "request": "Require statistically superior pace before mainline fixing; extend simulations when sampling evidence is insufficient.",
+  "behavior": {
+    "comparison": "Each candidate pace must beat both competitors with lower confidence gap strictly greater than explicit min_gap.",
+    "sequential_method": "Hoeffding pairwise bounds, delta(k)=alpha/(6*k*(k+1)), predeclared cumulative sample sizes.",
+    "additional_trials": "Continue same fixed ensemble and same seed prefix; stop on confirmation or explicit maximum.",
+    "no_confirmation": "Do not fix mainline; retain conditional scenario comparisons.",
+    "selection_boundary": "Raw conditional API is hypothesis only; confirmed selector recomputes all adaptive look evidence.",
+    "production_changed": false,
+    "formal_go_issued": false
+  },
+  "validation": {
+    "full_suite": "884 passed",
+    "coverage": {
+      "statements": 8814,
+      "missing": 0,
+      "percent": 100
+    },
+    "check_quality": "PASS",
+    "skill_validation": "06,07,09 PASS",
+    "synthetic_repeated_validation": "report/model_diagnostics/20261027/pace_advantage_synthetic_validation.json"
+  },
+  "limitations": [
+    "MC error guarantee assumes fixed iid empirical ensemble and predeclared cumulative look counts.",
+    "Additional simulations do not increase independent real-race training observations or correct model bias.",
+    "Actual data-trained pace draws, temporal calibration and production integration remain incomplete.",
+    "Evidence validation checks internal consistency, not authenticity of caller inputs."
+  ],
+  "sources": [
+    "https://doi.org/10.1080/01621459.1963.10500830"
+  ],
+  "targets": [
+    {
+      "path": "analysis/pace_advantage.py",
+      "sha256": "886107cfdcdb7ad43f140a919ac4fcd9d1c94bd4854719ce2c1f4ec71dcb7e86"
+    },
+    {
+      "path": "analysis/adaptive_pace.py",
+      "sha256": "6364257987b82a4fae050d00ce045d10b70ab895211b38d44eabbe2aed260460"
+    },
+    {
+      "path": "analysis/pace_conditioning.py",
+      "sha256": "b46b783782e2fb20874a9f31203cc133837a1e8bfc6dfcbd085e32e0bf2773ce"
+    },
+    {
+      "path": "analysis/pace_candidates.py",
+      "sha256": "e7f744c08b6fbb8c55f777e5c77beb19bc2bfa48dcf4e9e678097118f2a33028"
+    },
+    {
+      "path": "strategy/pace_selection.py",
+      "sha256": "76659b0a5baee37bdf8a44e207ad627a1b31307d9110df551eb8154fe072f2d2"
+    },
+    {
+      "path": "tests/test_adaptive_pace_selection.py",
+      "sha256": "058168566a43bd511107a91f4ef35fcf20a56e3e168b250acbc7582ad973ace0"
+    },
+    {
+      "path": "skills/jra-06-pace-simulation/SKILL.md",
+      "sha256": "e0205857fdf7fb6e7d49cdb9e35ee91d69d30b4e608173853d5060a9e3b8928f"
+    },
+    {
+      "path": "skills/jra-07-probability-calculation/SKILL.md",
+      "sha256": "456e2309ce1ef962b15b86e8788f224050661d48fd80a076bc39aa4701aee1ad"
+    },
+    {
+      "path": "skills/jra-09-ticket-building/SKILL.md",
+      "sha256": "c6417f0856d728bf21d8d214fe0b9db16e51e7f3d1b32808cc154c1b1bff24b3"
+    },
+    {
+      "path": "docs/joint_simulation_research.md",
+      "sha256": "d9686ed97838237a7e2e6bfb8d4262f59b89d2242e3edbe53ec78f5bb1fd8cd4"
+    }
+  ],
+  "independent_review": "report/skill_reviews/20261027/pace_advantage_review.json",
+  "git": "Uncommitted; no push requested for this change.",
+  "independent_review_result": {
+    "status": "NG",
+    "component_verdict": "OK_STATIC_REVIEW",
+    "objective_verdict": "ACTUAL_RACE_CALIBRATION_NOT_ESTABLISHED"
+  }
+}

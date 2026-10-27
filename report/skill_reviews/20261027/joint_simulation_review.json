@@ -1,0 +1,174 @@
+{
+  "review_kind": "skill_revision_user_intent",
+  "independent_reviewer": "/root/kikka_ability_review",
+  "evaluated_at": "2026-10-26T23:20:15.082473+00:00",
+  "status": "NG",
+  "reason": "Research calculation components pass scoped static independent review after publication semantics and timezone fixes. Full user objective remains incomplete: real historical/environment/body-weight calibrated joint draws and validation are absent.",
+  "user_intent": "Assess body-weight changes in market odds and integrate cushion, moisture and all usable history through Monte Carlo to distinguish horses.",
+  "scope": {
+    "instructions_reviewed": true,
+    "implementation_reviewed": true,
+    "new_prediction_calculation": false,
+    "tests_executed": false,
+    "existing_artifacts_modified": false
+  },
+  "targets": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/body_weight_market.py",
+      "sha256": "b1654882c222850cfba19c519fa7522c6292481cdbebaaa9b71a3d4df84e4dc7"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/joint_monte_carlo.py",
+      "sha256": "7a663706b80cc5a21d3adaa82276c2384bfb3c8c1109ccfc0ef2f4e7caeaf273"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/scripts/build_body_weight_panel.py",
+      "sha256": "621f8dd6e25338a1806fb4e7cf88218dd9f61c1423be0b69f8fd6d105a28dad1"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/model_diagnostics/20261027/body_weight_observation_panel.json",
+      "sha256": "d2749c3e6bbf7906a5ffc6460078e7aee9b5867c06200ac249d983d504d4f754"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/model_diagnostics/20261027/feature_input_readiness.json",
+      "sha256": "807503a3339e00c8004008e72b5e004dac5312c85ce9e52779151bf2177f4974"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-10-review/SKILL.md",
+      "sha256": "aea642f9b4e1dc7254b500be9b9e0cffbee040d2148c30776fdc30f859067b13"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-10-review/references/user_intent.md",
+      "sha256": "d5083803a7ddecf7ce54299641f1bd65710fdbd77df53ff6f6f0f6acad77bdb4"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/tests/test_joint_monte_carlo.py",
+      "sha256": "561626710fecba2972108edecab25ee03f0d2d3077cb2071d4d0863e6cc0830a"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/tests/test_body_weight_panel.py",
+      "sha256": "8ccac4a7cf6ee8b541d09cc530386b67b1154553d0070a86bcf6468fcb497330"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/docs/joint_simulation_research.md",
+      "sha256": "6e7279e5b728fbd76586604387fed5db00266ab3d5cb8106fc4e219c7d908184"
+    }
+  ],
+  "findings": [
+    {
+      "id": "PUBLICATION_BRACKET_NOT_POST_QUOTE",
+      "priority": 1,
+      "file": "scripts/build_body_weight_panel.py",
+      "lines": [
+        33,
+        60
+      ],
+      "scene": "All 18 saved rows: unpublished observation 14:22:36 JST, published observation 14:52:39 JST; prices labelled odds_after are as of 14:51 JST.",
+      "deviation": "Publication could occur after 14:51. Two snapshots demonstrate an unpublished-to-published bracket but not that the second quote incorporated publication. measured_count=18 is descriptive interval changes, not 18 measured release responses.",
+      "fix": "Either retain descriptive quote_at_earlier_snapshot/quote_at_later_snapshot semantics with explicit post_publication_verified=false and release_response=null, or require a quote after the published observation upper bound for guaranteed post-publication status. Do not turn these 18 rows into learned body-weight response labels. Add the within-bracket quote case to tests.",
+      "resolution": "RESOLVED_BY_READBACK",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "TIMEZONE_CONTRACT",
+      "priority": 2,
+      "file": "scripts/build_body_weight_panel.py",
+      "lines": [
+        13,
+        14
+      ],
+      "scene": "All-naive ISO dates compare successfully and output an interval without an absolute event time.",
+      "deviation": "Unlike analysis/body_weight_market.py, this script does not reject missing offsets; event-time matching could be ambiguous when input sources differ.",
+      "fix": "Require timezone-aware timestamps for post_time, snapshot completion, body-weight captures and quotes; record actual quote timestamp semantics.",
+      "status": "RESOLVED",
+      "resolution": "Readback confirms _time requires timezone and utcoffset; post, snapshot completion, body captures and matched quote timestamps pass through it. Four naive-input rejection test cases added; tests inspected but not executed by this reviewer."
+    },
+    {
+      "id": "REAL_DATA_CONNECTION_INCOMPLETE",
+      "priority": 2,
+      "file": "analysis/joint_monte_carlo.py",
+      "scene": "rg identifies simulate_joint_trials callers only in synthetic tests. Source draws are supplied by caller, not generated from the saved 1468 histories, body weights or environment measurements.",
+      "deviation": "This is an empirical bootstrap integrator, not the requested complete calibrated horse/condition/market simulation.",
+      "fix": "Keep improvement incomplete. Data collector must recover structured historical body weights/changes and timed odds; analyzer/environment researchers must generate validated role-specific paired draws; simulator must supply calibrated whole-race draws with time cutoffs; EV must evaluate paired prices. Compare against baseline with date-separated holdouts before promotion."
+    }
+  ],
+  "evaluated_checks": [
+    {
+      "check": "market_response_does_not_change_structure",
+      "status": "PASS_STATIC",
+      "evidence": "Final probabilities depend only on log(base_probabilities)+environment_logits; market_log_odds_response only changes prices and EV."
+    },
+    {
+      "check": "joint_draw_pairing",
+      "status": "PASS_STATIC",
+      "evidence": "Complete ordered horse_ids and unique source trial IDs enforced; one whole-race index sampled, deep-copied, source_trial_id retained; EV uses each paired probability*price."
+    },
+    {
+      "check": "seed_used",
+      "status": "PASS_STATIC",
+      "evidence": "random.Random(seed).randrange selects whole-race source draws. It controls empirical bootstrap, not upstream draw creation or actual race outcomes."
+    },
+    {
+      "check": "capture_vs_publication",
+      "status": "PASS_STATIC_WITH_LIMITATION",
+      "evidence": "Exact event helper requires published_at; panel only snapshot changes and all18 later_quote_confirmed_after_publication=false. No release-response labels established."
+    },
+    {
+      "check": "predictive_skill_claim",
+      "status": "NOT_ESTABLISHED",
+      "evidence": "Synthetic tests demonstrate contracts only. Readiness report states environment production model absent, body-weight model absent, 3-race research fit with no validation/test."
+    },
+    {
+      "check": "offset_aware_panel_times",
+      "status": "PASS_STATIC",
+      "evidence": "_time rejects tzinfo/utcoffset missing, used across relevant event timestamps; tests cover post/snapshot/body/quote."
+    },
+    {
+      "check": "honest_documentation",
+      "status": "PASS_STATIC",
+      "evidence": "docs/joint_simulation_research.md explicitly states no calibrated all-feature real-race draw, no new actual-race recommendation, and source recovery/validation still required."
+    }
+  ],
+  "data_uses": [
+    {
+      "data": "current body weight/change + two odds snapshots",
+      "use": "descriptive observation panel only",
+      "unconnected": "validated market-response model and exact publication-time quotes"
+    },
+    {
+      "data": "cushion/moisture",
+      "use": "saved observed/reconstructed environment evidence",
+      "unconnected": "promoted interaction model; environment logits must come from a validated supplying role"
+    },
+    {
+      "data": "1468 histories, 1250 pace values",
+      "use": "readiness inventory",
+      "unconnected": "historical pace and structured historical body weight not consumed by new MC; carried weight must not substitute horse body weight"
+    }
+  ],
+  "evidence": [
+    "feature_input_readiness.json: past_body_weight=0, past_body_weight_change=0; research_fit_validation=NOT_EXECUTED; production_environment_model_exists=false",
+    "body_weight_observation_panel.json: 18 descriptive rows, all odds_after 14:51 JST before publication upper bound 14:52:39 JST"
+  ],
+  "fix": "Complete real-data recovery, audited role-specific draw generation and date-separated validation. No further concrete component defect identified in scoped readback.",
+  "recheck": {
+    "evaluated_at": "2026-10-26T23:21:38.549298+00:00",
+    "resolved": [
+      "PUBLICATION_BRACKET_NOT_POST_QUOTE",
+      "TIMEZONE_CONTRACT"
+    ],
+    "remaining": [
+      "Actual calibrated draws and data-model wiring remain incomplete; no predictive skill validated."
+    ]
+  },
+  "race_gate_change": "None; this development review adds no race stopping threshold.",
+  "component_verdict": {
+    "status": "OK_STATIC_REVIEW",
+    "scope": "Separation of structural probability and price; whole-race paired bootstrap; actual seed usage; explicit snapshot-vs-publication semantics; offset-aware time validation.",
+    "tests": "Parent reports panel 15 PASS; independent reviewer read tests, did not run them."
+  },
+  "objective_verdict": {
+    "status": "NG_INCOMPLETE",
+    "reason": "No actual calibrated all-feature joint draws, no historical body-weight/pace connection, no date-heldout validation."
+  }
+}

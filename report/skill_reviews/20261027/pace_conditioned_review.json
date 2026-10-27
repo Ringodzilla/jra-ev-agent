@@ -1,0 +1,111 @@
+{
+  "review_kind": "skill_revision_user_intent",
+  "independent_reviewer": "/root/kikka_ability_review",
+  "evaluated_at": "2026-10-26T23:29:40.957031+00:00",
+  "user_statement": "MC pace forecast -> fix the predicted pace -> narrow tickets using conditional win probabilities.",
+  "status": "NG",
+  "component_verdict": "OK_STATIC_REVIEW",
+  "objective_verdict": "INCOMPLETE_REAL_DRAW_CALIBRATION",
+  "targets": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/pace_conditioning.py",
+      "sha256": "c97427ca15fd4fe561a7f206d2d0f6f687f8d86a759b2dca1feff044e4390ffa"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/pace_candidates.py",
+      "sha256": "1e0cc230335b49048ab6b452ea7d2a7ec82c5decba06f401b05c203fea475760"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/strategy/pace_selection.py",
+      "sha256": "c0dd0bc1b6d0bb07a89e2a595343813dc7791787b0c31a0f4597062213f9e0eb"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/tests/test_pace_conditioning.py",
+      "sha256": "0d64e2b72207d725d0254b2aa0d27be6f991a2675b9be57c5c62f89676913f9c"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/tests/test_pace_candidates.py",
+      "sha256": "6b986443f550af6b61d4c864ec6aa2d0d49951946fce4a6ae3b9dddd8d5f06be"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/tests/test_pace_selection.py",
+      "sha256": "52e647086508d779b1a9d680b0db81237b0c9ce0de3a1bfb5956a14762247dc0"
+    }
+  ],
+  "evaluated_checks": [
+    {
+      "id": "pace_before_ev",
+      "status": "PASS_STATIC",
+      "evidence": "Automatic mainline uses only sampled high/mid/slow counts. Caller-fixed selection recorded. Ties are AMBIGUOUS; no EV or result-based pace optimization."
+    },
+    {
+      "id": "conditional_not_marginal",
+      "status": "PASS_STATIC",
+      "evidence": "Conditional summaries group identical sampled whole-race trials. Other pace and marginal summaries retained. Weighted conditional probabilities explicitly checked against marginal."
+    },
+    {
+      "id": "nonlinear_combination_average",
+      "status": "PASS_STATIC",
+      "evidence": "build_candidate_evaluations runs per unique source draw; canonical PL ticket probabilities and EV are weighted by source bootstrap counts divided by pace count. Does not apply nonlinear event transform to averaged win probabilities."
+    },
+    {
+      "id": "selected_pace_only_filter",
+      "status": "PASS_STATIC",
+      "evidence": "Only selected pace hit probability and EV control eligibility; all three sensitivity states retained, missing states remain NOT_EVALUATED, formal tickets empty."
+    },
+    {
+      "id": "source_draw_truth",
+      "status": "NOT_ESTABLISHED",
+      "evidence": "Source pace labels, base probabilities and environment logits are caller supplied. Empirical frequency is forecast only to the extent supplied draws are calibrated. No actual data-driven pace model identified in reviewed implementation."
+    }
+  ],
+  "findings": [
+    {
+      "id": "FRAME_IDENTITY_METADATA",
+      "priority": 2,
+      "status": "RESOLVED",
+      "file": "analysis/pace_candidates.py",
+      "reason": "For wakuren, re.findall numbers are frames but stored as horse_numbers and propagated by select_pace_candidates. A top-level limitation is insufficient for machine consumer identity. Existing test uses frame=horse number, masking divergence.",
+      "fix": "Record number_kind=frame/horse with explicit frame_numbers for wakuren, preserve in filtering output. Add test with multiple horses in same frame and differing horse/frame numbers.",
+      "resolution": "Adapter emits wakuren horse_numbers=[], frame_numbers and number_kind=frame; selector prioritizes explicit frame input, legacy fallback read only, emits typed output. Frame metadata tests inspected."
+    },
+    {
+      "id": "PRICE_LINEAGE_DROPPED",
+      "priority": 2,
+      "status": "RESOLVED",
+      "file": "analysis/pace_candidates.py",
+      "reason": "Canonical candidates carry snapshot_id/captured_at/race_id but adapter drops explicit snapshot and time metadata while claiming fixed_current_official_snapshot. Candidate key retains race but cannot identify exact quote by itself.",
+      "fix": "Carry original price snapshot and capture timestamp/quote source into conditional candidate and selection output; do not claim validated pre-race availability from this adapter alone.",
+      "resolution": "Adapter retains source_snapshot_id/source_captured_at from canonical candidates; selector deep-copies both into evaluated and eligible outputs. Provenance assertions inspected."
+    },
+    {
+      "id": "ACTUAL_SOURCE_DRAWS_UNCONNECTED",
+      "status": "INCOMPLETE",
+      "reason": "These components aggregate externally provided draws; collecting all history/environment and deriving calibrated pace probabilities remains outside implementation. No real-race new probability or recommendation computed by reviewer.",
+      "fix": "Connect audited role-specific data/draw generation and evaluate date-separated calibration and decision utility before completing full objective or production adoption."
+    }
+  ],
+  "reason": "Scoped conditional calculation and metadata preservation match user intent after fixes. Full real-data objective remains incomplete, not a production prediction.",
+  "fix": "Complete audited data-driven pace draw generation and chronological validation; no remaining concrete component defect identified in scoped static readback.",
+  "scope": {
+    "static_review": true,
+    "tests_read": true,
+    "tests_executed": false,
+    "new_probabilities": false,
+    "network_used": false,
+    "production_changed": false
+  },
+  "race_gate_change": "No additional operational refusal thresholds introduced.",
+  "recheck": {
+    "evaluated_at": "2026-10-26T23:31:02.772416+00:00",
+    "method": "Read-only static code/test inspection",
+    "resolved": [
+      "FRAME_IDENTITY_METADATA",
+      "PRICE_LINEAGE_DROPPED"
+    ],
+    "remaining": [
+      "ACTUAL_SOURCE_DRAWS_UNCONNECTED"
+    ],
+    "test_execution": "Reviewer did not execute; parent reports selector36 PASS / coverage100. Not predictive-performance evidence."
+  }
+}

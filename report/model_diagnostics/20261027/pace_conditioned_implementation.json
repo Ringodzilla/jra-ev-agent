@@ -1,0 +1,44 @@
+{
+  "status": "RESEARCH_FLOW_IMPLEMENTED_REAL_DATA_PACE_MODEL_PENDING",
+  "flow": [
+    "P(pace) from supplied calibrated pace-labelled draw ensemble and whole-race bootstrap",
+    "Select mainline pace explicitly or by largest sampled frequency, never by EV or results",
+    "P(win or ticket hit|selected pace) from matching sampled trials",
+    "Filter candidates using caller-specified bet-type thresholds; preserve other paces and marginal comparison"
+  ],
+  "validation": {
+    "full_tests": 811,
+    "source_coverage_percent": 100,
+    "quality": "PASS",
+    "skills_validated": 4,
+    "independent_component_review": "OK after frame/provenance fixes"
+  },
+  "limitations": [
+    "Research API only; public production workflow unchanged.",
+    "Real-data features-to-pace-draw generation and time-separated validation remain incomplete.",
+    "Conditional EV at a fixed observed quote differs from a simulation of combination-price changes.",
+    "Conditioning on a forecast does not make that pace certain."
+  ],
+  "input_artifacts": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/pace_conditioning.py",
+      "sha256": "c97427ca15fd4fe561a7f206d2d0f6f687f8d86a759b2dca1feff044e4390ffa"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/pace_candidates.py",
+      "sha256": "99da7ed929e6e5555bd6d4771284cec7e5c61087fb70e86bbf02b893411363c0"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/strategy/pace_selection.py",
+      "sha256": "c0dd0bc1b6d0bb07a89e2a595343813dc7791787b0c31a0f4597062213f9e0eb"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/docs/joint_simulation_research.md",
+      "sha256": "a0cd035e7ca692729d40656201b5c72684d92b83d01c7dbfb720d9299c25b379"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/skill_reviews/20261027/pace_conditioned_review.json",
+      "sha256": "f90ec19c17a479caaba0d91736ebb038a78615d9abdb6478eef631a45e27e327"
+    }
+  ]
+}

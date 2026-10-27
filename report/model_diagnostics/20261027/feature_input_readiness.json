@@ -1,0 +1,807 @@
+{
+  "schema_version": 1,
+  "role": "data_integrity_auditor",
+  "created_at": "2026-10-26T23:16:33.688755+00:00",
+  "scope": "read-only saved inventory; no training, no new probabilities, no raw full-text dump",
+  "research_v4": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01",
+    "races": 36,
+    "horses": 466,
+    "histories": 1468,
+    "saved_audit_model_ready_races": [
+      {
+        "race_id": "20261024_東京_03",
+        "numeric_race_id": "20261024_05_03",
+        "gate": "PASS",
+        "model_ready": true,
+        "horses": 10,
+        "histories": 19,
+        "findings": 0,
+        "source_mismatches": 0,
+        "surface_gate": "PASS",
+        "environment_gate": "PASS"
+      },
+      {
+        "race_id": "20261024_東京_09",
+        "numeric_race_id": "20261024_05_09",
+        "gate": "PASS",
+        "model_ready": true,
+        "horses": 13,
+        "histories": 65,
+        "findings": 0,
+        "source_mismatches": 0,
+        "surface_gate": "PASS",
+        "environment_gate": "PASS"
+      },
+      {
+        "race_id": "20261024_京都_11",
+        "numeric_race_id": "20261024_08_11",
+        "gate": "PASS",
+        "model_ready": true,
+        "horses": 16,
+        "histories": 80,
+        "findings": 0,
+        "source_mismatches": 0,
+        "surface_gate": "PASS",
+        "environment_gate": "PASS"
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "numeric_race_id": "20261024_05_02",
+        "gate": "PASS",
+        "model_ready": true,
+        "horses": 7,
+        "histories": 10,
+        "findings": 0,
+        "source_mismatches": 0,
+        "surface_gate": "PASS",
+        "environment_gate": "PASS"
+      },
+      {
+        "race_id": "20261024_東京_08",
+        "numeric_race_id": "20261024_05_08",
+        "gate": "PASS",
+        "model_ready": true,
+        "horses": 13,
+        "histories": 60,
+        "findings": 0,
+        "source_mismatches": 0,
+        "surface_gate": "PASS",
+        "environment_gate": "PASS"
+      },
+      {
+        "race_id": "20261024_京都_02",
+        "numeric_race_id": "20261024_08_02",
+        "gate": "PASS",
+        "model_ready": true,
+        "horses": 10,
+        "histories": 14,
+        "findings": 0,
+        "source_mismatches": 0,
+        "surface_gate": "PASS",
+        "environment_gate": "PASS"
+      },
+      {
+        "race_id": "20261024_京都_08",
+        "numeric_race_id": "20261024_08_08",
+        "gate": "PASS",
+        "model_ready": true,
+        "horses": 8,
+        "histories": 40,
+        "findings": 0,
+        "source_mismatches": 0,
+        "surface_gate": "PASS",
+        "environment_gate": "PASS"
+      }
+    ],
+    "gate_counts": {
+      "UNVERIFIED": 17,
+      "BLOCKED_ACQUISITION_INCOMPLETE": 2,
+      "BLOCKED_ZERO_HISTORY_NEUTRAL_FORBIDDEN": 7,
+      "BLOCKED_UNAPPROVED_IMPUTATION": 1,
+      "PASS": 7,
+      "NOT_SUPPORTED_SURFACE": 1,
+      "BLOCKED_MISSING_DATA": 1
+    },
+    "provenance": "post-result factual reconstruction; not immutable pre-release/pre-race capture",
+    "snapshot_files": [
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_04_01.json",
+        "sha256": "4439525dce887b102dd1975c53fb45fb768b575598160db5fc45e4d5dbe0d7d9",
+        "race_id": "20261024_04_01",
+        "horses": 12,
+        "histories": 18,
+        "history_pace_nonempty": 17,
+        "current_weight_nonempty": 12,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T21:57:33.726990+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_04_02.json",
+        "sha256": "ebfdac7bb5d52d4e77e27d0f781937b500f95e762280287a5b5a3768b3d7a3dd",
+        "race_id": "20261024_04_02",
+        "horses": 18,
+        "histories": 41,
+        "history_pace_nonempty": 37,
+        "current_weight_nonempty": 18,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T21:57:37.440263+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_04_03.json",
+        "sha256": "fc53b230093cf75db6a13bf475027280265e56669c13dba7c6241f15527d7196",
+        "race_id": "20261024_04_03",
+        "horses": 14,
+        "histories": 28,
+        "history_pace_nonempty": 27,
+        "current_weight_nonempty": 14,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T21:57:45.401143+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_04_04.json",
+        "sha256": "95a059aafa22ae1d8cf2af09ee3a857ff6a3b313763699d5a5462761f29c31db",
+        "race_id": "20261024_04_04",
+        "horses": 12,
+        "histories": 58,
+        "history_pace_nonempty": 54,
+        "current_weight_nonempty": 12,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T21:57:50.400739+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_04_05.json",
+        "sha256": "ae1f03fdc266790e93940698dd99cb3827d15ca49bebac851c3cbe3677d7d33d",
+        "race_id": "20261024_04_05",
+        "horses": 14,
+        "histories": 0,
+        "history_pace_nonempty": 0,
+        "current_weight_nonempty": 14,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T21:58:03.936076+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_04_06.json",
+        "sha256": "b7bbf8ae938e6e0fca75f2b4a4814fef17846f43a98d1b6a7eb596a247933cef",
+        "race_id": "20261024_04_06",
+        "horses": 12,
+        "histories": 59,
+        "history_pace_nonempty": 51,
+        "current_weight_nonempty": 12,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T21:58:03.940088+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_04_07.json",
+        "sha256": "55f6e712c7b0c58876fe1d7840e2458255092816e7e115f4157d3a696a0a653d",
+        "race_id": "20261024_04_07",
+        "horses": 12,
+        "histories": 57,
+        "history_pace_nonempty": 55,
+        "current_weight_nonempty": 12,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T21:58:15.730581+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_04_08.json",
+        "sha256": "2e2744dfc82c1d9e40c878c06ebdb5ac1c90c2095a9358ff3540c908f9a0cc58",
+        "race_id": "20261024_04_08",
+        "horses": 10,
+        "histories": 50,
+        "history_pace_nonempty": 37,
+        "current_weight_nonempty": 10,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T21:58:26.301189+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_04_09.json",
+        "sha256": "3798b21da717acd103b27f95ca64789245deb8b9e2cd91adb25454131d293efa",
+        "race_id": "20261024_04_09",
+        "horses": 16,
+        "histories": 80,
+        "history_pace_nonempty": 71,
+        "current_weight_nonempty": 16,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T21:58:34.139910+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_04_10.json",
+        "sha256": "0f3461f47022626d1cb15d8be53666f6fab2611ecc411254f3e9fcab6e6e6907",
+        "race_id": "20261024_04_10",
+        "horses": 15,
+        "histories": 75,
+        "history_pace_nonempty": 56,
+        "current_weight_nonempty": 15,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T21:58:44.584547+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_04_11.json",
+        "sha256": "41355ea8febc4a08075b1e0153f5d8d83048122033608695358ee714f3ccc248",
+        "race_id": "20261024_04_11",
+        "horses": 12,
+        "histories": 60,
+        "history_pace_nonempty": 59,
+        "current_weight_nonempty": 12,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T21:58:56.823976+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_04_12.json",
+        "sha256": "857859727557e4f89780ebabb9fdb5e9a026e2998c3abbb09b2bfb28759a48de",
+        "race_id": "20261024_04_12",
+        "horses": 18,
+        "histories": 90,
+        "history_pace_nonempty": 81,
+        "current_weight_nonempty": 18,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T21:59:05.542777+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_05_01.json",
+        "sha256": "9769f53856f075792e15547ead8f720adfc3846b96d5ef29dffd535b8a3a58cb",
+        "race_id": "20261024_05_01",
+        "horses": 14,
+        "histories": 27,
+        "history_pace_nonempty": 21,
+        "current_weight_nonempty": 14,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T21:59:17.809575+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_05_02.json",
+        "sha256": "5e313673267f0ae0e1d19ea0e5ca12df9b09508d2cf2e2167f268ac1b62d6c5a",
+        "race_id": "20261024_05_02",
+        "horses": 7,
+        "histories": 10,
+        "history_pace_nonempty": 10,
+        "current_weight_nonempty": 7,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T21:59:21.467993+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_05_03.json",
+        "sha256": "ad640602c44d627a324ab9ae44bfd5db69799f586b77950de1e5f7c03602fe3f",
+        "race_id": "20261024_05_03",
+        "horses": 10,
+        "histories": 19,
+        "history_pace_nonempty": 16,
+        "current_weight_nonempty": 10,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T21:59:22.432587+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_05_04.json",
+        "sha256": "f62411edcb60fde7b0c57fad54ecaa8f1788b1b4e408a81ac1d3b5633222e25d",
+        "race_id": "20261024_05_04",
+        "horses": 16,
+        "histories": 0,
+        "history_pace_nonempty": 0,
+        "current_weight_nonempty": 16,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T21:59:24.893015+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_05_05.json",
+        "sha256": "0f7cb79f54a917dacb2c2f711ccc2d792ce8490dc564eac95854a4890845e0f7",
+        "race_id": "20261024_05_05",
+        "horses": 18,
+        "histories": 0,
+        "history_pace_nonempty": 0,
+        "current_weight_nonempty": 18,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T21:59:24.894315+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_05_06.json",
+        "sha256": "b51a27a778e52f6604c5152109ea50bb991ae0d14017a2bffdea97a3bb60ad41",
+        "race_id": "20261024_05_06",
+        "horses": 16,
+        "histories": 0,
+        "history_pace_nonempty": 0,
+        "current_weight_nonempty": 16,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T21:59:24.895612+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_05_07.json",
+        "sha256": "473b79070557552678bc419c345e695ea28de142f315abc12f04610880d2d4e3",
+        "race_id": "20261024_05_07",
+        "horses": 12,
+        "histories": 56,
+        "history_pace_nonempty": 48,
+        "current_weight_nonempty": 12,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T21:59:24.899026+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_05_08.json",
+        "sha256": "6a3eb1949c5fe57c28aa5f804857a101a1fdb441bc37735c03c3dbc078f1efd1",
+        "race_id": "20261024_05_08",
+        "horses": 13,
+        "histories": 60,
+        "history_pace_nonempty": 60,
+        "current_weight_nonempty": 13,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T21:59:33.158718+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_05_09.json",
+        "sha256": "1f9060199ef55ac2c7288b5e79bee4942dadf88dfcf82c7d86449f8f1f7b268f",
+        "race_id": "20261024_05_09",
+        "horses": 13,
+        "histories": 65,
+        "history_pace_nonempty": 62,
+        "current_weight_nonempty": 13,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T21:59:41.847728+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_05_10.json",
+        "sha256": "528a990088d66765739371bf67ec537aecf2174dc9d25586f0cbe8949b278be8",
+        "race_id": "20261024_05_10",
+        "horses": 16,
+        "histories": 80,
+        "history_pace_nonempty": 59,
+        "current_weight_nonempty": 16,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T21:59:52.521915+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_05_11.json",
+        "sha256": "2112e672f1749a9308a5f997286713940d4aa507e3b65b5f1283855950c73d72",
+        "race_id": "20261024_05_11",
+        "horses": 13,
+        "histories": 22,
+        "history_pace_nonempty": 15,
+        "current_weight_nonempty": 13,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T22:00:06.719104+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_05_12.json",
+        "sha256": "0c29346104badecd2ee23e8ddac7682b29c7b4ff4818a9a7818b9f6966b4eda0",
+        "race_id": "20261024_05_12",
+        "horses": 11,
+        "histories": 55,
+        "history_pace_nonempty": 50,
+        "current_weight_nonempty": 11,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T22:00:08.630350+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_08_01.json",
+        "sha256": "980e9936eedba5a7aabda52e000f9f10d965d4619c3b651c14003fbbeae840fb",
+        "race_id": "20261024_08_01",
+        "horses": 11,
+        "histories": 16,
+        "history_pace_nonempty": 16,
+        "current_weight_nonempty": 11,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T22:00:16.060556+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_08_02.json",
+        "sha256": "089744ce398218df4fb743e433cb9fae891f0089f6b95c03b9f203e083f41fd7",
+        "race_id": "20261024_08_02",
+        "horses": 10,
+        "histories": 14,
+        "history_pace_nonempty": 14,
+        "current_weight_nonempty": 10,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T22:00:17.680120+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_08_03.json",
+        "sha256": "2323b9a659560dc9fef39b3c056f8a94501d1236e11fac2b4fa622defc8e83ab",
+        "race_id": "20261024_08_03",
+        "horses": 16,
+        "histories": 0,
+        "history_pace_nonempty": 0,
+        "current_weight_nonempty": 16,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T22:00:19.626947+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_08_04.json",
+        "sha256": "7e908284b02b9a6902a6a0c2dbe0a5749742dcbfdcaceb110dd0846383321aeb",
+        "race_id": "20261024_08_04",
+        "horses": 10,
+        "histories": 50,
+        "history_pace_nonempty": 5,
+        "current_weight_nonempty": 10,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T22:00:19.629648+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_08_05.json",
+        "sha256": "2ad62b82ad7c9883f1fe291be865b24e4791cfc710623c01dccd551c62de115b",
+        "race_id": "20261024_08_05",
+        "horses": 13,
+        "histories": 0,
+        "history_pace_nonempty": 0,
+        "current_weight_nonempty": 13,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T22:00:27.492332+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_08_06.json",
+        "sha256": "35feaf00b6643f058db37d09d9383f2ffd3d13a5a440ebaaf0bcc23bc1e8f762",
+        "race_id": "20261024_08_06",
+        "horses": 12,
+        "histories": 59,
+        "history_pace_nonempty": 53,
+        "current_weight_nonempty": 12,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T22:00:27.497128+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_08_07.json",
+        "sha256": "374b7264cae12f5f57fa1e6ce0cf3f64254d4d765cbf5c0582c03f176433b829",
+        "race_id": "20261024_08_07",
+        "horses": 10,
+        "histories": 46,
+        "history_pace_nonempty": 30,
+        "current_weight_nonempty": 10,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T22:00:34.807925+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_08_08.json",
+        "sha256": "1f29424e324e0073e05311294e5165a582f3de4103d45ec0bbe6bfb539c6441f",
+        "race_id": "20261024_08_08",
+        "horses": 8,
+        "histories": 40,
+        "history_pace_nonempty": 37,
+        "current_weight_nonempty": 8,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T22:00:41.861105+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_08_09.json",
+        "sha256": "a8b0010abf48c26ad66efe765dbff7baea27232f56a924c6791a8275c43dbf28",
+        "race_id": "20261024_08_09",
+        "horses": 9,
+        "histories": 18,
+        "history_pace_nonempty": 15,
+        "current_weight_nonempty": 9,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T22:00:46.983200+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_08_10.json",
+        "sha256": "5ccffda52e1fc7b8b3d73c519cbdd0041c20b1ca92f7dc61a079fab6573b1f42",
+        "race_id": "20261024_08_10",
+        "horses": 15,
+        "histories": 75,
+        "history_pace_nonempty": 67,
+        "current_weight_nonempty": 15,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T22:00:48.839216+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_08_11.json",
+        "sha256": "43098095275ed9292d19b815e9bd853bd15c9e5e76f5dcb9421124a82ffb5f2b",
+        "race_id": "20261024_08_11",
+        "horses": 16,
+        "histories": 80,
+        "history_pace_nonempty": 80,
+        "current_weight_nonempty": 16,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T22:00:56.168618+00:00"
+      },
+      {
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/final_fact_snapshot_v4_20261026_01/20261024_08_12.json",
+        "sha256": "aae11fc7fb7ac4b18c7cad541eff39354f7b7138d662350f9824a4733bd639bb",
+        "race_id": "20261024_08_12",
+        "horses": 12,
+        "histories": 60,
+        "history_pace_nonempty": 47,
+        "current_weight_nonempty": 12,
+        "history_body_weight_nonempty": 0,
+        "record_type": "post_result_fact_reconstruction",
+        "created_at": "2026-10-25T22:01:05.840530+00:00"
+      }
+    ],
+    "field_counts": {
+      "current_body_weight": 466,
+      "body_weight_change_nonempty": 372,
+      "current_odds": 466,
+      "target_conditions_timestamp": 0,
+      "past_pace": 1250,
+      "past_carried_weight": 1468,
+      "past_body_weight": 0,
+      "past_body_weight_change": 0
+    },
+    "past_body_weight_note": "weight is carried handicap weight, not horse body weight. Official raw_result_cells preserve original result cells but no structured historical horse-body-weight feature is present.",
+    "ready_race_environments": [
+      {
+        "race_id": "20261024_京都_11",
+        "audit_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/audit_run_20261025T220750475013Z/20261024_08_11_audit.json",
+        "gate": "PASS",
+        "record_type": "retrospective_reconstructed",
+        "production_learning_eligible": false,
+        "environment": {
+          "cushion": {
+            "measured_at": "2026-10-24T06:00:00+09:00",
+            "cushion": 9.5
+          },
+          "moisture": {
+            "measured_at": "2026-10-24T05:00:00+09:00",
+            "turf_moisture_goal": 10.2,
+            "turf_moisture_goal_condition": "wet",
+            "turf_moisture_corner4": 10.6,
+            "turf_moisture_corner4_condition": "wet",
+            "dirt_moisture_goal": 12.5,
+            "dirt_moisture_goal_condition": "soft",
+            "dirt_moisture_corner4": 12.7,
+            "dirt_moisture_corner4_condition": "soft",
+            "note": "注記：測定時刻までの当日雨量は9.0ミリメートルでした"
+          }
+        },
+        "environment_source_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_environment_reconstruction/observations_20261024T225734690084Z.json"
+      },
+      {
+        "race_id": "20261024_東京_03",
+        "audit_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/audit_run_20261025T220750475013Z/20261024_05_03_audit.json",
+        "gate": "PASS",
+        "record_type": "retrospective_reconstructed",
+        "production_learning_eligible": false,
+        "environment": {
+          "cushion": {
+            "measured_at": "2026-10-24T07:00:00+09:00",
+            "cushion": 9.5
+          },
+          "moisture": {
+            "measured_at": "2026-10-24T05:00:00+09:00",
+            "turf_moisture_goal": 12.7,
+            "turf_moisture_goal_condition": "hard",
+            "turf_moisture_corner4": 15.5,
+            "turf_moisture_corner4_condition": "hard",
+            "dirt_moisture_goal": 2.0,
+            "dirt_moisture_goal_condition": "hard",
+            "dirt_moisture_corner4": 2.4,
+            "dirt_moisture_corner4_condition": "hard",
+            "note": "注記：測定時刻までの当日雨量は0.0ミリメートルでした"
+          }
+        },
+        "environment_source_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_environment_reconstruction/observations_20261024T225734690084Z.json"
+      },
+      {
+        "race_id": "20261024_東京_09",
+        "audit_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/audit_run_20261025T220750475013Z/20261024_05_09_audit.json",
+        "gate": "PASS",
+        "record_type": "retrospective_reconstructed",
+        "production_learning_eligible": false,
+        "environment": {
+          "cushion": {
+            "measured_at": "2026-10-24T07:00:00+09:00",
+            "cushion": 9.5
+          },
+          "moisture": {
+            "measured_at": "2026-10-24T05:00:00+09:00",
+            "turf_moisture_goal": 12.7,
+            "turf_moisture_goal_condition": "hard",
+            "turf_moisture_corner4": 15.5,
+            "turf_moisture_corner4_condition": "hard",
+            "dirt_moisture_goal": 2.0,
+            "dirt_moisture_goal_condition": "hard",
+            "dirt_moisture_corner4": 2.4,
+            "dirt_moisture_corner4_condition": "hard",
+            "note": "注記：測定時刻までの当日雨量は0.0ミリメートルでした"
+          }
+        },
+        "environment_source_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_environment_reconstruction/observations_20261024T225734690084Z.json"
+      },
+      {
+        "race_id": "20261024_東京_02",
+        "audit_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/audit_run_20261025T220750475327Z/20261024_05_02_audit.json",
+        "gate": "PASS",
+        "record_type": "retrospective_reconstructed",
+        "production_learning_eligible": false,
+        "environment": {
+          "cushion": {
+            "measured_at": "2026-10-24T07:00:00+09:00",
+            "cushion": 9.5
+          },
+          "moisture": {
+            "measured_at": "2026-10-24T05:00:00+09:00",
+            "turf_moisture_goal": 12.7,
+            "turf_moisture_goal_condition": "hard",
+            "turf_moisture_corner4": 15.5,
+            "turf_moisture_corner4_condition": "hard",
+            "dirt_moisture_goal": 2.0,
+            "dirt_moisture_goal_condition": "hard",
+            "dirt_moisture_corner4": 2.4,
+            "dirt_moisture_corner4_condition": "hard",
+            "note": "注記：測定時刻までの当日雨量は0.0ミリメートルでした"
+          }
+        },
+        "environment_source_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_environment_reconstruction/observations_20261024T225734690084Z.json"
+      },
+      {
+        "race_id": "20261024_京都_08",
+        "audit_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/audit_run_20261025T220750475327Z/20261024_08_08_audit.json",
+        "gate": "PASS",
+        "record_type": "retrospective_reconstructed",
+        "production_learning_eligible": false,
+        "environment": {
+          "cushion": {
+            "measured_at": "2026-10-24T06:00:00+09:00",
+            "cushion": 9.5
+          },
+          "moisture": {
+            "measured_at": "2026-10-24T05:00:00+09:00",
+            "turf_moisture_goal": 10.2,
+            "turf_moisture_goal_condition": "wet",
+            "turf_moisture_corner4": 10.6,
+            "turf_moisture_corner4_condition": "wet",
+            "dirt_moisture_goal": 12.5,
+            "dirt_moisture_goal_condition": "soft",
+            "dirt_moisture_corner4": 12.7,
+            "dirt_moisture_corner4_condition": "soft",
+            "note": "注記：測定時刻までの当日雨量は9.0ミリメートルでした"
+          }
+        },
+        "environment_source_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_environment_reconstruction/observations_20261024T225734690084Z.json"
+      },
+      {
+        "race_id": "20261024_京都_02",
+        "audit_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/audit_run_20261025T220750475327Z/20261024_08_02_audit.json",
+        "gate": "PASS",
+        "record_type": "retrospective_reconstructed",
+        "production_learning_eligible": false,
+        "environment": {
+          "cushion": {
+            "measured_at": "2026-10-24T06:00:00+09:00",
+            "cushion": 9.5
+          },
+          "moisture": {
+            "measured_at": "2026-10-24T05:00:00+09:00",
+            "turf_moisture_goal": 10.2,
+            "turf_moisture_goal_condition": "wet",
+            "turf_moisture_corner4": 10.6,
+            "turf_moisture_corner4_condition": "wet",
+            "dirt_moisture_goal": 12.5,
+            "dirt_moisture_goal_condition": "soft",
+            "dirt_moisture_corner4": 12.7,
+            "dirt_moisture_corner4_condition": "soft",
+            "note": "注記：測定時刻までの当日雨量は9.0ミリメートルでした"
+          }
+        },
+        "environment_source_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_environment_reconstruction/observations_20261024T225734690084Z.json"
+      },
+      {
+        "race_id": "20261024_東京_08",
+        "audit_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/audit_run_20261025T220750475327Z/20261024_05_08_audit.json",
+        "gate": "PASS",
+        "record_type": "retrospective_reconstructed",
+        "production_learning_eligible": false,
+        "environment": {
+          "cushion": {
+            "measured_at": "2026-10-24T07:00:00+09:00",
+            "cushion": 9.5
+          },
+          "moisture": {
+            "measured_at": "2026-10-24T05:00:00+09:00",
+            "turf_moisture_goal": 12.7,
+            "turf_moisture_goal_condition": "hard",
+            "turf_moisture_corner4": 15.5,
+            "turf_moisture_corner4_condition": "hard",
+            "dirt_moisture_goal": 2.0,
+            "dirt_moisture_goal_condition": "hard",
+            "dirt_moisture_corner4": 2.4,
+            "dirt_moisture_corner4_condition": "hard",
+            "note": "注記：測定時刻までの当日雨量は0.0ミリメートルでした"
+          }
+        },
+        "environment_source_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_environment_reconstruction/observations_20261024T225734690084Z.json"
+      }
+    ]
+  },
+  "kikuka_pre_race_saved_ev": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20261025_京都_11/20261025T051942Z/04_ev_calculator.json",
+      "sha256": "f24c5c15d788693fe48a230d7c5c8b9777d9bd83bd7b25dacccd6844aed02984",
+      "run": "20261025T051942Z",
+      "rows": 18,
+      "body_weight_published": 0,
+      "captured_at": [
+        "2026-10-25T05:19:55.398395+00:00"
+      ],
+      "sample_odds_fields_semantics": "odds_first may originate from earlier shared live history, not a controlled release-window sample; compare run current_odds by horse for exploratory changes only"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20261025_京都_11/20261025T052231Z/04_ev_calculator.json",
+      "sha256": "de56a65218ec23c1d5d81d26ef788de7317914d6715c670ced73c7466e906ffe",
+      "run": "20261025T052231Z",
+      "rows": 18,
+      "body_weight_published": 0,
+      "captured_at": [
+        "2026-10-25T05:22:45.730962+00:00"
+      ],
+      "sample_odds_fields_semantics": "odds_first may originate from earlier shared live history, not a controlled release-window sample; compare run current_odds by horse for exploratory changes only"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/final_predictions/20261025_京都_11/20261025T055235Z/04_ev_calculator.json",
+      "sha256": "f752eb5c7c7ada39b2eb2592bacbae9373e5fc6e48755e696b8115c885a38f7b",
+      "run": "20261025T055235Z",
+      "rows": 18,
+      "body_weight_published": 18,
+      "captured_at": [
+        "2026-10-25T05:52:52.097327+00:00"
+      ],
+      "sample_odds_fields_semantics": "odds_first may originate from earlier shared live history, not a controlled release-window sample; compare run current_odds by horse for exploratory changes only"
+    }
+  ],
+  "kikuka_exact600": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/races/20261025_京都_11/stages/01_data_collector_exact600m_20261025T150011.json",
+    "audit_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/races/20261025_京都_11/integrity_audit_exact600m_20261025T150011.json",
+    "horses": 18,
+    "histories": 87,
+    "exact600_observed": 86,
+    "not_measured": 1,
+    "meaning": "leader elapsed 600m; 2500m race has no exact600 timing boundary",
+    "model_use": "historical pace unconnected to current feature/MC path"
+  },
+  "learned_artifacts": {
+    "production_environment_model_exists": false,
+    "production_body_weight_odds_model_found": false,
+    "body_weight_feature_code": "src/feature_engineering.py body_weight_model_usage metadata_only; adjustment_applied false",
+    "research_fit_path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/research_fit_20261024T233855843460Z/training_report.json",
+    "research_fit_status": "INSUFFICIENT_DATA_RESEARCH_ONLY",
+    "research_fit_training_races": 3,
+    "research_fit_training_horses": 31,
+    "research_fit_validation": "NOT_EXECUTED",
+    "research_fit_test": "NOT_EXECUTED_LATER_UNUSED_RACE_DAY_REQUIRED",
+    "fit_is_v4": false
+  },
+  "available": [
+    "whole-horse current weight, change and odds in saved reconstructed facts",
+    "7 v4 saved-audit model-ready race inputs for separate research only",
+    "kikuka 14:22 unpublished vs14:52 published saved runs, actual same-day environment and 86 exact historical leader600 observations"
+  ],
+  "unconnected_or_missing": [
+    "event-time body-weight release timestamps and synchronized before/after odds panel",
+    "structured historical horse body weight and changes; carried weight must not substitute",
+    "trained held-out-validated weight-change-to-odds response model",
+    "promoted environment interaction model; current score0 remains no adjustment",
+    "historical pace and body weight currently not consumed by model/MC; collection alone changes no probabilities"
+  ],
+  "next_action": "define temporal target and recover body-weight/odds event panel, audit per-race data then research model with date-separated holdouts; do not treat reconstructed final odds as pre-release market response"
+}

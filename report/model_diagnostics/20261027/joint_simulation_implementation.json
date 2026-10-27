@@ -1,0 +1,62 @@
+{
+  "status": "RESEARCH_COMPONENTS_IMPLEMENTED_FULL_DATA_MODEL_NOT_YET_CONNECTED",
+  "implemented": [
+    "Body-weight publication and win-odds observation matching with no invented publication time",
+    "Seeded whole-race paired bootstrap: structural probability/environment logit/market price response, paired EV distribution",
+    "Real saved Kikuka snapshot price comparison:18 horses, zero confirmed post-publication late quotes"
+  ],
+  "validation": {
+    "full_suite_before_final_timestamp_fix": "751 PASS",
+    "final_targeted_tests": "76 PASS",
+    "quality": "PASS",
+    "source_coverage_percent": 100,
+    "independent_component_review": "OK after two fixes",
+    "end_to_end_model_review": "INCOMPLETE"
+  },
+  "remaining": [
+    "Connect recovered historical body-weight observations; retrieve remaining44 local-racing raw sources and retain141 first-start changes as not measured",
+    "Connect historical pace/body/environment features to fitted research draws",
+    "Learn market response from time-valid observations without causal claims or double application",
+    "Compare frozen baseline and candidates on time-separated data before production use"
+  ],
+  "production_model_changed": false,
+  "real_race_full_data_probabilities_issued": false,
+  "input_artifacts": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/body_weight_market.py",
+      "sha256": "b1654882c222850cfba19c519fa7522c6292481cdbebaaa9b71a3d4df84e4dc7"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/joint_monte_carlo.py",
+      "sha256": "7a663706b80cc5a21d3adaa82276c2384bfb3c8c1109ccfc0ef2f4e7caeaf273"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/scripts/build_body_weight_panel.py",
+      "sha256": "621f8dd6e25338a1806fb4e7cf88218dd9f61c1423be0b69f8fd6d105a28dad1"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/model_diagnostics/20261027/body_weight_observation_panel.json",
+      "sha256": "d2749c3e6bbf7906a5ffc6460078e7aee9b5867c06200ac249d983d504d4f754"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/model_diagnostics/20261027/feature_input_readiness.json",
+      "sha256": "807503a3339e00c8004008e72b5e004dac5312c85ce9e52779151bf2177f4974"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/skill_reviews/20261027/joint_simulation_review.json",
+      "sha256": "502d7e684ff7228aadcfd953782a129ac9414659c9a09befb1452dd7db88cfa0"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/model_diagnostics/20261027/historical_body_weights_recovered.json",
+      "sha256": "c42501d5859440c2f1e5491e5176c78e102b4e757885c88e5bf6718dcd02c6ed"
+    }
+  ],
+  "historical_body_weight_recovery": {
+    "history_rows": 1468,
+    "body_weight_observed": 1424,
+    "body_weight_change_observed": 1283,
+    "first_start_change_not_measured": 141,
+    "raw_source_not_recovered": 44,
+    "imputed_count": 0
+  }
+}
