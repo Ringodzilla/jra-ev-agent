@@ -16,6 +16,28 @@ DEFAULT_RECENCY_WEIGHTS = (1.00, 0.85, 0.70, 0.55, 0.40)
 DOMESTIC_TRACKS = {"札幌", "函館", "福島", "新潟", "東京", "中山", "中京", "京都", "阪神", "小倉"}
 
 
+class UnsupportedHistoryObservation(ValueError):
+    """The common model cannot replace explicitly unavailable observations."""
+
+
+def _require_observed_history_field(row: dict[str, str], field: str) -> None:
+    status = str(row.get(f"{field}_status", "")).strip()
+    if status and status != "OBSERVED":
+        reason = str(row.get(f"{field}_missing_reason", "")).strip()
+        raise UnsupportedHistoryObservation(f"{field}: {status}: {reason}")
+
+
+def validate_explicit_history_observations(row: dict[str, str]) -> None:
+    """Validate declared semantics before a caller projects historical fields."""
+    if str(row.get("last_3f_status", "")).strip():
+        _comparable_last3f(row)
+    if str(row.get("passing_order_status", "")).strip():
+        _front_running_score(
+            row.get("passing_order", ""), status=str(row["passing_order_status"]),
+            reason=str(row.get("passing_order_missing_reason", "")),
+        )
+
+
 def summarize_history_rows(
     rows: Iterable[dict[str, str]],
     *,
@@ -37,7 +59,14 @@ def summarize_history_rows(
         weight_values = [_to_float(row.get("weight"), DEFAULT_WEIGHT) for row in ordered]
         distance_values = [_to_float(row.get("distance"), 0.0) for row in ordered]
         time_values = [_distance_speed_score(row) for row in ordered]
-        front_values = [_front_running_score(row.get("passing_order", "")) for row in ordered]
+        front_values = [
+            _front_running_score(
+                row.get("passing_order", ""),
+                status=str(row.get("passing_order_status", "")),
+                reason=str(row.get("passing_order_missing_reason", "")),
+            )
+            for row in ordered
+        ]
         odds_values = [_to_float(row.get("odds"), 0.0) for row in ordered]
 
         avg_finish = _weighted_mean(finish_values, weights, default=10.0)
@@ -379,7 +408,15 @@ def _distance_speed_score(row: dict[str, str]) -> float:
 
 
 def _comparable_last3f(row: dict[str, str]) -> float:
-    """Return a flat/dirt 3F value, neutralizing non-comparable jump sectionals."""
+    """Reject explicit unavailable facts before the legacy compatibility path."""
+    _require_observed_history_field(row, "last_3f")
+    status = str(row.get("last_3f_status", "")).strip()
+    if status == "OBSERVED":
+        value = _to_float(row.get("last_3f"), math.nan)
+        if not math.isfinite(value) or value <= 0:
+            raise UnsupportedHistoryObservation("last_3f: OBSERVED value is missing or invalid")
+        if str(row.get("target_surface", "")).strip() == "障害" or _history_surface(row) == "障害":
+            raise UnsupportedHistoryObservation("last_3f: common flat/dirt model does not support jump histories")
     if str(row.get("target_surface", "")).strip() == "障害" or _history_surface(row) == "障害":
         return DEFAULT_LAST3F
     return _to_float(row.get("last_3f"), DEFAULT_LAST3F)
@@ -412,7 +449,15 @@ def _distance_fit_score(avg_distance: float | str, target_distance: float) -> fl
     return max(0.0, 1.0 - (gap / 1200.0))
 
 
-def _front_running_score(passing_order: str) -> float:
+def _front_running_score(passing_order: str, *, status: str = "", reason: str = "") -> float:
+    status = status.strip()
+    _require_observed_history_field(
+        {"passing_order_status": status, "passing_order_missing_reason": reason}, "passing_order"
+    )
+    if status == "OBSERVED" and (
+        not isinstance(passing_order, str) or not re.fullmatch(r"[1-9]\d*(?:[-→][1-9]\d*)*", passing_order)
+    ):
+        raise UnsupportedHistoryObservation("passing_order: OBSERVED value is missing or invalid")
     if not passing_order:
         return 0.5
     numbers = [int(part) for part in passing_order.replace("→", "-").split("-") if part.strip().isdigit()]

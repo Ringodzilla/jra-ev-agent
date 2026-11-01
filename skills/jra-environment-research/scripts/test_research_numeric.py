@@ -4,18 +4,19 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
 from research_gate import ref,sha,Blocked
-from research_numeric import produce,check,verify_candidate,shared
+from research_numeric import produce,check,verify_candidate,shared,dataset
+from structural_features import structural_features
 
 
 class NumericTests(unittest.TestCase):
-    def setUp(self):
+    def setUp(self,training_date='2026-10-24'):
         self.tmp=TemporaryDirectory();self.base=Path(self.tmp.name);self.prior={};selected=[];sources=[];labels=[];tracks={}
         def save(name,data):
             p=self.base/name;p.write_text(json.dumps(data,ensure_ascii=False));return ref(p)
         for index,(track,weather,condition,cushion) in enumerate([('東京','晴','良',9.5),('京都','雨','稍重',9.9),('新潟','曇','重',10.1)]):
             rid=f'synthetic{index}';rows=[];entries=[]
             for horse in (1,2):
-                target=dict(race_id=rid,horse_id=f'h{horse}',horse_name=f'人工{horse}',horse_number=str(horse),frame_number=str(horse),target_track=track,target_surface='芝',target_distance='1600',target_track_condition=condition,target_weather=weather,target_race_date='2026-10-24',assigned_weight='55',current_jockey='人工騎手')
+                target=dict(race_id=rid,horse_id=f'h{horse}',horse_name=f'人工{horse}',horse_number=str(horse),frame_number=str(horse),target_track=track,target_surface='芝',target_distance='1600',target_track_condition=condition,target_weather=weather,target_race_date=training_date,assigned_weight='55',current_jockey='人工騎手')
                 entries.append(target)
                 for run in (1,2):
                     rows.append(dict(target,run_index=str(run),date=f'2026-09-{20-run:02d}',position=str(horse+run-1),time=str(94+horse),distance='1600',last_3f=str(33+horse),passing_order=f'{horse}-{horse+run}',weight='55',course=track,history_surface='芝',track_condition=condition,jockey='人工騎手',popularity=str(horse),odds=str(2+horse)))
@@ -24,15 +25,31 @@ class NumericTests(unittest.TestCase):
             url=f'https://jra.jp/synthetic/{index}'
             source_ref=save(f'source{index}.json',{'result_url':url});sources.append(dict(source_ref,official_url=url))
             labels.append({'race_id':rid,'式別':'単勝','馬番':'1','払戻金':'300'})
-            c={'measured_at':'2026-10-24T06:00:00+09:00','cushion':cushion}
-            m={'measured_at':'2026-10-24T05:00:00+09:00','turf_moisture_goal':10+index,'turf_moisture_corner4':11+index}
+            c={'measured_at':training_date+'T06:00:00+09:00','cushion':cushion}
+            m={'measured_at':training_date+'T05:00:00+09:00','turf_moisture_goal':10+index,'turf_moisture_corner4':11+index}
             tracks[track]={'cushion_history':[c],'moisture_history':[m]}
-            audit={'race_id':rid,'metadata_source':{'path':str(raw),'sha256':sha(raw),'url':url,'encoding':'utf-8'},'post_time':'2026-10-24T12:00:00+09:00','environment':{'cushion':c,'moisture':m}}
+            audit={'race_id':rid,'metadata_source':{'path':str(raw),'sha256':sha(raw),'url':url,'encoding':'utf-8'},'post_time':training_date+'T12:00:00+09:00','environment':{'cushion':c,'moisture':m}}
             selected.append({'race_id':rid,'normalized':nref,'audit':save(f'a{index}.json',audit)})
-        self.prior['intake']={'labels':save('labels.json',{'sources':sources,'rows':labels}),'environment':save('env.json',{'target_date':'2026-10-24','pre_race_capture':False,'sources':{},'tracks':tracks})}
+        self.prior['intake']={'training_date':training_date,'labels':save('labels.json',{'sources':sources,'rows':labels}),'environment':save('env.json',{'target_date':training_date,'pre_race_capture':False,'sources':{},'tracks':tracks})}
         self.prior['intake']['shared_initial']=shared(self.base)
         self.prior['integrity_audit']={'selected':selected}
     def tearDown(self):self.tmp.cleanup()
+    def test_structural_projection_cannot_drop_unavailable_semantic_markers(self):
+        normalized=json.loads(Path(self.prior['integrity_audit']['selected'][0]['normalized']['path']).read_text())
+        target=normalized['entries'][0]
+        history=[r for r in normalized['rows'] if r['horse_id']==target['horse_id']]
+        for field in ('last_3f','passing_order'):
+            marked=[dict(r,**{field+'_status':'NOT_APPLICABLE',field+'_missing_reason':'SOURCE_NONAPPLICABLE'}) for r in history]
+            # Values remain populated deliberately: projection must not turn
+            # contradictory metadata into accepted observed model inputs.
+            with self.assertRaisesRegex(ValueError,field):
+                structural_features(marked,target)
+    def test_structural_observed_metadata_keeps_complete_flat_features_identical(self):
+        normalized=json.loads(Path(self.prior['integrity_audit']['selected'][0]['normalized']['path']).read_text())
+        target=normalized['entries'][0]
+        history=[r for r in normalized['rows'] if r['horse_id']==target['horse_id']]
+        marked=[dict(r,last_3f_status='OBSERVED',passing_order_status='OBSERVED') for r in history]
+        self.assertEqual(structural_features(history,target),structural_features(marked,target))
     def stages(self):
         for stage in ('analysis','simulation','probability','fit','review','report'):
             payload=produce(stage,self.prior,self.base)
@@ -40,6 +57,23 @@ class NumericTests(unittest.TestCase):
             self.assertTrue(all(checks.values()),(stage,checks))
             self.prior[stage]=payload
     def test_all_numerical_stages(self):self.stages()
+    def test_frozen_sunday_date_all_stages(self):
+        self.tmp.cleanup();self.setUp('2026-10-25');self.stages()
+        self.assertEqual({r['date'] for r in self.prior['fit']['dataset']},{'2026-10-25'})
+    def test_other_day_environment_rejected(self):
+        self.tmp.cleanup();self.setUp('2026-10-25')
+        for stage in ('analysis','simulation','probability'):
+            self.prior[stage]=produce(stage,self.prior,self.base)
+        path=Path(self.prior['intake']['environment']['path']);env=json.loads(path.read_text())
+        env['target_date']='2026-10-24';path.write_text(json.dumps(env));self.prior['intake']['environment']=ref(path)
+        with self.assertRaises(Blocked):dataset(self.prior)
+    def test_other_day_entry_rejected(self):
+        for stage in ('analysis','simulation','probability'):
+            self.prior[stage]=produce(stage,self.prior,self.base)
+        item=self.prior['integrity_audit']['selected'][0];path=Path(item['normalized']['path'])
+        data=json.loads(path.read_text());data['entries'][0]['target_race_date']='2026-10-25'
+        path.write_text(json.dumps(data));item['normalized']=ref(path)
+        with self.assertRaises(Blocked):dataset(self.prior)
     def test_wrong_score_and_dropped_horse(self):
         payload=produce('analysis',self.prior,self.base);payload['rows'][0]['ability_score']+=.1
         self.assertFalse(all(check('analysis',payload,self.prior,self.base).values()))
@@ -60,6 +94,8 @@ class NumericTests(unittest.TestCase):
         self.assertFalse(verify_candidate(fit['dataset'],fit['model']))
         fit['model']['ridge']=100;fit['metrics']['candidate']['log_loss']+=.1
         self.assertFalse(all(check('fit',fit,self.prior,self.base).values()))
+        fit['model']['training_end_date']='2026-10-25'
+        self.assertFalse(verify_candidate(fit['dataset'],fit['model']))
     def test_forged_review_and_production_report(self):
         self.stages();review=self.prior['review'];review['independent_metrics']['candidate']['brier']+=.5
         self.assertFalse(all(check('review',review,self.prior,self.base).values()))

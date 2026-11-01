@@ -8,7 +8,7 @@ from src.data_integrity import _history_result_observations, verify_source_artif
 
 def page(distance, laps):
     return f'''<div class="cell course">コース：{distance:,}<span>メートル</span></div>
-    <div class="cell date">2026年9月19日</div><table>
+    <div class="cell date">2026年9月19日</div><table><thead><tr><th>馬名</th><th class="f_time">上り3F</th><th>着順</th></tr></thead>
     <tr><th>ハロンタイム</th><td>{laps}</td></tr>
     <tr><td class="horse"><a>A</a></td><td class="f_time">35.1</td>
     <td class="place">2</td></tr>

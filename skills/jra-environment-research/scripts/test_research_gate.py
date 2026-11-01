@@ -18,7 +18,7 @@ class GateTests(unittest.TestCase):
         real=Path(__file__).resolve().parents[3]
         (self.root/'config/skill_workflow.json').write_bytes((real/'config/skill_workflow.json').read_bytes())
         (self.root/'docs').mkdir()
-        for name in ('skill_workflow.md','condition_models.md'):
+        for name in ('skill_workflow.md','condition_models.md','environment_model.md'):
             (self.root/'docs'/name).write_text('Artificial contract fixture')
         self.input=self.base/'input.json';dump_new(self.input,{'synthetic':True})
         self.plan=self.base/'plan.json';dump_new(self.plan,{'training_date_max':'2026-10-24','validation_dates':['2026-10-25'],'family':'linear','ridge':100})
@@ -51,6 +51,9 @@ class GateTests(unittest.TestCase):
     def test_code_or_skill_tamper(self):
         self.record_intake();(self.root/'src/fake.py').write_text('x=2')
         with self.assertRaises(Blocked):self.run.verify()
+    def test_environment_contract_tamper(self):
+        self.record_intake();(self.root/'docs/environment_model.md').write_text('Changed contract')
+        with self.assertRaises(Blocked):self.run.verify()
     def test_other_run_output(self):
         with self.assertRaises(Blocked):self.run.record('intake',self.intake(run_id='another'),evidence=[],checks={'fake':True})
     def test_fake_gate_no_semantic_evidence(self):
@@ -59,6 +62,39 @@ class GateTests(unittest.TestCase):
         with self.assertRaises(Blocked):self.run.require_next('collection')
     def test_invalid_fixed_plan(self):
         with self.assertRaises(Blocked):self.run.record('intake',self.intake(ridge=1),evidence=[],checks={'fake':True})
+    def exploratory(self, **changes):
+        plan={'experiment_id':'separate-sunday-fit','experiment_kind':'posthoc_exploratory_training_only',
+              'training_date_max':'2026-10-25','training_dates':['2026-10-25'],
+              'validation_dates':[],'test_dates':[],'allowed_target_surfaces':['芝'],
+              'imputations_permitted':False,'labels_previously_inspected':True,
+              'preregistered_before_label_inspection':False,'production_eligible':False,
+              'family':'linear','ridge':100}
+        plan.update(changes)
+        path=self.base/'exploratory.json';dump_new(path,plan)
+        run=ResearchSequence.create(self.root,self.base/'exploratory_run',[ref(path),ref(self.input)])
+        payload=self.intake(run_id=run.run_id,plan=ref(path),training_date=plan['training_date_max'],
+                            validation_dates=plan['validation_dates'],audit_purpose='environment_structural_research')
+        return run,payload
+    def test_separate_sunday_fit_only_contract(self):
+        run,payload=self.exploratory()
+        run.record('intake',payload,evidence=[ref(self.input)],checks={'fixture':True})
+        self.assertEqual(len(run.verify()[0]),1)
+    def test_cannot_relabel_old_holdout_as_training(self):
+        with self.assertRaises(Blocked):
+            self.run.record('intake',self.intake(training_date='2026-10-25',validation_dates=[]),
+                            evidence=[ref(self.input)],checks={'fixture':True})
+    def test_exploratory_overlap_forbidden(self):
+        run,payload=self.exploratory(validation_dates=['2026-10-25'])
+        with self.assertRaises(Blocked):run.record('intake',payload,evidence=[ref(self.input)],checks={'fixture':True})
+    def test_exploratory_cannot_enable_production(self):
+        run,payload=self.exploratory(production_eligible=True)
+        with self.assertRaises(Blocked):run.record('intake',payload,evidence=[ref(self.input)],checks={'fixture':True})
+    def test_exploratory_market_purpose_mismatch(self):
+        run,payload=self.exploratory();payload['audit_purpose']='environment_training'
+        with self.assertRaises(Blocked):run.record('intake',payload,evidence=[ref(self.input)],checks={'fixture':True})
+    def test_invalid_canonical_training_date(self):
+        run,payload=self.exploratory(training_date_max='2026-02-30',training_dates=['2026-02-30'])
+        with self.assertRaises(Blocked):run.record('intake',payload,evidence=[ref(self.input)],checks={'fixture':True})
     def test_input_tamper(self):
         self.record_intake();self.input.write_text('{}')
         with self.assertRaises(Blocked):self.run.verify()

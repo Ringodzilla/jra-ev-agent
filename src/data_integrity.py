@@ -138,21 +138,36 @@ def verify_source_artifacts(collected: dict) -> dict:
             acquisition.extend(missing_source_coverage({'rows': [row]}, _RAW_FIELDS)['records'])
             mismatches.append({'row': row, 'field': 'source_row', 'source_value': 'unmatched_horse_date_or_after_target'})
             continue
-        for field in _RAW_FIELDS:
+        fields = _RAW_FIELDS + (('average_1f',) if any(
+            not _missing(original.get('average_1f')) for original in originals
+        ) or not _missing(row.get('average_1f')) else ())
+        for field in fields:
             value = str(normalized_input.get(field) or '').strip()
             values = [str(original.get(field) or '').strip() for original in originals]
             record = field_coverage(row, normalized_input, field, originals, collected)
             acquisition.append(record)
+            if record['state'] == 'SOURCE_SEMANTIC_CONFLICT':
+                mismatches.append({'row': row, 'field': field, 'source_value': values,
+                                   'reason_code': 'SOURCE_SEMANTIC_CONFLICT'})
+                continue
             if record['state'] == 'AVAILABLE_BUT_NOT_COLLECTED':
                 mismatches.append({'row': row, 'field': field, 'source_value': values,
                                    'reason_code': 'AVAILABLE_BUT_NOT_COLLECTED'})
                 continue
             if value not in values:
                 mismatches.append({'row': row, 'field': field, 'source_value': values})
+        for field in ('last_3f_status', 'passing_order_status', 'average_1f_status',
+                      'last_3f_missing_reason', 'passing_order_missing_reason',
+                      'sectional_header', 'sectional_raw', 'official_course_text'):
+            declared = row.get(field, '')
+            if declared and not any(original.get(field) == declared for original in originals):
+                mismatches.append({'row': row, 'field': field,
+                                   'source_value': [original.get(field, '') for original in originals],
+                                   'reason_code': 'SEMANTIC_STATE_NOT_SOURCE_VERIFIED'})
         if (all(r.get('_raw_last3f_source') == 'fallback' for r in originals)
                 and row.get('last_3f_source') != 'fallback'):
             detected_imputations.append({'row': row, 'field': 'last_3f', 'method': 'parser_last3f_fallback'})
-    coverage = {'status': 'PASS' if all(r['state'] in {'OBSERVED', 'NOT_MEASURED', 'SUBSTITUTED'} for r in acquisition)
+    coverage = {'status': 'PASS' if all(r['state'] in {'OBSERVED', 'NOT_MEASURED', 'NOT_APPLICABLE', 'SUBSTITUTED'} for r in acquisition)
                 else 'BLOCKED', 'records': acquisition,
                 'counts': dict(Counter(r['state'] for r in acquisition))}
     return {'status': 'MISMATCH' if mismatches else 'PASS', 'mismatches': mismatches,
@@ -178,15 +193,15 @@ def _history_result_observations(html: str, artifact: dict) -> list[dict]:
         return node.get_text(' ', strip=True) if node else ''
     weather = soup.select_one('li.weather .txt')
     from jra_scraper.history_pace import parse_official_opening_600m
+    from jra_scraper.history_observations import parse_result_history_semantics
     pace = parse_official_opening_600m(html)
     return [dict(pace=pace['pace'], pace_missing_reason=pace['pace_missing_reason'],
                  pace_source=pace['pace_source'], pace_scope=pace['pace_scope'], race_id=str(artifact.get('race_id', '')), horse_id=str(artifact.get('horse_id', '')),
                  horse_name=artifact.get('horse_name', ''), date=day,
-                 last_3f=cell('td.f_time'), last_3f_source='official_historical_result',
-                 passing_order='-'.join(node.get_text(strip=True) for node in row.select('td.corner li')),
                  position=cell('td.place'), time=cell('td.time'), jockey=cell('td.jockey'),
                  weight=cell('td.weight'), popularity=cell('td.pop'),
-                 weather=weather.get_text(strip=True) if weather else '')]
+                 weather=weather.get_text(strip=True) if weather else '',
+                 **parse_result_history_semantics(soup, row))]
 
 
 def _history_odds_observations(html: str, artifact: dict) -> list[dict]:
@@ -221,6 +236,8 @@ def audit_collected_data(collected: dict, race_configs: object, approvals: list 
     entries = collected.get('entries', [])
     quality = collected.get('quality_report') or {}
     digest = data_input_sha256(collected, race_configs)
+    source_check = verify_source_artifacts(collected)
+    semantic_coverage = source_check['acquisition_coverage']['records']
     findings: list[dict] = []
     missing: list[dict] = []
     counts: list[dict] = []
@@ -261,15 +278,31 @@ def audit_collected_data(collected: dict, race_configs: object, approvals: list 
             if field == 'passing_order' and not absent:
                 invalid = not any(p.strip().isdigit() for p in str(row[field]).replace('→', '-').split('-'))
             if absent or invalid:
+                semantic = next((item for item in semantic_coverage
+                    if item['field'] == field and str(item.get('race_id', '')) == str(row.get('race_id', ''))
+                    and str(item.get('horse_id', '')) == str(row.get('horse_id', ''))
+                    and _date_key(item.get('date', '')) == _date_key(row.get('date', ''))
+                    and item.get('semantic_status')), {})
+                state = semantic.get('semantic_status')
                 missing.append({**{k: str(row.get(k, '')) for k in ('race_id', 'horse_number', 'run_index')},
-                                'field': field, 'state': 'missing' if absent else 'invalid',
+                                'field': field, 'state': state or ('missing' if absent else 'invalid'),
                                 'model_used': field in _EFFECTS})
                 if field in _EFFECTS:
                     method, impact = _EFFECTS[field]
-                    finding(row, field, method, impact, field in _REQUIRED)
+                    if state:
+                        # Neither non-applicability nor a missing observation is
+                        # permission to manufacture a comparable 3F/corner value.
+                        finding(row, field, 'unsupported_source_observation', impact, True)
+                        required_missing = True
+                    else:
+                        finding(row, field, method, impact, field in _REQUIRED)
                 required_missing |= field in _REQUIRED
         if '障害' in str(row.get('race_name', '')) or str(row.get('history_surface')) == '障害' or str(row.get('target_surface')) == '障害':
-            finding(row, 'last_3f', 'neutralize_jump_sectional_36', 'closing_strength,pace_score')
+            if row.get('last_3f_status'):
+                finding(row, 'last_3f', 'unsupported_source_observation', 'closing_strength,pace_score', True)
+                required_missing = True
+            else:
+                finding(row, 'last_3f', 'neutralize_jump_sectional_36', 'closing_strength,pace_score')
 
     issues = quality.get('issues', [])
     fallback_count = quality.get('last3f_fallback_rows', 0)
@@ -311,18 +344,27 @@ def audit_collected_data(collected: dict, race_configs: object, approvals: list 
             required_missing = True
         if not history:
             finding(entry, 'history', 'neutral_history_fallback', 'all_history_features')
-        for field, method, impact in (
+        target_fields = (
             ('assigned_weight', 'default_55', 'weight_score'),
             ('current_popularity', 'history_average_or_10', 'popularity_gap'),
             ('current_odds', 'default_0', 'market_support,EV'),
-        ):
+        )
+        if purpose == 'environment_structural_research':
+            # The strict structural_features contract never reads or generates
+            # target-market metadata. This is not permission to impute it in a
+            # prediction run, nor to admit post-event market values as features.
+            target_fields = target_fields[:1]
+            for field in ('current_popularity', 'current_odds', 'win_odds'):
+                if not _missing(entry.get(field)):
+                    finding(entry, field, 'forbidden_target_market_in_structural_research',
+                            'structural_input_contract')
+        for field, method, impact in target_fields:
             value = entry.get(field)
             if field == 'current_odds':
                 value = value or entry.get('win_odds')
             if not _number(value):
                 finding(entry, field, method, impact)
 
-    source_check = verify_source_artifacts(collected)
     for recovered in source_check.get('detected_imputations', []):
         finding(recovered['row'], recovered['field'], recovered['method'], 'closing_strength,pace_score')
     race_ids = sorted({str(e.get('race_id', '')) for e in entries})

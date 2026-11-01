@@ -70,7 +70,8 @@ def baseline(prior):
 
 def dataset(prior):
     labels=read(prior['intake']['labels']);environment=read(prior['intake']['environment'])
-    if environment['target_date']!='2026-10-24' or environment['pre_race_capture'] is not False:
+    training_date=prior['intake']['training_date']
+    if environment['target_date']!=training_date or environment['pre_race_capture'] is not False:
         raise Blocked('Posthoc environment date/provenance invalid')
     for source in environment['sources'].values():
         if sha(source['raw_path'])!=source['sha256']:raise Blocked('Environment original changed')
@@ -79,6 +80,8 @@ def dataset(prior):
     races=[]
     for selected in prior['integrity_audit']['selected']:
         a=read(selected['audit']);n=read(selected['normalized']);rid=a['race_id'];target=n['entries'][0]
+        if any(r['target_race_date']!=training_date for r in n['entries']):
+            raise Blocked('Normalized entry outside frozen training date')
         metadata=a['metadata_source']
         if sha(metadata['path'])!=metadata['sha256'] or not metadata['url'].startswith(('https://jra.jp/','https://www.jra.go.jp/')):
             raise Blocked('Official result source mismatch')
@@ -104,13 +107,15 @@ def dataset(prior):
             raise Blocked('Track/measurement history mismatch')
         for key in ('cushion','moisture'):
             stamp=datetime.fromisoformat(obs[key]['measured_at'])
-            if stamp.tzinfo is None or stamp.date().isoformat()!='2026-10-24' or stamp>=post:
+            if stamp.tzinfo is None or stamp.date().isoformat()!=training_date or stamp>=post:
                 raise Blocked('Measurement date/time not before race')
         env={'cushion':obs['cushion']['cushion'],'turf_moisture_goal':obs['moisture']['turf_moisture_goal'],
              'turf_moisture_corner4':obs['moisture']['turf_moisture_corner4'],
              'weather':target['target_weather'],'track_condition':target['target_track_condition']}
         if identities(by_race[rid])!=identities(n['entries']):raise Blocked('Fit horse set mismatch')
-        races.append({'race_id':rid,'date':'2026-10-24','rows':by_race[rid],'environment':env,
+        if post.date().isoformat()!=training_date or post.tzinfo is None:
+            raise Blocked('Race post time outside frozen training date')
+        races.append({'race_id':rid,'date':training_date,'rows':by_race[rid],'environment':env,
                       'winners':sorted(winners),'win_payouts':payouts})
     if len(races)!=len(by_race) or len(races)!=len({r['race_id'] for r in races}):raise Blocked('Fit race duplicate/missing')
     return races
@@ -141,7 +146,7 @@ def independent_metrics(races,model=None):
 
 def verify_candidate(races,model):
     from analysis.environment_model import design_matrix,environment_vector,HORSE_FEATURES
-    if model['family']!='linear' or model['ridge']!=100 or model['status']!='candidate_not_promoted' or model['training_races']!=len(races) or model['training_end_date']!='2026-10-24':return False
+    if model['family']!='linear' or model['ridge']!=100 or model['status']!='candidate_not_promoted' or model['training_races']!=len(races) or model['training_end_date']!=max(r['date'] for r in races):return False
     ev=np.array([environment_vector(r['environment'],'linear')[0] for r in races]);vary=np.ptp(ev,axis=0)>1e-10
     env_names=environment_vector(races[0]['environment'],'linear')[1]
     unsupported=[name for name,flag in zip(env_names,vary) if not flag]

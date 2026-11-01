@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT))
 from src.feature_engineering import (
     summarize_history_rows, _map_score, _distance_fit_score, _condition_match_score,
+    validate_explicit_history_observations,
 )
 from src.track_bias import track_bias_adjustment
 
@@ -28,6 +29,7 @@ def structural_features(history, target):
     if not history or len(history) > 5:
         raise ValueError('One to five fully observed histories required')
     for row in history:
+        validate_explicit_history_observations(row)
         if any(key not in row or str(row[key]).strip() in {'', 'None', 'UNVERIFIED'} for key in HISTORY_FIELDS):
             raise ValueError('Required historical observation missing')
         for key in ('position', 'time', 'distance', 'last_3f', 'weight', 'odds', 'popularity'):

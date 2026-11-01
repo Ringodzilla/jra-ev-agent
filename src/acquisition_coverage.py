@@ -33,6 +33,20 @@ def field_coverage(row: dict, normalized: dict, field: str, originals: list[dict
     record = dict(_identity(row, field), input_value=value,
                   observed_values=sorted({str(o[field]) for o in observed}),
                   source_artifacts=sources)
+    # Only reparsed, hash-verified originals can prove non-applicability.
+    # A caller's marker or a blank cell is never enough.
+    semantic_na = [o for o in originals if o.get(field + '_status') == 'NOT_APPLICABLE'
+                   and _empty(o.get(field))]
+    if semantic_na and observed:
+        return dict(record, state='SOURCE_SEMANTIC_CONFLICT',
+                    reason='Matched originals disagree on observation and non-applicability')
+    if semantic_na:
+        if not _empty(value):
+            return dict(record, state='SOURCE_SEMANTIC_CONFLICT',
+                        reason='Input contains a number for a source-proven nonapplicable field')
+        return dict(record, state='NOT_APPLICABLE',
+                    reason=semantic_na[0].get(field + '_missing_reason', ''),
+                    semantic_status='NOT_APPLICABLE')
     if observed:
         return dict(record, state='AVAILABLE_BUT_NOT_COLLECTED' if _empty(value) else 'OBSERVED',
                     reason='Nonempty value reparsed from matched raw source')
@@ -44,6 +58,13 @@ def field_coverage(row: dict, normalized: dict, field: str, originals: list[dict
                               'NO_600M_BOUNDARY_PARTIAL_INTERVAL_NOT_ESTIMATED' for o in originals):
         return dict(record, state='NOT_MEASURED',
                     reason='Validated official intervals have no exact 600m boundary; no interpolation')
+    unavailable = [o for o in originals if o.get(field + '_status') in
+                   {'NOT_OBSERVED', 'UNVERIFIED'} and _empty(o.get(field))]
+    if unavailable:
+        return dict(record, state='SOURCE_FIELD_MISSING',
+                    semantic_status=unavailable[0][field + '_status'],
+                    reason=unavailable[0].get(field + '_missing_reason',
+                                              'Source observation is not verified'))
     attempts = (collected.get('source_audit') or {}).get('attempts', [])
     matching = [a for a in attempts if all(str(a.get(k, '')) == str(row.get(k, ''))
                 for k in ('race_id', 'horse_id', 'date')) and field in a.get('fields', [])]

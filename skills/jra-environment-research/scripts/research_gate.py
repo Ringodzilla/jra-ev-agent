@@ -7,6 +7,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+from datetime import date
 from pathlib import Path
 from uuid import uuid4
 
@@ -19,6 +20,38 @@ SKILLS=('jra-01-intake','jra-02-official-collection','jra-03-integrity-audit','j
 
 class Blocked(ValueError):
     pass
+
+
+def training_contract(plan, payload):
+    """Bind the original held-out experiment or an explicitly separate fit-only run."""
+    training = payload['training_date']
+    if date.fromisoformat(training).isoformat() != training:
+        raise Blocked('Canonical ISO training date required')
+    validation = payload['validation_dates']
+    if not isinstance(validation, list) or validation != sorted(set(validation)):
+        raise Blocked('Unique ordered whole validation dates required')
+    if any(date.fromisoformat(day).isoformat() != day or day <= training for day in validation):
+        raise Blocked('Validation must be whole dates after training')
+    exploratory = plan.get('experiment_kind') == 'posthoc_exploratory_training_only'
+    if exploratory:
+        if (not isinstance(plan.get('experiment_id'), str) or not plan['experiment_id'].strip()
+                or validation or plan.get('test_dates') != []
+                or plan.get('training_dates') != [training]
+                or plan.get('allowed_target_surfaces') != ['芝']
+                or plan.get('imputations_permitted') is not False
+                or plan.get('labels_previously_inspected') is not True
+                or plan.get('preregistered_before_label_inspection') is not False
+                or plan.get('production_eligible') is not False
+                or payload.get('audit_purpose') != 'environment_structural_research'):
+            raise Blocked('Separate exploratory run must be fit-only and never production eligible')
+    elif (plan.get('experiment_kind') is not None or training != '2026-10-24'
+          or validation != ['2026-10-25']
+          or payload.get('audit_purpose', 'environment_training') != 'environment_training'):
+        raise Blocked('Original held-out experiment partition must remain unchanged')
+    return (plan['training_date_max'] == training and plan['validation_dates'] == validation
+            and plan['family'] == payload['family'] == 'linear'
+            and plan['ridge'] == payload['ridge'] == 100
+            and payload['variant'] == 'exact_structural_softmax_temperature1_no_mc_no_market')
 
 
 def sha(path):
@@ -64,7 +97,7 @@ def freeze(root):
     paths=[p for folder in ('src','analysis','jra_scraper') for p in (root/folder).rglob('*.py')]
     paths += [root/'skills'/name/'SKILL.md' for name in set(SKILLS)]
     paths += list(Path(__file__).resolve().parent.glob('*.py'))
-    paths += [root/'config/skill_workflow.json',root/'docs/skill_workflow.md',root/'docs/condition_models.md']
+    paths += [root/'config/skill_workflow.json',root/'docs/skill_workflow.md',root/'docs/condition_models.md',root/'docs/environment_model.md']
     paths += list((root/'report/research').rglob('research_stage_wrapper*.py'))
     return [ref(p) for p in sorted(set(paths))]
 
@@ -205,8 +238,7 @@ class ResearchSequence:
                     raise Blocked('Intake source not frozen in manifest')
             if plan['training_date_max']!=p['training_date'] or plan['validation_dates']!=p['validation_dates'] or plan['family']!=p['family'] or plan['ridge']!=p['ridge']:
                 raise Blocked('Preregistered plan differs')
-            return {'fixed_plan':p['training_date']=='2026-10-24' and p['validation_dates']==['2026-10-25']
-                    and p['family']=='linear' and p['ridge']==100 and p['variant']=='exact_structural_softmax_temperature1_no_mc_no_market',
+            return {'fixed_plan':training_contract(plan,p),
                     'no_production':p['production_model_changed'] is False,
                     'shared_state_bound':p['shared_initial']==self.manifest['shared_initial']}
         if stage=='collection':
@@ -260,7 +292,8 @@ class ResearchSequence:
                 normalized=read(a['normalized_artifact'])
                 if data_input_sha256(collected,normalized['race_configs'])!=data_input_sha256(normalized,normalized['race_configs']):
                     raise Blocked('Collected and normalized inputs differ')
-                expected=audit_collected_data(collected,normalized['race_configs'],purpose='environment_training')
+                expected=audit_collected_data(collected,normalized['race_configs'],
+                    purpose=prior['intake'].get('audit_purpose','environment_training'))
                 if canonical(expected)!=canonical(a['collected_audit']):
                     raise Blocked('Saved audit differs from full current source reparse')
             for item in selected:
@@ -273,7 +306,7 @@ class ResearchSequence:
                     or ca['history_counts_verified'] is not True
                     or ca['source_audit_status']!='VERIFIED_REPARSE'
                     or ca['input_sha256']!=data_input_sha256(n,n['race_configs'])
-                    or any(r['target_race_date']!='2026-10-24' or r['target_surface']!='芝' for r in n['entries'])):
+                    or any(r['target_race_date']!=prior['intake']['training_date'] or r['target_surface']!='芝' for r in n['entries'])):
                     return {'current_audit_pass':False}
             return {'current_audit_pass':True,'all36_source_reparsed':len(items)==36}
         if stage=='approval_gate':

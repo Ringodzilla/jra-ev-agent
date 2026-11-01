@@ -31,7 +31,7 @@ def test_historical_result_fields_are_observed_and_unique():
     from src.data_integrity import _history_result_observations
     html = '''<div class="cell date">2026年10月11日（日曜）4回京都4日</div>
     <ul><li class="weather"><span class="txt">晴</span></li></ul>
-    <table><tr><td class="horse"><a>A</a></td><td class="place">7</td>
+    <table><thead><tr><th>馬名</th><th>着順</th><th class="f_time">上り3F</th><th>タイム</th><th>通過順</th></tr></thead><tr><td class="horse"><a>A</a></td><td class="place">7</td>
     <td class="f_time">39.5</td><td class="time">1:27.0</td>
     <td class="corner"><li>5</li><li>3</li></td></tr></table>'''
     data = _history_result_observations(html, {'race_id': 'R', 'horse_id': 'H', 'horse_name': 'A'})
@@ -56,7 +56,7 @@ def test_source_audit_accepts_recovered_observation_from_historical_result():
     row = _normalize_row(parser.parse_horse_last5(history, 'R', 'H', 'A', '')[0])
     row.update(target_race_date='2026-10-24', last_3f='34.2', last_3f_source='official_historical_result', passing_order='5-5-4-2')
     result_html = '''<div class="cell date">2026年3月1日（日曜）2回中山2日</div>
-    <table><tr><td class="horse"><a>A</a></td><td class="f_time">34.2</td>
+    <table><thead><tr><th>馬名</th><th class="f_time">上り3F</th><th>通過順</th></tr></thead><tr><td class="horse"><a>A</a></td><td class="f_time">34.2</td>
     <td class="corner"><li>5</li><li>5</li><li>4</li><li>2</li></td></tr></table>'''
     artifacts = [dict(kind=kind, html=html, sha256=hashlib.sha256(html.encode()).hexdigest(), race_id='R', horse_id='H', horse_name='A')
                  for kind, html in [('horse_history', history), ('history_result', result_html)]]

@@ -1,0 +1,116 @@
+{
+  "review_kind": "skill_revision_user_intent",
+  "reviewer": "/root/skill_review",
+  "independent_from_editor": true,
+  "status": "OK",
+  "user_request": "Missing history must be recovered through the official horse identity; genuinely short careers of young horses must be distinguished from collection gaps.",
+  "targets": [
+    {
+      "path": "skills/jra-02-official-collection/SKILL.md",
+      "sha256": "a7ba79abf3f071170226cf9925674e2b1d82cbf0f4496f6efa6abd8292271c98"
+    },
+    {
+      "path": "skills/jra-data-integrity-audit/SKILL.md",
+      "sha256": "826224a8c470ea1e57e320cfa5b1dfa606beac862f738eb45f7b6e956a6f954d"
+    }
+  ],
+  "reason": "The revision requires official horse identity/link verification, recovery of both row and field gaps, and independently verified pre-target career counts. Age and parsed row counts alone cannot establish a complete short career. Existing CLI limitations are explicitly disclosed.",
+  "scenarios": [
+    {
+      "input": "verified career=2, collected=2",
+      "expected": "required=2, complete, no fabricated three runs",
+      "result": "OK"
+    },
+    {
+      "input": "verified career=6, collected=2",
+      "expected": "required=5, missing=3, official recovery",
+      "result": "OK"
+    },
+    {
+      "input": "career unknown, collected=2, young horse",
+      "expected": "null/UNVERIFIED; no age inference",
+      "result": "OK"
+    },
+    {
+      "input": "five runs with missing passing order",
+      "expected": "row completeness and field missingness stay separate; recover original source",
+      "result": "OK"
+    },
+    {
+      "input": "verified debutant career=0",
+      "expected": "count complete; undefined features and imputation approval audited separately",
+      "result": "OK"
+    },
+    {
+      "input": "name-derived fallback ID without official link",
+      "expected": "recover real official link; do not invent URL or checksum",
+      "result": "OK"
+    },
+    {
+      "input": "overseas/local coverage incomplete or career includes later starts",
+      "expected": "verify scope and pre-target cutoff; preserve uncertainty",
+      "result": "OK"
+    }
+  ],
+  "implementation_evidence": [
+    {
+      "path": "jra_scraper/pipeline.py",
+      "lines": [
+        163,
+        173
+      ],
+      "observation": "Embedded history >=5 skips horse URL fetch; fewer rows trigger fetch. Field gaps do not trigger this branch."
+    },
+    {
+      "path": "jra_scraper/pipeline.py",
+      "lines": [
+        226,
+        236
+      ],
+      "observation": "force_rebuild and no missing history table permit required count from parsed rows; independent full-page/career verification is not implemented here."
+    },
+    {
+      "path": "jra_scraper/parser.py",
+      "lines": [
+        301,
+        311
+      ],
+      "observation": "Explicit no_data returns no history; career count still needs separate verification."
+    }
+  ],
+  "data_uses": [
+    {
+      "data": "official horse ID and URL",
+      "use": "identity and source recovery only, not numerical ability feature",
+      "owner": "data_collector"
+    },
+    {
+      "data": "pre-target career count and acquired count",
+      "use": "completeness audit, no young-horse purchase exclusion",
+      "owner": "data_collector / data_integrity_auditor"
+    },
+    {
+      "data": "historical times, passing order and other fields",
+      "use": "retain per-field provenance and hand to stage03, then existing analyzer/simulator contracts",
+      "owner": "data_collector -> auditor -> analyzer/simulator"
+    }
+  ],
+  "unconnected_and_limitations": [
+    "This revision changes skills only. CLI-wide automatic recovery for five-row field gaps, official-ID rediscovery and independent career coverage verification remains unimplemented. The skill requires collector verification and does not claim otherwise.",
+    "No feature, coefficient, prediction probability or ticket rule changed. Model accuracy improvement was not measured."
+  ],
+  "deviations": [],
+  "required_fixes": [],
+  "verification": {
+    "instructions_reviewed": true,
+    "implementation_reviewed": true,
+    "prediction_numeric_calculation_executed": false,
+    "prediction_numeric_calculation_reason": "Collection/audit instruction revision only; no prediction requested.",
+    "machine_quality_checks": {
+      "reported_by": "parent agent",
+      "check_quality.sh": "exit 0; 68 passed",
+      "pipeline_and_parser_regressions": "exit 0; 24 passed",
+      "separate_from_semantic_review": true
+    }
+  }
+}

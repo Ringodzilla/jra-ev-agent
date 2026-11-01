@@ -11,6 +11,7 @@ from urllib.parse import parse_qs, urljoin, urlparse
 from bs4 import BeautifulSoup
 
 from .models import HorseEntry, ParserIssue, RaceLink
+from .history_observations import corner_observation, sectional_observation
 
 
 TRACKS = ("札幌", "函館", "福島", "新潟", "東京", "中山", "中京", "京都", "阪神", "小倉")
@@ -46,6 +47,7 @@ class JRAParser:
         "distance": ("距離", "前々走", "3走前"),
         "pace": ("前半", "前3F", "通過前半", "前半3F"),
         "last_3f": ("上り", "上り3F", "上がり", "上がり3F", "末3F", "後3F"),
+        "average_1f": ("平均1F", "平均1ハロン"),
         "track_condition": ("馬場", "馬場状態"),
         "weather": ("天候",),
         "passing_order": ("通過", "4角", "4C", "コーナー通過順"),
@@ -376,6 +378,23 @@ class JRAParser:
             if self._is_jump_race_name(mapped.get("race_name", ""), mapped.get("distance", "")):
                 history_surface = "障害"
             mapped["history_surface"] = history_surface
+            last3f_header = next((m.raw for m in header_matches if m.canonical == "last_3f"), "")
+            average_header = next((m.raw for m in header_matches if m.canonical == "average_1f"), "")
+            sectional_header = last3f_header or average_header
+            if sectional_header or history_surface == "障害" or "中止" in mapped.get("position", ""):
+                average = sectional_observation(mapped.get("average_1f", ""), average_header) if average_header else None
+                sectional_raw = mapped.get("last_3f", "") if last3f_header else mapped.get("average_1f", "")
+                mapped.update(sectional_observation(
+                    sectional_raw,
+                    sectional_header, jump=history_surface == "障害",
+                    position=mapped.get("position", ""),
+                ))
+                if average is not None:
+                    mapped.update({key: average[key] for key in (
+                        "average_1f", "average_1f_status", "average_1f_header", "average_1f_raw")})
+            if "直線" in mapped.get("distance", "") or re.search(r"芝\s*[・･]\s*直", mapped.get("distance", "")):
+                mapped.update(corner_observation(mapped.get("passing_order", ""), mapped["distance"],
+                                                position=mapped.get("position", "")))
             self._apply_last_3f_fallback(
                 mapped,
                 horse_name=horse_name,
@@ -876,6 +895,10 @@ class JRAParser:
         run_index: int,
         issue_sink: list[ParserIssue] | None,
     ) -> None:
+        if row.get("last_3f_status") in {"NOT_APPLICABLE", "NOT_OBSERVED", "UNVERIFIED"}:
+            # A known different unit or an explicitly unobserved value is never
+            # a numerical last-three-furlong observation, including legacy36.
+            return
         if row.get("last_3f"):
             row["last_3f_source"] = row.get("last_3f_source", "observed")
             return
@@ -1025,10 +1048,13 @@ class JRAParser:
 
     def _extract_embedded_history(self, row) -> list[dict[str, str]]:
         histories: list[dict[str, str]] = []
-        for run_idx, cell in enumerate(row.select("td.past"), start=1):
+        for cell in row.select("td.past"):
+            run_idx = len(histories) + 1
             date = self._extract_text(cell, ".date_line .date")
             race_name = self._extract_text(cell, ".race_line .name")
             if not date and not race_name:
+                continue
+            if re.search(r"JRA(?:へ|より)転[入出]", cell.get_text(" ", strip=True)):
                 continue
             if any(status in self._extract_text(cell, ".place_line .place") for status in ("取消", "除外")):
                 continue
@@ -1039,11 +1065,22 @@ class JRAParser:
                 for li in cell.select(".corner_list li")
             ]
             last3f_text = self._extract_text(cell, ".info_line3 .f3")
-            last3f = self._extract_last_3f_value(last3f_text)
             distance_text = self._extract_text(cell, ".info_line2 .dist")
             history_surface, _ = self._parse_condition_text(distance_text)
             if self._is_jump_race_name(race_name, distance_text):
                 history_surface = "障害"
+            raw_position = self._extract_text(cell, ".place_line .place")
+            position = raw_position if raw_position in {"中止", "失格"} else self._normalize_int_like(raw_position)
+            # The embedded f3 element supplies the value and its visible label.
+            # For jumps, an absent/ambiguous label cannot establish 3F units.
+            header = last3f_text if re.search(r"平均|3[FＦ]", last3f_text) else (
+                "上り3F" if history_surface != "障害" else "")
+            sectional = sectional_observation(last3f_text, header,
+                                              jump=history_surface == "障害", position=position)
+            if sectional["last_3f_status"] == "OBSERVED":
+                sectional["last_3f_source"] = "embedded"
+            corner = corner_observation("-".join(corner_values), distance_text,
+                                        values=[value for value in corner_values if value], position=position)
 
             histories.append(
                 {
@@ -1053,16 +1090,15 @@ class JRAParser:
                     "race_name": race_name,
                     "distance": distance_text,
                     "history_surface": history_surface,
-                    "position": self._normalize_int_like(self._extract_text(cell, ".place_line .place")),
+                    "position": position,
                     "time": self._extract_text(cell, ".info_line2 .time"),
                     "weight": self._normalize_decimal_like(self._extract_text(cell, ".info_line1 .weight")),
                     "jockey": self._extract_text(cell, ".info_line1 .jockey"),
                     "pace": "",
-                    "last_3f": last3f,
-                    "last_3f_source": "embedded" if last3f else "",
+                    **sectional,
                     "track_condition": self._extract_text(cell, ".info_line2 .condition"),
                     "weather": "",
-                    "passing_order": "-".join(value for value in corner_values if value),
+                    **corner,
                     "odds": "",
                     "popularity": self._normalize_int_like(self._extract_text(cell, ".place_line .pop")),
                     "race_result_url": urljoin(self.base_url, href_node.get("href")) if href_node else "",

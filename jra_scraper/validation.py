@@ -5,6 +5,8 @@ import re
 from collections import defaultdict
 from datetime import datetime
 
+from .history_observations import SEMANTIC_FIELDS
+
 OUTPUT_COLUMNS = [
     "row_id",
     "race_id",
@@ -45,6 +47,9 @@ OUTPUT_COLUMNS = [
     "passing_order",
     "odds",
     "popularity",
+    "last_3f_source",
+    *SEMANTIC_FIELDS,
+    "history_semantic_conflicts",
 ]
 
 ENTRY_COLUMNS = [
@@ -174,6 +179,7 @@ def _normalize_row(row: dict[str, str]) -> dict[str, str]:
     data["time"] = _normalize_time(data["time"])
     data["pace"] = _normalize_time(data["pace"])
     data["last_3f"] = _normalize_float(data["last_3f"])
+    data["average_1f"] = _normalize_float(data["average_1f"])
     data["passing_order"] = _normalize_passing_order(data["passing_order"])
     data["odds"] = _normalize_float(data["odds"])
     data["popularity"] = _normalize_int(data["popularity"])

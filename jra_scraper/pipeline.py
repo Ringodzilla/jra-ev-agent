@@ -10,6 +10,7 @@ from pathlib import Path
 
 from .config import ScrapeConfig
 from .data_repair import MANUAL_HISTORY_COLUMNS, MissingHistoryRepairAction, missing_history_request
+from .history_observations import SEMANTIC_FIELDS
 from .models import ParserIssue, RaceLink
 from .parser import JRAParser
 from .scraper import JRAScraper, safe_filename
@@ -739,7 +740,9 @@ def _rows_from_embedded_history(horse) -> list[dict[str, str]]:
             "odds": str(history.get("odds", "")),
             "popularity": str(history.get("popularity", "")),
         }
-        if not row["last_3f"]:
+        row.update({key: str(history.get(key, "")) for key in SEMANTIC_FIELDS})
+        row["history_semantic_conflicts"] = str(history.get("history_semantic_conflicts", ""))
+        if not row["last_3f"] and not row["last_3f_status"]:
             row["last_3f"] = JRAParser.LAST_3F_NEUTRAL_BASELINE
             row["last_3f_source"] = "fallback"
         rows.append(row)
@@ -780,6 +783,81 @@ def _merge_history_rows(
     return merged
 
 
+def _coalesce_semantic_observations(
+    merged: dict[str, str], primary: dict[str, str], secondary: dict[str, str],
+) -> dict[str, str]:
+    """Keep source-proven nonapplicability from being filled by another column.
+
+    Unknown legacy numbers are retained as conflict evidence, never silently
+    promoted to comparable sectionals or corner positions.
+    """
+    groups = {
+        "last_3f": ("last_3f", "last_3f_source", "last_3f_status", "last_3f_missing_reason",
+                    "average_1f", "average_1f_status", "average_1f_header", "average_1f_raw",
+                    "sectional_header", "sectional_raw"),
+        "passing_order": ("passing_order", "passing_order_status", "passing_order_missing_reason",
+                          "passing_order_raw", "official_course_text"),
+    }
+    conflicts = []
+    for field, keys in groups.items():
+        status = field + "_status"
+        nonapplicable = [source for source in (primary, secondary)
+                         if source.get(status) == "NOT_APPLICABLE"]
+        if nonapplicable:
+            chosen = nonapplicable[0]
+            for key in keys:
+                merged[key] = chosen.get(key, "")
+            merged[field] = ""
+            if field == "last_3f":
+                merged["last_3f_source"] = ""
+            incompatible = [source for source in (primary, secondary)
+                            if str(source.get(field, "")).strip()
+                            and source.get("last_3f_source" if field == "last_3f" else status) != "fallback"]
+            if incompatible:
+                conflicts.append({"field": field, "reason": "NONAPPLICABLE_OBSERVATION_CONFLICT",
+                                  "sources": [{key: source.get(key, "") for key in keys}
+                                              for source in (primary, secondary)]})
+                merged[status] = "UNVERIFIED"
+                merged[field + "_missing_reason"] = "NONAPPLICABLE_OBSERVATION_CONFLICT"
+        else:
+            primary_value = str(primary.get(field, "")).strip()
+            primary_fallback = field == "last_3f" and primary.get("last_3f_source") == "fallback"
+            chosen = None
+            if primary.get(status) == "OBSERVED" and primary_value:
+                chosen = primary
+            elif secondary.get(status) == "OBSERVED" and str(secondary.get(field, "")).strip():
+                if primary.get(status) or not primary_value or primary_fallback:
+                    chosen = secondary
+            elif primary.get(status):
+                chosen = primary
+            elif (not primary_value or primary_fallback) and secondary.get(status):
+                chosen = secondary
+            if chosen is not None:
+                for key in keys:
+                    merged[key] = chosen.get(key, "")
+                if chosen.get(status) != "OBSERVED" or not str(chosen.get(field, "")).strip():
+                    merged[field] = ""
+                    if field == "last_3f":
+                        merged["last_3f_source"] = ""
+            elif primary_value and not primary_fallback and secondary.get(status):
+                # An empty secondary source cannot attach its missing-status to
+                # a primary legacy observation. Its raw artifact stays retained.
+                for key in keys:
+                    merged[key] = primary.get(key, "")
+    if conflicts:
+        previous = []
+        for source in (primary, secondary):
+            value = source.get("history_semantic_conflicts", "")
+            if value:
+                try:
+                    parsed = json.loads(value)
+                    previous.extend(parsed if isinstance(parsed, list) else [{"previous": parsed}])
+                except (ValueError, TypeError):
+                    previous.append({"unparsed_previous": value})
+        merged["history_semantic_conflicts"] = json.dumps(previous + conflicts, ensure_ascii=False)
+    return merged
+
+
 def _history_identity(row: dict[str, str]) -> tuple[str, ...]:
     """Identify one run consistently across JRA tables with different race labels."""
     date_key = _compact_date_key(str(row.get("date", "")))
@@ -817,7 +895,7 @@ def _coalesce_history_rows(primary: dict[str, str], secondary: dict[str, str]) -
         merged["last_3f"] = secondary_last3f
         merged["last_3f_source"] = secondary_source or "observed"
 
-    return merged
+    return _coalesce_semantic_observations(merged, primary, secondary)
 
 
 def _is_last3f_fallback(value: str, source: str) -> bool:

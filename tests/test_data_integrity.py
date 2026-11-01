@@ -29,6 +29,32 @@ class DataIntegrityTests(unittest.TestCase):
         self.data['source_audit'] = {'status': 'PASS'}
         self.assertEqual(audit_collected_data(self.data, self.config)['gate'], 'UNVERIFIED')
 
+    def test_structural_research_omits_only_target_market_fallbacks(self):
+        entry = self.data['entries'][0]
+        entry.pop('current_popularity')
+        entry.pop('current_odds')
+        prediction = audit_collected_data(self.data, self.config)
+        self.assertEqual({f['field'] for f in prediction['findings']},
+                         {'current_popularity', 'current_odds'})
+        research = audit_collected_data(self.data, self.config,
+                                        purpose='environment_structural_research')
+        self.assertEqual(research['findings'], [])
+        self.assertEqual(research['gate'], 'UNVERIFIED')  # Raw evidence still mandatory.
+        self.row['odds'] = ''
+        research = audit_collected_data(self.data, self.config,
+                                        purpose='environment_structural_research')
+        self.assertEqual({f['field'] for f in research['findings']}, {'odds'})
+        self.assertEqual(research['gate'], 'BLOCKED_UNAPPROVED_IMPUTATION')
+
+    def test_structural_research_rejects_target_market_in_features(self):
+        research = audit_collected_data(self.data, self.config,
+                                        purpose='environment_structural_research')
+        self.assertEqual(research['gate'], 'BLOCKED_UNAPPROVED_IMPUTATION')
+        self.assertEqual({f['field'] for f in research['findings']},
+                         {'current_popularity', 'current_odds'})
+        self.assertTrue(all(f['method'] == 'forbidden_target_market_in_structural_research'
+                            for f in research['findings']))
+
     def test_passing_order_neutral_requires_exact_approval(self):
         self.row['passing_order'] = ''
         result = audit_collected_data(self.data, self.config)
@@ -117,7 +143,7 @@ class DataIntegrityTests(unittest.TestCase):
         issues = audit_collected_data(self.data, self.config)['verification_issues']
         self.assertTrue(any(i['field'] == 'source_row' for i in issues))
 
-    def test_raw_reparse_recovers_fallback_and_explicit_approval_allows_pass(self):
+    def test_source_labeled_missing_sectional_is_not_replaced_or_approved(self):
         import hashlib
         from pathlib import Path
         from jra_scraper.parser import JRAParser
@@ -134,11 +160,13 @@ class DataIntegrityTests(unittest.TestCase):
             sha256=hashlib.sha256(html.encode()).hexdigest(), race_id='r1', horse_id='h1',
             horse_name='A', horse_url='https://jra.jp/history')]}
         result = audit_collected_data(self.data, self.config)
-        self.assertEqual(result['gate'], 'BLOCKED_UNAPPROVED_IMPUTATION')
+        self.assertEqual(result['gate'], 'BLOCKED_MISSING_DATA')
         self.assertFalse(result['verification_issues'])
-        self.assertTrue(result['recovered_imputation_provenance'])
+        self.assertFalse(result['recovered_imputation_provenance'])
+        self.assertEqual(self.data['rows'][0]['last_3f'], '')
+        self.assertEqual(self.data['rows'][0]['last_3f_status'], 'NOT_OBSERVED')
         approved = audit_collected_data(self.data, self.config, [self.approval(result)])
-        self.assertEqual(approved['gate'], 'PASS')
+        self.assertEqual(approved['gate'], 'BLOCKED_MISSING_DATA')
 
     def test_japanese_history_date_and_repair_action_horse_id(self):
         self.row['date'] = '2026年10月1日'
