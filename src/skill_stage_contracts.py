@@ -105,7 +105,9 @@ def stage_checks(step: str, output: dict, prior: dict[str, dict], *, mode: str) 
                 "quality_evidence_present": isinstance(output.get("quality_report"), dict),
                 "raw_sources_bound": isinstance(artifacts, list) and bool(artifacts) and all(
                     isinstance(a, dict) and isinstance(a.get("html"), str) and bool(a["html"])
-                    and a.get("kind") in {"horse_history", "race_detail", "history_result", "history_odds"}
+                    and a.get("kind") in {"horse_history", "race_detail", "history_result", "history_odds",
+                                          "nar_history_result", "hkjc_history_sectionals", "overseas_jra_result",
+                                          "france_tracking_pdf"}
                     and hashlib.sha256(a["html"].encode()).hexdigest() == a.get("sha256") for a in artifacts)}
     if step == "integrity_audit":
         expected = audit_collected_data(collection, configs, output.get("approval_evidence", []), purpose=mode)

@@ -55,6 +55,7 @@ def run_analysis_phase(
     win5_stake_yen_per_point: int = 100,
     enforce_skill_gates: bool = False,
     integrity_approvals: list[dict] | None = None,
+    collected_input: dict | None = None,
 ) -> dict:
     logging.info("analysis phase started")
 
@@ -78,6 +79,7 @@ def run_analysis_phase(
         race_limit=race_limit,
         horse_limit=horse_limit,
         reprocess_raw=reprocess_raw,
+        collected_input=collected_input,
     )
 
     ev_rows = list(dict(outputs.get("ev_calculator") or {}).get("ev_rows") or [])
@@ -209,6 +211,8 @@ def _safe_path_part(value: str) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run the fully orchestrated JRA EV workflow")
     parser.add_argument("--config-path", default=str(ROOT / "config/races.json"), help="Race config json path")
+    parser.add_argument('--collected-path', type=Path,
+                        help='Frozen collector JSON; all collection, integrity and later gates remain mandatory')
     parser.add_argument("--force-rebuild", action="store_true", help="Ignore processed state and rebuild races")
     parser.add_argument("--reprocess-raw", action="store_true", help="Parse only cached raw HTML and avoid network fetches")
     parser.add_argument("--race-limit", type=int, default=None, help="Max races to process (default: no limit)")
@@ -243,6 +247,7 @@ def main() -> None:
         win5_stake_yen_per_point=args.win5_stake_yen_per_point,
         enforce_skill_gates=True,
         integrity_approvals=(json.loads(args.integrity_approvals_path.read_text()) if args.integrity_approvals_path else []),
+        collected_input=(json.loads(args.collected_path.read_text(encoding='utf-8')) if args.collected_path else None),
     )
     logging.info("outputs ready: %s", payload)
 

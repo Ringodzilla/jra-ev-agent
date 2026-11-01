@@ -129,6 +129,78 @@ def test_gated_workflow_runs_roles_in_sequence_after_verified_audit(tmp_path):
     assert result['skill_workflow']['completed_steps'] == [step for step, _ in STEPS]
 
 
+def _saved_collection_workflow(tmp_path):
+    payloads = stage_payloads(mode="prediction")
+    config = payloads["intake"]["race_configs"]
+    payloads["collection"]["race_configs"] = deepcopy(config)
+    workflow = ReactiveRaceWorkflow(ScrapeConfig(stages_dir=tmp_path / 'stages', raw_dir=tmp_path / 'raw'))
+    workflow.enforce_skill_gates = True
+    workflow.domestic_collector.run = Mock(side_effect=AssertionError('saved input must not be recollected'))
+    for name, stage in [('analyzer', 'analysis'), ('simulator', 'simulation'),
+                        ('ev_calculator', 'ev'), ('bet_builder', 'tickets'),
+                        ('reviewer', 'review'), ('article_writer', 'report')]:
+        getattr(workflow, name).run = Mock(return_value=payloads[stage])
+    return workflow, payloads, config
+
+
+def test_saved_collection_gets_fresh_full_gate_chain_without_mutation_or_cache_sources(tmp_path):
+    workflow, payloads, config = _saved_collection_workflow(tmp_path)
+    original = deepcopy(payloads['collection'])
+    with patch('src.react_workflow.attach_history_sources', side_effect=AssertionError('frozen sources only')):
+        result = workflow.run(config, collected_input=payloads['collection'])
+    assert payloads['collection'] == original
+    assert result['skill_workflow']['completed_steps'] == [step for step, _ in STEPS]
+    assert result['data_collector']['source_audit'] == original['source_audit']
+    record = workflow.skill_sequence.records[1]
+    saved = __import__('json').loads(Path(record['output_artifacts'][0]['path']).read_text())
+    assert saved['_skill_binding']['run_id'] == workflow.skill_sequence.directory.name
+    workflow.domestic_collector.run.assert_not_called()
+
+
+@pytest.mark.parametrize('mutation,error', [
+    ('config', 'race_configs'), ('not_object', 'race_configs'), ('binding', 'previous run binding'),
+])
+def test_saved_collection_rejects_wrong_configuration_and_stale_binding(tmp_path, mutation, error):
+    workflow, payloads, config = _saved_collection_workflow(tmp_path)
+    collected = payloads['collection']
+    if mutation == 'config':
+        collected['race_configs'] = []
+    elif mutation == 'binding':
+        collected['_skill_binding'] = {'run_id': 'previous'}
+    else:
+        collected = []
+    with pytest.raises(ValueError, match=error):
+        workflow.run(config, collected_input=collected)
+    workflow.analyzer.run.assert_not_called()
+
+
+def test_saved_collection_rejects_legacy_ungated_api_and_direct_internal_call(tmp_path):
+    workflow, payloads, config = _saved_collection_workflow(tmp_path)
+    with pytest.raises(ValueError, match='enforced skill gates'):
+        workflow._run(config, collected_input=payloads['collection'])
+    workflow.enforce_skill_gates = False
+    with pytest.raises(ValueError, match='enforced skill gates'):
+        workflow.run(config, collected_input=payloads['collection'])
+    workflow.analyzer.run.assert_not_called()
+
+
+@pytest.mark.parametrize('failure', ['source', 'missing_horse', 'imputation'])
+def test_saved_collection_never_bypasses_source_lineup_or_imputation_gate(tmp_path, failure):
+    workflow, payloads, config = _saved_collection_workflow(tmp_path)
+    collected = payloads['collection']
+    if failure == 'source':
+        collected['source_audit'] = {'artifacts': []}
+    elif failure == 'missing_horse':
+        collected['entries'] = []
+    else:
+        collected['rows'][0]['passing_order'] = ''
+    result = workflow.run(config, collected_input=collected)
+    workflow.analyzer.run.assert_not_called()
+    workflow.domestic_collector.run.assert_not_called()
+    assert result['bet_builder']['tickets'] == []
+    assert 'analysis' in result['skill_workflow']['not_executed']
+
+
 def test_cached_history_sources_are_supplied_not_asserted(tmp_path):
     from jra_scraper.scraper import safe_filename
     path = tmp_path / f'horse_{safe_filename("H")}.html'

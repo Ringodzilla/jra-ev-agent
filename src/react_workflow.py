@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict
+from copy import deepcopy
 
 import json
 from pathlib import Path
@@ -106,13 +107,21 @@ class ReactiveRaceWorkflow:
         race_limit: int | None = None,
         horse_limit: int | None = None,
         reprocess_raw: bool = False,
+        collected_input: dict | None = None,
     ) -> dict[str, object]:
+        if collected_input is not None:
+            if not self.enforce_skill_gates or self.skill_sequence is None:
+                raise ValueError('Saved collection requires enforced skill gates')
+            if not isinstance(collected_input, dict) or collected_input.get('race_configs') != race_configs:
+                raise ValueError('Saved collection race_configs must match the requested configuration')
+            if '_skill_binding' in collected_input:
+                raise ValueError('Saved collection must not carry a previous run binding')
         final_payload: dict[str, object] = {}
         collector = self._select_collector(race_configs)
 
         for attempt in range(self.settings.max_repair_attempts + 1):
             aggressive_repair = attempt > 0
-            collected = collector.run(
+            collected = deepcopy(collected_input) if collected_input is not None else collector.run(
                 race_configs,
                 force_rebuild=force_rebuild or aggressive_repair,
                 race_limit=race_limit,
@@ -122,7 +131,10 @@ class ReactiveRaceWorkflow:
             )
             if self.skill_sequence is not None:
                 self._audit_collected = collected
-                attach_history_sources(collected, self.config.raw_dir)
+                # Saved inputs are a frozen evidence set. Adding today's cache
+                # would change their sources and could import unrelated races.
+                if collected_input is None:
+                    attach_history_sources(collected, self.config.raw_dir)
                 self.skill_sequence.record('collection', self.skill_sequence.bind(collected),
                                            checks={'entries_present': bool(collected.get('entries'))})
                 audit = audit_collected_data(collected, race_configs, self.integrity_approvals)

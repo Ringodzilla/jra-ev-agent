@@ -27,6 +27,20 @@ except ModuleNotFoundError:
 
 @unittest.skipUnless(HAS_RUN_PIPELINE, "run_pipeline dependencies are not installed")
 class TestPipelineEntrypoints(unittest.TestCase):
+    def test_cli_saved_collector_is_passed_with_gates_enforced(self):
+        from unittest.mock import patch
+        from scripts import run_pipeline
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / 'collector.json'
+            collected = {'race_configs': [{'race_id': 'R'}], 'rows': [], 'entries': []}
+            path.write_text(json.dumps(collected), encoding='utf-8')
+            with patch('sys.argv', ['run_pipeline.py', '--collected-path', str(path)]), \
+                 patch.object(run_pipeline, 'load_race_configs', return_value=[{'race_id': 'R'}]), \
+                 patch.object(run_pipeline, 'run_analysis_phase', return_value={}) as run:
+                run_pipeline.main()
+            self.assertEqual(run.call_args.kwargs['collected_input'], collected)
+            self.assertIs(run.call_args.kwargs['enforce_skill_gates'], True)
+
     def test_load_race_configs_requires_keys(self):
         with tempfile.TemporaryDirectory() as td:
             p = Path(td) / "races.json"

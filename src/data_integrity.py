@@ -102,9 +102,14 @@ def verify_source_artifacts(collected: dict) -> dict:
                 parsed = _history_result_observations(html, artifact)
             elif artifact.get('kind') == 'history_odds':
                 parsed = _history_odds_observations(html, artifact)
+            elif artifact.get('kind') in {
+                'nar_history_result', 'hkjc_history_sectionals', 'overseas_jra_result', 'france_tracking_pdf',
+            }:
+                from jra_scraper.foreign_history import parse_foreign_history_artifact
+                parsed = parse_foreign_history_artifact(html, artifact)
             else:
                 continue
-        except (ValueError, TypeError, KeyError):
+        except (ValueError, TypeError, KeyError, OSError):
             return {'status': 'UNVERIFIED', 'mismatches': [],
                     'acquisition_coverage': missing_source_coverage(collected, _RAW_FIELDS)}
         for raw_row in parsed:
