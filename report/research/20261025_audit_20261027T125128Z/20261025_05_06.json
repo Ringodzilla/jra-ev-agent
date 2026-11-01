@@ -1,0 +1,1790 @@
+{
+  "schema_version": 1,
+  "status": "BLOCKED_UNAPPROVED_IMPUTATION",
+  "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+  "purpose": "research_preparation",
+  "verification_issues": [],
+  "recovered_imputation_provenance": [],
+  "input_sha256": "cc4cf0caa4e70b6cc6131d44187992884c2e852eb73a864bbb655da038030a21",
+  "race_ids": [
+    "20261025_05_06"
+  ],
+  "findings": [
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024105324/18",
+      "horse_number": "1",
+      "run_index": "",
+      "field": "history",
+      "method": "neutral_history_fallback",
+      "finding_id": "dd14a18998c794e781a49e91",
+      "feature_impact": "all_history_features",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024105324/18",
+      "horse_number": "1",
+      "run_index": "",
+      "field": "current_popularity",
+      "method": "history_average_or_10",
+      "finding_id": "95aa3fe85e69664e0cd979de",
+      "feature_impact": "popularity_gap",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024105324/18",
+      "horse_number": "1",
+      "run_index": "",
+      "field": "current_odds",
+      "method": "default_0",
+      "finding_id": "41de9d93896d2655ee8bdc56",
+      "feature_impact": "market_support,EV",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024101952/CC",
+      "horse_number": "2",
+      "run_index": "",
+      "field": "history",
+      "method": "neutral_history_fallback",
+      "finding_id": "bff1c6e0223fd91956e3f5ec",
+      "feature_impact": "all_history_features",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024101952/CC",
+      "horse_number": "2",
+      "run_index": "",
+      "field": "current_popularity",
+      "method": "history_average_or_10",
+      "finding_id": "17a807e054cf55abd8922790",
+      "feature_impact": "popularity_gap",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024101952/CC",
+      "horse_number": "2",
+      "run_index": "",
+      "field": "current_odds",
+      "method": "default_0",
+      "finding_id": "6daa43007f14d4c1e9780b78",
+      "feature_impact": "market_support,EV",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024105044/A5",
+      "horse_number": "3",
+      "run_index": "",
+      "field": "history",
+      "method": "neutral_history_fallback",
+      "finding_id": "66c037a8933c3417165f0a9a",
+      "feature_impact": "all_history_features",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024105044/A5",
+      "horse_number": "3",
+      "run_index": "",
+      "field": "current_popularity",
+      "method": "history_average_or_10",
+      "finding_id": "eaadb1c4145b9434b3557c80",
+      "feature_impact": "popularity_gap",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024105044/A5",
+      "horse_number": "3",
+      "run_index": "",
+      "field": "current_odds",
+      "method": "default_0",
+      "finding_id": "8279be6cd8b03ef682e9192e",
+      "feature_impact": "market_support,EV",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024105541/41",
+      "horse_number": "4",
+      "run_index": "",
+      "field": "history",
+      "method": "neutral_history_fallback",
+      "finding_id": "c2b66ebb516e68f37a6b590f",
+      "feature_impact": "all_history_features",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024105541/41",
+      "horse_number": "4",
+      "run_index": "",
+      "field": "current_popularity",
+      "method": "history_average_or_10",
+      "finding_id": "609a7c77ba4af4f7e22fb9a5",
+      "feature_impact": "popularity_gap",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024105541/41",
+      "horse_number": "4",
+      "run_index": "",
+      "field": "current_odds",
+      "method": "default_0",
+      "finding_id": "a77fc2a951e4e5afc3a8f420",
+      "feature_impact": "market_support,EV",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024107425/9A",
+      "horse_number": "5",
+      "run_index": "",
+      "field": "history",
+      "method": "neutral_history_fallback",
+      "finding_id": "11b41d21a5779a44a9d4ea4c",
+      "feature_impact": "all_history_features",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024107425/9A",
+      "horse_number": "5",
+      "run_index": "",
+      "field": "current_popularity",
+      "method": "history_average_or_10",
+      "finding_id": "247d705cfe088350dfdc6a80",
+      "feature_impact": "popularity_gap",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024107425/9A",
+      "horse_number": "5",
+      "run_index": "",
+      "field": "current_odds",
+      "method": "default_0",
+      "finding_id": "52ec015bc49f0fc74a42058f",
+      "feature_impact": "market_support,EV",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024101691/06",
+      "horse_number": "6",
+      "run_index": "",
+      "field": "history",
+      "method": "neutral_history_fallback",
+      "finding_id": "d7440643e21c723a3b6fdeda",
+      "feature_impact": "all_history_features",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024101691/06",
+      "horse_number": "6",
+      "run_index": "",
+      "field": "current_popularity",
+      "method": "history_average_or_10",
+      "finding_id": "580a18b8dc6ff05d6fe27e66",
+      "feature_impact": "popularity_gap",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024101691/06",
+      "horse_number": "6",
+      "run_index": "",
+      "field": "current_odds",
+      "method": "default_0",
+      "finding_id": "e86ff7bb513dd36897527e8a",
+      "feature_impact": "market_support,EV",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024108029/91",
+      "horse_number": "7",
+      "run_index": "",
+      "field": "history",
+      "method": "neutral_history_fallback",
+      "finding_id": "4e12a45154c2799f98eafc05",
+      "feature_impact": "all_history_features",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024108029/91",
+      "horse_number": "7",
+      "run_index": "",
+      "field": "current_popularity",
+      "method": "history_average_or_10",
+      "finding_id": "52815fd55c135bdf4e25e492",
+      "feature_impact": "popularity_gap",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024108029/91",
+      "horse_number": "7",
+      "run_index": "",
+      "field": "current_odds",
+      "method": "default_0",
+      "finding_id": "9df7044b7b1de0bccf787e3b",
+      "feature_impact": "market_support,EV",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024105510/9E",
+      "horse_number": "8",
+      "run_index": "",
+      "field": "history",
+      "method": "neutral_history_fallback",
+      "finding_id": "2cdf42a48639561617423c88",
+      "feature_impact": "all_history_features",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024105510/9E",
+      "horse_number": "8",
+      "run_index": "",
+      "field": "current_popularity",
+      "method": "history_average_or_10",
+      "finding_id": "c4364fd2417584d547014e4f",
+      "feature_impact": "popularity_gap",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024105510/9E",
+      "horse_number": "8",
+      "run_index": "",
+      "field": "current_odds",
+      "method": "default_0",
+      "finding_id": "1ad033eb2c0c37beebee6e0b",
+      "feature_impact": "market_support,EV",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024104671/B3",
+      "horse_number": "9",
+      "run_index": "",
+      "field": "history",
+      "method": "neutral_history_fallback",
+      "finding_id": "cf41f0338cd670187d0324a2",
+      "feature_impact": "all_history_features",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024104671/B3",
+      "horse_number": "9",
+      "run_index": "",
+      "field": "current_popularity",
+      "method": "history_average_or_10",
+      "finding_id": "82e712ffc5d1dadbb236d6ab",
+      "feature_impact": "popularity_gap",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024104671/B3",
+      "horse_number": "9",
+      "run_index": "",
+      "field": "current_odds",
+      "method": "default_0",
+      "finding_id": "74e011fbe350e71e69f0b7e1",
+      "feature_impact": "market_support,EV",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024104407/93",
+      "horse_number": "10",
+      "run_index": "",
+      "field": "history",
+      "method": "neutral_history_fallback",
+      "finding_id": "238501930c14b7d422502bac",
+      "feature_impact": "all_history_features",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024104407/93",
+      "horse_number": "10",
+      "run_index": "",
+      "field": "current_popularity",
+      "method": "history_average_or_10",
+      "finding_id": "6fbc884025366d5272d0c1dd",
+      "feature_impact": "popularity_gap",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024104407/93",
+      "horse_number": "10",
+      "run_index": "",
+      "field": "current_odds",
+      "method": "default_0",
+      "finding_id": "73002b969ca2dea9d7ab69b6",
+      "feature_impact": "market_support,EV",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024106289/75",
+      "horse_number": "11",
+      "run_index": "",
+      "field": "history",
+      "method": "neutral_history_fallback",
+      "finding_id": "79b49ed3496e891dd7cf2d05",
+      "feature_impact": "all_history_features",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024106289/75",
+      "horse_number": "11",
+      "run_index": "",
+      "field": "current_popularity",
+      "method": "history_average_or_10",
+      "finding_id": "4067150d8dbe57882d9d15e3",
+      "feature_impact": "popularity_gap",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024106289/75",
+      "horse_number": "11",
+      "run_index": "",
+      "field": "current_odds",
+      "method": "default_0",
+      "finding_id": "776a13a6a4f0fd73b9bfad8b",
+      "feature_impact": "market_support,EV",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024102626/C4",
+      "horse_number": "12",
+      "run_index": "",
+      "field": "history",
+      "method": "neutral_history_fallback",
+      "finding_id": "fcc81c614a2cf04338e304f2",
+      "feature_impact": "all_history_features",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024102626/C4",
+      "horse_number": "12",
+      "run_index": "",
+      "field": "current_popularity",
+      "method": "history_average_or_10",
+      "finding_id": "63b1bfe9ae87bb914608e05b",
+      "feature_impact": "popularity_gap",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024102626/C4",
+      "horse_number": "12",
+      "run_index": "",
+      "field": "current_odds",
+      "method": "default_0",
+      "finding_id": "59c6680af3a8c339b16d92ff",
+      "feature_impact": "market_support,EV",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024104821/C5",
+      "horse_number": "13",
+      "run_index": "",
+      "field": "history",
+      "method": "neutral_history_fallback",
+      "finding_id": "8a34e75c5dc89e7bbec0cbe0",
+      "feature_impact": "all_history_features",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024104821/C5",
+      "horse_number": "13",
+      "run_index": "",
+      "field": "current_popularity",
+      "method": "history_average_or_10",
+      "finding_id": "816ac88ecec74781467529a3",
+      "feature_impact": "popularity_gap",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024104821/C5",
+      "horse_number": "13",
+      "run_index": "",
+      "field": "current_odds",
+      "method": "default_0",
+      "finding_id": "44a1749bcf1b98a48dd15a09",
+      "feature_impact": "market_support,EV",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024106600/AE",
+      "horse_number": "14",
+      "run_index": "",
+      "field": "history",
+      "method": "neutral_history_fallback",
+      "finding_id": "357e3360923c37833719ce84",
+      "feature_impact": "all_history_features",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024106600/AE",
+      "horse_number": "14",
+      "run_index": "",
+      "field": "current_popularity",
+      "method": "history_average_or_10",
+      "finding_id": "8da1badf646a1cce6d45c3e1",
+      "feature_impact": "popularity_gap",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024106600/AE",
+      "horse_number": "14",
+      "run_index": "",
+      "field": "current_odds",
+      "method": "default_0",
+      "finding_id": "e6d0fcc9f314f5503db9352f",
+      "feature_impact": "market_support,EV",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024102210/3E",
+      "horse_number": "15",
+      "run_index": "",
+      "field": "history",
+      "method": "neutral_history_fallback",
+      "finding_id": "dc50e44bbfaed1164443c4b2",
+      "feature_impact": "all_history_features",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024102210/3E",
+      "horse_number": "15",
+      "run_index": "",
+      "field": "current_popularity",
+      "method": "history_average_or_10",
+      "finding_id": "b9b18c5b0304558d207ab462",
+      "feature_impact": "popularity_gap",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024102210/3E",
+      "horse_number": "15",
+      "run_index": "",
+      "field": "current_odds",
+      "method": "default_0",
+      "finding_id": "f11bc9678fe4d7c5477b95de",
+      "feature_impact": "market_support,EV",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024105136/AC",
+      "horse_number": "16",
+      "run_index": "",
+      "field": "history",
+      "method": "neutral_history_fallback",
+      "finding_id": "79194fbe21ac34e5d65f399d",
+      "feature_impact": "all_history_features",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024105136/AC",
+      "horse_number": "16",
+      "run_index": "",
+      "field": "current_popularity",
+      "method": "history_average_or_10",
+      "finding_id": "615e9ea5b598d78d2f333dbe",
+      "feature_impact": "popularity_gap",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_id": "pw01dud002024105136/AC",
+      "horse_number": "16",
+      "run_index": "",
+      "field": "current_odds",
+      "method": "default_0",
+      "finding_id": "e5f21d96c6cb6bdc230c6c16",
+      "feature_impact": "market_support,EV",
+      "required_missing": false,
+      "approved": false
+    }
+  ],
+  "acquisition_coverage": {
+    "status": "BLOCKED",
+    "records": [],
+    "counts": {}
+  },
+  "missing_fields": [],
+  "missing_field_counts": {},
+  "history_counts": [
+    {
+      "race_id": "20261025_05_06",
+      "horse_number": "1",
+      "collected": 0,
+      "required": 0,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_number": "2",
+      "collected": 0,
+      "required": 0,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_number": "3",
+      "collected": 0,
+      "required": 0,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_number": "4",
+      "collected": 0,
+      "required": 0,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_number": "5",
+      "collected": 0,
+      "required": 0,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_number": "6",
+      "collected": 0,
+      "required": 0,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_number": "7",
+      "collected": 0,
+      "required": 0,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_number": "8",
+      "collected": 0,
+      "required": 0,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_number": "9",
+      "collected": 0,
+      "required": 0,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_number": "10",
+      "collected": 0,
+      "required": 0,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_number": "11",
+      "collected": 0,
+      "required": 0,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_number": "12",
+      "collected": 0,
+      "required": 0,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_number": "13",
+      "collected": 0,
+      "required": 0,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_number": "14",
+      "collected": 0,
+      "required": 0,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_number": "15",
+      "collected": 0,
+      "required": 0,
+      "status": "COMPLETE"
+    },
+    {
+      "race_id": "20261025_05_06",
+      "horse_number": "16",
+      "collected": 0,
+      "required": 0,
+      "status": "COMPLETE"
+    }
+  ],
+  "history_counts_verified": true,
+  "unapproved_finding_count": 48,
+  "source_audit_status": "UNVERIFIED",
+  "raw_provenance_status": "UNVERIFIED",
+  "limitations": [
+    "Normalized inputs only; original-source parser omissions are not verified.",
+    "Collector quality flags and nonempty numeric values do not prove observed origin.",
+    "Raw history reparse verifies reproducibility, not independent parser completeness or current entry provenance."
+  ],
+  "source_issue_classification": [],
+  "entry_model_requirements_scope": "Current market requirements belong to prediction; this collection is post-event research preparation, no model executed.",
+  "race_id": "20261025_05_06",
+  "audit_script_sha256": "d0185c8ea54f9cc8085c794b9ed466935657f8e53c3ce944ff5c8c5e09f0ffc6",
+  "input_artifacts": [
+    {
+      "path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_05_06.json",
+      "sha256": "94ac0f3e5775a44c5868700e4bbf84964f064c283e9da3d72b01f701d2e811e1"
+    }
+  ],
+  "nar_source_checks": [],
+  "environment_pairing": {
+    "track": "東京",
+    "environment_artifact": "report/research/20261025_environment_20261027T125148Z/environment_collection.json",
+    "environment_sha256": "31c0e6677f0aa0d69a5bb4974d4ae30836f21987e237ba6f1bc6889525e9866b",
+    "weather": "曇",
+    "track_condition": "稍重",
+    "race_condition_provenance": "post_event_official_result",
+    "pre_race_capture_proven": false,
+    "same_day_cushion_observations": [
+      {
+        "measured_at": "2026-10-25T07:00:00+09:00",
+        "cushion": 9.5
+      }
+    ],
+    "same_day_moisture_observations": [
+      {
+        "measured_at": "2026-10-25T05:30:00+09:00",
+        "turf_moisture_goal": 17.5,
+        "turf_moisture_goal_condition": "wet",
+        "turf_moisture_corner4": 16.9,
+        "turf_moisture_corner4_condition": "wet",
+        "dirt_moisture_goal": 7.4,
+        "dirt_moisture_goal_condition": "wet",
+        "dirt_moisture_corner4": 7.9,
+        "dirt_moisture_corner4_condition": "wet",
+        "note": "注記：特になし"
+      }
+    ],
+    "environment_score": "NOT_CALCULATED",
+    "model_fit": "NOT_EXECUTED",
+    "status": "MATCHED_POST_EVENT_RECONSTRUCTION"
+  },
+  "field_missingness": [],
+  "imputations": {
+    "adopted_for_learning": [],
+    "potential_if_model_executed": [
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024105324/18",
+        "horse_number": "1",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "dd14a18998c794e781a49e91",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024105324/18",
+        "horse_number": "1",
+        "run_index": "",
+        "field": "current_popularity",
+        "method": "history_average_or_10",
+        "finding_id": "95aa3fe85e69664e0cd979de",
+        "feature_impact": "popularity_gap",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024105324/18",
+        "horse_number": "1",
+        "run_index": "",
+        "field": "current_odds",
+        "method": "default_0",
+        "finding_id": "41de9d93896d2655ee8bdc56",
+        "feature_impact": "market_support,EV",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024101952/CC",
+        "horse_number": "2",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "bff1c6e0223fd91956e3f5ec",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024101952/CC",
+        "horse_number": "2",
+        "run_index": "",
+        "field": "current_popularity",
+        "method": "history_average_or_10",
+        "finding_id": "17a807e054cf55abd8922790",
+        "feature_impact": "popularity_gap",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024101952/CC",
+        "horse_number": "2",
+        "run_index": "",
+        "field": "current_odds",
+        "method": "default_0",
+        "finding_id": "6daa43007f14d4c1e9780b78",
+        "feature_impact": "market_support,EV",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024105044/A5",
+        "horse_number": "3",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "66c037a8933c3417165f0a9a",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024105044/A5",
+        "horse_number": "3",
+        "run_index": "",
+        "field": "current_popularity",
+        "method": "history_average_or_10",
+        "finding_id": "eaadb1c4145b9434b3557c80",
+        "feature_impact": "popularity_gap",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024105044/A5",
+        "horse_number": "3",
+        "run_index": "",
+        "field": "current_odds",
+        "method": "default_0",
+        "finding_id": "8279be6cd8b03ef682e9192e",
+        "feature_impact": "market_support,EV",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024105541/41",
+        "horse_number": "4",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "c2b66ebb516e68f37a6b590f",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024105541/41",
+        "horse_number": "4",
+        "run_index": "",
+        "field": "current_popularity",
+        "method": "history_average_or_10",
+        "finding_id": "609a7c77ba4af4f7e22fb9a5",
+        "feature_impact": "popularity_gap",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024105541/41",
+        "horse_number": "4",
+        "run_index": "",
+        "field": "current_odds",
+        "method": "default_0",
+        "finding_id": "a77fc2a951e4e5afc3a8f420",
+        "feature_impact": "market_support,EV",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024107425/9A",
+        "horse_number": "5",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "11b41d21a5779a44a9d4ea4c",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024107425/9A",
+        "horse_number": "5",
+        "run_index": "",
+        "field": "current_popularity",
+        "method": "history_average_or_10",
+        "finding_id": "247d705cfe088350dfdc6a80",
+        "feature_impact": "popularity_gap",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024107425/9A",
+        "horse_number": "5",
+        "run_index": "",
+        "field": "current_odds",
+        "method": "default_0",
+        "finding_id": "52ec015bc49f0fc74a42058f",
+        "feature_impact": "market_support,EV",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024101691/06",
+        "horse_number": "6",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "d7440643e21c723a3b6fdeda",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024101691/06",
+        "horse_number": "6",
+        "run_index": "",
+        "field": "current_popularity",
+        "method": "history_average_or_10",
+        "finding_id": "580a18b8dc6ff05d6fe27e66",
+        "feature_impact": "popularity_gap",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024101691/06",
+        "horse_number": "6",
+        "run_index": "",
+        "field": "current_odds",
+        "method": "default_0",
+        "finding_id": "e86ff7bb513dd36897527e8a",
+        "feature_impact": "market_support,EV",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024108029/91",
+        "horse_number": "7",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "4e12a45154c2799f98eafc05",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024108029/91",
+        "horse_number": "7",
+        "run_index": "",
+        "field": "current_popularity",
+        "method": "history_average_or_10",
+        "finding_id": "52815fd55c135bdf4e25e492",
+        "feature_impact": "popularity_gap",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024108029/91",
+        "horse_number": "7",
+        "run_index": "",
+        "field": "current_odds",
+        "method": "default_0",
+        "finding_id": "9df7044b7b1de0bccf787e3b",
+        "feature_impact": "market_support,EV",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024105510/9E",
+        "horse_number": "8",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "2cdf42a48639561617423c88",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024105510/9E",
+        "horse_number": "8",
+        "run_index": "",
+        "field": "current_popularity",
+        "method": "history_average_or_10",
+        "finding_id": "c4364fd2417584d547014e4f",
+        "feature_impact": "popularity_gap",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024105510/9E",
+        "horse_number": "8",
+        "run_index": "",
+        "field": "current_odds",
+        "method": "default_0",
+        "finding_id": "1ad033eb2c0c37beebee6e0b",
+        "feature_impact": "market_support,EV",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024104671/B3",
+        "horse_number": "9",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "cf41f0338cd670187d0324a2",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024104671/B3",
+        "horse_number": "9",
+        "run_index": "",
+        "field": "current_popularity",
+        "method": "history_average_or_10",
+        "finding_id": "82e712ffc5d1dadbb236d6ab",
+        "feature_impact": "popularity_gap",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024104671/B3",
+        "horse_number": "9",
+        "run_index": "",
+        "field": "current_odds",
+        "method": "default_0",
+        "finding_id": "74e011fbe350e71e69f0b7e1",
+        "feature_impact": "market_support,EV",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024104407/93",
+        "horse_number": "10",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "238501930c14b7d422502bac",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024104407/93",
+        "horse_number": "10",
+        "run_index": "",
+        "field": "current_popularity",
+        "method": "history_average_or_10",
+        "finding_id": "6fbc884025366d5272d0c1dd",
+        "feature_impact": "popularity_gap",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024104407/93",
+        "horse_number": "10",
+        "run_index": "",
+        "field": "current_odds",
+        "method": "default_0",
+        "finding_id": "73002b969ca2dea9d7ab69b6",
+        "feature_impact": "market_support,EV",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024106289/75",
+        "horse_number": "11",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "79b49ed3496e891dd7cf2d05",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024106289/75",
+        "horse_number": "11",
+        "run_index": "",
+        "field": "current_popularity",
+        "method": "history_average_or_10",
+        "finding_id": "4067150d8dbe57882d9d15e3",
+        "feature_impact": "popularity_gap",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024106289/75",
+        "horse_number": "11",
+        "run_index": "",
+        "field": "current_odds",
+        "method": "default_0",
+        "finding_id": "776a13a6a4f0fd73b9bfad8b",
+        "feature_impact": "market_support,EV",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024102626/C4",
+        "horse_number": "12",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "fcc81c614a2cf04338e304f2",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024102626/C4",
+        "horse_number": "12",
+        "run_index": "",
+        "field": "current_popularity",
+        "method": "history_average_or_10",
+        "finding_id": "63b1bfe9ae87bb914608e05b",
+        "feature_impact": "popularity_gap",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024102626/C4",
+        "horse_number": "12",
+        "run_index": "",
+        "field": "current_odds",
+        "method": "default_0",
+        "finding_id": "59c6680af3a8c339b16d92ff",
+        "feature_impact": "market_support,EV",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024104821/C5",
+        "horse_number": "13",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "8a34e75c5dc89e7bbec0cbe0",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024104821/C5",
+        "horse_number": "13",
+        "run_index": "",
+        "field": "current_popularity",
+        "method": "history_average_or_10",
+        "finding_id": "816ac88ecec74781467529a3",
+        "feature_impact": "popularity_gap",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024104821/C5",
+        "horse_number": "13",
+        "run_index": "",
+        "field": "current_odds",
+        "method": "default_0",
+        "finding_id": "44a1749bcf1b98a48dd15a09",
+        "feature_impact": "market_support,EV",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024106600/AE",
+        "horse_number": "14",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "357e3360923c37833719ce84",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024106600/AE",
+        "horse_number": "14",
+        "run_index": "",
+        "field": "current_popularity",
+        "method": "history_average_or_10",
+        "finding_id": "8da1badf646a1cce6d45c3e1",
+        "feature_impact": "popularity_gap",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024106600/AE",
+        "horse_number": "14",
+        "run_index": "",
+        "field": "current_odds",
+        "method": "default_0",
+        "finding_id": "e6d0fcc9f314f5503db9352f",
+        "feature_impact": "market_support,EV",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024102210/3E",
+        "horse_number": "15",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "dc50e44bbfaed1164443c4b2",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024102210/3E",
+        "horse_number": "15",
+        "run_index": "",
+        "field": "current_popularity",
+        "method": "history_average_or_10",
+        "finding_id": "b9b18c5b0304558d207ab462",
+        "feature_impact": "popularity_gap",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024102210/3E",
+        "horse_number": "15",
+        "run_index": "",
+        "field": "current_odds",
+        "method": "default_0",
+        "finding_id": "f11bc9678fe4d7c5477b95de",
+        "feature_impact": "market_support,EV",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024105136/AC",
+        "horse_number": "16",
+        "run_index": "",
+        "field": "history",
+        "method": "neutral_history_fallback",
+        "finding_id": "79194fbe21ac34e5d65f399d",
+        "feature_impact": "all_history_features",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024105136/AC",
+        "horse_number": "16",
+        "run_index": "",
+        "field": "current_popularity",
+        "method": "history_average_or_10",
+        "finding_id": "615e9ea5b598d78d2f333dbe",
+        "feature_impact": "popularity_gap",
+        "required_missing": false,
+        "approved": false
+      },
+      {
+        "race_id": "20261025_05_06",
+        "horse_id": "pw01dud002024105136/AC",
+        "horse_number": "16",
+        "run_index": "",
+        "field": "current_odds",
+        "method": "default_0",
+        "finding_id": "e5f21d96c6cb6bdc230c6c16",
+        "feature_impact": "market_support,EV",
+        "required_missing": false,
+        "approved": false
+      }
+    ]
+  },
+  "approval_checks": [
+    {
+      "status": "NOT_APPROVED",
+      "scope": "No imputation approved; no model executed"
+    }
+  ],
+  "horse_set_check": {
+    "declared": {
+      "1": "リアスドール",
+      "2": "ボルトライン",
+      "3": "タカチャン",
+      "4": "ミコアイランド",
+      "5": "ナンヨーカラフル",
+      "6": "スタニングヨシノ",
+      "7": "レインワルティア",
+      "8": "ゴルゴーローズ",
+      "9": "ビーセルフィッシュ",
+      "10": "ニャンコ",
+      "11": "クリスタルシュガー",
+      "12": "アルパイングリーン",
+      "13": "ノーブルウィナー",
+      "14": "ミストヴェール",
+      "15": "チャジャッタ",
+      "16": "ケレドフェスティヴ"
+    },
+    "result": {
+      "14": "ミストヴェール",
+      "13": "ノーブルウィナー",
+      "11": "クリスタルシュガー",
+      "12": "アルパイングリーン",
+      "4": "ミコアイランド",
+      "2": "ボルトライン",
+      "3": "タカチャン",
+      "16": "ケレドフェスティヴ",
+      "10": "ニャンコ",
+      "15": "チャジャッタ",
+      "6": "スタニングヨシノ",
+      "5": "ナンヨーカラフル",
+      "8": "ゴルゴーローズ",
+      "7": "レインワルティア",
+      "9": "ビーセルフィッシュ",
+      "1": "リアスドール"
+    },
+    "same_set": true,
+    "starter_set_same": true,
+    "nonstarters": []
+  },
+  "leakage_check": {
+    "history_after_or_on_target": [],
+    "container_risks": [],
+    "labels_separate": true,
+    "training_execution": "NOT_EXECUTED",
+    "gate": "PASS_DATE_AND_CONTAINER_CHECK_ONLY"
+  },
+  "history_count_expected": [
+    {
+      "horse_number": "1",
+      "required": 0,
+      "collected": 0
+    },
+    {
+      "horse_number": "2",
+      "required": 0,
+      "collected": 0
+    },
+    {
+      "horse_number": "3",
+      "required": 0,
+      "collected": 0
+    },
+    {
+      "horse_number": "4",
+      "required": 0,
+      "collected": 0
+    },
+    {
+      "horse_number": "5",
+      "required": 0,
+      "collected": 0
+    },
+    {
+      "horse_number": "6",
+      "required": 0,
+      "collected": 0
+    },
+    {
+      "horse_number": "7",
+      "required": 0,
+      "collected": 0
+    },
+    {
+      "horse_number": "8",
+      "required": 0,
+      "collected": 0
+    },
+    {
+      "horse_number": "9",
+      "required": 0,
+      "collected": 0
+    },
+    {
+      "horse_number": "10",
+      "required": 0,
+      "collected": 0
+    },
+    {
+      "horse_number": "11",
+      "required": 0,
+      "collected": 0
+    },
+    {
+      "horse_number": "12",
+      "required": 0,
+      "collected": 0
+    },
+    {
+      "horse_number": "13",
+      "required": 0,
+      "collected": 0
+    },
+    {
+      "horse_number": "14",
+      "required": 0,
+      "collected": 0
+    },
+    {
+      "horse_number": "15",
+      "required": 0,
+      "collected": 0
+    },
+    {
+      "horse_number": "16",
+      "required": 0,
+      "collected": 0
+    }
+  ],
+  "history_date_set_checks": [
+    {
+      "horse_number": "1",
+      "expected_dates": [],
+      "actual_dates": [],
+      "status": "PASS"
+    },
+    {
+      "horse_number": "2",
+      "expected_dates": [],
+      "actual_dates": [],
+      "status": "PASS"
+    },
+    {
+      "horse_number": "3",
+      "expected_dates": [],
+      "actual_dates": [],
+      "status": "PASS"
+    },
+    {
+      "horse_number": "4",
+      "expected_dates": [],
+      "actual_dates": [],
+      "status": "PASS"
+    },
+    {
+      "horse_number": "5",
+      "expected_dates": [],
+      "actual_dates": [],
+      "status": "PASS"
+    },
+    {
+      "horse_number": "6",
+      "expected_dates": [],
+      "actual_dates": [],
+      "status": "PASS"
+    },
+    {
+      "horse_number": "7",
+      "expected_dates": [],
+      "actual_dates": [],
+      "status": "PASS"
+    },
+    {
+      "horse_number": "8",
+      "expected_dates": [],
+      "actual_dates": [],
+      "status": "PASS"
+    },
+    {
+      "horse_number": "9",
+      "expected_dates": [],
+      "actual_dates": [],
+      "status": "PASS"
+    },
+    {
+      "horse_number": "10",
+      "expected_dates": [],
+      "actual_dates": [],
+      "status": "PASS"
+    },
+    {
+      "horse_number": "11",
+      "expected_dates": [],
+      "actual_dates": [],
+      "status": "PASS"
+    },
+    {
+      "horse_number": "12",
+      "expected_dates": [],
+      "actual_dates": [],
+      "status": "PASS"
+    },
+    {
+      "horse_number": "13",
+      "expected_dates": [],
+      "actual_dates": [],
+      "status": "PASS"
+    },
+    {
+      "horse_number": "14",
+      "expected_dates": [],
+      "actual_dates": [],
+      "status": "PASS"
+    },
+    {
+      "horse_number": "15",
+      "expected_dates": [],
+      "actual_dates": [],
+      "status": "PASS"
+    },
+    {
+      "horse_number": "16",
+      "expected_dates": [],
+      "actual_dates": [],
+      "status": "PASS"
+    }
+  ],
+  "career_source_checks": [
+    {
+      "horse_number": "1",
+      "status": "PASS",
+      "before_target_count": 0,
+      "official_totals": {
+        "平地レース合計": 1,
+        "障害レース合計": 0
+      },
+      "listed_started_count": 1,
+      "unknown_row_count": 0,
+      "nonstarter_count": 0,
+      "latest5_dates": []
+    },
+    {
+      "horse_number": "2",
+      "status": "PASS",
+      "before_target_count": 0,
+      "official_totals": {
+        "平地レース合計": 1,
+        "障害レース合計": 0
+      },
+      "listed_started_count": 1,
+      "unknown_row_count": 0,
+      "nonstarter_count": 0,
+      "latest5_dates": []
+    },
+    {
+      "horse_number": "3",
+      "status": "PASS",
+      "before_target_count": 0,
+      "official_totals": {
+        "平地レース合計": 1,
+        "障害レース合計": 0
+      },
+      "listed_started_count": 1,
+      "unknown_row_count": 0,
+      "nonstarter_count": 0,
+      "latest5_dates": []
+    },
+    {
+      "horse_number": "4",
+      "status": "PASS",
+      "before_target_count": 0,
+      "official_totals": {
+        "平地レース合計": 1,
+        "障害レース合計": 0
+      },
+      "listed_started_count": 1,
+      "unknown_row_count": 0,
+      "nonstarter_count": 0,
+      "latest5_dates": []
+    },
+    {
+      "horse_number": "5",
+      "status": "PASS",
+      "before_target_count": 0,
+      "official_totals": {
+        "平地レース合計": 1,
+        "障害レース合計": 0
+      },
+      "listed_started_count": 1,
+      "unknown_row_count": 0,
+      "nonstarter_count": 0,
+      "latest5_dates": []
+    },
+    {
+      "horse_number": "6",
+      "status": "PASS",
+      "before_target_count": 0,
+      "official_totals": {
+        "平地レース合計": 1,
+        "障害レース合計": 0
+      },
+      "listed_started_count": 1,
+      "unknown_row_count": 0,
+      "nonstarter_count": 0,
+      "latest5_dates": []
+    },
+    {
+      "horse_number": "7",
+      "status": "PASS",
+      "before_target_count": 0,
+      "official_totals": {
+        "平地レース合計": 1,
+        "障害レース合計": 0
+      },
+      "listed_started_count": 1,
+      "unknown_row_count": 0,
+      "nonstarter_count": 0,
+      "latest5_dates": []
+    },
+    {
+      "horse_number": "8",
+      "status": "PASS",
+      "before_target_count": 0,
+      "official_totals": {
+        "平地レース合計": 1,
+        "障害レース合計": 0
+      },
+      "listed_started_count": 1,
+      "unknown_row_count": 0,
+      "nonstarter_count": 0,
+      "latest5_dates": []
+    },
+    {
+      "horse_number": "9",
+      "status": "PASS",
+      "before_target_count": 0,
+      "official_totals": {
+        "平地レース合計": 1,
+        "障害レース合計": 0
+      },
+      "listed_started_count": 1,
+      "unknown_row_count": 0,
+      "nonstarter_count": 0,
+      "latest5_dates": []
+    },
+    {
+      "horse_number": "10",
+      "status": "PASS",
+      "before_target_count": 0,
+      "official_totals": {
+        "平地レース合計": 1,
+        "障害レース合計": 0
+      },
+      "listed_started_count": 1,
+      "unknown_row_count": 0,
+      "nonstarter_count": 0,
+      "latest5_dates": []
+    },
+    {
+      "horse_number": "11",
+      "status": "PASS",
+      "before_target_count": 0,
+      "official_totals": {
+        "平地レース合計": 1,
+        "障害レース合計": 0
+      },
+      "listed_started_count": 1,
+      "unknown_row_count": 0,
+      "nonstarter_count": 0,
+      "latest5_dates": []
+    },
+    {
+      "horse_number": "12",
+      "status": "PASS",
+      "before_target_count": 0,
+      "official_totals": {
+        "平地レース合計": 1,
+        "障害レース合計": 0
+      },
+      "listed_started_count": 1,
+      "unknown_row_count": 0,
+      "nonstarter_count": 0,
+      "latest5_dates": []
+    },
+    {
+      "horse_number": "13",
+      "status": "PASS",
+      "before_target_count": 0,
+      "official_totals": {
+        "平地レース合計": 1,
+        "障害レース合計": 0
+      },
+      "listed_started_count": 1,
+      "unknown_row_count": 0,
+      "nonstarter_count": 0,
+      "latest5_dates": []
+    },
+    {
+      "horse_number": "14",
+      "status": "PASS",
+      "before_target_count": 0,
+      "official_totals": {
+        "平地レース合計": 1,
+        "障害レース合計": 0
+      },
+      "listed_started_count": 1,
+      "unknown_row_count": 0,
+      "nonstarter_count": 0,
+      "latest5_dates": []
+    },
+    {
+      "horse_number": "15",
+      "status": "PASS",
+      "before_target_count": 0,
+      "official_totals": {
+        "平地レース合計": 1,
+        "障害レース合計": 0
+      },
+      "listed_started_count": 1,
+      "unknown_row_count": 0,
+      "nonstarter_count": 0,
+      "latest5_dates": []
+    },
+    {
+      "horse_number": "16",
+      "status": "PASS",
+      "before_target_count": 0,
+      "official_totals": {
+        "平地レース合計": 1,
+        "障害レース合計": 0
+      },
+      "listed_started_count": 1,
+      "unknown_row_count": 0,
+      "nonstarter_count": 0,
+      "latest5_dates": []
+    }
+  ],
+  "next_action": "Resolve concrete source/missingness findings before any calculation"
+}

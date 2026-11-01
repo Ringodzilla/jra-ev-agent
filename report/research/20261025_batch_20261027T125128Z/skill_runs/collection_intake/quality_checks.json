@@ -1,0 +1,18 @@
+{
+  "command": "scripts/check_quality.sh",
+  "exit_code": 0,
+  "checks": {
+    "ruff": "PASS",
+    "architecture": "PASS",
+    "feature_leakage": "PASS",
+    "skill_workflow_contracts": "PASS"
+  },
+  "pytest": {
+    "passed": 68,
+    "failed": 0,
+    "duration_seconds": 4.28
+  },
+  "warning": "urllib3 LibreSSL compatibility warning, execution passed",
+  "scope": "Existing project quality checks; raw report scripts independently executed and audited",
+  "recorded_at": "2026-10-27T13:06:24.876583+00:00"
+}

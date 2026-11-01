@@ -1,0 +1,2274 @@
+<!-- resources/views/home.blade.php -->
+
+
+<!-- resources/views/layouts/app.blade.php -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+        <title>地方競馬 データ情報</title>
+    
+    <!-- CSSファイルの読み込み -->
+            <link rel="stylesheet" href="/KeibaWeb/resources/css/reset.css?t=20260201_1" type="text/css" media="all" />
+            <link rel="stylesheet" href="/KeibaWeb/resources/css/DataRoom_common.css?t=20260201_1" type="text/css" media="all" />
+            <link rel="stylesheet" href="/KeibaWeb/resources/css/DataRoom_raceinfo2.css?t=20260201_1" type="text/css" media="all" />
+            <link rel="stylesheet" href="/KeibaWeb/resources/css/DataRoom_odd.css?t=20260201_1" type="text/css" media="all" />
+            <link rel="stylesheet" href="/KeibaWeb/resources/css/DataRoom.css?t=20260201_1" type="text/css" media="all" />
+            <link rel="stylesheet" href="/KeibaWeb/resources/css/DataRoomTop.css?t=20260201_1" type="text/css" media="all" />
+    
+    <!-- JSファイルの読み込み -->
+            <script type="text/javascript" src="/KeibaWeb/resources/js/jquery-1.9.1.min.js?t=20260130_1"></script>
+            <script type="text/javascript" src="/KeibaWeb/resources/js/common.js?t=20260130_1"></script>
+            <script type="text/javascript" src="/KeibaWeb/resources/js/common2.js?t=20260130_1"></script>
+            <script type="text/javascript" src="/KeibaWeb/resources/js/monthltconveninfo.js?t=20260130_1"></script>
+            <script type="text/javascript" src="/KeibaWeb/resources/js/odd.js?t=20260130_1"></script>
+            <script type="text/javascript" src="/KeibaWeb/resources/js/recentButton.js?t=20260130_1"></script>
+        <link rel="shortcut icon" href="/KeibaWeb/resources/img/favicon.ico" />
+</head>
+<body>
+    <header>
+    <div class="headerInner">
+        <div class="titleArea">
+            <h1>
+                <span>地方競馬情報サイト</span>
+                <a href="/index.html">
+                    <img src="/KeibaWeb/resources/img/mainlogo.png?bld=20240319134801" alt="">
+                </a>
+            </h1>
+            <div class="vote">
+                <img id="headerbanner00" src="/KeibaWeb/resources/img/header_banner_00.png?bld=20240319134801" alt="">
+            </div>
+            <ul class="bannerArea clearfix">
+                <li>
+                    <a href="/jranet/" target="_blank">
+                        <img class="normal" src="/KeibaWeb/resources/img/header_banner_01.png?bld=20240319134801">
+                        <img class="min" src="/KeibaWeb/resources/img/header_banner_01_min.png?bld=20240319134801">
+                    </a>
+                </li>
+                                <li>
+                    <a href="https://www.spat4.jp/keiba/pc" target="_blank">
+                        <img class="normal" src="/KeibaWeb/resources/img/header_banner_02.png?bld=20240319134801">
+                        <img class="min" src="/KeibaWeb/resources/img/header_banner_02_min.png?bld=20240319134801">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://my.keiba.rakuten.co.jp/?scid=keiba_NAR_bet" target="_blank">
+                        <img class="normal" src="/KeibaWeb/resources/img/header_banner_03.png?bld=20240319134801">
+                        <img class="min" src="/KeibaWeb/resources/img/header_banner_03_min.png?bld=20240319134801">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.oddspark.com/keiba/auth/VoteKeibaTop.do" target="_blank">
+                        <img class="normal" src="/KeibaWeb/resources/img/header_banner_04.png?bld=20240319134801">
+                        <img class="min" src="/KeibaWeb/resources/img/header_banner_04_min.png?bld=20240319134801">
+                    </a>
+                </li>
+                            </ul>
+            <div class="topSearch clearfix">
+                <form id="cse-search-box" action="https://google.com/cse">
+                    <input type="hidden" name="cx" value="000374752549361390111:sr3uzpcoe-q" />
+                    <input type="hidden" name="ie" value="UTF-8" />
+                    <input type="text" name="q" size="31" class="searchBox"/ placeholder="サイト内検索">
+                    <input type="submit" name="sa" value="" class="searchBtn"/>
+                </form>
+                <script type="text/javascript"
+                                src="https://www.google.com/coop/cse/brand?form=cse-search-boxamp;lang=ja"></script>
+            </div>
+        </div>
+    </div>
+
+    <div class="globalNavi">
+        <ul class="gNavi clearfix">
+            <li class="gNaviitem1">
+                <a href="/KeibaWeb/TodayRaceInfo/TodayRaceInfoTop">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_08.png?bld=20240319134801" alt="">
+                    <p>レース情報</p>
+                </a>
+            </li>
+            <li class="gNaviitem2">
+                <a href="/KeibaWeb/MonthlyConveneInfo/MonthlyConveneInfoTop">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_01.png?bld=20240319134801" alt="">
+                                            <p>開催日程</p>
+                                    </a>
+            </li>
+            <li class="gNaviitem3">
+                <a href="/live/?20260804" target="_blank">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_02.png?bld=20240319134801" alt="">
+                    <p>ライブ中継</p>
+                </a>
+            </li>
+            <li class="gNaviitem4">
+                <a href="/dirtgraderace/">
+                    <img class="dart" src="/KeibaWeb/resources/img/icon_gnavi_12.png?bld=20240319134801" alt="">
+                    <p>ダートグレード競走</p>
+                </a>
+            </li>
+            <li class="gNaviitem5">
+                <a href="/gradedrace/">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_04.png?bld=20240319134801" alt="">
+                    <p>シリーズ･重賞競走</p>
+                </a>
+            </li>
+            <li class="gNaviitem6">
+                <a href="/KeibaWeb/DataRoom/DataRoomTop">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_05.png?bld=20240319134801" alt="">
+                    <p>データ検索</p>
+                </a>
+            </li>
+            <li class="gNaviitem7">
+                <a href="/guide/index.html">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_06.png?bld=20240319134801" alt="">
+                    <p>競馬場ガイド</p>
+                </a>
+            </li>
+            <!--<li>
+                <a href="about/">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_07.png?bld=20240319134801" alt="">
+                    <p>もっと！地方競馬</p>
+                </a>
+            </li>-->
+        </ul>
+    </div>
+</header>
+<div class="breadCrumb"></div>
+ <!-- Head部分の読み込み -->
+        <main>
+        <div id="mainContainer">
+    <article class="raceCard">
+        <div class="innerWrapper auto">
+            <div id="databasesearch">
+                <div class="odd_header">
+                    <ul class="horseinfo horse">
+                        <li>
+                            <h4 class="odd_title">トロピカルヒーロー</h4>
+                        </li>
+                        <li>
+                            <div>
+                                <span class="sex ">牡</span>                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                                                    抹消
+                                                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                                            </div>
+                        </li>
+                        <li>
+                            <a class="cNaviBtn"
+                                href="/KeibaWeb/DataRoom/RaceHorseInfo?k_lineageLoginCode=30036405876&amp;k_activeCode=1">馬情報</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+                    <table class="HorseMarkInfo_table">
+                <thead>
+                    <tr>
+                        <th>年月日</th>
+                        <th>競馬場</th>
+                        <th>R</th>
+                        <th>競走名</th>
+                        <th>格組</th>
+                        <th>距離</th>
+                        <th colspan="3">天候・馬場</th>
+                        <th>頭数</th>
+                        <th>枠</th>
+                        <th>馬番</th>
+                        <th>人気</th>
+                        <th>着順</th>
+                        <th>タイム</th>
+                        <th>差</th>
+                        <th>上3F</th>
+                        <th>体重</th>
+                        <th>騎手(所属)</th>
+                        <th>重量</th>
+                        <th>調教師</th>
+                        <th>収得賞金</th>
+                        <th>1着馬または(2着馬)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                                            <tr>
+                            <td>2026/09/01</td>
+                            <td>盛岡</td>
+                            <td>9</td>
+                            <td class="green">
+                                                                    <a href="/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2026%2F09%2F01&amp;k_raceNo=9&amp;k_babaCode=10">
+                                        <p class="text-overflow">
+                                            Ｊ交 東京カップけやき賞Ａ
+                                        </p>
+                                    </a>
+                                                            </td>
+                            <td>
+                                Ａ
+                            </td>
+                            <td>1600</td>
+                            <td>曇</td>
+                            <td>稍重</td>
+                            <td></td>
+                            <td  class="dbdata2">9</td>
+                            <td>7</td>
+                            <td>7</td>
+                            <td>9</td>
+                            <td  class=" gray ">
+                                8
+                                        </td>
+                            <td>1:39.7</td>
+                            <td>3.2</td>
+                            <td>38.3</td>
+                            <td  class="dbdata2">
+                                507
+                            </td>
+                            <td>菅原辰
+                                        (岩手)
+                                </td>
+                            <td class="dbdata2">
+                                                                    56.0
+                                                                </td>
+                            <td>石栗龍</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    チュウワチーフ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2026/04/26</td>
+                            <td>Ｊ東京</td>
+                            <td>12</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ４歳上２勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1400</td>
+                            <td>晴</td>
+                            <td>稍重</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>16</td>
+                            <td  class=" gray ">
+                                15
+                                        </td>
+                            <td>1:27.2</td>
+                            <td>3.5</td>
+                            <td>37.3</td>
+                            <td  class="dbdata2">
+                                540
+                            </td>
+                            <td>小林脩
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    58.0
+                                                                </td>
+                            <td>石栗龍</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    スナッピードレッサ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2026/04/18</td>
+                            <td>Ｊ中山</td>
+                            <td>12</td>
+                            <td class="green">
+                                                                    <p class="text-overflow nolink">
+                                        葛飾特別４歳上２勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1200</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">13</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td>13</td>
+                            <td  class=" gray ">
+                                13
+                                        </td>
+                            <td>1:12.5</td>
+                            <td>1.7</td>
+                            <td>35.7</td>
+                            <td  class="dbdata2">
+                                538
+                            </td>
+                            <td>野中悠
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    58.0
+                                                                </td>
+                            <td>石栗龍</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    ハヤテノツバサ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2026/03/29</td>
+                            <td>Ｊ阪神</td>
+                            <td>12</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ４歳上２勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1200</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>15</td>
+                            <td  class=" gray ">
+                                16
+                                        </td>
+                            <td>1:14.7</td>
+                            <td>3.3</td>
+                            <td>36.5</td>
+                            <td  class="dbdata2">
+                                530
+                            </td>
+                            <td>古川吉
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    58.0
+                                                                </td>
+                            <td>石栗龍</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    ハリーケーン
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2026/02/15</td>
+                            <td>Ｊ東京</td>
+                            <td>8</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ４歳上２勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>芝1600</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">14</td>
+                            <td>8</td>
+                            <td>13</td>
+                            <td>14</td>
+                            <td  class=" gray ">
+                                13
+                                        </td>
+                            <td>1:34.7</td>
+                            <td>2.1</td>
+                            <td>35.3</td>
+                            <td  class="dbdata2">
+                                558
+                            </td>
+                            <td>木幡巧
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    58.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    エフォートレス
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2026/01/31</td>
+                            <td>Ｊ京都</td>
+                            <td>9</td>
+                            <td class="green">
+                                                                    <p class="text-overflow nolink">
+                                        長浜特別４歳上２勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1400</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">13</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td>13</td>
+                            <td  class=" gray ">
+                                11
+                                        </td>
+                            <td>1:26.8</td>
+                            <td>1.6</td>
+                            <td>36.5</td>
+                            <td  class="dbdata2">
+                                556
+                            </td>
+                            <td>永島ま
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    58.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    ハクサンアイリス
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2026/01/17</td>
+                            <td>Ｊ中山</td>
+                            <td>8</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ４歳上２勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1200</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td>15</td>
+                            <td  class=" gray ">
+                                10
+                                        </td>
+                            <td>1:12.7</td>
+                            <td>0.9</td>
+                            <td>36.6</td>
+                            <td  class="dbdata2">
+                                558
+                            </td>
+                            <td>長浜鴻
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    56.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    ゴールドハンマー
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2025/12/20</td>
+                            <td>Ｊ中京</td>
+                            <td>10</td>
+                            <td class="green">
+                                                                    <p class="text-overflow nolink">
+                                        ２０２５ヤングジョッキーズシリ
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1400</td>
+                            <td>小雨</td>
+                            <td>稍重</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>8</td>
+                            <td>16</td>
+                            <td>16</td>
+                            <td  class=" gray ">
+                                9
+                                        </td>
+                            <td>1:26.0</td>
+                            <td>0.7</td>
+                            <td>37.0</td>
+                            <td  class="dbdata2">
+                                548
+                            </td>
+                            <td>神尾香
+                                        (川崎)
+                                </td>
+                            <td class="dbdata2">
+                                                                    58.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    トルーマンテソーロ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2025/12/06</td>
+                            <td>Ｊ阪神</td>
+                            <td>8</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ３歳上２勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1400</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>4</td>
+                            <td>7</td>
+                            <td>16</td>
+                            <td  class=" gray ">
+                                15
+                                        </td>
+                            <td>1:25.2</td>
+                            <td>1.3</td>
+                            <td>36.5</td>
+                            <td  class="dbdata2">
+                                546
+                            </td>
+                            <td>古川吉
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    58.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    メイショウツヨキ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2025/11/08</td>
+                            <td>Ｊ京都</td>
+                            <td>9</td>
+                            <td class="green">
+                                                                    <p class="text-overflow nolink">
+                                        亀岡特別３歳上２勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1400</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>15</td>
+                            <td  class=" gray ">
+                                10
+                                        </td>
+                            <td>1:25.2</td>
+                            <td>1.9</td>
+                            <td>36.9</td>
+                            <td  class="dbdata2">
+                                536
+                            </td>
+                            <td>古川吉
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    58.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    ジャスパーバローズ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2025/10/25</td>
+                            <td>Ｊ東京</td>
+                            <td>12</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ３歳上２勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1400</td>
+                            <td>雨</td>
+                            <td>稍重</td>
+                            <td></td>
+                            <td  class="dbdata2">13</td>
+                            <td>8</td>
+                            <td>13</td>
+                            <td>13</td>
+                            <td  class=" gray ">
+                                9
+                                        </td>
+                            <td>1:25.2</td>
+                            <td>1.1</td>
+                            <td>35.3</td>
+                            <td  class="dbdata2">
+                                540
+                            </td>
+                            <td>長浜鴻
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    56.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    フウセツ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2025/09/27</td>
+                            <td>Ｊ中山</td>
+                            <td>12</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ３歳上２勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1200</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>14</td>
+                            <td  class=" gray ">
+                                15
+                                        </td>
+                            <td>1:12.8</td>
+                            <td>1.4</td>
+                            <td>35.8</td>
+                            <td  class="dbdata2">
+                                536
+                            </td>
+                            <td>長浜鴻
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    56.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    ワンダラー
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2025/07/13</td>
+                            <td>Ｊ福島</td>
+                            <td>12</td>
+                            <td class="green">
+                                                                    <p class="text-overflow nolink">
+                                        彦星賞３歳上２勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>芝1200</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">9</td>
+                            <td>4</td>
+                            <td>4</td>
+                            <td>8</td>
+                            <td  class=" gray ">
+                                8
+                                        </td>
+                            <td>1:12.1</td>
+                            <td>1.8</td>
+                            <td>35.0</td>
+                            <td  class="dbdata2">
+                                528
+                            </td>
+                            <td>野中悠
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    58.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    エコロマーズ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2025/06/22</td>
+                            <td>Ｊ東京</td>
+                            <td>9</td>
+                            <td class="green">
+                                                                    <p class="text-overflow nolink">
+                                        甲州街道特別３歳上２勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1400</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>16</td>
+                            <td  class=" gray ">
+                                10
+                                        </td>
+                            <td>1:25.4</td>
+                            <td>2.0</td>
+                            <td>36.7</td>
+                            <td  class="dbdata2">
+                                528
+                            </td>
+                            <td>野中悠
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    58.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    トクシーカイザー
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2025/04/06</td>
+                            <td>Ｊ中山</td>
+                            <td>12</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ４歳上２勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1200</td>
+                            <td>晴</td>
+                            <td>稍重</td>
+                            <td></td>
+                            <td  class="dbdata2">15</td>
+                            <td>4</td>
+                            <td>6</td>
+                            <td>11</td>
+                            <td  class=" gray ">
+                                12
+                                        </td>
+                            <td>1:13.1</td>
+                            <td>1.6</td>
+                            <td>35.6</td>
+                            <td  class="dbdata2">
+                                538
+                            </td>
+                            <td>野中悠
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    58.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    ネイト
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2025/03/22</td>
+                            <td>Ｊ中山</td>
+                            <td>12</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ４歳上２勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1200</td>
+                            <td>晴</td>
+                            <td>稍重</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>7</td>
+                            <td>13</td>
+                            <td>7</td>
+                            <td  class=" gray ">
+                                14
+                                        </td>
+                            <td>1:12.9</td>
+                            <td>1.5</td>
+                            <td>36.4</td>
+                            <td  class="dbdata2">
+                                534
+                            </td>
+                            <td>長浜鴻
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    55.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    スマイルアップ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2025/03/01</td>
+                            <td>Ｊ中山</td>
+                            <td>8</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ４歳上１勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1200</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>3</td>
+                            <td>6</td>
+                            <td>5</td>
+                            <td  class=" red ">
+                                1
+                                        </td>
+                            <td>1:12.5</td>
+                            <td>0.3</td>
+                            <td>36.5</td>
+                            <td  class="dbdata2">
+                                540
+                            </td>
+                            <td>長浜鴻
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    55.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        8,000,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    （ショウナンハクウン）
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2025/02/10</td>
+                            <td>Ｊ京都</td>
+                            <td>12</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ４歳上１勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1200</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>4</td>
+                            <td>7</td>
+                            <td>13</td>
+                            <td  class=" gray ">
+                                5
+                                        </td>
+                            <td>1:13.2</td>
+                            <td>0.7</td>
+                            <td>35.7</td>
+                            <td  class="dbdata2">
+                                538
+                            </td>
+                            <td>古川吉
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    58.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        800,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    エコロネオ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2025/01/26</td>
+                            <td>Ｊ中山</td>
+                            <td>8</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ４歳上２勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1200</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">14</td>
+                            <td>6</td>
+                            <td>10</td>
+                            <td>11</td>
+                            <td  class=" gray ">
+                                11
+                                        </td>
+                            <td>1:12.7</td>
+                            <td>1.3</td>
+                            <td>37.4</td>
+                            <td  class="dbdata2">
+                                542
+                            </td>
+                            <td>長浜鴻
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    55.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    シークレットヴァウ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2024/12/14</td>
+                            <td>Ｊ中京</td>
+                            <td>3</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ３歳上１勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1200</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>4</td>
+                            <td>8</td>
+                            <td>5</td>
+                            <td  class=" gray ">
+                                12
+                                        </td>
+                            <td>1:13.6</td>
+                            <td>2.0</td>
+                            <td>35.4</td>
+                            <td  class="dbdata2">
+                                522
+                            </td>
+                            <td>長浜鴻
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    55.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    ビバップ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2024/11/17</td>
+                            <td>Ｊ東京</td>
+                            <td>7</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ３歳上１勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1300</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>3</td>
+                            <td>5</td>
+                            <td>5</td>
+                            <td  class=" gray ">
+                                中止
+                                        </td>
+                            <td></td>
+                            <td></td>
+                            <td> </td>
+                            <td  class="dbdata2">
+                                530
+                            </td>
+                            <td>野中悠
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    58.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    フラーハ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2024/10/27</td>
+                            <td>Ｊ新潟</td>
+                            <td>8</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ３歳上１勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1200</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">11</td>
+                            <td>7</td>
+                            <td>9</td>
+                            <td>6</td>
+                            <td  class=" gray ">
+                                4
+                                        </td>
+                            <td>1:11.5</td>
+                            <td>0.8</td>
+                            <td>35.7</td>
+                            <td  class="dbdata2">
+                                522
+                            </td>
+                            <td>長浜鴻
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    55.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        1,200,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    キタノソワレ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2024/10/14</td>
+                            <td>Ｊ新潟</td>
+                            <td>8</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ３歳上１勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1200</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">8</td>
+                            <td>8</td>
+                            <td>8</td>
+                            <td>6</td>
+                            <td  class=" gray ">
+                                6
+                                        </td>
+                            <td>1:12.0</td>
+                            <td>0.8</td>
+                            <td>36.7</td>
+                            <td  class="dbdata2">
+                                524
+                            </td>
+                            <td>長浜鴻
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    55.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    テイエムヒショウ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2024/09/28</td>
+                            <td>Ｊ中山</td>
+                            <td>8</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ３歳上１勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1200</td>
+                            <td>曇</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>7</td>
+                            <td>13</td>
+                            <td>9</td>
+                            <td  class=" gray ">
+                                9
+                                        </td>
+                            <td>1:12.2</td>
+                            <td>0.8</td>
+                            <td>36.7</td>
+                            <td  class="dbdata2">
+                                526
+                            </td>
+                            <td>長浜鴻
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    55.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    ヒストリアイ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2024/03/02</td>
+                            <td>Ｊ中山</td>
+                            <td>7</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ４歳上１勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1200</td>
+                            <td>曇</td>
+                            <td>重</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>6</td>
+                            <td>11</td>
+                            <td>5</td>
+                            <td  class=" gray ">
+                                4
+                                        </td>
+                            <td>1:11.5</td>
+                            <td>0.5</td>
+                            <td>36.8</td>
+                            <td  class="dbdata2">
+                                520
+                            </td>
+                            <td>長浜鴻
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    55.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        1,200,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    サトノガレオン
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2024/02/10</td>
+                            <td>Ｊ京都</td>
+                            <td>8</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ４歳上１勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1200</td>
+                            <td>曇</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>6</td>
+                            <td>11</td>
+                            <td>9</td>
+                            <td  class=" gray ">
+                                5
+                                        </td>
+                            <td>1:13.1</td>
+                            <td>0.3</td>
+                            <td>35.8</td>
+                            <td  class="dbdata2">
+                                508
+                            </td>
+                            <td>松若風
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    58.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        800,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    ウイスキータイム
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2024/01/21</td>
+                            <td>Ｊ京都</td>
+                            <td>8</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ４歳上１勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1400</td>
+                            <td>曇</td>
+                            <td>重</td>
+                            <td></td>
+                            <td  class="dbdata2">14</td>
+                            <td>5</td>
+                            <td>9</td>
+                            <td>12</td>
+                            <td  class=" gray ">
+                                4
+                                        </td>
+                            <td>1:23.9</td>
+                            <td>0.8</td>
+                            <td>35.8</td>
+                            <td  class="dbdata2">
+                                506
+                            </td>
+                            <td>松若風
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    57.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        1,200,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    エムズマインド
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2023/12/12</td>
+                            <td>川崎</td>
+                            <td>9</td>
+                            <td class="green">
+                                                                    <a href="/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2023%2F12%2F12&amp;k_raceNo=9&amp;k_babaCode=21">
+                                        <p class="text-overflow">
+                                            Ｊ交 ディセンバースタＢ２Ｂ３
+                                        </p>
+                                    </a>
+                                                            </td>
+                            <td>
+                                Ｂ２Ｂ３
+                            </td>
+                            <td>1500</td>
+                            <td>曇</td>
+                            <td>稍重</td>
+                            <td>ナ</td>
+                            <td  class="dbdata2">12</td>
+                            <td>5</td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td  class=" gray ">
+                                4
+                                        </td>
+                            <td>1:38.9</td>
+                            <td>1.6</td>
+                            <td>41.9</td>
+                            <td  class="dbdata2">
+                                500
+                            </td>
+                            <td>野中悠
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    57.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        600,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    ソウルストライク
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2023/11/26</td>
+                            <td>Ｊ東京</td>
+                            <td>7</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ３歳上１勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1400</td>
+                            <td>曇</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>8</td>
+                            <td>16</td>
+                            <td>16</td>
+                            <td  class=" gray ">
+                                12
+                                        </td>
+                            <td>1:27.6</td>
+                            <td>1.3</td>
+                            <td>37.8</td>
+                            <td  class="dbdata2">
+                                504
+                            </td>
+                            <td>野中悠
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    57.0
+                                                                </td>
+                            <td>根本康</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    キャプテンローレル
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2023/09/30</td>
+                            <td>Ｊ中山</td>
+                            <td>8</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ３歳上１勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1200</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>8</td>
+                            <td>16</td>
+                            <td>13</td>
+                            <td  class=" gray ">
+                                11
+                                        </td>
+                            <td>1:12.6</td>
+                            <td>2.4</td>
+                            <td>37.5</td>
+                            <td  class="dbdata2">
+                                494
+                            </td>
+                            <td>小林脩
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    54.0
+                                                                </td>
+                            <td>武藤善</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    サイモンギフト
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2023/07/08</td>
+                            <td>Ｊ福島</td>
+                            <td>9</td>
+                            <td class="green">
+                                                                    <p class="text-overflow nolink">
+                                        須賀川特別３歳上１勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>芝1200</td>
+                            <td>曇</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">13</td>
+                            <td>7</td>
+                            <td>10</td>
+                            <td>11</td>
+                            <td  class=" gray ">
+                                13
+                                        </td>
+                            <td>1:10.5</td>
+                            <td>1.5</td>
+                            <td>34.8</td>
+                            <td  class="dbdata2">
+                                482
+                            </td>
+                            <td>武藤雅
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    55.0
+                                                                </td>
+                            <td>武藤善</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    ダレモトメラレナイ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2023/07/02</td>
+                            <td>Ｊ福島</td>
+                            <td>12</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ３歳上１勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>芝1200</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>4</td>
+                            <td>7</td>
+                            <td>8</td>
+                            <td  class=" gray ">
+                                13
+                                        </td>
+                            <td>1:10.2</td>
+                            <td>1.6</td>
+                            <td>35.3</td>
+                            <td  class="dbdata2">
+                                480
+                            </td>
+                            <td>小林脩
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    53.0
+                                                                </td>
+                            <td>武藤善</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    プレジャークルーズ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2023/04/23</td>
+                            <td>Ｊ東京</td>
+                            <td>6</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ３歳１勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1400</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>7</td>
+                            <td>13</td>
+                            <td>13</td>
+                            <td  class=" gray ">
+                                11
+                                        </td>
+                            <td>1:26.9</td>
+                            <td>1.4</td>
+                            <td>37.3</td>
+                            <td  class="dbdata2">
+                                492
+                            </td>
+                            <td>小林脩
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    54.0
+                                                                </td>
+                            <td>武藤善</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    ロードフォンス
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2023/03/19</td>
+                            <td>Ｊ中山</td>
+                            <td>4</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ３歳１勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1200</td>
+                            <td>晴</td>
+                            <td>不良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>4</td>
+                            <td>7</td>
+                            <td>14</td>
+                            <td  class=" gray ">
+                                7
+                                        </td>
+                            <td>1:11.4</td>
+                            <td>0.8</td>
+                            <td>36.1</td>
+                            <td  class="dbdata2">
+                                496
+                            </td>
+                            <td>丹内祐
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    56.0
+                                                                </td>
+                            <td>武藤善</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    タリエシン
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2023/03/04</td>
+                            <td>Ｊ中山</td>
+                            <td>7</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ３歳１勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1200</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>7</td>
+                            <td>14</td>
+                            <td>11</td>
+                            <td  class=" gray ">
+                                10
+                                        </td>
+                            <td>1:12.2</td>
+                            <td>1.2</td>
+                            <td>37.5</td>
+                            <td  class="dbdata2">
+                                494
+                            </td>
+                            <td>武藤雅
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    56.0
+                                                                </td>
+                            <td>武藤善</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    ハチメンロッピ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2023/02/04</td>
+                            <td>Ｊ東京</td>
+                            <td>4</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ３歳１勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1400</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">11</td>
+                            <td>8</td>
+                            <td>10</td>
+                            <td>6</td>
+                            <td  class=" gray ">
+                                8
+                                        </td>
+                            <td>1:26.8</td>
+                            <td>0.8</td>
+                            <td>36.5</td>
+                            <td  class="dbdata2">
+                                496
+                            </td>
+                            <td>小林脩
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    54.0
+                                                                </td>
+                            <td>武藤善</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    ニフェーデービル
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2023/01/15</td>
+                            <td>Ｊ中京</td>
+                            <td>4</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ３歳１勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1200</td>
+                            <td>晴</td>
+                            <td>稍重</td>
+                            <td></td>
+                            <td  class="dbdata2">11</td>
+                            <td>8</td>
+                            <td>11</td>
+                            <td>11</td>
+                            <td  class=" gray ">
+                                4
+                                        </td>
+                            <td>1:12.9</td>
+                            <td>1.1</td>
+                            <td>36.7</td>
+                            <td  class="dbdata2">
+                                488
+                            </td>
+                            <td>富田暁
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    56.0
+                                                                </td>
+                            <td>武藤善</td>
+                            <td class="dbdata2">
+                                        1,200,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    アームズレイン
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2022/12/24</td>
+                            <td>Ｊ中山</td>
+                            <td>7</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ２歳１勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1200</td>
+                            <td>晴</td>
+                            <td>稍重</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>3</td>
+                            <td>5</td>
+                            <td>12</td>
+                            <td  class=" gray ">
+                                11
+                                        </td>
+                            <td>1:12.1</td>
+                            <td>1.0</td>
+                            <td>36.8</td>
+                            <td  class="dbdata2">
+                                494
+                            </td>
+                            <td>武藤雅
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    55.0
+                                                                </td>
+                            <td>武藤善</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    マニバドラ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2022/12/17</td>
+                            <td>Ｊ中京</td>
+                            <td>9</td>
+                            <td class="green">
+                                                                    <p class="text-overflow nolink">
+                                        スポーツ報知杯中京２歳Ｓオープ
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>芝1200</td>
+                            <td>小雨</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">10</td>
+                            <td>8</td>
+                            <td>10</td>
+                            <td>7</td>
+                            <td  class=" gray ">
+                                7
+                                        </td>
+                            <td>1:09.7</td>
+                            <td>1.7</td>
+                            <td>34.6</td>
+                            <td  class="dbdata2">
+                                488
+                            </td>
+                            <td>佐々大
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    55.0
+                                                                </td>
+                            <td>武藤善</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    ビッグシーザー
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2022/11/19</td>
+                            <td>Ｊ福島</td>
+                            <td>4</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ２歳未勝利
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>芝1200</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>3</td>
+                            <td>6</td>
+                            <td>1</td>
+                            <td  class=" red ">
+                                1
+                                        </td>
+                            <td>1:10.3</td>
+                            <td>0.5</td>
+                            <td>35.7</td>
+                            <td  class="dbdata2">
+                                482
+                            </td>
+                            <td>佐々大
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    52.0
+                                                                </td>
+                            <td>武藤善</td>
+                            <td class="dbdata2">
+                                        5,200,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    （シンリンゲンカイ）
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2022/11/06</td>
+                            <td>Ｊ福島</td>
+                            <td>2</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ２歳未勝利
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>芝1200</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>2</td>
+                            <td>4</td>
+                            <td>2</td>
+                            <td  class=" blue ">
+                                2
+                                        </td>
+                            <td>1:09.5</td>
+                            <td>0.4</td>
+                            <td>35.4</td>
+                            <td  class="dbdata2">
+                                484
+                            </td>
+                            <td>佐々大
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    52.0
+                                                                </td>
+                            <td>武藤善</td>
+                            <td class="dbdata2">
+                                        2,100,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    ミルトクレイモー
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2022/10/16</td>
+                            <td>Ｊ新潟</td>
+                            <td>1</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ２歳未勝利
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>芝1200</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>3</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td  class=" blue ">
+                                2
+                                        </td>
+                            <td>1:09.2</td>
+                            <td>0.5</td>
+                            <td>34.5</td>
+                            <td  class="dbdata2">
+                                478
+                            </td>
+                            <td>佐々大
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    52.0
+                                                                </td>
+                            <td>武藤善</td>
+                            <td class="dbdata2">
+                                        2,100,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    ダンシングニードル
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2022/09/04</td>
+                            <td>Ｊ新潟</td>
+                            <td>2</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ２歳未勝利
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>芝1400</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">18</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>8</td>
+                            <td  class=" blue ">
+                                2
+                                        </td>
+                            <td>1:23.2</td>
+                            <td>0.5</td>
+                            <td>36.1</td>
+                            <td  class="dbdata2">
+                                472
+                            </td>
+                            <td>佐々大
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    51.0
+                                                                </td>
+                            <td>武藤善</td>
+                            <td class="dbdata2">
+                                        2,100,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    ノーブルラン
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2022/08/14</td>
+                            <td>Ｊ新潟</td>
+                            <td>3</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ２歳未勝利
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>芝1200</td>
+                            <td>曇</td>
+                            <td>稍重</td>
+                            <td></td>
+                            <td  class="dbdata2">17</td>
+                            <td>3</td>
+                            <td>5</td>
+                            <td>10</td>
+                            <td  class=" gray ">
+                                4
+                                        </td>
+                            <td>1:09.4</td>
+                            <td>0.3</td>
+                            <td>35.0</td>
+                            <td  class="dbdata2">
+                                464
+                            </td>
+                            <td>佐々大
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    51.0
+                                                                </td>
+                            <td>武藤善</td>
+                            <td class="dbdata2">
+                                        780,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    リバーラ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2022/07/17</td>
+                            <td>Ｊ函館</td>
+                            <td>1</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ２歳未勝利
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>芝1200</td>
+                            <td>小雨</td>
+                            <td>稍重</td>
+                            <td></td>
+                            <td  class="dbdata2">8</td>
+                            <td>6</td>
+                            <td>6</td>
+                            <td>7</td>
+                            <td  class=" gray ">
+                                4
+                                        </td>
+                            <td>1:12.4</td>
+                            <td>0.7</td>
+                            <td>37.0</td>
+                            <td  class="dbdata2">
+                                468
+                            </td>
+                            <td>菱田裕
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    54.0
+                                                                </td>
+                            <td>武藤善</td>
+                            <td class="dbdata2">
+                                        780,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    マルモリディライト
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2022/07/03</td>
+                            <td>Ｊ函館</td>
+                            <td>1</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ２歳未勝利
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>芝1200</td>
+                            <td>曇</td>
+                            <td>稍重</td>
+                            <td></td>
+                            <td  class="dbdata2">11</td>
+                            <td>7</td>
+                            <td>8</td>
+                            <td>7</td>
+                            <td  class=" gray ">
+                                6
+                                        </td>
+                            <td>1:11.8</td>
+                            <td>0.8</td>
+                            <td>36.5</td>
+                            <td  class="dbdata2">
+                                476
+                            </td>
+                            <td>菱田裕
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    54.0
+                                                                </td>
+                            <td>武藤善</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    シンゼンイズモ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2022/06/18</td>
+                            <td>Ｊ東京</td>
+                            <td>5</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ２歳新馬
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>芝1400</td>
+                            <td>曇</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>8</td>
+                            <td>16</td>
+                            <td>9</td>
+                            <td  class=" gray ">
+                                11
+                                        </td>
+                            <td>1:24.1</td>
+                            <td>2.0</td>
+                            <td>35.8</td>
+                            <td  class="dbdata2">
+                                466
+                            </td>
+                            <td>江田照
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    54.0
+                                                                </td>
+                            <td>武藤善</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    ウンブライル
+                                                                </td>
+                        </tr>
+                                    </tbody>
+            </table>
+                            <p class="annotationRed">※2026/09/08 地方競馬登録抹消</p>
+                <br>
+                        </article>
+</div>
+    </main>
+</body>
+        <div class="innerWrapper2">
+    <footer>
+        <ul class="footerMenu">
+            <li>
+                <a href="/index.html">
+                    HOME
+                </a>
+            </li>
+            <li>
+                <a href="/association/">
+                    地方競馬全国協会（NAR）
+                </a>
+            </li>
+            <li>
+                <a href="/sitemap.html">
+                    サイトマップ
+                </a>
+            </li>
+            <li>
+                <a href="/link.html">
+                    関連リンク
+                </a>
+            </li>
+            <li>
+                <a href="/terms.html">
+                    利用規約
+                </a>
+            </li>
+            <li>
+                <a href="/qa.html">
+                    ご意見・ご要望／FAQ
+                </a>
+            </li>
+        </ul>
+        <div class="copyright">
+        copyright 1998-NAR (The National Association of Racing) All Rights Reserved
+        </div>
+        <!-- 言語選択 -->
+        <div class="language cp_sl01">
+            <select onChange="location.href=value;">
+                <option value="#">Language</option>
+                <option value="https://goracing.sakura.ne.jp/english/">English</option>
+                <option value="https://goracing.sakura.ne.jp/french/">Francais</option>
+                <option value="https://goracing.sakura.ne.jp/chinese/">中文</option>
+                <option value="https://goracing.sakura.ne.jp/korea/">한글</option>
+            </select>
+        </div>
+    </footer>
+</div></html>

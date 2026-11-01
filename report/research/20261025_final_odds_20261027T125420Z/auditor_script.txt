@@ -1,0 +1,55 @@
+import json,re,hashlib,math
+from pathlib import Path
+from collections import Counter
+from bs4 import BeautifulSoup
+root=Path('report/research/20261025_final_odds_20261027T125420Z')
+summary=[]
+for path in sorted((root/'races').glob('*.json')):
+ r=json.loads(path.read_text());extra=[];frames={};active={x['combination'] for x in r['odds'] if x['bet_type']=='win'}
+ for pg in r['pages']:
+  s=BeautifulSoup(Path(pg['raw_path']).read_text(),'html.parser')
+  if pg['kind']=='win_place':
+   frame=''
+   for tr in s.select('table.tanpuku tbody tr'):
+    im=tr.select_one('.waku img');num=tr.select_one('.num')
+    if im:
+     m=re.search(r'枠(\d+)',im.get('alt',''));frame=m[1] if m else ''
+    if num:frames[num.get_text(strip=True)]=frame
+  kinds={'wakuren':('waku','wakuren',False,False),'umaren':('umaren','umaren',False,False),'wide':('wide','wide',False,False),'umatan':('umatan','umatan',True,False),'sanrenpuku':('fuku3','sanrenpuku',False,True)}
+  if pg['kind'] in kinds:
+   cls,bt,ordered,pair=kinds[pg['kind']]
+   for table in s.select('table.'+cls):
+    cap=table.select_one('caption');nums=re.findall(r'\d+',cap.get_text(' ',strip=True)) if cap else []
+    if not nums and cap:nums=re.findall(r'\d+',' '.join(cap.get('class',[])))
+    for tr in table.select('tbody tr'):
+     th=tr.select_one('th');td=tr.select_one('td')
+     if not th or not td:continue
+     ns=re.findall(r'\d+',th.get_text(' ',strip=True));txt=td.get_text(' ',strip=True)
+     if not ns or not nums or not txt or re.search(r'\d',txt):continue
+     combination=nums+[ns[0]]
+     if not ordered:combination=sorted(combination,key=int)
+     extra.append({'bet_type':bt,'combination':('>' if ordered else '-').join(combination),'official_text':txt,'numeric_odds':None,'source_cname':pg['cname']})
+  if pg['kind']=='sanrentan':
+   for table in s.select('table.tan3'):
+    first=[x.select_one('.num').get_text(strip=True) for x in table.parent.select(':scope > div.p_line') if x.select_one('.num')]
+    if len(first)!=2:continue
+    for tr in table.select('tbody tr'):
+     th=tr.select_one('th');td=tr.select_one('td')
+     if not th or not td:continue
+     ns=re.findall(r'\d+',th.get_text(' ',strip=True));txt=td.get_text(' ',strip=True)
+     if ns and txt and not re.search(r'\d',txt):extra.append({'bet_type':'sanrentan','combination':'>'.join(first+[ns[0]]),'official_text':txt,'numeric_odds':None,'source_cname':pg['cname']})
+ extra=list({(x['bet_type'],x['combination']):x for x in extra}.values());r['non_numeric_official_combinations']=extra;r['non_numeric_counts']=dict(Counter(x['bet_type'] for x in extra));r['horse_frame_mapping']=frames
+ n=len(active);fc=Counter(frames[x] for x in active if frames.get(x));expected=dict(r['expected_active_horse_counts']);expected['wakuren']=math.comb(len(fc),2)+sum(v>=2 for v in fc.values()) if 'wakuren' in r['counts'] else 0
+ eligible_extra=[];inactive_extra=[]
+ for x in extra:
+  ns=re.split('[- >]+',x['combination']);allowed=set(fc) if x['bet_type']=='wakuren' else active
+  (eligible_extra if all(y in allowed for y in ns) else inactive_extra).append(x)
+ r['inactive_combination_official_statuses']=inactive_extra;r['active_non_numeric_counts']=dict(Counter(x['bet_type'] for x in eligible_extra))
+ r['expected_active_horse_counts']=expected;r['count_mismatches']={k:{'expected':v,'numeric_observed':r['counts'].get(k,0),'non_numeric_observed':r['active_non_numeric_counts'].get(k,0)} for k,v in expected.items() if r['counts'].get(k,0)+r['active_non_numeric_counts'].get(k,0)!=v}
+ r['wakuren_count_validation']='ACTIVE_HORSE_FRAME_COMBINATIONS_CHECKED';r['market_availability']={k:'OBSERVED_NUMERIC_OR_NON_NUMERIC_MARKET' if r['counts'].get(k) or r['non_numeric_counts'].get(k) else 'NO_OFFICIAL_MARKET_LINK_OBSERVED' for k in ['win','place','wakuren','umaren','wide','umatan','sanrenpuku','sanrentan']}
+ r['expected_not_listed_markets']=['wakuren'] if n<=8 and not r['counts'].get('wakuren') else [];r['unexplained_missing_bet_types']=[x for x in r['missing_bet_types'] if x not in r['expected_not_listed_markets']]
+ blocking=[e for e in r['errors'] if not(e=='wakuren:NO_OBSERVED_OFFICIAL_LINK' and 'wakuren' in r['expected_not_listed_markets'])]
+ r['status']='COMPLETE_OFFICIAL_ODDS_COLLECTION' if not blocking and not r['count_mismatches'] and not r['unexplained_missing_bet_types'] else 'NEEDS_AUDIT';r['blocking_errors']=blocking
+ path.write_text(json.dumps(r,ensure_ascii=False,indent=2)+'\n');summary.append({'race_id':r['race_id'],'status':r['status'],'counts':r['counts'],'non_numeric_counts':r['non_numeric_counts'],'count_mismatches':r['count_mismatches'],'expected_not_listed_markets':r['expected_not_listed_markets'],'artifact_path':str(path),'sha256':hashlib.sha256(path.read_bytes()).hexdigest()})
+(root/'coverage_audit.json').write_text(json.dumps({'role':'data_collector','races':summary,'total_races':len(summary),'numeric_odds_total':sum(sum(x['counts'].values()) for x in summary),'non_numeric_total':sum(sum(x['non_numeric_counts'].values()) for x in summary),'all_races_complete':len(summary)==36 and all(x['status']=='COMPLETE_OFFICIAL_ODDS_COLLECTION' for x in summary),'imputation_count':0,'fit_executed':False},ensure_ascii=False,indent=2)+'\n')
+print(json.dumps({'races':len(summary),'status_counts':dict(Counter(x['status'] for x in summary)),'mismatches':[x for x in summary if x['count_mismatches']]},ensure_ascii=False))

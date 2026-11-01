@@ -1,0 +1,67 @@
+{
+  "role": "reviewer",
+  "mode": "function_revision_review",
+  "created_at": "2026-10-30T21:37:50.637344+00:00",
+  "status": "AWAITING_IMPLEMENTATION_FINALIZATION",
+  "instructions": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-10-review/SKILL.md",
+      "sha256": "aea642f9b4e1dc7254b500be9b9e0cffbee040d2148c30776fdc30f859067b13"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/docs/condition_models.md",
+      "sha256": "cef0f974e453f69286a3a84e25f307b3174afa7418862395835a1125a316585f"
+    }
+  ],
+  "acceptance": [
+    "Actual result headers distinguish average1F versus last3F; numeric unit labels are never measurements",
+    "Straight-course empty corner is source-proven NOT_APPLICABLE, never front_rate0.5",
+    "Unavailable/noncomparable observations cannot reenter via parser fallback, embedded row projection, merge or CSV normalization",
+    "Caller status is not enough to prove source nonapplicability; contradictory raw observations remain blocked",
+    "Observed ordinary flat/dirt histories preserve prior core outputs; no missing-row weight redistribution",
+    "Historical pace remains official leader-lap600m with raw source, cutoff and no interpolation; no unvalidated score coefficient or production promotion",
+    "Old immutable data and historical research run snapshots retained; changed code not represented as a replay of old freeze"
+  ],
+  "known_reviewer_findings": [
+    {
+      "id": "UNIT_LABEL_DIGITS_ARE_NOT_TIMINGS",
+      "counterexamples": [
+        "上り3F 未測定",
+        "3F 計不",
+        "平均1F",
+        "平均1F --"
+      ],
+      "risk": "Initial helper took label digit1/3 as timing",
+      "fix_requested": "Remove known unit labels then require a lone valid positive numeric observation",
+      "reported_fix": "source agent reports corrected and four tests added",
+      "recheck": "PENDING_FINAL_SHA"
+    },
+    {
+      "id": "EXPLICIT_UNIT_CONFLICT",
+      "counterexamples": [
+        {
+          "header": "上り3F",
+          "raw": "平均1F 14.2"
+        },
+        {
+          "header": "平均1F",
+          "raw": "3F 35.4"
+        }
+      ],
+      "fix_requested": "Keep raw/header and classify conflicting units UNVERIFIED",
+      "recheck": "PENDING"
+    },
+    {
+      "id": "SEMANTIC_METADATA_MUST_SURVIVE_PIPELINE",
+      "paths": [
+        "jra_scraper/pipeline.py:_rows_from_embedded_history",
+        "jra_scraper/pipeline.py:_merge_history_row_fields",
+        "jra_scraper/validation.py:_normalize_row",
+        "jra_scraper/validation.py:OUTPUT_COLUMNS"
+      ],
+      "risk": "Projection drops markers and embedded-row fallback reintroduces36.0",
+      "reported_fix": "Parent integration in progress",
+      "recheck": "PENDING"
+    }
+  ]
+}

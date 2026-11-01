@@ -1,0 +1,34 @@
+{
+  "review_checks": {
+    "dataset_matches": true,
+    "candidate_stationary": true,
+    "metrics_match": true,
+    "shared_unchanged": true
+  },
+  "independent_metrics": {
+    "baseline": {
+      "race_count": 10,
+      "log_loss": 2.437868777002473,
+      "brier": 0.9095977628113057,
+      "top1_hit_rate": 0.0,
+      "win_top1_policy_roi": 0.0
+    },
+    "candidate": {
+      "race_count": 10,
+      "log_loss": 2.42566990613222,
+      "brier": 0.9076993288757155,
+      "top1_hit_rate": 0.0,
+      "win_top1_policy_roi": 0.0
+    }
+  },
+  "status": "OK",
+  "fit_sha256": "028ba3c12727597d9f13742e159c690898c2473397d0a247b0beb4d562a8ad2a",
+  "review_scope": "numerical_recalculation_not_proof_of_LLM_review",
+  "role": "reviewer",
+  "run_id": "d4bfcdb0a5114397abae0842ec389af6",
+  "stage": "review",
+  "independent_diagnostics": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/review/independent_diagnostics.json",
+    "sha256": "467dccf1d931bcd363b9f3dba077e65304e187f97d3a8f9c354e78d609cd55f6"
+  }
+}

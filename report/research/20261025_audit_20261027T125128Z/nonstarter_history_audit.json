@@ -1,0 +1,2404 @@
+{
+  "schema_version": 1,
+  "status": "BLOCKED_UNAPPROVED_IMPUTATION",
+  "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+  "purpose": "nonstarter_history_collection_only",
+  "verification_issues": [],
+  "recovered_imputation_provenance": [],
+  "input_sha256": "a6f59052ac3ee1bd9fc22f2aee81ab07bdc01d2505b532eefabda6c4aac949f0",
+  "race_ids": [
+    "20261025_08_03"
+  ],
+  "findings": [
+    {
+      "race_id": "20261025_08_03",
+      "horse_id": "pw01dud002024105437/B2",
+      "horse_number": "5",
+      "run_index": "",
+      "field": "current_popularity",
+      "method": "history_average_or_10",
+      "finding_id": "e70c5e74f0aa918e312f08d9",
+      "feature_impact": "popularity_gap",
+      "required_missing": false,
+      "approved": false
+    },
+    {
+      "race_id": "20261025_08_03",
+      "horse_id": "pw01dud002024105437/B2",
+      "horse_number": "5",
+      "run_index": "",
+      "field": "current_odds",
+      "method": "default_0",
+      "finding_id": "73a437eebb39b3424e452ae7",
+      "feature_impact": "market_support,EV",
+      "required_missing": false,
+      "approved": false
+    }
+  ],
+  "acquisition_coverage": {
+    "status": "PASS",
+    "records": [
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "1",
+        "date": "2026年9月27日",
+        "field": "date",
+        "input_value": "2026-09-27",
+        "observed_values": [
+          "2026-09-27"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_25457fcfe7d3f013d1400242ea58ead8770a48d2b5c5a5f65b2784bc3154728c.html",
+            "sha256": "88d98cf8371489b989729d35af0dce3406c733339e34f2cada8ced0b53860524",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_84a59bf4e69087c1b66da8f4686765c57b0445553be15be739481519d46f412b.html",
+            "sha256": "2c090f177c9c6bfd90adebc7518e01e9a5404988fef93c348aa6ee2a4a8dbeae",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "1",
+        "date": "2026年9月27日",
+        "field": "course",
+        "input_value": "阪神",
+        "observed_values": [
+          "阪神"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_25457fcfe7d3f013d1400242ea58ead8770a48d2b5c5a5f65b2784bc3154728c.html",
+            "sha256": "88d98cf8371489b989729d35af0dce3406c733339e34f2cada8ced0b53860524",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_84a59bf4e69087c1b66da8f4686765c57b0445553be15be739481519d46f412b.html",
+            "sha256": "2c090f177c9c6bfd90adebc7518e01e9a5404988fef93c348aa6ee2a4a8dbeae",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "1",
+        "date": "2026年9月27日",
+        "field": "race_name",
+        "input_value": "未勝利",
+        "observed_values": [
+          "2歳未勝利",
+          "未勝利"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_25457fcfe7d3f013d1400242ea58ead8770a48d2b5c5a5f65b2784bc3154728c.html",
+            "sha256": "88d98cf8371489b989729d35af0dce3406c733339e34f2cada8ced0b53860524",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_84a59bf4e69087c1b66da8f4686765c57b0445553be15be739481519d46f412b.html",
+            "sha256": "2c090f177c9c6bfd90adebc7518e01e9a5404988fef93c348aa6ee2a4a8dbeae",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "1",
+        "date": "2026年9月27日",
+        "field": "distance",
+        "input_value": "1600",
+        "observed_values": [
+          "1600"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_25457fcfe7d3f013d1400242ea58ead8770a48d2b5c5a5f65b2784bc3154728c.html",
+            "sha256": "88d98cf8371489b989729d35af0dce3406c733339e34f2cada8ced0b53860524",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_84a59bf4e69087c1b66da8f4686765c57b0445553be15be739481519d46f412b.html",
+            "sha256": "2c090f177c9c6bfd90adebc7518e01e9a5404988fef93c348aa6ee2a4a8dbeae",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "1",
+        "date": "2026年9月27日",
+        "field": "history_surface",
+        "input_value": "芝",
+        "observed_values": [
+          "芝"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_25457fcfe7d3f013d1400242ea58ead8770a48d2b5c5a5f65b2784bc3154728c.html",
+            "sha256": "88d98cf8371489b989729d35af0dce3406c733339e34f2cada8ced0b53860524",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_84a59bf4e69087c1b66da8f4686765c57b0445553be15be739481519d46f412b.html",
+            "sha256": "2c090f177c9c6bfd90adebc7518e01e9a5404988fef93c348aa6ee2a4a8dbeae",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "1",
+        "date": "2026年9月27日",
+        "field": "track_condition",
+        "input_value": "良",
+        "observed_values": [
+          "良"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_25457fcfe7d3f013d1400242ea58ead8770a48d2b5c5a5f65b2784bc3154728c.html",
+            "sha256": "88d98cf8371489b989729d35af0dce3406c733339e34f2cada8ced0b53860524",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_84a59bf4e69087c1b66da8f4686765c57b0445553be15be739481519d46f412b.html",
+            "sha256": "2c090f177c9c6bfd90adebc7518e01e9a5404988fef93c348aa6ee2a4a8dbeae",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "1",
+        "date": "2026年9月27日",
+        "field": "position",
+        "input_value": "5",
+        "observed_values": [
+          "5"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_25457fcfe7d3f013d1400242ea58ead8770a48d2b5c5a5f65b2784bc3154728c.html",
+            "sha256": "88d98cf8371489b989729d35af0dce3406c733339e34f2cada8ced0b53860524",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_84a59bf4e69087c1b66da8f4686765c57b0445553be15be739481519d46f412b.html",
+            "sha256": "2c090f177c9c6bfd90adebc7518e01e9a5404988fef93c348aa6ee2a4a8dbeae",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "1",
+        "date": "2026年9月27日",
+        "field": "time",
+        "input_value": "95.4",
+        "observed_values": [
+          "95.4"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_25457fcfe7d3f013d1400242ea58ead8770a48d2b5c5a5f65b2784bc3154728c.html",
+            "sha256": "88d98cf8371489b989729d35af0dce3406c733339e34f2cada8ced0b53860524",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_84a59bf4e69087c1b66da8f4686765c57b0445553be15be739481519d46f412b.html",
+            "sha256": "2c090f177c9c6bfd90adebc7518e01e9a5404988fef93c348aa6ee2a4a8dbeae",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "1",
+        "date": "2026年9月27日",
+        "field": "last_3f",
+        "input_value": "35.3",
+        "observed_values": [
+          "35.3"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_25457fcfe7d3f013d1400242ea58ead8770a48d2b5c5a5f65b2784bc3154728c.html",
+            "sha256": "88d98cf8371489b989729d35af0dce3406c733339e34f2cada8ced0b53860524",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_84a59bf4e69087c1b66da8f4686765c57b0445553be15be739481519d46f412b.html",
+            "sha256": "2c090f177c9c6bfd90adebc7518e01e9a5404988fef93c348aa6ee2a4a8dbeae",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "1",
+        "date": "2026年9月27日",
+        "field": "passing_order",
+        "input_value": "4",
+        "observed_values": [
+          "4"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_25457fcfe7d3f013d1400242ea58ead8770a48d2b5c5a5f65b2784bc3154728c.html",
+            "sha256": "88d98cf8371489b989729d35af0dce3406c733339e34f2cada8ced0b53860524",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_84a59bf4e69087c1b66da8f4686765c57b0445553be15be739481519d46f412b.html",
+            "sha256": "2c090f177c9c6bfd90adebc7518e01e9a5404988fef93c348aa6ee2a4a8dbeae",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "1",
+        "date": "2026年9月27日",
+        "field": "popularity",
+        "input_value": "3",
+        "observed_values": [
+          "3"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_25457fcfe7d3f013d1400242ea58ead8770a48d2b5c5a5f65b2784bc3154728c.html",
+            "sha256": "88d98cf8371489b989729d35af0dce3406c733339e34f2cada8ced0b53860524",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_84a59bf4e69087c1b66da8f4686765c57b0445553be15be739481519d46f412b.html",
+            "sha256": "2c090f177c9c6bfd90adebc7518e01e9a5404988fef93c348aa6ee2a4a8dbeae",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "1",
+        "date": "2026年9月27日",
+        "field": "weight",
+        "input_value": "55",
+        "observed_values": [
+          "55"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_25457fcfe7d3f013d1400242ea58ead8770a48d2b5c5a5f65b2784bc3154728c.html",
+            "sha256": "88d98cf8371489b989729d35af0dce3406c733339e34f2cada8ced0b53860524",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_84a59bf4e69087c1b66da8f4686765c57b0445553be15be739481519d46f412b.html",
+            "sha256": "2c090f177c9c6bfd90adebc7518e01e9a5404988fef93c348aa6ee2a4a8dbeae",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "1",
+        "date": "2026年9月27日",
+        "field": "jockey",
+        "input_value": "吉村 誠之助",
+        "observed_values": [
+          "吉村 誠之助"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_25457fcfe7d3f013d1400242ea58ead8770a48d2b5c5a5f65b2784bc3154728c.html",
+            "sha256": "88d98cf8371489b989729d35af0dce3406c733339e34f2cada8ced0b53860524",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_84a59bf4e69087c1b66da8f4686765c57b0445553be15be739481519d46f412b.html",
+            "sha256": "2c090f177c9c6bfd90adebc7518e01e9a5404988fef93c348aa6ee2a4a8dbeae",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "1",
+        "date": "2026年9月27日",
+        "field": "pace",
+        "input_value": "35.2",
+        "observed_values": [
+          "35.2"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_25457fcfe7d3f013d1400242ea58ead8770a48d2b5c5a5f65b2784bc3154728c.html",
+            "sha256": "88d98cf8371489b989729d35af0dce3406c733339e34f2cada8ced0b53860524",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_84a59bf4e69087c1b66da8f4686765c57b0445553be15be739481519d46f412b.html",
+            "sha256": "2c090f177c9c6bfd90adebc7518e01e9a5404988fef93c348aa6ee2a4a8dbeae",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "1",
+        "date": "2026年9月27日",
+        "field": "weather",
+        "input_value": "曇",
+        "observed_values": [
+          "曇"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_25457fcfe7d3f013d1400242ea58ead8770a48d2b5c5a5f65b2784bc3154728c.html",
+            "sha256": "88d98cf8371489b989729d35af0dce3406c733339e34f2cada8ced0b53860524",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_84a59bf4e69087c1b66da8f4686765c57b0445553be15be739481519d46f412b.html",
+            "sha256": "2c090f177c9c6bfd90adebc7518e01e9a5404988fef93c348aa6ee2a4a8dbeae",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "1",
+        "date": "2026年9月27日",
+        "field": "odds",
+        "input_value": "3.8",
+        "observed_values": [
+          "3.8"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_25457fcfe7d3f013d1400242ea58ead8770a48d2b5c5a5f65b2784bc3154728c.html",
+            "sha256": "88d98cf8371489b989729d35af0dce3406c733339e34f2cada8ced0b53860524",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_84a59bf4e69087c1b66da8f4686765c57b0445553be15be739481519d46f412b.html",
+            "sha256": "2c090f177c9c6bfd90adebc7518e01e9a5404988fef93c348aa6ee2a4a8dbeae",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "2",
+        "date": "2026年9月6日",
+        "field": "date",
+        "input_value": "2026-09-06",
+        "observed_values": [
+          "2026-09-06"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_270dc89c3d00c6fb746a11c5ce74d87a6bb8b0ba9518fb310e28904744e5a6c4.html",
+            "sha256": "972ae99309366351fd660feef4c7a449a02edf8bd02c5ac103c6420af4b339b7",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_bac604047fdd67d9b1cade8144a3192143c5807f3d7729bf9e1bef3b4e65a118.html",
+            "sha256": "f822cd73a96198a8324bdc8965849d916c906453853de91717b4bb5b1c899ab6",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "2",
+        "date": "2026年9月6日",
+        "field": "course",
+        "input_value": "阪神",
+        "observed_values": [
+          "阪神"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_270dc89c3d00c6fb746a11c5ce74d87a6bb8b0ba9518fb310e28904744e5a6c4.html",
+            "sha256": "972ae99309366351fd660feef4c7a449a02edf8bd02c5ac103c6420af4b339b7",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_bac604047fdd67d9b1cade8144a3192143c5807f3d7729bf9e1bef3b4e65a118.html",
+            "sha256": "f822cd73a96198a8324bdc8965849d916c906453853de91717b4bb5b1c899ab6",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "2",
+        "date": "2026年9月6日",
+        "field": "race_name",
+        "input_value": "未勝利",
+        "observed_values": [
+          "2歳未勝利",
+          "未勝利"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_270dc89c3d00c6fb746a11c5ce74d87a6bb8b0ba9518fb310e28904744e5a6c4.html",
+            "sha256": "972ae99309366351fd660feef4c7a449a02edf8bd02c5ac103c6420af4b339b7",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_bac604047fdd67d9b1cade8144a3192143c5807f3d7729bf9e1bef3b4e65a118.html",
+            "sha256": "f822cd73a96198a8324bdc8965849d916c906453853de91717b4bb5b1c899ab6",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "2",
+        "date": "2026年9月6日",
+        "field": "distance",
+        "input_value": "1400",
+        "observed_values": [
+          "1400"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_270dc89c3d00c6fb746a11c5ce74d87a6bb8b0ba9518fb310e28904744e5a6c4.html",
+            "sha256": "972ae99309366351fd660feef4c7a449a02edf8bd02c5ac103c6420af4b339b7",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_bac604047fdd67d9b1cade8144a3192143c5807f3d7729bf9e1bef3b4e65a118.html",
+            "sha256": "f822cd73a96198a8324bdc8965849d916c906453853de91717b4bb5b1c899ab6",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "2",
+        "date": "2026年9月6日",
+        "field": "history_surface",
+        "input_value": "芝",
+        "observed_values": [
+          "芝"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_270dc89c3d00c6fb746a11c5ce74d87a6bb8b0ba9518fb310e28904744e5a6c4.html",
+            "sha256": "972ae99309366351fd660feef4c7a449a02edf8bd02c5ac103c6420af4b339b7",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_bac604047fdd67d9b1cade8144a3192143c5807f3d7729bf9e1bef3b4e65a118.html",
+            "sha256": "f822cd73a96198a8324bdc8965849d916c906453853de91717b4bb5b1c899ab6",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "2",
+        "date": "2026年9月6日",
+        "field": "track_condition",
+        "input_value": "良",
+        "observed_values": [
+          "良"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_270dc89c3d00c6fb746a11c5ce74d87a6bb8b0ba9518fb310e28904744e5a6c4.html",
+            "sha256": "972ae99309366351fd660feef4c7a449a02edf8bd02c5ac103c6420af4b339b7",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_bac604047fdd67d9b1cade8144a3192143c5807f3d7729bf9e1bef3b4e65a118.html",
+            "sha256": "f822cd73a96198a8324bdc8965849d916c906453853de91717b4bb5b1c899ab6",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "2",
+        "date": "2026年9月6日",
+        "field": "position",
+        "input_value": "3",
+        "observed_values": [
+          "3"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_270dc89c3d00c6fb746a11c5ce74d87a6bb8b0ba9518fb310e28904744e5a6c4.html",
+            "sha256": "972ae99309366351fd660feef4c7a449a02edf8bd02c5ac103c6420af4b339b7",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_bac604047fdd67d9b1cade8144a3192143c5807f3d7729bf9e1bef3b4e65a118.html",
+            "sha256": "f822cd73a96198a8324bdc8965849d916c906453853de91717b4bb5b1c899ab6",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "2",
+        "date": "2026年9月6日",
+        "field": "time",
+        "input_value": "81.5",
+        "observed_values": [
+          "81.5"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_270dc89c3d00c6fb746a11c5ce74d87a6bb8b0ba9518fb310e28904744e5a6c4.html",
+            "sha256": "972ae99309366351fd660feef4c7a449a02edf8bd02c5ac103c6420af4b339b7",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_bac604047fdd67d9b1cade8144a3192143c5807f3d7729bf9e1bef3b4e65a118.html",
+            "sha256": "f822cd73a96198a8324bdc8965849d916c906453853de91717b4bb5b1c899ab6",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "2",
+        "date": "2026年9月6日",
+        "field": "last_3f",
+        "input_value": "34.7",
+        "observed_values": [
+          "34.7"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_270dc89c3d00c6fb746a11c5ce74d87a6bb8b0ba9518fb310e28904744e5a6c4.html",
+            "sha256": "972ae99309366351fd660feef4c7a449a02edf8bd02c5ac103c6420af4b339b7",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_bac604047fdd67d9b1cade8144a3192143c5807f3d7729bf9e1bef3b4e65a118.html",
+            "sha256": "f822cd73a96198a8324bdc8965849d916c906453853de91717b4bb5b1c899ab6",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "2",
+        "date": "2026年9月6日",
+        "field": "passing_order",
+        "input_value": "5",
+        "observed_values": [
+          "5"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_270dc89c3d00c6fb746a11c5ce74d87a6bb8b0ba9518fb310e28904744e5a6c4.html",
+            "sha256": "972ae99309366351fd660feef4c7a449a02edf8bd02c5ac103c6420af4b339b7",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_bac604047fdd67d9b1cade8144a3192143c5807f3d7729bf9e1bef3b4e65a118.html",
+            "sha256": "f822cd73a96198a8324bdc8965849d916c906453853de91717b4bb5b1c899ab6",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "2",
+        "date": "2026年9月6日",
+        "field": "popularity",
+        "input_value": "3",
+        "observed_values": [
+          "3"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_270dc89c3d00c6fb746a11c5ce74d87a6bb8b0ba9518fb310e28904744e5a6c4.html",
+            "sha256": "972ae99309366351fd660feef4c7a449a02edf8bd02c5ac103c6420af4b339b7",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_bac604047fdd67d9b1cade8144a3192143c5807f3d7729bf9e1bef3b4e65a118.html",
+            "sha256": "f822cd73a96198a8324bdc8965849d916c906453853de91717b4bb5b1c899ab6",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "2",
+        "date": "2026年9月6日",
+        "field": "weight",
+        "input_value": "55",
+        "observed_values": [
+          "55"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_270dc89c3d00c6fb746a11c5ce74d87a6bb8b0ba9518fb310e28904744e5a6c4.html",
+            "sha256": "972ae99309366351fd660feef4c7a449a02edf8bd02c5ac103c6420af4b339b7",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_bac604047fdd67d9b1cade8144a3192143c5807f3d7729bf9e1bef3b4e65a118.html",
+            "sha256": "f822cd73a96198a8324bdc8965849d916c906453853de91717b4bb5b1c899ab6",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "2",
+        "date": "2026年9月6日",
+        "field": "jockey",
+        "input_value": "吉村 誠之助",
+        "observed_values": [
+          "吉村 誠之助"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_270dc89c3d00c6fb746a11c5ce74d87a6bb8b0ba9518fb310e28904744e5a6c4.html",
+            "sha256": "972ae99309366351fd660feef4c7a449a02edf8bd02c5ac103c6420af4b339b7",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_bac604047fdd67d9b1cade8144a3192143c5807f3d7729bf9e1bef3b4e65a118.html",
+            "sha256": "f822cd73a96198a8324bdc8965849d916c906453853de91717b4bb5b1c899ab6",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "2",
+        "date": "2026年9月6日",
+        "field": "pace",
+        "input_value": "34.8",
+        "observed_values": [
+          "34.8"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_270dc89c3d00c6fb746a11c5ce74d87a6bb8b0ba9518fb310e28904744e5a6c4.html",
+            "sha256": "972ae99309366351fd660feef4c7a449a02edf8bd02c5ac103c6420af4b339b7",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_bac604047fdd67d9b1cade8144a3192143c5807f3d7729bf9e1bef3b4e65a118.html",
+            "sha256": "f822cd73a96198a8324bdc8965849d916c906453853de91717b4bb5b1c899ab6",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "2",
+        "date": "2026年9月6日",
+        "field": "weather",
+        "input_value": "曇",
+        "observed_values": [
+          "曇"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_270dc89c3d00c6fb746a11c5ce74d87a6bb8b0ba9518fb310e28904744e5a6c4.html",
+            "sha256": "972ae99309366351fd660feef4c7a449a02edf8bd02c5ac103c6420af4b339b7",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_bac604047fdd67d9b1cade8144a3192143c5807f3d7729bf9e1bef3b4e65a118.html",
+            "sha256": "f822cd73a96198a8324bdc8965849d916c906453853de91717b4bb5b1c899ab6",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "2",
+        "date": "2026年9月6日",
+        "field": "odds",
+        "input_value": "4.7",
+        "observed_values": [
+          "4.7"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_270dc89c3d00c6fb746a11c5ce74d87a6bb8b0ba9518fb310e28904744e5a6c4.html",
+            "sha256": "972ae99309366351fd660feef4c7a449a02edf8bd02c5ac103c6420af4b339b7",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_bac604047fdd67d9b1cade8144a3192143c5807f3d7729bf9e1bef3b4e65a118.html",
+            "sha256": "f822cd73a96198a8324bdc8965849d916c906453853de91717b4bb5b1c899ab6",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "3",
+        "date": "2026年8月8日",
+        "field": "date",
+        "input_value": "2026-08-08",
+        "observed_values": [
+          "2026-08-08"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_c690ffcc05b7203f19aabaf857c09909e6adc0ec22b38034455276141270362a.html",
+            "sha256": "8483b52c27f1587844fa657bee6a9585df0ef96b9ac72f05dfae37c7ff8cb0bc",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_d2106f31611009aa5946d9f835667f9e91add3ecf9f9fab0f6a0776601c43653.html",
+            "sha256": "461190f7fa3e482815adc865bdb54c6a9501846da87932318a43cf2d0fdf0209",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "3",
+        "date": "2026年8月8日",
+        "field": "course",
+        "input_value": "中京",
+        "observed_values": [
+          "中京"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_c690ffcc05b7203f19aabaf857c09909e6adc0ec22b38034455276141270362a.html",
+            "sha256": "8483b52c27f1587844fa657bee6a9585df0ef96b9ac72f05dfae37c7ff8cb0bc",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_d2106f31611009aa5946d9f835667f9e91add3ecf9f9fab0f6a0776601c43653.html",
+            "sha256": "461190f7fa3e482815adc865bdb54c6a9501846da87932318a43cf2d0fdf0209",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "3",
+        "date": "2026年8月8日",
+        "field": "race_name",
+        "input_value": "未勝利",
+        "observed_values": [
+          "2歳未勝利",
+          "未勝利"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_c690ffcc05b7203f19aabaf857c09909e6adc0ec22b38034455276141270362a.html",
+            "sha256": "8483b52c27f1587844fa657bee6a9585df0ef96b9ac72f05dfae37c7ff8cb0bc",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_d2106f31611009aa5946d9f835667f9e91add3ecf9f9fab0f6a0776601c43653.html",
+            "sha256": "461190f7fa3e482815adc865bdb54c6a9501846da87932318a43cf2d0fdf0209",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "3",
+        "date": "2026年8月8日",
+        "field": "distance",
+        "input_value": "1600",
+        "observed_values": [
+          "1600"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_c690ffcc05b7203f19aabaf857c09909e6adc0ec22b38034455276141270362a.html",
+            "sha256": "8483b52c27f1587844fa657bee6a9585df0ef96b9ac72f05dfae37c7ff8cb0bc",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_d2106f31611009aa5946d9f835667f9e91add3ecf9f9fab0f6a0776601c43653.html",
+            "sha256": "461190f7fa3e482815adc865bdb54c6a9501846da87932318a43cf2d0fdf0209",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "3",
+        "date": "2026年8月8日",
+        "field": "history_surface",
+        "input_value": "芝",
+        "observed_values": [
+          "芝"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_c690ffcc05b7203f19aabaf857c09909e6adc0ec22b38034455276141270362a.html",
+            "sha256": "8483b52c27f1587844fa657bee6a9585df0ef96b9ac72f05dfae37c7ff8cb0bc",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_d2106f31611009aa5946d9f835667f9e91add3ecf9f9fab0f6a0776601c43653.html",
+            "sha256": "461190f7fa3e482815adc865bdb54c6a9501846da87932318a43cf2d0fdf0209",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "3",
+        "date": "2026年8月8日",
+        "field": "track_condition",
+        "input_value": "良",
+        "observed_values": [
+          "良"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_c690ffcc05b7203f19aabaf857c09909e6adc0ec22b38034455276141270362a.html",
+            "sha256": "8483b52c27f1587844fa657bee6a9585df0ef96b9ac72f05dfae37c7ff8cb0bc",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_d2106f31611009aa5946d9f835667f9e91add3ecf9f9fab0f6a0776601c43653.html",
+            "sha256": "461190f7fa3e482815adc865bdb54c6a9501846da87932318a43cf2d0fdf0209",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "3",
+        "date": "2026年8月8日",
+        "field": "position",
+        "input_value": "3",
+        "observed_values": [
+          "3"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_c690ffcc05b7203f19aabaf857c09909e6adc0ec22b38034455276141270362a.html",
+            "sha256": "8483b52c27f1587844fa657bee6a9585df0ef96b9ac72f05dfae37c7ff8cb0bc",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_d2106f31611009aa5946d9f835667f9e91add3ecf9f9fab0f6a0776601c43653.html",
+            "sha256": "461190f7fa3e482815adc865bdb54c6a9501846da87932318a43cf2d0fdf0209",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "3",
+        "date": "2026年8月8日",
+        "field": "time",
+        "input_value": "94.6",
+        "observed_values": [
+          "94.6"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_c690ffcc05b7203f19aabaf857c09909e6adc0ec22b38034455276141270362a.html",
+            "sha256": "8483b52c27f1587844fa657bee6a9585df0ef96b9ac72f05dfae37c7ff8cb0bc",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_d2106f31611009aa5946d9f835667f9e91add3ecf9f9fab0f6a0776601c43653.html",
+            "sha256": "461190f7fa3e482815adc865bdb54c6a9501846da87932318a43cf2d0fdf0209",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "3",
+        "date": "2026年8月8日",
+        "field": "last_3f",
+        "input_value": "34.5",
+        "observed_values": [
+          "34.5"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_c690ffcc05b7203f19aabaf857c09909e6adc0ec22b38034455276141270362a.html",
+            "sha256": "8483b52c27f1587844fa657bee6a9585df0ef96b9ac72f05dfae37c7ff8cb0bc",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_d2106f31611009aa5946d9f835667f9e91add3ecf9f9fab0f6a0776601c43653.html",
+            "sha256": "461190f7fa3e482815adc865bdb54c6a9501846da87932318a43cf2d0fdf0209",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "3",
+        "date": "2026年8月8日",
+        "field": "passing_order",
+        "input_value": "2",
+        "observed_values": [
+          "2"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_c690ffcc05b7203f19aabaf857c09909e6adc0ec22b38034455276141270362a.html",
+            "sha256": "8483b52c27f1587844fa657bee6a9585df0ef96b9ac72f05dfae37c7ff8cb0bc",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_d2106f31611009aa5946d9f835667f9e91add3ecf9f9fab0f6a0776601c43653.html",
+            "sha256": "461190f7fa3e482815adc865bdb54c6a9501846da87932318a43cf2d0fdf0209",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "3",
+        "date": "2026年8月8日",
+        "field": "popularity",
+        "input_value": "2",
+        "observed_values": [
+          "2"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_c690ffcc05b7203f19aabaf857c09909e6adc0ec22b38034455276141270362a.html",
+            "sha256": "8483b52c27f1587844fa657bee6a9585df0ef96b9ac72f05dfae37c7ff8cb0bc",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_d2106f31611009aa5946d9f835667f9e91add3ecf9f9fab0f6a0776601c43653.html",
+            "sha256": "461190f7fa3e482815adc865bdb54c6a9501846da87932318a43cf2d0fdf0209",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "3",
+        "date": "2026年8月8日",
+        "field": "weight",
+        "input_value": "55",
+        "observed_values": [
+          "55"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_c690ffcc05b7203f19aabaf857c09909e6adc0ec22b38034455276141270362a.html",
+            "sha256": "8483b52c27f1587844fa657bee6a9585df0ef96b9ac72f05dfae37c7ff8cb0bc",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_d2106f31611009aa5946d9f835667f9e91add3ecf9f9fab0f6a0776601c43653.html",
+            "sha256": "461190f7fa3e482815adc865bdb54c6a9501846da87932318a43cf2d0fdf0209",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "3",
+        "date": "2026年8月8日",
+        "field": "jockey",
+        "input_value": "吉村 誠之助",
+        "observed_values": [
+          "吉村 誠之助"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_c690ffcc05b7203f19aabaf857c09909e6adc0ec22b38034455276141270362a.html",
+            "sha256": "8483b52c27f1587844fa657bee6a9585df0ef96b9ac72f05dfae37c7ff8cb0bc",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_d2106f31611009aa5946d9f835667f9e91add3ecf9f9fab0f6a0776601c43653.html",
+            "sha256": "461190f7fa3e482815adc865bdb54c6a9501846da87932318a43cf2d0fdf0209",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "3",
+        "date": "2026年8月8日",
+        "field": "pace",
+        "input_value": "36.7",
+        "observed_values": [
+          "36.7"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_c690ffcc05b7203f19aabaf857c09909e6adc0ec22b38034455276141270362a.html",
+            "sha256": "8483b52c27f1587844fa657bee6a9585df0ef96b9ac72f05dfae37c7ff8cb0bc",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_d2106f31611009aa5946d9f835667f9e91add3ecf9f9fab0f6a0776601c43653.html",
+            "sha256": "461190f7fa3e482815adc865bdb54c6a9501846da87932318a43cf2d0fdf0209",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "3",
+        "date": "2026年8月8日",
+        "field": "weather",
+        "input_value": "晴",
+        "observed_values": [
+          "晴"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_c690ffcc05b7203f19aabaf857c09909e6adc0ec22b38034455276141270362a.html",
+            "sha256": "8483b52c27f1587844fa657bee6a9585df0ef96b9ac72f05dfae37c7ff8cb0bc",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_d2106f31611009aa5946d9f835667f9e91add3ecf9f9fab0f6a0776601c43653.html",
+            "sha256": "461190f7fa3e482815adc865bdb54c6a9501846da87932318a43cf2d0fdf0209",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "3",
+        "date": "2026年8月8日",
+        "field": "odds",
+        "input_value": "3.4",
+        "observed_values": [
+          "3.4"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_c690ffcc05b7203f19aabaf857c09909e6adc0ec22b38034455276141270362a.html",
+            "sha256": "8483b52c27f1587844fa657bee6a9585df0ef96b9ac72f05dfae37c7ff8cb0bc",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_d2106f31611009aa5946d9f835667f9e91add3ecf9f9fab0f6a0776601c43653.html",
+            "sha256": "461190f7fa3e482815adc865bdb54c6a9501846da87932318a43cf2d0fdf0209",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "4",
+        "date": "2026年7月12日",
+        "field": "date",
+        "input_value": "2026-07-12",
+        "observed_values": [
+          "2026-07-12"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_e61cfd6948d56de4d35c41db89e36783fd2445fd5c3603b72352cf06b6b94222.html",
+            "sha256": "3eb747d2a93e8d8628a92ffdcb599f8c9cc9864167ab06290bae3f8d4e17e57a",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_cf90ae86813588eecb9b5993bccd53e9a773b3d142cf2ab97b9275b75df48ae5.html",
+            "sha256": "3f2aaac45451eb7e5e49e73b23db602bc06ffa99340be9007a014d80403d6f99",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "4",
+        "date": "2026年7月12日",
+        "field": "course",
+        "input_value": "小倉",
+        "observed_values": [
+          "小倉"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_e61cfd6948d56de4d35c41db89e36783fd2445fd5c3603b72352cf06b6b94222.html",
+            "sha256": "3eb747d2a93e8d8628a92ffdcb599f8c9cc9864167ab06290bae3f8d4e17e57a",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_cf90ae86813588eecb9b5993bccd53e9a773b3d142cf2ab97b9275b75df48ae5.html",
+            "sha256": "3f2aaac45451eb7e5e49e73b23db602bc06ffa99340be9007a014d80403d6f99",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "4",
+        "date": "2026年7月12日",
+        "field": "race_name",
+        "input_value": "新馬",
+        "observed_values": [
+          "2歳新馬",
+          "新馬"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_e61cfd6948d56de4d35c41db89e36783fd2445fd5c3603b72352cf06b6b94222.html",
+            "sha256": "3eb747d2a93e8d8628a92ffdcb599f8c9cc9864167ab06290bae3f8d4e17e57a",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_cf90ae86813588eecb9b5993bccd53e9a773b3d142cf2ab97b9275b75df48ae5.html",
+            "sha256": "3f2aaac45451eb7e5e49e73b23db602bc06ffa99340be9007a014d80403d6f99",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "4",
+        "date": "2026年7月12日",
+        "field": "distance",
+        "input_value": "2000",
+        "observed_values": [
+          "2000"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_e61cfd6948d56de4d35c41db89e36783fd2445fd5c3603b72352cf06b6b94222.html",
+            "sha256": "3eb747d2a93e8d8628a92ffdcb599f8c9cc9864167ab06290bae3f8d4e17e57a",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_cf90ae86813588eecb9b5993bccd53e9a773b3d142cf2ab97b9275b75df48ae5.html",
+            "sha256": "3f2aaac45451eb7e5e49e73b23db602bc06ffa99340be9007a014d80403d6f99",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "4",
+        "date": "2026年7月12日",
+        "field": "history_surface",
+        "input_value": "芝",
+        "observed_values": [
+          "芝"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_e61cfd6948d56de4d35c41db89e36783fd2445fd5c3603b72352cf06b6b94222.html",
+            "sha256": "3eb747d2a93e8d8628a92ffdcb599f8c9cc9864167ab06290bae3f8d4e17e57a",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_cf90ae86813588eecb9b5993bccd53e9a773b3d142cf2ab97b9275b75df48ae5.html",
+            "sha256": "3f2aaac45451eb7e5e49e73b23db602bc06ffa99340be9007a014d80403d6f99",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "4",
+        "date": "2026年7月12日",
+        "field": "track_condition",
+        "input_value": "良",
+        "observed_values": [
+          "良"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_e61cfd6948d56de4d35c41db89e36783fd2445fd5c3603b72352cf06b6b94222.html",
+            "sha256": "3eb747d2a93e8d8628a92ffdcb599f8c9cc9864167ab06290bae3f8d4e17e57a",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_cf90ae86813588eecb9b5993bccd53e9a773b3d142cf2ab97b9275b75df48ae5.html",
+            "sha256": "3f2aaac45451eb7e5e49e73b23db602bc06ffa99340be9007a014d80403d6f99",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "4",
+        "date": "2026年7月12日",
+        "field": "position",
+        "input_value": "4",
+        "observed_values": [
+          "4"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_e61cfd6948d56de4d35c41db89e36783fd2445fd5c3603b72352cf06b6b94222.html",
+            "sha256": "3eb747d2a93e8d8628a92ffdcb599f8c9cc9864167ab06290bae3f8d4e17e57a",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_cf90ae86813588eecb9b5993bccd53e9a773b3d142cf2ab97b9275b75df48ae5.html",
+            "sha256": "3f2aaac45451eb7e5e49e73b23db602bc06ffa99340be9007a014d80403d6f99",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "4",
+        "date": "2026年7月12日",
+        "field": "time",
+        "input_value": "122.8",
+        "observed_values": [
+          "122.8"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_e61cfd6948d56de4d35c41db89e36783fd2445fd5c3603b72352cf06b6b94222.html",
+            "sha256": "3eb747d2a93e8d8628a92ffdcb599f8c9cc9864167ab06290bae3f8d4e17e57a",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_cf90ae86813588eecb9b5993bccd53e9a773b3d142cf2ab97b9275b75df48ae5.html",
+            "sha256": "3f2aaac45451eb7e5e49e73b23db602bc06ffa99340be9007a014d80403d6f99",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "4",
+        "date": "2026年7月12日",
+        "field": "last_3f",
+        "input_value": "35.7",
+        "observed_values": [
+          "35.7"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_e61cfd6948d56de4d35c41db89e36783fd2445fd5c3603b72352cf06b6b94222.html",
+            "sha256": "3eb747d2a93e8d8628a92ffdcb599f8c9cc9864167ab06290bae3f8d4e17e57a",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_cf90ae86813588eecb9b5993bccd53e9a773b3d142cf2ab97b9275b75df48ae5.html",
+            "sha256": "3f2aaac45451eb7e5e49e73b23db602bc06ffa99340be9007a014d80403d6f99",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "4",
+        "date": "2026年7月12日",
+        "field": "passing_order",
+        "input_value": "1",
+        "observed_values": [
+          "1"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_e61cfd6948d56de4d35c41db89e36783fd2445fd5c3603b72352cf06b6b94222.html",
+            "sha256": "3eb747d2a93e8d8628a92ffdcb599f8c9cc9864167ab06290bae3f8d4e17e57a",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_cf90ae86813588eecb9b5993bccd53e9a773b3d142cf2ab97b9275b75df48ae5.html",
+            "sha256": "3f2aaac45451eb7e5e49e73b23db602bc06ffa99340be9007a014d80403d6f99",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "4",
+        "date": "2026年7月12日",
+        "field": "popularity",
+        "input_value": "3",
+        "observed_values": [
+          "3"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_e61cfd6948d56de4d35c41db89e36783fd2445fd5c3603b72352cf06b6b94222.html",
+            "sha256": "3eb747d2a93e8d8628a92ffdcb599f8c9cc9864167ab06290bae3f8d4e17e57a",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_cf90ae86813588eecb9b5993bccd53e9a773b3d142cf2ab97b9275b75df48ae5.html",
+            "sha256": "3f2aaac45451eb7e5e49e73b23db602bc06ffa99340be9007a014d80403d6f99",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "4",
+        "date": "2026年7月12日",
+        "field": "weight",
+        "input_value": "55",
+        "observed_values": [
+          "55"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_e61cfd6948d56de4d35c41db89e36783fd2445fd5c3603b72352cf06b6b94222.html",
+            "sha256": "3eb747d2a93e8d8628a92ffdcb599f8c9cc9864167ab06290bae3f8d4e17e57a",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_cf90ae86813588eecb9b5993bccd53e9a773b3d142cf2ab97b9275b75df48ae5.html",
+            "sha256": "3f2aaac45451eb7e5e49e73b23db602bc06ffa99340be9007a014d80403d6f99",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "4",
+        "date": "2026年7月12日",
+        "field": "jockey",
+        "input_value": "吉村 誠之助",
+        "observed_values": [
+          "吉村 誠之助"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_e61cfd6948d56de4d35c41db89e36783fd2445fd5c3603b72352cf06b6b94222.html",
+            "sha256": "3eb747d2a93e8d8628a92ffdcb599f8c9cc9864167ab06290bae3f8d4e17e57a",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_cf90ae86813588eecb9b5993bccd53e9a773b3d142cf2ab97b9275b75df48ae5.html",
+            "sha256": "3f2aaac45451eb7e5e49e73b23db602bc06ffa99340be9007a014d80403d6f99",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "4",
+        "date": "2026年7月12日",
+        "field": "pace",
+        "input_value": "37.1",
+        "observed_values": [
+          "37.1"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_e61cfd6948d56de4d35c41db89e36783fd2445fd5c3603b72352cf06b6b94222.html",
+            "sha256": "3eb747d2a93e8d8628a92ffdcb599f8c9cc9864167ab06290bae3f8d4e17e57a",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_cf90ae86813588eecb9b5993bccd53e9a773b3d142cf2ab97b9275b75df48ae5.html",
+            "sha256": "3f2aaac45451eb7e5e49e73b23db602bc06ffa99340be9007a014d80403d6f99",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "4",
+        "date": "2026年7月12日",
+        "field": "weather",
+        "input_value": "晴",
+        "observed_values": [
+          "晴"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_e61cfd6948d56de4d35c41db89e36783fd2445fd5c3603b72352cf06b6b94222.html",
+            "sha256": "3eb747d2a93e8d8628a92ffdcb599f8c9cc9864167ab06290bae3f8d4e17e57a",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_cf90ae86813588eecb9b5993bccd53e9a773b3d142cf2ab97b9275b75df48ae5.html",
+            "sha256": "3f2aaac45451eb7e5e49e73b23db602bc06ffa99340be9007a014d80403d6f99",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      },
+      {
+        "race_id": "20261025_08_03",
+        "horse_id": "pw01dud002024105437/B2",
+        "horse_number": "5",
+        "run_index": "4",
+        "date": "2026年7月12日",
+        "field": "odds",
+        "input_value": "6",
+        "observed_values": [
+          "6"
+        ],
+        "source_artifacts": [
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/77cd3beaafd6d8a1770946299b0beb41404cd20fb009fd2681bc1f899a00edfd.html",
+            "sha256": "1b99ef78b290c0f02b4a3b0c1c73769f1562d7201fabc33fcb23826912087237",
+            "kind": "horse_history"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/145973b4df70d65aec3dca664efc59e08add469d441e05a5185c78329ffab4b3.html",
+            "sha256": "13e711b31acac2214cf37dc11d21a50a5d731f8a7dddfd9f775190fd3c23d977",
+            "kind": "race_detail"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_e61cfd6948d56de4d35c41db89e36783fd2445fd5c3603b72352cf06b6b94222.html",
+            "sha256": "3eb747d2a93e8d8628a92ffdcb599f8c9cc9864167ab06290bae3f8d4e17e57a",
+            "kind": "history_result"
+          },
+          {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_cf90ae86813588eecb9b5993bccd53e9a773b3d142cf2ab97b9275b75df48ae5.html",
+            "sha256": "3f2aaac45451eb7e5e49e73b23db602bc06ffa99340be9007a014d80403d6f99",
+            "kind": "history_odds"
+          }
+        ],
+        "state": "OBSERVED",
+        "reason": "Nonempty value reparsed from matched raw source"
+      }
+    ],
+    "counts": {
+      "OBSERVED": 64
+    }
+  },
+  "missing_fields": [],
+  "missing_field_counts": {},
+  "history_counts": [
+    {
+      "race_id": "20261025_08_03",
+      "horse_number": "5",
+      "collected": 4,
+      "required": 4,
+      "status": "COMPLETE"
+    }
+  ],
+  "history_counts_verified": true,
+  "unapproved_finding_count": 2,
+  "source_audit_status": "VERIFIED_REPARSE",
+  "raw_provenance_status": "VERIFIED_REPARSE",
+  "limitations": [
+    "Normalized inputs only; original-source parser omissions are not verified.",
+    "Collector quality flags and nonempty numeric values do not prove observed origin.",
+    "Raw history reparse verifies reproducibility, not independent parser completeness or current entry provenance."
+  ],
+  "role": "data_integrity_auditor",
+  "horse_name": "シュプレヒコール",
+  "horse_number": "5",
+  "entry_status": "取消",
+  "excluded_from_training_entries": true,
+  "independent_career": {
+    "status": "PASS",
+    "before_target_count": 4,
+    "official_totals": {
+      "平地レース合計": 4,
+      "障害レース合計": 0
+    },
+    "listed_started_count": 4,
+    "unknown_row_count": 0,
+    "nonstarter_count": 1,
+    "latest5_dates": [
+      "2026-09-27",
+      "2026-09-06",
+      "2026-08-08",
+      "2026-07-12"
+    ]
+  },
+  "input_artifact": {
+    "path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_08_03.json",
+    "sha256": "6b51c1bd1cd12419bd2ebafd9f15582024724b3ea7723797982e1122e4b0d2d6"
+  },
+  "script_artifact": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_audit_20261027T125128Z/audit_nonstarter.py",
+    "sha256": "d2a4043a539c18b4bc270469f165093ca59c44981f2123d0a89d5f0aa2c82437"
+  }
+}

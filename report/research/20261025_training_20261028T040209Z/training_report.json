@@ -1,0 +1,107 @@
+{
+  "claim_scope": "in_sample_research_candidate_only",
+  "status": "INSUFFICIENT_DATA_RESEARCH_ONLY",
+  "validation_status": "NOT_EXECUTED",
+  "test_status": "NOT_EXECUTED",
+  "production_eligible": false,
+  "production_model_changed": false,
+  "tickets": [],
+  "research_fit_sha256": "028ba3c12727597d9f13742e159c690898c2473397d0a247b0beb4d562a8ad2a",
+  "review_sha256": "755604df17ef9220b2e6eb5328a6bbeccbc795d91ef0601962bda884cfddc2aa",
+  "role": "reporter",
+  "run_id": "d4bfcdb0a5114397abae0842ec389af6",
+  "stage": "report",
+  "training_completed": true,
+  "training_date": "2026-10-25",
+  "reported_at": "2026-10-30T00:57:17.793819+00:00",
+  "training_summary": {
+    "races": 10,
+    "horses": 120,
+    "history_rows": 371,
+    "family": "linear",
+    "ridge": 100,
+    "scope": "posthoc_exploratory_training_only",
+    "effective_winner_events": 10,
+    "excluded_races": 26,
+    "excluded_gate_counts": {
+      "BLOCKED_MISSING_DATA": 3,
+      "BLOCKED_UNAPPROVED_IMPUTATION": 16,
+      "UNVERIFIED": 3,
+      "NOT_SUPPORTED_SURFACE": 4
+    }
+  },
+  "training_only_metrics": {
+    "baseline": {
+      "race_count": 10,
+      "log_loss": 2.437868777002473,
+      "brier": 0.9095977628113057,
+      "top1_hit_rate": 0.0,
+      "win_top1_policy_roi": 0.0
+    },
+    "candidate": {
+      "race_count": 10,
+      "log_loss": 2.42566990613222,
+      "brier": 0.9076993288757155,
+      "top1_hit_rate": 0.0,
+      "win_top1_policy_roi": 0.0
+    }
+  },
+  "data_quality": {
+    "all36_audited": true,
+    "selected_required_missing_fields": 0,
+    "selected_unapproved_imputations": 0,
+    "whole_starting_fields_retained": true
+  },
+  "diagnostics": {
+    "active_coefficients": 24,
+    "design_rank": 16,
+    "uniform_reference_log_loss": 2.4374364347852713,
+    "top1_hits_baseline": "0/10",
+    "top1_hits_candidate": "0/10"
+  },
+  "limitations": [
+    "1日・10レースの訓練内結果のみ。検証・test未実施。",
+    "基本形の勝率はほぼ一律。訓練内損失の低下を予測精度改善とは扱わない。",
+    "有効24係数に対して設計行列rank16。環境効果の識別は未証明。",
+    "過去ペース363/371走は観測を保持しているが基本形には未接続。",
+    "今回のstrict Softmax基準は既存本番Monte Carloと別variant。",
+    "26レースは原典と停止理由を保持。欠損馬単位の除外や補完は行っていない。",
+    "事後再構成データであり、発走前保存の証明ではない。"
+  ],
+  "next_action": "基準モデルの識別力と過去ペースの接続を研究し、未使用の別開催日で検証・testする。本番採用は別の昇格手順。",
+  "artifacts": {
+    "candidate_model": {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/candidate_environment_model.json",
+      "sha256": "1e81fa9e3df297bf5f7957563d1064aa4b52731794b6f81258bdb97b57366ad9"
+    },
+    "training_metrics": {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/training_metrics.json",
+      "sha256": "eeb7cb1804c3b542aea42862d2a82fadf6a003b47f555434628e6b54aa726c0a"
+    },
+    "semantic_review": {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/review/semantic_review.json",
+      "sha256": "9730db8f14ce6aed8ec8fbddb916bed5e6f46a1943354678a7ac4e996e7a392c"
+    },
+    "independent_diagnostics": {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/review/independent_diagnostics.json",
+      "sha256": "467dccf1d931bcd363b9f3dba077e65304e187f97d3a8f9c354e78d609cd55f6"
+    },
+    "audit_summary": {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/audit/summary.json",
+      "sha256": "b243883ba9a5e848fa4722e9b346f363ebb1cd78ed42589d6b0bc216665a7ff5"
+    },
+    "frozen_plan": {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/research_plan.json",
+      "sha256": "98014ae372d98fda052970e7fe2fc21a13aab8373b371a455a5a06b59a20885e"
+    },
+    "quality": {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/quality_checks_resumed.json",
+      "sha256": "6f43090575ffac601fc2e970f60a0badbaefdedf5f38226c01dae5c634f668df"
+    }
+  },
+  "shared_state_unchanged": true,
+  "formal_report_record": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/skill_runs/training_01/10_record.json",
+    "sha256": "62fbd6ef0748dddee9b54e3e02ab90cf09fc4c4a6daf85bb63565a8be832ee8a"
+  }
+}

@@ -1,0 +1,510 @@
+{
+  "role": "reviewer",
+  "run_id": "d4bfcdb0a5114397abae0842ec389af6",
+  "reviewed_at": "2026-10-30T00:50:21.494855+00:00",
+  "input_fit": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/skill_runs/training_01/08_output.json",
+    "sha256": "b391dabf9dd791829722b10f8c4509552ced88c0f5e9d00ab7d8971afc2e28a7"
+  },
+  "independent_review_checks": {
+    "dataset_matches": true,
+    "candidate_stationary": true,
+    "metrics_match": true,
+    "shared_unchanged": true
+  },
+  "independent_metrics": {
+    "baseline": {
+      "race_count": 10,
+      "log_loss": 2.437868777002473,
+      "brier": 0.9095977628113057,
+      "top1_hit_rate": 0.0,
+      "win_top1_policy_roi": 0.0
+    },
+    "candidate": {
+      "race_count": 10,
+      "log_loss": 2.42566990613222,
+      "brier": 0.9076993288757155,
+      "top1_hit_rate": 0.0,
+      "win_top1_policy_roi": 0.0
+    }
+  },
+  "data": {
+    "races": 10,
+    "horses": 120,
+    "training_dates": [
+      "2026-10-25"
+    ],
+    "effective_winner_events": 10,
+    "venue_counts": {
+      "04": 4,
+      "05": 2,
+      "08": 4
+    },
+    "weather_counts": {
+      "雨": 4,
+      "曇": 6
+    },
+    "environment_unique_vectors": 6
+  },
+  "identifiability": {
+    "nominal_coefficients": 28,
+    "active_coefficients": 24,
+    "inactive_constant_environment_terms": [
+      "snow"
+    ],
+    "environment_vector_rank": 4,
+    "race_centered_design_shape": [
+      120,
+      28
+    ],
+    "race_centered_raw_design_rank": 16,
+    "scaled_design_rank": 16,
+    "singular_values": [
+      32.590910102632016,
+      24.413073316931932,
+      19.903396669918415,
+      15.817455443246073,
+      14.08096494176262,
+      11.388444628244638,
+      10.166888466908203,
+      7.186822673963196,
+      5.830472377525431,
+      5.0325107168879395,
+      3.0717590958604593,
+      2.9174360781302284,
+      2.4777436767350056,
+      2.080938515713637,
+      1.5975300550766505,
+      1.490542731180547,
+      8.21848668688499e-15,
+      4.775844486218543e-15,
+      3.780621519115248e-15,
+      3.3204589668221154e-15,
+      2.7796960848239772e-15,
+      1.8748809379142344e-15,
+      1.4652595510264447e-15,
+      1.2084112444664857e-15,
+      5.67936124116602e-16,
+      7.948270334167361e-18,
+      2.4207154722910333e-28,
+      2.1568476991764473e-33
+    ],
+    "regularization": "Positive ridge gives a numerical minimizer; it does not establish empirical identification of collinear environmental effects."
+  },
+  "baseline_flatness": [
+    {
+      "race_id": "20261025_04_01",
+      "field_size": 13,
+      "min_probability": 0.06710372976923448,
+      "max_probability": 0.09371683192823492,
+      "max_min_ratio": 1.3965964671490128,
+      "normalized_entropy": 0.9972679280253736,
+      "top1_horse_number": "9"
+    },
+    {
+      "race_id": "20261025_04_03",
+      "field_size": 18,
+      "min_probability": 0.0483897999522154,
+      "max_probability": 0.06545968194912095,
+      "max_min_ratio": 1.3527578542122916,
+      "normalized_entropy": 0.9989020531267152,
+      "top1_horse_number": "14"
+    },
+    {
+      "race_id": "20261025_04_09",
+      "field_size": 14,
+      "min_probability": 0.06405674756284717,
+      "max_probability": 0.08268192420930405,
+      "max_min_ratio": 1.290760573321076,
+      "normalized_entropy": 0.9992342867285898,
+      "top1_horse_number": "9"
+    },
+    {
+      "race_id": "20261025_04_10",
+      "field_size": 12,
+      "min_probability": 0.07632278682042891,
+      "max_probability": 0.10019891493467724,
+      "max_min_ratio": 1.3128309265019857,
+      "normalized_entropy": 0.9987089380377531,
+      "top1_horse_number": "12"
+    },
+    {
+      "race_id": "20261025_05_02",
+      "field_size": 7,
+      "min_probability": 0.1271744562720655,
+      "max_probability": 0.15652768670528555,
+      "max_min_ratio": 1.2308107405658917,
+      "normalized_entropy": 0.999146667345732,
+      "top1_horse_number": "7"
+    },
+    {
+      "race_id": "20261025_05_03",
+      "field_size": 12,
+      "min_probability": 0.07020646427295729,
+      "max_probability": 0.10518247123557588,
+      "max_min_ratio": 1.4981878424561388,
+      "normalized_entropy": 0.9973072114364555,
+      "top1_horse_number": "9"
+    },
+    {
+      "race_id": "20261025_08_03",
+      "field_size": 8,
+      "min_probability": 0.10596961326521157,
+      "max_probability": 0.15776255922347684,
+      "max_min_ratio": 1.4887528071716407,
+      "normalized_entropy": 0.9966300023972994,
+      "top1_horse_number": "2"
+    },
+    {
+      "race_id": "20261025_08_07",
+      "field_size": 9,
+      "min_probability": 0.09627764716975565,
+      "max_probability": 0.13327051280094895,
+      "max_min_ratio": 1.384231093287603,
+      "normalized_entropy": 0.9970698903263691,
+      "top1_horse_number": "2"
+    },
+    {
+      "race_id": "20261025_08_09",
+      "field_size": 9,
+      "min_probability": 0.088700251293994,
+      "max_probability": 0.14212576842750835,
+      "max_min_ratio": 1.6023152849526576,
+      "normalized_entropy": 0.9929720957192982,
+      "top1_horse_number": "9"
+    },
+    {
+      "race_id": "20261025_08_11",
+      "field_size": 18,
+      "min_probability": 0.0472792533153787,
+      "max_probability": 0.07142011049253114,
+      "max_min_ratio": 1.510601489751109,
+      "normalized_entropy": 0.99834600392604,
+      "top1_horse_number": "8"
+    }
+  ],
+  "candidate_flatness": [
+    {
+      "race_id": "20261025_04_01",
+      "field_size": 13,
+      "min_probability": 0.06621052706810349,
+      "max_probability": 0.09250810127010618,
+      "max_min_ratio": 1.397181163879775,
+      "normalized_entropy": 0.9982240606685703,
+      "top1_horse_number": "9"
+    },
+    {
+      "race_id": "20261025_04_03",
+      "field_size": 18,
+      "min_probability": 0.04835227258673755,
+      "max_probability": 0.06661482515017673,
+      "max_min_ratio": 1.3776979154532725,
+      "normalized_entropy": 0.9987247916737687,
+      "top1_horse_number": "14"
+    },
+    {
+      "race_id": "20261025_04_09",
+      "field_size": 14,
+      "min_probability": 0.06454355332626589,
+      "max_probability": 0.08079448601097285,
+      "max_min_ratio": 1.2517824298045528,
+      "normalized_entropy": 0.9995025454656,
+      "top1_horse_number": "9"
+    },
+    {
+      "race_id": "20261025_04_10",
+      "field_size": 12,
+      "min_probability": 0.0766426412944496,
+      "max_probability": 0.0964907081522032,
+      "max_min_ratio": 1.258968982834246,
+      "normalized_entropy": 0.9989613500942526,
+      "top1_horse_number": "12"
+    },
+    {
+      "race_id": "20261025_05_02",
+      "field_size": 7,
+      "min_probability": 0.12744607274638733,
+      "max_probability": 0.15585092005647763,
+      "max_min_ratio": 1.2228773841200649,
+      "normalized_entropy": 0.9992047796571006,
+      "top1_horse_number": "7"
+    },
+    {
+      "race_id": "20261025_05_03",
+      "field_size": 12,
+      "min_probability": 0.07027072279750501,
+      "max_probability": 0.10641534469871404,
+      "max_min_ratio": 1.514362460812661,
+      "normalized_entropy": 0.9968918395486984,
+      "top1_horse_number": "9"
+    },
+    {
+      "race_id": "20261025_08_03",
+      "field_size": 8,
+      "min_probability": 0.10652050008255015,
+      "max_probability": 0.15868346976842093,
+      "max_min_ratio": 1.4896988809238227,
+      "normalized_entropy": 0.9965307786604586,
+      "top1_horse_number": "2"
+    },
+    {
+      "race_id": "20261025_08_07",
+      "field_size": 9,
+      "min_probability": 0.0958138103416742,
+      "max_probability": 0.13386255359089222,
+      "max_min_ratio": 1.3971112631209983,
+      "normalized_entropy": 0.9970454768658491,
+      "top1_horse_number": "2"
+    },
+    {
+      "race_id": "20261025_08_09",
+      "field_size": 9,
+      "min_probability": 0.08839921574297911,
+      "max_probability": 0.1414473004632966,
+      "max_min_ratio": 1.6000967799822443,
+      "normalized_entropy": 0.9924410793444124,
+      "top1_horse_number": "9"
+    },
+    {
+      "race_id": "20261025_08_11",
+      "field_size": 18,
+      "min_probability": 0.04704573848215246,
+      "max_probability": 0.07113299129290714,
+      "max_min_ratio": 1.5119964865657822,
+      "normalized_entropy": 0.9983423143003952,
+      "top1_horse_number": "8"
+    }
+  ],
+  "uniform_reference_log_loss": 2.4374364347852713,
+  "whole_race_exclusions": [
+    {
+      "race_id": "20261025_04_02",
+      "gate": "BLOCKED_MISSING_DATA",
+      "horses_retained_in_source": 10,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "findings": 3,
+      "source_mismatches": 0
+    },
+    {
+      "race_id": "20261025_04_04",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horses_retained_in_source": 13,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "findings": 2,
+      "source_mismatches": 0
+    },
+    {
+      "race_id": "20261025_04_05",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horses_retained_in_source": 18,
+      "surface_gate": "PASS",
+      "findings": 18,
+      "source_mismatches": 0
+    },
+    {
+      "race_id": "20261025_04_06",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horses_retained_in_source": 11,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "findings": 10,
+      "source_mismatches": 5
+    },
+    {
+      "race_id": "20261025_04_07",
+      "gate": "UNVERIFIED",
+      "horses_retained_in_source": 14,
+      "surface_gate": "PASS",
+      "findings": 0,
+      "source_mismatches": 0
+    },
+    {
+      "race_id": "20261025_04_08",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horses_retained_in_source": 14,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "findings": 8,
+      "source_mismatches": 4
+    },
+    {
+      "race_id": "20261025_04_11",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horses_retained_in_source": 17,
+      "surface_gate": "PASS",
+      "findings": 25,
+      "source_mismatches": 0
+    },
+    {
+      "race_id": "20261025_04_12",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horses_retained_in_source": 12,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "findings": 3,
+      "source_mismatches": 0
+    },
+    {
+      "race_id": "20261025_05_01",
+      "gate": "NOT_SUPPORTED_SURFACE",
+      "horses_retained_in_source": 16,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "findings": 0,
+      "source_mismatches": 0
+    },
+    {
+      "race_id": "20261025_05_04",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horses_retained_in_source": 11,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "findings": 56,
+      "source_mismatches": 0
+    },
+    {
+      "race_id": "20261025_05_05",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horses_retained_in_source": 13,
+      "surface_gate": "PASS",
+      "findings": 13,
+      "source_mismatches": 0
+    },
+    {
+      "race_id": "20261025_05_06",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horses_retained_in_source": 16,
+      "surface_gate": "PASS",
+      "findings": 16,
+      "source_mismatches": 0
+    },
+    {
+      "race_id": "20261025_05_07",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horses_retained_in_source": 15,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "findings": 4,
+      "source_mismatches": 0
+    },
+    {
+      "race_id": "20261025_05_08",
+      "gate": "UNVERIFIED",
+      "horses_retained_in_source": 18,
+      "surface_gate": "PASS",
+      "findings": 0,
+      "source_mismatches": 0
+    },
+    {
+      "race_id": "20261025_05_09",
+      "gate": "UNVERIFIED",
+      "horses_retained_in_source": 11,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "findings": 0,
+      "source_mismatches": 0
+    },
+    {
+      "race_id": "20261025_05_10",
+      "gate": "BLOCKED_MISSING_DATA",
+      "horses_retained_in_source": 9,
+      "surface_gate": "PASS",
+      "findings": 3,
+      "source_mismatches": 0
+    },
+    {
+      "race_id": "20261025_05_11",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horses_retained_in_source": 16,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "findings": 7,
+      "source_mismatches": 17
+    },
+    {
+      "race_id": "20261025_05_12",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horses_retained_in_source": 13,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "findings": 1,
+      "source_mismatches": 0
+    },
+    {
+      "race_id": "20261025_08_01",
+      "gate": "NOT_SUPPORTED_SURFACE",
+      "horses_retained_in_source": 8,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "findings": 0,
+      "source_mismatches": 0
+    },
+    {
+      "race_id": "20261025_08_02",
+      "gate": "NOT_SUPPORTED_SURFACE",
+      "horses_retained_in_source": 10,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "findings": 0,
+      "source_mismatches": 0
+    },
+    {
+      "race_id": "20261025_08_04",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horses_retained_in_source": 16,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "findings": 16,
+      "source_mismatches": 0
+    },
+    {
+      "race_id": "20261025_08_05",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horses_retained_in_source": 8,
+      "surface_gate": "PASS",
+      "findings": 8,
+      "source_mismatches": 0
+    },
+    {
+      "race_id": "20261025_08_06",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horses_retained_in_source": 12,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "findings": 2,
+      "source_mismatches": 0
+    },
+    {
+      "race_id": "20261025_08_08",
+      "gate": "BLOCKED_MISSING_DATA",
+      "horses_retained_in_source": 18,
+      "surface_gate": "PASS",
+      "findings": 5,
+      "source_mismatches": 5
+    },
+    {
+      "race_id": "20261025_08_10",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horses_retained_in_source": 15,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "findings": 2,
+      "source_mismatches": 0
+    },
+    {
+      "race_id": "20261025_08_12",
+      "gate": "NOT_SUPPORTED_SURFACE",
+      "horses_retained_in_source": 12,
+      "surface_gate": "NOT_SUPPORTED_SURFACE",
+      "findings": 0,
+      "source_mismatches": 0
+    }
+  ],
+  "whole_race_exclusion_gate_counts": {
+    "BLOCKED_MISSING_DATA": 3,
+    "BLOCKED_UNAPPROVED_IMPUTATION": 16,
+    "UNVERIFIED": 3,
+    "NOT_SUPPORTED_SURFACE": 4
+  },
+  "baseline_configurations": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/config/track_biases.json",
+      "sha256": "525b11ed2a660d765263d793651efd75896fcc58f1837250d3d70353d250cc59"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/config/course_learning.json",
+      "sha256": "c39162acad3b57564d72a46682ffe821095272ae9386ccc04477bc2db7f35ee9"
+    }
+  ],
+  "runtime_packages": {
+    "numpy": "2.0.2",
+    "scipy": "1.13.1"
+  },
+  "claim_scope": "in_sample_research_candidate_only"
+}

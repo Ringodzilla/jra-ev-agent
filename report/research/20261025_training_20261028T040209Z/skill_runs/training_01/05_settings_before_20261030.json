@@ -1,0 +1,19 @@
+{
+  "run_id": "d4bfcdb0a5114397abae0842ec389af6",
+  "stage": "analysis",
+  "role": "analyzer",
+  "captured_at": "2026-10-30T00:27:41.139787+00:00",
+  "timing": "before structural feature calculation",
+  "settings": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/config/track_biases.json",
+      "sha256": "525b11ed2a660d765263d793651efd75896fcc58f1837250d3d70353d250cc59"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/config/course_learning.json",
+      "sha256": "c39162acad3b57564d72a46682ffe821095272ae9386ccc04477bc2db7f35ee9"
+    }
+  ],
+  "model_coefficients_changed": false,
+  "dispatch": "Parent /root explicitly dispatched analysis only on 2026-10-30; no fit dispatch yet"
+}

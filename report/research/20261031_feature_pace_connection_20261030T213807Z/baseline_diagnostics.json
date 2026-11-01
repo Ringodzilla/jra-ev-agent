@@ -1,0 +1,141 @@
+{
+  "role": "analyzer",
+  "scope": "saved-output diagnostic replay only",
+  "historical_run_id": "d4bfcdb0a5114397abae0842ec389af6",
+  "historical_records": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/skill_runs/training_01/01_record.json",
+      "sha256": "4cb68fd1a64f607e7a6325c7a7f6173421284384ee54240e374491cbe3ba765b"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/skill_runs/training_01/02_record.json",
+      "sha256": "2ae7202e6245b0eb675d6f8bea317b8c283bce1edec267687c6160f44e9aee44"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/skill_runs/training_01/03_record.json",
+      "sha256": "cef686c92d8c570cc9ce08e919ddd5a9c7393ea6bae87edf908d31f858f1a70b"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/skill_runs/training_01/04_record.json",
+      "sha256": "a47d5718cf037c551b70f4340096634afee2432906e15296e513cf653efef791"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/skill_runs/training_01/05_record.json",
+      "sha256": "6fe499616166097b725c591b0f0d08b05452d257274c87e4470ef353bbd64494"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/skill_runs/training_01/06_record.json",
+      "sha256": "3718ee5ffb66bd526d76d152c6ba9cc49af792a2287bcaece4b50038e63eb39f"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/skill_runs/training_01/07_record.json",
+      "sha256": "2bce9036eda33c81e59803c633c8679215c6c6da87085edb204d9e5a89fcf1fc"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/skill_runs/training_01/08_record.json",
+      "sha256": "7c91ec48b1956ae9ff22b394298df71909afa792528dbc2a9e08a58740cfcb28"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/skill_runs/training_01/09_record.json",
+      "sha256": "3800412f666c79d461fd1fa1fcdf1117c3738d23b8947311bf2fd36ded7e70ee"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/skill_runs/training_01/10_record.json",
+      "sha256": "62fbd6ef0748dddee9b54e3e02ab90cf09fc4c4a6daf85bb63565a8be832ee8a"
+    }
+  ],
+  "input_probabilities": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/skill_runs/training_01/07_output.json",
+    "sha256": "d847edafdfafd2cd0ed9b881f15a8f791ada9c8371a2da34211c9ac73f94ef6a"
+  },
+  "input_fit": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/skill_runs/training_01/08_output.json",
+    "sha256": "b391dabf9dd791829722b10f8c4509552ced88c0f5e9d00ab7d8971afc2e28a7"
+  },
+  "current_code_recertifies_old_run": false,
+  "new_predictions_or_fit_executed": false,
+  "baseline_variant": "exact_structural_softmax_temperature1_no_mc_no_market",
+  "production_MC_evaluated": false,
+  "baseline_log_loss": 2.437868777002473,
+  "uniform_log_loss": 2.4374364347852713,
+  "mean_normalized_entropy": 0.9975585077069626,
+  "probability_ratio_range": [
+    1.2308107405658915,
+    1.6023152849526574
+  ],
+  "top1_hits": 0,
+  "races": [
+    {
+      "race_id": "20261025_04_01",
+      "field_size": 13,
+      "normalized_entropy": 0.9972679280253736,
+      "probability_max_min_ratio": 1.3965964671490125,
+      "top1_hit": false
+    },
+    {
+      "race_id": "20261025_04_03",
+      "field_size": 18,
+      "normalized_entropy": 0.9989020531267151,
+      "probability_max_min_ratio": 1.3527578542122918,
+      "top1_hit": false
+    },
+    {
+      "race_id": "20261025_04_09",
+      "field_size": 14,
+      "normalized_entropy": 0.9992342867285899,
+      "probability_max_min_ratio": 1.290760573321076,
+      "top1_hit": false
+    },
+    {
+      "race_id": "20261025_04_10",
+      "field_size": 12,
+      "normalized_entropy": 0.9987089380377528,
+      "probability_max_min_ratio": 1.3128309265019857,
+      "top1_hit": false
+    },
+    {
+      "race_id": "20261025_05_02",
+      "field_size": 7,
+      "normalized_entropy": 0.999146667345732,
+      "probability_max_min_ratio": 1.2308107405658915,
+      "top1_hit": false
+    },
+    {
+      "race_id": "20261025_05_03",
+      "field_size": 12,
+      "normalized_entropy": 0.9973072114364553,
+      "probability_max_min_ratio": 1.4981878424561388,
+      "top1_hit": false
+    },
+    {
+      "race_id": "20261025_08_03",
+      "field_size": 8,
+      "normalized_entropy": 0.9966300023972994,
+      "probability_max_min_ratio": 1.4887528071716403,
+      "top1_hit": false
+    },
+    {
+      "race_id": "20261025_08_07",
+      "field_size": 9,
+      "normalized_entropy": 0.9970698903263688,
+      "probability_max_min_ratio": 1.384231093287603,
+      "top1_hit": false
+    },
+    {
+      "race_id": "20261025_08_09",
+      "field_size": 9,
+      "normalized_entropy": 0.9929720957192982,
+      "probability_max_min_ratio": 1.6023152849526574,
+      "top1_hit": false
+    },
+    {
+      "race_id": "20261025_08_11",
+      "field_size": 18,
+      "normalized_entropy": 0.9983460039260399,
+      "probability_max_min_ratio": 1.510601489751109,
+      "top1_hit": false
+    }
+  ],
+  "interpretation": "This saved strict research baseline is nearly uniform on these ten training races. No conclusion about the separate production MC or other dates follows.",
+  "next_experiment": "Compare feature contribution and probability calibration on chronologically separate audited race days; do not tune score multipliers to these winners."
+}

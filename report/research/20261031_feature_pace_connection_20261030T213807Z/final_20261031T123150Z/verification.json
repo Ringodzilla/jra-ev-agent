@@ -1,0 +1,46 @@
+{
+  "status": "PASS",
+  "role": "analyzer",
+  "checked_at": "2026-10-31T12:33:36.029599+00:00",
+  "targeted_tests": {
+    "passed": 41,
+    "log": {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_feature_pace_connection_20261030T213807Z/final_20261031T123150Z/targeted_tests_final.log",
+      "sha256": "0fd45321b7aea8906cb326ee56201f9406916435616b88dcac32b8201464e9e0"
+    }
+  },
+  "ruff": "PASS",
+  "diff_check": "PASS",
+  "code_snapshot": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_feature_pace_connection_20261030T213807Z/final_20261031T123150Z/code_execution_snapshot.json",
+    "sha256": "37f93e957659243592c180c779571877da664783c8b578be7143e0b8a5e4cfa9"
+  },
+  "summary": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_feature_pace_connection_20261030T213807Z/final_20261031T123150Z/summary.json",
+    "sha256": "f1becfee708637750328a4740909b1b73f8ce01742e1d96a51d723db0ad1c1fe"
+  },
+  "facts_only_no_new_prediction_or_fit": true,
+  "nonfinisher_corner_contract": "last_recorded retained; final unavailable without numeric official finish status; null interaction, no partial-history exclusion",
+  "source_files": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/feature_engineering.py",
+      "sha256": "e4d43cc1108777b4c3e179576a4c0546d3fdcc64f58d15d6a0ba7befb2db2740"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/history_pace_features.py",
+      "sha256": "5890d3291cfeb9ed18d354ad56ea834b6bfa35d5598e4491031db61282a9a5c7"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/jra_scraper/history_observations.py",
+      "sha256": "d5a5834ed09e940f906b7d7908b746ab564ed43fa3c2803cc9a2c8c1a77c9b3d"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/jra_scraper/history_pace.py",
+      "sha256": "c5a9e89be2ac095cbaa6d66c8dffdd1fd057ef81b72b7a8c5b3d0ced065cf7ae"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-environment-research/scripts/structural_features.py",
+      "sha256": "09c825b30e4dc9f3336b5353e2460ee7a8d341a337c5a2ac80ab112431ec752f"
+    }
+  ]
+}

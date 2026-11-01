@@ -1,0 +1,39 @@
+{
+  "role": "orchestrator",
+  "run_id": "d4bfcdb0a5114397abae0842ec389af6",
+  "stage": "intake",
+  "plan": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/research_plan.json",
+    "sha256": "98014ae372d98fda052970e7fe2fc21a13aab8373b371a455a5a06b59a20885e"
+  },
+  "labels": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/data/labels.json",
+    "sha256": "79550f9ef80ead1e40c5a431fff366abca7de724e6fb91921d45811ea1a7949b"
+  },
+  "environment": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/data/environment.json",
+    "sha256": "0e8fa83ad7f2aaea144266f0c6f7f47d2f3dbea2b0560655ffb714c453baf6b0"
+  },
+  "training_date": "2026-10-25",
+  "validation_dates": [],
+  "family": "linear",
+  "ridge": 100,
+  "audit_purpose": "environment_structural_research",
+  "variant": "exact_structural_softmax_temperature1_no_mc_no_market",
+  "production_model_changed": false,
+  "shared_initial": {
+    "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/processed/result_labels.csv": "eb8da8bf1c8b168b60d8c4b966e3c8022778bd04b910742258adf64c9618a09a",
+    "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/environment_model/learning_status.json": "7041fc461a27602c4d6ee91707fc2c0ceaae640777822c0f3a8adf80960db7b7",
+    "/Users/konishi/Documents/Playground/projects/jra-ev-agent/data/models/environment_model.json": null
+  },
+  "race_context": {
+    "target_date": "2026-10-25",
+    "scope": "All 36 races audited; all supported, fully observed, whole-race turf PASS inputs selected"
+  },
+  "purpose": "Exploratory retrospective environmental interaction fit using market-independent common baseline",
+  "cutoff": "All historical races strictly before 2026-10-25; result labels separated",
+  "source_urls": [
+    "https://jra.jp/",
+    "https://www.jra.go.jp/"
+  ]
+}

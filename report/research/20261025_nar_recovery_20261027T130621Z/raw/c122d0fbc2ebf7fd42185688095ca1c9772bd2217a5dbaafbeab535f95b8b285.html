@@ -1,0 +1,687 @@
+<!-- resources/views/home.blade.php -->
+
+
+<!-- resources/views/layouts/app.blade.php -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+        <title>地方競馬 データ情報</title>
+    
+    <!-- CSSファイルの読み込み -->
+            <link rel="stylesheet" href="/KeibaWeb/resources/css/reset.css?t=20260201_1" type="text/css" media="all" />
+            <link rel="stylesheet" href="/KeibaWeb/resources/css/DataRoom_common.css?t=20260201_1" type="text/css" media="all" />
+            <link rel="stylesheet" href="/KeibaWeb/resources/css/DataRoom_raceinfo2.css?t=20260201_1" type="text/css" media="all" />
+            <link rel="stylesheet" href="/KeibaWeb/resources/css/DataRoom_odd.css?t=20260201_1" type="text/css" media="all" />
+            <link rel="stylesheet" href="/KeibaWeb/resources/css/DataRoom.css?t=20260201_1" type="text/css" media="all" />
+            <link rel="stylesheet" href="/KeibaWeb/resources/css/DataRoomTop.css?t=20260201_1" type="text/css" media="all" />
+    
+    <!-- JSファイルの読み込み -->
+            <script type="text/javascript" src="/KeibaWeb/resources/js/jquery-1.9.1.min.js?t=20260130_1"></script>
+            <script type="text/javascript" src="/KeibaWeb/resources/js/common.js?t=20260130_1"></script>
+            <script type="text/javascript" src="/KeibaWeb/resources/js/common2.js?t=20260130_1"></script>
+            <script type="text/javascript" src="/KeibaWeb/resources/js/monthltconveninfo.js?t=20260130_1"></script>
+            <script type="text/javascript" src="/KeibaWeb/resources/js/odd.js?t=20260130_1"></script>
+            <script type="text/javascript" src="/KeibaWeb/resources/js/recentButton.js?t=20260130_1"></script>
+        <link rel="shortcut icon" href="/KeibaWeb/resources/img/favicon.ico" />
+</head>
+<body>
+    <header>
+    <div class="headerInner">
+        <div class="titleArea">
+            <h1>
+                <span>地方競馬情報サイト</span>
+                <a href="/index.html">
+                    <img src="/KeibaWeb/resources/img/mainlogo.png?bld=20240319134801" alt="">
+                </a>
+            </h1>
+            <div class="vote">
+                <img id="headerbanner00" src="/KeibaWeb/resources/img/header_banner_00.png?bld=20240319134801" alt="">
+            </div>
+            <ul class="bannerArea clearfix">
+                <li>
+                    <a href="/jranet/" target="_blank">
+                        <img class="normal" src="/KeibaWeb/resources/img/header_banner_01.png?bld=20240319134801">
+                        <img class="min" src="/KeibaWeb/resources/img/header_banner_01_min.png?bld=20240319134801">
+                    </a>
+                </li>
+                                <li>
+                    <a href="https://www.spat4.jp/keiba/pc" target="_blank">
+                        <img class="normal" src="/KeibaWeb/resources/img/header_banner_02.png?bld=20240319134801">
+                        <img class="min" src="/KeibaWeb/resources/img/header_banner_02_min.png?bld=20240319134801">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://my.keiba.rakuten.co.jp/?scid=keiba_NAR_bet" target="_blank">
+                        <img class="normal" src="/KeibaWeb/resources/img/header_banner_03.png?bld=20240319134801">
+                        <img class="min" src="/KeibaWeb/resources/img/header_banner_03_min.png?bld=20240319134801">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.oddspark.com/keiba/auth/VoteKeibaTop.do" target="_blank">
+                        <img class="normal" src="/KeibaWeb/resources/img/header_banner_04.png?bld=20240319134801">
+                        <img class="min" src="/KeibaWeb/resources/img/header_banner_04_min.png?bld=20240319134801">
+                    </a>
+                </li>
+                            </ul>
+            <div class="topSearch clearfix">
+                <form id="cse-search-box" action="https://google.com/cse">
+                    <input type="hidden" name="cx" value="000374752549361390111:sr3uzpcoe-q" />
+                    <input type="hidden" name="ie" value="UTF-8" />
+                    <input type="text" name="q" size="31" class="searchBox"/ placeholder="サイト内検索">
+                    <input type="submit" name="sa" value="" class="searchBtn"/>
+                </form>
+                <script type="text/javascript"
+                                src="https://www.google.com/coop/cse/brand?form=cse-search-boxamp;lang=ja"></script>
+            </div>
+        </div>
+    </div>
+
+    <div class="globalNavi">
+        <ul class="gNavi clearfix">
+            <li class="gNaviitem1">
+                <a href="/KeibaWeb/TodayRaceInfo/TodayRaceInfoTop">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_08.png?bld=20240319134801" alt="">
+                    <p>レース情報</p>
+                </a>
+            </li>
+            <li class="gNaviitem2">
+                <a href="/KeibaWeb/MonthlyConveneInfo/MonthlyConveneInfoTop">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_01.png?bld=20240319134801" alt="">
+                                            <p>開催日程</p>
+                                    </a>
+            </li>
+            <li class="gNaviitem3">
+                <a href="/live/?20260804" target="_blank">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_02.png?bld=20240319134801" alt="">
+                    <p>ライブ中継</p>
+                </a>
+            </li>
+            <li class="gNaviitem4">
+                <a href="/dirtgraderace/">
+                    <img class="dart" src="/KeibaWeb/resources/img/icon_gnavi_12.png?bld=20240319134801" alt="">
+                    <p>ダートグレード競走</p>
+                </a>
+            </li>
+            <li class="gNaviitem5">
+                <a href="/gradedrace/">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_04.png?bld=20240319134801" alt="">
+                    <p>シリーズ･重賞競走</p>
+                </a>
+            </li>
+            <li class="gNaviitem6">
+                <a href="/KeibaWeb/DataRoom/DataRoomTop">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_05.png?bld=20240319134801" alt="">
+                    <p>データ検索</p>
+                </a>
+            </li>
+            <li class="gNaviitem7">
+                <a href="/guide/index.html">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_06.png?bld=20240319134801" alt="">
+                    <p>競馬場ガイド</p>
+                </a>
+            </li>
+            <!--<li>
+                <a href="about/">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_07.png?bld=20240319134801" alt="">
+                    <p>もっと！地方競馬</p>
+                </a>
+            </li>-->
+        </ul>
+    </div>
+</header>
+<div class="breadCrumb"></div>
+ <!-- Head部分の読み込み -->
+        <main>
+        <div id="mainContainer">
+    <article class="raceCard">
+        <div class="innerWrapper auto">
+            <div id="databasesearch">
+                <div class="odd_header">
+                    <ul class="horseinfo horse">
+                        <li>
+                            <h4 class="odd_title">ロードフロイデ</h4>
+                        </li>
+                        <li>
+                            <div>
+                                <span class="sex ">牡</span>                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                                                    抹消
+                                                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                                            </div>
+                        </li>
+                        <li>
+                            <a class="cNaviBtn"
+                                href="/KeibaWeb/DataRoom/RaceHorseInfo?k_lineageLoginCode=30082408496&amp;k_activeCode=1">馬情報</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+                    <table class="HorseMarkInfo_table">
+                <thead>
+                    <tr>
+                        <th>年月日</th>
+                        <th>競馬場</th>
+                        <th>R</th>
+                        <th>競走名</th>
+                        <th>格組</th>
+                        <th>距離</th>
+                        <th colspan="3">天候・馬場</th>
+                        <th>頭数</th>
+                        <th>枠</th>
+                        <th>馬番</th>
+                        <th>人気</th>
+                        <th>着順</th>
+                        <th>タイム</th>
+                        <th>差</th>
+                        <th>上3F</th>
+                        <th>体重</th>
+                        <th>騎手(所属)</th>
+                        <th>重量</th>
+                        <th>調教師</th>
+                        <th>収得賞金</th>
+                        <th>1着馬または(2着馬)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                                            <tr>
+                            <td>2026/02/01</td>
+                            <td>高知</td>
+                            <td>8</td>
+                            <td class="">
+                                                                    <a href="/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2026%2F02%2F01&amp;k_raceNo=8&amp;k_babaCode=31">
+                                        <p class="text-overflow">
+                                            Ｃ２－２
+                                        </p>
+                                    </a>
+                                                            </td>
+                            <td>
+                                Ｃ２
+                            </td>
+                            <td>1300</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">8</td>
+                            <td>3</td>
+                            <td>3</td>
+                            <td>1</td>
+                            <td  class=" red ">
+                                1
+                                        </td>
+                            <td>1:24.4</td>
+                            <td>0.4</td>
+                            <td>39.1</td>
+                            <td  class="dbdata2">
+                                464
+                            </td>
+                            <td>吉原寛
+                                        (高知)
+                                </td>
+                            <td class="dbdata2">
+                                                                    57.0
+                                                                </td>
+                            <td>打越勇</td>
+                            <td class="dbdata2">
+                                        700,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    （ゴールデンチョイス）
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2026/01/12</td>
+                            <td>高知</td>
+                            <td>9</td>
+                            <td class="">
+                                                                    <a href="/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2026%2F01%2F12&amp;k_raceNo=9&amp;k_babaCode=31">
+                                        <p class="text-overflow">
+                                            Ｃ３－２
+                                        </p>
+                                    </a>
+                                                            </td>
+                            <td>
+                                Ｃ３
+                            </td>
+                            <td>1600</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">7</td>
+                            <td>8</td>
+                            <td>8</td>
+                            <td>1</td>
+                            <td  class=" red ">
+                                1
+                                        </td>
+                            <td>1:46.0</td>
+                            <td>1.0</td>
+                            <td>38.0</td>
+                            <td  class="dbdata2">
+                                463
+                            </td>
+                            <td>吉原寛
+                                        (高知)
+                                </td>
+                            <td class="dbdata2">
+                                                                    57.0
+                                                                </td>
+                            <td>打越勇</td>
+                            <td class="dbdata2">
+                                        600,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    （プレストバローズ）
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2025/12/29</td>
+                            <td>高知</td>
+                            <td>7</td>
+                            <td class="green">
+                                                                    <a href="/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2025%2F12%2F29&amp;k_raceNo=7&amp;k_babaCode=31">
+                                        <p class="text-overflow">
+                                            カトレア特別Ｃ３－１選抜馬
+                                        </p>
+                                    </a>
+                                                            </td>
+                            <td>
+                                Ｃ３
+                            </td>
+                            <td>1400</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">10</td>
+                            <td>3</td>
+                            <td>3</td>
+                            <td>1</td>
+                            <td  class=" gray ">
+                                5
+                                        </td>
+                            <td>1:33.3</td>
+                            <td>1.0</td>
+                            <td>40.2</td>
+                            <td  class="dbdata2">
+                                463
+                            </td>
+                            <td>井上瑛
+                                        (高知)
+                                </td>
+                            <td class="dbdata2">
+                                                                    57.0
+                                                                </td>
+                            <td>打越勇</td>
+                            <td class="dbdata2">
+                                        110,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    アルデヤーノ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2025/12/14</td>
+                            <td>高知</td>
+                            <td>8</td>
+                            <td class="">
+                                                                    <a href="/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2025%2F12%2F14&amp;k_raceNo=8&amp;k_babaCode=31">
+                                        <p class="text-overflow">
+                                            Ｃ３－４
+                                        </p>
+                                    </a>
+                                                            </td>
+                            <td>
+                                Ｃ３
+                            </td>
+                            <td>1300</td>
+                            <td>晴</td>
+                            <td>稍重</td>
+                            <td></td>
+                            <td  class="dbdata2">9</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td  class=" red ">
+                                1
+                                        </td>
+                            <td>1:24.1</td>
+                            <td>0.2</td>
+                            <td>39.4</td>
+                            <td  class="dbdata2">
+                                464
+                            </td>
+                            <td>井上瑛
+                                        (高知)
+                                </td>
+                            <td class="dbdata2">
+                                                                    57.0
+                                                                </td>
+                            <td>打越勇</td>
+                            <td class="dbdata2">
+                                        600,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    （アンリトゥンルール）
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2025/11/08</td>
+                            <td>Ｊ東京</td>
+                            <td>7</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ３歳上１勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1300</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>7</td>
+                            <td  class=" yellow ">
+                                3
+                                        </td>
+                            <td>1:18.7</td>
+                            <td>0.8</td>
+                            <td>36.3</td>
+                            <td  class="dbdata2">
+                                458
+                            </td>
+                            <td>原優介
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    57.0
+                                                                </td>
+                            <td>小栗実</td>
+                            <td class="dbdata2">
+                                        2,000,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    ドントゥザムーン
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2025/10/19</td>
+                            <td>Ｊ東京</td>
+                            <td>8</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ３歳上１勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1400</td>
+                            <td>曇</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">15</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>5</td>
+                            <td  class=" gray ">
+                                4
+                                        </td>
+                            <td>1:26.2</td>
+                            <td>0.3</td>
+                            <td>36.9</td>
+                            <td  class="dbdata2">
+                                458
+                            </td>
+                            <td>横山和
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    56.0
+                                                                </td>
+                            <td>小栗実</td>
+                            <td class="dbdata2">
+                                        1,200,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    ゴールドハンマー
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2025/01/05</td>
+                            <td>Ｊ中京</td>
+                            <td>2</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ３歳未勝利
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1400</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>8</td>
+                            <td>15</td>
+                            <td>1</td>
+                            <td  class=" blue ">
+                                2
+                                        </td>
+                            <td>1:26.3</td>
+                            <td>0.2</td>
+                            <td>36.8</td>
+                            <td  class="dbdata2">
+                                452
+                            </td>
+                            <td>吉村誠
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    55.0
+                                                                </td>
+                            <td>小栗実</td>
+                            <td class="dbdata2">
+                                        2,200,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    セルズパワー
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2024/11/10</td>
+                            <td>Ｊ京都</td>
+                            <td>1</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ２歳未勝利
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1400</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>4</td>
+                            <td>7</td>
+                            <td>10</td>
+                            <td  class=" yellow ">
+                                3
+                                        </td>
+                            <td>1:26.0</td>
+                            <td>0.3</td>
+                            <td>37.8</td>
+                            <td  class="dbdata2">
+                                450
+                            </td>
+                            <td>田口貫
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    55.0
+                                                                </td>
+                            <td>小栗実</td>
+                            <td class="dbdata2">
+                                        1,400,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    ポッドドンナー
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2024/10/27</td>
+                            <td>Ｊ京都</td>
+                            <td>1</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ２歳未勝利
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1200</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">9</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>6</td>
+                            <td  class=" gray ">
+                                5
+                                        </td>
+                            <td>1:14.0</td>
+                            <td>1.6</td>
+                            <td>37.1</td>
+                            <td  class="dbdata2">
+                                450
+                            </td>
+                            <td>高杉吏
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    54.0
+                                                                </td>
+                            <td>小栗実</td>
+                            <td class="dbdata2">
+                                        550,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    セントールビースト
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2024/10/06</td>
+                            <td>Ｊ新潟</td>
+                            <td>5</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ２歳新馬
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1200</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">15</td>
+                            <td>4</td>
+                            <td>6</td>
+                            <td>6</td>
+                            <td  class=" gray ">
+                                8
+                                        </td>
+                            <td>1:14.1</td>
+                            <td>2.3</td>
+                            <td>36.9</td>
+                            <td  class="dbdata2">
+                                446
+                            </td>
+                            <td>小沢大
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    55.0
+                                                                </td>
+                            <td>小栗実</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    ポールセン
+                                                                </td>
+                        </tr>
+                                    </tbody>
+            </table>
+                            <p class="annotationRed">※2026/02/03 地方競馬登録抹消</p>
+                <br>
+                        </article>
+</div>
+    </main>
+</body>
+        <div class="innerWrapper2">
+    <footer>
+        <ul class="footerMenu">
+            <li>
+                <a href="/index.html">
+                    HOME
+                </a>
+            </li>
+            <li>
+                <a href="/association/">
+                    地方競馬全国協会（NAR）
+                </a>
+            </li>
+            <li>
+                <a href="/sitemap.html">
+                    サイトマップ
+                </a>
+            </li>
+            <li>
+                <a href="/link.html">
+                    関連リンク
+                </a>
+            </li>
+            <li>
+                <a href="/terms.html">
+                    利用規約
+                </a>
+            </li>
+            <li>
+                <a href="/qa.html">
+                    ご意見・ご要望／FAQ
+                </a>
+            </li>
+        </ul>
+        <div class="copyright">
+        copyright 1998-NAR (The National Association of Racing) All Rights Reserved
+        </div>
+        <!-- 言語選択 -->
+        <div class="language cp_sl01">
+            <select onChange="location.href=value;">
+                <option value="#">Language</option>
+                <option value="https://goracing.sakura.ne.jp/english/">English</option>
+                <option value="https://goracing.sakura.ne.jp/french/">Francais</option>
+                <option value="https://goracing.sakura.ne.jp/chinese/">中文</option>
+                <option value="https://goracing.sakura.ne.jp/korea/">한글</option>
+            </select>
+        </div>
+    </footer>
+</div></html>

@@ -1,0 +1,35 @@
+{
+  "target_date": "2026-10-25",
+  "collection_mode": "post_event_official_reconstruction",
+  "role": "data_collector",
+  "scope": [
+    "36 JRA races across Tokyo Kyoto Niigata",
+    "all declared horses with official racecards and full career HTML",
+    "latest five started races before target date with official result and final win odds sources",
+    "target race results as outcome labels only"
+  ],
+  "directories": {
+    "races": "immutable initial parser output; includes mixed source fields; do not train directly",
+    "features": "reconstructed pre-target observations; independent integrity audit required before any calculation",
+    "labels": "target outcomes, target final odds references, target/post-target career rows",
+    "raw": "official response bytes",
+    "history_results": "deduplicated past-result observations"
+  },
+  "manifests": [
+    "manifest.json",
+    "history_manifest.json"
+  ],
+  "forbidden_operations_not_performed": [
+    "model fit",
+    "probability calculation",
+    "EV calculation",
+    "production state update"
+  ],
+  "nar_target_manifest": {
+    "path": "nar_recovery_targets.json",
+    "sha256": "9f2cfaefdc1099406815bb62d527773ecea9f9b735b76c641203f27acfa5067b",
+    "history_rows": 45,
+    "unique_horses": 22
+  },
+  "created_at": "2026-10-27T13:05:00.516144+00:00"
+}

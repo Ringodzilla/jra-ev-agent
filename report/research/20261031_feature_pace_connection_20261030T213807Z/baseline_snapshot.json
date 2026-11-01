@@ -1,0 +1,36 @@
+{
+  "created_at": "2026-10-30T21:38:07.502808+00:00",
+  "reconstruction_note": "Snapshot created after feature status guards began; HEAD content is the pre-change worktree content for these five initially-clean files. Earlier dirty research routing/audit files are not replaced or claimed to equal HEAD.",
+  "files": [
+    {
+      "path": "src/feature_engineering.py",
+      "snapshot": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_feature_pace_connection_20261030T213807Z/baseline/src/feature_engineering.py",
+      "sha256": "f65e6c156bc0bb0902cc4abd989ba9796d68720538f0f8f47f6a7d134cb5ffd2",
+      "origin": "HEAD bytes; file observed clean in GO-start git status before this task edits"
+    },
+    {
+      "path": "src/model.py",
+      "snapshot": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_feature_pace_connection_20261030T213807Z/baseline/src/model.py",
+      "sha256": "d3b65f83502be1da29a4d6a75e10f8ac043e5c759a6f30446db76e35b413cd47",
+      "origin": "HEAD bytes; file observed clean in GO-start git status before this task edits"
+    },
+    {
+      "path": "analysis/ev.py",
+      "snapshot": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_feature_pace_connection_20261030T213807Z/baseline/analysis/ev.py",
+      "sha256": "f3ef8e5b0e7308c39ed86b251eee773937202595e04784b4d0a02512f4a55065",
+      "origin": "HEAD bytes; file observed clean in GO-start git status before this task edits"
+    },
+    {
+      "path": "config/track_biases.json",
+      "snapshot": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_feature_pace_connection_20261030T213807Z/baseline/config/track_biases.json",
+      "sha256": "525b11ed2a660d765263d793651efd75896fcc58f1837250d3d70353d250cc59",
+      "origin": "HEAD bytes; file observed clean in GO-start git status before this task edits"
+    },
+    {
+      "path": "config/course_learning.json",
+      "snapshot": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_feature_pace_connection_20261030T213807Z/baseline/config/course_learning.json",
+      "sha256": "c39162acad3b57564d72a46682ffe821095272ae9386ccc04477bc2db7f35ee9",
+      "origin": "HEAD bytes; file observed clean in GO-start git status before this task edits"
+    }
+  ]
+}

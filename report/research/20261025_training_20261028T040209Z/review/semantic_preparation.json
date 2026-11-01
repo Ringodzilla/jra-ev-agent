@@ -1,0 +1,79 @@
+{
+  "role": "reviewer",
+  "review_phase": "PRE_FIT_SEMANTIC_PREPARATION_ONLY",
+  "evaluated_at": "2026-10-28T04:25:43.666268+00:00",
+  "run_id": "d4bfcdb0a5114397abae0842ec389af6",
+  "status": "PREPARED_NOT_FINAL_REVIEW",
+  "reason": "Experimental scope and design inspected; coefficient/metric evaluation and formal09 are prohibited until fit08 PASS.",
+  "fit_results_inspected": false,
+  "formal_review_recorded": false,
+  "evaluated_checks": {
+    "separate_sunday_experiment": true,
+    "prior_label_inspection_disclosed": true,
+    "no_heldout_claims": true,
+    "fixed_model_family_and_ridge": true,
+    "whole_current_PASS_set": true,
+    "no_production_permission": true,
+    "no_imputation_permission": true,
+    "baseline_variant_explicit": true
+  },
+  "evidence": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/research_plan.json",
+      "sha256": "98014ae372d98fda052970e7fe2fc21a13aab8373b371a455a5a06b59a20885e"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/audit/summary.json",
+      "sha256": "b243883ba9a5e848fa4722e9b346f363ebb1cd78ed42589d6b0bc216665a7ff5"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/skill_runs/training_01/01_output.json",
+      "sha256": "f8d6cd50b08345175cc14c539e386762e552d633751a44ddd076a76e47f5baad"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-environment-research/scripts/structural_features.py",
+      "sha256": "f3f021d739cbc4cf2036aff803b79cb73f402f161e42a3a35d6de25a80038d40"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/data_integrity.py",
+      "sha256": "df5c573aae41b86e65fcdb82e98faa3206b741aef09bbc0bb310370c0fc41034"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-environment-research/scripts/research_gate.py",
+      "sha256": "0c8cbac439e65ffb25213cc27670d2075cde017a35fae939db322664168b1f02"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-environment-research/scripts/research_numeric.py",
+      "sha256": "3489b005b6e39c5081522aa698662f91b81fb052bc582aebfe5d269d9124788f"
+    }
+  ],
+  "baseline_config_dependencies": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/config/track_biases.json",
+      "sha256": "525b11ed2a660d765263d793651efd75896fcc58f1837250d3d70353d250cc59"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/config/course_learning.json",
+      "sha256": "c39162acad3b57564d72a46682ffe821095272ae9386ccc04477bc2db7f35ee9"
+    }
+  ],
+  "pre_fit_recommendation": "Bind both baseline config JSON refs in analysis/simulation stage evidence; they are read by track_bias/course_pace logic and absent from manifest code freeze. No code changes needed.",
+  "claims_allowed_after_success": [
+    "A fixed exploratory candidate has been trained using 10 whole-race current-PASS Sunday turf races, subject to final independent numerical and semantic review."
+  ],
+  "claims_forbidden": [
+    "Independent validation or test performance",
+    "Improvement of existing Monte Carlo model",
+    "Pre-race capture proven",
+    "Production-ready coefficients",
+    "Profitability or calibration improvement demonstrated"
+  ],
+  "post_fit_review_requirements": [
+    "Independent probability/metric and gradient stationarity recalculation via research_numeric review producer",
+    "Race-centered interaction design rank and environmental variation/concentration limitations",
+    "Whole-race selection reasons for all26 other races",
+    "Shared-state and original Saturday experiment unchanged",
+    "No current-market input, double-environment-counting or unapproved imputation",
+    "Train-only metrics explicitly separated from future independent validation/test"
+  ]
+}

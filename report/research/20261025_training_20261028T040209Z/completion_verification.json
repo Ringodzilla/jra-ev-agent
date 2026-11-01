@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-10-30T01:02:58.778351+00:00",
+  "scope": "Post-report hash/chain/state confirmation; full current-source numerical gate already passed in 10_record",
+  "stages_passed": [
+    "intake",
+    "collection",
+    "integrity_audit",
+    "approval_gate",
+    "analysis",
+    "simulation",
+    "probability",
+    "fit",
+    "review",
+    "report"
+  ],
+  "code_freeze_unchanged": true,
+  "all_record_outputs_and_evidence_sha_match": true,
+  "shared_state_unchanged": true,
+  "report": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/training_report.json",
+    "sha256": "cf614391b6f8cb8d468b60075cfcde051b1fcf28ef5a6d7290de210439a57fb8"
+  }
+}

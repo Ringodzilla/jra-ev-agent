@@ -1,0 +1,689 @@
+<!-- resources/views/home.blade.php -->
+
+
+<!-- resources/views/layouts/app.blade.php -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+        <title>地方競馬 データ情報</title>
+    
+    <!-- CSSファイルの読み込み -->
+            <link rel="stylesheet" href="/KeibaWeb/resources/css/reset.css?t=20260201_1" type="text/css" media="all" />
+            <link rel="stylesheet" href="/KeibaWeb/resources/css/DataRoom_common.css?t=20260201_1" type="text/css" media="all" />
+            <link rel="stylesheet" href="/KeibaWeb/resources/css/DataRoom_raceinfo2.css?t=20260201_1" type="text/css" media="all" />
+            <link rel="stylesheet" href="/KeibaWeb/resources/css/DataRoom_odd.css?t=20260201_1" type="text/css" media="all" />
+            <link rel="stylesheet" href="/KeibaWeb/resources/css/DataRoom.css?t=20260201_1" type="text/css" media="all" />
+            <link rel="stylesheet" href="/KeibaWeb/resources/css/DataRoomTop.css?t=20260201_1" type="text/css" media="all" />
+    
+    <!-- JSファイルの読み込み -->
+            <script type="text/javascript" src="/KeibaWeb/resources/js/jquery-1.9.1.min.js?t=20260130_1"></script>
+            <script type="text/javascript" src="/KeibaWeb/resources/js/common.js?t=20260130_1"></script>
+            <script type="text/javascript" src="/KeibaWeb/resources/js/common2.js?t=20260130_1"></script>
+            <script type="text/javascript" src="/KeibaWeb/resources/js/monthltconveninfo.js?t=20260130_1"></script>
+            <script type="text/javascript" src="/KeibaWeb/resources/js/odd.js?t=20260130_1"></script>
+            <script type="text/javascript" src="/KeibaWeb/resources/js/recentButton.js?t=20260130_1"></script>
+        <link rel="shortcut icon" href="/KeibaWeb/resources/img/favicon.ico" />
+</head>
+<body>
+    <header>
+    <div class="headerInner">
+        <div class="titleArea">
+            <h1>
+                <span>地方競馬情報サイト</span>
+                <a href="/index.html">
+                    <img src="/KeibaWeb/resources/img/mainlogo.png?bld=20240319134801" alt="">
+                </a>
+            </h1>
+            <div class="vote">
+                <img id="headerbanner00" src="/KeibaWeb/resources/img/header_banner_00.png?bld=20240319134801" alt="">
+            </div>
+            <ul class="bannerArea clearfix">
+                <li>
+                    <a href="/jranet/" target="_blank">
+                        <img class="normal" src="/KeibaWeb/resources/img/header_banner_01.png?bld=20240319134801">
+                        <img class="min" src="/KeibaWeb/resources/img/header_banner_01_min.png?bld=20240319134801">
+                    </a>
+                </li>
+                                <li>
+                    <a href="https://www.spat4.jp/keiba/pc" target="_blank">
+                        <img class="normal" src="/KeibaWeb/resources/img/header_banner_02.png?bld=20240319134801">
+                        <img class="min" src="/KeibaWeb/resources/img/header_banner_02_min.png?bld=20240319134801">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://my.keiba.rakuten.co.jp/?scid=keiba_NAR_bet" target="_blank">
+                        <img class="normal" src="/KeibaWeb/resources/img/header_banner_03.png?bld=20240319134801">
+                        <img class="min" src="/KeibaWeb/resources/img/header_banner_03_min.png?bld=20240319134801">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.oddspark.com/keiba/auth/VoteKeibaTop.do" target="_blank">
+                        <img class="normal" src="/KeibaWeb/resources/img/header_banner_04.png?bld=20240319134801">
+                        <img class="min" src="/KeibaWeb/resources/img/header_banner_04_min.png?bld=20240319134801">
+                    </a>
+                </li>
+                            </ul>
+            <div class="topSearch clearfix">
+                <form id="cse-search-box" action="https://google.com/cse">
+                    <input type="hidden" name="cx" value="000374752549361390111:sr3uzpcoe-q" />
+                    <input type="hidden" name="ie" value="UTF-8" />
+                    <input type="text" name="q" size="31" class="searchBox"/ placeholder="サイト内検索">
+                    <input type="submit" name="sa" value="" class="searchBtn"/>
+                </form>
+                <script type="text/javascript"
+                                src="https://www.google.com/coop/cse/brand?form=cse-search-boxamp;lang=ja"></script>
+            </div>
+        </div>
+    </div>
+
+    <div class="globalNavi">
+        <ul class="gNavi clearfix">
+            <li class="gNaviitem1">
+                <a href="/KeibaWeb/TodayRaceInfo/TodayRaceInfoTop">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_08.png?bld=20240319134801" alt="">
+                    <p>レース情報</p>
+                </a>
+            </li>
+            <li class="gNaviitem2">
+                <a href="/KeibaWeb/MonthlyConveneInfo/MonthlyConveneInfoTop">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_01.png?bld=20240319134801" alt="">
+                                            <p>開催日程</p>
+                                    </a>
+            </li>
+            <li class="gNaviitem3">
+                <a href="/live/?20260804" target="_blank">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_02.png?bld=20240319134801" alt="">
+                    <p>ライブ中継</p>
+                </a>
+            </li>
+            <li class="gNaviitem4">
+                <a href="/dirtgraderace/">
+                    <img class="dart" src="/KeibaWeb/resources/img/icon_gnavi_12.png?bld=20240319134801" alt="">
+                    <p>ダートグレード競走</p>
+                </a>
+            </li>
+            <li class="gNaviitem5">
+                <a href="/gradedrace/">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_04.png?bld=20240319134801" alt="">
+                    <p>シリーズ･重賞競走</p>
+                </a>
+            </li>
+            <li class="gNaviitem6">
+                <a href="/KeibaWeb/DataRoom/DataRoomTop">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_05.png?bld=20240319134801" alt="">
+                    <p>データ検索</p>
+                </a>
+            </li>
+            <li class="gNaviitem7">
+                <a href="/guide/index.html">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_06.png?bld=20240319134801" alt="">
+                    <p>競馬場ガイド</p>
+                </a>
+            </li>
+            <!--<li>
+                <a href="about/">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_07.png?bld=20240319134801" alt="">
+                    <p>もっと！地方競馬</p>
+                </a>
+            </li>-->
+        </ul>
+    </div>
+</header>
+<div class="breadCrumb"></div>
+ <!-- Head部分の読み込み -->
+        <main>
+        <div id="mainContainer">
+    <article class="raceCard">
+        <div class="innerWrapper auto">
+            <div id="databasesearch">
+                <div class="odd_header">
+                    <ul class="horseinfo horse">
+                        <li>
+                            <h4 class="odd_title">カレンパンピナップ</h4>
+                        </li>
+                        <li>
+                            <div>
+                                <span class="sex ">セン</span><span class="age ">6</span>                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                                                    現役
+                                                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                                            </div>
+                        </li>
+                        <li>
+                            <a class="cNaviBtn"
+                                href="/KeibaWeb/DataRoom/RaceHorseInfo?k_lineageLoginCode=30085409176&amp;k_activeCode=1">馬情報</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+                    <table class="HorseMarkInfo_table">
+                <thead>
+                    <tr>
+                        <th>年月日</th>
+                        <th>競馬場</th>
+                        <th>R</th>
+                        <th>競走名</th>
+                        <th>格組</th>
+                        <th>距離</th>
+                        <th colspan="3">天候・馬場</th>
+                        <th>頭数</th>
+                        <th>枠</th>
+                        <th>馬番</th>
+                        <th>人気</th>
+                        <th>着順</th>
+                        <th>タイム</th>
+                        <th>差</th>
+                        <th>上3F</th>
+                        <th>体重</th>
+                        <th>騎手(所属)</th>
+                        <th>重量</th>
+                        <th>調教師</th>
+                        <th>収得賞金</th>
+                        <th>1着馬または(2着馬)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                                            <tr>
+                            <td>2026/08/09</td>
+                            <td>Ｊ中京</td>
+                            <td>5</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ３歳上１勝クラス
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>1400</td>
+                            <td>曇</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>3</td>
+                            <td>6</td>
+                            <td>9</td>
+                            <td  class=" gray ">
+                                15
+                                        </td>
+                            <td>1:27.0</td>
+                            <td>2.4</td>
+                            <td>39.4</td>
+                            <td  class="dbdata2">
+                                482
+                            </td>
+                            <td>松若風
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    58.0
+                                                                </td>
+                            <td>平田修</td>
+                            <td class="dbdata2">
+                                        0
+                                </td>
+                            <td class="dbdata3">
+                                                                    ジャスティンルマン
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2026/05/04</td>
+                            <td>園田</td>
+                            <td>6</td>
+                            <td class="">
+                                                                    <a href="/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2026%2F05%2F04&amp;k_raceNo=6&amp;k_babaCode=27">
+                                        <p class="text-overflow">
+                                            Ｃ３一４歳以上
+                                        </p>
+                                    </a>
+                                                            </td>
+                            <td>
+                                Ｃ３一
+                            </td>
+                            <td>1400</td>
+                            <td>晴</td>
+                            <td>重</td>
+                            <td></td>
+                            <td  class="dbdata2">6</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td  class=" red ">
+                                1
+                                        </td>
+                            <td>1:35.0</td>
+                            <td>0.6</td>
+                            <td>41.5</td>
+                            <td  class="dbdata2">
+                                491
+                            </td>
+                            <td>松木大
+                                        (兵庫)
+                                </td>
+                            <td class="dbdata2">
+                                                                    57.0
+                                                                </td>
+                            <td>新子雅</td>
+                            <td class="dbdata2">
+                                        600,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    （キャバリエクエスト）
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2026/04/14</td>
+                            <td>園田</td>
+                            <td>2</td>
+                            <td class="">
+                                                                    <a href="/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2026%2F04%2F14&amp;k_raceNo=2&amp;k_babaCode=27">
+                                        <p class="text-overflow">
+                                            Ｃ３一４歳以上
+                                        </p>
+                                    </a>
+                                                            </td>
+                            <td>
+                                Ｃ３一
+                            </td>
+                            <td>1400</td>
+                            <td>曇</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">10</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td  class=" gray ">
+                                5
+                                        </td>
+                            <td>1:33.6</td>
+                            <td>0.8</td>
+                            <td>41.7</td>
+                            <td  class="dbdata2">
+                                490
+                            </td>
+                            <td>松木大
+                                        (兵庫)
+                                </td>
+                            <td class="dbdata2">
+                                                                    58.0
+                                                                </td>
+                            <td>新子雅</td>
+                            <td class="dbdata2">
+                                        60,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    コスモカピタン
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2025/05/22</td>
+                            <td>園田</td>
+                            <td>3</td>
+                            <td class="">
+                                                                    <a href="/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2025%2F05%2F22&amp;k_raceNo=3&amp;k_babaCode=27">
+                                        <p class="text-overflow">
+                                            Ｃ２三４歳以上
+                                        </p>
+                                    </a>
+                                                            </td>
+                            <td>
+                                Ｃ２三
+                            </td>
+                            <td>1400</td>
+                            <td>曇</td>
+                            <td>稍重</td>
+                            <td></td>
+                            <td  class="dbdata2">11</td>
+                            <td>8</td>
+                            <td>10</td>
+                            <td>1</td>
+                            <td  class=" red ">
+                                1
+                                        </td>
+                            <td>1:33.2</td>
+                            <td>0.4</td>
+                            <td>40.9</td>
+                            <td  class="dbdata2">
+                                487
+                            </td>
+                            <td>松木大
+                                        (兵庫)
+                                </td>
+                            <td class="dbdata2">
+                                                                    57.0
+                                                                </td>
+                            <td>新子雅</td>
+                            <td class="dbdata2">
+                                        700,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    （トゥームレイダー）
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2025/04/30</td>
+                            <td>園田</td>
+                            <td>3</td>
+                            <td class="">
+                                                                    <a href="/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2025%2F04%2F30&amp;k_raceNo=3&amp;k_babaCode=27">
+                                        <p class="text-overflow">
+                                            Ｃ３一４歳以上
+                                        </p>
+                                    </a>
+                                                            </td>
+                            <td>
+                                Ｃ３一
+                            </td>
+                            <td>1400</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">10</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td  class=" red ">
+                                1
+                                        </td>
+                            <td>1:31.6</td>
+                            <td>0.3</td>
+                            <td>39.9</td>
+                            <td  class="dbdata2">
+                                486
+                            </td>
+                            <td>松木大
+                                        (兵庫)
+                                </td>
+                            <td class="dbdata2">
+                                                                    57.0
+                                                                </td>
+                            <td>新子雅</td>
+                            <td class="dbdata2">
+                                        600,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    （トゥームレイダー）
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2024/02/20</td>
+                            <td>姫路</td>
+                            <td>7</td>
+                            <td class="green">
+                                                                    <a href="/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2024%2F02%2F20&amp;k_raceNo=7&amp;k_babaCode=28">
+                                        <p class="text-overflow">
+                                            Ｃ２ ４歳以上特別
+                                        </p>
+                                    </a>
+                                                            </td>
+                            <td>
+                                Ｃ２
+                            </td>
+                            <td>1500</td>
+                            <td>曇</td>
+                            <td>重</td>
+                            <td></td>
+                            <td  class="dbdata2">6</td>
+                            <td>6</td>
+                            <td>6</td>
+                            <td>1</td>
+                            <td  class=" yellow ">
+                                3
+                                        </td>
+                            <td>1:40.8</td>
+                            <td>0.4</td>
+                            <td>39.8</td>
+                            <td  class="dbdata2">
+                                479
+                            </td>
+                            <td>笹田知
+                                        (兵庫)
+                                </td>
+                            <td class="dbdata2">
+                                                                    56.0
+                                                                </td>
+                            <td>新子雅</td>
+                            <td class="dbdata2">
+                                        200,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    オールタイムハイ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2024/01/31</td>
+                            <td>姫路</td>
+                            <td>5</td>
+                            <td class="">
+                                                                    <a href="/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2024%2F01%2F31&amp;k_raceNo=5&amp;k_babaCode=28">
+                                        <p class="text-overflow">
+                                            Ｃ２一４歳以上
+                                        </p>
+                                    </a>
+                                                            </td>
+                            <td>
+                                Ｃ２一
+                            </td>
+                            <td>1400</td>
+                            <td>曇</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">10</td>
+                            <td>7</td>
+                            <td>7</td>
+                            <td>1</td>
+                            <td  class=" yellow ">
+                                3
+                                        </td>
+                            <td>1:32.6</td>
+                            <td>0.7</td>
+                            <td>40.2</td>
+                            <td  class="dbdata2">
+                                485
+                            </td>
+                            <td>笹田知
+                                        (兵庫)
+                                </td>
+                            <td class="dbdata2">
+                                                                    56.0
+                                                                </td>
+                            <td>新子雅</td>
+                            <td class="dbdata2">
+                                        175,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    サクラトップヒル
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2022/12/10</td>
+                            <td>Ｊ中京</td>
+                            <td>4</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ２歳未勝利
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>芝1600</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">16</td>
+                            <td>6</td>
+                            <td>12</td>
+                            <td>3</td>
+                            <td  class=" yellow ">
+                                3
+                                        </td>
+                            <td>1:36.3</td>
+                            <td>0.3</td>
+                            <td>34.8</td>
+                            <td  class="dbdata2">
+                                488
+                            </td>
+                            <td>岩田望
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    55.0
+                                                                </td>
+                            <td>平田修</td>
+                            <td class="dbdata2">
+                                        1,300,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    マイネルフォルツァ
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2022/10/16</td>
+                            <td>Ｊ新潟</td>
+                            <td>4</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ２歳未勝利
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>芝1600</td>
+                            <td>晴</td>
+                            <td>良</td>
+                            <td></td>
+                            <td  class="dbdata2">10</td>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td  class=" gray ">
+                                4
+                                        </td>
+                            <td>1:37.9</td>
+                            <td>0.1</td>
+                            <td>33.3</td>
+                            <td  class="dbdata2">
+                                482
+                            </td>
+                            <td>今村聖
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    51.0
+                                                                </td>
+                            <td>平田修</td>
+                            <td class="dbdata2">
+                                        780,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    トーセントラム
+                                                                </td>
+                        </tr>
+                                            <tr>
+                            <td>2022/09/19</td>
+                            <td>Ｊ中京</td>
+                            <td>5</td>
+                            <td class="">
+                                                                    <p class="text-overflow nolink">
+                                        ２歳新馬
+                                    </p>
+                                                            </td>
+                            <td>
+                                 
+                            </td>
+                            <td>芝1600</td>
+                            <td>曇</td>
+                            <td>稍重</td>
+                            <td></td>
+                            <td  class="dbdata2">14</td>
+                            <td>6</td>
+                            <td>9</td>
+                            <td>7</td>
+                            <td  class=" blue ">
+                                2
+                                        </td>
+                            <td>1:36.6</td>
+                            <td>0.0</td>
+                            <td>35.7</td>
+                            <td  class="dbdata2">
+                                482
+                            </td>
+                            <td>今村聖
+                                        (JRA)
+                                </td>
+                            <td class="dbdata2">
+                                                                    50.0
+                                                                </td>
+                            <td>平田修</td>
+                            <td class="dbdata2">
+                                        2,800,000
+                                </td>
+                            <td class="dbdata3">
+                                                                    オーシャントライブ
+                                                                </td>
+                        </tr>
+                                    </tbody>
+            </table>
+                        </article>
+</div>
+    </main>
+</body>
+        <div class="innerWrapper2">
+    <footer>
+        <ul class="footerMenu">
+            <li>
+                <a href="/index.html">
+                    HOME
+                </a>
+            </li>
+            <li>
+                <a href="/association/">
+                    地方競馬全国協会（NAR）
+                </a>
+            </li>
+            <li>
+                <a href="/sitemap.html">
+                    サイトマップ
+                </a>
+            </li>
+            <li>
+                <a href="/link.html">
+                    関連リンク
+                </a>
+            </li>
+            <li>
+                <a href="/terms.html">
+                    利用規約
+                </a>
+            </li>
+            <li>
+                <a href="/qa.html">
+                    ご意見・ご要望／FAQ
+                </a>
+            </li>
+        </ul>
+        <div class="copyright">
+        copyright 1998-NAR (The National Association of Racing) All Rights Reserved
+        </div>
+        <!-- 言語選択 -->
+        <div class="language cp_sl01">
+            <select onChange="location.href=value;">
+                <option value="#">Language</option>
+                <option value="https://goracing.sakura.ne.jp/english/">English</option>
+                <option value="https://goracing.sakura.ne.jp/french/">Francais</option>
+                <option value="https://goracing.sakura.ne.jp/chinese/">中文</option>
+                <option value="https://goracing.sakura.ne.jp/korea/">한글</option>
+            </select>
+        </div>
+    </footer>
+</div></html>

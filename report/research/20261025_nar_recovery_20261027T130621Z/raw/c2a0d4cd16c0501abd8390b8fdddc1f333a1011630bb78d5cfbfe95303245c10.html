@@ -1,0 +1,1005 @@
+<!-- resources/views/home.blade.php -->
+
+
+<!-- resources/views/layouts/app.blade.php -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+        <title>当日メニュー｜地方競馬情報サイト</title>
+    
+    <!-- CSSファイルの読み込み -->
+            <link rel="stylesheet" href="/KeibaWeb/resources/css/reset.css?t=20260201_1" type="text/css" media="all" />
+            <link rel="stylesheet" href="/KeibaWeb/resources/css/common2.css?t=20260201_1" type="text/css" media="all" />
+            <link rel="stylesheet" href="/KeibaWeb/resources/css/raceinfo2.css?t=20260201_1" type="text/css" media="all" />
+    
+    <!-- JSファイルの読み込み -->
+            <script type="text/javascript" src="/KeibaWeb/resources/js/jquery-1.9.1.min.js?t=20260130_1"></script>
+            <script type="text/javascript" src="/KeibaWeb/resources/js/common.js?t=20260130_1"></script>
+            <script type="text/javascript" src="/KeibaWeb/resources/js/common2.js?t=20260130_1"></script>
+            <script type="text/javascript" src="/KeibaWeb/resources/js/monthltconveninfo.js?t=20260130_1"></script>
+            <script type="text/javascript" src="/KeibaWeb/resources/js/odd.js?t=20260130_1"></script>
+            <script type="text/javascript" src="/KeibaWeb/resources/js/recentButton.js?t=20260130_1"></script>
+        <link rel="shortcut icon" href="/KeibaWeb/resources/img/favicon.ico" />
+</head>
+<body>
+    <header>
+    <div class="headerInner">
+        <div class="titleArea">
+            <h1>
+                <span>地方競馬情報サイト</span>
+                <a href="/index.html">
+                    <img src="/KeibaWeb/resources/img/mainlogo.png?bld=20240319134801" alt="">
+                </a>
+            </h1>
+            <div class="vote">
+                <img id="headerbanner00" src="/KeibaWeb/resources/img/header_banner_00.png?bld=20240319134801" alt="">
+            </div>
+            <ul class="bannerArea clearfix">
+                <li>
+                    <a href="/jranet/" target="_blank">
+                        <img class="normal" src="/KeibaWeb/resources/img/header_banner_01.png?bld=20240319134801">
+                        <img class="min" src="/KeibaWeb/resources/img/header_banner_01_min.png?bld=20240319134801">
+                    </a>
+                </li>
+                                <li>
+                    <a href="https://www.spat4.jp/keiba/pc" target="_blank">
+                        <img class="normal" src="/KeibaWeb/resources/img/header_banner_02.png?bld=20240319134801">
+                        <img class="min" src="/KeibaWeb/resources/img/header_banner_02_min.png?bld=20240319134801">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://my.keiba.rakuten.co.jp/?scid=keiba_NAR_bet" target="_blank">
+                        <img class="normal" src="/KeibaWeb/resources/img/header_banner_03.png?bld=20240319134801">
+                        <img class="min" src="/KeibaWeb/resources/img/header_banner_03_min.png?bld=20240319134801">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.oddspark.com/keiba/auth/VoteKeibaTop.do" target="_blank">
+                        <img class="normal" src="/KeibaWeb/resources/img/header_banner_04.png?bld=20240319134801">
+                        <img class="min" src="/KeibaWeb/resources/img/header_banner_04_min.png?bld=20240319134801">
+                    </a>
+                </li>
+                            </ul>
+            <div class="topSearch clearfix">
+                <form id="cse-search-box" action="https://google.com/cse">
+                    <input type="hidden" name="cx" value="000374752549361390111:sr3uzpcoe-q" />
+                    <input type="hidden" name="ie" value="UTF-8" />
+                    <input type="text" name="q" size="31" class="searchBox"/ placeholder="サイト内検索">
+                    <input type="submit" name="sa" value="" class="searchBtn"/>
+                </form>
+                <script type="text/javascript"
+                                src="https://www.google.com/coop/cse/brand?form=cse-search-boxamp;lang=ja"></script>
+            </div>
+        </div>
+    </div>
+
+    <div class="globalNavi">
+        <ul class="gNavi clearfix">
+            <li class="gNaviitem1">
+                <a href="/KeibaWeb/TodayRaceInfo/TodayRaceInfoTop">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_08.png?bld=20240319134801" alt="">
+                    <p>レース情報</p>
+                </a>
+            </li>
+            <li class="gNaviitem2">
+                <a href="/KeibaWeb/MonthlyConveneInfo/MonthlyConveneInfoTop">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_01.png?bld=20240319134801" alt="">
+                                            <p>開催日程</p>
+                                    </a>
+            </li>
+            <li class="gNaviitem3">
+                <a href="/live/?20260804" target="_blank">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_02.png?bld=20240319134801" alt="">
+                    <p>ライブ中継</p>
+                </a>
+            </li>
+            <li class="gNaviitem4">
+                <a href="/dirtgraderace/">
+                    <img class="dart" src="/KeibaWeb/resources/img/icon_gnavi_12.png?bld=20240319134801" alt="">
+                    <p>ダートグレード競走</p>
+                </a>
+            </li>
+            <li class="gNaviitem5">
+                <a href="/gradedrace/">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_04.png?bld=20240319134801" alt="">
+                    <p>シリーズ･重賞競走</p>
+                </a>
+            </li>
+            <li class="gNaviitem6">
+                <a href="/KeibaWeb/DataRoom/DataRoomTop">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_05.png?bld=20240319134801" alt="">
+                    <p>データ検索</p>
+                </a>
+            </li>
+            <li class="gNaviitem7">
+                <a href="/guide/index.html">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_06.png?bld=20240319134801" alt="">
+                    <p>競馬場ガイド</p>
+                </a>
+            </li>
+            <!--<li>
+                <a href="about/">
+                    <img src="/KeibaWeb/resources/img/icon_gnavi_07.png?bld=20240319134801" alt="">
+                    <p>もっと！地方競馬</p>
+                </a>
+            </li>-->
+        </ul>
+    </div>
+</header>
+<div class="breadCrumb"></div>
+ <!-- Head部分の読み込み -->
+            <!-- <div class="pageHeader">
+<h2>開催日程</h2>
+</div> -->
+<div class="subMenu">
+    <ul class="clearfix">
+        <li>
+            <a id="TodayRaceInfoTop" href="../TodayRaceInfo/TodayRaceInfoTop">本日のレース情報</a>
+        </li>
+        <li>
+            <a id="MonthlyConveneInfoTop" href="../MonthlyConveneInfo/MonthlyConveneInfoTop">月別開催日程</a>
+        </li>
+                    <li>
+                <a id="RaceList" href="../TodayRaceInfo/RaceList?k_babaCode=36&amp;k_raceDate=2025%2F07%2F23&amp;k_raceNo=12">当日メニュー</a>
+            </li>
+            <li>
+                                    <a id="RefundMoneyList" href="../TodayRaceInfo/RefundMoneyList?k_babaCode=36&amp;k_raceDate=2025%2F07%2F23&amp;k_raceNo=12">当日払戻金</a>
+                            </li>
+            </ul>
+</div>
+ <!-- サブメニュー部分の読み込み -->
+        <main>
+            <div id="mainContainer">
+        
+        <article class="raceList">
+            <div class="innerWrapper">
+                                <nav class="navWrapper">
+                    <div class="dateArea clearfix">
+                                                    <a class="yesterday" href=/KeibaWeb/TodayRaceInfo/RaceList?k_raceDate=2025%2F07%2F22&amp;k_babaCode=36>前日</a>
+                                                <p class="current">
+                                                            7/23
+                                                    </p>
+                                                    <a class="tomorrow" href=/KeibaWeb/TodayRaceInfo/RaceList?k_raceDate=2025%2F07%2F24&amp;k_babaCode=36>翌日</a>
+                                            </div>
+                    <div class="courseArea clearfix">
+                                                                                                                        <a class="courseBtn active">門別</a>
+                                                                                                                                                                                    <a href=/KeibaWeb/TodayRaceInfo/RaceList?k_raceDate=2025%2F07%2F23&amp;k_babaCode=18 class="courseBtn">浦和</a>
+                                                                                                                                                                                    <a href=/KeibaWeb/TodayRaceInfo/RaceList?k_raceDate=2025%2F07%2F23&amp;k_babaCode=24 class="courseBtn">名古屋</a>
+                                                                                                                                                                                    <a href=/KeibaWeb/TodayRaceInfo/RaceList?k_raceDate=2025%2F07%2F23&amp;k_babaCode=27 class="courseBtn">園田</a>
+                                                                                                        </div>
+                </nav>
+                <section class="raceTable">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th colspan="13">
+                                    2025年7月23日（水） 門別競馬　当日メニュー
+                                </th>
+                            </tr>
+                            <tr class="subHeader">
+                                <th class="a">競走</th>
+                                <th class="b">発走時刻</th>
+                                <th class="c">変更</th>
+                                <th class="d">競走種類</th>
+                                <th class="e">競走名・出馬表</th>
+                                <th class="f">コース</th>
+                                <th class="g">天候</th>
+                                <th class="h">馬場</th>
+                                <th class="i">頭数</th>
+                                <th class="k">オッズ・映像・成績</th>
+                            </tr>
+                                                            <tr class="data">
+                                    
+                                    <td>
+                                        1R
+                                    </td>
+                                    
+                                    <td>
+                                                                                    14:25
+                                                                            </td>
+                                    
+                                    <td><span class="timechange"></span>
+                                    </td>
+                                    
+                                    <td>
+                                                                            </td>
+                                    
+                                    <td>
+                                         
+                                            <a href=/KeibaWeb/TodayRaceInfo/DebaTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=1&amp;k_babaCode=36>２歳　未勝利</a>
+                                                                            </td>
+                                    
+                                    <td>
+                                          右1000m
+                                    </td>
+                                    
+                                    <td>
+                                        晴
+                                    </td>
+                                    
+                                    <td>
+                                        良
+                                    </td>
+                                    
+                                    <td>
+                                        12
+                                    </td>
+                                    
+                                    <td>
+                                        
+                                                                                    <a class="chartBtn disable">オッズ</a>
+                                                                                                                                                                            <a target="_blank" href=http://keiba-lv-st.jp/movie/player?date=20250723&amp;race=1&amp;track=monbetsu class="chartBtn">映像</a>
+                                                                                                                                                                        <a class="chartBtn" href=/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=1&amp;k_babaCode=36>成績</a>
+                                                                            </td>
+                                </tr>
+                                                            <tr class="data">
+                                    
+                                    <td>
+                                        2R
+                                    </td>
+                                    
+                                    <td>
+                                                                                    15:00
+                                                                            </td>
+                                    
+                                    <td><span class="timechange"></span>
+                                    </td>
+                                    
+                                    <td>
+                                                                            </td>
+                                    
+                                    <td>
+                                         
+                                            <a href=/KeibaWeb/TodayRaceInfo/DebaTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=2&amp;k_babaCode=36>２歳　未勝利</a>
+                                                                            </td>
+                                    
+                                    <td>
+                                          右1200m
+                                    </td>
+                                    
+                                    <td>
+                                        晴
+                                    </td>
+                                    
+                                    <td>
+                                        良
+                                    </td>
+                                    
+                                    <td>
+                                        10
+                                    </td>
+                                    
+                                    <td>
+                                        
+                                                                                    <a class="chartBtn disable">オッズ</a>
+                                                                                                                                                                            <a target="_blank" href=http://keiba-lv-st.jp/movie/player?date=20250723&amp;race=2&amp;track=monbetsu class="chartBtn">映像</a>
+                                                                                                                                                                        <a class="chartBtn" href=/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=2&amp;k_babaCode=36>成績</a>
+                                                                            </td>
+                                </tr>
+                                                            <tr class="data">
+                                    
+                                    <td>
+                                        3R
+                                    </td>
+                                    
+                                    <td>
+                                                                                    15:30
+                                                                            </td>
+                                    
+                                    <td><span class="timechange"></span>
+                                    </td>
+                                    
+                                    <td>
+                                                                            </td>
+                                    
+                                    <td>
+                                         
+                                            <a href=/KeibaWeb/TodayRaceInfo/DebaTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=3&amp;k_babaCode=36>Ｊ認 アタックチャレンジ２歳未勝利</a>
+                                                                            </td>
+                                    
+                                    <td>
+                                          右1000m
+                                    </td>
+                                    
+                                    <td>
+                                        晴
+                                    </td>
+                                    
+                                    <td>
+                                        良
+                                    </td>
+                                    
+                                    <td>
+                                        8
+                                    </td>
+                                    
+                                    <td>
+                                        
+                                                                                    <a class="chartBtn disable">オッズ</a>
+                                                                                                                                                                            <a target="_blank" href=http://keiba-lv-st.jp/movie/player?date=20250723&amp;race=3&amp;track=monbetsu class="chartBtn">映像</a>
+                                                                                                                                                                        <a class="chartBtn" href=/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=3&amp;k_babaCode=36>成績</a>
+                                                                            </td>
+                                </tr>
+                                                            <tr class="data">
+                                    
+                                    <td>
+                                        4R
+                                    </td>
+                                    
+                                    <td>
+                                                                                    16:05
+                                                                            </td>
+                                    
+                                    <td><span class="timechange"></span>
+                                    </td>
+                                    
+                                    <td>
+                                                                            </td>
+                                    
+                                    <td>
+                                         
+                                            <a href=/KeibaWeb/TodayRaceInfo/DebaTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=4&amp;k_babaCode=36>Ｊ認 フレッシュチャレンジ２歳新馬</a>
+                                                                            </td>
+                                    
+                                    <td>
+                                          右1000m
+                                    </td>
+                                    
+                                    <td>
+                                        晴
+                                    </td>
+                                    
+                                    <td>
+                                        良
+                                    </td>
+                                    
+                                    <td>
+                                        11
+                                    </td>
+                                    
+                                    <td>
+                                        
+                                                                                    <a class="chartBtn disable">オッズ</a>
+                                                                                                                                                                            <a target="_blank" href=http://keiba-lv-st.jp/movie/player?date=20250723&amp;race=4&amp;track=monbetsu class="chartBtn">映像</a>
+                                                                                                                                                                        <a class="chartBtn" href=/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=4&amp;k_babaCode=36>成績</a>
+                                                                            </td>
+                                </tr>
+                                                            <tr class="data">
+                                    
+                                    <td>
+                                        5R
+                                    </td>
+                                    
+                                    <td>
+                                                                                    16:40
+                                                                            </td>
+                                    
+                                    <td><span class="timechange"></span>
+                                    </td>
+                                    
+                                    <td>
+                                                                            </td>
+                                    
+                                    <td>
+                                         
+                                            <a href=/KeibaWeb/TodayRaceInfo/DebaTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=5&amp;k_babaCode=36>３歳以上　Ｃ４－４</a>
+                                                                            </td>
+                                    
+                                    <td>
+                                          右1600m
+                                    </td>
+                                    
+                                    <td>
+                                        晴
+                                    </td>
+                                    
+                                    <td>
+                                        良
+                                    </td>
+                                    
+                                    <td>
+                                        8
+                                    </td>
+                                    
+                                    <td>
+                                        
+                                                                                    <a class="chartBtn disable">オッズ</a>
+                                                                                                                                                                            <a target="_blank" href=http://keiba-lv-st.jp/movie/player?date=20250723&amp;race=5&amp;track=monbetsu class="chartBtn">映像</a>
+                                                                                                                                                                        <a class="chartBtn" href=/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=5&amp;k_babaCode=36>成績</a>
+                                                                            </td>
+                                </tr>
+                                                            <tr class="data">
+                                    
+                                    <td>
+                                        6R
+                                    </td>
+                                    
+                                    <td>
+                                                                                    17:15
+                                                                            </td>
+                                    
+                                    <td><span class="timechange"></span>
+                                    </td>
+                                    
+                                    <td>
+                                                                            </td>
+                                    
+                                    <td>
+                                         
+                                            <a href=/KeibaWeb/TodayRaceInfo/DebaTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=6&amp;k_babaCode=36>３歳以上　Ｃ４－３</a>
+                                                                            </td>
+                                    
+                                    <td>
+                                          右1200m
+                                    </td>
+                                    
+                                    <td>
+                                        晴
+                                    </td>
+                                    
+                                    <td>
+                                        良
+                                    </td>
+                                    
+                                    <td>
+                                        9
+                                    </td>
+                                    
+                                    <td>
+                                        
+                                                                                    <a class="chartBtn disable">オッズ</a>
+                                                                                                                                                                            <a target="_blank" href=http://keiba-lv-st.jp/movie/player?date=20250723&amp;race=6&amp;track=monbetsu class="chartBtn">映像</a>
+                                                                                                                                                                        <a class="chartBtn" href=/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=6&amp;k_babaCode=36>成績</a>
+                                                                            </td>
+                                </tr>
+                                                            <tr class="data">
+                                    
+                                    <td>
+                                        7R
+                                    </td>
+                                    
+                                    <td>
+                                                                                    17:50
+                                                                            </td>
+                                    
+                                    <td><span class="timechange"></span>
+                                    </td>
+                                    
+                                    <td>
+                                        特別                                    </td>
+                                    
+                                    <td>
+                                         
+                                            <a href=/KeibaWeb/TodayRaceInfo/DebaTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=7&amp;k_babaCode=36>Ｊ交 リゲル特別Ｃ１</a>
+                                                                            </td>
+                                    
+                                    <td>
+                                          右1200m
+                                    </td>
+                                    
+                                    <td>
+                                        晴
+                                    </td>
+                                    
+                                    <td>
+                                        良
+                                    </td>
+                                    
+                                    <td>
+                                        10
+                                    </td>
+                                    
+                                    <td>
+                                        
+                                                                                    <a class="chartBtn disable">オッズ</a>
+                                                                                                                                                                            <a target="_blank" href=http://keiba-lv-st.jp/movie/player?date=20250723&amp;race=7&amp;track=monbetsu class="chartBtn">映像</a>
+                                                                                                                                                                        <a class="chartBtn" href=/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=7&amp;k_babaCode=36>成績</a>
+                                                                            </td>
+                                </tr>
+                                                            <tr class="data">
+                                    
+                                    <td>
+                                        8R
+                                    </td>
+                                    
+                                    <td>
+                                                                                    18:25
+                                                                            </td>
+                                    
+                                    <td><span class="timechange"></span>
+                                    </td>
+                                    
+                                    <td>
+                                                                            </td>
+                                    
+                                    <td>
+                                         
+                                            <a href=/KeibaWeb/TodayRaceInfo/DebaTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=8&amp;k_babaCode=36>ハロー！Ｌｅｘｉｎｇｔｏｎ賞Ｃ４－３</a>
+                                                                            </td>
+                                    
+                                    <td>
+                                          右1000m
+                                    </td>
+                                    
+                                    <td>
+                                        晴
+                                    </td>
+                                    
+                                    <td>
+                                        良
+                                    </td>
+                                    
+                                    <td>
+                                        11
+                                    </td>
+                                    
+                                    <td>
+                                        
+                                                                                    <a class="chartBtn disable">オッズ</a>
+                                                                                                                                                                            <a target="_blank" href=http://keiba-lv-st.jp/movie/player?date=20250723&amp;race=8&amp;track=monbetsu class="chartBtn">映像</a>
+                                                                                                                                                                        <a class="chartBtn" href=/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=8&amp;k_babaCode=36>成績</a>
+                                                                            </td>
+                                </tr>
+                                                            <tr class="data">
+                                    
+                                    <td>
+                                        9R
+                                    </td>
+                                    
+                                    <td>
+                                                                                    19:00
+                                                                            </td>
+                                    
+                                    <td><span class="timechange"></span>
+                                    </td>
+                                    
+                                    <td>
+                                        特別                                    </td>
+                                    
+                                    <td>
+                                         
+                                            <a href=/KeibaWeb/TodayRaceInfo/DebaTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=9&amp;k_babaCode=36>匠の味！ほべつメロン特別Ｃ２－２Ｃ３－１</a>
+                                                                            </td>
+                                    
+                                    <td>
+                                          右1000m
+                                    </td>
+                                    
+                                    <td>
+                                        晴
+                                    </td>
+                                    
+                                    <td>
+                                        良
+                                    </td>
+                                    
+                                    <td>
+                                        9
+                                    </td>
+                                    
+                                    <td>
+                                        
+                                                                                    <a class="chartBtn disable">オッズ</a>
+                                                                                                                                                                            <a target="_blank" href=http://keiba-lv-st.jp/movie/player?date=20250723&amp;race=9&amp;track=monbetsu class="chartBtn">映像</a>
+                                                                                                                                                                        <a class="chartBtn" href=/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=9&amp;k_babaCode=36>成績</a>
+                                                                            </td>
+                                </tr>
+                                                            <tr class="data">
+                                    
+                                    <td>
+                                        10R
+                                    </td>
+                                    
+                                    <td>
+                                                                                    19:35
+                                                                            </td>
+                                    
+                                    <td><span class="timechange">有</span>
+                                    </td>
+                                    
+                                    <td>
+                                        特別                                    </td>
+                                    
+                                    <td>
+                                         
+                                            <a href=/KeibaWeb/TodayRaceInfo/DebaTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=10&amp;k_babaCode=36>グランシャリオドリーム３６Ｃ２－２Ｃ３－</a>
+                                                                            </td>
+                                    
+                                    <td>
+                                          右1200m
+                                    </td>
+                                    
+                                    <td>
+                                        晴
+                                    </td>
+                                    
+                                    <td>
+                                        良
+                                    </td>
+                                    
+                                    <td>
+                                        12
+                                    </td>
+                                    
+                                    <td>
+                                        
+                                                                                    <a class="chartBtn disable">オッズ</a>
+                                                                                                                                                                            <a target="_blank" href=http://keiba-lv-st.jp/movie/player?date=20250723&amp;race=10&amp;track=monbetsu class="chartBtn">映像</a>
+                                                                                                                                                                        <a class="chartBtn" href=/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=10&amp;k_babaCode=36>成績</a>
+                                                                            </td>
+                                </tr>
+                                                            <tr class="data">
+                                    
+                                    <td>
+                                        11R
+                                    </td>
+                                    
+                                    <td>
+                                                                                    20:10
+                                                                            </td>
+                                    
+                                    <td><span class="timechange">有</span>
+                                    </td>
+                                    
+                                    <td>
+                                        特別                                    </td>
+                                    
+                                    <td>
+                                         
+                                            <a href=/KeibaWeb/TodayRaceInfo/DebaTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=11&amp;k_babaCode=36>ＪＡバンクよりぞう特別Ｂ３～Ｃ１－１</a>
+                                                                            </td>
+                                    
+                                    <td>
+                                          右1000m
+                                    </td>
+                                    
+                                    <td>
+                                        晴
+                                    </td>
+                                    
+                                    <td>
+                                        良
+                                    </td>
+                                    
+                                    <td>
+                                        10
+                                    </td>
+                                    
+                                    <td>
+                                        
+                                                                                    <a class="chartBtn disable">オッズ</a>
+                                                                                                                                                                            <a target="_blank" href=http://keiba-lv-st.jp/movie/player?date=20250723&amp;race=11&amp;track=monbetsu class="chartBtn">映像</a>
+                                                                                                                                                                        <a class="chartBtn" href=/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=11&amp;k_babaCode=36>成績</a>
+                                                                            </td>
+                                </tr>
+                                                            <tr class="data">
+                                    
+                                    <td>
+                                        12R
+                                    </td>
+                                    
+                                    <td>
+                                                                                    20:50
+                                                                            </td>
+                                    
+                                    <td><span class="timechange"></span>
+                                    </td>
+                                    
+                                    <td>
+                                        重賞                                    </td>
+                                    
+                                    <td>
+                                         
+                                            <a href=/KeibaWeb/TodayRaceInfo/DebaTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=12&amp;k_babaCode=36>Ｊ認 リリーカップ２歳牝馬オープン</a>
+                                                                            </td>
+                                    
+                                    <td>
+                                          右1000m
+                                    </td>
+                                    
+                                    <td>
+                                        晴
+                                    </td>
+                                    
+                                    <td>
+                                        良
+                                    </td>
+                                    
+                                    <td>
+                                        8
+                                    </td>
+                                    
+                                    <td>
+                                        
+                                                                                    <a class="chartBtn disable">オッズ</a>
+                                                                                                                                                                            <a target="_blank" href=http://keiba-lv-st.jp/movie/player?date=20250723&amp;race=12&amp;track=monbetsu class="chartBtn">映像</a>
+                                                                                                                                                                        <a class="chartBtn" href=/KeibaWeb/TodayRaceInfo/RaceMarkTable?k_raceDate=2025%2F07%2F23&amp;k_raceNo=12&amp;k_babaCode=36>成績</a>
+                                                                            </td>
+                                </tr>
+                                                    </tbody>
+                    </table>
+
+                    
+                                            <table class="changeInfo">
+                            <tbody>
+                                <tr>
+                                    <th colspan="6">変更情報</th>
+                                </tr>
+                                <tr class="subHeader">
+                                    <th class="a">競走</th>
+                                    <th class="b">馬番</th>
+                                    <th class="c">馬名</th>
+                                    <th class="d">変更区分</th>
+                                    <th class="e">変更理由</th>
+                                    <th class="f">変更内容</th>
+                                </tr>
+                                                                                                            <tr class="data">
+                                            <td>
+                                                10R
+                                            </td>
+                                            <td>
+                                                6
+                                            </td>
+                                            <td align="left"><span class="bold">
+                                                    イイデスカイハイ
+                                                </span></td>
+                                            <td>
+                                                出走取消
+                                            </td>
+                                            <td>
+                                                疾病
+                                            </td>
+                                            <td>
+                                                
+                                            </td>
+                                        </tr>
+                                                                            <tr class="data">
+                                            <td>
+                                                11R
+                                            </td>
+                                            <td>
+                                                10
+                                            </td>
+                                            <td align="left"><span class="bold">
+                                                    シャイニーメイン
+                                                </span></td>
+                                            <td>
+                                                騎手変更
+                                            </td>
+                                            <td>
+                                                疾病
+                                            </td>
+                                            <td>
+                                                若杉朝 51kg → 阿岸潤 53kg
+                                            </td>
+                                        </tr>
+                                                                                                </tbody>
+                        </table>
+                                        <table class="winnerSearch">
+                        <tbody>
+                            <tr>
+                                <th>重賞競走優勝馬検索</th>
+                            </tr>
+                            <tr>
+                                <script language="JavaScript">
+                                    function setselect1() {
+                                        const val = document.jyuusyouWinhoseForm.k_nenndo.value;
+                                        const babaCode = 36;
+                                        var labels = null;
+                                        var values = null;
+                                        switch (val) {
+                                            case '2026' : labels = new Array("帯広ば","門別","札幌","盛岡","水沢","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","高知","佐賀" );
+ values = new Array("3","36","8","10","11","18","19","20","21","22","23","24","25","27","28","31","32");
+ break;
+case '2025' : labels = new Array("帯広ば","門別","札幌","盛岡","水沢","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","高知","佐賀" );
+ values = new Array("3","36","8","10","11","18","19","20","21","22","23","24","25","27","28","31","32");
+ break;
+case '2024' : labels = new Array("帯広ば","門別","札幌","盛岡","水沢","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","高知","佐賀" );
+ values = new Array("3","36","8","10","11","18","19","20","21","22","23","24","25","27","28","31","32");
+ break;
+case '2023' : labels = new Array("帯広ば","門別","札幌","盛岡","水沢","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","高知","佐賀" );
+ values = new Array("3","36","8","10","11","18","19","20","21","22","23","24","25","27","28","31","32");
+ break;
+case '2022' : labels = new Array("帯広ば","門別","札幌","盛岡","水沢","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","高知","佐賀" );
+ values = new Array("3","36","8","10","11","18","19","20","21","22","23","24","25","27","28","31","32");
+ break;
+case '2021' : labels = new Array("帯広ば","門別","札幌","盛岡","水沢","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","高知","佐賀" );
+ values = new Array("3","36","8","10","11","18","19","20","21","22","23","24","25","27","28","31","32");
+ break;
+case '2020' : labels = new Array("帯広ば","門別","札幌","盛岡","水沢","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","高知","佐賀" );
+ values = new Array("3","36","8","10","11","18","19","20","21","22","23","24","25","27","28","31","32");
+ break;
+case '2019' : labels = new Array("帯広ば","門別","札幌","盛岡","水沢","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","高知","佐賀" );
+ values = new Array("3","36","8","10","11","18","19","20","21","22","23","24","25","27","28","31","32");
+ break;
+case '2018' : labels = new Array("帯広ば","門別","札幌","盛岡","水沢","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","高知","佐賀" );
+ values = new Array("3","36","8","10","11","18","19","20","21","22","23","24","25","27","28","31","32");
+ break;
+case '2017' : labels = new Array("帯広ば","門別","札幌","盛岡","水沢","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","高知","佐賀" );
+ values = new Array("3","36","8","10","11","18","19","20","21","22","23","24","25","27","28","31","32");
+ break;
+case '2016' : labels = new Array("帯広ば","門別","札幌","盛岡","水沢","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","高知","佐賀" );
+ values = new Array("3","36","8","10","11","18","19","20","21","22","23","24","25","27","28","31","32");
+ break;
+case '2015' : labels = new Array("帯広ば","門別","札幌","盛岡","水沢","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","高知","佐賀" );
+ values = new Array("3","36","8","10","11","18","19","20","21","22","23","24","25","27","28","31","32");
+ break;
+case '2014' : labels = new Array("帯広ば","門別","札幌","盛岡","水沢","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","高知","佐賀" );
+ values = new Array("3","36","8","10","11","18","19","20","21","22","23","24","25","27","28","31","32");
+ break;
+case '2013' : labels = new Array("帯広ば","門別","札幌","盛岡","水沢","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","福山","高知","佐賀" );
+ values = new Array("3","36","8","10","11","18","19","20","21","22","23","24","25","27","28","30","31","32");
+ break;
+case '2012' : labels = new Array("帯広ば","門別","札幌","盛岡","水沢","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","福山","高知","佐賀","荒尾" );
+ values = new Array("3","36","8","10","11","18","19","20","21","22","23","24","25","27","28","30","31","32","33");
+ break;
+case '2011' : labels = new Array("帯広ば","門別","札幌","盛岡","水沢","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","福山","高知","佐賀","荒尾" );
+ values = new Array("3","36","8","10","11","18","19","20","21","22","23","24","25","27","28","30","31","32","33");
+ break;
+case '2010' : labels = new Array("帯広ば","門別","札幌","盛岡","水沢","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","福山","高知","佐賀","荒尾" );
+ values = new Array("3","36","8","10","11","18","19","20","21","22","23","24","25","27","28","30","31","32","33");
+ break;
+case '2009' : labels = new Array("帯広ば","門別","札幌","盛岡","水沢","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","福山","高知","佐賀","荒尾" );
+ values = new Array("3","36","8","10","11","18","19","20","21","22","23","24","25","27","28","30","31","32","33");
+ break;
+case '2008' : labels = new Array("帯広ば","旭川","門別","札幌","盛岡","水沢","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","福山","高知","佐賀","荒尾" );
+ values = new Array("3","7","36","8","10","11","18","19","20","21","22","23","24","25","27","28","30","31","32","33");
+ break;
+case '2007' : labels = new Array("帯広ば","旭川","門別","札幌","盛岡","水沢","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","福山","高知","佐賀","荒尾" );
+ values = new Array("3","7","36","8","10","11","18","19","20","21","22","23","24","25","27","28","30","31","32","33");
+ break;
+case '2006' : labels = new Array("北見ば","岩見ば","帯広ば","旭川ば","旭川","門別","札幌","盛岡","水沢","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","福山","高知","佐賀","荒尾" );
+ values = new Array("1","2","3","4","7","36","8","10","11","18","19","20","21","22","23","24","25","27","28","30","31","32","33");
+ break;
+case '2005' : labels = new Array("北見ば","岩見ば","帯広ば","旭川ば","旭川","門別","札幌","盛岡","水沢","宇都宮","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","福山","高知","佐賀","荒尾" );
+ values = new Array("1","2","3","4","7","36","8","10","11","16","18","19","20","21","22","23","24","25","27","28","30","31","32","33");
+ break;
+case '2004' : labels = new Array("北見ば","岩見ば","帯広ば","旭川ば","旭川","門別","札幌","盛岡","水沢","宇都宮","高崎","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","福山","高知","佐賀","荒尾" );
+ values = new Array("1","2","3","4","7","36","8","10","11","16","17","18","19","20","21","22","23","24","25","27","28","30","31","32","33");
+ break;
+case '2003' : labels = new Array("北見ば","岩見ば","帯広ば","旭川ば","旭川","門別","札幌","盛岡","水沢","上山","足利","宇都宮","高崎","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","福山","高知","佐賀","荒尾" );
+ values = new Array("1","2","3","4","7","36","8","10","11","12","15","16","17","18","19","20","21","22","23","24","25","27","28","30","31","32","33");
+ break;
+case '2002' : labels = new Array("北見ば","岩見ば","帯広ば","旭川ば","旭川","門別","札幌","盛岡","水沢","上山","新潟","足利","宇都宮","高崎","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","益田","福山","高知","佐賀","荒尾" );
+ values = new Array("1","2","3","4","7","36","8","10","11","12","13","15","16","17","18","19","20","21","22","23","24","25","27","28","29","30","31","32","33");
+ break;
+case '2001' : labels = new Array("北見ば","岩見ば","帯広ば","旭川ば","旭川","門別","札幌","盛岡","水沢","上山","新潟","三条","足利","宇都宮","高崎","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","益田","福山","高知","佐賀","荒尾","中津" );
+ values = new Array("1","2","3","4","7","36","8","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","27","28","29","30","31","32","33","34");
+ break;
+case '2000' : labels = new Array("北見ば","岩見ば","帯広ば","旭川ば","旭川","門別","札幌","盛岡","水沢","上山","新潟","三条","足利","宇都宮","高崎","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","益田","福山","高知","佐賀","荒尾","中津" );
+ values = new Array("1","2","3","4","7","36","8","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","27","28","29","30","31","32","33","34");
+ break;
+case '1999' : labels = new Array("北見ば","岩見ば","帯広ば","旭川ば","旭川","門別","札幌","盛岡","水沢","上山","新潟","三条","足利","宇都宮","高崎","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","益田","福山","高知","佐賀","荒尾","中津" );
+ values = new Array("1","2","3","4","7","36","8","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","27","28","29","30","31","32","33","34");
+ break;
+case '1998' : labels = new Array("北見ば","岩見ば","帯広ば","旭川ば","旭川","門別","札幌","盛岡","水沢","上山","新潟","三条","足利","宇都宮","高崎","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","益田","福山","高知","佐賀","荒尾","中津" );
+ values = new Array("1","2","3","4","7","36","8","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","27","28","29","30","31","32","33","34");
+ break;
+case '*' : labels = new Array("北見ば","岩見ば","帯広ば","旭川ば","岩見沢","帯広","旭川","門別","札幌","函館","盛岡","水沢","上山","新潟","三条","足利","宇都宮","高崎","浦和","船橋","大井","川崎","金沢","笠松","名古屋","中京","園田","姫路","益田","福山","高知","佐賀","荒尾","中津" );
+ values = new Array("1","2","3","4","5","6","7","36","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","27","28","29","30","31","32","33","34");
+ break;
+
+
+                                        }
+                                        if (document.jyuusyouWinhoseForm.k_babaCode.options != null)
+                                            document.jyuusyouWinhoseForm.k_babaCode.options.length = 0;
+                                        for (var j = 0; j < labels.length; j++) {
+                                            document.jyuusyouWinhoseForm.k_babaCode.options[j] = new Option(labels[j], values[j]);
+                                            if (values[j] == "") {
+                                                document.jyuusyouWinhoseForm.k_babaCode.options[j].selected = "true";
+                                            }
+                                            if (document.jyuusyouWinhoseForm.k_nenndo.value == "*" && document.jyuusyouWinhoseForm.k_babaCode.options[j]
+                                                .value == babaCode) {
+                                                document.jyuusyouWinhoseForm.k_babaCode.options[j].selected = "true";
+                                            }
+                                        }
+                                    }
+                                </script>
+                                <form name="jyuusyouWinhoseForm" action="/KeibaWeb/DataRoom/JyusyoRaceWinhorse"
+                                    method="GET">
+                                    <td class="dbdata3" nowrap align="left">
+                                        <select name="k_nenndo" onChange="setselect1();">
+                                            <option value=*>最新</option>
+                                                                                            <option value="2026">2026年</option>
+                                                                                            <option value="2025">2025年</option>
+                                                                                            <option value="2024">2024年</option>
+                                                                                            <option value="2023">2023年</option>
+                                                                                            <option value="2022">2022年</option>
+                                                                                            <option value="2021">2021年</option>
+                                                                                            <option value="2020">2020年</option>
+                                                                                            <option value="2019">2019年</option>
+                                                                                            <option value="2018">2018年</option>
+                                                                                            <option value="2017">2017年</option>
+                                                                                            <option value="2016">2016年</option>
+                                                                                            <option value="2015">2015年</option>
+                                                                                            <option value="2014">2014年</option>
+                                                                                            <option value="2013">2013年</option>
+                                                                                            <option value="2012">2012年</option>
+                                                                                            <option value="2011">2011年</option>
+                                                                                            <option value="2010">2010年</option>
+                                                                                            <option value="2009">2009年</option>
+                                                                                            <option value="2008">2008年</option>
+                                                                                            <option value="2007">2007年</option>
+                                                                                            <option value="2006">2006年</option>
+                                                                                            <option value="2005">2005年</option>
+                                                                                            <option value="2004">2004年</option>
+                                                                                            <option value="2003">2003年</option>
+                                                                                            <option value="2002">2002年</option>
+                                                                                            <option value="2001">2001年</option>
+                                                                                            <option value="2000">2000年</option>
+                                                                                            <option value="1999">1999年</option>
+                                                                                            <option value="1998">1998年</option>
+                                                                                    </select>
+                                        <select name="k_babaCode"></select>
+                                        <input value="検索" type="submit" />
+                                    </td>
+                                </form>
+                                <script language="JavaScript">
+                                    //call default
+                                    setselect1();
+                                </script>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </article>
+        <article class="attention">
+            <div class="innerWrapper">
+                <p>※レース名について、「Ｊ認」はJRA認定競走、「Ｊ交」はJRA条件交流競走、「Ｊ指」はJRA指定競走を指します。</p>
+            </div>
+        </article>
+    </div>
+    </main>
+</body>
+        <div class="innerWrapper2">
+    <footer>
+        <ul class="footerMenu">
+            <li>
+                <a href="/index.html">
+                    HOME
+                </a>
+            </li>
+            <li>
+                <a href="/association/">
+                    地方競馬全国協会（NAR）
+                </a>
+            </li>
+            <li>
+                <a href="/sitemap.html">
+                    サイトマップ
+                </a>
+            </li>
+            <li>
+                <a href="/link.html">
+                    関連リンク
+                </a>
+            </li>
+            <li>
+                <a href="/terms.html">
+                    利用規約
+                </a>
+            </li>
+            <li>
+                <a href="/qa.html">
+                    ご意見・ご要望／FAQ
+                </a>
+            </li>
+        </ul>
+        <div class="copyright">
+        copyright 1998-NAR (The National Association of Racing) All Rights Reserved
+        </div>
+        <!-- 言語選択 -->
+        <div class="language cp_sl01">
+            <select onChange="location.href=value;">
+                <option value="#">Language</option>
+                <option value="https://goracing.sakura.ne.jp/english/">English</option>
+                <option value="https://goracing.sakura.ne.jp/french/">Francais</option>
+                <option value="https://goracing.sakura.ne.jp/chinese/">中文</option>
+                <option value="https://goracing.sakura.ne.jp/korea/">한글</option>
+            </select>
+        </div>
+    </footer>
+</div></html>

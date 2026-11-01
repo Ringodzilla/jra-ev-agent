@@ -1,0 +1,13 @@
+from pathlib import Path
+import requests,json,hashlib,time,re
+from datetime import datetime,timezone
+from urllib.parse import urljoin,parse_qs,urlparse
+from bs4 import BeautifulSoup
+r=Path('report/research/20261025_nar_recovery_20261027T130621Z');p=r/'observations.json';d=json.loads(p.read_text());m=json.loads((r/'manifest.json').read_text());cache={};attempts=[];sesh=requests.Session()
+for x in d['observations']:
+ if x.get('fields',{}).get('odds') not in ('',None):continue
+ src=x['source'];s=BeautifulSoup(Path(src['path']).read_bytes().decode(src['encoding']),'html.parser');links=[a for a in s.select('a[href]') if a.get_text(strip=True)=='当日メニュー'];assert len(links)==1;u=urljoin(src['url'],links[0]['href'])
+ if u not in cache:
+  rq=datetime.now(timezone.utc).isoformat();resp=sesh.get(u,timeout=35);resp.raise_for_status();stamp=datetime.now(timezone.utc).isoformat();resp.encoding=resp.apparent_encoding;raw=r/'raw'/(hashlib.sha256(u.encode()).hexdigest()+'.html');raw.write_bytes(resp.content);source={'url':u,'response_url':resp.url,'path':str(raw),'sha256':hashlib.sha256(resp.content).hexdigest(),'requested_at':rq,'captured_at':stamp,'method':'GET','encoding':resp.encoding,'http_status':resp.status_code};m.append(source);cache[u]=(BeautifulSoup(resp.text,'html.parser'),source);time.sleep(.4)
+ menu,source=cache[u];no=parse_qs(urlparse(src['url']).query)['k_raceNo'][0];tr=next(t for t in menu.select('tr') if t.select_one('td') and re.match(r'^'+no+r'R\b',t.get_text(' ',strip=True)));odds=[a for a in tr.select('a') if a.get_text(strip=True)=='オッズ'];disabled=bool(odds) and all('disable' in a.get('class',[]) and not a.get('href') and not a.get('onclick') for a in odds);proof={'horse_name':x['horse_name'],'date':x['date'],'race_number':no,'race_result_odds_links':[a.get('href') for a in s.select('a[href]') if 'Odds' in a.get('href','')],'menu_source':source,'menu_row_html':str(tr),'odds_disabled_without_href_or_onclick':disabled,'reason':'OFFICIAL_RESULT_ODDS_CELL_EMPTY_AND_DAY_MENU_ODDS_DISABLED' if disabled else 'REQUIRES_ADDITIONAL_EXPLORATION','retention_expiry_not_asserted':True};x['odds_recovery']=proof;x['missing_reasons']['odds']=proof['reason'];attempts.append(proof)
+p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n');(r/'manifest.json').write_text(json.dumps(m,ensure_ascii=False,indent=2)+'\n');(r/'odds_recovery_audit.json').write_text(json.dumps({'role':'data_collector','attempts':attempts,'count':len(attempts),'disabled_count':sum(x['odds_disabled_without_href_or_onclick'] for x in attempts),'imputations':[]},ensure_ascii=False,indent=2)+'\n');print(len(attempts),sum(x['odds_disabled_without_href_or_onclick'] for x in attempts))

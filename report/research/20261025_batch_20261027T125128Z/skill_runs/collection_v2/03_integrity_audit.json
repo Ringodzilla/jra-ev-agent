@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "step_id": "integrity_audit",
+  "role": "data_integrity_auditor",
+  "status": "BLOCKED",
+  "reason_codes": [
+    "BLOCKED_FOR_MODEL_CALCULATION"
+  ],
+  "previous_step": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/skill_runs/collection_v2/02_collection.json",
+    "sha256": "a4fa991d6f1336081868674cd435c977619254e2c3951d7850a83e7259e99bed"
+  },
+  "output_artifacts": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_audit_20261027T125128Z/summary.json",
+      "sha256": "f4398d49c11302dab7d445803bbd115a66dee71255a9ee0894c014081227557b"
+    }
+  ],
+  "next_action": "report_collection_only",
+  "scope": "Collection audit finished; no model calculation gate bypass"
+}

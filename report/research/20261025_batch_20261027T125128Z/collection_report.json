@@ -1,0 +1,78 @@
+{
+  "status": "COLLECTION_AND_INDEPENDENT_AUDIT_COMPLETE_WITH_EXPLICIT_LIMITATIONS",
+  "target_date": "2026-10-25",
+  "scope": "東京・京都・新潟 各12レース",
+  "counts": {
+    "races": 36,
+    "declared_horses": 467,
+    "starters": 466,
+    "official_nonstarters": 1,
+    "pre_target_history_rows": 1570,
+    "starter_history_rows": 1566,
+    "history_count_shortfalls": 0,
+    "unresolved_source_mismatches": 0,
+    "source_sha_mismatches": 0,
+    "final_numeric_odds_combinations": 100801,
+    "final_nonnumeric_official_combinations": 400,
+    "nar_histories": 45
+  },
+  "canonical_data": {
+    "features": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/features_final_v2",
+    "labels": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/labels_final_v2",
+    "catalog": {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/final_artifact_catalog_v2.json",
+      "sha256": "3796c34d918c5633f1aacd5bb866bec0cd99b683099e54a7a2d02b3be3369eb2"
+    },
+    "collection_summary": {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/final_collection_summary_v2.json",
+      "sha256": "738a7f2fe4ed9570ca68cf5709b429c35724d9d512e4f442104f728eeb60a4d0"
+    },
+    "independent_audit": {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_audit_20261027T125128Z/summary.json",
+      "sha256": "f4398d49c11302dab7d445803bbd115a66dee71255a9ee0894c014081227557b"
+    },
+    "environment": {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_environment_20261027T125148Z/environment_collection.json",
+      "sha256": "31c0e6677f0aa0d69a5bb4974d4ae30836f21987e237ba6f1bc6889525e9866b"
+    }
+  },
+  "missing_observations": {
+    "pace": {
+      "count": 199,
+      "reason": "600m計測境界なし・障害ラップ未掲載等、補間なし"
+    },
+    "last_3f": {
+      "count": 41,
+      "reason": "障害平均1Fを別項目保存38件、競走中止の公式空欄3件"
+    },
+    "passing_order": {
+      "count": 26,
+      "reason": "芝直線コースでコーナー通過順非該当"
+    },
+    "historical_win_odds": {
+      "count": 16,
+      "reason": "NAR公式結果欄空欄、当日オッズ導線無効を全件確認"
+    }
+  },
+  "training_status": {
+    "executed": false,
+    "model_calculation_gate": "BLOCKED_FOR_MODEL_CALCULATION",
+    "reconstructed_after_race": true,
+    "pre_race_capture_proven": false,
+    "imputations_adopted": 0,
+    "shared_learning_state_unchanged": true,
+    "limitations": [
+      "Existing prediction audit requires current market fields deliberately excluded from post-event feature inputs; its gates remain blocked.",
+      "Existing source parser does not consume NAR observations or recognize the jump average-1F semantic correction. Separate source checks preserve these distinctions without overriding machine gates.",
+      "Original-source reparse shares production parsing logic and does not independently prove all parser completeness.",
+      "Post-event reconstruction does not prove pre-race capture. No fit, probabilities, EV, tickets, model promotion, or shared learning-state mutation performed."
+    ],
+    "next_action": "学習用途の項目対応・欠損の扱い・時系列分割を確定する。未承認補完を使う計算は実行しない。"
+  },
+  "quality": {
+    "command": "scripts/check_quality.sh",
+    "exit_code": 0,
+    "tests_passed": 68
+  },
+  "created_at": "2026-10-27T13:34:58.093903+00:00"
+}

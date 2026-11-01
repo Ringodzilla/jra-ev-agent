@@ -1,0 +1,485 @@
+{
+  "role": "reviewer",
+  "run_id": "d4bfcdb0a5114397abae0842ec389af6",
+  "reviewed_at": "2026-10-30T00:56:23.660688+00:00",
+  "status": "OK",
+  "approval_scope": "isolated_posthoc_exploratory_training_artifact_only",
+  "production_approval": false,
+  "reason": "The fixed exploratory candidate and its limited in-sample claims match the frozen plan; independent numerical/source lineage checks pass. Sample size, confounding, rank deficiency and weak baseline discrimination prevent claims of validated predictive improvement or production readiness.",
+  "fix": "No fix required to retain this research-only artifact. The future research requirements below are not relaxed gates or newly invented rejection thresholds.",
+  "evaluated_checks": [
+    {
+      "id": "experimental_scope",
+      "status": "PASS",
+      "finding": "Sunday-only posthoc exploratory fit, labels_previously_inspected=true, not preregistered before labels. Original Saturday-train/Sunday-validation experiment is separate and unchanged."
+    },
+    {
+      "id": "whole_race_universe",
+      "status": "PASS",
+      "finding": "All 10 current-code eligible turf races and all 120 starters/371 past histories retained. No missing horse was individually excluded."
+    },
+    {
+      "id": "market_and_results_separation",
+      "status": "PASS",
+      "finding": "Strict structural projection never reads or generates target odds/popularity. Target outcomes/payouts are used only as fit labels and retrospective policy metrics. Every historical race predates 2026-10-25."
+    },
+    {
+      "id": "baseline_configs_bound",
+      "status": "PASS",
+      "finding": "Both track_biases.json and course_learning.json are SHA-bound in analysis05 and subsequent numerical-stage evidence; no frozen code/config was edited during calculation."
+    },
+    {
+      "id": "no_imputation",
+      "status": "PASS",
+      "finding": "Selected whole-race audits have zero findings and required missingness, no imputation approval/adoption. Unsupported or blocked races remain in artifacts with reasons."
+    },
+    {
+      "id": "independent_numerics",
+      "status": "PASS",
+      "finding": "Independent dataset, metric, gradient-stationarity and shared-state checks all true; formal09 verifies full current-code source replay and stage lineage."
+    },
+    {
+      "id": "baseline_identity",
+      "status": "PASS_WITH_LIMITATIONS",
+      "finding": "This is exact_structural_softmax_temperature1_no_mc_no_market. It reuses common features and pace functions but differs from the existing production Monte Carlo probability baseline; candidate gains cannot be reported as production MC improvement."
+    },
+    {
+      "id": "environment_application",
+      "status": "PASS_WITH_LIMITATIONS",
+      "finding": "Baseline environment_score=0; learned race-centered horse/environment interaction is added once to log baseline probability. Existing course condition matching and the residual condition interaction can be correlated; no manually added duplicate environment coefficient is present."
+    },
+    {
+      "id": "sample_and_identifiability",
+      "status": "RESEARCH_ONLY",
+      "finding": "One date, ten race winner events, three venues. 28 nominal/24 active coefficients but design rank16. Ridge selects a numerical minimizer without proving identification of all physical effects."
+    },
+    {
+      "id": "decision_quality",
+      "status": "LIMITED",
+      "finding": "Baseline and candidate top-one policies both miss all10 races and ROI=0. Baseline loss is almost uniform-reference loss; small training loss improvement does not demonstrate horse discrimination, calibration, profitability or generalization."
+    },
+    {
+      "id": "heldout_and_promotion",
+      "status": "PASS",
+      "finding": "No validation/test, no model promotion, no real tickets. Production and shared-state hashes remain unchanged. Original model and experiment assets are retained."
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/skill_runs/training_01/09_record.json",
+      "sha256": "3800412f666c79d461fd1fa1fcdf1117c3738d23b8947311bf2fd36ded7e70ee"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/skill_runs/training_01/08_output.json",
+      "sha256": "b391dabf9dd791829722b10f8c4509552ced88c0f5e9d00ab7d8971afc2e28a7"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/review/independent_diagnostics.json",
+      "sha256": "467dccf1d931bcd363b9f3dba077e65304e187f97d3a8f9c354e78d609cd55f6"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/research_plan.json",
+      "sha256": "98014ae372d98fda052970e7fe2fc21a13aab8373b371a455a5a06b59a20885e"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/audit/summary.json",
+      "sha256": "b243883ba9a5e848fa4722e9b346f363ebb1cd78ed42589d6b0bc216665a7ff5"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/review/configuration_dependency_review.json",
+      "sha256": "55aadd68bedbeb6a9b49e68e3c2e7b4083d75349154b7674b2b857c9a2cb7ef2"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/review/analysis_configuration_binding.json",
+      "sha256": "6a18b888486bc860afc3252c7a7dad00fe3125facd26c2c034698e3ca0463f43"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/review/simulation_configuration_binding.json",
+      "sha256": "5e943f1c513d885fa1b77371352d5b76b6b55e9a68946df0e45eeebd6b46d59e"
+    }
+  ],
+  "training_metrics": {
+    "baseline": {
+      "race_count": 10,
+      "log_loss": 2.437868777002473,
+      "brier": 0.9095977628113057,
+      "top1_hit_rate": 0.0,
+      "win_top1_policy_roi": 0.0
+    },
+    "candidate": {
+      "race_count": 10,
+      "log_loss": 2.42566990613222,
+      "brier": 0.9076993288757155,
+      "top1_hit_rate": 0.0,
+      "win_top1_policy_roi": 0.0
+    }
+  },
+  "uniform_reference_log_loss": 2.4374364347852713,
+  "baseline_distribution": {
+    "mean_normalized_entropy": 0.9975585077069626,
+    "normalized_entropy_range": [
+      0.9929720957192982,
+      0.9992342867285898
+    ],
+    "max_min_probability_ratio_range": [
+      1.2308107405658917,
+      1.6023152849526576
+    ],
+    "interpretation": "Near-uniform baseline. Correct numerical execution and training improvement do not prove useful discrimination."
+  },
+  "coefficient_identifiability": {
+    "nominal_coefficients": 28,
+    "active_coefficients": 24,
+    "inactive_constant_environment_terms": [
+      "snow"
+    ],
+    "environment_vector_rank": 4,
+    "race_centered_design_shape": [
+      120,
+      28
+    ],
+    "race_centered_raw_design_rank": 16,
+    "scaled_design_rank": 16,
+    "singular_values": [
+      32.590910102632016,
+      24.413073316931932,
+      19.903396669918415,
+      15.817455443246073,
+      14.08096494176262,
+      11.388444628244638,
+      10.166888466908203,
+      7.186822673963196,
+      5.830472377525431,
+      5.0325107168879395,
+      3.0717590958604593,
+      2.9174360781302284,
+      2.4777436767350056,
+      2.080938515713637,
+      1.5975300550766505,
+      1.490542731180547,
+      8.21848668688499e-15,
+      4.775844486218543e-15,
+      3.780621519115248e-15,
+      3.3204589668221154e-15,
+      2.7796960848239772e-15,
+      1.8748809379142344e-15,
+      1.4652595510264447e-15,
+      1.2084112444664857e-15,
+      5.67936124116602e-16,
+      7.948270334167361e-18,
+      2.4207154722910333e-28,
+      2.1568476991764473e-33
+    ],
+    "regularization": "Positive ridge gives a numerical minimizer; it does not establish empirical identification of collinear environmental effects."
+  },
+  "environment_coverage": {
+    "races": 10,
+    "horses": 120,
+    "training_dates": [
+      "2026-10-25"
+    ],
+    "effective_winner_events": 10,
+    "venue_counts": {
+      "04": 4,
+      "05": 2,
+      "08": 4
+    },
+    "weather_counts": {
+      "雨": 4,
+      "曇": 6
+    },
+    "environment_unique_vectors": 6
+  },
+  "independent_validation": {
+    "executed": false,
+    "test_executed": false,
+    "old_contract_sha_unchanged": true,
+    "old_validation_cannot_be_reused_as_independent_evaluation_of_this_candidate": true,
+    "minimum_policy": {
+      "training_races": 100,
+      "validation_races": 20,
+      "test_races": 20
+    },
+    "minimum_policy_met": false
+  },
+  "data_use_trace": [
+    {
+      "data": "Past finish/time/distance",
+      "use": "Common recency-weighted ability and speed features"
+    },
+    {
+      "data": "Past last3f and final corner order",
+      "use": "Closing strength/front rate, common pace scenarios; source missingness is not replaced"
+    },
+    {
+      "data": "Past course/surface/condition/jockey/weight; target assigned weight/frame/jockey",
+      "use": "Common course, weight, jockey and pace priors, with frozen config dependencies"
+    },
+    {
+      "data": "Date, horse identity, full career and result lineup",
+      "use": "Cutoff, exact latest5 history and whole-starter-set integrity checks"
+    },
+    {
+      "data": "Target observed weather, cushion and turf moisture, measured time/history",
+      "use": "Source-bound post-event environment vectors interacting with four race-centered horse features"
+    },
+    {
+      "data": "Target winners and win payouts",
+      "use": "Conditional fit targets and one100-yen top-one retrospective policy metrics only"
+    },
+    {
+      "data": "Historical leader opening600m observations",
+      "use": "Retained and source-audited but not connected to this fixed common structural/pace function. Future validated pace feature experiment required.",
+      "observed_in_selected_histories": 363,
+      "selected_history_rows": 371
+    },
+    {
+      "data": "Historical odds/popularity",
+      "use": "Retained and audited under strict history contract; computed historical market summaries are not used by the strict structural score"
+    },
+    {
+      "data": "All eight target final odds tables, body weight and other retained raw metadata",
+      "use": "Preserved for future price/EV/body-weight or other separately validated experiments; not silently presented as learned ability features or inputs to this candidate"
+    }
+  ],
+  "remaining_races": {
+    "count": 26,
+    "gate_counts": {
+      "BLOCKED_MISSING_DATA": 3,
+      "BLOCKED_UNAPPROVED_IMPUTATION": 16,
+      "UNVERIFIED": 3,
+      "NOT_SUPPORTED_SURFACE": 4
+    },
+    "race_reasons": [
+      {
+        "race_id": "20261025_04_02",
+        "gate": "BLOCKED_MISSING_DATA",
+        "horses_retained_in_source": 10,
+        "surface_gate": "NOT_SUPPORTED_SURFACE",
+        "findings": 3,
+        "source_mismatches": 0
+      },
+      {
+        "race_id": "20261025_04_04",
+        "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+        "horses_retained_in_source": 13,
+        "surface_gate": "NOT_SUPPORTED_SURFACE",
+        "findings": 2,
+        "source_mismatches": 0
+      },
+      {
+        "race_id": "20261025_04_05",
+        "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+        "horses_retained_in_source": 18,
+        "surface_gate": "PASS",
+        "findings": 18,
+        "source_mismatches": 0
+      },
+      {
+        "race_id": "20261025_04_06",
+        "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+        "horses_retained_in_source": 11,
+        "surface_gate": "NOT_SUPPORTED_SURFACE",
+        "findings": 10,
+        "source_mismatches": 5
+      },
+      {
+        "race_id": "20261025_04_07",
+        "gate": "UNVERIFIED",
+        "horses_retained_in_source": 14,
+        "surface_gate": "PASS",
+        "findings": 0,
+        "source_mismatches": 0
+      },
+      {
+        "race_id": "20261025_04_08",
+        "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+        "horses_retained_in_source": 14,
+        "surface_gate": "NOT_SUPPORTED_SURFACE",
+        "findings": 8,
+        "source_mismatches": 4
+      },
+      {
+        "race_id": "20261025_04_11",
+        "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+        "horses_retained_in_source": 17,
+        "surface_gate": "PASS",
+        "findings": 25,
+        "source_mismatches": 0
+      },
+      {
+        "race_id": "20261025_04_12",
+        "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+        "horses_retained_in_source": 12,
+        "surface_gate": "NOT_SUPPORTED_SURFACE",
+        "findings": 3,
+        "source_mismatches": 0
+      },
+      {
+        "race_id": "20261025_05_01",
+        "gate": "NOT_SUPPORTED_SURFACE",
+        "horses_retained_in_source": 16,
+        "surface_gate": "NOT_SUPPORTED_SURFACE",
+        "findings": 0,
+        "source_mismatches": 0
+      },
+      {
+        "race_id": "20261025_05_04",
+        "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+        "horses_retained_in_source": 11,
+        "surface_gate": "NOT_SUPPORTED_SURFACE",
+        "findings": 56,
+        "source_mismatches": 0
+      },
+      {
+        "race_id": "20261025_05_05",
+        "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+        "horses_retained_in_source": 13,
+        "surface_gate": "PASS",
+        "findings": 13,
+        "source_mismatches": 0
+      },
+      {
+        "race_id": "20261025_05_06",
+        "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+        "horses_retained_in_source": 16,
+        "surface_gate": "PASS",
+        "findings": 16,
+        "source_mismatches": 0
+      },
+      {
+        "race_id": "20261025_05_07",
+        "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+        "horses_retained_in_source": 15,
+        "surface_gate": "NOT_SUPPORTED_SURFACE",
+        "findings": 4,
+        "source_mismatches": 0
+      },
+      {
+        "race_id": "20261025_05_08",
+        "gate": "UNVERIFIED",
+        "horses_retained_in_source": 18,
+        "surface_gate": "PASS",
+        "findings": 0,
+        "source_mismatches": 0
+      },
+      {
+        "race_id": "20261025_05_09",
+        "gate": "UNVERIFIED",
+        "horses_retained_in_source": 11,
+        "surface_gate": "NOT_SUPPORTED_SURFACE",
+        "findings": 0,
+        "source_mismatches": 0
+      },
+      {
+        "race_id": "20261025_05_10",
+        "gate": "BLOCKED_MISSING_DATA",
+        "horses_retained_in_source": 9,
+        "surface_gate": "PASS",
+        "findings": 3,
+        "source_mismatches": 0
+      },
+      {
+        "race_id": "20261025_05_11",
+        "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+        "horses_retained_in_source": 16,
+        "surface_gate": "NOT_SUPPORTED_SURFACE",
+        "findings": 7,
+        "source_mismatches": 17
+      },
+      {
+        "race_id": "20261025_05_12",
+        "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+        "horses_retained_in_source": 13,
+        "surface_gate": "NOT_SUPPORTED_SURFACE",
+        "findings": 1,
+        "source_mismatches": 0
+      },
+      {
+        "race_id": "20261025_08_01",
+        "gate": "NOT_SUPPORTED_SURFACE",
+        "horses_retained_in_source": 8,
+        "surface_gate": "NOT_SUPPORTED_SURFACE",
+        "findings": 0,
+        "source_mismatches": 0
+      },
+      {
+        "race_id": "20261025_08_02",
+        "gate": "NOT_SUPPORTED_SURFACE",
+        "horses_retained_in_source": 10,
+        "surface_gate": "NOT_SUPPORTED_SURFACE",
+        "findings": 0,
+        "source_mismatches": 0
+      },
+      {
+        "race_id": "20261025_08_04",
+        "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+        "horses_retained_in_source": 16,
+        "surface_gate": "NOT_SUPPORTED_SURFACE",
+        "findings": 16,
+        "source_mismatches": 0
+      },
+      {
+        "race_id": "20261025_08_05",
+        "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+        "horses_retained_in_source": 8,
+        "surface_gate": "PASS",
+        "findings": 8,
+        "source_mismatches": 0
+      },
+      {
+        "race_id": "20261025_08_06",
+        "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+        "horses_retained_in_source": 12,
+        "surface_gate": "NOT_SUPPORTED_SURFACE",
+        "findings": 2,
+        "source_mismatches": 0
+      },
+      {
+        "race_id": "20261025_08_08",
+        "gate": "BLOCKED_MISSING_DATA",
+        "horses_retained_in_source": 18,
+        "surface_gate": "PASS",
+        "findings": 5,
+        "source_mismatches": 5
+      },
+      {
+        "race_id": "20261025_08_10",
+        "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+        "horses_retained_in_source": 15,
+        "surface_gate": "NOT_SUPPORTED_SURFACE",
+        "findings": 2,
+        "source_mismatches": 0
+      },
+      {
+        "race_id": "20261025_08_12",
+        "gate": "NOT_SUPPORTED_SURFACE",
+        "horses_retained_in_source": 12,
+        "surface_gate": "NOT_SUPPORTED_SURFACE",
+        "findings": 0,
+        "source_mismatches": 0
+      }
+    ],
+    "policy": "All remain in canonical source data. Collection completeness is distinct from eligibility for this strict turf research input contract."
+  },
+  "allowed_claims": [
+    "A fixed linear/ridge100 research candidate was fitted on10 whole Sunday turf races/120 horses with no unapproved imputation.",
+    "In-sample log loss and Brier decreased slightly against the frozen research baseline.",
+    "Both top-one policies remain0/10 and no predictive or financial improvement has been validated."
+  ],
+  "forbidden_claims": [
+    "Validated environmental causal effects",
+    "Independent validation or test improvement",
+    "Improvement of production Monte Carlo probabilities",
+    "All36 races were fitted",
+    "High-EV horse discovery or profitable betting",
+    "Promotion or production use"
+  ],
+  "future_research_requirements": [
+    "Collect independent dates and conditions, preserving chronology and existing held-out experiments; meet existing minimum100/20/20 policy before considering promotion.",
+    "Compare basic-score scale/calibration and discrimination with uniform probabilities before attributing residual environment fit to useful horse-strength separation.",
+    "Connect retained official historical pace to an explicitly tested feature/pace experiment; do not hide weakness behind extra longshot or NO_GO filters.",
+    "Address source-supported NAR/straight-course/jump/debut inputs with separate tested contracts rather than missing-horse exclusion or unapproved numeric defaults.",
+    "If eventual production adoption is considered, use a production-compatible baseline or validate the declared baseline change before transferring environment coefficients."
+  ]
+}

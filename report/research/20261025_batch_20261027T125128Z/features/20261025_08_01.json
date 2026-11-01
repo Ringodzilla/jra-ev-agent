@@ -1,0 +1,3463 @@
+{
+  "race_id": "20261025_08_01",
+  "result_url": {
+    "label_reference": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604090120261025/82",
+    "excluded_from_feature_inputs": true
+  },
+  "racecard_url": "https://jra.jp/JRADB/accessD.html?CNAME=pw01dde1008202604090120261025/C6",
+  "horses": [
+    {
+      "race_id": "20261025_京都_01",
+      "race_name": "2歳未勝利",
+      "horse_id": "pw01dud002024107172/FE",
+      "horse_name": "ナオミガサイキョウ",
+      "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024107172/FE",
+      "frame_number": "1",
+      "horse_number": "1",
+      "current_jockey": "松若 風馬",
+      "assigned_weight": "55.0",
+      "current_body_weight": "502",
+      "body_weight_change": "-4",
+      "body_weight_status": "published",
+      "target_track": "京都",
+      "target_race_date": "2026-10-25",
+      "target_race_number": "01",
+      "target_surface": "ダート",
+      "target_distance": "1800",
+      "target_weather": "",
+      "target_track_condition": "",
+      "target_conditions_captured_at": "",
+      "horse_country": "",
+      "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024107172/FE",
+      "history_pre_target": [
+        {
+          "date": "2026年9月27日",
+          "course": "阪神",
+          "race_name": "未勝利",
+          "distance": "1800ダ",
+          "track_condition": "良",
+          "popularity": "5",
+          "position": "2",
+          "jockey": "松若 風馬",
+          "weight": "55.0",
+          "time": "1:54.8",
+          "raw_text": "2026年9月27日 阪神 2歳未勝利 ダ1800 良 9 5 2 松若 風馬 55.0 506 1:54.8 ブックオブケルズ",
+          "normalized_date": "2026-09-27",
+          "run_index": "1",
+          "history_surface": "ダート",
+          "pace": "37.9",
+          "last_3f": "38.0",
+          "last_3f_source": "official_result_observation",
+          "weather": "曇",
+          "passing_order": "5-5-5-4",
+          "odds": "11.0",
+          "race_result_url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202604090320260927/EB",
+          "race_id": "20261025_京都_01",
+          "horse_id": "pw01dud002024107172/FE",
+          "horse_name": "ナオミガサイキョウ",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024107172/FE",
+          "official_result_observation": {
+            "horse_name": "ナオミガサイキョウ",
+            "raw_cells": {
+              "place": "2",
+              "waku": "",
+              "num": "7",
+              "horse": "ナオミガサイキョウ",
+              "age": "牝2",
+              "weight": "55.0",
+              "jockey": "松若 風馬",
+              "time": "1:54.8",
+              "margin": "４",
+              "corner": "5 5 5 4",
+              "f_time": "38.0",
+              "h_weight": "506 (+8)",
+              "trainer": "佐藤 悠太",
+              "pop": "5"
+            },
+            "horse_href": "/JRADB/accessU.html?CNAME=pw01dud102024107172/E5",
+            "horse_number": "7",
+            "position": "2",
+            "last_3f": "38.0",
+            "time": "1:54.8",
+            "odds": "",
+            "weight": "55.0",
+            "jockey": "松若 風馬",
+            "popularity": "5",
+            "passing_order": "5-5-5-4"
+          },
+          "official_result_source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202604090320260927/EB",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01sde1009202604090320260927/EB"
+            },
+            "captured_at": "2026-10-27T13:18:42.591509+00:00",
+            "sha256": "6bda69886f409ea51a0928c82aa716f3bf9d94886a2717335de364b967390398",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_a1c7b240757ddca8bfffa456b08e64a4106a269fe415320be2d5d2a6c6e71216.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "official_pace_observation": {
+            "pace": "37.9",
+            "pace_source": "official_race_leader_intervals",
+            "pace_scope": "race_leader_at_each_boundary",
+            "pace_rule_url": "https://www.jra.go.jp/kouza/yougo/w291.html",
+            "distance_m": 1800,
+            "interval_seconds": [
+              "13.0",
+              "11.4",
+              "13.5",
+              "12.7",
+              "12.7",
+              "13.1",
+              "12.8",
+              "12.5",
+              "12.4"
+            ],
+            "interval_lengths_m": [
+              200,
+              200,
+              200,
+              200,
+              200,
+              200,
+              200,
+              200,
+              200
+            ],
+            "pace_missing_reason": ""
+          },
+          "previous_parser_values": {
+            "passing_order": "5-5-5-4",
+            "last_3f": "38.0",
+            "time": "1:54.8",
+            "position": "2",
+            "weight": "55.0",
+            "jockey": "松若 風馬",
+            "popularity": "5"
+          },
+          "field_provenance": {
+            "passing_order": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202604090320260927/EB",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202604090320260927/EB"
+              },
+              "captured_at": "2026-10-27T13:18:42.591509+00:00",
+              "sha256": "6bda69886f409ea51a0928c82aa716f3bf9d94886a2717335de364b967390398",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_a1c7b240757ddca8bfffa456b08e64a4106a269fe415320be2d5d2a6c6e71216.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "last_3f": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202604090320260927/EB",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202604090320260927/EB"
+              },
+              "captured_at": "2026-10-27T13:18:42.591509+00:00",
+              "sha256": "6bda69886f409ea51a0928c82aa716f3bf9d94886a2717335de364b967390398",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_a1c7b240757ddca8bfffa456b08e64a4106a269fe415320be2d5d2a6c6e71216.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "time": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202604090320260927/EB",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202604090320260927/EB"
+              },
+              "captured_at": "2026-10-27T13:18:42.591509+00:00",
+              "sha256": "6bda69886f409ea51a0928c82aa716f3bf9d94886a2717335de364b967390398",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_a1c7b240757ddca8bfffa456b08e64a4106a269fe415320be2d5d2a6c6e71216.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "position": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202604090320260927/EB",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202604090320260927/EB"
+              },
+              "captured_at": "2026-10-27T13:18:42.591509+00:00",
+              "sha256": "6bda69886f409ea51a0928c82aa716f3bf9d94886a2717335de364b967390398",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_a1c7b240757ddca8bfffa456b08e64a4106a269fe415320be2d5d2a6c6e71216.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "weight": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202604090320260927/EB",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202604090320260927/EB"
+              },
+              "captured_at": "2026-10-27T13:18:42.591509+00:00",
+              "sha256": "6bda69886f409ea51a0928c82aa716f3bf9d94886a2717335de364b967390398",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_a1c7b240757ddca8bfffa456b08e64a4106a269fe415320be2d5d2a6c6e71216.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "jockey": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202604090320260927/EB",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202604090320260927/EB"
+              },
+              "captured_at": "2026-10-27T13:18:42.591509+00:00",
+              "sha256": "6bda69886f409ea51a0928c82aa716f3bf9d94886a2717335de364b967390398",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_a1c7b240757ddca8bfffa456b08e64a4106a269fe415320be2d5d2a6c6e71216.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "popularity": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202604090320260927/EB",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202604090320260927/EB"
+              },
+              "captured_at": "2026-10-27T13:18:42.591509+00:00",
+              "sha256": "6bda69886f409ea51a0928c82aa716f3bf9d94886a2717335de364b967390398",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_a1c7b240757ddca8bfffa456b08e64a4106a269fe415320be2d5d2a6c6e71216.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "weather": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202604090320260927/EB",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202604090320260927/EB"
+              },
+              "captured_at": "2026-10-27T13:18:42.591509+00:00",
+              "sha256": "6bda69886f409ea51a0928c82aa716f3bf9d94886a2717335de364b967390398",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_a1c7b240757ddca8bfffa456b08e64a4106a269fe415320be2d5d2a6c6e71216.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "odds": [
+              {
+                "url": "https://jra.jp/JRADB/accessO.html?CNAME=pw151ou1009202604090320260927Z/2D",
+                "method": "POST",
+                "request_parameters": {
+                  "cname": "pw151ou1009202604090320260927Z/2D"
+                },
+                "captured_at": "2026-10-27T13:18:43.477474+00:00",
+                "sha256": "b7aed3d19aab9d49f1c35d9da278e4416bbacb537dc4a5bc2c480d014363a35d",
+                "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_5baa51adc9c538f458d23b0403299a7df094b50c35eee9a390b89c3a1bd1fd27.html",
+                "encoding": "SHIFT_JIS"
+              }
+            ],
+            "pace": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202604090320260927/EB",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202604090320260927/EB"
+              },
+              "captured_at": "2026-10-27T13:18:42.591509+00:00",
+              "sha256": "6bda69886f409ea51a0928c82aa716f3bf9d94886a2717335de364b967390398",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_a1c7b240757ddca8bfffa456b08e64a4106a269fe415320be2d5d2a6c6e71216.html",
+              "encoding": "SHIFT_JIS"
+            }
+          },
+          "pace_source": "official_race_leader_intervals",
+          "pace_scope": "race_leader_at_each_boundary",
+          "pace_rule_url": "https://www.jra.go.jp/kouza/yougo/w291.html",
+          "distance_m": 1800,
+          "interval_seconds": [
+            "13.0",
+            "11.4",
+            "13.5",
+            "12.7",
+            "12.7",
+            "13.1",
+            "12.8",
+            "12.5",
+            "12.4"
+          ],
+          "interval_lengths_m": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ],
+          "pace_missing_reason": ""
+        },
+        {
+          "date": "2026年6月13日",
+          "course": "阪神",
+          "race_name": "新馬",
+          "distance": "1400ダ",
+          "track_condition": "良",
+          "popularity": "8",
+          "position": "5",
+          "jockey": "岩田 望来",
+          "weight": "55.0",
+          "time": "1:28.8",
+          "raw_text": "2026年6月13日 阪神 2歳新馬 ダ1400 良 13 8 5 岩田 望来 55.0 498 1:28.8 クロリス",
+          "normalized_date": "2026-06-13",
+          "run_index": "2",
+          "history_surface": "ダート",
+          "pace": "35.9",
+          "last_3f": "39.6",
+          "last_3f_source": "official_result_observation",
+          "weather": "晴",
+          "passing_order": "6-6",
+          "odds": "17.1",
+          "race_result_url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202603030620260613/68",
+          "race_id": "20261025_京都_01",
+          "horse_id": "pw01dud002024107172/FE",
+          "horse_name": "ナオミガサイキョウ",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024107172/FE",
+          "official_result_observation": {
+            "horse_name": "ナオミガサイキョウ",
+            "raw_cells": {
+              "place": "5",
+              "waku": "",
+              "num": "9",
+              "horse": "ナオミガサイキョウ",
+              "age": "牝2",
+              "weight": "55.0",
+              "jockey": "岩田 望来",
+              "time": "1:28.8",
+              "margin": "５",
+              "corner": "6 6",
+              "f_time": "39.6",
+              "h_weight": "498 (初出走)",
+              "trainer": "佐藤 悠太",
+              "pop": "8"
+            },
+            "horse_href": "/JRADB/accessU.html?CNAME=pw01dud102024107172/E5",
+            "horse_number": "9",
+            "position": "5",
+            "last_3f": "39.6",
+            "time": "1:28.8",
+            "odds": "",
+            "weight": "55.0",
+            "jockey": "岩田 望来",
+            "popularity": "8",
+            "passing_order": "6-6"
+          },
+          "official_result_source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202603030620260613/68",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01sde1009202603030620260613/68"
+            },
+            "captured_at": "2026-10-27T13:18:44.423835+00:00",
+            "sha256": "8b6da94fda56344c3235be13f1514881a64923aa966220d439a3c057568f749a",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_c9727b6da8b9e4d13d92d4944042220e21f8b7f6fe7c234bca582ea9099c5743.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "official_pace_observation": {
+            "pace": "35.9",
+            "pace_source": "official_race_leader_intervals",
+            "pace_scope": "race_leader_at_each_boundary",
+            "pace_rule_url": "https://www.jra.go.jp/kouza/yougo/w291.html",
+            "distance_m": 1400,
+            "interval_seconds": [
+              "12.7",
+              "11.2",
+              "12.0",
+              "12.4",
+              "12.9",
+              "12.6",
+              "13.1"
+            ],
+            "interval_lengths_m": [
+              200,
+              200,
+              200,
+              200,
+              200,
+              200,
+              200
+            ],
+            "pace_missing_reason": ""
+          },
+          "previous_parser_values": {
+            "passing_order": "6-6",
+            "last_3f": "39.6",
+            "time": "1:28.8",
+            "position": "5",
+            "weight": "55.0",
+            "jockey": "岩田 望来",
+            "popularity": "8"
+          },
+          "field_provenance": {
+            "passing_order": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202603030620260613/68",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202603030620260613/68"
+              },
+              "captured_at": "2026-10-27T13:18:44.423835+00:00",
+              "sha256": "8b6da94fda56344c3235be13f1514881a64923aa966220d439a3c057568f749a",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_c9727b6da8b9e4d13d92d4944042220e21f8b7f6fe7c234bca582ea9099c5743.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "last_3f": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202603030620260613/68",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202603030620260613/68"
+              },
+              "captured_at": "2026-10-27T13:18:44.423835+00:00",
+              "sha256": "8b6da94fda56344c3235be13f1514881a64923aa966220d439a3c057568f749a",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_c9727b6da8b9e4d13d92d4944042220e21f8b7f6fe7c234bca582ea9099c5743.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "time": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202603030620260613/68",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202603030620260613/68"
+              },
+              "captured_at": "2026-10-27T13:18:44.423835+00:00",
+              "sha256": "8b6da94fda56344c3235be13f1514881a64923aa966220d439a3c057568f749a",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_c9727b6da8b9e4d13d92d4944042220e21f8b7f6fe7c234bca582ea9099c5743.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "position": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202603030620260613/68",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202603030620260613/68"
+              },
+              "captured_at": "2026-10-27T13:18:44.423835+00:00",
+              "sha256": "8b6da94fda56344c3235be13f1514881a64923aa966220d439a3c057568f749a",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_c9727b6da8b9e4d13d92d4944042220e21f8b7f6fe7c234bca582ea9099c5743.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "weight": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202603030620260613/68",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202603030620260613/68"
+              },
+              "captured_at": "2026-10-27T13:18:44.423835+00:00",
+              "sha256": "8b6da94fda56344c3235be13f1514881a64923aa966220d439a3c057568f749a",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_c9727b6da8b9e4d13d92d4944042220e21f8b7f6fe7c234bca582ea9099c5743.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "jockey": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202603030620260613/68",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202603030620260613/68"
+              },
+              "captured_at": "2026-10-27T13:18:44.423835+00:00",
+              "sha256": "8b6da94fda56344c3235be13f1514881a64923aa966220d439a3c057568f749a",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_c9727b6da8b9e4d13d92d4944042220e21f8b7f6fe7c234bca582ea9099c5743.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "popularity": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202603030620260613/68",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202603030620260613/68"
+              },
+              "captured_at": "2026-10-27T13:18:44.423835+00:00",
+              "sha256": "8b6da94fda56344c3235be13f1514881a64923aa966220d439a3c057568f749a",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_c9727b6da8b9e4d13d92d4944042220e21f8b7f6fe7c234bca582ea9099c5743.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "weather": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202603030620260613/68",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202603030620260613/68"
+              },
+              "captured_at": "2026-10-27T13:18:44.423835+00:00",
+              "sha256": "8b6da94fda56344c3235be13f1514881a64923aa966220d439a3c057568f749a",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_c9727b6da8b9e4d13d92d4944042220e21f8b7f6fe7c234bca582ea9099c5743.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "odds": [
+              {
+                "url": "https://jra.jp/JRADB/accessO.html?CNAME=pw151ou1009202603030620260613Z/AA",
+                "method": "POST",
+                "request_parameters": {
+                  "cname": "pw151ou1009202603030620260613Z/AA"
+                },
+                "captured_at": "2026-10-27T13:18:45.537515+00:00",
+                "sha256": "5e47cdf3a2578de18d66fcad320deaab0218ec3e90c2fbbc59d11b67892bd7cb",
+                "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_9f9e7c2a6d82e6fdc61a5920ba991f094792bba4b17eedfbb5684f292553fa42.html",
+                "encoding": "SHIFT_JIS"
+              }
+            ],
+            "pace": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202603030620260613/68",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202603030620260613/68"
+              },
+              "captured_at": "2026-10-27T13:18:44.423835+00:00",
+              "sha256": "8b6da94fda56344c3235be13f1514881a64923aa966220d439a3c057568f749a",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_c9727b6da8b9e4d13d92d4944042220e21f8b7f6fe7c234bca582ea9099c5743.html",
+              "encoding": "SHIFT_JIS"
+            }
+          },
+          "pace_source": "official_race_leader_intervals",
+          "pace_scope": "race_leader_at_each_boundary",
+          "pace_rule_url": "https://www.jra.go.jp/kouza/yougo/w291.html",
+          "distance_m": 1400,
+          "interval_seconds": [
+            "12.7",
+            "11.2",
+            "12.0",
+            "12.4",
+            "12.9",
+            "12.6",
+            "13.1"
+          ],
+          "interval_lengths_m": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ],
+          "pace_missing_reason": ""
+        }
+      ],
+      "history_count": 2,
+      "career_starts": 2,
+      "history_missing_fields": [
+        {
+          "index": 0,
+          "fields": [
+            "pace",
+            "weather",
+            "odds"
+          ],
+          "fallback": "embedded"
+        },
+        {
+          "index": 1,
+          "fields": [
+            "pace",
+            "weather",
+            "odds"
+          ],
+          "fallback": "embedded"
+        }
+      ],
+      "career_verification": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 2,
+        "official_totals": {
+          "平地レース合計": 3,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 3,
+        "before_target_count": 2,
+        "started_rows": [
+          {
+            "date": "2026年9月27日",
+            "course": "阪神",
+            "race_name": "2歳未勝利",
+            "distance": "ダ1800",
+            "track_condition": "良",
+            "popularity": "5",
+            "position": "2",
+            "jockey": "松若 風馬",
+            "weight": "55.0",
+            "time": "1:54.8",
+            "raw_text": "2026年9月27日 阪神 2歳未勝利 ダ1800 良 9 5 2 松若 風馬 55.0 506 1:54.8 ブックオブケルズ",
+            "normalized_date": "2026-09-27"
+          },
+          {
+            "date": "2026年6月13日",
+            "course": "阪神",
+            "race_name": "2歳新馬",
+            "distance": "ダ1400",
+            "track_condition": "良",
+            "popularity": "8",
+            "position": "5",
+            "jockey": "岩田 望来",
+            "weight": "55.0",
+            "time": "1:28.8",
+            "raw_text": "2026年6月13日 阪神 2歳新馬 ダ1400 良 13 8 5 岩田 望来 55.0 498 1:28.8 クロリス",
+            "normalized_date": "2026-06-13"
+          }
+        ],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      },
+      "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+      "career_source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024107172/FE",
+        "method": "POST",
+        "request_parameters": {
+          "cname": "pw01dud002024107172/FE"
+        },
+        "captured_at": "2026-10-27T12:57:39.867160+00:00",
+        "sha256": "6820b81589d0a76dcf52abdbfe681fff63b28821345ef66bf47dd685b5aef5ba",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/07fc95b83b214b447b74a6c7ae7ff334ba68fc03496fdb5021b835dbc27c407b.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "entry_status": "STARTER"
+    },
+    {
+      "race_id": "20261025_京都_01",
+      "race_name": "2歳未勝利",
+      "horse_id": "pw01dud002024104786/33",
+      "horse_name": "キミチャン",
+      "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104786/33",
+      "frame_number": "2",
+      "horse_number": "2",
+      "current_jockey": "丹内 祐次",
+      "assigned_weight": "55.0",
+      "current_body_weight": "502",
+      "body_weight_change": "-2",
+      "body_weight_status": "published",
+      "target_track": "京都",
+      "target_race_date": "2026-10-25",
+      "target_race_number": "01",
+      "target_surface": "ダート",
+      "target_distance": "1800",
+      "target_weather": "",
+      "target_track_condition": "",
+      "target_conditions_captured_at": "",
+      "horse_country": "",
+      "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104786/33",
+      "history_pre_target": [
+        {
+          "date": "2026年9月21日",
+          "course": "阪神",
+          "race_name": "牝新馬",
+          "distance": "1400ダ",
+          "track_condition": "良",
+          "popularity": "9",
+          "position": "13",
+          "jockey": "鮫島 克駿",
+          "weight": "55.0",
+          "time": "1:32.0",
+          "raw_text": "2026年9月21日 阪神 2歳新馬 ダ1400 良 14 9 13 鮫島 克駿 55.0 504 1:32.0 ワンスフォーユー",
+          "normalized_date": "2026-09-21",
+          "run_index": "1",
+          "history_surface": "ダート",
+          "pace": "35.1",
+          "last_3f": "42.9",
+          "last_3f_source": "official_result_observation",
+          "weather": "晴",
+          "passing_order": "9-11",
+          "odds": "35.5",
+          "race_result_url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202604070420260921/4C",
+          "race_id": "20261025_京都_01",
+          "horse_id": "pw01dud002024104786/33",
+          "horse_name": "キミチャン",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104786/33",
+          "official_result_observation": {
+            "horse_name": "キミチャン",
+            "raw_cells": {
+              "place": "13",
+              "waku": "",
+              "num": "6",
+              "horse": "キミチャン",
+              "age": "牝2",
+              "weight": "55.0",
+              "jockey": "鮫島 克駿",
+              "time": "1:32.0",
+              "margin": "８",
+              "corner": "9 11",
+              "f_time": "42.9",
+              "h_weight": "504 (初出走)",
+              "trainer": "加藤 公太",
+              "pop": "9"
+            },
+            "horse_href": "/JRADB/accessU.html?CNAME=pw01dud102024104786/1A",
+            "horse_number": "6",
+            "position": "13",
+            "last_3f": "42.9",
+            "time": "1:32.0",
+            "odds": "",
+            "weight": "55.0",
+            "jockey": "鮫島 克駿",
+            "popularity": "9",
+            "passing_order": "9-11"
+          },
+          "official_result_source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202604070420260921/4C",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01sde1009202604070420260921/4C"
+            },
+            "captured_at": "2026-10-27T13:18:46.490388+00:00",
+            "sha256": "8e19b67cbb6733c58734c2b0be497bbc2586f8993b7a69e52e042f8bfdf5b2fd",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_eb97465da001a5ae3cd2aff61dd38996c3505f5d4aed8c818c9de9e3cbec06f6.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "official_pace_observation": {
+            "pace": "35.1",
+            "pace_source": "official_race_leader_intervals",
+            "pace_scope": "race_leader_at_each_boundary",
+            "pace_rule_url": "https://www.jra.go.jp/kouza/yougo/w291.html",
+            "distance_m": 1400,
+            "interval_seconds": [
+              "12.2",
+              "10.9",
+              "12.0",
+              "12.4",
+              "12.6",
+              "12.4",
+              "12.7"
+            ],
+            "interval_lengths_m": [
+              200,
+              200,
+              200,
+              200,
+              200,
+              200,
+              200
+            ],
+            "pace_missing_reason": ""
+          },
+          "previous_parser_values": {
+            "passing_order": "9-11",
+            "last_3f": "42.9",
+            "time": "1:32.0",
+            "position": "13",
+            "weight": "55.0",
+            "jockey": "鮫島 克駿",
+            "popularity": "9"
+          },
+          "field_provenance": {
+            "passing_order": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202604070420260921/4C",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202604070420260921/4C"
+              },
+              "captured_at": "2026-10-27T13:18:46.490388+00:00",
+              "sha256": "8e19b67cbb6733c58734c2b0be497bbc2586f8993b7a69e52e042f8bfdf5b2fd",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_eb97465da001a5ae3cd2aff61dd38996c3505f5d4aed8c818c9de9e3cbec06f6.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "last_3f": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202604070420260921/4C",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202604070420260921/4C"
+              },
+              "captured_at": "2026-10-27T13:18:46.490388+00:00",
+              "sha256": "8e19b67cbb6733c58734c2b0be497bbc2586f8993b7a69e52e042f8bfdf5b2fd",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_eb97465da001a5ae3cd2aff61dd38996c3505f5d4aed8c818c9de9e3cbec06f6.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "time": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202604070420260921/4C",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202604070420260921/4C"
+              },
+              "captured_at": "2026-10-27T13:18:46.490388+00:00",
+              "sha256": "8e19b67cbb6733c58734c2b0be497bbc2586f8993b7a69e52e042f8bfdf5b2fd",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_eb97465da001a5ae3cd2aff61dd38996c3505f5d4aed8c818c9de9e3cbec06f6.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "position": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202604070420260921/4C",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202604070420260921/4C"
+              },
+              "captured_at": "2026-10-27T13:18:46.490388+00:00",
+              "sha256": "8e19b67cbb6733c58734c2b0be497bbc2586f8993b7a69e52e042f8bfdf5b2fd",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_eb97465da001a5ae3cd2aff61dd38996c3505f5d4aed8c818c9de9e3cbec06f6.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "weight": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202604070420260921/4C",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202604070420260921/4C"
+              },
+              "captured_at": "2026-10-27T13:18:46.490388+00:00",
+              "sha256": "8e19b67cbb6733c58734c2b0be497bbc2586f8993b7a69e52e042f8bfdf5b2fd",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_eb97465da001a5ae3cd2aff61dd38996c3505f5d4aed8c818c9de9e3cbec06f6.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "jockey": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202604070420260921/4C",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202604070420260921/4C"
+              },
+              "captured_at": "2026-10-27T13:18:46.490388+00:00",
+              "sha256": "8e19b67cbb6733c58734c2b0be497bbc2586f8993b7a69e52e042f8bfdf5b2fd",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_eb97465da001a5ae3cd2aff61dd38996c3505f5d4aed8c818c9de9e3cbec06f6.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "popularity": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202604070420260921/4C",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202604070420260921/4C"
+              },
+              "captured_at": "2026-10-27T13:18:46.490388+00:00",
+              "sha256": "8e19b67cbb6733c58734c2b0be497bbc2586f8993b7a69e52e042f8bfdf5b2fd",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_eb97465da001a5ae3cd2aff61dd38996c3505f5d4aed8c818c9de9e3cbec06f6.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "weather": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202604070420260921/4C",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202604070420260921/4C"
+              },
+              "captured_at": "2026-10-27T13:18:46.490388+00:00",
+              "sha256": "8e19b67cbb6733c58734c2b0be497bbc2586f8993b7a69e52e042f8bfdf5b2fd",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_eb97465da001a5ae3cd2aff61dd38996c3505f5d4aed8c818c9de9e3cbec06f6.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "odds": [
+              {
+                "url": "https://jra.jp/JRADB/accessO.html?CNAME=pw151ou1009202604070420260921Z/8E",
+                "method": "POST",
+                "request_parameters": {
+                  "cname": "pw151ou1009202604070420260921Z/8E"
+                },
+                "captured_at": "2026-10-27T13:18:47.420939+00:00",
+                "sha256": "37934ac8c9377cc612d3534da09010c5568149dda464a314c8e976e701e05300",
+                "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_a3a2dc3b3df72c8fd5b67a619be23db4dad93b166ba26af7dac849e999c1b9ce.html",
+                "encoding": "SHIFT_JIS"
+              }
+            ],
+            "pace": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1009202604070420260921/4C",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1009202604070420260921/4C"
+              },
+              "captured_at": "2026-10-27T13:18:46.490388+00:00",
+              "sha256": "8e19b67cbb6733c58734c2b0be497bbc2586f8993b7a69e52e042f8bfdf5b2fd",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_eb97465da001a5ae3cd2aff61dd38996c3505f5d4aed8c818c9de9e3cbec06f6.html",
+              "encoding": "SHIFT_JIS"
+            }
+          },
+          "pace_source": "official_race_leader_intervals",
+          "pace_scope": "race_leader_at_each_boundary",
+          "pace_rule_url": "https://www.jra.go.jp/kouza/yougo/w291.html",
+          "distance_m": 1400,
+          "interval_seconds": [
+            "12.2",
+            "10.9",
+            "12.0",
+            "12.4",
+            "12.6",
+            "12.4",
+            "12.7"
+          ],
+          "interval_lengths_m": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ],
+          "pace_missing_reason": ""
+        }
+      ],
+      "history_count": 1,
+      "career_starts": 1,
+      "history_missing_fields": [
+        {
+          "index": 0,
+          "fields": [
+            "pace",
+            "weather",
+            "odds"
+          ],
+          "fallback": "embedded"
+        }
+      ],
+      "career_verification": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 1,
+        "official_totals": {
+          "平地レース合計": 2,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 2,
+        "before_target_count": 1,
+        "started_rows": [
+          {
+            "date": "2026年9月21日",
+            "course": "阪神",
+            "race_name": "2歳新馬",
+            "distance": "ダ1400",
+            "track_condition": "良",
+            "popularity": "9",
+            "position": "13",
+            "jockey": "鮫島 克駿",
+            "weight": "55.0",
+            "time": "1:32.0",
+            "raw_text": "2026年9月21日 阪神 2歳新馬 ダ1400 良 14 9 13 鮫島 克駿 55.0 504 1:32.0 ワンスフォーユー",
+            "normalized_date": "2026-09-21"
+          }
+        ],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      },
+      "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+      "career_source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104786/33",
+        "method": "POST",
+        "request_parameters": {
+          "cname": "pw01dud002024104786/33"
+        },
+        "captured_at": "2026-10-27T12:57:40.897922+00:00",
+        "sha256": "419e85f03546d6d92d41874adce2913b4e1572ee5d5bd8b0c766376ebe2f3fb7",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/b16c05130d51b7812ca1fab7d7f7a1c63dfbff79897a17d22a079af65be0da8d.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "entry_status": "STARTER"
+    },
+    {
+      "race_id": "20261025_京都_01",
+      "race_name": "2歳未勝利",
+      "horse_id": "pw01dud002024106232/00",
+      "horse_name": "マリナーヴァレイ",
+      "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106232/00",
+      "frame_number": "3",
+      "horse_number": "3",
+      "current_jockey": "西村 淳也",
+      "assigned_weight": "55.0",
+      "current_body_weight": "460",
+      "body_weight_change": "+2",
+      "body_weight_status": "published",
+      "target_track": "京都",
+      "target_race_date": "2026-10-25",
+      "target_race_number": "01",
+      "target_surface": "ダート",
+      "target_distance": "1800",
+      "target_weather": "",
+      "target_track_condition": "",
+      "target_conditions_captured_at": "",
+      "horse_country": "",
+      "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106232/00",
+      "history_pre_target": [
+        {
+          "date": "2026年10月10日",
+          "course": "京都",
+          "race_name": "牝未勝利",
+          "distance": "1600芝",
+          "track_condition": "良",
+          "popularity": "5",
+          "position": "5",
+          "jockey": "幸 英明",
+          "weight": "55.0",
+          "time": "1:33.1",
+          "raw_text": "2026年10月10日 京都 2歳未勝利 芝1600 良 9 5 5 幸 英明 55.0 458 1:33.1 バティック",
+          "normalized_date": "2026-10-10",
+          "run_index": "1",
+          "history_surface": "芝",
+          "pace": "34",
+          "last_3f": "34.8",
+          "last_3f_source": "official_result_observation",
+          "weather": "晴",
+          "passing_order": "7-7",
+          "odds": "15.2",
+          "race_result_url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030220261010/7A",
+          "race_id": "20261025_京都_01",
+          "horse_id": "pw01dud002024106232/00",
+          "horse_name": "マリナーヴァレイ",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106232/00",
+          "official_result_observation": {
+            "horse_name": "マリナーヴァレイ",
+            "raw_cells": {
+              "place": "5",
+              "waku": "",
+              "num": "7",
+              "horse": "マリナーヴァレイ",
+              "age": "牝2",
+              "weight": "55.0",
+              "jockey": "幸 英明",
+              "time": "1:33.1",
+              "margin": "２ 1/2",
+              "corner": "7 7",
+              "f_time": "34.8",
+              "h_weight": "458 (-6)",
+              "trainer": "石坂 公一",
+              "pop": "5"
+            },
+            "horse_href": "/JRADB/accessU.html?CNAME=pw01dud102024106232/E7",
+            "horse_number": "7",
+            "position": "5",
+            "last_3f": "34.8",
+            "time": "1:33.1",
+            "odds": "",
+            "weight": "55.0",
+            "jockey": "幸 英明",
+            "popularity": "5",
+            "passing_order": "7-7"
+          },
+          "official_result_source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030220261010/7A",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01sde1008202604030220261010/7A"
+            },
+            "captured_at": "2026-10-27T13:18:48.467493+00:00",
+            "sha256": "9720409070f3986e138fef9eea954343182a30cc1e7a42fe3d270557a394ed3b",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_affa193a7449c79d1550382c3592cde568a1107335dd330fb7f90a3f2de62a86.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "official_pace_observation": {
+            "pace": "34",
+            "pace_source": "official_race_leader_intervals",
+            "pace_scope": "race_leader_at_each_boundary",
+            "pace_rule_url": "https://www.jra.go.jp/kouza/yougo/w291.html",
+            "distance_m": 1600,
+            "interval_seconds": [
+              "12.4",
+              "10.4",
+              "11.2",
+              "11.8",
+              "11.5",
+              "11.6",
+              "11.4",
+              "11.8"
+            ],
+            "interval_lengths_m": [
+              200,
+              200,
+              200,
+              200,
+              200,
+              200,
+              200,
+              200
+            ],
+            "pace_missing_reason": ""
+          },
+          "previous_parser_values": {
+            "passing_order": "7-7",
+            "last_3f": "34.8",
+            "time": "1:33.1",
+            "position": "5",
+            "weight": "55.0",
+            "jockey": "幸 英明",
+            "popularity": "5"
+          },
+          "field_provenance": {
+            "passing_order": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030220261010/7A",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604030220261010/7A"
+              },
+              "captured_at": "2026-10-27T13:18:48.467493+00:00",
+              "sha256": "9720409070f3986e138fef9eea954343182a30cc1e7a42fe3d270557a394ed3b",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_affa193a7449c79d1550382c3592cde568a1107335dd330fb7f90a3f2de62a86.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "last_3f": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030220261010/7A",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604030220261010/7A"
+              },
+              "captured_at": "2026-10-27T13:18:48.467493+00:00",
+              "sha256": "9720409070f3986e138fef9eea954343182a30cc1e7a42fe3d270557a394ed3b",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_affa193a7449c79d1550382c3592cde568a1107335dd330fb7f90a3f2de62a86.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "time": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030220261010/7A",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604030220261010/7A"
+              },
+              "captured_at": "2026-10-27T13:18:48.467493+00:00",
+              "sha256": "9720409070f3986e138fef9eea954343182a30cc1e7a42fe3d270557a394ed3b",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_affa193a7449c79d1550382c3592cde568a1107335dd330fb7f90a3f2de62a86.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "position": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030220261010/7A",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604030220261010/7A"
+              },
+              "captured_at": "2026-10-27T13:18:48.467493+00:00",
+              "sha256": "9720409070f3986e138fef9eea954343182a30cc1e7a42fe3d270557a394ed3b",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_affa193a7449c79d1550382c3592cde568a1107335dd330fb7f90a3f2de62a86.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "weight": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030220261010/7A",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604030220261010/7A"
+              },
+              "captured_at": "2026-10-27T13:18:48.467493+00:00",
+              "sha256": "9720409070f3986e138fef9eea954343182a30cc1e7a42fe3d270557a394ed3b",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_affa193a7449c79d1550382c3592cde568a1107335dd330fb7f90a3f2de62a86.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "jockey": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030220261010/7A",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604030220261010/7A"
+              },
+              "captured_at": "2026-10-27T13:18:48.467493+00:00",
+              "sha256": "9720409070f3986e138fef9eea954343182a30cc1e7a42fe3d270557a394ed3b",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_affa193a7449c79d1550382c3592cde568a1107335dd330fb7f90a3f2de62a86.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "popularity": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030220261010/7A",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604030220261010/7A"
+              },
+              "captured_at": "2026-10-27T13:18:48.467493+00:00",
+              "sha256": "9720409070f3986e138fef9eea954343182a30cc1e7a42fe3d270557a394ed3b",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_affa193a7449c79d1550382c3592cde568a1107335dd330fb7f90a3f2de62a86.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "weather": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030220261010/7A",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604030220261010/7A"
+              },
+              "captured_at": "2026-10-27T13:18:48.467493+00:00",
+              "sha256": "9720409070f3986e138fef9eea954343182a30cc1e7a42fe3d270557a394ed3b",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_affa193a7449c79d1550382c3592cde568a1107335dd330fb7f90a3f2de62a86.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "track_condition": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030220261010/7A",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604030220261010/7A"
+              },
+              "captured_at": "2026-10-27T13:18:48.467493+00:00",
+              "sha256": "9720409070f3986e138fef9eea954343182a30cc1e7a42fe3d270557a394ed3b",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_affa193a7449c79d1550382c3592cde568a1107335dd330fb7f90a3f2de62a86.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "odds": [
+              {
+                "url": "https://jra.jp/JRADB/accessO.html?CNAME=pw151ou1008202604030220261010Z/BC",
+                "method": "POST",
+                "request_parameters": {
+                  "cname": "pw151ou1008202604030220261010Z/BC"
+                },
+                "captured_at": "2026-10-27T13:18:49.413537+00:00",
+                "sha256": "527f78593c0b58f7af3eeda9a4ffbcc796a9a1730ae62fe38c1911e2e10f6107",
+                "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_9930a8cbf09af13421dc49c3573d2778eef89484a44aad7fdd22dda9f8fffe9e.html",
+                "encoding": "SHIFT_JIS"
+              }
+            ],
+            "pace": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030220261010/7A",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604030220261010/7A"
+              },
+              "captured_at": "2026-10-27T13:18:48.467493+00:00",
+              "sha256": "9720409070f3986e138fef9eea954343182a30cc1e7a42fe3d270557a394ed3b",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_affa193a7449c79d1550382c3592cde568a1107335dd330fb7f90a3f2de62a86.html",
+              "encoding": "SHIFT_JIS"
+            }
+          },
+          "pace_source": "official_race_leader_intervals",
+          "pace_scope": "race_leader_at_each_boundary",
+          "pace_rule_url": "https://www.jra.go.jp/kouza/yougo/w291.html",
+          "distance_m": 1600,
+          "interval_seconds": [
+            "12.4",
+            "10.4",
+            "11.2",
+            "11.8",
+            "11.5",
+            "11.6",
+            "11.4",
+            "11.8"
+          ],
+          "interval_lengths_m": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ],
+          "pace_missing_reason": ""
+        },
+        {
+          "date": "2026年7月18日",
+          "course": "福島",
+          "race_name": "牝新馬",
+          "distance": "1800芝",
+          "track_condition": "良",
+          "popularity": "4",
+          "position": "5",
+          "jockey": "戸崎 圭太",
+          "weight": "55.0",
+          "time": "1:50.1",
+          "raw_text": "2026年7月18日 福島 2歳新馬 芝1800 良 15 4 5 戸崎 圭太 55.0 464 1:50.1 シルクドマルス",
+          "normalized_date": "2026-07-18",
+          "run_index": "2",
+          "history_surface": "芝",
+          "pace": "36.9",
+          "last_3f": "36.0",
+          "last_3f_source": "official_result_observation",
+          "weather": "曇",
+          "passing_order": "3-3-2-3",
+          "odds": "6.8",
+          "race_result_url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1003202602070520260718/BE",
+          "race_id": "20261025_京都_01",
+          "horse_id": "pw01dud002024106232/00",
+          "horse_name": "マリナーヴァレイ",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106232/00",
+          "official_result_observation": {
+            "horse_name": "マリナーヴァレイ",
+            "raw_cells": {
+              "place": "5",
+              "waku": "",
+              "num": "9",
+              "horse": "マリナーヴァレイ",
+              "age": "牝2",
+              "weight": "55.0",
+              "jockey": "戸崎 圭太",
+              "time": "1:50.1",
+              "margin": "３／４",
+              "corner": "3 3 2 3",
+              "f_time": "36.0",
+              "h_weight": "464 (初出走)",
+              "trainer": "石坂 公一",
+              "pop": "4"
+            },
+            "horse_href": "/JRADB/accessU.html?CNAME=pw01dud102024106232/E7",
+            "horse_number": "9",
+            "position": "5",
+            "last_3f": "36.0",
+            "time": "1:50.1",
+            "odds": "",
+            "weight": "55.0",
+            "jockey": "戸崎 圭太",
+            "popularity": "4",
+            "passing_order": "3-3-2-3"
+          },
+          "official_result_source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1003202602070520260718/BE",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01sde1003202602070520260718/BE"
+            },
+            "captured_at": "2026-10-27T12:54:44.038200+00:00",
+            "sha256": "4a3a128cc4c26def0522218a31a4c52490170dc72956dd26f5c5ec33547fff42",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_2500b4a515c1dfb71b46dd53fecfde0906e27745f3b5910c932dd1d5b6df6b79.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "official_pace_observation": {
+            "pace": "36.9",
+            "pace_source": "official_race_leader_intervals",
+            "pace_scope": "race_leader_at_each_boundary",
+            "pace_rule_url": "https://www.jra.go.jp/kouza/yougo/w291.html",
+            "distance_m": 1800,
+            "interval_seconds": [
+              "12.8",
+              "11.7",
+              "12.4",
+              "13.0",
+              "12.5",
+              "11.5",
+              "11.9",
+              "11.7",
+              "11.9"
+            ],
+            "interval_lengths_m": [
+              200,
+              200,
+              200,
+              200,
+              200,
+              200,
+              200,
+              200,
+              200
+            ],
+            "pace_missing_reason": ""
+          },
+          "previous_parser_values": {
+            "passing_order": "3-3-2-3",
+            "last_3f": "36.0",
+            "time": "1:50.1",
+            "position": "5",
+            "weight": "55.0",
+            "jockey": "戸崎 圭太",
+            "popularity": "4"
+          },
+          "field_provenance": {
+            "passing_order": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1003202602070520260718/BE",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1003202602070520260718/BE"
+              },
+              "captured_at": "2026-10-27T12:54:44.038200+00:00",
+              "sha256": "4a3a128cc4c26def0522218a31a4c52490170dc72956dd26f5c5ec33547fff42",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_2500b4a515c1dfb71b46dd53fecfde0906e27745f3b5910c932dd1d5b6df6b79.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "last_3f": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1003202602070520260718/BE",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1003202602070520260718/BE"
+              },
+              "captured_at": "2026-10-27T12:54:44.038200+00:00",
+              "sha256": "4a3a128cc4c26def0522218a31a4c52490170dc72956dd26f5c5ec33547fff42",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_2500b4a515c1dfb71b46dd53fecfde0906e27745f3b5910c932dd1d5b6df6b79.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "time": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1003202602070520260718/BE",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1003202602070520260718/BE"
+              },
+              "captured_at": "2026-10-27T12:54:44.038200+00:00",
+              "sha256": "4a3a128cc4c26def0522218a31a4c52490170dc72956dd26f5c5ec33547fff42",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_2500b4a515c1dfb71b46dd53fecfde0906e27745f3b5910c932dd1d5b6df6b79.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "position": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1003202602070520260718/BE",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1003202602070520260718/BE"
+              },
+              "captured_at": "2026-10-27T12:54:44.038200+00:00",
+              "sha256": "4a3a128cc4c26def0522218a31a4c52490170dc72956dd26f5c5ec33547fff42",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_2500b4a515c1dfb71b46dd53fecfde0906e27745f3b5910c932dd1d5b6df6b79.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "weight": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1003202602070520260718/BE",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1003202602070520260718/BE"
+              },
+              "captured_at": "2026-10-27T12:54:44.038200+00:00",
+              "sha256": "4a3a128cc4c26def0522218a31a4c52490170dc72956dd26f5c5ec33547fff42",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_2500b4a515c1dfb71b46dd53fecfde0906e27745f3b5910c932dd1d5b6df6b79.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "jockey": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1003202602070520260718/BE",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1003202602070520260718/BE"
+              },
+              "captured_at": "2026-10-27T12:54:44.038200+00:00",
+              "sha256": "4a3a128cc4c26def0522218a31a4c52490170dc72956dd26f5c5ec33547fff42",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_2500b4a515c1dfb71b46dd53fecfde0906e27745f3b5910c932dd1d5b6df6b79.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "popularity": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1003202602070520260718/BE",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1003202602070520260718/BE"
+              },
+              "captured_at": "2026-10-27T12:54:44.038200+00:00",
+              "sha256": "4a3a128cc4c26def0522218a31a4c52490170dc72956dd26f5c5ec33547fff42",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_2500b4a515c1dfb71b46dd53fecfde0906e27745f3b5910c932dd1d5b6df6b79.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "weather": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1003202602070520260718/BE",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1003202602070520260718/BE"
+              },
+              "captured_at": "2026-10-27T12:54:44.038200+00:00",
+              "sha256": "4a3a128cc4c26def0522218a31a4c52490170dc72956dd26f5c5ec33547fff42",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_2500b4a515c1dfb71b46dd53fecfde0906e27745f3b5910c932dd1d5b6df6b79.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "track_condition": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1003202602070520260718/BE",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1003202602070520260718/BE"
+              },
+              "captured_at": "2026-10-27T12:54:44.038200+00:00",
+              "sha256": "4a3a128cc4c26def0522218a31a4c52490170dc72956dd26f5c5ec33547fff42",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_2500b4a515c1dfb71b46dd53fecfde0906e27745f3b5910c932dd1d5b6df6b79.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "odds": [
+              {
+                "url": "https://jra.jp/JRADB/accessO.html?CNAME=pw151ou1003202602070520260718Z/00",
+                "method": "POST",
+                "request_parameters": {
+                  "cname": "pw151ou1003202602070520260718Z/00"
+                },
+                "captured_at": "2026-10-27T12:54:44.811132+00:00",
+                "sha256": "56308f93a1339a32f275284c40f763decf15d79d962f84d4b910150540deee9c",
+                "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_3009cf9584ed61a14cf8b4dfad33266f7622723b06572e23d5c6ec8ae2a66840.html",
+                "encoding": "SHIFT_JIS"
+              }
+            ],
+            "pace": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1003202602070520260718/BE",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1003202602070520260718/BE"
+              },
+              "captured_at": "2026-10-27T12:54:44.038200+00:00",
+              "sha256": "4a3a128cc4c26def0522218a31a4c52490170dc72956dd26f5c5ec33547fff42",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_2500b4a515c1dfb71b46dd53fecfde0906e27745f3b5910c932dd1d5b6df6b79.html",
+              "encoding": "SHIFT_JIS"
+            }
+          },
+          "pace_source": "official_race_leader_intervals",
+          "pace_scope": "race_leader_at_each_boundary",
+          "pace_rule_url": "https://www.jra.go.jp/kouza/yougo/w291.html",
+          "distance_m": 1800,
+          "interval_seconds": [
+            "12.8",
+            "11.7",
+            "12.4",
+            "13.0",
+            "12.5",
+            "11.5",
+            "11.9",
+            "11.7",
+            "11.9"
+          ],
+          "interval_lengths_m": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ],
+          "pace_missing_reason": ""
+        }
+      ],
+      "history_count": 2,
+      "career_starts": 2,
+      "history_missing_fields": [
+        {
+          "index": 0,
+          "fields": [
+            "pace",
+            "weather",
+            "odds"
+          ],
+          "fallback": "embedded"
+        },
+        {
+          "index": 1,
+          "fields": [
+            "pace",
+            "weather",
+            "odds"
+          ],
+          "fallback": "embedded"
+        }
+      ],
+      "career_verification": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 2,
+        "official_totals": {
+          "平地レース合計": 3,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 3,
+        "before_target_count": 2,
+        "started_rows": [
+          {
+            "date": "2026年10月10日",
+            "course": "京都",
+            "race_name": "2歳未勝利",
+            "distance": "芝1600",
+            "track_condition": "良",
+            "popularity": "5",
+            "position": "5",
+            "jockey": "幸 英明",
+            "weight": "55.0",
+            "time": "1:33.1",
+            "raw_text": "2026年10月10日 京都 2歳未勝利 芝1600 良 9 5 5 幸 英明 55.0 458 1:33.1 バティック",
+            "normalized_date": "2026-10-10"
+          },
+          {
+            "date": "2026年7月18日",
+            "course": "福島",
+            "race_name": "2歳新馬",
+            "distance": "芝1800",
+            "track_condition": "良",
+            "popularity": "4",
+            "position": "5",
+            "jockey": "戸崎 圭太",
+            "weight": "55.0",
+            "time": "1:50.1",
+            "raw_text": "2026年7月18日 福島 2歳新馬 芝1800 良 15 4 5 戸崎 圭太 55.0 464 1:50.1 シルクドマルス",
+            "normalized_date": "2026-07-18"
+          }
+        ],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      },
+      "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+      "career_source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106232/00",
+        "method": "POST",
+        "request_parameters": {
+          "cname": "pw01dud002024106232/00"
+        },
+        "captured_at": "2026-10-27T12:57:41.875881+00:00",
+        "sha256": "0f5540ea0d1812b7b4f2ef84545b0524d4f0e531ab775be1be2149ecdb8e76e0",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/05562b4a5fddf4bfa2811af763a6a2762beec38587bdd3e57226fef78a872aec.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "entry_status": "STARTER"
+    },
+    {
+      "race_id": "20261025_京都_01",
+      "race_name": "2歳未勝利",
+      "horse_id": "pw01dud002024102645/71",
+      "horse_name": "ミール",
+      "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102645/71",
+      "frame_number": "4",
+      "horse_number": "4",
+      "current_jockey": "田口 貫太",
+      "assigned_weight": "55.0",
+      "current_body_weight": "434",
+      "body_weight_change": "-12",
+      "body_weight_status": "published",
+      "target_track": "京都",
+      "target_race_date": "2026-10-25",
+      "target_race_number": "01",
+      "target_surface": "ダート",
+      "target_distance": "1800",
+      "target_weather": "",
+      "target_track_condition": "",
+      "target_conditions_captured_at": "",
+      "horse_country": "",
+      "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102645/71",
+      "history_pre_target": [
+        {
+          "date": "2026年8月1日",
+          "course": "中京",
+          "race_name": "牝新馬",
+          "distance": "1400芝",
+          "track_condition": "良",
+          "popularity": "12",
+          "position": "12",
+          "jockey": "吉村 誠之助",
+          "weight": "55.0",
+          "time": "1:22.7",
+          "raw_text": "2026年8月1日 中京 2歳新馬 芝1400 良 13 12 12 吉村 誠之助 55.0 446 1:22.7 ラムラベイ",
+          "normalized_date": "2026-08-01",
+          "run_index": "1",
+          "history_surface": "芝",
+          "pace": "34.4",
+          "last_3f": "36.1",
+          "last_3f_source": "official_result_observation",
+          "weather": "晴",
+          "passing_order": "7-7",
+          "odds": "101.3",
+          "race_result_url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1007202602030220260801/F1",
+          "race_id": "20261025_京都_01",
+          "horse_id": "pw01dud002024102645/71",
+          "horse_name": "ミール",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102645/71",
+          "official_result_observation": {
+            "horse_name": "ミール",
+            "raw_cells": {
+              "place": "12",
+              "waku": "",
+              "num": "1",
+              "horse": "ミール",
+              "age": "牝2",
+              "weight": "55.0",
+              "jockey": "吉村 誠之助",
+              "time": "1:22.7",
+              "margin": "４",
+              "corner": "7 7",
+              "f_time": "36.1",
+              "h_weight": "446 (初出走)",
+              "trainer": "高橋 一哉",
+              "pop": "12"
+            },
+            "horse_href": "/JRADB/accessU.html?CNAME=pw01dud102024102645/58",
+            "horse_number": "1",
+            "position": "12",
+            "last_3f": "36.1",
+            "time": "1:22.7",
+            "odds": "",
+            "weight": "55.0",
+            "jockey": "吉村 誠之助",
+            "popularity": "12",
+            "passing_order": "7-7"
+          },
+          "official_result_source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1007202602030220260801/F1",
+            "method": "POST",
+            "captured_at": "2026-10-24T23:47:55.437455+00:00",
+            "sha256": "612c34fd20eec3178e8a1c6ff14e4a541b155b0974704dc4808b249b6baf11ff",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_4437444ca48cb1242e3ea39462eaf85428c8a71155f532260138a3abe64467a5.html",
+            "encoding": "SHIFT_JIS",
+            "reuse_verified_at": "2026-10-27T13:18:49.926316+00:00",
+            "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+          },
+          "official_pace_observation": {
+            "pace": "34.4",
+            "pace_source": "official_race_leader_intervals",
+            "pace_scope": "race_leader_at_each_boundary",
+            "pace_rule_url": "https://www.jra.go.jp/kouza/yougo/w291.html",
+            "distance_m": 1400,
+            "interval_seconds": [
+              "12.3",
+              "10.9",
+              "11.2",
+              "11.6",
+              "11.3",
+              "11.0",
+              "11.7"
+            ],
+            "interval_lengths_m": [
+              200,
+              200,
+              200,
+              200,
+              200,
+              200,
+              200
+            ],
+            "pace_missing_reason": ""
+          },
+          "previous_parser_values": {
+            "passing_order": "7-7",
+            "last_3f": "36.1",
+            "time": "1:22.7",
+            "position": "12",
+            "weight": "55.0",
+            "jockey": "吉村 誠之助",
+            "popularity": "12"
+          },
+          "field_provenance": {
+            "passing_order": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1007202602030220260801/F1",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:47:55.437455+00:00",
+              "sha256": "612c34fd20eec3178e8a1c6ff14e4a541b155b0974704dc4808b249b6baf11ff",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_4437444ca48cb1242e3ea39462eaf85428c8a71155f532260138a3abe64467a5.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T13:18:49.926316+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "last_3f": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1007202602030220260801/F1",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:47:55.437455+00:00",
+              "sha256": "612c34fd20eec3178e8a1c6ff14e4a541b155b0974704dc4808b249b6baf11ff",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_4437444ca48cb1242e3ea39462eaf85428c8a71155f532260138a3abe64467a5.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T13:18:49.926316+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "time": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1007202602030220260801/F1",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:47:55.437455+00:00",
+              "sha256": "612c34fd20eec3178e8a1c6ff14e4a541b155b0974704dc4808b249b6baf11ff",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_4437444ca48cb1242e3ea39462eaf85428c8a71155f532260138a3abe64467a5.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T13:18:49.926316+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "position": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1007202602030220260801/F1",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:47:55.437455+00:00",
+              "sha256": "612c34fd20eec3178e8a1c6ff14e4a541b155b0974704dc4808b249b6baf11ff",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_4437444ca48cb1242e3ea39462eaf85428c8a71155f532260138a3abe64467a5.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T13:18:49.926316+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "weight": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1007202602030220260801/F1",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:47:55.437455+00:00",
+              "sha256": "612c34fd20eec3178e8a1c6ff14e4a541b155b0974704dc4808b249b6baf11ff",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_4437444ca48cb1242e3ea39462eaf85428c8a71155f532260138a3abe64467a5.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T13:18:49.926316+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "jockey": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1007202602030220260801/F1",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:47:55.437455+00:00",
+              "sha256": "612c34fd20eec3178e8a1c6ff14e4a541b155b0974704dc4808b249b6baf11ff",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_4437444ca48cb1242e3ea39462eaf85428c8a71155f532260138a3abe64467a5.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T13:18:49.926316+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "popularity": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1007202602030220260801/F1",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:47:55.437455+00:00",
+              "sha256": "612c34fd20eec3178e8a1c6ff14e4a541b155b0974704dc4808b249b6baf11ff",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_4437444ca48cb1242e3ea39462eaf85428c8a71155f532260138a3abe64467a5.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T13:18:49.926316+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "weather": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1007202602030220260801/F1",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:47:55.437455+00:00",
+              "sha256": "612c34fd20eec3178e8a1c6ff14e4a541b155b0974704dc4808b249b6baf11ff",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_4437444ca48cb1242e3ea39462eaf85428c8a71155f532260138a3abe64467a5.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T13:18:49.926316+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "track_condition": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1007202602030220260801/F1",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:47:55.437455+00:00",
+              "sha256": "612c34fd20eec3178e8a1c6ff14e4a541b155b0974704dc4808b249b6baf11ff",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_4437444ca48cb1242e3ea39462eaf85428c8a71155f532260138a3abe64467a5.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T13:18:49.926316+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "odds": [
+              {
+                "url": "https://jra.jp/JRADB/accessO.html?CNAME=pw151ou1007202602030220260801Z/33",
+                "method": "POST",
+                "captured_at": "2026-10-24T23:47:56.136251+00:00",
+                "sha256": "6b87837e1cc5eaf77bdce00ff29b624c1ef5c390b978461e5f724429fdc45132",
+                "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_43a051faa3b82624afb887456effbbf39936d1e4bb060ec06b6be391410ce9b8.html",
+                "encoding": "SHIFT_JIS",
+                "reuse_verified_at": "2026-10-27T13:18:50.203789+00:00",
+                "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+              }
+            ],
+            "pace": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1007202602030220260801/F1",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:47:55.437455+00:00",
+              "sha256": "612c34fd20eec3178e8a1c6ff14e4a541b155b0974704dc4808b249b6baf11ff",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_4437444ca48cb1242e3ea39462eaf85428c8a71155f532260138a3abe64467a5.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T13:18:49.926316+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            }
+          },
+          "pace_source": "official_race_leader_intervals",
+          "pace_scope": "race_leader_at_each_boundary",
+          "pace_rule_url": "https://www.jra.go.jp/kouza/yougo/w291.html",
+          "distance_m": 1400,
+          "interval_seconds": [
+            "12.3",
+            "10.9",
+            "11.2",
+            "11.6",
+            "11.3",
+            "11.0",
+            "11.7"
+          ],
+          "interval_lengths_m": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ],
+          "pace_missing_reason": ""
+        }
+      ],
+      "history_count": 1,
+      "career_starts": 1,
+      "history_missing_fields": [
+        {
+          "index": 0,
+          "fields": [
+            "pace",
+            "weather",
+            "odds"
+          ],
+          "fallback": "embedded"
+        }
+      ],
+      "career_verification": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 1,
+        "official_totals": {
+          "平地レース合計": 2,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 2,
+        "before_target_count": 1,
+        "started_rows": [
+          {
+            "date": "2026年8月1日",
+            "course": "中京",
+            "race_name": "2歳新馬",
+            "distance": "芝1400",
+            "track_condition": "良",
+            "popularity": "12",
+            "position": "12",
+            "jockey": "吉村 誠之助",
+            "weight": "55.0",
+            "time": "1:22.7",
+            "raw_text": "2026年8月1日 中京 2歳新馬 芝1400 良 13 12 12 吉村 誠之助 55.0 446 1:22.7 ラムラベイ",
+            "normalized_date": "2026-08-01"
+          }
+        ],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      },
+      "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+      "career_source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102645/71",
+        "method": "POST",
+        "request_parameters": {
+          "cname": "pw01dud002024102645/71"
+        },
+        "captured_at": "2026-10-27T12:57:42.681612+00:00",
+        "sha256": "9cb136c62fa5c22d14935bbc63018a7617265a40cc7d775f26568e44b7591a25",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/fe10b428b67f3ac38d7751e44dd8ca929cd8b3ec27712c7bc3694450320a3ad8.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "entry_status": "STARTER"
+    },
+    {
+      "race_id": "20261025_京都_01",
+      "race_name": "2歳未勝利",
+      "horse_id": "pw01dud002024107251/9C",
+      "horse_name": "アップルペアー",
+      "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024107251/9C",
+      "frame_number": "5",
+      "horse_number": "5",
+      "current_jockey": "幸 英明",
+      "assigned_weight": "55.0",
+      "current_body_weight": "422",
+      "body_weight_change": "0",
+      "body_weight_status": "published",
+      "target_track": "京都",
+      "target_race_date": "2026-10-25",
+      "target_race_number": "01",
+      "target_surface": "ダート",
+      "target_distance": "1800",
+      "target_weather": "",
+      "target_track_condition": "",
+      "target_conditions_captured_at": "",
+      "horse_country": "",
+      "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024107251/9C",
+      "history_pre_target": [
+        {
+          "date": "2026年10月4日",
+          "course": "京都",
+          "race_name": "新馬",
+          "distance": "1400ダ",
+          "track_condition": "良",
+          "popularity": "13",
+          "position": "13",
+          "jockey": "★ 河原田 菜々",
+          "weight": "51.0",
+          "time": "1:27.8",
+          "raw_text": "2026年10月4日 京都 2歳新馬 ダ1400 良 16 13 13 河原田 菜々 51.0 422 1:27.8 ミホマル",
+          "normalized_date": "2026-10-04",
+          "run_index": "1",
+          "history_surface": "ダート",
+          "pace": "34.9",
+          "last_3f": "38.0",
+          "last_3f_source": "official_result_observation",
+          "weather": "小雨",
+          "passing_order": "14-14",
+          "odds": "105.8",
+          "race_result_url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604020320261004/56",
+          "race_id": "20261025_京都_01",
+          "horse_id": "pw01dud002024107251/9C",
+          "horse_name": "アップルペアー",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024107251/9C",
+          "official_result_observation": {
+            "horse_name": "アップルペアー",
+            "raw_cells": {
+              "place": "13",
+              "waku": "",
+              "num": "9",
+              "horse": "アップルペアー",
+              "age": "牝2",
+              "weight": "51.0",
+              "jockey": "★ 河原田 菜々",
+              "time": "1:27.8",
+              "margin": "クビ",
+              "corner": "14 14",
+              "f_time": "38.0",
+              "h_weight": "422 (初出走)",
+              "trainer": "大根田 裕之",
+              "pop": "13"
+            },
+            "horse_href": "/JRADB/accessU.html?CNAME=pw01dud102024107251/83",
+            "horse_number": "9",
+            "position": "13",
+            "last_3f": "38.0",
+            "time": "1:27.8",
+            "odds": "",
+            "weight": "51.0",
+            "jockey": "★ 河原田 菜々",
+            "popularity": "13",
+            "passing_order": "14-14"
+          },
+          "official_result_source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604020320261004/56",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01sde1008202604020320261004/56"
+            },
+            "captured_at": "2026-10-27T13:18:51.339101+00:00",
+            "sha256": "2934fdff661b0aeff55ad3b41601d2c601ceda1644677de01730910cebcf7ecb",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_1bc4c4bafc13e5896e2f8a6a4fe8329b900c619ad68670131d4be6fed100e273.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "official_pace_observation": {
+            "pace": "34.9",
+            "pace_source": "official_race_leader_intervals",
+            "pace_scope": "race_leader_at_each_boundary",
+            "pace_rule_url": "https://www.jra.go.jp/kouza/yougo/w291.html",
+            "distance_m": 1400,
+            "interval_seconds": [
+              "12.1",
+              "10.9",
+              "11.9",
+              "12.3",
+              "12.4",
+              "12.9",
+              "12.7"
+            ],
+            "interval_lengths_m": [
+              200,
+              200,
+              200,
+              200,
+              200,
+              200,
+              200
+            ],
+            "pace_missing_reason": ""
+          },
+          "previous_parser_values": {
+            "passing_order": "14-14",
+            "last_3f": "38.0",
+            "time": "1:27.8",
+            "position": "13",
+            "weight": "51.0",
+            "jockey": "★ 河原田 菜",
+            "popularity": "13"
+          },
+          "field_provenance": {
+            "passing_order": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604020320261004/56",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604020320261004/56"
+              },
+              "captured_at": "2026-10-27T13:18:51.339101+00:00",
+              "sha256": "2934fdff661b0aeff55ad3b41601d2c601ceda1644677de01730910cebcf7ecb",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_1bc4c4bafc13e5896e2f8a6a4fe8329b900c619ad68670131d4be6fed100e273.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "last_3f": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604020320261004/56",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604020320261004/56"
+              },
+              "captured_at": "2026-10-27T13:18:51.339101+00:00",
+              "sha256": "2934fdff661b0aeff55ad3b41601d2c601ceda1644677de01730910cebcf7ecb",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_1bc4c4bafc13e5896e2f8a6a4fe8329b900c619ad68670131d4be6fed100e273.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "time": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604020320261004/56",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604020320261004/56"
+              },
+              "captured_at": "2026-10-27T13:18:51.339101+00:00",
+              "sha256": "2934fdff661b0aeff55ad3b41601d2c601ceda1644677de01730910cebcf7ecb",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_1bc4c4bafc13e5896e2f8a6a4fe8329b900c619ad68670131d4be6fed100e273.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "position": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604020320261004/56",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604020320261004/56"
+              },
+              "captured_at": "2026-10-27T13:18:51.339101+00:00",
+              "sha256": "2934fdff661b0aeff55ad3b41601d2c601ceda1644677de01730910cebcf7ecb",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_1bc4c4bafc13e5896e2f8a6a4fe8329b900c619ad68670131d4be6fed100e273.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "weight": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604020320261004/56",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604020320261004/56"
+              },
+              "captured_at": "2026-10-27T13:18:51.339101+00:00",
+              "sha256": "2934fdff661b0aeff55ad3b41601d2c601ceda1644677de01730910cebcf7ecb",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_1bc4c4bafc13e5896e2f8a6a4fe8329b900c619ad68670131d4be6fed100e273.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "jockey": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604020320261004/56",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604020320261004/56"
+              },
+              "captured_at": "2026-10-27T13:18:51.339101+00:00",
+              "sha256": "2934fdff661b0aeff55ad3b41601d2c601ceda1644677de01730910cebcf7ecb",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_1bc4c4bafc13e5896e2f8a6a4fe8329b900c619ad68670131d4be6fed100e273.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "popularity": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604020320261004/56",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604020320261004/56"
+              },
+              "captured_at": "2026-10-27T13:18:51.339101+00:00",
+              "sha256": "2934fdff661b0aeff55ad3b41601d2c601ceda1644677de01730910cebcf7ecb",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_1bc4c4bafc13e5896e2f8a6a4fe8329b900c619ad68670131d4be6fed100e273.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "weather": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604020320261004/56",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604020320261004/56"
+              },
+              "captured_at": "2026-10-27T13:18:51.339101+00:00",
+              "sha256": "2934fdff661b0aeff55ad3b41601d2c601ceda1644677de01730910cebcf7ecb",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_1bc4c4bafc13e5896e2f8a6a4fe8329b900c619ad68670131d4be6fed100e273.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "odds": [
+              {
+                "url": "https://jra.jp/JRADB/accessO.html?CNAME=pw151ou1008202604020320261004Z/98",
+                "method": "POST",
+                "request_parameters": {
+                  "cname": "pw151ou1008202604020320261004Z/98"
+                },
+                "captured_at": "2026-10-27T13:18:52.261049+00:00",
+                "sha256": "32e7ec14f550b52e4bc05c48f1e10c087dc35dc6c72f901aaa28ab186b11922a",
+                "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_edf7fac83ecd5495ab048b0e6e9ad9ef9493c6d6cecec2153b0599eaefff56ae.html",
+                "encoding": "SHIFT_JIS"
+              }
+            ],
+            "pace": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604020320261004/56",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604020320261004/56"
+              },
+              "captured_at": "2026-10-27T13:18:51.339101+00:00",
+              "sha256": "2934fdff661b0aeff55ad3b41601d2c601ceda1644677de01730910cebcf7ecb",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_1bc4c4bafc13e5896e2f8a6a4fe8329b900c619ad68670131d4be6fed100e273.html",
+              "encoding": "SHIFT_JIS"
+            }
+          },
+          "pace_source": "official_race_leader_intervals",
+          "pace_scope": "race_leader_at_each_boundary",
+          "pace_rule_url": "https://www.jra.go.jp/kouza/yougo/w291.html",
+          "distance_m": 1400,
+          "interval_seconds": [
+            "12.1",
+            "10.9",
+            "11.9",
+            "12.3",
+            "12.4",
+            "12.9",
+            "12.7"
+          ],
+          "interval_lengths_m": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ],
+          "pace_missing_reason": ""
+        }
+      ],
+      "history_count": 1,
+      "career_starts": 1,
+      "history_missing_fields": [
+        {
+          "index": 0,
+          "fields": [
+            "pace",
+            "weather",
+            "odds"
+          ],
+          "fallback": "embedded"
+        }
+      ],
+      "career_verification": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 1,
+        "official_totals": {
+          "平地レース合計": 2,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 2,
+        "before_target_count": 1,
+        "started_rows": [
+          {
+            "date": "2026年10月4日",
+            "course": "京都",
+            "race_name": "2歳新馬",
+            "distance": "ダ1400",
+            "track_condition": "良",
+            "popularity": "13",
+            "position": "13",
+            "jockey": "河原田 菜々",
+            "weight": "51.0",
+            "time": "1:27.8",
+            "raw_text": "2026年10月4日 京都 2歳新馬 ダ1400 良 16 13 13 河原田 菜々 51.0 422 1:27.8 ミホマル",
+            "normalized_date": "2026-10-04"
+          }
+        ],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      },
+      "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+      "career_source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024107251/9C",
+        "method": "POST",
+        "request_parameters": {
+          "cname": "pw01dud002024107251/9C"
+        },
+        "captured_at": "2026-10-27T12:57:43.474111+00:00",
+        "sha256": "57f9c70857b1020d0a6ec73d2e6b9a7f2cfc4af96b7270ef602e3c7aecde83dd",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/95404cd8a1428eda95cf4527cc99f35ea23d0443635873f71f6f5587d4d2ceb0.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "entry_status": "STARTER"
+    },
+    {
+      "race_id": "20261025_京都_01",
+      "race_name": "2歳未勝利",
+      "horse_id": "pw01dud002024103078/C3",
+      "horse_name": "ウインブリーズ",
+      "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024103078/C3",
+      "frame_number": "6",
+      "horse_number": "6",
+      "current_jockey": "☆ 田山 旺佑",
+      "assigned_weight": "54.0",
+      "current_body_weight": "466",
+      "body_weight_change": "0",
+      "body_weight_status": "published",
+      "target_track": "京都",
+      "target_race_date": "2026-10-25",
+      "target_race_number": "01",
+      "target_surface": "ダート",
+      "target_distance": "1800",
+      "target_weather": "",
+      "target_track_condition": "",
+      "target_conditions_captured_at": "",
+      "horse_country": "",
+      "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024103078/C3",
+      "history_pre_target": [
+        {
+          "date": "2026年10月11日",
+          "course": "京都",
+          "race_name": "牝新馬",
+          "distance": "1400ダ",
+          "track_condition": "良",
+          "popularity": "2",
+          "position": "11",
+          "jockey": "☆ 田山 旺佑",
+          "weight": "54.0",
+          "time": "1:27.7",
+          "raw_text": "2026年10月11日 京都 2歳新馬 ダ1400 良 16 2 11 田山 旺佑 54.0 466 1:27.7 ヒメハッカ",
+          "normalized_date": "2026-10-11",
+          "run_index": "1",
+          "history_surface": "ダート",
+          "pace": "35.1",
+          "last_3f": "39.2",
+          "last_3f_source": "official_result_observation",
+          "weather": "晴",
+          "passing_order": "11-11",
+          "odds": "5.4",
+          "race_result_url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604040320261011/5F",
+          "race_id": "20261025_京都_01",
+          "horse_id": "pw01dud002024103078/C3",
+          "horse_name": "ウインブリーズ",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024103078/C3",
+          "official_result_observation": {
+            "horse_name": "ウインブリーズ",
+            "raw_cells": {
+              "place": "11",
+              "waku": "",
+              "num": "10",
+              "horse": "ウインブリーズ",
+              "age": "牝2",
+              "weight": "54.0",
+              "jockey": "☆ 田山 旺佑",
+              "time": "1:27.7",
+              "margin": "２ 1/2",
+              "corner": "11 11",
+              "f_time": "39.2",
+              "h_weight": "466 (初出走)",
+              "trainer": "宮本 博",
+              "pop": "2"
+            },
+            "horse_href": "/JRADB/accessU.html?CNAME=pw01dud102024103078/AA",
+            "horse_number": "10",
+            "position": "11",
+            "last_3f": "39.2",
+            "time": "1:27.7",
+            "odds": "",
+            "weight": "54.0",
+            "jockey": "☆ 田山 旺佑",
+            "popularity": "2",
+            "passing_order": "11-11"
+          },
+          "official_result_source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604040320261011/5F",
+            "method": "POST",
+            "captured_at": "2026-10-24T23:51:13.135688+00:00",
+            "sha256": "8ba4545c6e0a8d320e07d9c0fe5269e010cc9005c0840b22030229857e901ddf",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_6f830ea2b7138fe38eee4a9dfae6e45a5f0cd1038859f76d3ed62a1f26535145.html",
+            "encoding": "SHIFT_JIS",
+            "reuse_verified_at": "2026-10-27T12:53:47.103319+00:00",
+            "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+          },
+          "official_pace_observation": {
+            "pace": "35.1",
+            "pace_source": "official_race_leader_intervals",
+            "pace_scope": "race_leader_at_each_boundary",
+            "pace_rule_url": "https://www.jra.go.jp/kouza/yougo/w291.html",
+            "distance_m": 1400,
+            "interval_seconds": [
+              "12.1",
+              "11.0",
+              "12.0",
+              "11.9",
+              "12.7",
+              "12.7",
+              "12.8"
+            ],
+            "interval_lengths_m": [
+              200,
+              200,
+              200,
+              200,
+              200,
+              200,
+              200
+            ],
+            "pace_missing_reason": ""
+          },
+          "previous_parser_values": {
+            "passing_order": "11-11",
+            "last_3f": "39.2",
+            "time": "1:27.7",
+            "position": "11",
+            "weight": "54.0",
+            "jockey": "☆ 田山 旺佑",
+            "popularity": "2"
+          },
+          "field_provenance": {
+            "passing_order": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604040320261011/5F",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:51:13.135688+00:00",
+              "sha256": "8ba4545c6e0a8d320e07d9c0fe5269e010cc9005c0840b22030229857e901ddf",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_6f830ea2b7138fe38eee4a9dfae6e45a5f0cd1038859f76d3ed62a1f26535145.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T12:53:47.103319+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "last_3f": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604040320261011/5F",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:51:13.135688+00:00",
+              "sha256": "8ba4545c6e0a8d320e07d9c0fe5269e010cc9005c0840b22030229857e901ddf",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_6f830ea2b7138fe38eee4a9dfae6e45a5f0cd1038859f76d3ed62a1f26535145.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T12:53:47.103319+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "time": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604040320261011/5F",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:51:13.135688+00:00",
+              "sha256": "8ba4545c6e0a8d320e07d9c0fe5269e010cc9005c0840b22030229857e901ddf",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_6f830ea2b7138fe38eee4a9dfae6e45a5f0cd1038859f76d3ed62a1f26535145.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T12:53:47.103319+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "position": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604040320261011/5F",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:51:13.135688+00:00",
+              "sha256": "8ba4545c6e0a8d320e07d9c0fe5269e010cc9005c0840b22030229857e901ddf",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_6f830ea2b7138fe38eee4a9dfae6e45a5f0cd1038859f76d3ed62a1f26535145.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T12:53:47.103319+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "weight": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604040320261011/5F",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:51:13.135688+00:00",
+              "sha256": "8ba4545c6e0a8d320e07d9c0fe5269e010cc9005c0840b22030229857e901ddf",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_6f830ea2b7138fe38eee4a9dfae6e45a5f0cd1038859f76d3ed62a1f26535145.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T12:53:47.103319+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "jockey": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604040320261011/5F",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:51:13.135688+00:00",
+              "sha256": "8ba4545c6e0a8d320e07d9c0fe5269e010cc9005c0840b22030229857e901ddf",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_6f830ea2b7138fe38eee4a9dfae6e45a5f0cd1038859f76d3ed62a1f26535145.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T12:53:47.103319+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "popularity": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604040320261011/5F",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:51:13.135688+00:00",
+              "sha256": "8ba4545c6e0a8d320e07d9c0fe5269e010cc9005c0840b22030229857e901ddf",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_6f830ea2b7138fe38eee4a9dfae6e45a5f0cd1038859f76d3ed62a1f26535145.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T12:53:47.103319+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "weather": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604040320261011/5F",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:51:13.135688+00:00",
+              "sha256": "8ba4545c6e0a8d320e07d9c0fe5269e010cc9005c0840b22030229857e901ddf",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_6f830ea2b7138fe38eee4a9dfae6e45a5f0cd1038859f76d3ed62a1f26535145.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T12:53:47.103319+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "odds": [
+              {
+                "url": "https://jra.jp/JRADB/accessO.html?CNAME=pw151ou1008202604040320261011Z/A1",
+                "method": "POST",
+                "captured_at": "2026-10-24T23:51:13.852991+00:00",
+                "sha256": "4ef8429b4e429fc29b722260b0a92baae021bd8a12bc7c32b7265d12999a826e",
+                "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_b41a656c40b72e414c41c943525dc1a4e3cb52e5fafe6408877eaf7bfbdcd7b0.html",
+                "encoding": "SHIFT_JIS",
+                "reuse_verified_at": "2026-10-27T12:53:47.358135+00:00",
+                "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+              }
+            ],
+            "pace": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604040320261011/5F",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:51:13.135688+00:00",
+              "sha256": "8ba4545c6e0a8d320e07d9c0fe5269e010cc9005c0840b22030229857e901ddf",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_6f830ea2b7138fe38eee4a9dfae6e45a5f0cd1038859f76d3ed62a1f26535145.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T12:53:47.103319+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            }
+          },
+          "pace_source": "official_race_leader_intervals",
+          "pace_scope": "race_leader_at_each_boundary",
+          "pace_rule_url": "https://www.jra.go.jp/kouza/yougo/w291.html",
+          "distance_m": 1400,
+          "interval_seconds": [
+            "12.1",
+            "11.0",
+            "12.0",
+            "11.9",
+            "12.7",
+            "12.7",
+            "12.8"
+          ],
+          "interval_lengths_m": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ],
+          "pace_missing_reason": ""
+        }
+      ],
+      "history_count": 1,
+      "career_starts": 1,
+      "history_missing_fields": [
+        {
+          "index": 0,
+          "fields": [
+            "pace",
+            "weather",
+            "odds"
+          ],
+          "fallback": "embedded"
+        }
+      ],
+      "career_verification": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 1,
+        "official_totals": {
+          "平地レース合計": 2,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 2,
+        "before_target_count": 1,
+        "started_rows": [
+          {
+            "date": "2026年10月11日",
+            "course": "京都",
+            "race_name": "2歳新馬",
+            "distance": "ダ1400",
+            "track_condition": "良",
+            "popularity": "2",
+            "position": "11",
+            "jockey": "田山 旺佑",
+            "weight": "54.0",
+            "time": "1:27.7",
+            "raw_text": "2026年10月11日 京都 2歳新馬 ダ1400 良 16 2 11 田山 旺佑 54.0 466 1:27.7 ヒメハッカ",
+            "normalized_date": "2026-10-11"
+          }
+        ],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      },
+      "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+      "career_source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024103078/C3",
+        "method": "POST",
+        "request_parameters": {
+          "cname": "pw01dud002024103078/C3"
+        },
+        "captured_at": "2026-10-27T12:57:44.236055+00:00",
+        "sha256": "2778ef2ad7667a827cf3ad48df53863939267eabfbf0d68e819522aa71d1471d",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/d2f969d8c1546123bf2b3b48800c38237cf217c8933a2514c446fb1d518fb022.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "entry_status": "STARTER"
+    },
+    {
+      "race_id": "20261025_京都_01",
+      "race_name": "2歳未勝利",
+      "horse_id": "pw01dud002024101134/0A",
+      "horse_name": "オージーブラック",
+      "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024101134/0A",
+      "frame_number": "7",
+      "horse_number": "7",
+      "current_jockey": "酒井 学",
+      "assigned_weight": "55.0",
+      "current_body_weight": "478",
+      "body_weight_change": "+6",
+      "body_weight_status": "published",
+      "target_track": "京都",
+      "target_race_date": "2026-10-25",
+      "target_race_number": "01",
+      "target_surface": "ダート",
+      "target_distance": "1800",
+      "target_weather": "",
+      "target_track_condition": "",
+      "target_conditions_captured_at": "",
+      "horse_country": "",
+      "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024101134/0A",
+      "history_pre_target": [
+        {
+          "date": "2026年10月4日",
+          "course": "京都",
+          "race_name": "新馬",
+          "distance": "1400ダ",
+          "track_condition": "良",
+          "popularity": "14",
+          "position": "15",
+          "jockey": "古川 吉洋",
+          "weight": "55.0",
+          "time": "1:28.8",
+          "raw_text": "2026年10月4日 京都 2歳新馬 ダ1400 良 16 14 15 古川 吉洋 55.0 472 1:28.8 ミホマル",
+          "normalized_date": "2026-10-04",
+          "run_index": "1",
+          "history_surface": "ダート",
+          "pace": "34.9",
+          "last_3f": "38.6",
+          "last_3f_source": "official_result_observation",
+          "weather": "小雨",
+          "passing_order": "15-15",
+          "odds": "168.2",
+          "race_result_url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604020320261004/56",
+          "race_id": "20261025_京都_01",
+          "horse_id": "pw01dud002024101134/0A",
+          "horse_name": "オージーブラック",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024101134/0A",
+          "official_result_observation": {
+            "horse_name": "オージーブラック",
+            "raw_cells": {
+              "place": "15",
+              "waku": "",
+              "num": "7",
+              "horse": "オージーブラック",
+              "age": "牝2",
+              "weight": "55.0",
+              "jockey": "古川 吉洋",
+              "time": "1:28.8",
+              "margin": "３ 1/2",
+              "corner": "15 15",
+              "f_time": "38.6",
+              "h_weight": "472 (初出走)",
+              "trainer": "畑端 省吾",
+              "pop": "14"
+            },
+            "horse_href": "/JRADB/accessU.html?CNAME=pw01dud102024101134/F1",
+            "horse_number": "7",
+            "position": "15",
+            "last_3f": "38.6",
+            "time": "1:28.8",
+            "odds": "",
+            "weight": "55.0",
+            "jockey": "古川 吉洋",
+            "popularity": "14",
+            "passing_order": "15-15"
+          },
+          "official_result_source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604020320261004/56",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01sde1008202604020320261004/56"
+            },
+            "captured_at": "2026-10-27T13:18:51.339101+00:00",
+            "sha256": "2934fdff661b0aeff55ad3b41601d2c601ceda1644677de01730910cebcf7ecb",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_1bc4c4bafc13e5896e2f8a6a4fe8329b900c619ad68670131d4be6fed100e273.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "official_pace_observation": {
+            "pace": "34.9",
+            "pace_source": "official_race_leader_intervals",
+            "pace_scope": "race_leader_at_each_boundary",
+            "pace_rule_url": "https://www.jra.go.jp/kouza/yougo/w291.html",
+            "distance_m": 1400,
+            "interval_seconds": [
+              "12.1",
+              "10.9",
+              "11.9",
+              "12.3",
+              "12.4",
+              "12.9",
+              "12.7"
+            ],
+            "interval_lengths_m": [
+              200,
+              200,
+              200,
+              200,
+              200,
+              200,
+              200
+            ],
+            "pace_missing_reason": ""
+          },
+          "previous_parser_values": {
+            "passing_order": "15-15",
+            "last_3f": "38.6",
+            "time": "1:28.8",
+            "position": "15",
+            "weight": "55.0",
+            "jockey": "古川 吉洋",
+            "popularity": "14"
+          },
+          "field_provenance": {
+            "passing_order": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604020320261004/56",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604020320261004/56"
+              },
+              "captured_at": "2026-10-27T13:18:51.339101+00:00",
+              "sha256": "2934fdff661b0aeff55ad3b41601d2c601ceda1644677de01730910cebcf7ecb",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_1bc4c4bafc13e5896e2f8a6a4fe8329b900c619ad68670131d4be6fed100e273.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "last_3f": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604020320261004/56",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604020320261004/56"
+              },
+              "captured_at": "2026-10-27T13:18:51.339101+00:00",
+              "sha256": "2934fdff661b0aeff55ad3b41601d2c601ceda1644677de01730910cebcf7ecb",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_1bc4c4bafc13e5896e2f8a6a4fe8329b900c619ad68670131d4be6fed100e273.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "time": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604020320261004/56",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604020320261004/56"
+              },
+              "captured_at": "2026-10-27T13:18:51.339101+00:00",
+              "sha256": "2934fdff661b0aeff55ad3b41601d2c601ceda1644677de01730910cebcf7ecb",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_1bc4c4bafc13e5896e2f8a6a4fe8329b900c619ad68670131d4be6fed100e273.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "position": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604020320261004/56",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604020320261004/56"
+              },
+              "captured_at": "2026-10-27T13:18:51.339101+00:00",
+              "sha256": "2934fdff661b0aeff55ad3b41601d2c601ceda1644677de01730910cebcf7ecb",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_1bc4c4bafc13e5896e2f8a6a4fe8329b900c619ad68670131d4be6fed100e273.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "weight": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604020320261004/56",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604020320261004/56"
+              },
+              "captured_at": "2026-10-27T13:18:51.339101+00:00",
+              "sha256": "2934fdff661b0aeff55ad3b41601d2c601ceda1644677de01730910cebcf7ecb",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_1bc4c4bafc13e5896e2f8a6a4fe8329b900c619ad68670131d4be6fed100e273.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "jockey": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604020320261004/56",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604020320261004/56"
+              },
+              "captured_at": "2026-10-27T13:18:51.339101+00:00",
+              "sha256": "2934fdff661b0aeff55ad3b41601d2c601ceda1644677de01730910cebcf7ecb",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_1bc4c4bafc13e5896e2f8a6a4fe8329b900c619ad68670131d4be6fed100e273.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "popularity": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604020320261004/56",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604020320261004/56"
+              },
+              "captured_at": "2026-10-27T13:18:51.339101+00:00",
+              "sha256": "2934fdff661b0aeff55ad3b41601d2c601ceda1644677de01730910cebcf7ecb",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_1bc4c4bafc13e5896e2f8a6a4fe8329b900c619ad68670131d4be6fed100e273.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "weather": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604020320261004/56",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604020320261004/56"
+              },
+              "captured_at": "2026-10-27T13:18:51.339101+00:00",
+              "sha256": "2934fdff661b0aeff55ad3b41601d2c601ceda1644677de01730910cebcf7ecb",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_1bc4c4bafc13e5896e2f8a6a4fe8329b900c619ad68670131d4be6fed100e273.html",
+              "encoding": "SHIFT_JIS"
+            },
+            "odds": [
+              {
+                "url": "https://jra.jp/JRADB/accessO.html?CNAME=pw151ou1008202604020320261004Z/98",
+                "method": "POST",
+                "request_parameters": {
+                  "cname": "pw151ou1008202604020320261004Z/98"
+                },
+                "captured_at": "2026-10-27T13:18:52.261049+00:00",
+                "sha256": "32e7ec14f550b52e4bc05c48f1e10c087dc35dc6c72f901aaa28ab186b11922a",
+                "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_edf7fac83ecd5495ab048b0e6e9ad9ef9493c6d6cecec2153b0599eaefff56ae.html",
+                "encoding": "SHIFT_JIS"
+              }
+            ],
+            "pace": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604020320261004/56",
+              "method": "POST",
+              "request_parameters": {
+                "cname": "pw01sde1008202604020320261004/56"
+              },
+              "captured_at": "2026-10-27T13:18:51.339101+00:00",
+              "sha256": "2934fdff661b0aeff55ad3b41601d2c601ceda1644677de01730910cebcf7ecb",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/history_1bc4c4bafc13e5896e2f8a6a4fe8329b900c619ad68670131d4be6fed100e273.html",
+              "encoding": "SHIFT_JIS"
+            }
+          },
+          "pace_source": "official_race_leader_intervals",
+          "pace_scope": "race_leader_at_each_boundary",
+          "pace_rule_url": "https://www.jra.go.jp/kouza/yougo/w291.html",
+          "distance_m": 1400,
+          "interval_seconds": [
+            "12.1",
+            "10.9",
+            "11.9",
+            "12.3",
+            "12.4",
+            "12.9",
+            "12.7"
+          ],
+          "interval_lengths_m": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ],
+          "pace_missing_reason": ""
+        }
+      ],
+      "history_count": 1,
+      "career_starts": 1,
+      "history_missing_fields": [
+        {
+          "index": 0,
+          "fields": [
+            "pace",
+            "weather",
+            "odds"
+          ],
+          "fallback": "embedded"
+        }
+      ],
+      "career_verification": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 1,
+        "official_totals": {
+          "平地レース合計": 2,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 2,
+        "before_target_count": 1,
+        "started_rows": [
+          {
+            "date": "2026年10月4日",
+            "course": "京都",
+            "race_name": "2歳新馬",
+            "distance": "ダ1400",
+            "track_condition": "良",
+            "popularity": "14",
+            "position": "15",
+            "jockey": "古川 吉洋",
+            "weight": "55.0",
+            "time": "1:28.8",
+            "raw_text": "2026年10月4日 京都 2歳新馬 ダ1400 良 16 14 15 古川 吉洋 55.0 472 1:28.8 ミホマル",
+            "normalized_date": "2026-10-04"
+          }
+        ],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      },
+      "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+      "career_source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024101134/0A",
+        "method": "POST",
+        "request_parameters": {
+          "cname": "pw01dud002024101134/0A"
+        },
+        "captured_at": "2026-10-27T12:57:45.023172+00:00",
+        "sha256": "828e7ef3e5509b1fb2fd9018255498c9ab8822e9bb81bc900dbc2327860400e1",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/b6887636e9e6ab761cb3abdac17b684df91145ab968c37564809a27ff63b1262.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "entry_status": "STARTER"
+    },
+    {
+      "race_id": "20261025_京都_01",
+      "race_name": "2歳未勝利",
+      "horse_id": "pw01dud002024104231/AF",
+      "horse_name": "マリアーナ",
+      "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104231/AF",
+      "frame_number": "8",
+      "horse_number": "8",
+      "current_jockey": "高倉 稜",
+      "assigned_weight": "55.0",
+      "current_body_weight": "458",
+      "body_weight_change": "-10",
+      "body_weight_status": "published",
+      "target_track": "京都",
+      "target_race_date": "2026-10-25",
+      "target_race_number": "01",
+      "target_surface": "ダート",
+      "target_distance": "1800",
+      "target_weather": "",
+      "target_track_condition": "",
+      "target_conditions_captured_at": "",
+      "horse_country": "",
+      "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104231/AF",
+      "history_pre_target": [
+        {
+          "date": "2026年10月10日",
+          "course": "京都",
+          "race_name": "新馬",
+          "distance": "1600芝",
+          "track_condition": "良",
+          "popularity": "7",
+          "position": "13",
+          "jockey": "高倉 稜",
+          "weight": "55.0",
+          "time": "1:36.2",
+          "raw_text": "2026年10月10日 京都 2歳新馬 芝1600 良 14 7 13 高倉 稜 55.0 468 1:36.2 キューティボンド",
+          "normalized_date": "2026-10-10",
+          "run_index": "1",
+          "history_surface": "芝",
+          "pace": "34.6",
+          "last_3f": "36.0",
+          "last_3f_source": "official_result_observation",
+          "weather": "晴",
+          "passing_order": "14-14",
+          "odds": "39.3",
+          "race_result_url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030520261010/99",
+          "race_id": "20261025_京都_01",
+          "horse_id": "pw01dud002024104231/AF",
+          "horse_name": "マリアーナ",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104231/AF",
+          "official_result_observation": {
+            "horse_name": "マリアーナ",
+            "raw_cells": {
+              "place": "13",
+              "waku": "",
+              "num": "11",
+              "horse": "マリアーナ",
+              "age": "牝2",
+              "weight": "55.0",
+              "jockey": "高倉 稜",
+              "time": "1:36.2",
+              "margin": "４",
+              "corner": "14 14",
+              "f_time": "36.0",
+              "h_weight": "468 (初出走)",
+              "trainer": "武 英智",
+              "pop": "7"
+            },
+            "horse_href": "/JRADB/accessU.html?CNAME=pw01dud102024104231/96",
+            "horse_number": "11",
+            "position": "13",
+            "last_3f": "36.0",
+            "time": "1:36.2",
+            "odds": "",
+            "weight": "55.0",
+            "jockey": "高倉 稜",
+            "popularity": "7",
+            "passing_order": "14-14"
+          },
+          "official_result_source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030520261010/99",
+            "method": "POST",
+            "captured_at": "2026-10-24T23:51:04.082960+00:00",
+            "sha256": "47ab1426b40043e06d60171c9a63e7978020c3556e385e9aea41be8d7a8547ae",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_7d11934f5622f9363a163715c7b087d85fa11412013711215ce49550483f4b9e.html",
+            "encoding": "SHIFT_JIS",
+            "reuse_verified_at": "2026-10-27T13:18:53.040443+00:00",
+            "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+          },
+          "official_pace_observation": {
+            "pace": "34.6",
+            "pace_source": "official_race_leader_intervals",
+            "pace_scope": "race_leader_at_each_boundary",
+            "pace_rule_url": "https://www.jra.go.jp/kouza/yougo/w291.html",
+            "distance_m": 1600,
+            "interval_seconds": [
+              "12.3",
+              "10.8",
+              "11.5",
+              "11.7",
+              "11.8",
+              "11.9",
+              "11.7",
+              "11.4"
+            ],
+            "interval_lengths_m": [
+              200,
+              200,
+              200,
+              200,
+              200,
+              200,
+              200,
+              200
+            ],
+            "pace_missing_reason": ""
+          },
+          "previous_parser_values": {
+            "passing_order": "14-14",
+            "last_3f": "36.0",
+            "time": "1:36.2",
+            "position": "13",
+            "weight": "55.0",
+            "jockey": "高倉 稜",
+            "popularity": "7"
+          },
+          "field_provenance": {
+            "passing_order": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030520261010/99",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:51:04.082960+00:00",
+              "sha256": "47ab1426b40043e06d60171c9a63e7978020c3556e385e9aea41be8d7a8547ae",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_7d11934f5622f9363a163715c7b087d85fa11412013711215ce49550483f4b9e.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T13:18:53.040443+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "last_3f": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030520261010/99",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:51:04.082960+00:00",
+              "sha256": "47ab1426b40043e06d60171c9a63e7978020c3556e385e9aea41be8d7a8547ae",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_7d11934f5622f9363a163715c7b087d85fa11412013711215ce49550483f4b9e.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T13:18:53.040443+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "time": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030520261010/99",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:51:04.082960+00:00",
+              "sha256": "47ab1426b40043e06d60171c9a63e7978020c3556e385e9aea41be8d7a8547ae",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_7d11934f5622f9363a163715c7b087d85fa11412013711215ce49550483f4b9e.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T13:18:53.040443+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "position": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030520261010/99",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:51:04.082960+00:00",
+              "sha256": "47ab1426b40043e06d60171c9a63e7978020c3556e385e9aea41be8d7a8547ae",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_7d11934f5622f9363a163715c7b087d85fa11412013711215ce49550483f4b9e.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T13:18:53.040443+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "weight": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030520261010/99",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:51:04.082960+00:00",
+              "sha256": "47ab1426b40043e06d60171c9a63e7978020c3556e385e9aea41be8d7a8547ae",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_7d11934f5622f9363a163715c7b087d85fa11412013711215ce49550483f4b9e.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T13:18:53.040443+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "jockey": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030520261010/99",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:51:04.082960+00:00",
+              "sha256": "47ab1426b40043e06d60171c9a63e7978020c3556e385e9aea41be8d7a8547ae",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_7d11934f5622f9363a163715c7b087d85fa11412013711215ce49550483f4b9e.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T13:18:53.040443+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "popularity": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030520261010/99",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:51:04.082960+00:00",
+              "sha256": "47ab1426b40043e06d60171c9a63e7978020c3556e385e9aea41be8d7a8547ae",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_7d11934f5622f9363a163715c7b087d85fa11412013711215ce49550483f4b9e.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T13:18:53.040443+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "weather": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030520261010/99",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:51:04.082960+00:00",
+              "sha256": "47ab1426b40043e06d60171c9a63e7978020c3556e385e9aea41be8d7a8547ae",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_7d11934f5622f9363a163715c7b087d85fa11412013711215ce49550483f4b9e.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T13:18:53.040443+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "track_condition": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030520261010/99",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:51:04.082960+00:00",
+              "sha256": "47ab1426b40043e06d60171c9a63e7978020c3556e385e9aea41be8d7a8547ae",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_7d11934f5622f9363a163715c7b087d85fa11412013711215ce49550483f4b9e.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T13:18:53.040443+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            },
+            "odds": [
+              {
+                "url": "https://jra.jp/JRADB/accessO.html?CNAME=pw151ou1008202604030520261010Z/DB",
+                "method": "POST",
+                "captured_at": "2026-10-24T23:51:04.814896+00:00",
+                "sha256": "21d4e7165ee6a9bbc0f295f9ecae452ac5eeaeaa27bfe28a8255664fb7b13bde",
+                "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_717432d1ddd6321eee66f8088cf8fda4917c0df21ce878c854bea407e144e63e.html",
+                "encoding": "SHIFT_JIS",
+                "reuse_verified_at": "2026-10-27T13:18:53.320556+00:00",
+                "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+              }
+            ],
+            "pace": {
+              "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1008202604030520261010/99",
+              "method": "POST",
+              "captured_at": "2026-10-24T23:51:04.082960+00:00",
+              "sha256": "47ab1426b40043e06d60171c9a63e7978020c3556e385e9aea41be8d7a8547ae",
+              "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/raw/v2_7d11934f5622f9363a163715c7b087d85fa11412013711215ce49550483f4b9e.html",
+              "encoding": "SHIFT_JIS",
+              "reuse_verified_at": "2026-10-27T13:18:53.040443+00:00",
+              "reuse_reason": "identical_official_url_and_verified_raw_sha256"
+            }
+          },
+          "pace_source": "official_race_leader_intervals",
+          "pace_scope": "race_leader_at_each_boundary",
+          "pace_rule_url": "https://www.jra.go.jp/kouza/yougo/w291.html",
+          "distance_m": 1600,
+          "interval_seconds": [
+            "12.3",
+            "10.8",
+            "11.5",
+            "11.7",
+            "11.8",
+            "11.9",
+            "11.7",
+            "11.4"
+          ],
+          "interval_lengths_m": [
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200,
+            200
+          ],
+          "pace_missing_reason": ""
+        }
+      ],
+      "history_count": 1,
+      "career_starts": 1,
+      "history_missing_fields": [
+        {
+          "index": 0,
+          "fields": [
+            "pace",
+            "weather",
+            "odds"
+          ],
+          "fallback": "embedded"
+        }
+      ],
+      "career_verification": {
+        "status": "VERIFIED_COMPLETE_OFFICIAL_HISTORY",
+        "career_before_target": 1,
+        "official_totals": {
+          "平地レース合計": 2,
+          "障害レース合計": 0
+        },
+        "listed_started_count": 2,
+        "before_target_count": 1,
+        "started_rows": [
+          {
+            "date": "2026年10月10日",
+            "course": "京都",
+            "race_name": "2歳新馬",
+            "distance": "芝1600",
+            "track_condition": "良",
+            "popularity": "7",
+            "position": "13",
+            "jockey": "高倉 稜",
+            "weight": "55.0",
+            "time": "1:36.2",
+            "raw_text": "2026年10月10日 京都 2歳新馬 芝1600 良 14 7 13 高倉 稜 55.0 468 1:36.2 キューティボンド",
+            "normalized_date": "2026-10-10"
+          }
+        ],
+        "nonstarter_rows": [],
+        "nonrace_events": [],
+        "unknown_rows": [],
+        "reason": "All official started rows equal official aggregate career totals"
+      },
+      "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+      "career_source": {
+        "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104231/AF",
+        "method": "POST",
+        "request_parameters": {
+          "cname": "pw01dud002024104231/AF"
+        },
+        "captured_at": "2026-10-27T12:57:45.925166+00:00",
+        "sha256": "0388b6d292f6ed354ae36b245a4886d95fd4105b1cde13de79ecd3a81460eb7e",
+        "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/f46f8f3e435d4e72e4db6ca597b365dd8400eb71887bb0bac0d69e82867789a4.html",
+        "encoding": "SHIFT_JIS"
+      },
+      "entry_status": "STARTER"
+    }
+  ],
+  "errors": [],
+  "parser_issues": [],
+  "history_conflicts": [
+    {
+      "horse": "ナオミガサイキョウ",
+      "date": "2026-09-27",
+      "field": "race_name",
+      "embedded_or_first": "未勝利",
+      "detail": "2歳未勝利"
+    },
+    {
+      "horse": "ナオミガサイキョウ",
+      "date": "2026-09-27",
+      "field": "distance",
+      "embedded_or_first": "1800ダ",
+      "detail": "ダ1800"
+    },
+    {
+      "horse": "ナオミガサイキョウ",
+      "date": "2026-09-27",
+      "field": "last_3f",
+      "embedded_or_first": "38.0",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ナオミガサイキョウ",
+      "date": "2026-09-27",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ナオミガサイキョウ",
+      "date": "2026-06-13",
+      "field": "race_name",
+      "embedded_or_first": "新馬",
+      "detail": "2歳新馬"
+    },
+    {
+      "horse": "ナオミガサイキョウ",
+      "date": "2026-06-13",
+      "field": "distance",
+      "embedded_or_first": "1400ダ",
+      "detail": "ダ1400"
+    },
+    {
+      "horse": "ナオミガサイキョウ",
+      "date": "2026-06-13",
+      "field": "last_3f",
+      "embedded_or_first": "39.6",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ナオミガサイキョウ",
+      "date": "2026-06-13",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "キミチャン",
+      "date": "2026-09-21",
+      "field": "race_name",
+      "embedded_or_first": "牝新馬",
+      "detail": "2歳新馬"
+    },
+    {
+      "horse": "キミチャン",
+      "date": "2026-09-21",
+      "field": "distance",
+      "embedded_or_first": "1400ダ",
+      "detail": "ダ1400"
+    },
+    {
+      "horse": "キミチャン",
+      "date": "2026-09-21",
+      "field": "last_3f",
+      "embedded_or_first": "42.9",
+      "detail": "36.0"
+    },
+    {
+      "horse": "キミチャン",
+      "date": "2026-09-21",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "マリナーヴァレイ",
+      "date": "2026-10-10",
+      "field": "race_name",
+      "embedded_or_first": "牝未勝利",
+      "detail": "2歳未勝利"
+    },
+    {
+      "horse": "マリナーヴァレイ",
+      "date": "2026-10-10",
+      "field": "distance",
+      "embedded_or_first": "1600芝",
+      "detail": "芝1600"
+    },
+    {
+      "horse": "マリナーヴァレイ",
+      "date": "2026-10-10",
+      "field": "last_3f",
+      "embedded_or_first": "34.8",
+      "detail": "36.0"
+    },
+    {
+      "horse": "マリナーヴァレイ",
+      "date": "2026-10-10",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "マリナーヴァレイ",
+      "date": "2026-07-18",
+      "field": "race_name",
+      "embedded_or_first": "牝新馬",
+      "detail": "2歳新馬"
+    },
+    {
+      "horse": "マリナーヴァレイ",
+      "date": "2026-07-18",
+      "field": "distance",
+      "embedded_or_first": "1800芝",
+      "detail": "芝1800"
+    },
+    {
+      "horse": "マリナーヴァレイ",
+      "date": "2026-07-18",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ミール",
+      "date": "2026-08-01",
+      "field": "race_name",
+      "embedded_or_first": "牝新馬",
+      "detail": "2歳新馬"
+    },
+    {
+      "horse": "ミール",
+      "date": "2026-08-01",
+      "field": "distance",
+      "embedded_or_first": "1400芝",
+      "detail": "芝1400"
+    },
+    {
+      "horse": "ミール",
+      "date": "2026-08-01",
+      "field": "last_3f",
+      "embedded_or_first": "36.1",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ミール",
+      "date": "2026-08-01",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "アップルペアー",
+      "date": "2026-10-04",
+      "field": "race_name",
+      "embedded_or_first": "新馬",
+      "detail": "2歳新馬"
+    },
+    {
+      "horse": "アップルペアー",
+      "date": "2026-10-04",
+      "field": "distance",
+      "embedded_or_first": "1400ダ",
+      "detail": "ダ1400"
+    },
+    {
+      "horse": "アップルペアー",
+      "date": "2026-10-04",
+      "field": "jockey",
+      "embedded_or_first": "★ 河原田 菜",
+      "detail": "河原田 菜々"
+    },
+    {
+      "horse": "アップルペアー",
+      "date": "2026-10-04",
+      "field": "last_3f",
+      "embedded_or_first": "38.0",
+      "detail": "36.0"
+    },
+    {
+      "horse": "アップルペアー",
+      "date": "2026-10-04",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "ウインブリーズ",
+      "date": "2026-10-11",
+      "field": "race_name",
+      "embedded_or_first": "牝新馬",
+      "detail": "2歳新馬"
+    },
+    {
+      "horse": "ウインブリーズ",
+      "date": "2026-10-11",
+      "field": "distance",
+      "embedded_or_first": "1400ダ",
+      "detail": "ダ1400"
+    },
+    {
+      "horse": "ウインブリーズ",
+      "date": "2026-10-11",
+      "field": "jockey",
+      "embedded_or_first": "☆ 田山 旺佑",
+      "detail": "田山 旺佑"
+    },
+    {
+      "horse": "ウインブリーズ",
+      "date": "2026-10-11",
+      "field": "last_3f",
+      "embedded_or_first": "39.2",
+      "detail": "36.0"
+    },
+    {
+      "horse": "ウインブリーズ",
+      "date": "2026-10-11",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "オージーブラック",
+      "date": "2026-10-04",
+      "field": "race_name",
+      "embedded_or_first": "新馬",
+      "detail": "2歳新馬"
+    },
+    {
+      "horse": "オージーブラック",
+      "date": "2026-10-04",
+      "field": "distance",
+      "embedded_or_first": "1400ダ",
+      "detail": "ダ1400"
+    },
+    {
+      "horse": "オージーブラック",
+      "date": "2026-10-04",
+      "field": "last_3f",
+      "embedded_or_first": "38.6",
+      "detail": "36.0"
+    },
+    {
+      "horse": "オージーブラック",
+      "date": "2026-10-04",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    },
+    {
+      "horse": "マリアーナ",
+      "date": "2026-10-10",
+      "field": "race_name",
+      "embedded_or_first": "新馬",
+      "detail": "2歳新馬"
+    },
+    {
+      "horse": "マリアーナ",
+      "date": "2026-10-10",
+      "field": "distance",
+      "embedded_or_first": "1600芝",
+      "detail": "芝1600"
+    },
+    {
+      "horse": "マリアーナ",
+      "date": "2026-10-10",
+      "field": "last_3f_source",
+      "embedded_or_first": "embedded",
+      "detail": "fallback"
+    }
+  ],
+  "collection_mode": "post_event_official_reconstruction",
+  "declared_entry_set": [
+    {
+      "horse_id": "pw01dud002024107172/FE",
+      "horse_name": "ナオミガサイキョウ",
+      "horse_number": "1"
+    },
+    {
+      "horse_id": "pw01dud002024104786/33",
+      "horse_name": "キミチャン",
+      "horse_number": "2"
+    },
+    {
+      "horse_id": "pw01dud002024106232/00",
+      "horse_name": "マリナーヴァレイ",
+      "horse_number": "3"
+    },
+    {
+      "horse_id": "pw01dud002024102645/71",
+      "horse_name": "ミール",
+      "horse_number": "4"
+    },
+    {
+      "horse_id": "pw01dud002024107251/9C",
+      "horse_name": "アップルペアー",
+      "horse_number": "5"
+    },
+    {
+      "horse_id": "pw01dud002024103078/C3",
+      "horse_name": "ウインブリーズ",
+      "horse_number": "6"
+    },
+    {
+      "horse_id": "pw01dud002024101134/0A",
+      "horse_name": "オージーブラック",
+      "horse_number": "7"
+    },
+    {
+      "horse_id": "pw01dud002024104231/AF",
+      "horse_name": "マリアーナ",
+      "horse_number": "8"
+    }
+  ],
+  "non_starters": []
+}

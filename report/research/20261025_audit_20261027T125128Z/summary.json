@@ -1,0 +1,4031 @@
+{
+  "role": "data_integrity_auditor",
+  "evaluated_at": "2026-10-27T13:33:31.872155+00:00",
+  "status": "COLLECTION_AUDITED_WITH_MODEL_INPUT_LIMITATIONS",
+  "gate": "BLOCKED_FOR_MODEL_CALCULATION",
+  "audit_scope": "read_only_post_event_observation_collection_no_fit_no_prediction",
+  "expected_races": 36,
+  "audited_races": 36,
+  "declared_horses": 467,
+  "starters": 466,
+  "non_starters": 1,
+  "starter_history_rows": 1566,
+  "nonstarter_history_rows": 4,
+  "all_history_rows": 1570,
+  "history_shortfalls": 0,
+  "history_career_unverified_horses": 0,
+  "history_latest5_date_set_mismatches": 0,
+  "all_race_declared_sets_match": true,
+  "all_race_starter_sets_match": true,
+  "unresolved_source_mismatches": 0,
+  "existing_parser_source_issue_classifications": {
+    "AVERAGE_1F_COLUMN_REJECTED_AS_LAST3F": 9,
+    "NAR_OBSERVATION_REQUIRES_SEPARATE_NAR_CHECK": 22
+  },
+  "raw_source_checks": 2788,
+  "raw_sha_failures": 0,
+  "nar_observations_independently_checked": 45,
+  "nar_source_check_failures": 0,
+  "parser_substitution_rows": 0,
+  "actual_learning_substitutions_adopted": 0,
+  "feature_container_leakage_risks": 0,
+  "starter_normalized_field_missingness": {
+    "pace": 199,
+    "position": 3,
+    "time": 3,
+    "last_3f": 41,
+    "odds": 16,
+    "passing_order": 26
+  },
+  "all_declared_history_missingness": {
+    "pace": 199,
+    "last_3f": 41,
+    "odds": 16,
+    "passing_order": 26
+  },
+  "all_declared_missing_field_reasons": {
+    "pace": {
+      "NO_600M_BOUNDARY_PARTIAL_INTERVAL_NOT_ESTIMATED": 110,
+      "NO_EXACT_INITIAL_600M_OBSERVATION_PARSED_NO_INTERPOLATION": 45,
+      "UNSUPPORTED_DISTANCE": 36,
+      "MISSING_OR_AMBIGUOUS_INTERVALS": 8
+    },
+    "last_3f": {
+      "UNOBSERVED_FALLBACK_REMOVED": 3,
+      "NOT_OBSERVED_RESULT_COLUMN_IS_AVERAGE_1F": 38
+    },
+    "odds": {
+      "OFFICIAL_RESULT_ODDS_CELL_EMPTY_AND_DAY_MENU_ODDS_DISABLED": 16
+    },
+    "passing_order": {
+      "NOT_APPLICABLE_STRAIGHT_COURSE_NO_CORNER_OBSERVATION": 26
+    }
+  },
+  "approval_checks": {
+    "imputation_authorized": false,
+    "new_calculations_executed": false,
+    "approved_imputations_used": []
+  },
+  "environment_and_final_odds_evidence": [
+    {
+      "path": "report/research/20261025_environment_20261027T125148Z/environment_collection.json",
+      "sha256": "31c0e6677f0aa0d69a5bb4974d4ae30836f21987e237ba6f1bc6889525e9866b",
+      "tracks": [
+        {
+          "track": "東京",
+          "date": "2026-10-25",
+          "same_day_cushion_count": 1,
+          "same_day_moisture_count": 1,
+          "missing_fields": [],
+          "pre_race_capture_proven": false
+        },
+        {
+          "track": "京都",
+          "date": "2026-10-25",
+          "same_day_cushion_count": 1,
+          "same_day_moisture_count": 1,
+          "missing_fields": [],
+          "pre_race_capture_proven": false
+        },
+        {
+          "track": "新潟",
+          "date": "2026-10-25",
+          "same_day_cushion_count": 1,
+          "same_day_moisture_count": 1,
+          "missing_fields": [],
+          "pre_race_capture_proven": false
+        }
+      ]
+    },
+    {
+      "path": "report/research/20261025_final_odds_20261027T125420Z/coverage_audit.json",
+      "sha256": "a7c631e71bdb243e8bc6bb5e47ebbd40cb6f9648996f0ca848db242d9048313e",
+      "total_races": 36,
+      "numeric_odds_total": 100801,
+      "non_numeric_total": 400,
+      "all_races_complete": true,
+      "imputation_count": 0,
+      "race_artifact_sha_checks": [
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_01.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_02.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_03.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_04.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_05.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_06.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_07.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_08.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_09.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_10.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_11.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_12.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_01.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_02.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_03.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_04.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_05.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_06.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_07.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_08.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_09.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_10.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_11.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_12.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_01.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_02.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_03.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_04.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_05.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_06.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_07.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_08.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_09.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_10.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_11.json",
+          "status": "PASS"
+        },
+        {
+          "path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_12.json",
+          "status": "PASS"
+        }
+      ]
+    }
+  ],
+  "canonical_input_equivalence": [
+    {
+      "race_id": "20261025_04_01",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_04_01.json",
+      "audited_sha256": "c27291e3227fbd086ff8446b73948b045dbad572a3c9d5b519811dafd698417b",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_04_01.json",
+      "canonical_sha256": "c27291e3227fbd086ff8446b73948b045dbad572a3c9d5b519811dafd698417b",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_04_02",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_04_02.json",
+      "audited_sha256": "de006643bcd1c3216056b9be1ba1fbaf5e76ce742de6e409c447bf0e89a395a6",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_04_02.json",
+      "canonical_sha256": "de006643bcd1c3216056b9be1ba1fbaf5e76ce742de6e409c447bf0e89a395a6",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_04_03",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_04_03.json",
+      "audited_sha256": "a628797029f79d802709a029b84b0eb914ef82833e431990baaf4b8edc11ba1d",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_04_03.json",
+      "canonical_sha256": "a628797029f79d802709a029b84b0eb914ef82833e431990baaf4b8edc11ba1d",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_04_04",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_04_04.json",
+      "audited_sha256": "a3742c1fdff23f1c646cffa08cfda84df45d34c25395041e42fce4562488d8d0",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_04_04.json",
+      "canonical_sha256": "a3742c1fdff23f1c646cffa08cfda84df45d34c25395041e42fce4562488d8d0",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_04_05",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_04_05.json",
+      "audited_sha256": "401a2f12023f70550e5d5fd6e3d06ff07883d97c5870c04309a2da3ffd6ebd4b",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_04_05.json",
+      "canonical_sha256": "401a2f12023f70550e5d5fd6e3d06ff07883d97c5870c04309a2da3ffd6ebd4b",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_04_06",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_04_06.json",
+      "audited_sha256": "7a5a062c5dda92c4e392ee65a0eb04ab64c2f5735f0f0a0e26b31576a411fcc0",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_04_06.json",
+      "canonical_sha256": "7a5a062c5dda92c4e392ee65a0eb04ab64c2f5735f0f0a0e26b31576a411fcc0",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_04_07",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_04_07.json",
+      "audited_sha256": "fceedee2852fb85fb0f673914bc0e128de253d9ff1deddccc590bff715d932d4",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_04_07.json",
+      "canonical_sha256": "fceedee2852fb85fb0f673914bc0e128de253d9ff1deddccc590bff715d932d4",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_04_08",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_04_08.json",
+      "audited_sha256": "c4fb46a18bf72b27554a9f5f337d5b6e7d5cb02d006792057ce2e4681c4851c3",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_04_08.json",
+      "canonical_sha256": "c4fb46a18bf72b27554a9f5f337d5b6e7d5cb02d006792057ce2e4681c4851c3",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_04_09",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_04_09.json",
+      "audited_sha256": "38351f6e127c7b15043095aba4a6280391efbde7b1a8f9f375eba78737105586",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_04_09.json",
+      "canonical_sha256": "38351f6e127c7b15043095aba4a6280391efbde7b1a8f9f375eba78737105586",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_04_10",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_04_10.json",
+      "audited_sha256": "e688884ee0896a1bbb89a5925ecb935ee8aa40fd0bc94b74bc4e8176054bfe69",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_04_10.json",
+      "canonical_sha256": "e688884ee0896a1bbb89a5925ecb935ee8aa40fd0bc94b74bc4e8176054bfe69",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_04_11",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_04_11.json",
+      "audited_sha256": "a7e9311377466e81ec961dad9966e5152bffad779e20aa6f946a79a64a4fb895",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_04_11.json",
+      "canonical_sha256": "a7e9311377466e81ec961dad9966e5152bffad779e20aa6f946a79a64a4fb895",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_04_12",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_04_12.json",
+      "audited_sha256": "2e32f2affa3b76cb51eeda15e5b9c9c56cf29f86254595e0d1d6adaf99e432c9",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_04_12.json",
+      "canonical_sha256": "2e32f2affa3b76cb51eeda15e5b9c9c56cf29f86254595e0d1d6adaf99e432c9",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_05_01",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_05_01.json",
+      "audited_sha256": "3c8e8f5f75c48db1dd823a4afffe1d5b16a2d1253a4cb05ba58f040c25118f51",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_05_01.json",
+      "canonical_sha256": "3c8e8f5f75c48db1dd823a4afffe1d5b16a2d1253a4cb05ba58f040c25118f51",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_05_02",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_05_02.json",
+      "audited_sha256": "7b8bf87e0392f2bea78830c01d76650c1761fa4305563a42cdc4794898f3e716",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_05_02.json",
+      "canonical_sha256": "7b8bf87e0392f2bea78830c01d76650c1761fa4305563a42cdc4794898f3e716",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_05_03",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_05_03.json",
+      "audited_sha256": "c20ecaf7f981b928768a785cb0ccc973e3c1a2effee003ee950b2f8b307a0986",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_05_03.json",
+      "canonical_sha256": "c20ecaf7f981b928768a785cb0ccc973e3c1a2effee003ee950b2f8b307a0986",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_05_04",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_05_04.json",
+      "audited_sha256": "be95eceb9557983592f566935a35c9993117b0e72d924dc5f117cb33a29546bd",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_05_04.json",
+      "canonical_sha256": "be95eceb9557983592f566935a35c9993117b0e72d924dc5f117cb33a29546bd",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_05_05",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_05_05.json",
+      "audited_sha256": "e7d3ee372af1259d273684f886f248f49e2c843c28f62db87d5bfbe0a5ce01d4",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_05_05.json",
+      "canonical_sha256": "e7d3ee372af1259d273684f886f248f49e2c843c28f62db87d5bfbe0a5ce01d4",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_05_06",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_05_06.json",
+      "audited_sha256": "94ac0f3e5775a44c5868700e4bbf84964f064c283e9da3d72b01f701d2e811e1",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_05_06.json",
+      "canonical_sha256": "94ac0f3e5775a44c5868700e4bbf84964f064c283e9da3d72b01f701d2e811e1",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_05_07",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_05_07.json",
+      "audited_sha256": "299cd555a0289c6c49c41bc32b1fba1646f5b393a1fc3b34f6199908d044e460",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_05_07.json",
+      "canonical_sha256": "299cd555a0289c6c49c41bc32b1fba1646f5b393a1fc3b34f6199908d044e460",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_05_08",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_05_08.json",
+      "audited_sha256": "771db07cb047df071364350b5d51872f39415e51350de9ed2a5f663c04223a9b",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_05_08.json",
+      "canonical_sha256": "771db07cb047df071364350b5d51872f39415e51350de9ed2a5f663c04223a9b",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_05_09",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_05_09.json",
+      "audited_sha256": "e1e8c1526e5d65eea5d980abd65569e57d1b94400176a963e1421b8f37aaf8af",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_05_09.json",
+      "canonical_sha256": "e1e8c1526e5d65eea5d980abd65569e57d1b94400176a963e1421b8f37aaf8af",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_05_10",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_05_10.json",
+      "audited_sha256": "a93fd413e4d135352487ad7c445355a681cd46e33c2ffff99c9cf020a86933e8",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_05_10.json",
+      "canonical_sha256": "a93fd413e4d135352487ad7c445355a681cd46e33c2ffff99c9cf020a86933e8",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_05_11",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_05_11.json",
+      "audited_sha256": "4c715b15f0ed6dcc3a13eeb97e28212f4636cd3d09e68352fb8f4b85aea20f79",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_05_11.json",
+      "canonical_sha256": "4c715b15f0ed6dcc3a13eeb97e28212f4636cd3d09e68352fb8f4b85aea20f79",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_05_12",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_05_12.json",
+      "audited_sha256": "abbd139bd5b325c67040d57907941aedac1f64b6926a8d44d4a0459eb56a563f",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_05_12.json",
+      "canonical_sha256": "abbd139bd5b325c67040d57907941aedac1f64b6926a8d44d4a0459eb56a563f",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_08_01",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_08_01.json",
+      "audited_sha256": "0894f7ecab750fa2d361255a0c7513e88c7a2bfba750ff1f1a7147f0c8a99225",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_08_01.json",
+      "canonical_sha256": "0894f7ecab750fa2d361255a0c7513e88c7a2bfba750ff1f1a7147f0c8a99225",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_08_02",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_08_02.json",
+      "audited_sha256": "672fddf3d86d5aa726b6f69cf75438a9ec54fdbcda386c4a66f241c41a6a00fd",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_08_02.json",
+      "canonical_sha256": "672fddf3d86d5aa726b6f69cf75438a9ec54fdbcda386c4a66f241c41a6a00fd",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_08_03",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_08_03.json",
+      "audited_sha256": "6b51c1bd1cd12419bd2ebafd9f15582024724b3ea7723797982e1122e4b0d2d6",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_08_03.json",
+      "canonical_sha256": "6b51c1bd1cd12419bd2ebafd9f15582024724b3ea7723797982e1122e4b0d2d6",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_08_04",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_08_04.json",
+      "audited_sha256": "be746025b754efa5a1fa8e9d362ff0bd470793c8a637675aa21cfa3f49e8bc7a",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_08_04.json",
+      "canonical_sha256": "be746025b754efa5a1fa8e9d362ff0bd470793c8a637675aa21cfa3f49e8bc7a",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_08_05",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_08_05.json",
+      "audited_sha256": "96d8ca0d7758748b489539f9db062c143f05db53d67a15778ae82710a0fbe7d5",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_08_05.json",
+      "canonical_sha256": "96d8ca0d7758748b489539f9db062c143f05db53d67a15778ae82710a0fbe7d5",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_08_06",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_08_06.json",
+      "audited_sha256": "847dddce6e5a914b7b9eece43ba095f31c2740e68c35b62b297ed8b592d13950",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_08_06.json",
+      "canonical_sha256": "847dddce6e5a914b7b9eece43ba095f31c2740e68c35b62b297ed8b592d13950",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_08_07",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_08_07.json",
+      "audited_sha256": "981206433afbddd596559da9fc25e48e48b890c067979b4a834035cc7e780be6",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_08_07.json",
+      "canonical_sha256": "981206433afbddd596559da9fc25e48e48b890c067979b4a834035cc7e780be6",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_08_08",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_08_08.json",
+      "audited_sha256": "a83963e4292f723e1028ed85496bcc883f0f6e2d515e4b0e0292d47ce34b1b36",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_08_08.json",
+      "canonical_sha256": "a83963e4292f723e1028ed85496bcc883f0f6e2d515e4b0e0292d47ce34b1b36",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_08_09",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_08_09.json",
+      "audited_sha256": "d58a7f6316b866bb30b79c0cb7fe5a759746db9a30082726ede58181408e9a27",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_08_09.json",
+      "canonical_sha256": "d58a7f6316b866bb30b79c0cb7fe5a759746db9a30082726ede58181408e9a27",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_08_10",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_08_10.json",
+      "audited_sha256": "e5b4c17ee4a8332c71766f07d0cfd199d76f82be159edddd4e980a661c23f8e5",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_08_10.json",
+      "canonical_sha256": "e5b4c17ee4a8332c71766f07d0cfd199d76f82be159edddd4e980a661c23f8e5",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_08_11",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_08_11.json",
+      "audited_sha256": "553f9cb5ea7a08aa65258c15cf2418ced1fd52fec7e82b4da06f6f63a228f671",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_08_11.json",
+      "canonical_sha256": "553f9cb5ea7a08aa65258c15cf2418ced1fd52fec7e82b4da06f6f63a228f671",
+      "sha256_equal": true
+    },
+    {
+      "race_id": "20261025_08_12",
+      "audited_path": "report/research/20261025_batch_20261027T125128Z/features_final/20261025_08_12.json",
+      "audited_sha256": "49ff579514c9a860c7268715baef9d691acbe7331309855abed5d4d23e00cf23",
+      "canonical_path": "report/research/20261025_batch_20261027T125128Z/features_final_v2/20261025_08_12.json",
+      "canonical_sha256": "49ff579514c9a860c7268715baef9d691acbe7331309855abed5d4d23e00cf23",
+      "sha256_equal": true
+    }
+  ],
+  "input_artifacts": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_audit_20261027T125128Z/summary_part0.json",
+      "sha256": "41050a3db76a1cfd3d9e0de1a1d37ac0cadab18375b61ca41f4328a048ec2bf7"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_audit_20261027T125128Z/summary_part1.json",
+      "sha256": "676c9fa1db891fd8eec75e28084e32048f2b5552d081ef9ff39f799725049673"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_audit_20261027T125128Z/summary_part2.json",
+      "sha256": "a8867dac07635c699e45520d8564e52c79aa83b081ee93d766ebb64c509ee787"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_audit_20261027T125128Z/summary_part3.json",
+      "sha256": "f00364163083553b9b1d1d447be8968ba57356d8420fd86da26d75ff0d29aafe"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_audit_20261027T125128Z/corrected_race_summary.json",
+      "sha256": "6f76aef0aa2e7c9cc0eadd0b8760ff69549e5cce353e44ba2fc2b2fd4dcb1a63"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_audit_20261027T125128Z/nonstarter_history_audit.json",
+      "sha256": "69fd44e976096a681ffb806e85e3f21be5f0555802876fb0343cf16a0ada7665"
+    },
+    {
+      "path": "report/research/20261025_batch_20261027T125128Z/final_collection_summary_v2.json",
+      "sha256": "738a7f2fe4ed9570ca68cf5709b429c35724d9d512e4f442104f728eeb60a4d0"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_audit_20261027T125128Z/environment_sources.json",
+      "sha256": "49c128071da6f81906aacf897eff08dc3bb71db0e4b074f8b64b875de102000e"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_audit_20261027T125128Z/nar_sources_independent.json",
+      "sha256": "b81981c2f505e902001cf6a90840f27181aee81c58e3f7598ee693fd13971061"
+    }
+  ],
+  "races": [
+    {
+      "race_id": "20261025_04_01",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 13,
+      "history_rows": 24,
+      "history_counts_verified": true,
+      "history_required": 24,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_04_01",
+          "horse_number": "5",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_01",
+          "horse_number": "10",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "OBSERVED": 382,
+        "NOT_MEASURED": 2
+      },
+      "field_missing_counts": {
+        "pace": 2
+      },
+      "source_audit_status": "VERIFIED_REPARSE",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 26,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_04_02",
+      "gate": "BLOCKED_MISSING_DATA",
+      "horse_count": 10,
+      "history_rows": 20,
+      "history_counts_verified": true,
+      "history_required": 20,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_04_02",
+          "horse_number": "5",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_02",
+          "horse_number": "6",
+          "run_index": "2",
+          "field": "position",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_02",
+          "horse_number": "6",
+          "run_index": "2",
+          "field": "time",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_02",
+          "horse_number": "6",
+          "run_index": "2",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "OBSERVED": 316,
+        "NOT_MEASURED": 1,
+        "SOURCE_FIELD_MISSING": 3
+      },
+      "field_missing_counts": {
+        "pace": 1,
+        "position": 1,
+        "time": 1,
+        "last_3f": 1
+      },
+      "source_audit_status": "VERIFIED_REPARSE",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 23,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_04_03",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 18,
+      "history_rows": 24,
+      "history_counts_verified": true,
+      "history_required": 24,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_04_03",
+          "horse_number": "10",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "OBSERVED": 383,
+        "NOT_MEASURED": 1
+      },
+      "field_missing_counts": {
+        "pace": 1
+      },
+      "source_audit_status": "VERIFIED_REPARSE",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 36,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_04_04",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 13,
+      "history_rows": 64,
+      "history_counts_verified": true,
+      "history_required": 64,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 8,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_04_04",
+          "horse_number": "2",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_04",
+          "horse_number": "2",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_04",
+          "horse_number": "2",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_04",
+          "horse_number": "2",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_04",
+          "horse_number": "2",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_04",
+          "horse_number": "11",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_04",
+          "horse_number": "11",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_04",
+          "horse_number": "11",
+          "run_index": "3",
+          "field": "odds",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_04",
+          "horse_number": "11",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_04",
+          "horse_number": "11",
+          "run_index": "4",
+          "field": "odds",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_04",
+          "horse_number": "13",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "SOURCE_UNVERIFIED": 1024
+      },
+      "field_missing_counts": {
+        "pace": 9,
+        "odds": 2
+      },
+      "source_audit_status": "UNVERIFIED",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 28,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_04_05",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 18,
+      "history_rows": 0,
+      "history_counts_verified": true,
+      "history_required": 0,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [],
+      "acquisition_coverage_counts": {},
+      "field_missing_counts": {},
+      "source_audit_status": "UNVERIFIED",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 54,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_04_06",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 11,
+      "history_rows": 54,
+      "history_counts_verified": true,
+      "history_required": 54,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "2",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "2",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "3",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "3",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "3",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "4",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "4",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "4",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "4",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "5",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "5",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "5",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "6",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "7",
+          "run_index": "1",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "7",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "7",
+          "run_index": "2",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "7",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "7",
+          "run_index": "3",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "7",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "7",
+          "run_index": "4",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "7",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "7",
+          "run_index": "5",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "7",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "9",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "11",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_06",
+          "horse_number": "11",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "OBSERVED": 838,
+        "NOT_MEASURED": 16,
+        "AVAILABLE_BUT_NOT_COLLECTED": 5,
+        "SOURCE_FIELD_MISSING": 5
+      },
+      "field_missing_counts": {
+        "pace": 21,
+        "last_3f": 5
+      },
+      "source_audit_status": "UNVERIFIED",
+      "source_mismatch_count": 5,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {
+        "AVERAGE_1F_COLUMN_REJECTED_AS_LAST3F": 5
+      },
+      "potential_imputation_count": 32,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_04_07",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 14,
+      "history_rows": 59,
+      "history_counts_verified": true,
+      "history_required": 59,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 1,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_04_07",
+          "horse_number": "6",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_07",
+          "horse_number": "10",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "SOURCE_UNVERIFIED": 944
+      },
+      "field_missing_counts": {
+        "pace": 2
+      },
+      "source_audit_status": "UNVERIFIED",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 28,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_04_08",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 14,
+      "history_rows": 68,
+      "history_counts_verified": true,
+      "history_required": 68,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_04_08",
+          "horse_number": "1",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_08",
+          "horse_number": "3",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_08",
+          "horse_number": "5",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_08",
+          "horse_number": "6",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_08",
+          "horse_number": "6",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_08",
+          "horse_number": "6",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_08",
+          "horse_number": "7",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_08",
+          "horse_number": "7",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_08",
+          "horse_number": "7",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_08",
+          "horse_number": "11",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_08",
+          "horse_number": "12",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_08",
+          "horse_number": "12",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_08",
+          "horse_number": "13",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_08",
+          "horse_number": "13",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_08",
+          "horse_number": "14",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_08",
+          "horse_number": "14",
+          "run_index": "2",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_08",
+          "horse_number": "14",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_08",
+          "horse_number": "14",
+          "run_index": "3",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_08",
+          "horse_number": "14",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_08",
+          "horse_number": "14",
+          "run_index": "4",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_08",
+          "horse_number": "14",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_08",
+          "horse_number": "14",
+          "run_index": "5",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_08",
+          "horse_number": "14",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "OBSERVED": 1065,
+        "NOT_MEASURED": 15,
+        "AVAILABLE_BUT_NOT_COLLECTED": 4,
+        "SOURCE_FIELD_MISSING": 4
+      },
+      "field_missing_counts": {
+        "pace": 19,
+        "last_3f": 4
+      },
+      "source_audit_status": "UNVERIFIED",
+      "source_mismatch_count": 4,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {
+        "AVERAGE_1F_COLUMN_REJECTED_AS_LAST3F": 4
+      },
+      "potential_imputation_count": 36,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_04_09",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 14,
+      "history_rows": 70,
+      "history_counts_verified": true,
+      "history_required": 70,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_04_09",
+          "horse_number": "5",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_09",
+          "horse_number": "14",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_09",
+          "horse_number": "14",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "OBSERVED": 1117,
+        "NOT_MEASURED": 3
+      },
+      "field_missing_counts": {
+        "pace": 3
+      },
+      "source_audit_status": "VERIFIED_REPARSE",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 28,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_04_10",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 12,
+      "history_rows": 60,
+      "history_counts_verified": true,
+      "history_required": 60,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [],
+      "acquisition_coverage_counts": {
+        "OBSERVED": 960
+      },
+      "field_missing_counts": {},
+      "source_audit_status": "VERIFIED_REPARSE",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 24,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_04_11",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 17,
+      "history_rows": 85,
+      "history_counts_verified": true,
+      "history_required": 85,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "2",
+          "run_index": "1",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "2",
+          "run_index": "2",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "3",
+          "run_index": "1",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "4",
+          "run_index": "1",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "4",
+          "run_index": "3",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "5",
+          "run_index": "1",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "5",
+          "run_index": "2",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "6",
+          "run_index": "1",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "6",
+          "run_index": "2",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "6",
+          "run_index": "4",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "9",
+          "run_index": "3",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "10",
+          "run_index": "1",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "10",
+          "run_index": "3",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "11",
+          "run_index": "1",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "11",
+          "run_index": "2",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "13",
+          "run_index": "2",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "13",
+          "run_index": "3",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "14",
+          "run_index": "1",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "14",
+          "run_index": "2",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "14",
+          "run_index": "3",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "14",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "16",
+          "run_index": "1",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "16",
+          "run_index": "2",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "16",
+          "run_index": "3",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "17",
+          "run_index": "1",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_11",
+          "horse_number": "17",
+          "run_index": "4",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "OBSERVED": 1334,
+        "SOURCE_FIELD_MISSING": 26
+      },
+      "field_missing_counts": {
+        "passing_order": 25,
+        "pace": 1
+      },
+      "source_audit_status": "VERIFIED_REPARSE",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 59,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_04_12",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 12,
+      "history_rows": 59,
+      "history_counts_verified": true,
+      "history_required": 59,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 4,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_04_12",
+          "horse_number": "2",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_12",
+          "horse_number": "3",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_12",
+          "horse_number": "3",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_12",
+          "horse_number": "4",
+          "run_index": "2",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_12",
+          "horse_number": "4",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_04_12",
+          "horse_number": "6",
+          "run_index": "4",
+          "field": "passing_order",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_04_12",
+          "horse_number": "11",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "SOURCE_UNVERIFIED": 944
+      },
+      "field_missing_counts": {
+        "pace": 5,
+        "last_3f": 1,
+        "passing_order": 1
+      },
+      "source_audit_status": "UNVERIFIED",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 27,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_05_01",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 16,
+      "history_rows": 24,
+      "history_counts_verified": true,
+      "history_required": 24,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_05_01",
+          "horse_number": "13",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "OBSERVED": 383,
+        "NOT_MEASURED": 1
+      },
+      "field_missing_counts": {
+        "pace": 1
+      },
+      "source_audit_status": "VERIFIED_REPARSE",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 32,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_05_02",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 7,
+      "history_rows": 15,
+      "history_counts_verified": true,
+      "history_required": 15,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [],
+      "acquisition_coverage_counts": {
+        "OBSERVED": 240
+      },
+      "field_missing_counts": {},
+      "source_audit_status": "VERIFIED_REPARSE",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 14,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_05_03",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 12,
+      "history_rows": 18,
+      "history_counts_verified": true,
+      "history_required": 18,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [],
+      "acquisition_coverage_counts": {
+        "OBSERVED": 288
+      },
+      "field_missing_counts": {},
+      "source_audit_status": "VERIFIED_REPARSE",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 24,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_05_04",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 11,
+      "history_rows": 55,
+      "history_counts_verified": true,
+      "history_required": 55,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 3,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "1",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "2",
+          "run_index": "2",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "2",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "2",
+          "run_index": "3",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "2",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "2",
+          "run_index": "4",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "2",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "2",
+          "run_index": "5",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "2",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "3",
+          "run_index": "1",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "3",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "3",
+          "run_index": "2",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "3",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "3",
+          "run_index": "3",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "3",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "3",
+          "run_index": "4",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "3",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "4",
+          "run_index": "1",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "4",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "4",
+          "run_index": "2",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "4",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "4",
+          "run_index": "3",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "4",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "4",
+          "run_index": "4",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "4",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "4",
+          "run_index": "5",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "4",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "5",
+          "run_index": "1",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "5",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "5",
+          "run_index": "2",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "5",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "5",
+          "run_index": "3",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "5",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "5",
+          "run_index": "4",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "5",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "6",
+          "run_index": "1",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "6",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "6",
+          "run_index": "2",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "6",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "6",
+          "run_index": "3",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "6",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "6",
+          "run_index": "4",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "6",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "6",
+          "run_index": "5",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "6",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "7",
+          "run_index": "1",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "7",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "7",
+          "run_index": "2",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "7",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "9",
+          "run_index": "1",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "9",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "9",
+          "run_index": "2",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "9",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "9",
+          "run_index": "3",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "9",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "10",
+          "run_index": "1",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "10",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "10",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "10",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_04",
+          "horse_number": "10",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "SOURCE_UNVERIFIED": 880
+      },
+      "field_missing_counts": {
+        "pace": 32,
+        "last_3f": 28
+      },
+      "source_audit_status": "UNVERIFIED",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 78,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_05_05",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 13,
+      "history_rows": 0,
+      "history_counts_verified": true,
+      "history_required": 0,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [],
+      "acquisition_coverage_counts": {},
+      "field_missing_counts": {},
+      "source_audit_status": "UNVERIFIED",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 39,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_05_06",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 16,
+      "history_rows": 0,
+      "history_counts_verified": true,
+      "history_required": 0,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [],
+      "acquisition_coverage_counts": {},
+      "field_missing_counts": {},
+      "source_audit_status": "UNVERIFIED",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 48,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_05_07",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 15,
+      "history_rows": 74,
+      "history_counts_verified": true,
+      "history_required": 74,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 8,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_05_07",
+          "horse_number": "1",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_07",
+          "horse_number": "4",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_07",
+          "horse_number": "4",
+          "run_index": "2",
+          "field": "odds",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_07",
+          "horse_number": "4",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_07",
+          "horse_number": "4",
+          "run_index": "3",
+          "field": "odds",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_07",
+          "horse_number": "4",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_07",
+          "horse_number": "4",
+          "run_index": "4",
+          "field": "odds",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_07",
+          "horse_number": "4",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_07",
+          "horse_number": "4",
+          "run_index": "5",
+          "field": "odds",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_07",
+          "horse_number": "6",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_07",
+          "horse_number": "6",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_07",
+          "horse_number": "7",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_07",
+          "horse_number": "9",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_07",
+          "horse_number": "9",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_07",
+          "horse_number": "11",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_07",
+          "horse_number": "13",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_07",
+          "horse_number": "13",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_07",
+          "horse_number": "13",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_07",
+          "horse_number": "13",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_07",
+          "horse_number": "14",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "SOURCE_UNVERIFIED": 1184
+      },
+      "field_missing_counts": {
+        "pace": 16,
+        "odds": 4
+      },
+      "source_audit_status": "UNVERIFIED",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 34,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_05_08",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 18,
+      "history_rows": 90,
+      "history_counts_verified": true,
+      "history_required": 90,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 1,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_05_08",
+          "horse_number": "8",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_08",
+          "horse_number": "8",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_08",
+          "horse_number": "16",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "SOURCE_UNVERIFIED": 1440
+      },
+      "field_missing_counts": {
+        "pace": 3
+      },
+      "source_audit_status": "UNVERIFIED",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 36,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_05_09",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 11,
+      "history_rows": 55,
+      "history_counts_verified": true,
+      "history_required": 55,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 1,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_05_09",
+          "horse_number": "1",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_09",
+          "horse_number": "2",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_09",
+          "horse_number": "2",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_09",
+          "horse_number": "3",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_09",
+          "horse_number": "4",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_09",
+          "horse_number": "7",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_09",
+          "horse_number": "7",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_09",
+          "horse_number": "10",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_09",
+          "horse_number": "10",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_09",
+          "horse_number": "10",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_09",
+          "horse_number": "10",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_09",
+          "horse_number": "11",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "SOURCE_UNVERIFIED": 880
+      },
+      "field_missing_counts": {
+        "pace": 12
+      },
+      "source_audit_status": "UNVERIFIED",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 22,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_05_10",
+      "gate": "BLOCKED_MISSING_DATA",
+      "horse_count": 9,
+      "history_rows": 45,
+      "history_counts_verified": true,
+      "history_required": 45,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_05_10",
+          "horse_number": "1",
+          "run_index": "5",
+          "field": "position",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_10",
+          "horse_number": "1",
+          "run_index": "5",
+          "field": "time",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_10",
+          "horse_number": "1",
+          "run_index": "5",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_10",
+          "horse_number": "3",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "OBSERVED": 716,
+        "SOURCE_FIELD_MISSING": 3,
+        "NOT_MEASURED": 1
+      },
+      "field_missing_counts": {
+        "position": 1,
+        "time": 1,
+        "last_3f": 1,
+        "pace": 1
+      },
+      "source_audit_status": "VERIFIED_REPARSE",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 21,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_05_11",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 16,
+      "history_rows": 80,
+      "history_counts_verified": true,
+      "history_required": 80,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 5,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_05_11",
+          "horse_number": "1",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_11",
+          "horse_number": "1",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_11",
+          "horse_number": "2",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_11",
+          "horse_number": "2",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_11",
+          "horse_number": "8",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_11",
+          "horse_number": "9",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_11",
+          "horse_number": "12",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_11",
+          "horse_number": "13",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_11",
+          "horse_number": "13",
+          "run_index": "1",
+          "field": "odds",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_11",
+          "horse_number": "13",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_11",
+          "horse_number": "13",
+          "run_index": "2",
+          "field": "odds",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_11",
+          "horse_number": "13",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_11",
+          "horse_number": "13",
+          "run_index": "3",
+          "field": "odds",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_11",
+          "horse_number": "13",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_11",
+          "horse_number": "13",
+          "run_index": "4",
+          "field": "odds",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_05_11",
+          "horse_number": "13",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_11",
+          "horse_number": "13",
+          "run_index": "5",
+          "field": "odds",
+          "state": "missing",
+          "model_used": true
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "OBSERVED": 1251,
+        "SOURCE_FIELD_MISSING": 2,
+        "NOT_MEASURED": 5,
+        "SUBSTITUTED": 12,
+        "NOT_ATTEMPTED": 10
+      },
+      "field_missing_counts": {
+        "pace": 12,
+        "odds": 5
+      },
+      "source_audit_status": "UNVERIFIED",
+      "source_mismatch_count": 17,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {
+        "NAR_OBSERVATION_REQUIRES_SEPARATE_NAR_CHECK": 17
+      },
+      "potential_imputation_count": 39,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_05_12",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 13,
+      "history_rows": 56,
+      "history_counts_verified": true,
+      "history_required": 56,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 5,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_05_12",
+          "horse_number": "2",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_12",
+          "horse_number": "3",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_12",
+          "horse_number": "4",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_12",
+          "horse_number": "4",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_12",
+          "horse_number": "4",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_12",
+          "horse_number": "4",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_12",
+          "horse_number": "5",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_12",
+          "horse_number": "8",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_12",
+          "horse_number": "10",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_12",
+          "horse_number": "11",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_12",
+          "horse_number": "11",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_12",
+          "horse_number": "11",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_05_12",
+          "horse_number": "13",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "SOURCE_UNVERIFIED": 896
+      },
+      "field_missing_counts": {
+        "pace": 13
+      },
+      "source_audit_status": "UNVERIFIED",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 27,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_08_01",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 8,
+      "history_rows": 10,
+      "history_counts_verified": true,
+      "history_required": 10,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [],
+      "acquisition_coverage_counts": {
+        "OBSERVED": 160
+      },
+      "field_missing_counts": {},
+      "source_audit_status": "VERIFIED_REPARSE",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 16,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_08_02",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 10,
+      "history_rows": 19,
+      "history_counts_verified": true,
+      "history_required": 19,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_08_02",
+          "horse_number": "4",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "OBSERVED": 303,
+        "NOT_MEASURED": 1
+      },
+      "field_missing_counts": {
+        "pace": 1
+      },
+      "source_audit_status": "VERIFIED_REPARSE",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 20,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_08_03",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 8,
+      "history_rows": 13,
+      "history_counts_verified": true,
+      "history_required": 13,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [],
+      "acquisition_coverage_counts": {
+        "OBSERVED": 208
+      },
+      "field_missing_counts": {},
+      "source_audit_status": "VERIFIED_REPARSE",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 16,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 1
+    },
+    {
+      "race_id": "20261025_08_04",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 16,
+      "history_rows": 0,
+      "history_counts_verified": true,
+      "history_required": 0,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [],
+      "acquisition_coverage_counts": {},
+      "field_missing_counts": {},
+      "source_audit_status": "UNVERIFIED",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 48,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_08_05",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 8,
+      "history_rows": 0,
+      "history_counts_verified": true,
+      "history_required": 0,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [],
+      "acquisition_coverage_counts": {},
+      "field_missing_counts": {},
+      "source_audit_status": "UNVERIFIED",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 24,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_08_06",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 12,
+      "history_rows": 55,
+      "history_counts_verified": true,
+      "history_required": 55,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 4,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_08_06",
+          "horse_number": "1",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_06",
+          "horse_number": "4",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_06",
+          "horse_number": "5",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_06",
+          "horse_number": "7",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_06",
+          "horse_number": "7",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_06",
+          "horse_number": "7",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_06",
+          "horse_number": "8",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_06",
+          "horse_number": "8",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_06",
+          "horse_number": "8",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_06",
+          "horse_number": "8",
+          "run_index": "4",
+          "field": "odds",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_08_06",
+          "horse_number": "8",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_06",
+          "horse_number": "8",
+          "run_index": "5",
+          "field": "odds",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_08_06",
+          "horse_number": "9",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "SOURCE_UNVERIFIED": 880
+      },
+      "field_missing_counts": {
+        "pace": 11,
+        "odds": 2
+      },
+      "source_audit_status": "UNVERIFIED",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 26,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_08_07",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 9,
+      "history_rows": 42,
+      "history_counts_verified": true,
+      "history_required": 42,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [],
+      "acquisition_coverage_counts": {
+        "OBSERVED": 672
+      },
+      "field_missing_counts": {},
+      "source_audit_status": "VERIFIED_REPARSE",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 18,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_08_08",
+      "gate": "BLOCKED_MISSING_DATA",
+      "horse_count": 18,
+      "history_rows": 88,
+      "history_counts_verified": true,
+      "history_required": 88,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 1,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_08_08",
+          "horse_number": "11",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_08",
+          "horse_number": "11",
+          "run_index": "5",
+          "field": "odds",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_08_08",
+          "horse_number": "14",
+          "run_index": "3",
+          "field": "position",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_08_08",
+          "horse_number": "14",
+          "run_index": "3",
+          "field": "time",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_08_08",
+          "horse_number": "14",
+          "run_index": "3",
+          "field": "last_3f",
+          "state": "missing",
+          "model_used": true
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "OBSERVED": 1399,
+        "SUBSTITUTED": 4,
+        "NOT_ATTEMPTED": 2,
+        "SOURCE_FIELD_MISSING": 3
+      },
+      "field_missing_counts": {
+        "pace": 1,
+        "odds": 1,
+        "position": 1,
+        "time": 1,
+        "last_3f": 1
+      },
+      "source_audit_status": "UNVERIFIED",
+      "source_mismatch_count": 5,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {
+        "NAR_OBSERVATION_REQUIRES_SEPARATE_NAR_CHECK": 5
+      },
+      "potential_imputation_count": 41,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_08_09",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 9,
+      "history_rows": 18,
+      "history_counts_verified": true,
+      "history_required": 18,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_08_09",
+          "horse_number": "6",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "OBSERVED": 287,
+        "NOT_MEASURED": 1
+      },
+      "field_missing_counts": {
+        "pace": 1
+      },
+      "source_audit_status": "VERIFIED_REPARSE",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 18,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_08_10",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 15,
+      "history_rows": 75,
+      "history_counts_verified": true,
+      "history_required": 75,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 4,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "1",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "1",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "1",
+          "run_index": "5",
+          "field": "odds",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "2",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "3",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "5",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "5",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "5",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "5",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "6",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "6",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "6",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "7",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "7",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "8",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "8",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "9",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "10",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "10",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "10",
+          "run_index": "2",
+          "field": "odds",
+          "state": "missing",
+          "model_used": true
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "10",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "11",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "11",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "11",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "11",
+          "run_index": "4",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "12",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "12",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "13",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "14",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "14",
+          "run_index": "3",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        },
+        {
+          "race_id": "20261025_08_10",
+          "horse_number": "15",
+          "run_index": "2",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "SOURCE_UNVERIFIED": 1200
+      },
+      "field_missing_counts": {
+        "pace": 29,
+        "odds": 2
+      },
+      "source_audit_status": "UNVERIFIED",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 32,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_08_11",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 18,
+      "history_rows": 87,
+      "history_counts_verified": true,
+      "history_required": 87,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_08_11",
+          "horse_number": "13",
+          "run_index": "1",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "OBSERVED": 1391,
+        "NOT_MEASURED": 1
+      },
+      "field_missing_counts": {
+        "pace": 1
+      },
+      "source_audit_status": "VERIFIED_REPARSE",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 36,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    },
+    {
+      "race_id": "20261025_08_12",
+      "gate": "BLOCKED_UNAPPROVED_IMPUTATION",
+      "horse_count": 12,
+      "history_rows": 60,
+      "history_counts_verified": true,
+      "history_required": 60,
+      "history_shortfalls": 0,
+      "history_career_unverified_horses": 0,
+      "history_date_set_mismatches": 0,
+      "nar_source_checks_count": 0,
+      "nar_source_check_failures": 0,
+      "parser_substitution_rows": 0,
+      "historical_missing_fields": [
+        {
+          "race_id": "20261025_08_12",
+          "horse_number": "4",
+          "run_index": "5",
+          "field": "pace",
+          "state": "missing",
+          "model_used": false
+        }
+      ],
+      "acquisition_coverage_counts": {
+        "OBSERVED": 959,
+        "NOT_MEASURED": 1
+      },
+      "field_missing_counts": {
+        "pace": 1
+      },
+      "source_audit_status": "VERIFIED_REPARSE",
+      "source_mismatch_count": 0,
+      "unresolved_source_mismatch_count": 0,
+      "source_issue_classification_counts": {},
+      "potential_imputation_count": 24,
+      "leakage_container_risks": 0,
+      "horse_set_same": true,
+      "starter_set_same": true,
+      "nonstarters": 0
+    }
+  ],
+  "limitations": [
+    "Existing prediction audit requires current market fields deliberately excluded from post-event feature inputs; its gates remain blocked.",
+    "Existing source parser does not consume NAR observations or recognize the jump average-1F semantic correction. Separate source checks preserve these distinctions without overriding machine gates.",
+    "Original-source reparse shares production parsing logic and does not independently prove all parser completeness.",
+    "Post-event reconstruction does not prove pre-race capture. No fit, probabilities, EV, tickets, model promotion, or shared learning-state mutation performed."
+  ],
+  "next_action": "Use canonical v2 observations with explicit missingness for future research preparation; do not execute new model calculations with unapproved substitution.",
+  "semantic_missingness_verification": {
+    "path": "report/research/20261025_audit_20261027T125128Z/semantic_missingness_checks.json",
+    "sha256": "beeba5a067afabf18447a7fbb91ac5c233cac288e612fa4b89074c03f7b12d84",
+    "checked": 67,
+    "failures": 0
+  }
+}

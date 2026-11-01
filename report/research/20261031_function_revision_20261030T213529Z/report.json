@@ -1,0 +1,23 @@
+{
+  "status": "COMPLETE",
+  "changes": [
+    "原典見出しによる平均1Fと上がり3Fの分離",
+    "非観測・非該当・未確認をCSVと履歴結合まで保持し、36秒の再注入を防止",
+    "原典照合による非該当確認と未定義モデル入力の停止",
+    "先頭馬600mと位置取りの研究用接続、欠測理由と全履歴の保持"
+  ],
+  "source_validation": "report/research/20261031_source_semantics_validation_20261030T214014Z/validation.json",
+  "pace_study": "report/research/20261031_feature_pace_connection_20261030T213807Z/final_20261031T123150Z/summary.json",
+  "verification": "verification.json",
+  "production_model_promoted": false,
+  "accuracy_improvement": "未評価。別日での識別力・校正・意思決定の比較が必要。",
+  "prior_frozen_datasets_modified": false,
+  "pace_histories_retained": 371,
+  "pace_position_connected": 363,
+  "non_target_feature_cases_unchanged": 40,
+  "independent_review": {
+    "status": "OK",
+    "path": "report/research/20261031_function_revision_20261030T213529Z/review/function_revision_review.json",
+    "sha256": "318121044b2179f1f5e52f7c9029bcdce0bd792653043d1cdc757a7e995e7a2b"
+  }
+}

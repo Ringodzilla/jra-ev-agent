@@ -1,0 +1,59 @@
+import json,re,hashlib,sys,math
+from pathlib import Path
+from datetime import datetime,timezone
+from collections import Counter
+from urllib.parse import urlparse,parse_qs
+from bs4 import BeautifulSoup
+from jra_scraper.scraper import JRAScraper
+from jra_scraper.config import ScrapeConfig
+from jra_scraper.parser import JRAParser
+batch=Path('report/research/20261025_batch_20261027T125128Z')
+root=Path(sys.argv[1]) if len(sys.argv)>1 else Path('report/research')/('20261025_final_odds_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ'))
+(root/'raw').mkdir(parents=True,exist_ok=True);(root/'races').mkdir(exist_ok=True)
+print(str(root),flush=True)
+client=JRAScraper(ScrapeConfig(base_url='https://jra.jp',raw_dir=root/'raw',delay_seconds=.4,max_retries=2,timeout=30));parser=JRAParser('https://jra.jp')
+manifest=json.loads((root/'manifest.json').read_text()) if (root/'manifest.json').exists() else []
+progress={'role':'data_collector','target_date':'2026-10-25','purpose':'POST_EVENT_FINAL_ODDS_LABELS_ONLY','feature_input_allowed':False,'shared_learning_state_modified':False,'races':[]}
+keys=['win_place','wakuren','umaren','wide','umatan','sanrenpuku','sanrentan']
+tracks={'05':'東京','08':'京都','04':'新潟'}
+def save():
+ (root/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n');(root/'collection.json').write_text(json.dumps(progress,ensure_ascii=False,indent=2)+'\n')
+def fetch(url,params,name):
+ p=root/'raw'/name
+ if p.exists() and any(x.get('raw_path')==str(p) for x in manifest):
+  return p.read_text()
+ requested=datetime.now(timezone.utc).isoformat();h=client.fetch_post(url,params,raw_name=name,use_cache=False);received=datetime.now(timezone.utc).isoformat()
+ manifest.append({'url':url,'method':'POST','request_parameters':params,'requested_at':requested,'received_at':received,'raw_path':str(p),'raw_encoding':'utf-8 decoded via JRAScraper','sha256':hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else None,'response_received':bool(h)});save();return h or ''
+for result_url in json.loads((batch/'discovery.json').read_text())['results']:
+ cname=parse_qs(urlparse(result_url).query)['CNAME'][0];match=re.search(r'sde10(\d{2})2026\d{4}(\d{2})20261025/',cname)
+ if not match:raise ValueError(cname)
+ track=tracks[match[1]];num=int(match[2]);race_id=f'20261025_{track}_{num:02d}';out=root/'races'/(race_id+'.json')
+ if out.exists() and json.loads(out.read_text()).get('odds'):
+  x=json.loads(out.read_text());progress['races'].append({k:x[k] for k in ['race_id','status','counts','missing_bet_types','count_mismatches']});continue
+ upstream=json.loads((batch/'manifest.json').read_text());source=next((x for x in upstream if x['url']==result_url),None)
+ if source:
+  rb=Path(source['path']).read_bytes();assert hashlib.sha256(rb).hexdigest()==source['sha256'];h=rb.decode(source['encoding']);source_proof=source
+ else:
+  h=fetch(result_url.split('?')[0],{'cname':cname},race_id+'_result.html');source_proof={'own_raw':str(root/'raw'/(race_id+'_result.html'))}
+ initial=next((c for c in re.findall(r"doAction\('/JRADB/accessO.html',\s*'([^']+)'",h) if '20261025Z' in c and 'ou1' in c),'')
+ record={'race_id':race_id,'result_source':source_proof,'use':'LABELS_ONLY','feature_input_allowed':False,'pages':[],'odds':[],'errors':[]}
+ cnames={'win_place':initial};rows=[]
+ for kind in keys:
+  oc=cnames.get(kind,'')
+  if not oc:record['errors'].append(kind+':NO_OBSERVED_OFFICIAL_LINK');continue
+  html=fetch('https://jra.jp/JRADB/accessO.html',{'cname':oc},race_id+'_'+kind+'.html');soup=BeautifulSoup(html,'html.parser');text=soup.get_text(' ',strip=True)
+  title=' '.join(x.get_text(' ',strip=True) for x in soup.select('h1'))
+  identity_ok='2026年10月25日' in title and track in title and bool(re.search(r'\b'+str(num)+r'レース',title))
+  final='最終オッズ' in text
+  stamp=re.findall(r'\d{1,2}時\d{2}分現在オッズ',text)
+  record['pages'].append({'kind':kind,'cname':oc,'title':title,'identity_validated':identity_ok,'is_final_odds':final,'official_displayed_time':stamp,'official_displayed_time_reason':None if stamp else 'FINAL_ODDS_PAGE_HAS_NO_CLOCK_TIMESTAMP','raw_path':str(root/'raw'/(race_id+'_'+kind+'.html'))})
+  if not identity_ok or not final:record['errors'].append(kind+':IDENTITY_OR_FINAL_STATUS_UNCONFIRMED');continue
+  captured=next(x['received_at'] for x in manifest if x['request_parameters'].get('cname')==oc)
+  parsed=parser.parse_odds_page(html,race_id=race_id,source_cname=oc,captured_at=captured);rows+=parsed;cnames.update(parser.extract_odds_cnames(html))
+ record['odds']=list({(r['bet_type'],r['combination']):r for r in rows}.values());counts=dict(Counter(r['bet_type'] for r in record['odds']));record['counts']=counts
+ all_types=['win','place','wakuren','umaren','wide','umatan','sanrenpuku','sanrentan'];record['missing_bet_types']=[k for k in all_types if not counts.get(k)]
+ n=counts.get('win',0);expected={'win':n,'place':n,'umaren':math.comb(n,2),'wide':math.comb(n,2),'umatan':n*(n-1),'sanrenpuku':math.comb(n,3),'sanrentan':n*(n-1)*(n-2)} if n>=3 else {}
+ record['expected_active_horse_counts']=expected;record['count_mismatches']={k:{'expected':v,'observed':counts.get(k,0)} for k,v in expected.items() if counts.get(k,0)!=v};record['wakuren_count_validation']='PENDING_FRAME_COMPOSITION_VALIDATION'
+ record['status']='COLLECTED_PENDING_FRAME_AUDIT' if not record['errors'] and not record['count_mismatches'] and not record['missing_bet_types'] else 'NEEDS_AUDIT'
+ out.write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n');progress['races'].append({k:record[k] for k in ['race_id','status','counts','missing_bet_types','count_mismatches']});save();print(race_id,record['status'],counts,record['errors'],flush=True)
+progress['completed_races']=len(progress['races']);progress['status']='COLLECTION_FINISHED';save()

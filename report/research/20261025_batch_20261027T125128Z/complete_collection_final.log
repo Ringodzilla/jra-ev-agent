@@ -1,0 +1,35 @@
+/Users/konishi/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+COMPLETE 20261025_04_01 races 1 histories 24 errors 0
+COMPLETE 20261025_04_02 races 2 histories 44 errors 0
+COMPLETE 20261025_04_03 races 3 histories 68 errors 0
+COMPLETE 20261025_04_04 races 4 histories 132 errors 9
+COMPLETE 20261025_04_05 races 5 histories 132 errors 9
+Traceback (most recent call last):
+  File "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/complete_collection.py", line 205, in <module>
+    candidates.extend(urljoin('https://jra.jp',a['href']) for a in tr.select('a[href]') if 'accessS.html?CNAME=' in a['href'])
+  File "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/complete_collection.py", line 122, in result
+    obs = observations(html)
+  File "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/complete_collection.py", line 93, in observations
+    soup = BeautifulSoup(html, 'html.parser')
+  File "/Users/konishi/Library/Python/3.9/lib/python/site-packages/bs4/__init__.py", line 476, in __init__
+    self._feed()
+  File "/Users/konishi/Library/Python/3.9/lib/python/site-packages/bs4/__init__.py", line 661, in _feed
+    self.builder.feed(self.markup)
+  File "/Users/konishi/Library/Python/3.9/lib/python/site-packages/bs4/builder/_htmlparser.py", line 455, in feed
+    parser.feed(markup)
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/html/parser.py", line 110, in feed
+    self.goahead(0)
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/html/parser.py", line 170, in goahead
+    k = self.parse_starttag(i)
+  File "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/html/parser.py", line 344, in parse_starttag
+    self.handle_starttag(tag, attrs)
+  File "/Users/konishi/Library/Python/3.9/lib/python/site-packages/bs4/builder/_htmlparser.py", line 182, in handle_starttag
+    tagObj = self.soup.handle_starttag(
+  File "/Users/konishi/Library/Python/3.9/lib/python/site-packages/bs4/__init__.py", line 1035, in handle_starttag
+    tag = tag_class(
+  File "/Users/konishi/Library/Python/3.9/lib/python/site-packages/bs4/element.py", line 1893, in __init__
+    self.setup(parent, previous)
+  File "/Users/konishi/Library/Python/3.9/lib/python/site-packages/bs4/element.py", line 410, in setup
+    if self.previous_element is not None:
+KeyboardInterrupt

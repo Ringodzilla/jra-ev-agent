@@ -1,0 +1,209 @@
+{
+  "role": "reviewer",
+  "mode": "function_revision_review",
+  "status": "OK",
+  "approval_scope": "deterministic_source_semantics_and_fail_closed_input_contracts; research_observation_connection_only",
+  "reviewed_at": "2026-10-31T12:36:04.108003+00:00",
+  "reason": "Previously identified semantic defects were fixed and independently rechecked. Ordinary observed inputs retain common baseline outputs; source-bound pace facts are connected without unvalidated scoring coefficients.",
+  "fix": "No unresolved implementation fix required for this scope. Prediction-function promotion remains unevaluated.",
+  "target_files": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/jra_scraper/history_observations.py",
+      "sha256": "d5a5834ed09e940f906b7d7908b746ab564ed43fa3c2803cc9a2c8c1a77c9b3d"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/jra_scraper/parser.py",
+      "sha256": "bc1608b0196d45e69a0ef9bbbe5af78d660abcb569f38657c515e183e6626db0"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/jra_scraper/pipeline.py",
+      "sha256": "49b557b02fc091b6185306273319487a8245cba61c865b795e73d9b763805345"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/jra_scraper/validation.py",
+      "sha256": "8b415fcb12657fada27c469791744adf6c976a84ff5418cd0881e9c636d98f94"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/data_integrity.py",
+      "sha256": "f0af227eb8be189c6da470437a56ce670179f161da3e7f29803877c47571f121"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/acquisition_coverage.py",
+      "sha256": "a1b1761ec479217e11df89f8e321684e3b0bd22fcd33c2b67d7de07291d12ee6"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/feature_engineering.py",
+      "sha256": "e4d43cc1108777b4c3e179576a4c0546d3fdcc64f58d15d6a0ba7befb2db2740"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/history_pace_features.py",
+      "sha256": "5890d3291cfeb9ed18d354ad56ea834b6bfa35d5598e4491031db61282a9a5c7"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-environment-research/scripts/structural_features.py",
+      "sha256": "09c825b30e4dc9f3336b5353e2460ee7a8d341a337c5a2ac80ab112431ec752f"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/docs/history_observation_semantics.md",
+      "sha256": "50910c194d1c750f08b3a4efcaf9241a3b794138d266fcfad87a0e56470eb12a"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/tests/test_history_observations.py",
+      "sha256": "adf3aa9328a3fe9b55bba5907e82b5a80b0ef93b0b283b01706529df55d0ad35"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/tests/test_history_observation_features.py",
+      "sha256": "09576907b9c86d604f3457666f9e7a29d1ae0695b1c6d36b68d45f311de4bbac"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/tests/test_history_semantic_pipeline.py",
+      "sha256": "c49100f1c060e43fd4d86a5bc6cbea9fcc59321fbd904d9b70e747e6dbd990b7"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/tests/test_history_pace_features.py",
+      "sha256": "9bee174eda9315fbd2d083a85a9faeda6cc21a6c46806bf0e0c6698f283eb569"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/tests/test_history_pace.py",
+      "sha256": "3ca82d625ee306f68532ec3524e98eb600ef87b8b24fafab66de908f0731bc49"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/tests/test_retrospective_history_cutoff.py",
+      "sha256": "6224a95705a2c3e61a6b69b3ed796a7bfc69820f06e48153e76d22899d6c868d"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/tests/test_data_integrity.py",
+      "sha256": "daa545125a610ce1ae09fdd6c3ffed51c15b7d8da8fccd93bf10468b0f207924"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-environment-research/scripts/test_research_numeric.py",
+      "sha256": "90c6b7694a82a8427d65f2e9bb89f355db6a5c54e2dd25904d21730b4a0a02af"
+    }
+  ],
+  "evaluated_checks": [
+    {
+      "id": "official_units_and_nonapplicability",
+      "status": "PASS",
+      "finding": "Reviewer independently rechecked38 average1F,26 straight-corner NA and3 nonfinisher empty3F facts against hash-verified original HTML; numeric label digits and contradictory units do not become measurements."
+    },
+    {
+      "id": "semantic_pipeline_boundaries",
+      "status": "PASS",
+      "finding": "Embedded projection, merge, normalization and CSV preserve typed units/status/raw text. Explicit NA/NOT_OBSERVED/UNVERIFIED cannot be refilled by legacy36; NA-vs-number conflict retains raw values and stops common features."
+    },
+    {
+      "id": "source_not_caller_controls_na",
+      "status": "PASS",
+      "finding": "Current source audit reparses original statuses and checks declared semantic fields. Source-proven NA is acquisition-complete but unsupported for common numeric model; caller NA cannot hide a source observation."
+    },
+    {
+      "id": "strict_and_legacy_paths",
+      "status": "PASS",
+      "finding": "Strict research validates semantic state before historical-field projection; typed unavailable values fail closed before legacy36/0.5. Unmarked compatibility remains guarded by existing imputation/approval audit, not silently approved."
+    },
+    {
+      "id": "non_target_baseline",
+      "status": "PASS_WITH_SCOPE",
+      "finding": "40 artificial observed-flat/dirt cases have exact pre-change summary/feature outputs. No new production MC probability evaluation is claimed."
+    },
+    {
+      "id": "historical_diagnostics",
+      "status": "PASS_WITH_LIMITATIONS",
+      "finding": "Nearly uniform strict-baseline diagnosis reproduces old stored outputs. Old frozen run was not recertified under new code; no score multiplier was tuned to winners."
+    },
+    {
+      "id": "pace_connection",
+      "status": "PASS_RESEARCH_ONLY",
+      "finding": "All371 histories retained with363 exact leader600m/final-corner contexts. Eight unavailable contexts remain null with reasons; no interpolation, row exclusion, partial-history reweighting or aggregate score is defined."
+    },
+    {
+      "id": "nonfinisher_corner_scope",
+      "status": "PASS",
+      "finding": "Partial last-recorded corner positions are retained for nonfinishers, but final corner and interaction are null without verified numeric finish status. Official corner ranks are not positions at600m."
+    },
+    {
+      "id": "promotion_and_user_purpose",
+      "status": "PASS_RESEARCH_ONLY",
+      "finding": "Deterministic unit/availability corrections may enter collector/audit functions. Pace interactions remain uncalibrated source observations in seconds*ordinal units, with no production score or predictive-improvement claim."
+    }
+  ],
+  "reviewer_checks": {
+    "official_average1f": 38,
+    "official_straight_na": 26,
+    "official_nonfinisher_empty": 3,
+    "synthetic_semantic_cases": 14,
+    "baseline_artificial_exact_cases": 40,
+    "retained_research_histories": 371,
+    "complete_pace_corner_contexts": 363
+  },
+  "fix_history": [
+    {
+      "issue": "Unit digits1/3 treated as timings when no numeric measurement existed",
+      "resolution": "Labels removed before strict positive numerical match; missing/計不 remain non-observed; reviewer counterexamples PASS"
+    },
+    {
+      "issue": "Explicit average1F/3F unit conflicts",
+      "resolution": "UNVERIFIED/CONFLICTING_SECTIONAL_UNITS with raw/header retained; reviewer counterexamples PASS"
+    },
+    {
+      "issue": "Pipeline/CSV dropped semantic markers and reintroduced36",
+      "resolution": "Semantic columns survive projection/CSV, typed empty fields cannot receive legacy fallback, source-verified recovery only; reviewer merge/CSV checks PASS"
+    },
+    {
+      "issue": "Strict structural projection could discard semantic marker",
+      "resolution": "Public semantic-state validation runs before projection"
+    },
+    {
+      "issue": "Nonfinisher last recorded corner was labelled final corner",
+      "resolution": "Last recorded preserved but final corner/product null without verified completion"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_function_revision_20261030T213529Z/review/review_plan.json",
+      "sha256": "7b3273ddd740c0facb4c5a93bcc8b53839815202e51cee29adc9a1aaae5e9f43"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_function_revision_20261030T213529Z/review/independent_semantic_checks.json",
+      "sha256": "e28627b81f737b1f36f7f98dc0329a56e0113874d088eab3c30112f5e3295686"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_feature_pace_connection_20261030T213807Z/final_20261031T123150Z/summary.json",
+      "sha256": "f1becfee708637750328a4740909b1b73f8ce01742e1d96a51d723db0ad1c1fe"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_feature_pace_connection_20261030T213807Z/final_20261031T123150Z/verification.json",
+      "sha256": "7e8c8898b35394870bc8fbdb550ebc3a0a026a94b452ea657190b52598d6af84"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_feature_pace_connection_20261030T213807Z/final_20261031T123150Z/code_execution_snapshot.json",
+      "sha256": "37f93e957659243592c180c779571877da664783c8b578be7143e0b8a5e4cfa9"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_feature_pace_connection_20261030T213807Z/final_20261031T123150Z/unaffected_baseline_replay.json",
+      "sha256": "232e0445f91807d453ae08e3c9b3c99c8acb4283b82e736ed3fc59cb53e18b55"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_feature_pace_connection_20261030T213807Z/final_20261031T123150Z/baseline_diagnostics.json",
+      "sha256": "84655d879cc38c4e0ab3156ec93a0cf1108278704a2c9438b0caca2f32becf66"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_feature_pace_connection_20261030T213807Z/final_20261031T123150Z/history_pace_connection.json",
+      "sha256": "d71b9468b2926bd53dbc9ecb8c893fd635a33bc3b41378e67268fbb6f37a2293"
+    }
+  ],
+  "mechanical_validation_reported_by_parent": {
+    "check_quality": "68 passed",
+    "full_pytest": "963 passed",
+    "git_diff_check": "PASS"
+  },
+  "limitations": [
+    "This is not empirical validation of pace feature coefficients or production probability improvement.",
+    "Forty non-target cases are artificial regression inputs, not held-out prediction performance.",
+    "The existing in-sample ten-race diagnostics remain weak and near-uniform; no score scaling or environmental candidate promotion was performed.",
+    "Common numeric features reject source-proven unavailable observations until separately validated condition-specific features exist.",
+    "Historical artifacts remain immutable; changing collector/feature code invalidates their current-code freeze, not their recorded historical execution."
+  ],
+  "new_prediction_or_fit_executed_by_reviewer": false,
+  "production_model_promotion_approved": false
+}

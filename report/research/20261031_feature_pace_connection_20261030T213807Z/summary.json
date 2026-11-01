@@ -1,0 +1,34 @@
+{
+  "status": "FACT_CONNECTION_AND_SAVED_DIAGNOSTICS_COMPLETE",
+  "role": "analyzer",
+  "created_at": "2026-10-30T21:41:17.943861+00:00",
+  "artifacts": {
+    "baseline_diagnostics.json": {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_feature_pace_connection_20261030T213807Z/baseline_diagnostics.json",
+      "sha256": "84655d879cc38c4e0ab3156ec93a0cf1108278704a2c9438b0caca2f32becf66"
+    },
+    "unaffected_baseline_replay.json": {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_feature_pace_connection_20261030T213807Z/unaffected_baseline_replay.json",
+      "sha256": "9f41e1809ce233a4e42d4c4570b0526dbd55c48aaa996beb3157e8cf2ba36998"
+    },
+    "history_pace_connection.json": {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_feature_pace_connection_20261030T213807Z/history_pace_connection.json",
+      "sha256": "08ab0ae5e180266cdc57961707a423e1c08b3b4a8d9720ef7235c82437f6f396"
+    },
+    "baseline_snapshot.json": {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_feature_pace_connection_20261030T213807Z/baseline_snapshot.json",
+      "sha256": "6abf0dd5a94bf20207b1b4026eec141d59574b7054c80b5074d80c80a66b285e"
+    }
+  },
+  "baseline_new_probability_or_fit_executed": false,
+  "production_score_changed": false,
+  "pace_histories_retained": 371,
+  "pace_position_complete_contexts": 363,
+  "non_target_artificial_cases_unchanged": 40,
+  "model_promotion": "NOT_EVALUATED",
+  "limitations": [
+    "Saved in-sample research diagnostics are not production MC evaluation.",
+    "Raw pace-position products have seconds*ordinal units; no cross-distance comparability or predictive contribution has been established.",
+    "No incomplete history is dropped or reweighted; no aggregate model score is defined."
+  ]
+}

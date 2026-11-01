@@ -1,0 +1,21 @@
+{
+  "command": "scripts/check_quality.sh",
+  "exit_code": 0,
+  "passed": 68,
+  "warnings": 1,
+  "log": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/data/check_quality_resumed.log",
+    "sha256": "6974aca4eb8a1b1aba3a4b1eb81d5f42e3aecb2bbb4f5204af60501ee73ac856"
+  },
+  "frozen_research_manifest": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/skill_runs/training_01/manifest.json",
+    "sha256": "1c996011f88e58b2210fd995447e8b22f12fadb925e2fe24cecd3746a18ad128"
+  },
+  "previous_full_suite": {
+    "passed": 896,
+    "reference": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_training_20261028T040209Z/quality_checks.json",
+    "rerun_on_resume": false,
+    "reason": "Code freeze unchanged"
+  },
+  "recorded_at": "2026-10-30T00:46:21.238045+00:00"
+}

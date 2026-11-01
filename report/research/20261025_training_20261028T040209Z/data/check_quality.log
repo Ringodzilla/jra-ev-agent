@@ -1,0 +1,23 @@
+== Ruff ==
+All checks passed!
+
+== Architecture Boundaries ==
+Architecture boundary check passed.
+
+== Feature Leakage ==
+Leakage check passed.
+
+== Skill Workflow Contracts ==
+Skill workflow contracts: OK
+
+== Skill Gate Regression Tests ==
+....................................................................     [100%]
+=============================== warnings summary ===============================
+tests/test_skill_stage_contracts.py::test_all_stages_with_real_source_and_legitimate_no_go[final-OK]
+  /Users/konishi/Documents/Playground/projects/jra-ev-agent/.venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+68 passed, 1 warning in 2.84s
+
+quality checks: OK

@@ -1,0 +1,52 @@
+import requests,json,re,hashlib,time,sys
+from pathlib import Path
+from datetime import datetime,timezone
+from urllib.parse import urljoin,urlencode,parse_qs,urlparse
+from bs4 import BeautifulSoup
+root=Path(sys.argv[1]) if len(sys.argv)>1 else Path('report/research')/('20261025_nar_recovery_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ'));(root/'raw').mkdir(parents=True,exist_ok=True)
+targets=json.loads(Path('report/research/20261025_batch_20261027T125128Z/nar_recovery_targets.json').read_text());manifest=json.loads((root/'manifest.json').read_text()) if (root/'manifest.json').exists() else [];observations=[];cache={};session=requests.Session();base='https://sp.keiba.go.jp'
+for x in manifest:cache[x['url']]=(BeautifulSoup(Path(x['path']).read_bytes().decode(x['encoding']),'html.parser'),x)
+print(root,flush=True)
+def save():
+ (root/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n');(root/'observations.json').write_text(json.dumps({'role':'data_collector','target_date':'2026-10-25','imputations':[],'fit_executed':False,'observations':observations,'count':len(observations)},ensure_ascii=False,indent=2)+'\n')
+def fetch(url):
+ if url in cache:return cache[url]
+ requested=datetime.now(timezone.utc).isoformat();r=session.get(url,timeout=35);r.raise_for_status();stamp=datetime.now(timezone.utc).isoformat();r.encoding=r.apparent_encoding;p=root/'raw'/(hashlib.sha256(url.encode()).hexdigest()+'.html');p.write_bytes(r.content);source={'url':url,'path':str(p),'sha256':hashlib.sha256(r.content).hexdigest(),'captured_at':stamp,'requested_at':requested,'method':'GET','encoding':r.encoding,'http_status':r.status_code,'response_url':r.url};manifest.append(source);cache[url]=(BeautifulSoup(r.text,'html.parser'),source);save();time.sleep(.4);return cache[url]
+form,form_source=fetch(base+'/KeibaWeb/DataRoom/DataRoomTop')
+for name in dict.fromkeys(t['horse_name'] for t in targets):
+ ts=[t for t in targets if t['horse_name']==name];birth=re.search(r'(20\d{8})',ts[0]['horse_id']);birth=birth[1][:4] if birth else '*'
+ try:
+  params={'k_horseName':name,'k_horseNameCondition':'start','k_dataKind':'*','k_activeCode':'2','k_birthYear':birth,'k_belong':'*'};search,ss=fetch(base+'/KeibaWeb/DataRoom/RaceHorseList?'+urlencode(params));matches=[a for a in search.select('a[href*="/HorseMarkInfo?"]') if a.get_text(strip=True)==name]
+  if search.select_one('table.HorseMarkInfo_table'):
+   hp,hs=search,ss
+  elif len(matches)==1:
+   hp,hs=fetch(urljoin(base,matches[0]['href']))
+  else:raise ValueError('HORSE_SEARCH_MATCH_COUNT_'+str(len(matches)))
+  hrows=hp.select('table.HorseMarkInfo_table tr')
+  for t in ts:
+   date=t['history']['normalized_date'];valid=[]
+   for tr in hrows:
+    cells=tr.select('td')
+    if not cells:continue
+    vals=[x.get_text(' ',strip=True) for x in cells]
+    if vals[0].replace('/','-')==date and t['history']['course'] in vals[1]:valid.append((tr,vals))
+   out={'race_id':t['race_id'],'horse_name':name,'horse_id':t['horse_id'],'date':date,'jra_source':t['jra_source'],'nar_search_source':ss,'nar_horse_source':hs,'status':'UNRESOLVED'}
+   if len(valid)!=1:out['reason']='DATE_COURSE_MATCH_COUNT_'+str(len(valid));observations.append(out);save();continue
+   tr,vals=valid[0];out['observed_course']=vals[1];a=tr.select_one('a[href*="RaceMarkTable"]')
+   if not a:out['reason']='OFFICIAL_RACE_LINK_ABSENT';observations.append(out);save();continue
+   url=urljoin(base,a['href']);rs,source=fetch(url);rt=next((r for r in rs.select('tr') if r.select_one('td.horseName') and r.select_one('td.horseName').get_text(strip=True)==name),None)
+   if rt is None:out['reason']='HORSE_NOT_IN_OFFICIAL_RESULT';observations.append(out);save();continue
+   cells=rt.select('td');v=[x.get_text(' ',strip=True) for x in cells];headline=' '.join(x.get_text(' ',strip=True) for x in rs.select('h4'));md=re.fullmatch(r'(\d{4})-(\d{2})-(\d{2})',date);date_text=f'{int(md[1])}年{int(md[2])}月{int(md[3])}日';identity=date_text in headline and vals[1] in re.sub(r'\s+','',headline)
+   if not identity:raise ValueError('RACE_IDENTITY_MISMATCH '+url)
+   text=rs.get_text(' ',strip=True);weather=re.search(r'天候[：:]\s*([^\s]+)',text);condition=re.search(r'馬場[：:]\s*([^\s]+)',text)
+   fields={'weather':weather[1] if weather else None,'track_condition':condition[1] if condition else None,'position':v[0],'frame_number':v[1],'horse_number':v[2],'weight':v[6],'jockey':v[7],'trainer':v[8],'body_weight':v[9],'time':v[10],'margin':v[11],'last_3f':v[12],'passing_order':v[13],'popularity':v[14],'odds':v[15] if len(v)>15 else None}
+   timehead=next((x for x in rs.select('h4') if x.get_text(strip=True)=='タイム'),None)
+   time_text=timehead.find_next('table').get_text(' ',strip=True) if timehead and timehead.find_next('table') else None
+   out.update(status='MATCHED_OFFICIAL_RESULT',matched_horse_number=v[2],fields=fields,source=source,raw_row_html=str(rt),nar_horse_row_values=vals,official_time_table_text=time_text,pace_600m=None,pace_600m_reason='NO_EXACT_INITIAL_600M_OBSERVATION_PARSED_NO_INTERPOLATION',match_evidence={'horse_name_exact':True,'birth_year_search':birth,'date_and_course_in_official_result_heading':True,'observed_result_link':a['href'],'headline':headline,'jra_position_matches':v[0]==t['history']['position'],'jra_distance':t['history']['distance']});observations.append(out);save();print(name,date,'MATCHED',fields,flush=True)
+ except Exception as e:
+  print(name,'ERROR',str(e),flush=True)
+  done={(x['horse_id'],x['date']) for x in observations}
+  for t in ts:
+   if (t['horse_id'],t['history']['normalized_date']) not in done:observations.append({'race_id':t['race_id'],'horse_name':name,'horse_id':t['horse_id'],'date':t['history']['normalized_date'],'status':'UNRESOLVED','reason':str(e)})
+  save()
+print('DONE',len(observations),'matched',sum(x['status']=='MATCHED_OFFICIAL_RESULT' for x in observations),flush=True)

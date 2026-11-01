@@ -1,0 +1,38 @@
+{
+  "status": "FACT_CONNECTION_AND_SAVED_DIAGNOSTICS_COMPLETE",
+  "role": "analyzer",
+  "created_at": "2026-10-31T12:32:39.121730+00:00",
+  "artifacts": {
+    "baseline_diagnostics.json": {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_feature_pace_connection_20261030T213807Z/final_20261031T123150Z/baseline_diagnostics.json",
+      "sha256": "84655d879cc38c4e0ab3156ec93a0cf1108278704a2c9438b0caca2f32becf66"
+    },
+    "unaffected_baseline_replay.json": {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_feature_pace_connection_20261030T213807Z/final_20261031T123150Z/unaffected_baseline_replay.json",
+      "sha256": "232e0445f91807d453ae08e3c9b3c99c8acb4283b82e736ed3fc59cb53e18b55"
+    },
+    "history_pace_connection.json": {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_feature_pace_connection_20261030T213807Z/final_20261031T123150Z/history_pace_connection.json",
+      "sha256": "d71b9468b2926bd53dbc9ecb8c893fd635a33bc3b41378e67268fbb6f37a2293"
+    },
+    "baseline_snapshot.json": {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_feature_pace_connection_20261030T213807Z/final_20261031T123150Z/baseline_snapshot.json",
+      "sha256": "6abf0dd5a94bf20207b1b4026eec141d59574b7054c80b5074d80c80a66b285e"
+    },
+    "code_execution_snapshot.json": {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261031_feature_pace_connection_20261030T213807Z/final_20261031T123150Z/code_execution_snapshot.json",
+      "sha256": "37f93e957659243592c180c779571877da664783c8b578be7143e0b8a5e4cfa9"
+    }
+  },
+  "baseline_new_probability_or_fit_executed": false,
+  "production_score_changed": false,
+  "pace_histories_retained": 371,
+  "pace_position_complete_contexts": 363,
+  "non_target_artificial_cases_unchanged": 40,
+  "model_promotion": "NOT_EVALUATED",
+  "limitations": [
+    "Saved in-sample research diagnostics are not production MC evaluation.",
+    "Raw pace-position products have seconds*ordinal units; no cross-distance comparability or predictive contribution has been established.",
+    "No incomplete history is dropped or reweighted; no aggregate model score is defined."
+  ]
+}

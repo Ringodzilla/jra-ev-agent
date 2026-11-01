@@ -1,0 +1,1332 @@
+{
+  "schema_version": 1,
+  "record_type": "collected_raw_references",
+  "collected": {
+    "rows": [],
+    "entries": [
+      {
+        "race_id": "20261025_05_06",
+        "race_name": "メイクデビュー東京",
+        "horse_id": "pw01dud002024105324/18",
+        "horse_name": "リアスドール",
+        "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105324/18",
+        "frame_number": "1",
+        "horse_number": "1",
+        "current_jockey": "小崎 綾也",
+        "assigned_weight": "55.0",
+        "current_body_weight": "426",
+        "body_weight_change": "",
+        "body_weight_status": "published",
+        "target_track": "東京",
+        "target_race_date": "2026-10-25",
+        "target_race_number": "06",
+        "target_surface": "芝",
+        "target_distance": "1400",
+        "target_weather": "曇",
+        "target_track_condition": "稍重",
+        "target_conditions_captured_at": "2026-10-27T12:55:51.451096+00:00",
+        "horse_country": "",
+        "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105324/18",
+        "history_count": 0,
+        "career_starts": 0,
+        "history_missing_fields": [],
+        "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+        "career_source": {
+          "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105324/18",
+          "method": "POST",
+          "request_parameters": {
+            "cname": "pw01dud002024105324/18"
+          },
+          "captured_at": "2026-10-27T12:55:53.168155+00:00",
+          "sha256": "1e46e81c46be01224ca2e608a5a6c55ba4358907992464b5642974cc8959e20f",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/5d49fcbe1240d537f786308e916670681fb95d61d5d57caaf05d7f61eae3b76b.html",
+          "encoding": "SHIFT_JIS"
+        },
+        "entry_status": "STARTER",
+        "target_condition_provenance": {
+          "type": "post_event_official_reconstruction",
+          "source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1005202604090620261025/2D",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01sde1005202604090620261025/2D"
+            },
+            "captured_at": "2026-10-27T12:55:51.451096+00:00",
+            "sha256": "70741c4bacc60a8e7b62cd1aac4f7c08a6f5ac57cc67d5c73453fdf75a7e7575",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/8de759d55c62bc1369d81ece5280285dde4a84de6193e41e41b7f9a58836e1c6.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "pre_race_capture_proven": false
+        }
+      },
+      {
+        "race_id": "20261025_05_06",
+        "race_name": "メイクデビュー東京",
+        "horse_id": "pw01dud002024101952/CC",
+        "horse_name": "ボルトライン",
+        "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024101952/CC",
+        "frame_number": "1",
+        "horse_number": "2",
+        "current_jockey": "佐々木 大輔",
+        "assigned_weight": "55.0",
+        "current_body_weight": "434",
+        "body_weight_change": "",
+        "body_weight_status": "published",
+        "target_track": "東京",
+        "target_race_date": "2026-10-25",
+        "target_race_number": "06",
+        "target_surface": "芝",
+        "target_distance": "1400",
+        "target_weather": "曇",
+        "target_track_condition": "稍重",
+        "target_conditions_captured_at": "2026-10-27T12:55:51.451096+00:00",
+        "horse_country": "",
+        "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024101952/CC",
+        "history_count": 0,
+        "career_starts": 0,
+        "history_missing_fields": [],
+        "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+        "career_source": {
+          "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024101952/CC",
+          "method": "POST",
+          "request_parameters": {
+            "cname": "pw01dud002024101952/CC"
+          },
+          "captured_at": "2026-10-27T12:55:54.139424+00:00",
+          "sha256": "bb6c12886362af219105a4958ac93219d29473a64ccb99ea38964b5bad1d69e5",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/b49e8d27537e9dd81aafd9d7cf2d681dac8dcbd2da4f76d6788d2d68b2cbc4a0.html",
+          "encoding": "SHIFT_JIS"
+        },
+        "entry_status": "STARTER",
+        "target_condition_provenance": {
+          "type": "post_event_official_reconstruction",
+          "source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1005202604090620261025/2D",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01sde1005202604090620261025/2D"
+            },
+            "captured_at": "2026-10-27T12:55:51.451096+00:00",
+            "sha256": "70741c4bacc60a8e7b62cd1aac4f7c08a6f5ac57cc67d5c73453fdf75a7e7575",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/8de759d55c62bc1369d81ece5280285dde4a84de6193e41e41b7f9a58836e1c6.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "pre_race_capture_proven": false
+        }
+      },
+      {
+        "race_id": "20261025_05_06",
+        "race_name": "メイクデビュー東京",
+        "horse_id": "pw01dud002024105044/A5",
+        "horse_name": "タカチャン",
+        "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105044/A5",
+        "frame_number": "2",
+        "horse_number": "3",
+        "current_jockey": "石橋 脩",
+        "assigned_weight": "55.0",
+        "current_body_weight": "480",
+        "body_weight_change": "",
+        "body_weight_status": "published",
+        "target_track": "東京",
+        "target_race_date": "2026-10-25",
+        "target_race_number": "06",
+        "target_surface": "芝",
+        "target_distance": "1400",
+        "target_weather": "曇",
+        "target_track_condition": "稍重",
+        "target_conditions_captured_at": "2026-10-27T12:55:51.451096+00:00",
+        "horse_country": "",
+        "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105044/A5",
+        "history_count": 0,
+        "career_starts": 0,
+        "history_missing_fields": [],
+        "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+        "career_source": {
+          "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105044/A5",
+          "method": "POST",
+          "request_parameters": {
+            "cname": "pw01dud002024105044/A5"
+          },
+          "captured_at": "2026-10-27T12:55:54.973933+00:00",
+          "sha256": "f38cf387b5d76138cf543828ddab26d96df06e42e378553599b1c185d79b8898",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/b47ca143f8edcb0a3c04899b2c15649ec85a4e44280c0deb5eb407b9580c89b1.html",
+          "encoding": "SHIFT_JIS"
+        },
+        "entry_status": "STARTER",
+        "target_condition_provenance": {
+          "type": "post_event_official_reconstruction",
+          "source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1005202604090620261025/2D",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01sde1005202604090620261025/2D"
+            },
+            "captured_at": "2026-10-27T12:55:51.451096+00:00",
+            "sha256": "70741c4bacc60a8e7b62cd1aac4f7c08a6f5ac57cc67d5c73453fdf75a7e7575",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/8de759d55c62bc1369d81ece5280285dde4a84de6193e41e41b7f9a58836e1c6.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "pre_race_capture_proven": false
+        }
+      },
+      {
+        "race_id": "20261025_05_06",
+        "race_name": "メイクデビュー東京",
+        "horse_id": "pw01dud002024105541/41",
+        "horse_name": "ミコアイランド",
+        "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105541/41",
+        "frame_number": "2",
+        "horse_number": "4",
+        "current_jockey": "大野 拓弥",
+        "assigned_weight": "55.0",
+        "current_body_weight": "420",
+        "body_weight_change": "",
+        "body_weight_status": "published",
+        "target_track": "東京",
+        "target_race_date": "2026-10-25",
+        "target_race_number": "06",
+        "target_surface": "芝",
+        "target_distance": "1400",
+        "target_weather": "曇",
+        "target_track_condition": "稍重",
+        "target_conditions_captured_at": "2026-10-27T12:55:51.451096+00:00",
+        "horse_country": "",
+        "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105541/41",
+        "history_count": 0,
+        "career_starts": 0,
+        "history_missing_fields": [],
+        "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+        "career_source": {
+          "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105541/41",
+          "method": "POST",
+          "request_parameters": {
+            "cname": "pw01dud002024105541/41"
+          },
+          "captured_at": "2026-10-27T12:55:55.773905+00:00",
+          "sha256": "5493088229d9b0f3b80ef2fa6e7848230ed1b205739a887e490ef7994f637677",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/7b714fc13630bd234e8d1b8177ec5242dec69cf03f45b1557a6d447191a6cdaa.html",
+          "encoding": "SHIFT_JIS"
+        },
+        "entry_status": "STARTER",
+        "target_condition_provenance": {
+          "type": "post_event_official_reconstruction",
+          "source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1005202604090620261025/2D",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01sde1005202604090620261025/2D"
+            },
+            "captured_at": "2026-10-27T12:55:51.451096+00:00",
+            "sha256": "70741c4bacc60a8e7b62cd1aac4f7c08a6f5ac57cc67d5c73453fdf75a7e7575",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/8de759d55c62bc1369d81ece5280285dde4a84de6193e41e41b7f9a58836e1c6.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "pre_race_capture_proven": false
+        }
+      },
+      {
+        "race_id": "20261025_05_06",
+        "race_name": "メイクデビュー東京",
+        "horse_id": "pw01dud002024107425/9A",
+        "horse_name": "ナンヨーカラフル",
+        "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024107425/9A",
+        "frame_number": "3",
+        "horse_number": "5",
+        "current_jockey": "☆ 長浜 鴻緒",
+        "assigned_weight": "54.0",
+        "current_body_weight": "446",
+        "body_weight_change": "",
+        "body_weight_status": "published",
+        "target_track": "東京",
+        "target_race_date": "2026-10-25",
+        "target_race_number": "06",
+        "target_surface": "芝",
+        "target_distance": "1400",
+        "target_weather": "曇",
+        "target_track_condition": "稍重",
+        "target_conditions_captured_at": "2026-10-27T12:55:51.451096+00:00",
+        "horse_country": "",
+        "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024107425/9A",
+        "history_count": 0,
+        "career_starts": 0,
+        "history_missing_fields": [],
+        "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+        "career_source": {
+          "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024107425/9A",
+          "method": "POST",
+          "request_parameters": {
+            "cname": "pw01dud002024107425/9A"
+          },
+          "captured_at": "2026-10-27T12:55:56.613265+00:00",
+          "sha256": "8dddcf40e19235da1acd4e248f62fd05a7d7f08be9f48b2363191cb108ca599a",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/7f813be7392fafb701bf03bfde3f1a2382a3b361dabc75b6b2024ea95e151588.html",
+          "encoding": "CP932"
+        },
+        "entry_status": "STARTER",
+        "target_condition_provenance": {
+          "type": "post_event_official_reconstruction",
+          "source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1005202604090620261025/2D",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01sde1005202604090620261025/2D"
+            },
+            "captured_at": "2026-10-27T12:55:51.451096+00:00",
+            "sha256": "70741c4bacc60a8e7b62cd1aac4f7c08a6f5ac57cc67d5c73453fdf75a7e7575",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/8de759d55c62bc1369d81ece5280285dde4a84de6193e41e41b7f9a58836e1c6.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "pre_race_capture_proven": false
+        }
+      },
+      {
+        "race_id": "20261025_05_06",
+        "race_name": "メイクデビュー東京",
+        "horse_id": "pw01dud002024101691/06",
+        "horse_name": "スタニングヨシノ",
+        "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024101691/06",
+        "frame_number": "3",
+        "horse_number": "6",
+        "current_jockey": "鮫島 克駿",
+        "assigned_weight": "55.0",
+        "current_body_weight": "432",
+        "body_weight_change": "",
+        "body_weight_status": "published",
+        "target_track": "東京",
+        "target_race_date": "2026-10-25",
+        "target_race_number": "06",
+        "target_surface": "芝",
+        "target_distance": "1400",
+        "target_weather": "曇",
+        "target_track_condition": "稍重",
+        "target_conditions_captured_at": "2026-10-27T12:55:51.451096+00:00",
+        "horse_country": "",
+        "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024101691/06",
+        "history_count": 0,
+        "career_starts": 0,
+        "history_missing_fields": [],
+        "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+        "career_source": {
+          "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024101691/06",
+          "method": "POST",
+          "request_parameters": {
+            "cname": "pw01dud002024101691/06"
+          },
+          "captured_at": "2026-10-27T12:55:57.422343+00:00",
+          "sha256": "e91ac6a6f84e22cadbcbc6f10a182743642d27f5efbb9534d0f9ae95db1ddb69",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/fd81d62fa8f0be3d1c95bb885ca939e3f625c077b54b68a7e4067ce960740691.html",
+          "encoding": "CP932"
+        },
+        "entry_status": "STARTER",
+        "target_condition_provenance": {
+          "type": "post_event_official_reconstruction",
+          "source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1005202604090620261025/2D",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01sde1005202604090620261025/2D"
+            },
+            "captured_at": "2026-10-27T12:55:51.451096+00:00",
+            "sha256": "70741c4bacc60a8e7b62cd1aac4f7c08a6f5ac57cc67d5c73453fdf75a7e7575",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/8de759d55c62bc1369d81ece5280285dde4a84de6193e41e41b7f9a58836e1c6.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "pre_race_capture_proven": false
+        }
+      },
+      {
+        "race_id": "20261025_05_06",
+        "race_name": "メイクデビュー東京",
+        "horse_id": "pw01dud002024108029/91",
+        "horse_name": "レインワルティア",
+        "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024108029/91",
+        "frame_number": "4",
+        "horse_number": "7",
+        "current_jockey": "横山 武史",
+        "assigned_weight": "55.0",
+        "current_body_weight": "420",
+        "body_weight_change": "",
+        "body_weight_status": "published",
+        "target_track": "東京",
+        "target_race_date": "2026-10-25",
+        "target_race_number": "06",
+        "target_surface": "芝",
+        "target_distance": "1400",
+        "target_weather": "曇",
+        "target_track_condition": "稍重",
+        "target_conditions_captured_at": "2026-10-27T12:55:51.451096+00:00",
+        "horse_country": "",
+        "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024108029/91",
+        "history_count": 0,
+        "career_starts": 0,
+        "history_missing_fields": [],
+        "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+        "career_source": {
+          "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024108029/91",
+          "method": "POST",
+          "request_parameters": {
+            "cname": "pw01dud002024108029/91"
+          },
+          "captured_at": "2026-10-27T12:55:59.055660+00:00",
+          "sha256": "17b046d238772db6783f4347dad969bdde6b0128e35f27c2f2e3daf0b38adfeb",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/82183d20d0f19464f63a0daf730ab2fef66e2814675dbc3390925915ca9bfdb8.html",
+          "encoding": "SHIFT_JIS"
+        },
+        "entry_status": "STARTER",
+        "target_condition_provenance": {
+          "type": "post_event_official_reconstruction",
+          "source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1005202604090620261025/2D",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01sde1005202604090620261025/2D"
+            },
+            "captured_at": "2026-10-27T12:55:51.451096+00:00",
+            "sha256": "70741c4bacc60a8e7b62cd1aac4f7c08a6f5ac57cc67d5c73453fdf75a7e7575",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/8de759d55c62bc1369d81ece5280285dde4a84de6193e41e41b7f9a58836e1c6.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "pre_race_capture_proven": false
+        }
+      },
+      {
+        "race_id": "20261025_05_06",
+        "race_name": "メイクデビュー東京",
+        "horse_id": "pw01dud002024105510/9E",
+        "horse_name": "ゴルゴーローズ",
+        "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105510/9E",
+        "frame_number": "4",
+        "horse_number": "8",
+        "current_jockey": "内田 博幸",
+        "assigned_weight": "55.0",
+        "current_body_weight": "468",
+        "body_weight_change": "",
+        "body_weight_status": "published",
+        "target_track": "東京",
+        "target_race_date": "2026-10-25",
+        "target_race_number": "06",
+        "target_surface": "芝",
+        "target_distance": "1400",
+        "target_weather": "曇",
+        "target_track_condition": "稍重",
+        "target_conditions_captured_at": "2026-10-27T12:55:51.451096+00:00",
+        "horse_country": "",
+        "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105510/9E",
+        "history_count": 0,
+        "career_starts": 0,
+        "history_missing_fields": [],
+        "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+        "career_source": {
+          "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105510/9E",
+          "method": "POST",
+          "request_parameters": {
+            "cname": "pw01dud002024105510/9E"
+          },
+          "captured_at": "2026-10-27T12:55:59.923411+00:00",
+          "sha256": "6176b1b8822a4cc9e2f32906ea1c57fa4f470fd34c1a5db84a2b80567bb98bd4",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/1716f476f4ac943964e1ad4bd1cd7acbeffb7148fe320dad905e4e0e519ef07e.html",
+          "encoding": "SHIFT_JIS"
+        },
+        "entry_status": "STARTER",
+        "target_condition_provenance": {
+          "type": "post_event_official_reconstruction",
+          "source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1005202604090620261025/2D",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01sde1005202604090620261025/2D"
+            },
+            "captured_at": "2026-10-27T12:55:51.451096+00:00",
+            "sha256": "70741c4bacc60a8e7b62cd1aac4f7c08a6f5ac57cc67d5c73453fdf75a7e7575",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/8de759d55c62bc1369d81ece5280285dde4a84de6193e41e41b7f9a58836e1c6.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "pre_race_capture_proven": false
+        }
+      },
+      {
+        "race_id": "20261025_05_06",
+        "race_name": "メイクデビュー東京",
+        "horse_id": "pw01dud002024104671/B3",
+        "horse_name": "ビーセルフィッシュ",
+        "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104671/B3",
+        "frame_number": "5",
+        "horse_number": "9",
+        "current_jockey": "古川 吉洋",
+        "assigned_weight": "55.0",
+        "current_body_weight": "414",
+        "body_weight_change": "",
+        "body_weight_status": "published",
+        "target_track": "東京",
+        "target_race_date": "2026-10-25",
+        "target_race_number": "06",
+        "target_surface": "芝",
+        "target_distance": "1400",
+        "target_weather": "曇",
+        "target_track_condition": "稍重",
+        "target_conditions_captured_at": "2026-10-27T12:55:51.451096+00:00",
+        "horse_country": "",
+        "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104671/B3",
+        "history_count": 0,
+        "career_starts": 0,
+        "history_missing_fields": [],
+        "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+        "career_source": {
+          "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104671/B3",
+          "method": "POST",
+          "request_parameters": {
+            "cname": "pw01dud002024104671/B3"
+          },
+          "captured_at": "2026-10-27T12:56:00.897241+00:00",
+          "sha256": "4b554f4fe9595128f4ffe345881b80c347ed7815a6b909a46a6de0a68cbe96ec",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/a976a6b1c65c8ae4234cc45fd63c46414d7ec5acd25732329636ea49701dbef1.html",
+          "encoding": "SHIFT_JIS"
+        },
+        "entry_status": "STARTER",
+        "target_condition_provenance": {
+          "type": "post_event_official_reconstruction",
+          "source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1005202604090620261025/2D",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01sde1005202604090620261025/2D"
+            },
+            "captured_at": "2026-10-27T12:55:51.451096+00:00",
+            "sha256": "70741c4bacc60a8e7b62cd1aac4f7c08a6f5ac57cc67d5c73453fdf75a7e7575",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/8de759d55c62bc1369d81ece5280285dde4a84de6193e41e41b7f9a58836e1c6.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "pre_race_capture_proven": false
+        }
+      },
+      {
+        "race_id": "20261025_05_06",
+        "race_name": "メイクデビュー東京",
+        "horse_id": "pw01dud002024104407/93",
+        "horse_name": "ニャンコ",
+        "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104407/93",
+        "frame_number": "5",
+        "horse_number": "10",
+        "current_jockey": "木幡 巧也",
+        "assigned_weight": "55.0",
+        "current_body_weight": "444",
+        "body_weight_change": "",
+        "body_weight_status": "published",
+        "target_track": "東京",
+        "target_race_date": "2026-10-25",
+        "target_race_number": "06",
+        "target_surface": "芝",
+        "target_distance": "1400",
+        "target_weather": "曇",
+        "target_track_condition": "稍重",
+        "target_conditions_captured_at": "2026-10-27T12:55:51.451096+00:00",
+        "horse_country": "",
+        "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104407/93",
+        "history_count": 0,
+        "career_starts": 0,
+        "history_missing_fields": [],
+        "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+        "career_source": {
+          "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104407/93",
+          "method": "POST",
+          "request_parameters": {
+            "cname": "pw01dud002024104407/93"
+          },
+          "captured_at": "2026-10-27T12:56:01.776876+00:00",
+          "sha256": "a62f51ba5d00a7a7c056f1225f679a781ef1564505349d50eea45116d53da2b0",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/aa6157d3cf8806ecca61f37188ad31501ed19734a1ad8b85fd9c552191311b2e.html",
+          "encoding": "SHIFT_JIS"
+        },
+        "entry_status": "STARTER",
+        "target_condition_provenance": {
+          "type": "post_event_official_reconstruction",
+          "source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1005202604090620261025/2D",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01sde1005202604090620261025/2D"
+            },
+            "captured_at": "2026-10-27T12:55:51.451096+00:00",
+            "sha256": "70741c4bacc60a8e7b62cd1aac4f7c08a6f5ac57cc67d5c73453fdf75a7e7575",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/8de759d55c62bc1369d81ece5280285dde4a84de6193e41e41b7f9a58836e1c6.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "pre_race_capture_proven": false
+        }
+      },
+      {
+        "race_id": "20261025_05_06",
+        "race_name": "メイクデビュー東京",
+        "horse_id": "pw01dud002024106289/75",
+        "horse_name": "クリスタルシュガー",
+        "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106289/75",
+        "frame_number": "6",
+        "horse_number": "11",
+        "current_jockey": "荻野 極",
+        "assigned_weight": "55.0",
+        "current_body_weight": "446",
+        "body_weight_change": "",
+        "body_weight_status": "published",
+        "target_track": "東京",
+        "target_race_date": "2026-10-25",
+        "target_race_number": "06",
+        "target_surface": "芝",
+        "target_distance": "1400",
+        "target_weather": "曇",
+        "target_track_condition": "稍重",
+        "target_conditions_captured_at": "2026-10-27T12:55:51.451096+00:00",
+        "horse_country": "",
+        "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106289/75",
+        "history_count": 0,
+        "career_starts": 0,
+        "history_missing_fields": [],
+        "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+        "career_source": {
+          "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106289/75",
+          "method": "POST",
+          "request_parameters": {
+            "cname": "pw01dud002024106289/75"
+          },
+          "captured_at": "2026-10-27T12:56:02.569031+00:00",
+          "sha256": "853509294b1ba9d20a02ec48440c1147997ff4b4a4ec9a412e2bfd159d50229a",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/fa80f086591e1e05659ca89e545af094ace0201e71f00c50db074105a36de66e.html",
+          "encoding": "SHIFT_JIS"
+        },
+        "entry_status": "STARTER",
+        "target_condition_provenance": {
+          "type": "post_event_official_reconstruction",
+          "source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1005202604090620261025/2D",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01sde1005202604090620261025/2D"
+            },
+            "captured_at": "2026-10-27T12:55:51.451096+00:00",
+            "sha256": "70741c4bacc60a8e7b62cd1aac4f7c08a6f5ac57cc67d5c73453fdf75a7e7575",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/8de759d55c62bc1369d81ece5280285dde4a84de6193e41e41b7f9a58836e1c6.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "pre_race_capture_proven": false
+        }
+      },
+      {
+        "race_id": "20261025_05_06",
+        "race_name": "メイクデビュー東京",
+        "horse_id": "pw01dud002024102626/C4",
+        "horse_name": "アルパイングリーン",
+        "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102626/C4",
+        "frame_number": "6",
+        "horse_number": "12",
+        "current_jockey": "M.デムーロ",
+        "assigned_weight": "55.0",
+        "current_body_weight": "454",
+        "body_weight_change": "",
+        "body_weight_status": "published",
+        "target_track": "東京",
+        "target_race_date": "2026-10-25",
+        "target_race_number": "06",
+        "target_surface": "芝",
+        "target_distance": "1400",
+        "target_weather": "曇",
+        "target_track_condition": "稍重",
+        "target_conditions_captured_at": "2026-10-27T12:55:51.451096+00:00",
+        "horse_country": "",
+        "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102626/C4",
+        "history_count": 0,
+        "career_starts": 0,
+        "history_missing_fields": [],
+        "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+        "career_source": {
+          "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102626/C4",
+          "method": "POST",
+          "request_parameters": {
+            "cname": "pw01dud002024102626/C4"
+          },
+          "captured_at": "2026-10-27T12:56:03.334595+00:00",
+          "sha256": "ca33231eda171aad07f31afe73324487ef5d7107c60f48d954949142574f01ec",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/f6554f7689d5195a9147a12c8d33a51518440d72a1490486f6ce67a4ac5ea045.html",
+          "encoding": "SHIFT_JIS"
+        },
+        "entry_status": "STARTER",
+        "target_condition_provenance": {
+          "type": "post_event_official_reconstruction",
+          "source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1005202604090620261025/2D",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01sde1005202604090620261025/2D"
+            },
+            "captured_at": "2026-10-27T12:55:51.451096+00:00",
+            "sha256": "70741c4bacc60a8e7b62cd1aac4f7c08a6f5ac57cc67d5c73453fdf75a7e7575",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/8de759d55c62bc1369d81ece5280285dde4a84de6193e41e41b7f9a58836e1c6.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "pre_race_capture_proven": false
+        }
+      },
+      {
+        "race_id": "20261025_05_06",
+        "race_name": "メイクデビュー東京",
+        "horse_id": "pw01dud002024104821/C5",
+        "horse_name": "ノーブルウィナー",
+        "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104821/C5",
+        "frame_number": "7",
+        "horse_number": "13",
+        "current_jockey": "菅原 明良",
+        "assigned_weight": "55.0",
+        "current_body_weight": "446",
+        "body_weight_change": "",
+        "body_weight_status": "published",
+        "target_track": "東京",
+        "target_race_date": "2026-10-25",
+        "target_race_number": "06",
+        "target_surface": "芝",
+        "target_distance": "1400",
+        "target_weather": "曇",
+        "target_track_condition": "稍重",
+        "target_conditions_captured_at": "2026-10-27T12:55:51.451096+00:00",
+        "horse_country": "",
+        "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104821/C5",
+        "history_count": 0,
+        "career_starts": 0,
+        "history_missing_fields": [],
+        "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+        "career_source": {
+          "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104821/C5",
+          "method": "POST",
+          "request_parameters": {
+            "cname": "pw01dud002024104821/C5"
+          },
+          "captured_at": "2026-10-27T12:56:04.292776+00:00",
+          "sha256": "c2d33db6b703fa6b4e3b0f4d6994a4707b06ab04eb40549de9bf10a037e8de28",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/aed1cd05c59f1a7032facf1e4511d01bae7efc2fc5cd1f9ed67af78d46214a34.html",
+          "encoding": "SHIFT_JIS"
+        },
+        "entry_status": "STARTER",
+        "target_condition_provenance": {
+          "type": "post_event_official_reconstruction",
+          "source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1005202604090620261025/2D",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01sde1005202604090620261025/2D"
+            },
+            "captured_at": "2026-10-27T12:55:51.451096+00:00",
+            "sha256": "70741c4bacc60a8e7b62cd1aac4f7c08a6f5ac57cc67d5c73453fdf75a7e7575",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/8de759d55c62bc1369d81ece5280285dde4a84de6193e41e41b7f9a58836e1c6.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "pre_race_capture_proven": false
+        }
+      },
+      {
+        "race_id": "20261025_05_06",
+        "race_name": "メイクデビュー東京",
+        "horse_id": "pw01dud002024106600/AE",
+        "horse_name": "ミストヴェール",
+        "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106600/AE",
+        "frame_number": "7",
+        "horse_number": "14",
+        "current_jockey": "三浦 皇成",
+        "assigned_weight": "55.0",
+        "current_body_weight": "474",
+        "body_weight_change": "",
+        "body_weight_status": "published",
+        "target_track": "東京",
+        "target_race_date": "2026-10-25",
+        "target_race_number": "06",
+        "target_surface": "芝",
+        "target_distance": "1400",
+        "target_weather": "曇",
+        "target_track_condition": "稍重",
+        "target_conditions_captured_at": "2026-10-27T12:55:51.451096+00:00",
+        "horse_country": "",
+        "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106600/AE",
+        "history_count": 0,
+        "career_starts": 0,
+        "history_missing_fields": [],
+        "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+        "career_source": {
+          "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106600/AE",
+          "method": "POST",
+          "request_parameters": {
+            "cname": "pw01dud002024106600/AE"
+          },
+          "captured_at": "2026-10-27T12:56:05.133697+00:00",
+          "sha256": "0e8a5680dac92a26ffb62d9094dcb10107ed10eaa197d7e07776de008f922d49",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/e3a5d542c267c7054c99272e5a3622cb5547e99400c6125fcce51b68467e64db.html",
+          "encoding": "SHIFT_JIS"
+        },
+        "entry_status": "STARTER",
+        "target_condition_provenance": {
+          "type": "post_event_official_reconstruction",
+          "source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1005202604090620261025/2D",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01sde1005202604090620261025/2D"
+            },
+            "captured_at": "2026-10-27T12:55:51.451096+00:00",
+            "sha256": "70741c4bacc60a8e7b62cd1aac4f7c08a6f5ac57cc67d5c73453fdf75a7e7575",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/8de759d55c62bc1369d81ece5280285dde4a84de6193e41e41b7f9a58836e1c6.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "pre_race_capture_proven": false
+        }
+      },
+      {
+        "race_id": "20261025_05_06",
+        "race_name": "メイクデビュー東京",
+        "horse_id": "pw01dud002024102210/3E",
+        "horse_name": "チャジャッタ",
+        "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102210/3E",
+        "frame_number": "8",
+        "horse_number": "15",
+        "current_jockey": "▲ 遠藤 汰月",
+        "assigned_weight": "52.0",
+        "current_body_weight": "368",
+        "body_weight_change": "",
+        "body_weight_status": "published",
+        "target_track": "東京",
+        "target_race_date": "2026-10-25",
+        "target_race_number": "06",
+        "target_surface": "芝",
+        "target_distance": "1400",
+        "target_weather": "曇",
+        "target_track_condition": "稍重",
+        "target_conditions_captured_at": "2026-10-27T12:55:51.451096+00:00",
+        "horse_country": "",
+        "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102210/3E",
+        "history_count": 0,
+        "career_starts": 0,
+        "history_missing_fields": [],
+        "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+        "career_source": {
+          "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102210/3E",
+          "method": "POST",
+          "request_parameters": {
+            "cname": "pw01dud002024102210/3E"
+          },
+          "captured_at": "2026-10-27T12:56:06.029677+00:00",
+          "sha256": "b057a36a23a6708aad23be1703b7a3c40da1f163831c7153bb523bf1caf46837",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/45fe55ebd55dbb7b65750ca09fc9dc8736333090a97a16ad53d9263b34332963.html",
+          "encoding": "SHIFT_JIS"
+        },
+        "entry_status": "STARTER",
+        "target_condition_provenance": {
+          "type": "post_event_official_reconstruction",
+          "source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1005202604090620261025/2D",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01sde1005202604090620261025/2D"
+            },
+            "captured_at": "2026-10-27T12:55:51.451096+00:00",
+            "sha256": "70741c4bacc60a8e7b62cd1aac4f7c08a6f5ac57cc67d5c73453fdf75a7e7575",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/8de759d55c62bc1369d81ece5280285dde4a84de6193e41e41b7f9a58836e1c6.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "pre_race_capture_proven": false
+        }
+      },
+      {
+        "race_id": "20261025_05_06",
+        "race_name": "メイクデビュー東京",
+        "horse_id": "pw01dud002024105136/AC",
+        "horse_name": "ケレドフェスティヴ",
+        "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105136/AC",
+        "frame_number": "8",
+        "horse_number": "16",
+        "current_jockey": "▲ 佐藤 翔馬",
+        "assigned_weight": "52.0",
+        "current_body_weight": "416",
+        "body_weight_change": "",
+        "body_weight_status": "published",
+        "target_track": "東京",
+        "target_race_date": "2026-10-25",
+        "target_race_number": "06",
+        "target_surface": "芝",
+        "target_distance": "1400",
+        "target_weather": "曇",
+        "target_track_condition": "稍重",
+        "target_conditions_captured_at": "2026-10-27T12:55:51.451096+00:00",
+        "horse_country": "",
+        "horse_detail_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105136/AC",
+        "history_count": 0,
+        "career_starts": 0,
+        "history_missing_fields": [],
+        "history_selection_rule": "most_recent_five_started_races_before_target_from_verified_complete_career",
+        "career_source": {
+          "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105136/AC",
+          "method": "POST",
+          "request_parameters": {
+            "cname": "pw01dud002024105136/AC"
+          },
+          "captured_at": "2026-10-27T12:56:06.874716+00:00",
+          "sha256": "4375aab483a0eea2ab0b5a57b896f2841f2d236999e8657c06141e142ada43b8",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/7351ae6ff1aa14fdae541f010a8a0f1c1de8beca25de9c9c19f6cd8deb09bb66.html",
+          "encoding": "SHIFT_JIS"
+        },
+        "entry_status": "STARTER",
+        "target_condition_provenance": {
+          "type": "post_event_official_reconstruction",
+          "source": {
+            "url": "https://jra.jp/JRADB/accessS.html?CNAME=pw01sde1005202604090620261025/2D",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01sde1005202604090620261025/2D"
+            },
+            "captured_at": "2026-10-27T12:55:51.451096+00:00",
+            "sha256": "70741c4bacc60a8e7b62cd1aac4f7c08a6f5ac57cc67d5c73453fdf75a7e7575",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/8de759d55c62bc1369d81ece5280285dde4a84de6193e41e41b7f9a58836e1c6.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "pre_race_capture_proven": false
+        }
+      }
+    ],
+    "source_audit": {
+      "artifacts": [
+        {
+          "kind": "horse_history",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/5d49fcbe1240d537f786308e916670681fb95d61d5d57caaf05d7f61eae3b76b.html",
+          "sha256": "2d05f57bd6358f51b8b41895e6c9bd8776552b54e5a3d579892cc1e8a2a4fffd",
+          "original_source": {
+            "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105324/18",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01dud002024105324/18"
+            },
+            "captured_at": "2026-10-27T12:55:53.168155+00:00",
+            "sha256": "1e46e81c46be01224ca2e608a5a6c55ba4358907992464b5642974cc8959e20f",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/5d49fcbe1240d537f786308e916670681fb95d61d5d57caaf05d7f61eae3b76b.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "raw_reference": {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/5d49fcbe1240d537f786308e916670681fb95d61d5d57caaf05d7f61eae3b76b.html",
+            "encoding": "SHIFT_JIS",
+            "bytes_sha256": "1e46e81c46be01224ca2e608a5a6c55ba4358907992464b5642974cc8959e20f",
+            "html_utf8_sha256": "2d05f57bd6358f51b8b41895e6c9bd8776552b54e5a3d579892cc1e8a2a4fffd"
+          },
+          "race_id": "20261025_05_06",
+          "horse_id": "pw01dud002024105324/18",
+          "horse_name": "リアスドール",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105324/18"
+        },
+        {
+          "kind": "horse_history",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/b49e8d27537e9dd81aafd9d7cf2d681dac8dcbd2da4f76d6788d2d68b2cbc4a0.html",
+          "sha256": "1ee9c0b7961ca98fc504a2e7a97cf5250a93b417e0217be8b56ea7d1d8e668b5",
+          "original_source": {
+            "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024101952/CC",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01dud002024101952/CC"
+            },
+            "captured_at": "2026-10-27T12:55:54.139424+00:00",
+            "sha256": "bb6c12886362af219105a4958ac93219d29473a64ccb99ea38964b5bad1d69e5",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/b49e8d27537e9dd81aafd9d7cf2d681dac8dcbd2da4f76d6788d2d68b2cbc4a0.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "raw_reference": {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/b49e8d27537e9dd81aafd9d7cf2d681dac8dcbd2da4f76d6788d2d68b2cbc4a0.html",
+            "encoding": "SHIFT_JIS",
+            "bytes_sha256": "bb6c12886362af219105a4958ac93219d29473a64ccb99ea38964b5bad1d69e5",
+            "html_utf8_sha256": "1ee9c0b7961ca98fc504a2e7a97cf5250a93b417e0217be8b56ea7d1d8e668b5"
+          },
+          "race_id": "20261025_05_06",
+          "horse_id": "pw01dud002024101952/CC",
+          "horse_name": "ボルトライン",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024101952/CC"
+        },
+        {
+          "kind": "horse_history",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/b47ca143f8edcb0a3c04899b2c15649ec85a4e44280c0deb5eb407b9580c89b1.html",
+          "sha256": "d9a215f5ae1b5acc4956de9d462d29c8abd53c3a941850127b79e2bbc2ac7f55",
+          "original_source": {
+            "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105044/A5",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01dud002024105044/A5"
+            },
+            "captured_at": "2026-10-27T12:55:54.973933+00:00",
+            "sha256": "f38cf387b5d76138cf543828ddab26d96df06e42e378553599b1c185d79b8898",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/b47ca143f8edcb0a3c04899b2c15649ec85a4e44280c0deb5eb407b9580c89b1.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "raw_reference": {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/b47ca143f8edcb0a3c04899b2c15649ec85a4e44280c0deb5eb407b9580c89b1.html",
+            "encoding": "SHIFT_JIS",
+            "bytes_sha256": "f38cf387b5d76138cf543828ddab26d96df06e42e378553599b1c185d79b8898",
+            "html_utf8_sha256": "d9a215f5ae1b5acc4956de9d462d29c8abd53c3a941850127b79e2bbc2ac7f55"
+          },
+          "race_id": "20261025_05_06",
+          "horse_id": "pw01dud002024105044/A5",
+          "horse_name": "タカチャン",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105044/A5"
+        },
+        {
+          "kind": "horse_history",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/7b714fc13630bd234e8d1b8177ec5242dec69cf03f45b1557a6d447191a6cdaa.html",
+          "sha256": "59c9a42129d564d829ad15bb1ba42f53ad4e94804923e84bc67ac2b09c5c345e",
+          "original_source": {
+            "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105541/41",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01dud002024105541/41"
+            },
+            "captured_at": "2026-10-27T12:55:55.773905+00:00",
+            "sha256": "5493088229d9b0f3b80ef2fa6e7848230ed1b205739a887e490ef7994f637677",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/7b714fc13630bd234e8d1b8177ec5242dec69cf03f45b1557a6d447191a6cdaa.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "raw_reference": {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/7b714fc13630bd234e8d1b8177ec5242dec69cf03f45b1557a6d447191a6cdaa.html",
+            "encoding": "SHIFT_JIS",
+            "bytes_sha256": "5493088229d9b0f3b80ef2fa6e7848230ed1b205739a887e490ef7994f637677",
+            "html_utf8_sha256": "59c9a42129d564d829ad15bb1ba42f53ad4e94804923e84bc67ac2b09c5c345e"
+          },
+          "race_id": "20261025_05_06",
+          "horse_id": "pw01dud002024105541/41",
+          "horse_name": "ミコアイランド",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105541/41"
+        },
+        {
+          "kind": "horse_history",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/7f813be7392fafb701bf03bfde3f1a2382a3b361dabc75b6b2024ea95e151588.html",
+          "sha256": "7997c65c6d7008ab444251703d8d0e39709c9de262dfa1e63c772a2bbbc288c3",
+          "original_source": {
+            "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024107425/9A",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01dud002024107425/9A"
+            },
+            "captured_at": "2026-10-27T12:55:56.613265+00:00",
+            "sha256": "8dddcf40e19235da1acd4e248f62fd05a7d7f08be9f48b2363191cb108ca599a",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/7f813be7392fafb701bf03bfde3f1a2382a3b361dabc75b6b2024ea95e151588.html",
+            "encoding": "CP932"
+          },
+          "raw_reference": {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/7f813be7392fafb701bf03bfde3f1a2382a3b361dabc75b6b2024ea95e151588.html",
+            "encoding": "CP932",
+            "bytes_sha256": "8dddcf40e19235da1acd4e248f62fd05a7d7f08be9f48b2363191cb108ca599a",
+            "html_utf8_sha256": "7997c65c6d7008ab444251703d8d0e39709c9de262dfa1e63c772a2bbbc288c3"
+          },
+          "race_id": "20261025_05_06",
+          "horse_id": "pw01dud002024107425/9A",
+          "horse_name": "ナンヨーカラフル",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024107425/9A"
+        },
+        {
+          "kind": "horse_history",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/fd81d62fa8f0be3d1c95bb885ca939e3f625c077b54b68a7e4067ce960740691.html",
+          "sha256": "f3b97fc2cc0ace79ef2b0fb252c37933d2fcceb7103197b8dbf01d19772edadf",
+          "original_source": {
+            "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024101691/06",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01dud002024101691/06"
+            },
+            "captured_at": "2026-10-27T12:55:57.422343+00:00",
+            "sha256": "e91ac6a6f84e22cadbcbc6f10a182743642d27f5efbb9534d0f9ae95db1ddb69",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/fd81d62fa8f0be3d1c95bb885ca939e3f625c077b54b68a7e4067ce960740691.html",
+            "encoding": "CP932"
+          },
+          "raw_reference": {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/fd81d62fa8f0be3d1c95bb885ca939e3f625c077b54b68a7e4067ce960740691.html",
+            "encoding": "CP932",
+            "bytes_sha256": "e91ac6a6f84e22cadbcbc6f10a182743642d27f5efbb9534d0f9ae95db1ddb69",
+            "html_utf8_sha256": "f3b97fc2cc0ace79ef2b0fb252c37933d2fcceb7103197b8dbf01d19772edadf"
+          },
+          "race_id": "20261025_05_06",
+          "horse_id": "pw01dud002024101691/06",
+          "horse_name": "スタニングヨシノ",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024101691/06"
+        },
+        {
+          "kind": "horse_history",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/82183d20d0f19464f63a0daf730ab2fef66e2814675dbc3390925915ca9bfdb8.html",
+          "sha256": "3c1f8488872461e4fcce2083997d4613c57d269a8db7d2991a3221457db89e03",
+          "original_source": {
+            "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024108029/91",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01dud002024108029/91"
+            },
+            "captured_at": "2026-10-27T12:55:59.055660+00:00",
+            "sha256": "17b046d238772db6783f4347dad969bdde6b0128e35f27c2f2e3daf0b38adfeb",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/82183d20d0f19464f63a0daf730ab2fef66e2814675dbc3390925915ca9bfdb8.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "raw_reference": {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/82183d20d0f19464f63a0daf730ab2fef66e2814675dbc3390925915ca9bfdb8.html",
+            "encoding": "SHIFT_JIS",
+            "bytes_sha256": "17b046d238772db6783f4347dad969bdde6b0128e35f27c2f2e3daf0b38adfeb",
+            "html_utf8_sha256": "3c1f8488872461e4fcce2083997d4613c57d269a8db7d2991a3221457db89e03"
+          },
+          "race_id": "20261025_05_06",
+          "horse_id": "pw01dud002024108029/91",
+          "horse_name": "レインワルティア",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024108029/91"
+        },
+        {
+          "kind": "horse_history",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/1716f476f4ac943964e1ad4bd1cd7acbeffb7148fe320dad905e4e0e519ef07e.html",
+          "sha256": "7c7c0c95dc95ed1024f8e00fb371905ce4a6a713b6b2ea804b9985122df1410f",
+          "original_source": {
+            "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105510/9E",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01dud002024105510/9E"
+            },
+            "captured_at": "2026-10-27T12:55:59.923411+00:00",
+            "sha256": "6176b1b8822a4cc9e2f32906ea1c57fa4f470fd34c1a5db84a2b80567bb98bd4",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/1716f476f4ac943964e1ad4bd1cd7acbeffb7148fe320dad905e4e0e519ef07e.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "raw_reference": {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/1716f476f4ac943964e1ad4bd1cd7acbeffb7148fe320dad905e4e0e519ef07e.html",
+            "encoding": "SHIFT_JIS",
+            "bytes_sha256": "6176b1b8822a4cc9e2f32906ea1c57fa4f470fd34c1a5db84a2b80567bb98bd4",
+            "html_utf8_sha256": "7c7c0c95dc95ed1024f8e00fb371905ce4a6a713b6b2ea804b9985122df1410f"
+          },
+          "race_id": "20261025_05_06",
+          "horse_id": "pw01dud002024105510/9E",
+          "horse_name": "ゴルゴーローズ",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105510/9E"
+        },
+        {
+          "kind": "horse_history",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/a976a6b1c65c8ae4234cc45fd63c46414d7ec5acd25732329636ea49701dbef1.html",
+          "sha256": "482e6de4c3b46794425375cb3343fd0347518174d3afe1c717b030b4f1f12195",
+          "original_source": {
+            "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104671/B3",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01dud002024104671/B3"
+            },
+            "captured_at": "2026-10-27T12:56:00.897241+00:00",
+            "sha256": "4b554f4fe9595128f4ffe345881b80c347ed7815a6b909a46a6de0a68cbe96ec",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/a976a6b1c65c8ae4234cc45fd63c46414d7ec5acd25732329636ea49701dbef1.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "raw_reference": {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/a976a6b1c65c8ae4234cc45fd63c46414d7ec5acd25732329636ea49701dbef1.html",
+            "encoding": "SHIFT_JIS",
+            "bytes_sha256": "4b554f4fe9595128f4ffe345881b80c347ed7815a6b909a46a6de0a68cbe96ec",
+            "html_utf8_sha256": "482e6de4c3b46794425375cb3343fd0347518174d3afe1c717b030b4f1f12195"
+          },
+          "race_id": "20261025_05_06",
+          "horse_id": "pw01dud002024104671/B3",
+          "horse_name": "ビーセルフィッシュ",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104671/B3"
+        },
+        {
+          "kind": "horse_history",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/aa6157d3cf8806ecca61f37188ad31501ed19734a1ad8b85fd9c552191311b2e.html",
+          "sha256": "cf03734824fc9bccb1a04f33d3ee3a11794a46ad41110cc443b5a81be949d66d",
+          "original_source": {
+            "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104407/93",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01dud002024104407/93"
+            },
+            "captured_at": "2026-10-27T12:56:01.776876+00:00",
+            "sha256": "a62f51ba5d00a7a7c056f1225f679a781ef1564505349d50eea45116d53da2b0",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/aa6157d3cf8806ecca61f37188ad31501ed19734a1ad8b85fd9c552191311b2e.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "raw_reference": {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/aa6157d3cf8806ecca61f37188ad31501ed19734a1ad8b85fd9c552191311b2e.html",
+            "encoding": "SHIFT_JIS",
+            "bytes_sha256": "a62f51ba5d00a7a7c056f1225f679a781ef1564505349d50eea45116d53da2b0",
+            "html_utf8_sha256": "cf03734824fc9bccb1a04f33d3ee3a11794a46ad41110cc443b5a81be949d66d"
+          },
+          "race_id": "20261025_05_06",
+          "horse_id": "pw01dud002024104407/93",
+          "horse_name": "ニャンコ",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104407/93"
+        },
+        {
+          "kind": "horse_history",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/fa80f086591e1e05659ca89e545af094ace0201e71f00c50db074105a36de66e.html",
+          "sha256": "7ada2c2b16705c58a9d6078d6a2d8cf3953435b9f10b6a7950d6724637d16ee7",
+          "original_source": {
+            "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106289/75",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01dud002024106289/75"
+            },
+            "captured_at": "2026-10-27T12:56:02.569031+00:00",
+            "sha256": "853509294b1ba9d20a02ec48440c1147997ff4b4a4ec9a412e2bfd159d50229a",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/fa80f086591e1e05659ca89e545af094ace0201e71f00c50db074105a36de66e.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "raw_reference": {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/fa80f086591e1e05659ca89e545af094ace0201e71f00c50db074105a36de66e.html",
+            "encoding": "SHIFT_JIS",
+            "bytes_sha256": "853509294b1ba9d20a02ec48440c1147997ff4b4a4ec9a412e2bfd159d50229a",
+            "html_utf8_sha256": "7ada2c2b16705c58a9d6078d6a2d8cf3953435b9f10b6a7950d6724637d16ee7"
+          },
+          "race_id": "20261025_05_06",
+          "horse_id": "pw01dud002024106289/75",
+          "horse_name": "クリスタルシュガー",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106289/75"
+        },
+        {
+          "kind": "horse_history",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/f6554f7689d5195a9147a12c8d33a51518440d72a1490486f6ce67a4ac5ea045.html",
+          "sha256": "e96003d56d55cbf1f219277ec8fe5f243cbb38e0ec8343443485e799ecb65f08",
+          "original_source": {
+            "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102626/C4",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01dud002024102626/C4"
+            },
+            "captured_at": "2026-10-27T12:56:03.334595+00:00",
+            "sha256": "ca33231eda171aad07f31afe73324487ef5d7107c60f48d954949142574f01ec",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/f6554f7689d5195a9147a12c8d33a51518440d72a1490486f6ce67a4ac5ea045.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "raw_reference": {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/f6554f7689d5195a9147a12c8d33a51518440d72a1490486f6ce67a4ac5ea045.html",
+            "encoding": "SHIFT_JIS",
+            "bytes_sha256": "ca33231eda171aad07f31afe73324487ef5d7107c60f48d954949142574f01ec",
+            "html_utf8_sha256": "e96003d56d55cbf1f219277ec8fe5f243cbb38e0ec8343443485e799ecb65f08"
+          },
+          "race_id": "20261025_05_06",
+          "horse_id": "pw01dud002024102626/C4",
+          "horse_name": "アルパイングリーン",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102626/C4"
+        },
+        {
+          "kind": "horse_history",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/aed1cd05c59f1a7032facf1e4511d01bae7efc2fc5cd1f9ed67af78d46214a34.html",
+          "sha256": "4e6ce0ce2e88e460c30ea013c6691e0625a6884fcf196fb4ed26bd4eb38c7c0d",
+          "original_source": {
+            "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104821/C5",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01dud002024104821/C5"
+            },
+            "captured_at": "2026-10-27T12:56:04.292776+00:00",
+            "sha256": "c2d33db6b703fa6b4e3b0f4d6994a4707b06ab04eb40549de9bf10a037e8de28",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/aed1cd05c59f1a7032facf1e4511d01bae7efc2fc5cd1f9ed67af78d46214a34.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "raw_reference": {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/aed1cd05c59f1a7032facf1e4511d01bae7efc2fc5cd1f9ed67af78d46214a34.html",
+            "encoding": "SHIFT_JIS",
+            "bytes_sha256": "c2d33db6b703fa6b4e3b0f4d6994a4707b06ab04eb40549de9bf10a037e8de28",
+            "html_utf8_sha256": "4e6ce0ce2e88e460c30ea013c6691e0625a6884fcf196fb4ed26bd4eb38c7c0d"
+          },
+          "race_id": "20261025_05_06",
+          "horse_id": "pw01dud002024104821/C5",
+          "horse_name": "ノーブルウィナー",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024104821/C5"
+        },
+        {
+          "kind": "horse_history",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/e3a5d542c267c7054c99272e5a3622cb5547e99400c6125fcce51b68467e64db.html",
+          "sha256": "6e64407578452d340f77d9b4de39b1b8fc4125adbc5ab82b19cf7ec549e480cd",
+          "original_source": {
+            "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106600/AE",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01dud002024106600/AE"
+            },
+            "captured_at": "2026-10-27T12:56:05.133697+00:00",
+            "sha256": "0e8a5680dac92a26ffb62d9094dcb10107ed10eaa197d7e07776de008f922d49",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/e3a5d542c267c7054c99272e5a3622cb5547e99400c6125fcce51b68467e64db.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "raw_reference": {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/e3a5d542c267c7054c99272e5a3622cb5547e99400c6125fcce51b68467e64db.html",
+            "encoding": "SHIFT_JIS",
+            "bytes_sha256": "0e8a5680dac92a26ffb62d9094dcb10107ed10eaa197d7e07776de008f922d49",
+            "html_utf8_sha256": "6e64407578452d340f77d9b4de39b1b8fc4125adbc5ab82b19cf7ec549e480cd"
+          },
+          "race_id": "20261025_05_06",
+          "horse_id": "pw01dud002024106600/AE",
+          "horse_name": "ミストヴェール",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024106600/AE"
+        },
+        {
+          "kind": "horse_history",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/45fe55ebd55dbb7b65750ca09fc9dc8736333090a97a16ad53d9263b34332963.html",
+          "sha256": "6bd991a53ad4a7c09062dc206e4829f75e50518cf12fa1bcb20853d561df5680",
+          "original_source": {
+            "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102210/3E",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01dud002024102210/3E"
+            },
+            "captured_at": "2026-10-27T12:56:06.029677+00:00",
+            "sha256": "b057a36a23a6708aad23be1703b7a3c40da1f163831c7153bb523bf1caf46837",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/45fe55ebd55dbb7b65750ca09fc9dc8736333090a97a16ad53d9263b34332963.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "raw_reference": {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/45fe55ebd55dbb7b65750ca09fc9dc8736333090a97a16ad53d9263b34332963.html",
+            "encoding": "SHIFT_JIS",
+            "bytes_sha256": "b057a36a23a6708aad23be1703b7a3c40da1f163831c7153bb523bf1caf46837",
+            "html_utf8_sha256": "6bd991a53ad4a7c09062dc206e4829f75e50518cf12fa1bcb20853d561df5680"
+          },
+          "race_id": "20261025_05_06",
+          "horse_id": "pw01dud002024102210/3E",
+          "horse_name": "チャジャッタ",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024102210/3E"
+        },
+        {
+          "kind": "horse_history",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/7351ae6ff1aa14fdae541f010a8a0f1c1de8beca25de9c9c19f6cd8deb09bb66.html",
+          "sha256": "f4e0e06998e800306688f74775891f4f1dead20409dcc27488f8f94957703363",
+          "original_source": {
+            "url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105136/AC",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01dud002024105136/AC"
+            },
+            "captured_at": "2026-10-27T12:56:06.874716+00:00",
+            "sha256": "4375aab483a0eea2ab0b5a57b896f2841f2d236999e8657c06141e142ada43b8",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/7351ae6ff1aa14fdae541f010a8a0f1c1de8beca25de9c9c19f6cd8deb09bb66.html",
+            "encoding": "SHIFT_JIS"
+          },
+          "raw_reference": {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/7351ae6ff1aa14fdae541f010a8a0f1c1de8beca25de9c9c19f6cd8deb09bb66.html",
+            "encoding": "SHIFT_JIS",
+            "bytes_sha256": "4375aab483a0eea2ab0b5a57b896f2841f2d236999e8657c06141e142ada43b8",
+            "html_utf8_sha256": "f4e0e06998e800306688f74775891f4f1dead20409dcc27488f8f94957703363"
+          },
+          "race_id": "20261025_05_06",
+          "horse_id": "pw01dud002024105136/AC",
+          "horse_name": "ケレドフェスティヴ",
+          "horse_url": "https://jra.jp/JRADB/accessU.html?CNAME=pw01dud002024105136/AC"
+        },
+        {
+          "kind": "race_detail",
+          "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/12c6bb6cca2bd634c6587c4f4436e159fe540ee7e36ccb58671abb441115d75b.html",
+          "sha256": "234b221be43a791f3f0dbc53b7df93c88a53fb6135a03491cb60af9de177f499",
+          "original_source": {
+            "url": "https://jra.jp/JRADB/accessD.html?CNAME=pw01dde1005202604090620261025/71",
+            "method": "POST",
+            "request_parameters": {
+              "cname": "pw01dde1005202604090620261025/71"
+            },
+            "captured_at": "2026-10-27T12:55:52.150494+00:00",
+            "sha256": "0b3c4df26ad42a9bae147174848af628f21247446d1659a79d77524f372bc928",
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/12c6bb6cca2bd634c6587c4f4436e159fe540ee7e36ccb58671abb441115d75b.html",
+            "encoding": "CP932"
+          },
+          "raw_reference": {
+            "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/raw/12c6bb6cca2bd634c6587c4f4436e159fe540ee7e36ccb58671abb441115d75b.html",
+            "encoding": "CP932",
+            "bytes_sha256": "0b3c4df26ad42a9bae147174848af628f21247446d1659a79d77524f372bc928",
+            "html_utf8_sha256": "234b221be43a791f3f0dbc53b7df93c88a53fb6135a03491cb60af9de177f499"
+          },
+          "race_id": "20261025_05_06"
+        }
+      ]
+    }
+  }
+}

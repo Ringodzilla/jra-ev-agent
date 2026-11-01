@@ -1,0 +1,167 @@
+{
+  "input_artifact": {
+    "path": "report/research/20261025_environment_20261027T125148Z/environment_collection.json",
+    "sha256": "31c0e6677f0aa0d69a5bb4974d4ae30836f21987e237ba6f1bc6889525e9866b"
+  },
+  "source_sha_checks": [
+    {
+      "source": "cushion",
+      "kind": "raw",
+      "path": "report/research/20261025_environment_20261027T125148Z/raw/cushion.html",
+      "sha256": "9961c18b8f8c284e181e8cd0cbe70a91b65a1819f52d9188b63faa10bca53be6",
+      "status": "PASS"
+    },
+    {
+      "source": "cushion",
+      "kind": "decoded",
+      "path": "report/research/20261025_environment_20261027T125148Z/raw/cushion.utf8.html",
+      "sha256": "4a5e381d631ef6a8ae2ec99aef238fa944db59fd275149f022ccc32fec49d82e",
+      "status": "PASS"
+    },
+    {
+      "source": "moisture",
+      "kind": "raw",
+      "path": "report/research/20261025_environment_20261027T125148Z/raw/moisture.html",
+      "sha256": "3e9ba0cd5f2e7a4099a05d86fbc2b60aa6bbbaea73471154122d48f7b32e5829",
+      "status": "PASS"
+    },
+    {
+      "source": "moisture",
+      "kind": "decoded",
+      "path": "report/research/20261025_environment_20261027T125148Z/raw/moisture.utf8.html",
+      "sha256": "4f5a9a0fffd67802a2ddde91cb50d8d989878e3d64bffcae70743ada32a731cf",
+      "status": "PASS"
+    },
+    {
+      "source": "context_tokyo",
+      "kind": "raw",
+      "path": "report/research/20261025_environment_20261027T125148Z/raw/context_tokyo.html",
+      "sha256": "41b1d437444f5632ffcf48a01a6462dec7eef592e51f97dc789ea18d36df78e2",
+      "status": "PASS"
+    },
+    {
+      "source": "context_tokyo",
+      "kind": "decoded",
+      "path": "report/research/20261025_environment_20261027T125148Z/raw/context_tokyo.utf8.html",
+      "sha256": "3b0cd05d341e9a12457ea091da7279c5faf03489683756e54cb40982ede2634b",
+      "status": "PASS"
+    },
+    {
+      "source": "context_kyoto",
+      "kind": "raw",
+      "path": "report/research/20261025_environment_20261027T125148Z/raw/context_kyoto.html",
+      "sha256": "9bb1a681fd567e3ab23a59397fbf49a8b8e69ffa6094a46b167938e0e87ece47",
+      "status": "PASS"
+    },
+    {
+      "source": "context_kyoto",
+      "kind": "decoded",
+      "path": "report/research/20261025_environment_20261027T125148Z/raw/context_kyoto.utf8.html",
+      "sha256": "27f54554a165ea927373688cf6d95af6692a2bafaddcb1db4051b5c7cfc9c43d",
+      "status": "PASS"
+    }
+  ],
+  "tracks": [
+    {
+      "track": "東京",
+      "date": "2026-10-25",
+      "cushion_same_day_observations": [
+        {
+          "measured_at": "2026-10-25T07:00:00+09:00",
+          "cushion": 9.5
+        }
+      ],
+      "moisture_same_day_observations": [
+        {
+          "measured_at": "2026-10-25T05:30:00+09:00",
+          "turf_moisture_goal": 17.5,
+          "turf_moisture_goal_condition": "wet",
+          "turf_moisture_corner4": 16.9,
+          "turf_moisture_corner4_condition": "wet",
+          "dirt_moisture_goal": 7.4,
+          "dirt_moisture_goal_condition": "wet",
+          "dirt_moisture_corner4": 7.9,
+          "dirt_moisture_corner4_condition": "wet",
+          "note": "注記：特になし"
+        }
+      ],
+      "missing_fields": [],
+      "context_status": null,
+      "weather_source": "per_race_official_result_required",
+      "eligible_for_production_learning": false,
+      "eligibility_reasons": [
+        "POST_EVENT_RECONSTRUCTION",
+        "NO_PRE_RACE_CAPTURE_EVIDENCE"
+      ]
+    },
+    {
+      "track": "京都",
+      "date": "2026-10-25",
+      "cushion_same_day_observations": [
+        {
+          "measured_at": "2026-10-25T06:00:00+09:00",
+          "cushion": 9.2
+        }
+      ],
+      "moisture_same_day_observations": [
+        {
+          "measured_at": "2026-10-25T05:00:00+09:00",
+          "turf_moisture_goal": 10.2,
+          "turf_moisture_goal_condition": "wet",
+          "turf_moisture_corner4": 10.6,
+          "turf_moisture_corner4_condition": "wet",
+          "dirt_moisture_goal": 13.3,
+          "dirt_moisture_goal_condition": "soft",
+          "dirt_moisture_corner4": 13.9,
+          "dirt_moisture_corner4_condition": "soft",
+          "note": "注記：特になし"
+        }
+      ],
+      "missing_fields": [],
+      "context_status": null,
+      "weather_source": "per_race_official_result_required",
+      "eligible_for_production_learning": false,
+      "eligibility_reasons": [
+        "POST_EVENT_RECONSTRUCTION",
+        "NO_PRE_RACE_CAPTURE_EVIDENCE"
+      ]
+    },
+    {
+      "track": "新潟",
+      "date": "2026-10-25",
+      "cushion_same_day_observations": [
+        {
+          "measured_at": "2026-10-25T07:00:00+09:00",
+          "cushion": 8.8
+        }
+      ],
+      "moisture_same_day_observations": [
+        {
+          "measured_at": "2026-10-25T05:30:00+09:00",
+          "turf_moisture_goal": 13.5,
+          "turf_moisture_goal_condition": "wet",
+          "turf_moisture_corner4": 14.1,
+          "turf_moisture_corner4_condition": "wet",
+          "dirt_moisture_goal": 10.3,
+          "dirt_moisture_goal_condition": "soft",
+          "dirt_moisture_corner4": 11.4,
+          "dirt_moisture_corner4_condition": "soft",
+          "note": "注記：測定時刻までの当日雨量は2.5ミリメートルでした"
+        }
+      ],
+      "missing_fields": [],
+      "context_status": null,
+      "weather_source": "per_race_official_result_required",
+      "eligible_for_production_learning": false,
+      "eligibility_reasons": [
+        "POST_EVENT_RECONSTRUCTION",
+        "NO_PRE_RACE_CAPTURE_EVIDENCE"
+      ]
+    }
+  ],
+  "status": "SHA_VERIFIED_MEASUREMENT_COLLECTION_ONLY",
+  "limitations": [
+    "Per-race weather/going and pre-race timestamps require separate result pairing.",
+    "Post-event reconstruction is not a pre-race capture. No environment score calculated."
+  ]
+}

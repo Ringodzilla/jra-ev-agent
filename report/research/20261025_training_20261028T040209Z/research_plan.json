@@ -1,0 +1,39 @@
+{
+  "experiment_id": "sunday_20261025_exploratory_environment_linear_ridge100",
+  "experiment_kind": "posthoc_exploratory_training_only",
+  "training_date_max": "2026-10-25",
+  "training_dates": [
+    "2026-10-25"
+  ],
+  "validation_dates": [],
+  "test_dates": [],
+  "family": "linear",
+  "ridge": 100.0,
+  "baseline_variant": "exact_structural_softmax_temperature1_no_mc_no_market",
+  "allowed_target_surfaces": [
+    "芝"
+  ],
+  "selection": "All whole-race current-audit PASS races for contracted turf model; retain full starting field and exact required histories; retain each other race with reason. No horse-level exclusion.",
+  "imputations_permitted": false,
+  "labels_previously_inspected": true,
+  "preregistered_before_label_inspection": false,
+  "validation_status": "NOT_EXECUTED",
+  "test_status": "NOT_EXECUTED",
+  "production_eligible": false,
+  "production_model_changed": false,
+  "candidate_selection": "Single fixed family/ridge; no tuning against Sunday outcomes",
+  "old_experiment": {
+    "contract": {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261024_batch_20261024T225718Z/research_baseline_contract.json",
+      "sha256": "c17a7d16546b7b764e372ebdd4c2b9e413ae2a99da6f446fadd49a29ab47fff6"
+    },
+    "policy": "Preserve old Saturday-train/Sunday-validation experiment. This new Sunday-fit result is not independent validation or test for that experiment."
+  },
+  "model_selection_criteria": "Only a future independent whole-date validation/test can support promotion; apply docs/environment_model.md minimum sizes and improvement criteria.",
+  "source_catalog": {
+    "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/report/research/20261025_batch_20261027T125128Z/final_artifact_catalog_v2.json",
+    "sha256": "3796c34d918c5633f1aacd5bb866bec0cd99b683099e54a7a2d02b3be3369eb2"
+  },
+  "requested_action": "このデータを使って学習を開始",
+  "created_at": "2026-10-28T04:02:09.923520+00:00"
+}

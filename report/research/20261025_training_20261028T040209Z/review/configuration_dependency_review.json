@@ -1,0 +1,79 @@
+{
+  "role": "reviewer",
+  "phase": "PRE_FIT_CONFIGURATION_DEPENDENCY_REVIEW",
+  "reviewed_at": "2026-10-30T00:27:55.200287+00:00",
+  "model_results_inspected": false,
+  "mandatory_external_configuration": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/config/track_biases.json",
+      "sha256": "525b11ed2a660d765263d793651efd75896fcc58f1837250d3d70353d250cc59"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/config/course_learning.json",
+      "sha256": "c39162acad3b57564d72a46682ffe821095272ae9386ccc04477bc2db7f35ee9"
+    }
+  ],
+  "call_paths": [
+    {
+      "caller": "research_numeric.structural",
+      "path": "structural_features → summarize_history_rows + track_bias_adjustment",
+      "configurations": [
+        "config/track_biases.json",
+        "config/course_learning.json"
+      ]
+    },
+    {
+      "caller": "research_numeric.scenarios",
+      "path": "SimulatorAgent → simulate_race_scenarios → course_pace_adjustment",
+      "configurations": [
+        "config/course_learning.json"
+      ]
+    },
+    {
+      "caller": "research_numeric.baseline",
+      "path": "COMPONENT_WEIGHTS + two-stage Softmax temperature1, no Monte Carlo",
+      "configurations": []
+    },
+    {
+      "caller": "research_numeric.fit",
+      "path": "analysis.environment_model fit/evaluate; family/ridge bound by plan",
+      "configurations": []
+    }
+  ],
+  "source_artifacts": [
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-environment-research/scripts/structural_features.py",
+      "sha256": "f3f021d739cbc4cf2036aff803b79cb73f402f161e42a3a35d6de25a80038d40"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/skills/jra-environment-research/scripts/research_numeric.py",
+      "sha256": "3489b005b6e39c5081522aa698662f91b81fb052bc582aebfe5d269d9124788f"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/feature_engineering.py",
+      "sha256": "f65e6c156bc0bb0902cc4abd989ba9796d68720538f0f8f47f6a7d134cb5ffd2"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/track_bias.py",
+      "sha256": "cf305428e50e6b47cb1ffe937122a4063619708379db744665ac0f26790ab750"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/src/agents/simulator.py",
+      "sha256": "47354eab85d537e90a421d07e0c75b9bdb4b0b828e63400af92c592b4eac4c90"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/ev.py",
+      "sha256": "f3ef8e5b0e7308c39ed86b251eee773937202595e04784b4d0a02512f4a55065"
+    },
+    {
+      "path": "/Users/konishi/Documents/Playground/projects/jra-ev-agent/analysis/environment_model.py",
+      "sha256": "37418a14c524e383f76a1421e3eb31dda1aac6dcf691bc59517d7c9622653216"
+    }
+  ],
+  "action": "Parent accepted attaching both configuration refs to analysis05 and subsequent numerical-stage evidence. No source/freeze mutation required.",
+  "additional_unbound_mandatory_configuration_found": false,
+  "limitations": [
+    "This is the dependency assessment for the explicitly contracted research call path, not every production CLI or model.",
+    "Package versions may be recorded for reproducibility but no additional runtime configuration JSON is read by this path."
+  ]
+}

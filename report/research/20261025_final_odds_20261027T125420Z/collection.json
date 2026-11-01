@@ -1,0 +1,724 @@
+{
+  "role": "data_collector",
+  "target_date": "2026-10-25",
+  "purpose": "POST_EVENT_FINAL_ODDS_LABELS_ONLY",
+  "feature_input_allowed": false,
+  "shared_learning_state_modified": false,
+  "races": [
+    {
+      "race_id": "20261025_京都_01",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 8,
+        "place": 8,
+        "umaren": 28,
+        "wide": 28,
+        "umatan": 56,
+        "sanrenpuku": 56,
+        "sanrentan": 336
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [
+        "wakuren"
+      ],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_01.json",
+      "sha256": "0c900836d3862f8737b87d29b51b37890a8639e42c1a601a03627ed898bf097d"
+    },
+    {
+      "race_id": "20261025_京都_02",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 10,
+        "place": 10,
+        "wakuren": 30,
+        "umaren": 45,
+        "wide": 45,
+        "umatan": 90,
+        "sanrenpuku": 120,
+        "sanrentan": 720
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_02.json",
+      "sha256": "d72acb6aaec107ea3c0f6c0d199ff4a7fa63d111ac8832882707cbc60b00e064"
+    },
+    {
+      "race_id": "20261025_京都_03",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 8,
+        "place": 8,
+        "wakuren": 22,
+        "umaren": 28,
+        "wide": 28,
+        "umatan": 56,
+        "sanrenpuku": 56,
+        "sanrentan": 336
+      },
+      "non_numeric_counts": {
+        "wakuren": 7,
+        "umaren": 8,
+        "wide": 8,
+        "umatan": 16,
+        "sanrenpuku": 28,
+        "sanrentan": 168
+      },
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_03.json",
+      "sha256": "1c65acb2db0fe5eb5b2c3ed81a1ed96f4918c6c44c44215d2df6c851279e2eec"
+    },
+    {
+      "race_id": "20261025_京都_04",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 16,
+        "place": 16,
+        "wakuren": 36,
+        "umaren": 120,
+        "wide": 120,
+        "umatan": 240,
+        "sanrenpuku": 560,
+        "sanrentan": 3351
+      },
+      "non_numeric_counts": {
+        "sanrentan": 9
+      },
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_04.json",
+      "sha256": "2a2e32f0fcde326a7d7f1daef7ff98c6812a80ab994071f094c13185bf0a39e5"
+    },
+    {
+      "race_id": "20261025_京都_05",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 8,
+        "place": 8,
+        "umaren": 28,
+        "wide": 28,
+        "umatan": 56,
+        "sanrenpuku": 56,
+        "sanrentan": 336
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [
+        "wakuren"
+      ],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_05.json",
+      "sha256": "e1df89233e688c9e5953ee1c9dcc8596f25f780b7674fdc85fbb61f7e07a13ab"
+    },
+    {
+      "race_id": "20261025_京都_06",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 12,
+        "place": 12,
+        "wakuren": 32,
+        "umaren": 66,
+        "wide": 66,
+        "umatan": 132,
+        "sanrenpuku": 220,
+        "sanrentan": 1320
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_06.json",
+      "sha256": "ee03abc0d9ae3c71105be7e47aff97acb4042abf453dd40d6f60add2fc54d5e5"
+    },
+    {
+      "race_id": "20261025_京都_07",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 9,
+        "place": 9,
+        "wakuren": 29,
+        "umaren": 36,
+        "wide": 36,
+        "umatan": 72,
+        "sanrenpuku": 84,
+        "sanrentan": 504
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_07.json",
+      "sha256": "14c56839de5f5f83326bf5d29f0263bea56280147d5e1113762cf74d08938419"
+    },
+    {
+      "race_id": "20261025_京都_08",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 18,
+        "place": 18,
+        "wakuren": 36,
+        "umaren": 153,
+        "wide": 153,
+        "umatan": 306,
+        "sanrenpuku": 816,
+        "sanrentan": 4880
+      },
+      "non_numeric_counts": {
+        "sanrentan": 16
+      },
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_08.json",
+      "sha256": "89ca98b2becd61f6037a019492ef0da4ff52e360b3ea2712ba557ed1f550434f"
+    },
+    {
+      "race_id": "20261025_京都_09",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 9,
+        "place": 9,
+        "wakuren": 29,
+        "umaren": 36,
+        "wide": 36,
+        "umatan": 72,
+        "sanrenpuku": 84,
+        "sanrentan": 504
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_09.json",
+      "sha256": "2d79936e28a29837507c7bd1ce0a02ff2aa6dbf5aae8de699adb9193530ce40f"
+    },
+    {
+      "race_id": "20261025_京都_10",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 15,
+        "place": 15,
+        "wakuren": 35,
+        "umaren": 105,
+        "wide": 105,
+        "umatan": 210,
+        "sanrenpuku": 455,
+        "sanrentan": 2730
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_10.json",
+      "sha256": "905825f751a5862a56614bd125a519cf07a2940a7015786ac6c440a340acb83d"
+    },
+    {
+      "race_id": "20261025_京都_11",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 18,
+        "place": 18,
+        "wakuren": 36,
+        "umaren": 153,
+        "wide": 153,
+        "umatan": 306,
+        "sanrenpuku": 816,
+        "sanrentan": 4896
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_11.json",
+      "sha256": "9779b154c52d30c0292f4fc0e5994babc9d6dfcac50c1fda8a5f0ce9bb24700a"
+    },
+    {
+      "race_id": "20261025_京都_12",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 12,
+        "place": 12,
+        "wakuren": 32,
+        "umaren": 66,
+        "wide": 66,
+        "umatan": 132,
+        "sanrenpuku": 220,
+        "sanrentan": 1320
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_京都_12.json",
+      "sha256": "32e9cbc937220930453905e122d7dd28b2eb9007a48be151734daee9fc084f6d"
+    },
+    {
+      "race_id": "20261025_新潟_01",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 13,
+        "place": 13,
+        "wakuren": 33,
+        "umaren": 78,
+        "wide": 78,
+        "umatan": 156,
+        "sanrenpuku": 286,
+        "sanrentan": 1716
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_01.json",
+      "sha256": "2212764bec6194674424d06fd0c69689f5db88d8fd4228cb1f9ad5dee7aef432"
+    },
+    {
+      "race_id": "20261025_新潟_02",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 10,
+        "place": 10,
+        "wakuren": 30,
+        "umaren": 45,
+        "wide": 45,
+        "umatan": 90,
+        "sanrenpuku": 120,
+        "sanrentan": 720
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_02.json",
+      "sha256": "8d545ba525942ee9aa375eb0fe71f4814e6e1a2731a637594146f8943e782259"
+    },
+    {
+      "race_id": "20261025_新潟_03",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 18,
+        "place": 18,
+        "wakuren": 36,
+        "umaren": 153,
+        "wide": 153,
+        "umatan": 306,
+        "sanrenpuku": 816,
+        "sanrentan": 4889
+      },
+      "non_numeric_counts": {
+        "sanrentan": 7
+      },
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_03.json",
+      "sha256": "ace0408bc1e757f16d3426b9914ddb7b35921caed2fe32339333b2dddd42cb3d"
+    },
+    {
+      "race_id": "20261025_新潟_04",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 13,
+        "place": 13,
+        "wakuren": 33,
+        "umaren": 78,
+        "wide": 78,
+        "umatan": 156,
+        "sanrenpuku": 286,
+        "sanrentan": 1716
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_04.json",
+      "sha256": "f020661da8339c0fd8eee7fc7243d0967612373be2a6426c43b91269d13e616d"
+    },
+    {
+      "race_id": "20261025_新潟_05",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 18,
+        "place": 18,
+        "wakuren": 36,
+        "umaren": 153,
+        "wide": 153,
+        "umatan": 306,
+        "sanrenpuku": 816,
+        "sanrentan": 4894
+      },
+      "non_numeric_counts": {
+        "sanrentan": 2
+      },
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_05.json",
+      "sha256": "63c99eaef1738d1e379f4264c231044816f8641d6eaf7e942b27c54f71b03f8d"
+    },
+    {
+      "race_id": "20261025_新潟_06",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 11,
+        "place": 11,
+        "wakuren": 31,
+        "umaren": 55,
+        "wide": 55,
+        "umatan": 110,
+        "sanrenpuku": 165,
+        "sanrentan": 990
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_06.json",
+      "sha256": "21ecd188862baeeefc52a1cccf9e046019becfd32a6ae71935189976212d8192"
+    },
+    {
+      "race_id": "20261025_新潟_07",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 14,
+        "place": 14,
+        "wakuren": 34,
+        "umaren": 91,
+        "wide": 91,
+        "umatan": 182,
+        "sanrenpuku": 364,
+        "sanrentan": 2184
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_07.json",
+      "sha256": "9e0f8debeda1cee380287f0c221375a34bff745672395ab6177b6e41fb705821"
+    },
+    {
+      "race_id": "20261025_新潟_08",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 14,
+        "place": 14,
+        "wakuren": 34,
+        "umaren": 91,
+        "wide": 91,
+        "umatan": 182,
+        "sanrenpuku": 364,
+        "sanrentan": 2184
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_08.json",
+      "sha256": "47ddee6f6f748ce5679abc6fc303752a3a4ec88fd706d4c6a7df86865df6dd31"
+    },
+    {
+      "race_id": "20261025_新潟_09",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 14,
+        "place": 14,
+        "wakuren": 34,
+        "umaren": 91,
+        "wide": 91,
+        "umatan": 182,
+        "sanrenpuku": 364,
+        "sanrentan": 2184
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_09.json",
+      "sha256": "ca00299dc87307fef27a992bbdd150c183466260e409981550c31691b564959a"
+    },
+    {
+      "race_id": "20261025_新潟_10",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 12,
+        "place": 12,
+        "wakuren": 32,
+        "umaren": 66,
+        "wide": 66,
+        "umatan": 132,
+        "sanrenpuku": 220,
+        "sanrentan": 1320
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_10.json",
+      "sha256": "5d6ca1f949ccb9c38b2272b59ad7ff3a33d1d3de8578a335f2ec47e6eb5f0391"
+    },
+    {
+      "race_id": "20261025_新潟_11",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 17,
+        "place": 17,
+        "wakuren": 36,
+        "umaren": 136,
+        "wide": 136,
+        "umatan": 272,
+        "sanrenpuku": 680,
+        "sanrentan": 4080
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_11.json",
+      "sha256": "8ab47be3e3f95fcf3c9e57ff3203caee406a6d16024a7e5990b6f8dd4c25da0f"
+    },
+    {
+      "race_id": "20261025_新潟_12",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 12,
+        "place": 12,
+        "wakuren": 32,
+        "umaren": 66,
+        "wide": 66,
+        "umatan": 132,
+        "sanrenpuku": 220,
+        "sanrentan": 1320
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_新潟_12.json",
+      "sha256": "90e0d0dfa505cc4d03bfc2d05d425da7515468d0a06a7a8d41f8bf3b99d79898"
+    },
+    {
+      "race_id": "20261025_東京_01",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 16,
+        "place": 16,
+        "wakuren": 36,
+        "umaren": 120,
+        "wide": 120,
+        "umatan": 240,
+        "sanrenpuku": 560,
+        "sanrentan": 3277
+      },
+      "non_numeric_counts": {
+        "sanrentan": 83
+      },
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_01.json",
+      "sha256": "b85140dd74f53fc8a62ccae99693f96c6ee710fbe77597728de105cdd94eeaa3"
+    },
+    {
+      "race_id": "20261025_東京_02",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 7,
+        "place": 7,
+        "umaren": 21,
+        "wide": 21,
+        "umatan": 42,
+        "sanrenpuku": 35,
+        "sanrentan": 210
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [
+        "wakuren"
+      ],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_02.json",
+      "sha256": "ff8401839a89a73fcbc639bfa6497b7632c6552c5e2fc141387e0ab251fc4903"
+    },
+    {
+      "race_id": "20261025_東京_03",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 12,
+        "place": 12,
+        "wakuren": 32,
+        "umaren": 66,
+        "wide": 66,
+        "umatan": 132,
+        "sanrenpuku": 220,
+        "sanrentan": 1320
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_03.json",
+      "sha256": "06a05a59f15980e948de175978f73a81341a9c771154f24413a6a3f9bc38ff03"
+    },
+    {
+      "race_id": "20261025_東京_04",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 11,
+        "place": 11,
+        "wakuren": 31,
+        "umaren": 55,
+        "wide": 55,
+        "umatan": 110,
+        "sanrenpuku": 165,
+        "sanrentan": 990
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_04.json",
+      "sha256": "00b924709c96dc1ada879c8f74db08ef5a7dbb98a70b6d55ae910c99fde4e086"
+    },
+    {
+      "race_id": "20261025_東京_05",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 13,
+        "place": 13,
+        "wakuren": 33,
+        "umaren": 78,
+        "wide": 78,
+        "umatan": 156,
+        "sanrenpuku": 286,
+        "sanrentan": 1716
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_05.json",
+      "sha256": "2f1378d1eb1698e318c9a05b894030b5d25cae69925f44033aa6abaf79778fdb"
+    },
+    {
+      "race_id": "20261025_東京_06",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 16,
+        "place": 16,
+        "wakuren": 36,
+        "umaren": 120,
+        "wide": 120,
+        "umatan": 240,
+        "sanrenpuku": 560,
+        "sanrentan": 3355
+      },
+      "non_numeric_counts": {
+        "sanrentan": 5
+      },
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_06.json",
+      "sha256": "a5de484a40fa4ccaca6f707e381e46cbc5d46e53ad449ded7353244c26daf071"
+    },
+    {
+      "race_id": "20261025_東京_07",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 15,
+        "place": 15,
+        "wakuren": 35,
+        "umaren": 105,
+        "wide": 105,
+        "umatan": 210,
+        "sanrenpuku": 455,
+        "sanrentan": 2724
+      },
+      "non_numeric_counts": {
+        "sanrentan": 6
+      },
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_07.json",
+      "sha256": "8133eb1a31be23a7bee33c5670d8b9bdb5cd11a1307097259bc037c4038b9eae"
+    },
+    {
+      "race_id": "20261025_東京_08",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 18,
+        "place": 18,
+        "wakuren": 36,
+        "umaren": 153,
+        "wide": 153,
+        "umatan": 306,
+        "sanrenpuku": 816,
+        "sanrentan": 4859
+      },
+      "non_numeric_counts": {
+        "sanrentan": 37
+      },
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_08.json",
+      "sha256": "3f44230eb22d0e7b767ebfb991cb6e9e73777ae04fd61494fde7726412fff2fa"
+    },
+    {
+      "race_id": "20261025_東京_09",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 11,
+        "place": 11,
+        "wakuren": 31,
+        "umaren": 55,
+        "wide": 55,
+        "umatan": 110,
+        "sanrenpuku": 165,
+        "sanrentan": 990
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_09.json",
+      "sha256": "cd9ad43aad4568cc2482c32fd6173938c6c69597eb61cbd525d4dacccbd1cfad"
+    },
+    {
+      "race_id": "20261025_東京_10",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 9,
+        "place": 9,
+        "wakuren": 29,
+        "umaren": 36,
+        "wide": 36,
+        "umatan": 72,
+        "sanrenpuku": 84,
+        "sanrentan": 504
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_10.json",
+      "sha256": "c62c210ec21234560bf3a2e2e92e0c89c95242061a81d7ad91fb33f1aa507f79"
+    },
+    {
+      "race_id": "20261025_東京_11",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 16,
+        "place": 16,
+        "wakuren": 36,
+        "umaren": 120,
+        "wide": 120,
+        "umatan": 240,
+        "sanrenpuku": 560,
+        "sanrentan": 3360
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_11.json",
+      "sha256": "e2810e54a510c314c5fc5b3d4b6e411cd95b742ebb0be4000780c20b46bfc848"
+    },
+    {
+      "race_id": "20261025_東京_12",
+      "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+      "counts": {
+        "win": 13,
+        "place": 13,
+        "wakuren": 33,
+        "umaren": 78,
+        "wide": 78,
+        "umatan": 156,
+        "sanrenpuku": 286,
+        "sanrentan": 1716
+      },
+      "non_numeric_counts": {},
+      "count_mismatches": {},
+      "expected_not_listed_markets": [],
+      "artifact_path": "report/research/20261025_final_odds_20261027T125420Z/races/20261025_東京_12.json",
+      "sha256": "9e651332c5e9366286716a2e4b2bc1980a2e53c48678ce2020fefdd5f6744b68"
+    }
+  ],
+  "completed_races": 36,
+  "status": "COMPLETE_OFFICIAL_ODDS_COLLECTION",
+  "coverage_audit_path": "report/research/20261025_final_odds_20261027T125420Z/coverage_audit.json",
+  "total_numeric_odds": 100801,
+  "total_non_numeric_official_combinations": 400
+}
