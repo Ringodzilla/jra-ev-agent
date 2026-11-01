@@ -109,3 +109,54 @@ def test_average_furlong_itself_cannot_be_silently_omitted_or_forged():
     result = verify_source_artifacts(data)
     state = next(x for x in result["acquisition_coverage"]["records"] if x["field"] == "average_1f")
     assert result["status"] == "MISMATCH" and state["state"] == "AVAILABLE_BUT_NOT_COLLECTED"
+
+
+def test_primary_observed_value_preserves_its_own_units_and_status():
+    result = _coalesce_history_rows(
+        dict(last_3f="35.1", last_3f_status="OBSERVED", sectional_header="上り3F"),
+        dict(last_3f="", last_3f_status="NOT_OBSERVED"),
+    )
+    assert result["last_3f"] == "35.1"
+    assert result["last_3f_status"] == "OBSERVED"
+    assert result["sectional_header"] == "上り3F"
+
+
+def test_legacy_observation_is_not_marked_missing_by_an_empty_secondary():
+    result = _coalesce_history_rows(
+        dict(last_3f="35.1", last_3f_source="observed"),
+        dict(last_3f="", last_3f_status="NOT_OBSERVED"),
+    )
+    assert result["last_3f"] == "35.1"
+    assert result["last_3f_status"] == ""
+
+
+@pytest.mark.parametrize("previous,expected", [
+    ('[{"field": "older"}]', {"field": "older"}),
+    ('{"legacy": true}', {"previous": {"legacy": True}}),
+    ("invalid json", {"unparsed_previous": "invalid json"}),
+])
+def test_new_source_conflict_keeps_prior_conflict_evidence(previous, expected):
+    result = _coalesce_history_rows(
+        dict(passing_order="", passing_order_status="NOT_APPLICABLE",
+             history_semantic_conflicts=previous),
+        dict(passing_order="2-1", passing_order_status="OBSERVED"),
+    )
+    conflicts = json.loads(result["history_semantic_conflicts"])
+    assert conflicts[0] == expected
+    assert conflicts[-1]["reason"] == "NONAPPLICABLE_OBSERVATION_CONFLICT"
+
+
+def test_source_proven_nonapplicability_rejects_an_injected_sectional():
+    data = collected_observation(source_page())
+    data["rows"][0]["last_3f"] = "36"
+    result = verify_source_artifacts(data)
+    assert any(x.get("reason_code") == "SOURCE_SEMANTIC_CONFLICT" for x in result["mismatches"])
+    assert result["status"] == "MISMATCH"
+
+
+def test_explicit_jump_observation_still_requires_a_supported_model():
+    data = collected_observation(source_page())
+    data["rows"][0]["history_surface"] = "障害"
+    audit = audit_collected_data(data, {"r": {"career_starts_by_horse_number": {"1": 1}}})
+    assert audit["gate"] == "BLOCKED_MISSING_DATA"
+    assert any(f["method"] == "unsupported_source_observation" for f in audit["findings"])

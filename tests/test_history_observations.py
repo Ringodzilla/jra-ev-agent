@@ -144,3 +144,26 @@ def test_embedded_transfer_event_is_not_a_race_start():
     rows = JRAParser("https://jra.jp")._extract_embedded_history(BeautifulSoup(html, "html.parser"))
     assert len(rows) == 1
     assert rows[0]["date"] == "2026/09/20" and rows[0]["run_index"] == "1"
+
+
+def test_result_header_without_css_class_is_matched_by_column_position():
+    soup = result_page().__str__().replace('class="f_time">推定上り', '>推定上り')
+    soup = BeautifulSoup(soup, "html.parser")
+    result = parse_result_history_semantics(soup, soup.select_one("tbody tr"))
+    assert result["last_3f"] == "35.1"
+    assert result["sectional_header"] == "推定上り"
+    assert result["last_3f_status"] == "OBSERVED"
+
+
+def test_straight_horse_history_carries_explicit_corner_nonapplicability():
+    html = '''<table><tr><th>年月日</th><th>レース名</th><th>距離</th><th>着順</th>
+    <th>上り3F</th><th>通過</th></tr><tr><td>2026/09/20</td><td>直線競走</td>
+    <td>芝・直1000</td><td>1</td><td>32.4</td><td></td></tr></table>'''
+    row = JRAParser("https://jra.jp").parse_horse_last5(html, "r", "h", "A", "")[0]
+    assert row["passing_order_status"] == "NOT_APPLICABLE"
+    assert row["passing_order"] == ""
+
+
+def test_legacy_sectional_text_extractor_does_not_invent_a_missing_number():
+    assert JRAParser._extract_last_3f_value("3F 34.5") == "34.5"
+    assert JRAParser._extract_last_3f_value("未測定") == ""

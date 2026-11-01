@@ -38,6 +38,30 @@ class AcquisitionCoverageTests(unittest.TestCase):
                          'AVAILABLE_BUT_NOT_COLLECTED')
         self.assertEqual(a['findings'], [])
 
+    def test_incompatible_matched_source_semantics_are_not_silently_coalesced(self):
+        with self.sources([
+            {'last_3f': '', 'last_3f_status': 'NOT_APPLICABLE'},
+            {'last_3f': '34.5', 'last_3f_status': 'OBSERVED'},
+        ]):
+            result = verify_source_artifacts(self.data)
+        self.assertEqual(result['status'], 'MISMATCH')
+        self.assertTrue(any(x.get('reason_code') == 'SOURCE_SEMANTIC_CONFLICT'
+                            for x in result['mismatches']))
+
+    def test_number_without_an_observed_source_is_substituted_even_when_nonempty(self):
+        source = dict(self.row, last_3f='', _source_artifact={'path': 'original'})
+        record = field_coverage(self.row, self.row, 'last_3f', [source], self.data)
+        self.assertEqual(record['state'], 'SUBSTITUTED')
+        self.assertEqual(record['observed_values'], [])
+
+    def test_reparse_recovers_fallback_provenance_removed_by_caller(self):
+        self.row['last_3f'] = '36'
+        with self.sources([{'last_3f': '36', 'last_3f_source': 'fallback'}]):
+            result = audit_collected_data(self.data, self.config)
+        self.assertTrue(any(x['method'] == 'parser_last3f_fallback'
+                            for x in result['findings']))
+        self.assertEqual(result['gate'], 'BLOCKED_UNAPPROVED_IMPUTATION')
+
     def test_optional_weather_omission_cannot_hide_behind_empty_source(self):
         self.row['weather'] = ''
         with self.sources([{'weather': ''}, {'weather': '雨'}]):

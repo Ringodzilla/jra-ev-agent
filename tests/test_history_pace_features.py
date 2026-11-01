@@ -110,3 +110,20 @@ def test_nonfinisher_partial_corner_observation_is_not_a_verified_final_corner(t
     assert observed["seconds_x_final_corner_position"] is None
     assert result["retained_history_count"] == 1
     assert result["complete_context_count"] == 0
+
+
+@pytest.mark.parametrize("change,reason", [
+    ("missing_source", "provenance"),
+    ("foreign_source", "Exact JRA"),
+    ("completion", "completion status"),
+])
+def test_context_requires_supported_source_and_matching_completion(tmp_path, change, reason):
+    row = source_row(tmp_path)
+    if change == "missing_source":
+        row.pop("official_result_source")
+    elif change == "foreign_source":
+        row["official_result_source"]["url"] = "https://example.com/results"
+    else:
+        row["position"] = "1"
+    with pytest.raises(PaceObservationError, match=reason):
+        observed_history_pace_context([row], target_race_date="2026-10-25")
