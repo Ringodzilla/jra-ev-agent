@@ -23,11 +23,14 @@ def main() -> None:
     parser.add_argument('--output-dir', required=True, type=Path)
     parser.add_argument('--raw-dir', type=Path, default=ROOT / 'data/raw')
     parser.add_argument('--approvals-path', type=Path)
+    parser.add_argument('--preserve-source-set', action='store_true',
+                        help='Audit the frozen source set without adding cached HTML')
     args = parser.parse_args()
     data = json.loads(args.collected_path.read_text())
     collected = data.get('data_collector', data)
     configs = json.loads(args.config_path.read_text())
-    attach_history_sources(collected, args.raw_dir)
+    if not args.preserve_source_set:
+        attach_history_sources(collected, args.raw_dir)
     approvals = json.loads(args.approvals_path.read_text()) if args.approvals_path else []
     audit = audit_collected_data(collected, configs, approvals)
     audit['approval_evidence'] = approvals

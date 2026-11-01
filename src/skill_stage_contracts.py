@@ -49,6 +49,20 @@ def _review(output: dict) -> dict:
     return output.get("final_review", output)
 
 
+def _history_exception_projection(output: dict, collection: dict, audit: dict) -> bool:
+    application = output.get('history_exception_application') or {}
+    if not audit.get('approved_history_exceptions'):
+        return not application
+    from src.agents.analyzer import AnalyzerAgent
+    path = (output.get('environment_application') or {}).get('production_model_path')
+    expected = AnalyzerAgent(environment_model_path=Path(path) if path else None).run(
+        list(collection.get('rows') or []), odds_snapshots=collection.get('odds_snapshots'),
+        environment_snapshots=collection.get('environment_snapshots'),
+        collected_evidence=collection, integrity_audit=audit)
+    return (application == expected['history_exception_application']
+            and output.get('feature_rows') == expected['feature_rows'])
+
+
 def _environment_policy(rows: list, output: dict) -> bool:
     from src.environment_prediction import DEFAULT_PRODUCTION_MODEL_PATH, _load_promoted_model
     for row in rows:
@@ -123,7 +137,9 @@ def stage_checks(step: str, output: dict, prior: dict[str, dict], *, mode: str) 
         rows = _rows(output, "feature_rows")
         return {"feature_lineup": _valid_rows(rows, races, entries),
                 "ability_components_complete": bool(rows) and all(all(_finite(r.get(k)) for k in FEATURES) for r in rows),
-                "environment_lineage_present": _environment_policy(rows, output)}
+                "environment_lineage_present": _environment_policy(rows, output),
+                "history_exception_projection_reproduced": _history_exception_projection(
+                    output, collection, prior.get('approval_gate', {}))}
     if step == "simulation":
         rows = _rows(output, "scenario_rows")
         features = _rows(prior.get("analysis", {}), "feature_rows")

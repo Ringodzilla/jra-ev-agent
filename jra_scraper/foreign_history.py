@@ -4,6 +4,7 @@ from __future__ import annotations
 from datetime import date
 from decimal import Decimal
 import hashlib
+import json
 from pathlib import Path
 import re
 from urllib.parse import parse_qs, urlparse
@@ -67,7 +68,9 @@ def _jra_identity(artifact, *, number, position, distance, track, race_name):
     if _japanese_date(day_text) != artifact["date"]:
         raise ValueError("JRA identity source date mismatch")
     translations = {"SHA TIN": ("シャティン", "THE FWD QEII CUP", "クイーンエリザベス2世カップ"),
-                    "PARISLONGCHAMP": ("パリロンシャン", "QATAR PRIX DE L'ARC DE TRIOMPHE", "凱旋門賞")}
+                    "PARISLONGCHAMP": ("パリロンシャン", "QATAR PRIX DE L'ARC DE TRIOMPHE", "凱旋門賞"),
+                    "YORK": ("ヨーク", "JUDDMONTE INTERNATIONAL STAKES", "インターナショナルステークス"),
+                    "ASCOT": ("アスコット", "KING GEORGE VI & QUEEN ELIZABETH STAKES", "キングジョージ6世&クイーンエリザベスステークス")}
     if track not in translations:
         raise ValueError("Unverified overseas venue translation")
     jp_track, official_race, jp_race = translations[track]
@@ -249,3 +252,83 @@ def parse_foreign_history_artifact(html: str, artifact: dict) -> list[dict]:
     parser = {"nar_history_result": _nar, "hkjc_history_sectionals": _hkjc,
               "overseas_jra_result": _overseas_jra}[kind]
     return [parser(soup, artifact)]
+
+
+def parse_imperial_proxy_observation(item: dict, row: dict) -> Decimal:
+    """Reproduce an explicitly approved 603.504m proxy from a bound UK page.
+
+    This returns three imperial-furlong elapsed seconds, never a measured 600m
+    value. The frozen rendered response supplies a complete sectional table;
+    its date/event is identified by the bound URL and independent JRA result.
+    """
+    source = item["source"]
+    routes = {
+        "https://www.racingtv.com/results/2025-08-20/york/1535":
+            ("2025-08-20", "YORK", "JUDDMONTE INTERNATIONAL STAKES", 2050, 10),
+        "https://www.racingtv.com/results/2026-07-25/ascot/1535":
+            ("2026-07-25", "ASCOT", "KING GEORGE VI & QUEEN ELIZABETH STAKES", 2390, 12),
+    }
+    if source.get("url") not in routes:
+        raise ValueError("Unsupported imperial proxy source URL")
+    day, track, race_name, distance, expected_sections = routes[source["url"]]
+    row_day = _japanese_date(row["date"]) if "年" in row["date"] else date.fromisoformat(row["date"]).isoformat()
+    if (row_day != day or item["race_date"] != day or item["horse_name"] != row["horse_name"]
+            or item["track"].upper() != track or int(row["distance"]) != distance):
+        raise ValueError("Imperial proxy source history identity differs")
+    raw = Path(source["path"]).read_bytes()
+    if hashlib.sha256(raw).hexdigest() != source["sha256"]:
+        raise ValueError("Imperial proxy raw response changed")
+    response = json.loads(raw.decode("utf-8"))
+    if not isinstance(response, str) or source["url"] not in response.splitlines()[0]:
+        raise ValueError("Imperial proxy rendered response URL not bound")
+    lines = [re.sub(r"^L\d+:\s?", "", line).strip() for line in response.splitlines()]
+    lines = [line for line in lines if line]
+    roster_header = _one([i for i, line in enumerate(lines) if line == "Horse Information"], "imperial runner table")
+    first = _one([i for i, line in enumerate(lines) if line == "1f"], "imperial interval start")
+    total = _one([i for i, line in enumerate(lines) if line == "Total Time"], "imperial interval end")
+    labels = lines[first:total]
+    if (roster_header >= first or len(labels) != expected_sections
+            or labels != [str(i) + "f" for i in range(1, len(labels) + 1)]):
+        raise ValueError("Imperial furlong interval labels are not sequential")
+    roster_lines = lines[roster_header + 1:first]
+    positions = [i for i, text in enumerate(roster_lines) if re.fullmatch(r"\d+(?:st|nd|rd|th)", text)]
+    roster = []
+    for index, start in enumerate(positions):
+        end = positions[index + 1] if index + 1 < len(positions) else len(roster_lines)
+        block = roster_lines[start:end]
+        draw = _one([i for i, text in enumerate(block) if re.fullmatch(r"\(\d+\)", text)], "imperial draw")
+        if draw < 1 or draw + 1 >= len(block) or not re.fullmatch(r"[1-9]\d*", block[draw - 1]):
+            raise ValueError("Imperial runner number missing")
+        position = re.match(r"\d+", block[0])[0]
+        if int(position) != index + 1:
+            raise ValueError("Imperial runner order ambiguous")
+        roster.append((block[draw + 1], block[draw - 1], position))
+    name = item["official_horse_name"]
+    runner_index = _one([i for i, runner in enumerate(roster) if runner[0].upper() == name.upper()], "imperial horse")
+    data = lines[total + 1:]
+    ends = [i for i, text in enumerate(data) if re.fullmatch(r"FSP:\s*\d+(?:\.\d+)?%", text)]
+    if len(ends) != len(roster):
+        raise ValueError("Imperial sectional horse block count differs")
+    all_splits = []
+    start = 0
+    for end in ends:
+        block = data[start:end]
+        if len(block) != 2 * len(labels) + 1 or not re.fullmatch(r"\d+m,\s*\d+(?:\.\d+)?s", block[-1]):
+            raise ValueError("Imperial sectional block schema differs")
+        splits = []
+        for offset in range(0, 2 * len(labels), 2):
+            splits.append(Decimal(_positive(block[offset])))
+            if not re.fullmatch(r"\d+(?:st|nd|rd|th)\s*\|\s*[+-]\d+(?:\.\d+)?", block[offset + 1]):
+                raise ValueError("Imperial interval position missing")
+        all_splits.append(splits)
+        start = end + 1
+    artifact = dict(row, date=day, identity_source=item["identity_source"])
+    _jra_identity(artifact, number=roster[runner_index][1], position=roster[runner_index][2],
+                  distance=distance, track=track, race_name=race_name)
+    parsed = all_splits[runner_index][-3:]
+    declared = list(map(Decimal, item["individual_final_3_imperial_furlongs_splits_seconds"]))
+    value = sum(parsed)
+    if (parsed != declared or value != Decimal(str(item["individual_final_3_imperial_furlongs_seconds"]))
+            or Decimal(str(item["section_distance_m"])) != Decimal("603.504")):
+        raise ValueError("Declared imperial proxy differs from raw observation")
+    return value

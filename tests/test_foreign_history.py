@@ -253,3 +253,94 @@ def test_france_requires_independent_jra_number_finish_and_distance(france_sourc
     a['identity_source']['sha256'] = hashlib.sha256(a['identity_source']['html'].encode()).hexdigest()
     with pytest.raises(ValueError):
         parse_foreign_history_artifact(FRANCE, a)
+
+
+@pytest.fixture
+def imperial_source(tmp_path):
+    import hashlib
+    from jra_scraper.foreign_history import parse_imperial_proxy_observation
+    identity = identity_source()
+    h = identity['html'].replace('2026年4月26日 シャティン', '2025年8月20日 ヨーク').replace('2,000メートル', '2,050メートル').replace('クイーンエリザベス2世カップ', 'インターナショナルステークス').replace('class="place">2<', 'class="place">2<').replace('class="cell num">1<', 'class="cell num">2<')
+    identity.update(html=h, sha256=hashlib.sha256(h.encode()).hexdigest())
+    url = 'https://www.racingtv.com/results/2025-08-20/york/1535'
+    roster = ['Horse Information', '1st', 'Image', '1', '(1)', 'Other',
+              '2nd', 'Image', '2', '(2)', 'Danon Decile']
+    labels = [str(i) + 'f' for i in range(1, 11)] + ['Total Time']
+    blocks = []
+    for values in [['10.00'] * 10, ['10.00'] * 7 + ['11.22', '11.74', '13.04']]:
+        for split in values:
+            blocks.extend([split, '2nd | +0.10'])
+        blocks.extend(['2m, 7.90s', 'FSP: 100.0%'])
+    response = url + '\n' + '\n'.join('L%d: %s' % (i, x) for i, x in enumerate(roster + labels + blocks))
+    path = tmp_path / 'imperial.json'
+    path.write_text(__import__('json').dumps(response))
+    item = {'horse_name': 'マスカレードボール', 'race_date': '2025-08-20', 'track': 'York',
+            'official_horse_name': 'DANON DECILE', 'identity_source': identity,
+            'source': {'path': str(path), 'url': url, 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()},
+            'individual_final_3_imperial_furlongs_splits_seconds': ['11.22', '11.74', '13.04'],
+            'individual_final_3_imperial_furlongs_seconds': '36.00', 'section_distance_m': '603.504'}
+    row = {'horse_id': 'official-jra-id', 'horse_name': 'マスカレードボール', 'race_id': 'target',
+           'date': '2025年8月20日', 'distance': '2050'}
+    return parse_imperial_proxy_observation, item, row, path, response
+
+
+def test_imperial_proxy_is_reparsed_and_distinct_from_measured_600m(imperial_source):
+    from decimal import Decimal
+    parser, item, row, _, _ = imperial_source
+    assert parser(item, row) == Decimal('36.00')
+    row['date'] = '2025-08-20'
+    assert parser(item, row) == Decimal('36.00')
+
+
+@pytest.mark.parametrize('field,value', [('race_date', '2025-08-21'), ('track', 'Ascot'),
+                                       ('horse_name', '別馬'), ('official_horse_name', 'Other'),
+                                       ('section_distance_m', 600),
+                                       ('individual_final_3_imperial_furlongs_seconds', 35),
+                                       ('individual_final_3_imperial_furlongs_splits_seconds', ['11', '12', '13'])])
+def test_imperial_declared_identity_or_values_cannot_replace_raw_observation(imperial_source, field, value):
+    parser, item, row, _, _ = imperial_source
+    item[field] = value
+    with pytest.raises(ValueError):
+        parser(item, row)
+
+
+@pytest.mark.parametrize('field,value', [('horse_name', '別馬'), ('horse_id', 'wrong-id'),
+                                       ('distance', '2000'), ('date', '2025-08-21')])
+def test_imperial_row_must_match_registered_history(imperial_source, field, value):
+    parser, item, row, _, _ = imperial_source
+    row[field] = value
+    with pytest.raises(ValueError):
+        parser(item, row)
+
+
+@pytest.mark.parametrize('change', ['url', 'hash', 'response_type', 'response_url'])
+def test_imperial_source_response_is_bound(imperial_source, change):
+    import hashlib, json
+    parser, item, row, path, response = imperial_source
+    if change == 'url':
+        item['source']['url'] = 'https://evil.example/result'
+    elif change == 'hash':
+        item['source']['sha256'] = 'wrong'
+    else:
+        response = {} if change == 'response_type' else response.replace(item['source']['url'], 'https://wrong.example')
+        path.write_text(json.dumps(response))
+        item['source']['sha256'] = hashlib.sha256(path.read_bytes()).hexdigest()
+    with pytest.raises(ValueError):
+        parser(item, row)
+
+
+@pytest.mark.parametrize('old,new', [
+    ('Horse Information', 'Other Header'), ('10f', '11f'), ('Total Time', 'No Total Time'),
+    ('(2)', '(?)'), ('L8: 2', 'L8: unknown'), ('L6: 2nd', 'L6: 3rd'),
+    ('L10: Danon Decile', 'L10: Other'), ('FSP: 100.0%', 'FSP missing'),
+    ('2m, 7.90s', 'bad total'), ('2nd | +0.10', 'missing position'),
+])
+def test_imperial_raw_table_schema_must_be_complete(imperial_source, old, new):
+    import hashlib, json
+    parser, item, row, path, response = imperial_source
+    assert old in response
+    response = response.replace(old, new)
+    path.write_text(json.dumps(response))
+    item['source']['sha256'] = hashlib.sha256(path.read_bytes()).hexdigest()
+    with pytest.raises(ValueError):
+        parser(item, row)

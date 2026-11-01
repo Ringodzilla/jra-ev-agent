@@ -388,15 +388,51 @@ def audit_collected_data(collected: dict, race_configs: object, approvals: list 
     unapproved = [f for f in findings if not f['approved']]
     coverage = source_check['acquisition_coverage']
     source_verified = source_check['status'] == 'PASS'
+    from src.history_exceptions import HistoryExceptionError, validate_history_exceptions
+    exception_error = ''
+    try:
+        exceptions = validate_history_exceptions(collected, race_configs, approvals or [], purpose)
+        for record in exceptions:
+            if any(item['state'] in {'OBSERVED', 'AVAILABLE_BUT_NOT_COLLECTED', 'NOT_APPLICABLE'}
+                   and all(str(item.get(key, '')) == str(record.get(key, ''))
+                           for key in ('race_id', 'horse_id', 'horse_number', 'run_index', 'field'))
+                   for item in coverage['records']):
+                raise HistoryExceptionError('Source observation cannot be replaced by an exception')
+            expected = [f['finding_id'] for f in findings if all(
+                str(f.get(key, '')) == str(record.get(key, ''))
+                for key in ('race_id', 'horse_id', 'horse_number', 'run_index', 'field'))]
+            if sorted(record['finding_ids']) != sorted(expected):
+                raise HistoryExceptionError('Scoped exception does not match current field findings')
+    except HistoryExceptionError as exc:
+        exceptions, exception_error = [], str(exc)
+
+    def excepted(item):
+        return any(all(str(item.get(key, '')) == str(record.get(key, ''))
+                       for key in ('race_id', 'horse_id', 'horse_number', 'run_index', 'field'))
+                   for record in exceptions)
+
+    effective_coverage_blocked = coverage['status'] == 'BLOCKED'
+    if exceptions:
+        # Only explicit, source-bound field exceptions may remove their own
+        # unavailable-observation stop. Required identity/count/clock failures
+        # and source-reparse failures remain independent stops.
+        required_missing = (not entries or any(c['status'] == 'MISSING' for c in counts)
+                            or any(f['required_missing'] and not excepted(f) for f in findings))
+        effective_coverage_blocked = any(
+            item['state'] not in {'OBSERVED', 'NOT_MEASURED', 'NOT_APPLICABLE', 'SUBSTITUTED'}
+            and not excepted(item) for item in coverage['records'])
     gate = 'BLOCKED_MISSING_DATA' if required_missing else (
         'BLOCKED_UNAPPROVED_IMPUTATION' if unapproved else (
-            'BLOCKED_ACQUISITION_INCOMPLETE' if coverage['status'] == 'BLOCKED' and (
+            'BLOCKED_ACQUISITION_INCOMPLETE' if effective_coverage_blocked and (
                 source_verified or coverage['counts'].get('AVAILABLE_BUT_NOT_COLLECTED')) else (
                 'PASS' if source_verified and not unknown_counts else 'UNVERIFIED')))
+    if exception_error:
+        gate = 'UNVERIFIED'
     return {'schema_version': 1, 'status': gate, 'gate': gate, 'purpose': purpose,
             'verification_issues': source_check['mismatches'],
             'recovered_imputation_provenance': source_check.get('detected_imputations', []),
             'input_sha256': digest, 'race_ids': race_ids, 'findings': findings,
+            'approved_history_exceptions': exceptions, 'history_exception_error': exception_error,
             'acquisition_coverage': coverage,
             'missing_fields': missing, 'missing_field_counts': dict(Counter(m['field'] for m in missing)),
             'history_counts': counts, 'history_counts_verified': not unknown_counts,

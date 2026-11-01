@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from pathlib import Path
+import hashlib
+import json
 
 from analysis.ev import build_feature_rows
 from src.environment_prediction import apply_environment_features
@@ -16,7 +18,24 @@ class AnalyzerAgent:
         *,
         odds_snapshots: list[dict[str, str]] | None = None,
         environment_snapshots: list[dict[str, object]] | None = None,
+        collected_evidence: dict | None = None,
+        integrity_audit: dict | None = None,
     ) -> dict[str, object]:
+        exception_application = {}
+        if collected_evidence is not None or integrity_audit is not None:
+            from src.history_exceptions import model_history_rows
+            if collected_evidence is None or integrity_audit is None or rows != collected_evidence.get('rows'):
+                raise ValueError('History exception evidence must match analyzer source rows')
+            rows = model_history_rows(collected_evidence, integrity_audit)
+            exception_application = {
+                'source_input_sha256': integrity_audit['input_sha256'],
+                'records': integrity_audit.get('approved_history_exceptions', []),
+                'model_rows_sha256': hashlib.sha256(json.dumps(
+                    rows, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()).hexdigest(),
+                'observed_source_rows_preserved': True,
+            }
+        elif any(row.get('approved_history_exceptions') for row in rows):
+            raise ValueError('Model-only history exceptions require audited source evidence')
         feature_rows = build_feature_rows(rows, odds_snapshots=odds_snapshots)
         feature_rows, environment_application = apply_environment_features(
             feature_rows,
@@ -26,4 +45,5 @@ class AnalyzerAgent:
         return {
             "feature_rows": feature_rows,
             "environment_application": environment_application,
+            **({'history_exception_application': exception_application} if exception_application else {}),
         }

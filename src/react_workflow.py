@@ -143,10 +143,13 @@ class ReactiveRaceWorkflow:
                 self.skill_sequence.record('integrity_audit', self.skill_sequence.bind(audit), checks={'audit_completed': bool(audit.get('input_sha256'))})
                 self.skill_sequence.record('approval_gate', self.skill_sequence.bind(audit), checks={'integrity_and_approvals_pass': audit.get('gate') == 'PASS'},
                                            failure_code=str(audit.get('gate', 'UNVERIFIED')))
+            exception_evidence = ({'collected_evidence': collected, 'integrity_audit': audit}
+                                  if self.skill_sequence is not None and audit.get('approved_history_exceptions') else {})
             analyzed = self.analyzer.run(
                 list(collected.get("rows") or []),
                 odds_snapshots=list(collected.get("odds_snapshots") or []),
                 environment_snapshots=list(collected.get("environment_snapshots") or []),
+                **exception_evidence,
             )
             if self.skill_sequence is not None:
                 self.skill_sequence.record('analysis', self.skill_sequence.bind(analyzed), checks=row_checks(list(analyzed.get('feature_rows') or []), list(collected.get('entries') or [])))
