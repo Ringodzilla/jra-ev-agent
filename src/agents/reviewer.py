@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import math
+from collections.abc import Callable
 from itertools import combinations, product
 
 from strategy.betting import MIN_ACTIONABLE_WIN_EV
@@ -61,151 +62,33 @@ class ReviewerAgent:
         ticket_repair_blocked = False
         stake_dependency_ratio = 0.0
 
-        lineage_errors = _probability_lineage_errors(ticket_plan)
-        if lineage_errors:
-            reject("PROBABILITY_LINEAGE_INVALID", "probability lineage invalid: " + ", ".join(lineage_errors[:3]))
-            ticket_repair_blocked = True
+        lineage_errors, lineage_blocked = self._check_lineage(ticket_plan, reject)
+        ticket_repair_blocked = ticket_repair_blocked or lineage_blocked
 
-        value_integrity_errors = _ticket_value_integrity_errors(tickets, ticket_plan)
-        if value_integrity_errors:
-            reject(
-                "TICKET_VALUE_INTEGRITY_INVALID",
-                "ticket value integrity invalid: " + ", ".join(value_integrity_errors[:3])
-            )
-            ticket_repair_blocked = True
+        value_integrity_errors, integrity_blocked = self._check_value_integrity(tickets, ticket_plan, reject)
+        ticket_repair_blocked = ticket_repair_blocked or integrity_blocked
 
-        rank_coverage_errors = _rank_coverage_errors(
-            rank_coverage_tickets,
-            ev_rows,
-            settings=self.settings,
-        )
-        if rank_coverage_errors:
-            reject(
-                "RANK_COVERAGE_INVALID",
-                "rank coverage invalid: " + ", ".join(rank_coverage_errors[:3]),
-            )
-            ticket_repair_blocked = True
+        rank_coverage_errors, rank_blocked = self._check_rank_coverage(rank_coverage_tickets, ev_rows, reject)
+        ticket_repair_blocked = ticket_repair_blocked or rank_blocked
 
-        high_issues = int(dict(quality_report.get("issues_by_severity") or {}).get("high", 0))
-        if high_issues > 0:
-            reject("PARSER_HIGH_SEVERITY", f"high severity parser issues: {high_issues}")
-            ticket_repair_blocked = True
-            if attempt < self.settings.max_repair_attempts:
-                repair_actions.append("retry_aggressive_parse")
+        parser_blocked = self._check_parser_quality(quality_report, entry_rows, attempt, repair_actions, reject)
+        ticket_repair_blocked = ticket_repair_blocked or parser_blocked
 
-        missing_odds = int(quality_report.get("missing_current_odds_entries", 0) or 0)
-        if entry_rows and missing_odds == len(entry_rows):
-            reject("ALL_CURRENT_ODDS_MISSING", "current odds are missing for every entry")
-            ticket_repair_blocked = True
-            if attempt < self.settings.max_repair_attempts:
-                repair_actions.append("retry_aggressive_parse")
-
-        prob_sums = _probability_sums(ev_rows)
-        bad_prob_races = [race_id for race_id, total in prob_sums.items() if abs(total - 1.0) > 0.025]
-        if bad_prob_races:
-            reject("PROBABILITY_NORMALIZATION_DRIFT", f"probability normalization drift detected: {bad_prob_races}")
-            ticket_repair_blocked = True
+        prob_sums, prob_blocked = self._check_probability_sums(ev_rows, reject)
+        ticket_repair_blocked = ticket_repair_blocked or prob_blocked
 
         if str(ticket_plan.get("bet_type", "")) == "win5":
             ticket_repair_blocked = True
-            win5_points = int(_to_float(ticket_plan.get("points"), 0.0))
-            if win5_points <= 0:
-                reject("WIN5_NO_VALID_POINTS", "WIN5 formation has no valid points")
-            if self.settings.win5_max_points is not None and win5_points > self.settings.win5_max_points:
-                reject("WIN5_POINT_LIMIT_EXCEEDED", "WIN5 formation exceeds max point constraint")
-            if len(list(ticket_plan.get("legs") or [])) != 5:
-                reject("WIN5_LEG_COUNT_INVALID", "WIN5 formation must contain exactly five legs")
-            configured_order = _race_order_from_configs(list(collected.get("race_configs") or []))
-            actual_order = [str(race_id) for race_id in list(ticket_plan.get("race_order") or [])]
-            if configured_order and actual_order[: len(configured_order)] != configured_order:
-                reject("WIN5_RACE_ORDER_MISMATCH", "WIN5 race order does not match config order")
+            self._check_win5_plan(collected, ticket_plan, reject)
         else:
-            risky_tickets = [
-                ticket
-                for ticket in tickets
-                if _ticket_ev(ticket, default=0.0) < _ticket_min_ev(ticket, self.settings)
-                or _ticket_hit_prob(ticket) < _ticket_min_prob(ticket)
-            ]
-            if risky_tickets:
-                reject("TICKET_THRESHOLDS_FAILED", "ticket plan contains low-confidence or sub-threshold tickets")
-
-            top_rows = sorted(
-                ev_rows,
-                key=lambda row: _to_float(row.get("win_prob"), 0.0),
-                reverse=True,
-            )[:3]
-            ticket_horses = _ticket_horse_numbers(tickets)
-            covered_top = [
-                str(row.get("horse_number", ""))
-                for row in top_rows
-                if str(row.get("horse_number", "")) in ticket_horses
-            ]
-            top1_missing = bool(
-                tickets
-                and top_rows
-                and str(top_rows[0].get("horse_number", "")) not in ticket_horses
-            )
-            if top1_missing and not repaired_plan:
-                reject("TOP_WIN_HORSE_UNCOVERED", "top win-probability horse is missing from every ticket")
-            required_top_coverage = min(self.settings.min_top3_ticket_coverage, len(top_rows))
-            if tickets and len(covered_top) < required_top_coverage:
-                reject(
-                    "TOP3_COVERAGE_LOW",
-                    f"top-3 ticket coverage is too low: {len(covered_top)}/{required_top_coverage}"
-                )
-            stake_dependency_ratio = _max_non_core_horse_stake_dependency_ratio(
-                value_tickets,
-                ev_rows,
-            )
-
-            if value_tickets and portfolio_ev(value_tickets) < self.settings.min_portfolio_ev:
-                reject("PORTFOLIO_EV_LOW", "ticket portfolio EV is below the configured minimum")
-            if tickets and not portfolio_no_gami(tickets):
-                reject("PORTFOLIO_LOSS_ON_HIT", "ticket portfolio contains loss-on-hit tickets")
+            stake_dependency_ratio = self._check_standard_plan(tickets, value_tickets, ev_rows, repaired_plan, reject)
 
         if str(ticket_plan.get("bet_type", "")) != "win5":
-            longshot_overweight = [
-                ticket
-                for ticket in tickets
-                if _ticket_odds(ticket) >= _longshot_odds_threshold(ticket)
-                and int(_to_float(ticket.get("stake"), 0.0)) > _longshot_stake_threshold(ticket)
-            ]
-            if longshot_overweight:
-                reject("LONGSHOT_OVERWEIGHT", "ticket plan overweights extreme longshots")
+            self._check_longshot_overweight(tickets, reject)
 
-        divergent_rows = _find_divergent_rows(
-            ev_rows,
-            max_ev_delta_abs=self.settings.max_ev_delta_abs,
-            max_ev_delta_ratio=self.settings.max_ev_delta_ratio,
-            max_odds_gap_ratio=self.settings.max_odds_gap_ratio,
-        )
-        selected_divergent_rows = _selected_divergent_rows(value_tickets, divergent_rows)
-        actionable_divergent_rows = selected_divergent_rows
-        if actionable_divergent_rows and str(ticket_plan.get("bet_type", "")) != "win5":
-            reject(
-                "PREDICTED_CURRENT_EV_DIVERGENCE",
-                "predicted/current EV divergence detected: "
-                + ", ".join(
-                    f"{row['horse_name']}@{row['race_id']}"
-                    for row in actionable_divergent_rows[:3]
-                )
-            )
+        divergent_rows, selected_divergent_rows = self._check_divergence(ev_rows, value_tickets, ticket_plan, reject)
 
-        missing_eligible_win_candidates = _find_missing_eligible_win_candidates(
-            collected,
-            ev_rows,
-            ticket_plan,
-            minimum_win_ev=max(self.settings.min_ev, MIN_ACTIONABLE_WIN_EV),
-        )
-        if missing_eligible_win_candidates and str(ticket_plan.get("bet_type", "")) != "win5":
-            reject(
-                "ELIGIBLE_WIN_CANDIDATE_MISSING",
-                "eligible official-live win candidates are missing from candidate universe: "
-                + ", ".join(
-                    f"{row['horse_name']}@{row['race_id']}"
-                    for row in missing_eligible_win_candidates[:3]
-                )
-            )
+        missing_eligible_win_candidates = self._check_missing_win_candidates(collected, ev_rows, ticket_plan, reject)
 
         if repair_enabled and tickets and reasons and not ticket_repair_blocked:
             ticket_repair = _build_ticket_repair_action(
@@ -259,6 +142,220 @@ class ReviewerAgent:
                 "tickets": len(tickets),
             },
         }
+
+    def _check_lineage(
+        self, ticket_plan: dict[str, object], reject: Callable[[str, str], None]
+    ) -> tuple[list[str], bool]:
+        blocked = False
+        lineage_errors = _probability_lineage_errors(ticket_plan)
+        if lineage_errors:
+            reject("PROBABILITY_LINEAGE_INVALID", "probability lineage invalid: " + ", ".join(lineage_errors[:3]))
+            blocked = True
+        return lineage_errors, blocked
+
+    def _check_value_integrity(
+        self,
+        tickets: list[dict[str, object]],
+        ticket_plan: dict[str, object],
+        reject: Callable[[str, str], None],
+    ) -> tuple[list[str], bool]:
+        blocked = False
+        value_integrity_errors = _ticket_value_integrity_errors(tickets, ticket_plan)
+        if value_integrity_errors:
+            reject(
+                "TICKET_VALUE_INTEGRITY_INVALID",
+                "ticket value integrity invalid: " + ", ".join(value_integrity_errors[:3])
+            )
+            blocked = True
+        return value_integrity_errors, blocked
+
+    def _check_rank_coverage(
+        self,
+        rank_coverage_tickets: list[dict[str, object]],
+        ev_rows: list[dict[str, object]],
+        reject: Callable[[str, str], None],
+    ) -> tuple[list[str], bool]:
+        blocked = False
+        rank_coverage_errors = _rank_coverage_errors(
+            rank_coverage_tickets,
+            ev_rows,
+            settings=self.settings,
+        )
+        if rank_coverage_errors:
+            reject(
+                "RANK_COVERAGE_INVALID",
+                "rank coverage invalid: " + ", ".join(rank_coverage_errors[:3]),
+            )
+            blocked = True
+        return rank_coverage_errors, blocked
+
+    def _check_parser_quality(
+        self,
+        quality_report: dict[str, object],
+        entry_rows: list[dict[str, object]],
+        attempt: int,
+        repair_actions: list[object],
+        reject: Callable[[str, str], None],
+    ) -> bool:
+        blocked = False
+        high_issues = int(dict(quality_report.get("issues_by_severity") or {}).get("high", 0))
+        if high_issues > 0:
+            reject("PARSER_HIGH_SEVERITY", f"high severity parser issues: {high_issues}")
+            blocked = True
+            if attempt < self.settings.max_repair_attempts:
+                repair_actions.append("retry_aggressive_parse")
+        missing_odds = int(quality_report.get("missing_current_odds_entries", 0) or 0)
+        if entry_rows and missing_odds == len(entry_rows):
+            reject("ALL_CURRENT_ODDS_MISSING", "current odds are missing for every entry")
+            blocked = True
+            if attempt < self.settings.max_repair_attempts:
+                repair_actions.append("retry_aggressive_parse")
+        return blocked
+
+    def _check_probability_sums(
+        self, ev_rows: list[dict[str, object]], reject: Callable[[str, str], None]
+    ) -> tuple[dict[str, float], bool]:
+        blocked = False
+        prob_sums = _probability_sums(ev_rows)
+        bad_prob_races = [race_id for race_id, total in prob_sums.items() if abs(total - 1.0) > 0.025]
+        if bad_prob_races:
+            reject("PROBABILITY_NORMALIZATION_DRIFT", f"probability normalization drift detected: {bad_prob_races}")
+            blocked = True
+        return prob_sums, blocked
+
+    def _check_win5_plan(
+        self,
+        collected: dict[str, object],
+        ticket_plan: dict[str, object],
+        reject: Callable[[str, str], None],
+    ) -> None:
+        win5_points = int(_to_float(ticket_plan.get("points"), 0.0))
+        if win5_points <= 0:
+            reject("WIN5_NO_VALID_POINTS", "WIN5 formation has no valid points")
+        if self.settings.win5_max_points is not None and win5_points > self.settings.win5_max_points:
+            reject("WIN5_POINT_LIMIT_EXCEEDED", "WIN5 formation exceeds max point constraint")
+        if len(list(ticket_plan.get("legs") or [])) != 5:
+            reject("WIN5_LEG_COUNT_INVALID", "WIN5 formation must contain exactly five legs")
+        configured_order = _race_order_from_configs(list(collected.get("race_configs") or []))
+        actual_order = [str(race_id) for race_id in list(ticket_plan.get("race_order") or [])]
+        if configured_order and actual_order[: len(configured_order)] != configured_order:
+            reject("WIN5_RACE_ORDER_MISMATCH", "WIN5 race order does not match config order")
+
+    def _check_standard_plan(
+        self,
+        tickets: list[dict[str, object]],
+        value_tickets: list[dict[str, object]],
+        ev_rows: list[dict[str, object]],
+        repaired_plan: bool,
+        reject: Callable[[str, str], None],
+    ) -> float:
+        stake_dependency_ratio = 0.0
+        risky_tickets = [
+            ticket
+            for ticket in tickets
+            if _ticket_ev(ticket, default=0.0) < _ticket_min_ev(ticket, self.settings)
+            or _ticket_hit_prob(ticket) < _ticket_min_prob(ticket)
+        ]
+        if risky_tickets:
+            reject("TICKET_THRESHOLDS_FAILED", "ticket plan contains low-confidence or sub-threshold tickets")
+
+        top_rows = sorted(
+            ev_rows,
+            key=lambda row: _to_float(row.get("win_prob"), 0.0),
+            reverse=True,
+        )[:3]
+        ticket_horses = _ticket_horse_numbers(tickets)
+        covered_top = [
+            str(row.get("horse_number", ""))
+            for row in top_rows
+            if str(row.get("horse_number", "")) in ticket_horses
+        ]
+        top1_missing = bool(
+            tickets
+            and top_rows
+            and str(top_rows[0].get("horse_number", "")) not in ticket_horses
+        )
+        if top1_missing and not repaired_plan:
+            reject("TOP_WIN_HORSE_UNCOVERED", "top win-probability horse is missing from every ticket")
+        required_top_coverage = min(self.settings.min_top3_ticket_coverage, len(top_rows))
+        if tickets and len(covered_top) < required_top_coverage:
+            reject(
+                "TOP3_COVERAGE_LOW",
+                f"top-3 ticket coverage is too low: {len(covered_top)}/{required_top_coverage}"
+            )
+        stake_dependency_ratio = _max_non_core_horse_stake_dependency_ratio(
+            value_tickets,
+            ev_rows,
+        )
+
+        if value_tickets and portfolio_ev(value_tickets) < self.settings.min_portfolio_ev:
+            reject("PORTFOLIO_EV_LOW", "ticket portfolio EV is below the configured minimum")
+        if tickets and not portfolio_no_gami(tickets):
+            reject("PORTFOLIO_LOSS_ON_HIT", "ticket portfolio contains loss-on-hit tickets")
+        return stake_dependency_ratio
+
+    def _check_longshot_overweight(
+        self, tickets: list[dict[str, object]], reject: Callable[[str, str], None]
+    ) -> None:
+        longshot_overweight = [
+            ticket
+            for ticket in tickets
+            if _ticket_odds(ticket) >= _longshot_odds_threshold(ticket)
+            and int(_to_float(ticket.get("stake"), 0.0)) > _longshot_stake_threshold(ticket)
+        ]
+        if longshot_overweight:
+            reject("LONGSHOT_OVERWEIGHT", "ticket plan overweights extreme longshots")
+
+    def _check_divergence(
+        self,
+        ev_rows: list[dict[str, object]],
+        value_tickets: list[dict[str, object]],
+        ticket_plan: dict[str, object],
+        reject: Callable[[str, str], None],
+    ) -> tuple[list[dict[str, object]], list[dict[str, object]]]:
+        divergent_rows = _find_divergent_rows(
+            ev_rows,
+            max_ev_delta_abs=self.settings.max_ev_delta_abs,
+            max_ev_delta_ratio=self.settings.max_ev_delta_ratio,
+            max_odds_gap_ratio=self.settings.max_odds_gap_ratio,
+        )
+        selected_divergent_rows = _selected_divergent_rows(value_tickets, divergent_rows)
+        actionable_divergent_rows = selected_divergent_rows
+        if actionable_divergent_rows and str(ticket_plan.get("bet_type", "")) != "win5":
+            reject(
+                "PREDICTED_CURRENT_EV_DIVERGENCE",
+                "predicted/current EV divergence detected: "
+                + ", ".join(
+                    f"{row['horse_name']}@{row['race_id']}"
+                    for row in actionable_divergent_rows[:3]
+                )
+            )
+        return divergent_rows, selected_divergent_rows
+
+    def _check_missing_win_candidates(
+        self,
+        collected: dict[str, object],
+        ev_rows: list[dict[str, object]],
+        ticket_plan: dict[str, object],
+        reject: Callable[[str, str], None],
+    ) -> list[dict[str, object]]:
+        missing_eligible_win_candidates = _find_missing_eligible_win_candidates(
+            collected,
+            ev_rows,
+            ticket_plan,
+            minimum_win_ev=max(self.settings.min_ev, MIN_ACTIONABLE_WIN_EV),
+        )
+        if missing_eligible_win_candidates and str(ticket_plan.get("bet_type", "")) != "win5":
+            reject(
+                "ELIGIBLE_WIN_CANDIDATE_MISSING",
+                "eligible official-live win candidates are missing from candidate universe: "
+                + ", ".join(
+                    f"{row['horse_name']}@{row['race_id']}"
+                    for row in missing_eligible_win_candidates[:3]
+                )
+            )
+        return missing_eligible_win_candidates
+
 
 
 def _probability_lineage_errors(ticket_plan: dict[str, object]) -> list[str]:
