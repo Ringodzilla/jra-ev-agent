@@ -8,7 +8,7 @@ import re
 import sys
 import numpy as np
 from bs4 import BeautifulSoup
-from research_gate import Blocked,read,ref,identities,sha,canonical
+from research_gate import Blocked,read,identities,sha,canonical
 from structural_features import structural_features,COMPONENT_WEIGHTS
 ROOT=Path(__file__).resolve().parents[3]
 sys.path.insert(0,str(ROOT))
