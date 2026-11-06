@@ -172,110 +172,27 @@ class FinalPredictionWorkflow:
         collected["baseline_quality"] = baseline_quality
         collected["deadline"] = plan.to_dict()
 
-        if self.enforce_skill_gates:
-            self.skill_sequence = SkillSequence(self.output_dir, mode='final')
-            _attach_baseline_history_sources(collected, baseline, self.history_raw_dir)
-            try:
-                self.skill_sequence.record('intake', self.skill_sequence.bind({'race_configs': [race_config], 'workflow_settings': asdict(self.workflow_settings), 'ev_weights': asdict(self.ev_calculator.weights), 'deadline_settings': asdict(self.deadline_settings)}), checks={'race_id_present': bool(race_config.get('race_id'))})
-                self.skill_sequence.record('collection', self.skill_sequence.bind(collected), checks={'entries_present': bool(collected['entries'])})
-                audit = audit_collected_data(collected, [race_config], self.integrity_approvals, purpose='final')
-                audit['approval_evidence'] = self.integrity_approvals
-                collected['data_integrity_audit'] = audit
-                self.skill_sequence.record('integrity_audit', self.skill_sequence.bind(audit), checks={'audit_completed': bool(audit.get('input_sha256'))})
-                self.skill_sequence.record('approval_gate', self.skill_sequence.bind(audit), checks={'integrity_and_approvals_pass': audit.get('gate') == 'PASS'}, failure_code=str(audit.get('gate', 'UNVERIFIED')))
-            except SkillGateBlocked as exc:
-                return self._finish_after_live(plan, collected=collected, code='NO_GO_DATA_INTEGRITY_BLOCKED', reason=str(exc))
+        blocked = self._apply_intake_skill_gates(plan, race_config, baseline, collected)
+        if blocked is not None:
+            return blocked
 
         analysis_mode = "recomputed"
         if fixed_analysis is not None:
-            try:
-                ev_rows = build_fixed_analysis_ev_rows(
-                    race_config=race_config,
-                    fixed_analysis=fixed_analysis,
-                    live_entries=list(live.get("entries") or []),
-                    combo_odds=list(live.get("combo_odds") or []),
-                    baseline_rows=baseline_rows,
-                )
-            except ValueError as exc:
-                return self._finish_after_live(
-                    plan,
-                    collected=collected,
-                    code="NO_GO_FIXED_ANALYSIS_INVALID",
-                    reason=str(exc),
-                )
+            fixed_result = self._build_fixed_analysis(plan, race_config, fixed_analysis, live, baseline_rows, collected)
+            if isinstance(fixed_result, dict):
+                return fixed_result
+            analyzed, simulated, calculated = fixed_result
             analysis_mode = "fixed_reprice"
-            provenance = dict(fixed_analysis.get("provenance") or {})
-            analyzed = {
-                **dict(fixed_analysis.get("analyzer") or {}),
-                "reused": True,
-                "reuse_provenance": provenance.get("analyzer", {}),
-                "snapshot_id": live.get("snapshot_id", ""),
-            }
-            simulated = {
-                **dict(fixed_analysis.get("simulator") or {}),
-                "reused": True,
-                "reuse_provenance": provenance.get("simulator", {}),
-                "snapshot_id": live.get("snapshot_id", ""),
-            }
-            calculated = {
-                "role": "ev_calculator",
-                "mode": "fixed_probability_reprice",
-                "formula": "EV = fixed final win probability * latest official win odds",
-                "probability_source": provenance.get("simulator", {}),
-                "snapshot_id": live.get("snapshot_id", ""),
-                "ev_rows": ev_rows,
-                "ev_table": [
-                    {
-                        "horse_number": row.get("horse_number", ""),
-                        "horse": row.get("horse_name", ""),
-                        "win_prob": row.get("win_prob", ""),
-                        "odds": row.get("current_odds", ""),
-                        "ev": row.get("ev", ""),
-                    }
-                    for row in ev_rows
-                ],
-            }
-            calculated.update(
-                build_candidate_evaluations(
-                    ev_rows,
-                    list(live.get("combo_odds") or []),
-                )
-            )
         else:
-            analyzed = self.analyzer.run(
-                merged_rows,
-                odds_snapshots=list(collected.get("odds_snapshots") or []),
-                environment_snapshots=[dict(live.get("environment_snapshot") or {})],
-            )
-            analyzed["snapshot_id"] = live.get("snapshot_id", "")
-            if self.skill_sequence is not None:
-                try:
-                    self.skill_sequence.record('analysis', self.skill_sequence.bind(analyzed), checks=row_checks(list(analyzed.get('feature_rows') or []), list(collected.get('entries') or [])))
-                except SkillGateBlocked as exc:
-                    return self._finish_after_live(plan, collected=collected, code='NO_GO_SKILL_VALIDATION_FAILED', reason=str(exc))
-            simulated = self.simulator.run(list(analyzed.get("feature_rows") or []))
-            simulated["snapshot_id"] = live.get("snapshot_id", "")
-            if self.skill_sequence is not None:
-                try:
-                    self.skill_sequence.record('simulation', self.skill_sequence.bind(simulated), checks=row_checks(list(simulated.get('scenario_rows') or []), list(analyzed.get('feature_rows') or [])))
-                except SkillGateBlocked as exc:
-                    return self._finish_after_live(plan, collected=collected, code='NO_GO_SKILL_VALIDATION_FAILED', reason=str(exc))
-            calculated = self.ev_calculator.run(
-                list(simulated.get("scenario_rows") or []),
-                combo_odds=list(live.get("combo_odds") or []),
-            )
-            calculated["snapshot_id"] = live.get("snapshot_id", "")
+            recomputed = self._run_recomputed_analysis(plan, live, merged_rows, collected)
+            if isinstance(recomputed, dict):
+                return recomputed
+            analyzed, simulated, calculated = recomputed
 
         scenario_rows = list(simulated.get("scenario_rows") or calculated.get("ev_rows") or [])
-        if self.skill_sequence is not None:
-            try:
-                if fixed_analysis is not None:
-                    self.skill_sequence.record('analysis', self.skill_sequence.bind(analyzed), checks=row_checks(list(analyzed.get('feature_rows') or []), list(collected.get('entries') or [])))
-                    self.skill_sequence.record('simulation', self.skill_sequence.bind(simulated), checks=row_checks(scenario_rows, list(analyzed.get('feature_rows') or [])))
-                self.skill_sequence.record('probability', self.skill_sequence.bind(calculated), checks=probability_checks(list(calculated.get('ev_rows') or [])))
-                self.skill_sequence.record('ev', self.skill_sequence.bind(calculated), checks=ev_checks(list(calculated.get('ev_rows') or [])))
-            except SkillGateBlocked as exc:
-                return self._finish_after_live(plan, collected=collected, code='NO_GO_SKILL_VALIDATION_FAILED', reason=str(exc))
+        blocked = self._record_probability_skill_gates(plan, collected, fixed_analysis, analyzed, simulated, calculated, scenario_rows)
+        if blocked is not None:
+            return blocked
         bet_plan = self.bet_builder.run(
             list(calculated.get("ev_rows") or []),
             combo_odds=list(live.get("combo_odds") or []),
@@ -289,11 +206,9 @@ class FinalPredictionWorkflow:
             race_configs=[race_config],
         )
         bet_plan["snapshot_id"] = live.get("snapshot_id", "")
-        if self.skill_sequence is not None:
-            try:
-                self.skill_sequence.record('tickets', self.skill_sequence.bind(bet_plan), checks={'ticket_list_present': isinstance(bet_plan.get('tickets'), list)})
-            except SkillGateBlocked as exc:
-                return self._finish_after_live(plan, collected=collected, code='NO_GO_SKILL_VALIDATION_FAILED', reason=str(exc))
+        blocked = self._record_ticket_skill_gate(plan, collected, bet_plan)
+        if blocked is not None:
+            return blocked
         bet_plan["reviewer_ticket_repair_enabled"] = True
         quantitative_review = self.quantitative_reviewer.run(
             collected,
@@ -335,7 +250,182 @@ class FinalPredictionWorkflow:
             else:
                 bet_plan = invalidate_ticket_plan(bet_plan, str(review.get("reason", "")))
 
-        decision = {
+        decision = self._build_decision(plan, race_config, lineup, live, review, bet_plan, analysis_mode)
+        payload = {
+            "data_collector": collected,
+            "analyzer": analyzed,
+            "simulator": simulated,
+            "ev_calculator": calculated,
+            "bet_builder": bet_plan,
+            "reviewer": review,
+            "final_decision": decision,
+        }
+        blocked = self._record_final_skill_gates(plan, collected, review, quantitative_review, reviewed_ticket_plan, decision)
+        if blocked is not None:
+            return blocked
+        self._write_outputs(payload)
+        return payload
+
+    def _apply_intake_skill_gates(
+        self,
+        plan: DeadlinePlan,
+        race_config: dict[str, object],
+        baseline: dict[str, object] | list[dict[str, object]],
+        collected: dict[str, object],
+    ) -> dict[str, object] | None:
+        if self.enforce_skill_gates:
+            self.skill_sequence = SkillSequence(self.output_dir, mode='final')
+            _attach_baseline_history_sources(collected, baseline, self.history_raw_dir)
+            try:
+                self.skill_sequence.record('intake', self.skill_sequence.bind({'race_configs': [race_config], 'workflow_settings': asdict(self.workflow_settings), 'ev_weights': asdict(self.ev_calculator.weights), 'deadline_settings': asdict(self.deadline_settings)}), checks={'race_id_present': bool(race_config.get('race_id'))})
+                self.skill_sequence.record('collection', self.skill_sequence.bind(collected), checks={'entries_present': bool(collected['entries'])})
+                audit = audit_collected_data(collected, [race_config], self.integrity_approvals, purpose='final')
+                audit['approval_evidence'] = self.integrity_approvals
+                collected['data_integrity_audit'] = audit
+                self.skill_sequence.record('integrity_audit', self.skill_sequence.bind(audit), checks={'audit_completed': bool(audit.get('input_sha256'))})
+                self.skill_sequence.record('approval_gate', self.skill_sequence.bind(audit), checks={'integrity_and_approvals_pass': audit.get('gate') == 'PASS'}, failure_code=str(audit.get('gate', 'UNVERIFIED')))
+            except SkillGateBlocked as exc:
+                return self._finish_after_live(plan, collected=collected, code='NO_GO_DATA_INTEGRITY_BLOCKED', reason=str(exc))
+
+    def _build_fixed_analysis(
+        self,
+        plan: DeadlinePlan,
+        race_config: dict[str, object],
+        fixed_analysis: dict[str, object],
+        live: dict[str, object],
+        baseline_rows: list[dict[str, object]],
+        collected: dict[str, object],
+    ) -> tuple[dict[str, object], dict[str, object], dict[str, object]] | dict[str, object]:
+        try:
+            ev_rows = build_fixed_analysis_ev_rows(
+                race_config=race_config,
+                fixed_analysis=fixed_analysis,
+                live_entries=list(live.get("entries") or []),
+                combo_odds=list(live.get("combo_odds") or []),
+                baseline_rows=baseline_rows,
+            )
+        except ValueError as exc:
+            return self._finish_after_live(
+                plan,
+                collected=collected,
+                code="NO_GO_FIXED_ANALYSIS_INVALID",
+                reason=str(exc),
+            )
+        provenance = dict(fixed_analysis.get("provenance") or {})
+        analyzed = {
+            **dict(fixed_analysis.get("analyzer") or {}),
+            "reused": True,
+            "reuse_provenance": provenance.get("analyzer", {}),
+            "snapshot_id": live.get("snapshot_id", ""),
+        }
+        simulated = {
+            **dict(fixed_analysis.get("simulator") or {}),
+            "reused": True,
+            "reuse_provenance": provenance.get("simulator", {}),
+            "snapshot_id": live.get("snapshot_id", ""),
+        }
+        calculated = {
+            "role": "ev_calculator",
+            "mode": "fixed_probability_reprice",
+            "formula": "EV = fixed final win probability * latest official win odds",
+            "probability_source": provenance.get("simulator", {}),
+            "snapshot_id": live.get("snapshot_id", ""),
+            "ev_rows": ev_rows,
+            "ev_table": [
+                {
+                    "horse_number": row.get("horse_number", ""),
+                    "horse": row.get("horse_name", ""),
+                    "win_prob": row.get("win_prob", ""),
+                    "odds": row.get("current_odds", ""),
+                    "ev": row.get("ev", ""),
+                }
+                for row in ev_rows
+            ],
+        }
+        calculated.update(
+            build_candidate_evaluations(
+                ev_rows,
+                list(live.get("combo_odds") or []),
+            )
+        )
+        return analyzed, simulated, calculated
+
+    def _run_recomputed_analysis(
+        self,
+        plan: DeadlinePlan,
+        live: dict[str, object],
+        merged_rows: list[dict[str, object]],
+        collected: dict[str, object],
+    ) -> tuple[dict[str, object], dict[str, object], dict[str, object]] | dict[str, object]:
+        analyzed = self.analyzer.run(
+            merged_rows,
+            odds_snapshots=list(collected.get("odds_snapshots") or []),
+            environment_snapshots=[dict(live.get("environment_snapshot") or {})],
+        )
+        analyzed["snapshot_id"] = live.get("snapshot_id", "")
+        if self.skill_sequence is not None:
+            try:
+                self.skill_sequence.record('analysis', self.skill_sequence.bind(analyzed), checks=row_checks(list(analyzed.get('feature_rows') or []), list(collected.get('entries') or [])))
+            except SkillGateBlocked as exc:
+                return self._finish_after_live(plan, collected=collected, code='NO_GO_SKILL_VALIDATION_FAILED', reason=str(exc))
+        simulated = self.simulator.run(list(analyzed.get("feature_rows") or []))
+        simulated["snapshot_id"] = live.get("snapshot_id", "")
+        if self.skill_sequence is not None:
+            try:
+                self.skill_sequence.record('simulation', self.skill_sequence.bind(simulated), checks=row_checks(list(simulated.get('scenario_rows') or []), list(analyzed.get('feature_rows') or [])))
+            except SkillGateBlocked as exc:
+                return self._finish_after_live(plan, collected=collected, code='NO_GO_SKILL_VALIDATION_FAILED', reason=str(exc))
+        calculated = self.ev_calculator.run(
+            list(simulated.get("scenario_rows") or []),
+            combo_odds=list(live.get("combo_odds") or []),
+        )
+        calculated["snapshot_id"] = live.get("snapshot_id", "")
+
+        return analyzed, simulated, calculated
+
+    def _record_probability_skill_gates(
+        self,
+        plan: DeadlinePlan,
+        collected: dict[str, object],
+        fixed_analysis: dict[str, object] | None,
+        analyzed: dict[str, object],
+        simulated: dict[str, object],
+        calculated: dict[str, object],
+        scenario_rows: list[dict[str, object]],
+    ) -> dict[str, object] | None:
+        if self.skill_sequence is not None:
+            try:
+                if fixed_analysis is not None:
+                    self.skill_sequence.record('analysis', self.skill_sequence.bind(analyzed), checks=row_checks(list(analyzed.get('feature_rows') or []), list(collected.get('entries') or [])))
+                    self.skill_sequence.record('simulation', self.skill_sequence.bind(simulated), checks=row_checks(scenario_rows, list(analyzed.get('feature_rows') or [])))
+                self.skill_sequence.record('probability', self.skill_sequence.bind(calculated), checks=probability_checks(list(calculated.get('ev_rows') or [])))
+                self.skill_sequence.record('ev', self.skill_sequence.bind(calculated), checks=ev_checks(list(calculated.get('ev_rows') or [])))
+            except SkillGateBlocked as exc:
+                return self._finish_after_live(plan, collected=collected, code='NO_GO_SKILL_VALIDATION_FAILED', reason=str(exc))
+
+    def _record_ticket_skill_gate(
+        self,
+        plan: DeadlinePlan,
+        collected: dict[str, object],
+        bet_plan: dict[str, object],
+    ) -> dict[str, object] | None:
+        if self.skill_sequence is not None:
+            try:
+                self.skill_sequence.record('tickets', self.skill_sequence.bind(bet_plan), checks={'ticket_list_present': isinstance(bet_plan.get('tickets'), list)})
+            except SkillGateBlocked as exc:
+                return self._finish_after_live(plan, collected=collected, code='NO_GO_SKILL_VALIDATION_FAILED', reason=str(exc))
+
+    def _build_decision(
+        self,
+        plan: DeadlinePlan,
+        race_config: dict[str, object],
+        lineup: dict[str, object],
+        live: dict[str, object],
+        review: dict[str, object],
+        bet_plan: dict[str, object],
+        analysis_mode: str,
+    ) -> dict[str, object]:
+        return {
             "status": review["status"],
             "decision": review["decision"],
             "decision_code": review["decision_code"],
@@ -354,15 +444,16 @@ class FinalPredictionWorkflow:
             "checks": review["checks"],
             "tickets": list(bet_plan.get("tickets") or []),
         }
-        payload = {
-            "data_collector": collected,
-            "analyzer": analyzed,
-            "simulator": simulated,
-            "ev_calculator": calculated,
-            "bet_builder": bet_plan,
-            "reviewer": review,
-            "final_decision": decision,
-        }
+
+    def _record_final_skill_gates(
+        self,
+        plan: DeadlinePlan,
+        collected: dict[str, object],
+        review: dict[str, object],
+        quantitative_review: dict[str, object],
+        reviewed_ticket_plan: dict[str, object],
+        decision: dict[str, object],
+    ) -> dict[str, object] | None:
         if self.skill_sequence is not None:
             try:
                 self.skill_sequence.record('review', self.skill_sequence.bind({'final_review': review, 'quantitative_review': quantitative_review, 'reviewed_ticket_plan': reviewed_ticket_plan}), checks={'review_has_valid_status': review.get('status') in {'OK', 'NG'}})
@@ -370,8 +461,7 @@ class FinalPredictionWorkflow:
                 self.skill_sequence.record('report', self.skill_sequence.bind(decision), checks={'issued_at_present': bool(decision.get('issued_at'))})
             except SkillGateBlocked as exc:
                 return self._finish_after_live(plan, collected=collected, code='NO_GO_SKILL_VALIDATION_FAILED', reason=str(exc))
-        self._write_outputs(payload)
-        return payload
+
 
     def _finish_after_live(
         self,
