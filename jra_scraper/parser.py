@@ -205,84 +205,125 @@ class JRAParser:
         target_track_condition = parsed_track_condition or target_track_condition
         horses: list[HorseEntry] = []
         for row_index, row in enumerate(rows, start=1):
-            raw_cells = [self._norm(td.get_text(" ", strip=True)) for td in row.select("td")]
-            cells = self._repair_cells(
-                raw_cells,
-                len(headers),
-                matches,
-                issue_sink,
-                context={"race_id": race_id, "row_index": str(row_index)},
-                aggressive=aggressive_repair,
-            )
-            mapped = self._map_row(matches, cells)
-            mapped = self._apply_entry_fallbacks(
-                mapped,
+            entry = self._parse_entry_row(
                 row,
-                raw_cells,
-                aggressive_repair,
-                allow_odds_fallback=("current_odds" in entry_canonicals),
+                row_index,
+                headers=headers,
+                matches=matches,
+                entry_canonicals=entry_canonicals,
+                race_id=race_id,
+                effective_race_name=effective_race_name,
+                target_date=target_date,
+                target_track=target_track,
+                target_race_number=target_race_number,
+                target_surface=target_surface,
+                target_distance=target_distance,
+                target_weather=target_weather,
+                target_track_condition=target_track_condition,
+                target_conditions_captured_at=target_conditions_captured_at,
+                issue_sink=issue_sink,
+                aggressive_repair=aggressive_repair,
             )
-
-            anchor = row.select_one("a[href]")
-            href = (anchor.get("href") or "").strip() if anchor else ""
-            horse_name = (
-                mapped.get("horse_name")
-                or self._extract_text(row, "td.horse .name_line .name .txt")
-                or (self._norm(anchor.get_text(" ", strip=True)) if anchor else "")
-            )
-            if not horse_name:
-                self._issue(
-                    issue_sink,
-                    stage="parser.race_detail",
-                    severity="medium",
-                    code="entry_row_incomplete",
-                    message="Skipped race entry row because horse name was missing.",
-                    context={"race_id": race_id, "row_index": str(row_index)},
-                )
-                continue
-            if not href:
-                self._issue(
-                    issue_sink,
-                    stage="parser.race_detail",
-                    severity="low",
-                    code="entry_link_missing",
-                    message="Horse link was missing; used fallback horse_id.",
-                    context={"race_id": race_id, "row_index": str(row_index), "horse_name": horse_name},
-                )
-
-            horses.append(
-                HorseEntry(
-                    race_id=race_id,
-                    race_name=effective_race_name,
-                    horse_id=self._extract_horse_id(href, horse_name),
-                    horse_name=horse_name,
-                    horse_url=urljoin(self.base_url, href) if href else "",
-                    frame_number=mapped.get("frame_number", ""),
-                    horse_number=mapped.get("horse_number", ""),
-                    current_jockey=mapped.get("current_jockey", ""),
-                    assigned_weight=mapped.get("assigned_weight", ""),
-                    current_body_weight=mapped.get("current_body_weight", ""),
-                    body_weight_change=mapped.get("body_weight_change", ""),
-                    body_weight_status=mapped.get("body_weight_status", "unpublished"),
-                    current_odds=mapped.get("current_odds", ""),
-                    current_popularity=mapped.get("current_popularity", ""),
-                    target_track=target_track,
-                    target_race_date=target_date,
-                    target_race_number=target_race_number,
-                    target_surface=target_surface,
-                    target_distance=target_distance,
-                    target_weather=target_weather,
-                    target_track_condition=target_track_condition,
-                    target_conditions_captured_at=target_conditions_captured_at,
-                    horse_country=mapped.get("horse_country", ""),
-                    embedded_history=self._extract_embedded_history(row),
-                )
-            )
+            if entry is not None:
+                horses.append(entry)
 
         horses = self._dedupe_horses(horses)
         if len(horses) == 0:
             raise ValueError("No horses parsed — selector broken")
         return horses
+
+    def _parse_entry_row(
+        self,
+        row,
+        row_index: int,
+        *,
+        headers: list[str],
+        matches: Sequence[HeaderMatch],
+        entry_canonicals: set[str],
+        race_id: str,
+        effective_race_name: str,
+        target_date: str,
+        target_track: str,
+        target_race_number: str,
+        target_surface: str,
+        target_distance: str,
+        target_weather: str,
+        target_track_condition: str,
+        target_conditions_captured_at: str,
+        issue_sink: list[ParserIssue] | None,
+        aggressive_repair: bool,
+    ) -> HorseEntry | None:
+        raw_cells = [self._norm(td.get_text(" ", strip=True)) for td in row.select("td")]
+        cells = self._repair_cells(
+            raw_cells,
+            len(headers),
+            matches,
+            issue_sink,
+            context={"race_id": race_id, "row_index": str(row_index)},
+            aggressive=aggressive_repair,
+        )
+        mapped = self._map_row(matches, cells)
+        mapped = self._apply_entry_fallbacks(
+            mapped,
+            row,
+            raw_cells,
+            aggressive_repair,
+            allow_odds_fallback=("current_odds" in entry_canonicals),
+        )
+
+        anchor = row.select_one("a[href]")
+        href = (anchor.get("href") or "").strip() if anchor else ""
+        horse_name = (
+            mapped.get("horse_name")
+            or self._extract_text(row, "td.horse .name_line .name .txt")
+            or (self._norm(anchor.get_text(" ", strip=True)) if anchor else "")
+        )
+        if not horse_name:
+            self._issue(
+                issue_sink,
+                stage="parser.race_detail",
+                severity="medium",
+                code="entry_row_incomplete",
+                message="Skipped race entry row because horse name was missing.",
+                context={"race_id": race_id, "row_index": str(row_index)},
+            )
+            return None
+        if not href:
+            self._issue(
+                issue_sink,
+                stage="parser.race_detail",
+                severity="low",
+                code="entry_link_missing",
+                message="Horse link was missing; used fallback horse_id.",
+                context={"race_id": race_id, "row_index": str(row_index), "horse_name": horse_name},
+            )
+
+        return HorseEntry(
+                race_id=race_id,
+                race_name=effective_race_name,
+                horse_id=self._extract_horse_id(href, horse_name),
+                horse_name=horse_name,
+                horse_url=urljoin(self.base_url, href) if href else "",
+                frame_number=mapped.get("frame_number", ""),
+                horse_number=mapped.get("horse_number", ""),
+                current_jockey=mapped.get("current_jockey", ""),
+                assigned_weight=mapped.get("assigned_weight", ""),
+                current_body_weight=mapped.get("current_body_weight", ""),
+                body_weight_change=mapped.get("body_weight_change", ""),
+                body_weight_status=mapped.get("body_weight_status", "unpublished"),
+                current_odds=mapped.get("current_odds", ""),
+                current_popularity=mapped.get("current_popularity", ""),
+                target_track=target_track,
+                target_race_date=target_date,
+                target_race_number=target_race_number,
+                target_surface=target_surface,
+                target_distance=target_distance,
+                target_weather=target_weather,
+                target_track_condition=target_track_condition,
+                target_conditions_captured_at=target_conditions_captured_at,
+                horse_country=mapped.get("horse_country", ""),
+                embedded_history=self._extract_embedded_history(row),
+            )
 
     def parse_horse_last5(
         self,
@@ -342,103 +383,137 @@ class JRAParser:
         out: list[dict[str, str]] = []
 
         for tr in body_rows:
-            run_idx = len(out) + 1
-            raw_cells = [self._norm(td.get_text(" ", strip=True)) for td in tr.select("td")]
-            if any(re.fullmatch(r"JRA(?:へ|より)転[入出]", cell) for cell in raw_cells):
-                self._issue(
-                    issue_sink, stage="parser.horse_history", severity="info",
-                    code="non_race_transfer_event",
-                    message="Preserved a transfer event separately from race starts.",
-                    context={"race_id": race_id, "horse_id": horse_id,
-                             "horse_name": horse_name, "raw_text": tr.get_text(" ", strip=True)},
-                )
-                continue
-            cells = self._repair_cells(
-                raw_cells,
-                len(headers),
-                header_matches,
-                issue_sink,
-                context={"race_id": race_id, "horse_id": horse_id, "run_index": str(run_idx)},
-                aggressive=aggressive_repair,
-            )
-            if not any(cells):
-                continue
-
-            mapped = self._map_row(header_matches, cells)
-            if any(status in mapped.get("position", "") for status in ("取消", "除外")):
-                continue
-            if cutoff is not None:
-                match = re.search(r'(\d{4})\D+(\d{1,2})\D+(\d{1,2})', mapped.get('date', ''))
-                if match is None:
-                    raise ValueError('Cannot verify horse-history date before retrospective cutoff')
-                observed_date = date(*(int(value) for value in match.groups()))
-                if observed_date >= cutoff:
-                    continue
-            history_surface, _ = self._parse_condition_text(mapped.get("distance", ""))
-            if self._is_jump_race_name(mapped.get("race_name", ""), mapped.get("distance", "")):
-                history_surface = "障害"
-            mapped["history_surface"] = history_surface
-            last3f_header = next((m.raw for m in header_matches if m.canonical == "last_3f"), "")
-            average_header = next((m.raw for m in header_matches if m.canonical == "average_1f"), "")
-            sectional_header = last3f_header or average_header
-            if sectional_header or history_surface == "障害" or "中止" in mapped.get("position", ""):
-                average = sectional_observation(mapped.get("average_1f", ""), average_header) if average_header else None
-                sectional_raw = mapped.get("last_3f", "") if last3f_header else mapped.get("average_1f", "")
-                mapped.update(sectional_observation(
-                    sectional_raw,
-                    sectional_header, jump=history_surface == "障害",
-                    position=mapped.get("position", ""),
-                ))
-                if average is not None:
-                    mapped.update({key: average[key] for key in (
-                        "average_1f", "average_1f_status", "average_1f_header", "average_1f_raw")})
-            if "直線" in mapped.get("distance", "") or re.search(r"芝\s*[・･]\s*直", mapped.get("distance", "")):
-                mapped.update(corner_observation(mapped.get("passing_order", ""), mapped["distance"],
-                                                position=mapped.get("position", "")))
-            self._apply_last_3f_fallback(
-                mapped,
-                horse_name=horse_name,
+            row = self._history_row_from_table_row(
+                tr,
+                run_idx=len(out) + 1,
+                headers=headers,
+                header_matches=header_matches,
+                cutoff=cutoff,
                 race_id=race_id,
-                run_index=run_idx,
+                horse_id=horse_id,
+                horse_name=horse_name,
+                horse_url=horse_url,
+                current_entry=current_entry,
                 issue_sink=issue_sink,
+                aggressive_repair=aggressive_repair,
             )
-
-            row = {
-                "race_id": race_id,
-                "horse_id": horse_id,
-                "horse_name": horse_name,
-                "horse_url": horse_url,
-                "run_index": str(run_idx),
-                **mapped,
-            }
-            if current_entry is not None:
-                row.update(
-                    {
-                        "frame_number": current_entry.frame_number,
-                        "horse_number": current_entry.horse_number,
-                        "current_jockey": current_entry.current_jockey,
-                        "assigned_weight": current_entry.assigned_weight,
-                        "current_body_weight": current_entry.current_body_weight,
-                        "body_weight_change": current_entry.body_weight_change,
-                        "body_weight_status": current_entry.body_weight_status,
-                        "current_odds": current_entry.current_odds,
-                        "current_popularity": current_entry.current_popularity,
-                        "target_track": current_entry.target_track,
-                        "target_race_date": current_entry.target_race_date,
-                        "target_race_number": current_entry.target_race_number,
-                        "target_surface": current_entry.target_surface,
-                        "target_distance": current_entry.target_distance,
-                        "target_weather": current_entry.target_weather,
-                        "target_track_condition": current_entry.target_track_condition,
-                        "target_conditions_captured_at": current_entry.target_conditions_captured_at,
-                        "horse_country": current_entry.horse_country,
-                    }
-                )
+            if row is None:
+                continue
             out.append(row)
             if len(out) == 5:
                 break
 
         return out
+
+    def _history_row_from_table_row(
+        self,
+        tr,
+        *,
+        run_idx: int,
+        headers: list[str],
+        header_matches: Sequence[HeaderMatch],
+        cutoff: date | None,
+        race_id: str,
+        horse_id: str,
+        horse_name: str,
+        horse_url: str,
+        current_entry: HorseEntry | None,
+        issue_sink: list[ParserIssue] | None,
+        aggressive_repair: bool,
+    ) -> dict[str, str] | None:
+        raw_cells = [self._norm(td.get_text(" ", strip=True)) for td in tr.select("td")]
+        if any(re.fullmatch(r"JRA(?:へ|より)転[入出]", cell) for cell in raw_cells):
+            self._issue(
+                issue_sink, stage="parser.horse_history", severity="info",
+                code="non_race_transfer_event",
+                message="Preserved a transfer event separately from race starts.",
+                context={"race_id": race_id, "horse_id": horse_id,
+                         "horse_name": horse_name, "raw_text": tr.get_text(" ", strip=True)},
+            )
+            return None
+        cells = self._repair_cells(
+            raw_cells,
+            len(headers),
+            header_matches,
+            issue_sink,
+            context={"race_id": race_id, "horse_id": horse_id, "run_index": str(run_idx)},
+            aggressive=aggressive_repair,
+        )
+        if not any(cells):
+            return None
+
+        mapped = self._map_row(header_matches, cells)
+        if any(status in mapped.get("position", "") for status in ("取消", "除外")):
+            return None
+        if cutoff is not None:
+            match = re.search(r'(\d{4})\D+(\d{1,2})\D+(\d{1,2})', mapped.get('date', ''))
+            if match is None:
+                raise ValueError('Cannot verify horse-history date before retrospective cutoff')
+            observed_date = date(*(int(value) for value in match.groups()))
+            if observed_date >= cutoff:
+                return None
+        history_surface, _ = self._parse_condition_text(mapped.get("distance", ""))
+        if self._is_jump_race_name(mapped.get("race_name", ""), mapped.get("distance", "")):
+            history_surface = "障害"
+        mapped["history_surface"] = history_surface
+        last3f_header = next((m.raw for m in header_matches if m.canonical == "last_3f"), "")
+        average_header = next((m.raw for m in header_matches if m.canonical == "average_1f"), "")
+        sectional_header = last3f_header or average_header
+        if sectional_header or history_surface == "障害" or "中止" in mapped.get("position", ""):
+            average = sectional_observation(mapped.get("average_1f", ""), average_header) if average_header else None
+            sectional_raw = mapped.get("last_3f", "") if last3f_header else mapped.get("average_1f", "")
+            mapped.update(sectional_observation(
+                sectional_raw,
+                sectional_header, jump=history_surface == "障害",
+                position=mapped.get("position", ""),
+            ))
+            if average is not None:
+                mapped.update({key: average[key] for key in (
+                    "average_1f", "average_1f_status", "average_1f_header", "average_1f_raw")})
+        if "直線" in mapped.get("distance", "") or re.search(r"芝\s*[・･]\s*直", mapped.get("distance", "")):
+            mapped.update(corner_observation(mapped.get("passing_order", ""), mapped["distance"],
+                                            position=mapped.get("position", "")))
+        self._apply_last_3f_fallback(
+            mapped,
+            horse_name=horse_name,
+            race_id=race_id,
+            run_index=run_idx,
+            issue_sink=issue_sink,
+        )
+
+        row = {
+            "race_id": race_id,
+            "horse_id": horse_id,
+            "horse_name": horse_name,
+            "horse_url": horse_url,
+            "run_index": str(run_idx),
+            **mapped,
+        }
+        if current_entry is not None:
+            row.update(
+                {
+                    "frame_number": current_entry.frame_number,
+                    "horse_number": current_entry.horse_number,
+                    "current_jockey": current_entry.current_jockey,
+                    "assigned_weight": current_entry.assigned_weight,
+                    "current_body_weight": current_entry.current_body_weight,
+                    "body_weight_change": current_entry.body_weight_change,
+                    "body_weight_status": current_entry.body_weight_status,
+                    "current_odds": current_entry.current_odds,
+                    "current_popularity": current_entry.current_popularity,
+                    "target_track": current_entry.target_track,
+                    "target_race_date": current_entry.target_race_date,
+                    "target_race_number": current_entry.target_race_number,
+                    "target_surface": current_entry.target_surface,
+                    "target_distance": current_entry.target_distance,
+                    "target_weather": current_entry.target_weather,
+                    "target_track_condition": current_entry.target_track_condition,
+                    "target_conditions_captured_at": current_entry.target_conditions_captured_at,
+                    "horse_country": current_entry.horse_country,
+                }
+            )
+        return row
+
 
     def _parse_win_place_odds(
         self,
