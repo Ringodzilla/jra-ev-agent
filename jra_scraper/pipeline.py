@@ -11,7 +11,7 @@ from pathlib import Path
 from .config import ScrapeConfig
 from .data_repair import MANUAL_HISTORY_COLUMNS, MissingHistoryRepairAction, missing_history_request
 from .history_observations import SEMANTIC_FIELDS
-from .models import ParserIssue, RaceLink
+from .models import HorseEntry, ParserIssue, RaceLink
 from .parser import JRAParser
 from .scraper import JRAScraper, safe_filename
 from .validation import ENTRY_COLUMNS, OUTPUT_COLUMNS, build_entry_rows, validate_rows
@@ -108,160 +108,248 @@ class JRAPipeline:
             if not force_rebuild and race.race_id in processed_races:
                 logger.info("Skip already processed race race_id=%s", race.race_id)
                 continue
-
-            race_raw_name = f"race_{safe_filename(race.race_id)}.html"
-            race_html = self.scraper.fetch(
-                race.race_url,
-                raw_name=race_raw_name,
-                use_cache=reprocess_raw or not force_rebuild,
-                cache_only=reprocess_raw,
-            )
-            if not race_html:
-                failures[race.race_url] = failures.get(race.race_url, 0) + 1
-                logger.warning("Skip race due to missing html: %s", race.race_url)
-                continue
-
-            try:
-                target_conditions_captured_at = _raw_file_captured_at(
-                    self.config.raw_dir / race_raw_name
-                )
-                horses = self.parser.parse_race_detail(
-                    race_html,
-                    race.race_id,
-                    race.race_name,
-                    target_race_date=race.race_date,
-                    target_track=race.track,
-                    target_race_number=race.race_number,
-                    target_surface=race.target_surface,
-                    target_distance=race.target_distance,
-                    target_weather=race.target_weather,
-                    target_track_condition=race.target_track_condition,
-                    target_conditions_captured_at=target_conditions_captured_at,
-                    issue_sink=issues,
-                    aggressive_repair=aggressive_repair,
-                )
-            except ValueError as exc:
-                failures[race.race_url] = failures.get(race.race_url, 0) + 1
-                logger.warning("Skip race due to parse failure race_id=%s err=%s", race.race_id, exc)
-                continue
-
-            combo_odds_rows = self._fetch_combo_odds_rows(
+            result = self._process_race(
                 race,
-                race_html,
+                horse_limit=horse_limit,
                 reprocess_raw=reprocess_raw,
-                force_refresh=force_rebuild,
+                force_rebuild=force_rebuild,
+                aggressive_repair=aggressive_repair,
+                manual_history_rows=manual_history_rows,
+                history_repair=history_repair,
+                failures=failures,
                 issues=issues,
+                repair_actions=repair_actions,
+                missing_history_requests=missing_history_requests,
+                missing_history_template_rows=missing_history_template_rows,
             )
+            if result is None:
+                continue
+            race_rows, combo_odds_rows, race_failed = result
             all_combo_odds_rows.extend(combo_odds_rows)
-
-            if horse_limit is not None:
-                horses = horses[:horse_limit]
-            logger.info("Race=%s horses=%d", race.race_id, len(horses))
-
-            race_rows: list[dict[str, str]] = []
-            race_failed = False
-            for horse in horses:
-                embedded_rows = _rows_from_embedded_history(horse)
-                if len(embedded_rows) >= 5:
-                    race_rows.extend(embedded_rows)
-                    continue
-
-                horse_html = self.scraper.fetch(
-                    horse.horse_url,
-                    raw_name=f"horse_{safe_filename(horse.horse_id)}.html",
-                    use_cache=reprocess_raw or not force_rebuild,
-                    cache_only=reprocess_raw,
-                )
-                if not horse_html:
-                    failures[horse.horse_url] = failures.get(horse.horse_url, 0) + 1
-                    logger.warning("Skip horse due to missing html: %s", horse.horse_url)
-                    manual_rows = _manual_rows_for_horse(horse, manual_history_rows)
-                    rows = _merge_history_rows(
-                        embedded_rows,
-                        manual_rows,
-                        target_race_date=horse.target_race_date,
-                    )
-                    repair_result = history_repair.build_result(
-                        horse,
-                        rows=rows,
-                        reason="horse_detail_html_unavailable",
-                        source_counts={
-                            "embedded": len(embedded_rows),
-                            "manual": len(manual_rows),
-                            "detail": 0,
-                        },
-                        attempted_urls=[horse.horse_url],
-                    )
-                    rows = repair_result.rows
-                    repair_actions.extend(repair_result.repair_actions)
-                    missing_history_requests.extend(repair_result.manual_requests)
-                    missing_history_template_rows.extend(repair_result.manual_template_rows)
-                    if rows:
-                        race_rows.extend(rows)
-                        issues.extend(repair_result.issues)
-                    else:
-                        race_failed = True
-                    continue
-
-                detail_issues: list[ParserIssue] = []
-                detail_rows = self.parser.parse_horse_last5(
-                    horse_html,
-                    race_id=horse.race_id,
-                    horse_id=horse.horse_id,
-                    horse_name=horse.horse_name,
-                    horse_url=horse.horse_url,
-                    current_entry=horse,
-                    issue_sink=detail_issues,
-                    aggressive_repair=aggressive_repair,
-                )
-                manual_rows = _manual_rows_for_horse(horse, manual_history_rows)
-                rows = _merge_history_rows(
-                    embedded_rows,
-                    detail_rows + manual_rows,
-                    target_race_date=horse.target_race_date,
-                )
-                issues.extend(_issues_for_selected_history(detail_issues, rows))
-                history_table_missing = any(
-                    issue.code == "history_table_missing" for issue in detail_issues
-                )
-                required_history_count = 5
-                repair_reason = "history_sources_exhausted"
-                if force_rebuild and not history_table_missing and len(detail_rows) < 5:
-                    # A successfully parsed, freshly fetched JRA horse profile lists
-                    # every completed start. Young horses with fewer than five starts
-                    # therefore have complete career history rather than missing rows.
-                    required_history_count = min(
-                        5,
-                        max(len(embedded_rows), len(detail_rows)),
-                    )
-                    repair_reason = "official_career_history_complete"
-                repair_result = history_repair.build_result(
-                    horse,
-                    rows=rows,
-                    reason=repair_reason,
-                    source_counts={
-                        "embedded": len(embedded_rows),
-                        "manual": len(manual_rows),
-                        "detail": len(detail_rows),
-                    },
-                    attempted_urls=[horse.horse_url],
-                    required_history_count=required_history_count,
-                )
-                rows = repair_result.rows
-                repair_actions.extend(repair_result.repair_actions)
-                missing_history_requests.extend(repair_result.manual_requests)
-                missing_history_template_rows.extend(repair_result.manual_template_rows)
-                if not rows:
-                    race_failed = True
-                elif len(rows) < 5:
-                    issues.extend(repair_result.issues)
-                race_rows.extend(rows)
-
             all_new_rows.extend(race_rows)
             if not race_failed:
                 processed_races.add(race.race_id)
                 processed_this_run.append(race.race_id)
 
+        return self._write_run_outputs(
+            existing_rows=existing_rows,
+            all_new_rows=all_new_rows,
+            all_combo_odds_rows=all_combo_odds_rows,
+            processed_this_run=processed_this_run,
+            processed_races=processed_races,
+            failures=failures,
+            issues=issues,
+            repair_actions=repair_actions,
+            missing_history_requests=missing_history_requests,
+            missing_history_template_rows=missing_history_template_rows,
+        )
+
+    def _process_race(
+        self,
+        race: RaceLink,
+        *,
+        horse_limit: int | None,
+        reprocess_raw: bool,
+        force_rebuild: bool,
+        aggressive_repair: bool,
+        manual_history_rows: list[dict[str, str]],
+        history_repair: MissingHistoryRepairAction,
+        failures: dict[str, int],
+        issues: list[ParserIssue],
+        repair_actions: list[dict[str, object]],
+        missing_history_requests: list[dict[str, object]],
+        missing_history_template_rows: list[dict[str, str]],
+    ) -> tuple[list[dict[str, str]], list[dict[str, str]], bool] | None:
+        race_raw_name = f"race_{safe_filename(race.race_id)}.html"
+        race_html = self.scraper.fetch(
+            race.race_url,
+            raw_name=race_raw_name,
+            use_cache=reprocess_raw or not force_rebuild,
+            cache_only=reprocess_raw,
+        )
+        if not race_html:
+            failures[race.race_url] = failures.get(race.race_url, 0) + 1
+            logger.warning("Skip race due to missing html: %s", race.race_url)
+            return None
+
+        try:
+            target_conditions_captured_at = _raw_file_captured_at(
+                self.config.raw_dir / race_raw_name
+            )
+            horses = self.parser.parse_race_detail(
+                race_html,
+                race.race_id,
+                race.race_name,
+                target_race_date=race.race_date,
+                target_track=race.track,
+                target_race_number=race.race_number,
+                target_surface=race.target_surface,
+                target_distance=race.target_distance,
+                target_weather=race.target_weather,
+                target_track_condition=race.target_track_condition,
+                target_conditions_captured_at=target_conditions_captured_at,
+                issue_sink=issues,
+                aggressive_repair=aggressive_repair,
+            )
+        except ValueError as exc:
+            failures[race.race_url] = failures.get(race.race_url, 0) + 1
+            logger.warning("Skip race due to parse failure race_id=%s err=%s", race.race_id, exc)
+            return None
+
+        combo_odds_rows = self._fetch_combo_odds_rows(
+            race,
+            race_html,
+            reprocess_raw=reprocess_raw,
+            force_refresh=force_rebuild,
+            issues=issues,
+        )
+
+        if horse_limit is not None:
+            horses = horses[:horse_limit]
+        logger.info("Race=%s horses=%d", race.race_id, len(horses))
+
+        race_rows: list[dict[str, str]] = []
+        race_failed = False
+        for horse in horses:
+            rows, horse_failed = self._process_horse(
+                horse,
+                reprocess_raw=reprocess_raw,
+                force_rebuild=force_rebuild,
+                aggressive_repair=aggressive_repair,
+                manual_history_rows=manual_history_rows,
+                history_repair=history_repair,
+                failures=failures,
+                issues=issues,
+                repair_actions=repair_actions,
+                missing_history_requests=missing_history_requests,
+                missing_history_template_rows=missing_history_template_rows,
+            )
+            race_rows.extend(rows)
+            if horse_failed:
+                race_failed = True
+        return race_rows, combo_odds_rows, race_failed
+
+    def _process_horse(
+        self,
+        horse: HorseEntry,
+        *,
+        reprocess_raw: bool,
+        force_rebuild: bool,
+        aggressive_repair: bool,
+        manual_history_rows: list[dict[str, str]],
+        history_repair: MissingHistoryRepairAction,
+        failures: dict[str, int],
+        issues: list[ParserIssue],
+        repair_actions: list[dict[str, object]],
+        missing_history_requests: list[dict[str, object]],
+        missing_history_template_rows: list[dict[str, str]],
+    ) -> tuple[list[dict[str, str]], bool]:
+        embedded_rows = _rows_from_embedded_history(horse)
+        if len(embedded_rows) >= 5:
+            return embedded_rows, False
+
+        horse_html = self.scraper.fetch(
+            horse.horse_url,
+            raw_name=f"horse_{safe_filename(horse.horse_id)}.html",
+            use_cache=reprocess_raw or not force_rebuild,
+            cache_only=reprocess_raw,
+        )
+        if not horse_html:
+            failures[horse.horse_url] = failures.get(horse.horse_url, 0) + 1
+            logger.warning("Skip horse due to missing html: %s", horse.horse_url)
+            manual_rows = _manual_rows_for_horse(horse, manual_history_rows)
+            rows = _merge_history_rows(
+                embedded_rows,
+                manual_rows,
+                target_race_date=horse.target_race_date,
+            )
+            repair_result = history_repair.build_result(
+                horse,
+                rows=rows,
+                reason="horse_detail_html_unavailable",
+                source_counts={
+                    "embedded": len(embedded_rows),
+                    "manual": len(manual_rows),
+                    "detail": 0,
+                },
+                attempted_urls=[horse.horse_url],
+            )
+            rows = repair_result.rows
+            repair_actions.extend(repair_result.repair_actions)
+            missing_history_requests.extend(repair_result.manual_requests)
+            missing_history_template_rows.extend(repair_result.manual_template_rows)
+            if rows:
+                issues.extend(repair_result.issues)
+            return rows, not rows
+
+        detail_issues: list[ParserIssue] = []
+        detail_rows = self.parser.parse_horse_last5(
+            horse_html,
+            race_id=horse.race_id,
+            horse_id=horse.horse_id,
+            horse_name=horse.horse_name,
+            horse_url=horse.horse_url,
+            current_entry=horse,
+            issue_sink=detail_issues,
+            aggressive_repair=aggressive_repair,
+        )
+        manual_rows = _manual_rows_for_horse(horse, manual_history_rows)
+        rows = _merge_history_rows(
+            embedded_rows,
+            detail_rows + manual_rows,
+            target_race_date=horse.target_race_date,
+        )
+        issues.extend(_issues_for_selected_history(detail_issues, rows))
+        history_table_missing = any(
+            issue.code == "history_table_missing" for issue in detail_issues
+        )
+        required_history_count = 5
+        repair_reason = "history_sources_exhausted"
+        if force_rebuild and not history_table_missing and len(detail_rows) < 5:
+            # A successfully parsed, freshly fetched JRA horse profile lists
+            # every completed start. Young horses with fewer than five starts
+            # therefore have complete career history rather than missing rows.
+            required_history_count = min(
+                5,
+                max(len(embedded_rows), len(detail_rows)),
+            )
+            repair_reason = "official_career_history_complete"
+        repair_result = history_repair.build_result(
+            horse,
+            rows=rows,
+            reason=repair_reason,
+            source_counts={
+                "embedded": len(embedded_rows),
+                "manual": len(manual_rows),
+                "detail": len(detail_rows),
+            },
+            attempted_urls=[horse.horse_url],
+            required_history_count=required_history_count,
+        )
+        rows = repair_result.rows
+        repair_actions.extend(repair_result.repair_actions)
+        missing_history_requests.extend(repair_result.manual_requests)
+        missing_history_template_rows.extend(repair_result.manual_template_rows)
+        if not rows:
+            return rows, True
+        if len(rows) < 5:
+            issues.extend(repair_result.issues)
+        return rows, False
+
+    def _write_run_outputs(
+        self,
+        *,
+        existing_rows: list[dict[str, str]],
+        all_new_rows: list[dict[str, str]],
+        all_combo_odds_rows: list[dict[str, str]],
+        processed_this_run: list[str],
+        processed_races: set[str],
+        failures: dict[str, int],
+        issues: list[ParserIssue],
+        repair_actions: list[dict[str, object]],
+        missing_history_requests: list[dict[str, object]],
+        missing_history_template_rows: list[dict[str, str]],
+    ) -> list[dict[str, str]]:
         final_rows = validate_rows(existing_rows + all_new_rows)
         entry_rows = build_entry_rows(final_rows)
         self._write_csv(final_rows, self.config.output_csv, OUTPUT_COLUMNS)
