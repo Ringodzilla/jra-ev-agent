@@ -327,6 +327,8 @@ def test_data_collector_runs_and_always_closes(tmp_path: Path) -> None:
     config.quality_report_path.write_text('{"complete": true}', encoding="utf-8")
     pipeline = Mock()
     pipeline.run.return_value = [{"history": "row"}]
+    pipeline.acquisition_recorder.attempts.return_value = []
+    pipeline.last_acquisition_reports = []
     with patch("src.agents.data_collector.JRAPipeline", return_value=pipeline):
         payload = OverseasDataCollectorAgent(config).run([{"race_id": "R"}])
     assert payload["collector_key"] == "overseas"
