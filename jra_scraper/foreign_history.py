@@ -224,8 +224,12 @@ def _france_tracking(text, artifact):
     values = re.findall(r"\b\d{2}:\d{2}\.\d{2}\b", row)
     if len(values) != 8:
         raise ValueError("France Galop tracking row schema changed")
-    minute, seconds = values[-1].split(":")
-    last600 = Decimal(minute) * 60 + Decimal(seconds)
+
+    def _clock(value):
+        minute, seconds = value.split(":")
+        return Decimal(minute) * 60 + Decimal(seconds)
+
+    last600 = _clock(values[-1])
     runner = re.match(r"\s*(\d+)\s+" + re.escape(artifact["official_horse_name"]) + r"\s+(\d+)\s", row)
     _jra_identity(artifact, number=runner[1], position=runner[2], distance=int(race[3]),
                   track=text.splitlines()[1].strip(), race_name=race[2])
@@ -233,6 +237,18 @@ def _france_tracking(text, artifact):
                   last_3f_source="official_france_galop_tracking_last600m",
                   last_3f_missing_reason="", sectional_scope="individual_final600m",
                   sectional_transformation="official_Derniers_600m_aggregate")
+    # Total time is values[-2] (the finish cumulative), but it is emitted only
+    # when the whole row is internally consistent, so a corrupted or
+    # misaligned row can never turn into a fabricated clock time (fail
+    # closed: omit ``time`` entirely, never guess). Guards, all required:
+    # the seven cumulative values are strictly increasing, and the finish
+    # minus the 600m-to-go cumulative (values[-5], T3) reproduces the
+    # declared last-600m aggregate within source rounding (0.05s).
+    cumulative = [_clock(value) for value in values[:-1]]
+    if (all(earlier < later for earlier, later in zip(cumulative, cumulative[1:]))
+            and abs(cumulative[-1] - _clock(values[-5]) - last600) <= Decimal("0.05")):
+        result.update(time=_positive(str(cumulative[-1])),
+                      time_source="official_france_galop_tracking_total")
     return result
 
 
