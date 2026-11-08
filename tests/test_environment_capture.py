@@ -149,6 +149,8 @@ def test_data_collector_updates_model_inputs_from_newly_observed_weather(tmp_pat
                        quality_report_path=tmp_path / 'quality.json')
     pipeline = Mock()
     pipeline.run.return_value = [{'race_id': 'R', 'target_weather': '雨'}, {'race_id': 'OTHER'}]
+    pipeline.acquisition_recorder.attempts.return_value = []
+    pipeline.last_acquisition_reports = []
     observed = {'race_id': 'R', 'weather': '晴', 'track_condition': '良', 'weather_captured_at': NOW.isoformat()}
     with patch('src.agents.data_collector.JRAPipeline', return_value=pipeline), patch(
         'src.agents.data_collector.capture_environment', return_value=observed
