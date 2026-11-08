@@ -8,6 +8,14 @@ from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
+from .acquisition_report import (
+    AUDITED_FIELDS,
+    ROUTE_REGISTRY,
+    AcquisitionRecorder,
+    build_acquisition_report,
+    jurisdiction_for_row,
+    write_acquisition_bundle,
+)
 from .config import ScrapeConfig
 from .data_repair import MANUAL_HISTORY_COLUMNS, MissingHistoryRepairAction, missing_history_request
 from .history_observations import SEMANTIC_FIELDS
@@ -49,6 +57,10 @@ class JRAPipeline:
         self.config.ensure_dirs()
         self.scraper = JRAScraper(self.config)
         self.parser = JRAParser(self.config.base_url)
+        self.acquisition_recorder = AcquisitionRecorder()
+        self.last_acquisition_reports: list[dict[str, str]] = []
+        self._foreign_horse_names: dict[str, str] | None = None
+        self._france_identity_fetcher = None
 
     def run(
         self,
@@ -144,6 +156,206 @@ class JRAPipeline:
             missing_history_template_rows=missing_history_template_rows,
         )
 
+    def _record_fetch_attempt(
+        self,
+        route: str,
+        *,
+        url: str,
+        raw_name: str,
+        fetched: bool,
+        existed_before: bool,
+        race_id: str = "",
+        horse_id: str = "",
+        horse_number: str = "",
+        fields: tuple[str, ...] = (),
+    ) -> None:
+        """Record one fetch exactly as it happened, bound to its raw file."""
+        raw_path = self.config.raw_dir / raw_name
+        artifact_sha256 = ""
+        artifact_path = ""
+        if raw_path.exists():
+            artifact_sha256 = hashlib.sha256(raw_path.read_bytes()).hexdigest()
+            artifact_path = str(raw_path.resolve())
+        outcome = "unavailable" if not fetched else ("cache_hit" if existed_before else "fetched")
+        self.acquisition_recorder.record(
+            route,
+            url=url,
+            outcome=outcome,
+            race_id=race_id,
+            horse_id=horse_id,
+            horse_number=horse_number,
+            fields=fields,
+            artifact_sha256=artifact_sha256,
+            artifact_path=artifact_path,
+        )
+
+    def _record_manual_consultation(self, horse, manual_rows: list[dict[str, str]]) -> None:
+        self.acquisition_recorder.record(
+            "manual_history_overrides",
+            outcome="consulted",
+            race_id=horse.race_id,
+            horse_id=horse.horse_id,
+            horse_number=horse.horse_number,
+            fields=AUDITED_FIELDS,
+            reason=f"{len(manual_rows)} manual override rows consulted for this horse",
+        )
+
+    def _record_repair_outcome(self, horse, reason: str, repair_result) -> None:
+        status = ""
+        if repair_result.repair_actions:
+            status = str(repair_result.repair_actions[0].get("status", ""))
+        self.acquisition_recorder.record(
+            "jra_horse_history",
+            url=horse.horse_url,
+            outcome=reason,
+            race_id=horse.race_id,
+            horse_id=horse.horse_id,
+            horse_number=horse.horse_number,
+            fields=AUDITED_FIELDS,
+            reason=f"history repair outcome: {status}" if status else "history repair outcome",
+        )
+
+    def _foreign_horse_names_map(self) -> dict[str, str]:
+        """Operator-supplied English names; never guess an unmapped name."""
+        if self._foreign_horse_names is None:
+            path = self.config.manual_history_csv.parent / "foreign_horse_names.json"
+            mapping: dict[str, str] = {}
+            try:
+                if path.exists():
+                    payload = json.loads(path.read_text(encoding="utf-8"))
+                    if isinstance(payload, dict):
+                        mapping = {str(key): str(value) for key, value in payload.items()}
+            except (OSError, ValueError):
+                mapping = {}
+            self._foreign_horse_names = mapping
+        return self._foreign_horse_names
+
+    def _france_fetch_bytes(self, url: str) -> bytes | None:
+        try:
+            response = self.scraper.session.get(url, timeout=self.config.timeout)
+            response.raise_for_status()
+            return response.content
+        except Exception:  # noqa: BLE001 - optional route; failure is recorded by caller
+            return None
+
+    def _fetch_text_cp932(self, url: str) -> str | None:
+        try:
+            response = self.scraper.session.get(url, timeout=self.config.timeout)
+            response.raise_for_status()
+            return response.content.decode("cp932")
+        except Exception:  # noqa: BLE001 - optional route; absence is recorded by caller
+            return None
+
+    def _france_fetch_identity(self):
+        if self._france_identity_fetcher is None:
+            from jra_scraper import france_galop
+
+            path = self.config.manual_history_csv.parent / "foreign_identity_sources.json"
+            mapping = france_galop.load_identity_sources(path)
+            self._france_identity_fetcher = france_galop.identity_fetcher_from_map(
+                mapping, self._fetch_text_cp932
+            )
+        return self._france_identity_fetcher
+
+    def _apply_france_history(
+        self, horse, rows: list[dict[str, str]]
+    ) -> list[dict[str, str]]:
+        """Optional France Galop route; failures are recorded, never fatal."""
+        if not rows:
+            return rows
+        try:
+            from jra_scraper import france_galop
+        except Exception as exc:  # noqa: BLE001 - module ships separately
+            logger.warning("France Galop module unavailable: %s", exc)
+            return rows
+        targets = [row for row in rows if france_galop.is_france_history_row(row)]
+        if not targets:
+            return rows
+        names = self._foreign_horse_names_map()
+        store_dir = self.config.raw_dir / "france_tracking"
+        for row in targets:
+            scope = {
+                "race_id": str(row.get("race_id", "") or horse.race_id),
+                "horse_id": str(row.get("horse_id", "") or horse.horse_id),
+                "horse_number": str(row.get("horse_number", "") or horse.horse_number),
+                "run_index": str(row.get("run_index", "")),
+                "date": str(row.get("date", "")),
+            }
+            try:
+                official_name = names.get(scope["horse_id"], "")
+                if not official_name:
+                    self.acquisition_recorder.record(
+                        "france_galop_tracking",
+                        outcome="identity_unresolved",
+                        fields=("time", "last_3f"),
+                        reason="No operator-supplied English name for this horse",
+                        **scope,
+                    )
+                    continue
+                result = france_galop.collect_france_history(
+                    row,
+                    official_horse_name=official_name,
+                    fetch_bytes=self._france_fetch_bytes,
+                    fetch_identity=self._france_fetch_identity(),
+                    store_dir=store_dir,
+                )
+                attempt = dict(result.get("attempt") or {})
+                self.acquisition_recorder.record(
+                    str(attempt.get("route", "france_galop_tracking")),
+                    url=str(attempt.get("url", "")),
+                    outcome=str(attempt.get("outcome", "")),
+                    race_id=str(attempt.get("race_id", "") or scope["race_id"]),
+                    horse_id=str(attempt.get("horse_id", "") or scope["horse_id"]),
+                    horse_number=str(attempt.get("horse_number", "") or scope["horse_number"]),
+                    run_index=str(attempt.get("run_index", "") or scope["run_index"]),
+                    date=str(row.get("date", "")),
+                    fields=tuple(attempt.get("fields") or ()),
+                    artifact_sha256=str(attempt.get("artifact_sha256", "")),
+                    artifact_path=str(attempt.get("artifact_path", "")),
+                    reason=str(attempt.get("reason", "")),
+                )
+                artifact = result.get("artifact")
+                if artifact is not None:
+                    self._store_foreign_artifact(artifact, row, scope)
+                observation = result.get("observation")
+                if observation is not None:
+                    rows = _merge_history_rows(
+                        rows, [observation], target_race_date=horse.target_race_date
+                    )
+            except Exception as exc:  # noqa: BLE001 - audit remains the gate
+                logger.warning("France Galop route failed for horse_id=%s: %s",
+                               scope["horse_id"], exc)
+                self.acquisition_recorder.record(
+                    "france_galop_tracking",
+                    outcome="error",
+                    fields=("time", "last_3f"),
+                    reason=str(exc),
+                    **scope,
+                )
+        return rows
+
+    def _store_foreign_artifact(self, artifact: dict, row, scope: dict[str, str]) -> None:
+        descriptor_dir = self.config.raw_dir / "foreign_artifacts"
+        descriptor_dir.mkdir(parents=True, exist_ok=True)
+        from .acquisition_report import iso_date
+
+        date_iso = iso_date(artifact.get("date") or row.get("date", ""))
+        filename = f"france_tracking_{date_iso}_{safe_filename(scope['horse_id'])}.json"
+        (descriptor_dir / filename).write_text(
+            json.dumps(artifact, ensure_ascii=False, indent=2, sort_keys=True),
+            encoding="utf-8",
+        )
+        pdf_path = str(artifact.get("pdf_path", ""))
+        pdf_sha256 = str(artifact.get("pdf_sha256", ""))
+        if pdf_path and pdf_sha256:
+            self.acquisition_recorder.register_artifact(
+                pdf_path,
+                pdf_sha256,
+                kind="france_tracking_pdf",
+                url=str(artifact.get("url", "")),
+                race_id=scope["race_id"],
+            )
+
     def _process_race(
         self,
         race: RaceLink,
@@ -161,11 +373,20 @@ class JRAPipeline:
         missing_history_template_rows: list[dict[str, str]],
     ) -> tuple[list[dict[str, str]], list[dict[str, str]], bool] | None:
         race_raw_name = f"race_{safe_filename(race.race_id)}.html"
+        race_raw_existed = (self.config.raw_dir / race_raw_name).exists()
         race_html = self.scraper.fetch(
             race.race_url,
             raw_name=race_raw_name,
             use_cache=reprocess_raw or not force_rebuild,
             cache_only=reprocess_raw,
+        )
+        self._record_fetch_attempt(
+            "jra_race_detail",
+            url=race.race_url,
+            raw_name=race_raw_name,
+            fetched=bool(race_html),
+            existed_before=race_raw_existed,
+            race_id=race.race_id,
         )
         if not race_html:
             failures[race.race_url] = failures.get(race.race_url, 0) + 1
@@ -225,9 +446,49 @@ class JRAPipeline:
                 missing_history_template_rows=missing_history_template_rows,
             )
             race_rows.extend(rows)
+            self._record_route_determinations(rows)
             if horse_failed:
                 race_failed = True
         return race_rows, combo_odds_rows, race_failed
+
+    def _record_route_determinations(self, rows: list[dict[str, str]]) -> None:
+        """Record, per history scope, that no official route exists for it.
+
+        The collector genuinely evaluates the route registry for every
+        overseas history row when deciding which foreign routes apply. For
+        jurisdictions without a registered official route, that evaluation
+        is recorded as an attempt carrying route_status so the audit's
+        coverage layer can classify the absence as SOURCE_ROUTE_UNAVAILABLE
+        (still blocked) instead of a generic missing field. Domestic-course
+        rows are never classified overseas: single-kanji jurisdiction
+        markers can collide with domestic race names (e.g. 愛 in 愛知杯).
+        """
+        domestic_courses = {'札幌', '函館', '福島', '新潟', '東京', '中山',
+                            '中京', '京都', '阪神', '小倉'}
+        for row in rows:
+            if str(row.get('course', '')).strip() in domestic_courses:
+                continue
+            jurisdiction = jurisdiction_for_row(row)
+            if jurisdiction == 'japan':
+                continue
+            registry = ROUTE_REGISTRY.get(jurisdiction, {})
+            if registry.get('official_route_registered', False):
+                continue
+            reason = str(registry.get('reason', '')).strip() or (
+                f'No official source route is registered in this system for '
+                f'{jurisdiction}; the JRA official history is the only route.')
+            self.acquisition_recorder.record(
+                'route_registry',
+                outcome='no_official_source_route',
+                route_status='no_official_source_route',
+                race_id=str(row.get('race_id', '')),
+                horse_id=str(row.get('horse_id', '')),
+                horse_number=str(row.get('horse_number', '')),
+                run_index=str(row.get('run_index', '')),
+                date=str(row.get('date', '')),
+                fields=AUDITED_FIELDS,
+                reason=reason,
+            )
 
     def _process_horse(
         self,
@@ -248,21 +509,36 @@ class JRAPipeline:
         if len(embedded_rows) >= 5:
             return embedded_rows, False
 
+        horse_raw_name = f"horse_{safe_filename(horse.horse_id)}.html"
+        horse_raw_existed = (self.config.raw_dir / horse_raw_name).exists()
         horse_html = self.scraper.fetch(
             horse.horse_url,
-            raw_name=f"horse_{safe_filename(horse.horse_id)}.html",
+            raw_name=horse_raw_name,
             use_cache=reprocess_raw or not force_rebuild,
             cache_only=reprocess_raw,
+        )
+        self._record_fetch_attempt(
+            "jra_horse_history",
+            url=horse.horse_url,
+            raw_name=horse_raw_name,
+            fetched=bool(horse_html),
+            existed_before=horse_raw_existed,
+            race_id=horse.race_id,
+            horse_id=horse.horse_id,
+            horse_number=horse.horse_number,
+            fields=AUDITED_FIELDS,
         )
         if not horse_html:
             failures[horse.horse_url] = failures.get(horse.horse_url, 0) + 1
             logger.warning("Skip horse due to missing html: %s", horse.horse_url)
             manual_rows = _manual_rows_for_horse(horse, manual_history_rows)
+            self._record_manual_consultation(horse, manual_rows)
             rows = _merge_history_rows(
                 embedded_rows,
                 manual_rows,
                 target_race_date=horse.target_race_date,
             )
+            rows = self._apply_france_history(horse, rows)
             repair_result = history_repair.build_result(
                 horse,
                 rows=rows,
@@ -274,6 +550,7 @@ class JRAPipeline:
                 },
                 attempted_urls=[horse.horse_url],
             )
+            self._record_repair_outcome(horse, "horse_detail_html_unavailable", repair_result)
             rows = repair_result.rows
             repair_actions.extend(repair_result.repair_actions)
             missing_history_requests.extend(repair_result.manual_requests)
@@ -294,11 +571,13 @@ class JRAPipeline:
             aggressive_repair=aggressive_repair,
         )
         manual_rows = _manual_rows_for_horse(horse, manual_history_rows)
+        self._record_manual_consultation(horse, manual_rows)
         rows = _merge_history_rows(
             embedded_rows,
             detail_rows + manual_rows,
             target_race_date=horse.target_race_date,
         )
+        rows = self._apply_france_history(horse, rows)
         issues.extend(_issues_for_selected_history(detail_issues, rows))
         history_table_missing = any(
             issue.code == "history_table_missing" for issue in detail_issues
@@ -326,6 +605,7 @@ class JRAPipeline:
             attempted_urls=[horse.horse_url],
             required_history_count=required_history_count,
         )
+        self._record_repair_outcome(horse, repair_reason, repair_result)
         rows = repair_result.rows
         repair_actions.extend(repair_result.repair_actions)
         missing_history_requests.extend(repair_result.manual_requests)
@@ -361,7 +641,12 @@ class JRAPipeline:
         )
         append_live_combo_odds(self.config.combo_odds_csv, all_combo_odds_rows)
         self._save_state(processed_races, failures, len(processed_this_run), len(all_new_rows))
-        self._write_quality_report(issues, entry_rows, final_rows, repair_actions)
+        acquisition_reports = self._write_acquisition_bundles(final_rows, processed_this_run)
+        self.last_acquisition_reports = acquisition_reports
+        self._write_quality_report(
+            issues, entry_rows, final_rows, repair_actions,
+            acquisition_reports=acquisition_reports,
+        )
         self._write_missing_history_requests(missing_history_requests)
         self._write_manual_history_template(missing_history_template_rows)
 
@@ -464,12 +749,48 @@ class JRAPipeline:
         with self.config.state_path.open("w", encoding="utf-8") as file_obj:
             json.dump(payload, file_obj, ensure_ascii=False, indent=2)
 
+    def _write_acquisition_bundles(
+        self,
+        final_rows: list[dict[str, str]],
+        processed_this_run: list[str],
+    ) -> list[dict[str, str]]:
+        """One SHA-bound acquisition report per race processed in this run."""
+        refs: list[dict[str, str]] = []
+        generated_at = datetime.now(timezone.utc).isoformat()
+        for race_id in processed_this_run:
+            race_rows = [row for row in final_rows if str(row.get("race_id", "")) == race_id]
+            try:
+                report = build_acquisition_report(
+                    race_id=race_id,
+                    rows=race_rows,
+                    recorder=self.acquisition_recorder,
+                    generated_at=generated_at,
+                )
+            except ValueError:
+                # No route was recorded at all; an honest bundle cannot be
+                # built, and fabricating routes is not an option.
+                logger.warning("No acquisition routes recorded for race_id=%s", race_id)
+                continue
+            evidence = {
+                "artifact_index.json": {
+                    "artifacts": self.acquisition_recorder.artifacts_for_race(race_id),
+                }
+            }
+            ref = write_acquisition_bundle(
+                self.config.raw_dir / "acquisition" / safe_filename(race_id),
+                report,
+                evidence,
+            )
+            refs.append({"race_id": race_id, **ref})
+        return refs
+
     def _write_quality_report(
         self,
         issues: list[ParserIssue],
         entry_rows: list[dict[str, str]],
         history_rows: list[dict[str, str]] | None = None,
         repair_actions: list[dict[str, object]] | None = None,
+        acquisition_reports: list[dict[str, str]] | None = None,
     ) -> None:
         severity_counts = Counter(issue.severity for issue in issues)
         code_counts = Counter(issue.code for issue in issues)
@@ -516,6 +837,7 @@ class JRAPipeline:
             "live_combo_odds_count": len(combo_odds_rows),
             "missing_data_repair_action_count": len(repair_actions or []),
             "missing_data_repair_actions": repair_actions or [],
+            "acquisition_reports": acquisition_reports or [],
             "issues": [issue.to_dict() for issue in issues],
         }
         with self.config.quality_report_path.open("w", encoding="utf-8") as file_obj:
@@ -598,17 +920,34 @@ class JRAPipeline:
         issues: list[ParserIssue],
     ) -> list[dict[str, str]]:
         captured_at = datetime.now(timezone.utc).isoformat()
+        odds_url = f"{self.config.base_url}/JRADB/accessO.html"
         initial_cname = self.parser.extract_initial_odds_cname(race_html)
         if not initial_cname:
+            self.acquisition_recorder.record(
+                "jra_combo_odds",
+                url=odds_url,
+                outcome="unavailable",
+                race_id=race.race_id,
+                reason="Race page exposes no odds cname",
+            )
             return []
 
-        odds_url = f"{self.config.base_url}/JRADB/accessO.html"
+        odds_raw_name = f"odds_{safe_filename(race.race_id)}_win_place.html"
+        odds_raw_existed = (self.config.raw_dir / odds_raw_name).exists()
         first_html = self.scraper.fetch_post(
             odds_url,
             {"CNAME": initial_cname},
-            raw_name=f"odds_{safe_filename(race.race_id)}_win_place.html",
+            raw_name=odds_raw_name,
             use_cache=reprocess_raw or not force_refresh,
             cache_only=reprocess_raw,
+        )
+        self._record_fetch_attempt(
+            "jra_combo_odds",
+            url=odds_url,
+            raw_name=odds_raw_name,
+            fetched=bool(first_html),
+            existed_before=odds_raw_existed,
+            race_id=race.race_id,
         )
         if not first_html:
             issues.append(
