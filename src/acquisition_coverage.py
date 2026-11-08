@@ -47,6 +47,19 @@ def field_coverage(row: dict, normalized: dict, field: str, originals: list[dict
         return dict(record, state='NOT_APPLICABLE',
                     reason=semantic_na[0].get(field + '_missing_reason', ''),
                     semantic_status='NOT_APPLICABLE')
+    if (field == 'last_3f' and _empty(value) and not observed
+            and not any(o.get('last_3f_missing_reason') == 'CONFLICTING_SECTIONAL_UNITS'
+                        for o in originals)
+            and any(str(o.get('history_surface', '')) == '障害'
+                    or '障害' in str(o.get('race_name', '')) for o in originals)):
+        # A jump race's official record carries an average-1F column, never a
+        # final-3F sectional; jra_scraper.history_observations encodes the
+        # same unit rule. Once the hash-verified originals establish the race
+        # as a jump race, the absence of a 3F value is non-applicability,
+        # not an unobserved field.
+        return dict(record, state='NOT_APPLICABLE',
+                    reason='Jump race records carry average-1F, not a final-3F sectional',
+                    semantic_status='NOT_APPLICABLE')
     if observed:
         return dict(record, state='AVAILABLE_BUT_NOT_COLLECTED' if _empty(value) else 'OBSERVED',
                     reason='Nonempty value reparsed from matched raw source')
