@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "status": "RESEARCH_ARCHIVE_RETROSPECTIVE",
+  "days": 44,
+  "totals": {
+    "races": 1464,
+    "starters": 19617,
+    "declared": 19692,
+    "histories": 72604
+  },
+  "by_surface": {
+    "ダート": 635,
+    "芝": 780,
+    "障害": 49
+  },
+  "audit_preparation": {
+    "BLOCKED_UNAPPROVED_IMPUTATION": 756,
+    "PASS": 298,
+    "BLOCKED_MISSING_DATA": 323,
+    "BLOCKED_ACQUISITION_INCOMPLETE": 43,
+    "UNVERIFIED": 44
+  },
+  "nonstarters": 75,
+  "environment_venue_days": 122,
+  "official_source_index_records": 19659,
+  "source_document_bodies_included": false,
+  "formal_fit_status_at_snapshot": "NOT_STARTED",
+  "collection_sha256": "42db6a6257221bf1c9b1ea8172fa50bd6a56f4363155caa58399f7bedb7d3d5f",
+  "source_manifest_sha256": "c4450bd9fecf8027f77dde02a4a00a75afaeee2153bb71e2ba6b4a8734d11209",
+  "audit_summary_sha256": "9a55eb5821d1ca2c2f58863863e87745b572d6cf26751b0f5434f7f0107d2211",
+  "files": [
+    {
+      "file": "features_2026-05.jsonl.gz",
+      "sha256": "ce5bd69b22067da3474151dc444e1042398eb3971b9c27cb3284a54bb93b8045",
+      "records": 336,
+      "bytes": 13439312
+    },
+    {
+      "file": "outcomes_2026-05.jsonl.gz",
+      "sha256": "e9623dbfa72b1cc71524fed179d0589325ceb2e139647393e67463e8f32e0137",
+      "records": 336,
+      "bytes": 451630
+    },
+    {
+      "file": "audit_preparation_2026-05.jsonl.gz",
+      "sha256": "6bb826045c7a20faf679ab8ab2c0fcc948691959b7c32313bb4a91c4f092f74e",
+      "records": 336,
+      "bytes": 73440
+    },
+    {
+      "file": "features_2026-06.jsonl.gz",
+      "sha256": "61d2556fada351d07d3fa20c41daa4ecdb6a08e66a38ea0ef345376b8dce3504",
+      "records": 264,
+      "bytes": 9432095
+    },
+    {
+      "file": "outcomes_2026-06.jsonl.gz",
+      "sha256": "0368fb8eadb8811432ac912d3261cd4e9a28a6d7c2d6338ab177b0d3ad31065c",
+      "records": 264,
+      "bytes": 343839
+    },
+    {
+      "file": "audit_preparation_2026-06.jsonl.gz",
+      "sha256": "deb3f676811af7bad39f49eb272f3e1974b626804418e6b7d83c40d9103e5d50",
+      "records": 264,
+      "bytes": 58826
+    },
+    {
+      "file": "features_2026-07.jsonl.gz",
+      "sha256": "a012c253e610d95220c10c626dbdf756d440a9be607ae6a520d518d78380e0d1",
+      "records": 288,
+      "bytes": 9816148
+    },
+    {
+      "file": "outcomes_2026-07.jsonl.gz",
+      "sha256": "8466a6b43741286ded3e89885782c0dcdd38b71a0c8e955ff13f6745aaf320e6",
+      "records": 288,
+      "bytes": 365269
+    },
+    {
+      "file": "audit_preparation_2026-07.jsonl.gz",
+      "sha256": "6caf17dca0c0a70515f3287bfcf7b5b2dcfb4d2b07321c6b778ba0fc1f175947",
+      "records": 288,
+      "bytes": 61924
+    },
+    {
+      "file": "features_2026-08.jsonl.gz",
+      "sha256": "cbd3de6e399340aeb01242e7fa93ff22a2fb03a26b2c142a89086705c58d2e96",
+      "records": 360,
+      "bytes": 12675792
+    },
+    {
+      "file": "outcomes_2026-08.jsonl.gz",
+      "sha256": "4f6a5bf790ac61a983619e62f40d302f457385a4bdd9d783625a60ecc22c677b",
+      "records": 360,
+      "bytes": 458756
+    },
+    {
+      "file": "audit_preparation_2026-08.jsonl.gz",
+      "sha256": "913ca442a26ac422d8cfefa6f6cd77819dbccc414305ad7b97f6485b2864973e",
+      "records": 360,
+      "bytes": 79051
+    },
+    {
+      "file": "features_2026-09.jsonl.gz",
+      "sha256": "df83647b761fd831f06b7e7962a68844ad59092ab4f8c9cfb4e9c82f42bb23ac",
+      "records": 216,
+      "bytes": 7105143
+    },
+    {
+      "file": "outcomes_2026-09.jsonl.gz",
+      "sha256": "a7cb6dbe85ef7e7592b2e58d312dc5c9595bb0be045151d23d8da11f6f153759",
+      "records": 216,
+      "bytes": 275371
+    },
+    {
+      "file": "audit_preparation_2026-09.jsonl.gz",
+      "sha256": "75c6eca465e19a13672cbe7cfacdca6d47e8b4fa782ceee94d123c1a69b1bfae",
+      "records": 216,
+      "bytes": 46010
+    },
+    {
+      "file": "races.jsonl.gz",
+      "sha256": "e00dfc1db5a9982156d3a820773e805f85c59531de170c21f51a10d22f3aaae7",
+      "records": 1464,
+      "bytes": 27440
+    },
+    {
+      "file": "environment_venue_days.jsonl.gz",
+      "sha256": "94b253d15e47698d449bf717e0464b58b2ae73187d9deb94b7dca6855213b83f",
+      "records": 122,
+      "bytes": 13767
+    },
+    {
+      "file": "source_index.jsonl.gz",
+      "sha256": "ee5ed96fc1aa701ab99b15ffe9c3538c667ec9dfb6eec15fb0bfa08eb31929a3",
+      "records": 19659,
+      "bytes": 1365439
+    }
+  ]
+}
