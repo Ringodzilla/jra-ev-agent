@@ -1,4 +1,17 @@
-"""Pure, source-bound field acquisition evidence; declarations never prove absence."""
+"""Pure, source-bound field acquisition evidence; declarations never prove absence.
+
+SOURCE_ROUTE_UNAVAILABLE is a diagnostic classification, never a pass: the
+field exists in the world (a timed race in Qatar has a finishing time), but
+this system has no registered official source route for that jurisdiction,
+and the one route that ran (the JRA official history) does not observe the
+field. It is deliberately distinct from NOT_APPLICABLE, which is reserved
+for fields that cannot exist for the observation itself (a jump race's
+final-3F sectional, a straight course's corner positions). Reclassifying a
+missing observation as NOT_APPLICABLE merely because no route reaches it
+would redefine absence as inapplicability and let the gate pass on a
+declaration — exactly what this module forbids. The gate's pass states in
+src.data_integrity therefore exclude SOURCE_ROUTE_UNAVAILABLE.
+"""
 from __future__ import annotations
 
 from collections import Counter
@@ -71,16 +84,25 @@ def field_coverage(row: dict, normalized: dict, field: str, originals: list[dict
                               'NO_600M_BOUNDARY_PARTIAL_INTERVAL_NOT_ESTIMATED' for o in originals):
         return dict(record, state='NOT_MEASURED',
                     reason='Validated official intervals have no exact 600m boundary; no interpolation')
+    attempts = (collected.get('source_audit') or {}).get('attempts', [])
+    matching = [a for a in attempts if all(str(a.get(k, '')) == str(row.get(k, ''))
+                for k in ('race_id', 'horse_id', 'date')) and field in a.get('fields', [])]
+    route_blocked = [a for a in matching if a.get('route_status') == 'no_official_source_route']
     unavailable = [o for o in originals if o.get(field + '_status') in
                    {'NOT_OBSERVED', 'UNVERIFIED'} and _empty(o.get(field))]
     if unavailable:
+        if route_blocked:
+            # The only route's original does not observe the field, and the
+            # collector recorded that no other official route is registered
+            # for this jurisdiction. Still blocked; classified for diagnosis.
+            return dict(record, state='SOURCE_ROUTE_UNAVAILABLE',
+                        semantic_status=unavailable[0][field + '_status'],
+                        reason=str(route_blocked[0].get('reason', '')).strip()
+                               or 'No official source route is registered for this jurisdiction')
         return dict(record, state='SOURCE_FIELD_MISSING',
                     semantic_status=unavailable[0][field + '_status'],
                     reason=unavailable[0].get(field + '_missing_reason',
                                               'Source observation is not verified'))
-    attempts = (collected.get('source_audit') or {}).get('attempts', [])
-    matching = [a for a in attempts if all(str(a.get(k, '')) == str(row.get(k, ''))
-                for k in ('race_id', 'horse_id', 'date')) and field in a.get('fields', [])]
     artifacts = (collected.get('source_audit') or {}).get('artifacts', [])
     bound = [artifact for artifact in artifacts if any(a.get('artifact_sha256') == artifact.get('sha256')
              for a in matching)]
@@ -88,6 +110,10 @@ def field_coverage(row: dict, normalized: dict, field: str, originals: list[dict
                           artifact['html'], re.DOTALL) for artifact in bound)
     if failed:
         return dict(record, state='FETCH_FAILED', reason='Attempt bound to hash-verified raw error response')
+    if route_blocked:
+        return dict(record, state='SOURCE_ROUTE_UNAVAILABLE',
+                    reason=str(route_blocked[0].get('reason', '')).strip()
+                           or 'No official source route is registered for this jurisdiction')
     relevant_kinds = ({'history_result'} if field in {'pace', 'weather'} else
                       {'history_odds'} if field == 'odds' else
                       {'horse_history', 'race_detail', 'history_result'})
