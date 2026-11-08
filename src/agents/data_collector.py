@@ -74,6 +74,10 @@ class DataCollectorAgent:
             "aggressive_repair": effective_aggressive_repair,
             "race_configs": race_configs,
             "rows": rows,
+            "source_audit": {
+                "attempts": pipeline.acquisition_recorder.attempts(),
+                "acquisition_reports": list(pipeline.last_acquisition_reports),
+            },
             "entries": _read_csv(self.config.entries_csv),
             "odds_snapshots": _read_csv(self.config.odds_snapshots_csv),
             "combo_odds": _read_csv(self.config.combo_odds_csv),
