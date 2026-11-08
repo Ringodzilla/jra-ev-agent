@@ -1,1 +1,296 @@
-IiIiQWNxdWlzaXRpb24gcmVjb3JkZXIvcmVwb3J0OiBob25lc3QgYXR0ZW1wdHMgb25seSwgZXhhY3Qtc2NvcGUgb2JzZXJ2YXRpb25zLiIiIgpmcm9tIF9fZnV0dXJlX18gaW1wb3J0IGFubm90YXRpb25zCgppbXBvcnQgaGFzaGxpYgpmcm9tIHBhdGhsaWIgaW1wb3J0IFBhdGgKCmltcG9ydCBweXRlc3QKCmZyb20ganJhX3NjcmFwZXIuYWNxdWlzaXRpb25fcmVwb3J0IGltcG9ydCAoCiAgICBBVURJVEVEX0ZJRUxEUywKICAgIFJPVVRFX1JFR0lTVFJZLAogICAgQWNxdWlzaXRpb25SZWNvcmRlciwKICAgIGJ1aWxkX2FjcXVpc2l0aW9uX3JlcG9ydCwKICAgIGNvbXB1dGVfdW5yZXNvbHZlZF9vYnNlcnZhdGlvbnMsCiAgICBpc29fZGF0ZSwKICAgIGp1cmlzZGljdGlvbl9mb3Jfcm93LAogICAgd3JpdGVfYWNxdWlzaXRpb25fYnVuZGxlLAopCmZyb20gc3JjLmRhdGFfaW50ZWdyaXR5IGltcG9ydCBfUkFXX0ZJRUxEUwpmcm9tIHNyYy5oaXN0b3J5X2V4Y2VwdGlvbnMgaW1wb3J0IEhpc3RvcnlFeGNlcHRpb25FcnJvciwgX2F0dGVtcHRzLCBfdW5hdmFpbGFibGVfc2NvcGUKCgpkZWYgX3JlZihwYXRoOiBQYXRoKSAtPiBkaWN0OgogICAgcmV0dXJuIHsicGF0aCI6IHN0cihwYXRoLnJlc29sdmUoKSksCiAgICAgICAgICAgICJzaGEyNTYiOiBoYXNobGliLnNoYTI1NihwYXRoLnJlYWRfYnl0ZXMoKSkuaGV4ZGlnZXN0KCl9CgoKZGVmIF9yb3coKipvdmVycmlkZXMpIC0+IGRpY3Q6CiAgICByb3cgPSB7CiAgICAgICAgInJhY2VfaWQiOiAiUiIsICJob3JzZV9pZCI6ICJIIiwgImhvcnNlX25hbWUiOiAiSG9yc2UiLCAiaG9yc2VfbnVtYmVyIjogIjEiLAogICAgICAgICJydW5faW5kZXgiOiAiMSIsICJkYXRlIjogIjIwMjXlubQxMOaciDXml6UiLCAiY291cnNlIjogIuadseS6rCIsCiAgICAgICAgInJhY2VfbmFtZSI6ICLjg4bjgrnjg4jjgrnjg4bjg7zjgq/jgrkiLCAiZGlzdGFuY2UiOiAiMTYwMCIsICJoaXN0b3J5X3N1cmZhY2UiOiAi6IqdIiwKICAgICAgICAidHJhY2tfY29uZGl0aW9uIjogIuiJryIsICJwb3NpdGlvbiI6ICIxIiwgInRpbWUiOiAiMTozMy4wIiwKICAgICAgICAibGFzdF8zZiI6ICIzNC4wIiwgImxhc3RfM2Zfc291cmNlIjogIm9ic2VydmVkIiwgInBhc3Npbmdfb3JkZXIiOiAiMS0xIiwKICAgICAgICAicG9wdWxhcml0eSI6ICIxIiwgIndlaWdodCI6ICI1NSIsICJqb2NrZXkiOiAi6aiO5omLIiwgInBhY2UiOiAiTSIsCiAgICAgICAgIndlYXRoZXIiOiAi5pm0IiwgIm9kZHMiOiAiMi4wIiwKICAgIH0KICAgIHJvdy51cGRhdGUob3ZlcnJpZGVzKQogICAgcmV0dXJuIHJvdwoKCmRlZiB0ZXN0X2F1ZGl0ZWRfZmllbGRzX21pcnJvcl9kYXRhX2ludGVncml0eV9yYXdfZmllbGRzKCk6CiAgICBhc3NlcnQgdHVwbGUoQVVESVRFRF9GSUVMRFMpID09IHR1cGxlKF9SQVdfRklFTERTKQoKCmRlZiB0ZXN0X3JlY29yZGVyX2F0dGVtcHRfc2hhcGVfYW5kX29wdGlvbmFsX2tleXMoKToKICAgIHJlY29yZGVyID0gQWNxdWlzaXRpb25SZWNvcmRlcigpCiAgICByZWNvcmRlci5yZWNvcmQoImpyYV9ob3JzZV9oaXN0b3J5Iiwgb3V0Y29tZT0iZmV0Y2hlZCIsIHJhY2VfaWQ9IlIiLCBob3JzZV9pZD0iSCIsCiAgICAgICAgICAgICAgICAgICAgZmllbGRzPSgidGltZSIsICJsYXN0XzNmIiksIGFydGlmYWN0X3NoYTI1Nj0iYSIgKiA2NCwKICAgICAgICAgICAgICAgICAgICBhcnRpZmFjdF9wYXRoPSIvdG1wL3Jhdy9ob3JzZV9ILmh0bWwiKQogICAgcmVjb3JkZXIucmVjb3JkKCJmcmFuY2VfZ2Fsb3BfdHJhY2tpbmciLCBvdXRjb21lPSJlcnJvciIsIHJhY2VfaWQ9IlIiLCBob3JzZV9pZD0iSCIsCiAgICAgICAgICAgICAgICAgICAgcmVhc29uPSJib29tIiwgcm91dGVfc3RhdHVzPSJkZWdyYWRlZCIpCiAgICBhdHRlbXB0cyA9IHJlY29yZGVyLmF0dGVtcHRzKCkKICAgIGFzc2VydCBhdHRlbXB0c1swXSA9PSB7CiAgICAgICAgInJhY2VfaWQiOiAiUiIsICJob3JzZV9pZCI6ICJIIiwgImhvcnNlX251bWJlciI6ICIiLCAicnVuX2luZGV4IjogIiIsCiAgICAgICAgImRhdGUiOiAiIiwgImZpZWxkcyI6IFsidGltZSIsICJsYXN0XzNmIl0sICJyb3V0ZSI6ICJqcmFfaG9yc2VfaGlzdG9yeSIsCiAgICAgICAgInVybCI6ICIiLCAib3V0Y29tZSI6ICJmZXRjaGVkIiwgImFydGlmYWN0X3NoYTI1NiI6ICJhIiAqIDY0LCAicmVhc29uIjogIiIsCiAgICAgICAgImFydGlmYWN0X3BhdGgiOiAiL3RtcC9yYXcvaG9yc2VfSC5odG1sIiwKICAgIH0KICAgIGFzc2VydCAiYXJ0aWZhY3RfcGF0aCIgbm90IGluIGF0dGVtcHRzWzFdCiAgICBhc3NlcnQgYXR0ZW1wdHNbMV1bInJvdXRlX3N0YXR1cyJdID09ICJkZWdyYWRlZCIKICAgIGFzc2VydCAicm91dGVfc3RhdHVzIiBub3QgaW4gYXR0ZW1wdHNbMF0KCgpkZWYgdGVzdF9yZWNvcmRlcl9yb3V0ZXNfYWdncmVnYXRlX3VuaXF1ZV9vdXRjb21lcygpOgogICAgcmVjb3JkZXIgPSBBY3F1aXNpdGlvblJlY29yZGVyKCkKICAgIHJlY29yZGVyLnJlY29yZCgianJhX2hvcnNlX2hpc3RvcnkiLCBvdXRjb21lPSJmZXRjaGVkIiwgcmFjZV9pZD0iUiIpCiAgICByZWNvcmRlci5yZWNvcmQoImpyYV9ob3JzZV9oaXN0b3J5Iiwgb3V0Y29tZT0idW5hdmFpbGFibGUiLCByYWNlX2lkPSJSIikKICAgIHJlY29yZGVyLnJlY29yZCgianJhX2hvcnNlX2hpc3RvcnkiLCBvdXRjb21lPSJmZXRjaGVkIiwgcmFjZV9pZD0iUiIpCiAgICByZWNvcmRlci5yZWNvcmQoImpyYV9yYWNlX2RldGFpbCIsIG91dGNvbWU9ImNhY2hlX2hpdCIsIHJhY2VfaWQ9IlIiKQogICAgYXNzZXJ0IHJlY29yZGVyLnJvdXRlcygpID09IFsKICAgICAgICB7InJvdXRlIjogImpyYV9ob3JzZV9oaXN0b3J5IiwgIm91dGNvbWVzIjogWyJmZXRjaGVkIiwgInVuYXZhaWxhYmxlIl0sICJhdHRlbXB0cyI6IDN9LAogICAgICAgIHsicm91dGUiOiAianJhX3JhY2VfZGV0YWlsIiwgIm91dGNvbWVzIjogWyJjYWNoZV9oaXQiXSwgImF0dGVtcHRzIjogMX0sCiAgICBdCgoKZGVmIHRlc3RfcmVjb3JkZXJfYXJ0aWZhY3RfcmVnaXN0cnlfZGVkdXBlcygpOgogICAgcmVjb3JkZXIgPSBBY3F1aXNpdGlvblJlY29yZGVyKCkKICAgIHJlY29yZGVyLnJlY29yZCgianJhX2hvcnNlX2hpc3RvcnkiLCBvdXRjb21lPSJmZXRjaGVkIiwgcmFjZV9pZD0iUiIsCiAgICAgICAgICAgICAgICAgICAgYXJ0aWZhY3Rfc2hhMjU2PSJiIiAqIDY0LCBhcnRpZmFjdF9wYXRoPSIvdG1wL3Jhdy9ob3JzZV9ILmh0bWwiLAogICAgICAgICAgICAgICAgICAgIHVybD0iaHR0cHM6Ly9ob3JzZS9IIikKICAgIHJlY29yZGVyLnJlZ2lzdGVyX2FydGlmYWN0KCIvdG1wL3Jhdy9mcmFuY2UucGRmIiwgImMiICogNjQsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBraW5kPSJmcmFuY2VfdHJhY2tpbmdfcGRmIiwgcmFjZV9pZD0iUiIpCiAgICByZWNvcmRlci5yZWdpc3Rlcl9hcnRpZmFjdCgiL3RtcC9yYXcvZnJhbmNlLnBkZiIsICJjIiAqIDY0LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAga2luZD0iZnJhbmNlX3RyYWNraW5nX3BkZiIsIHJhY2VfaWQ9IlIiKQogICAgYXJ0aWZhY3RzID0gcmVjb3JkZXIuYXJ0aWZhY3RzX2Zvcl9yYWNlKCJSIikKICAgIGFzc2VydCBhcnRpZmFjdHMgPT0gWwogICAgICAgIHsicGF0aCI6ICIvdG1wL3Jhdy9mcmFuY2UucGRmIiwgInNoYTI1NiI6ICJjIiAqIDY0LAogICAgICAgICAia2luZCI6ICJmcmFuY2VfdHJhY2tpbmdfcGRmIiwgInVybCI6ICIifSwKICAgICAgICB7InBhdGgiOiAiL3RtcC9yYXcvaG9yc2VfSC5odG1sIiwgInNoYTI1NiI6ICJiIiAqIDY0LAogICAgICAgICAia2luZCI6ICJqcmFfaG9yc2VfaGlzdG9yeSIsICJ1cmwiOiAiaHR0cHM6Ly9ob3JzZS9IIn0sCiAgICBdCiAgICBhc3NlcnQgcmVjb3JkZXIuYXJ0aWZhY3RzX2Zvcl9yYWNlKCJPVEhFUiIpID09IFtdCgoKQHB5dGVzdC5tYXJrLnBhcmFtZXRyaXplKCJyb3csZXhwZWN0ZWQiLCBbCiAgICAoeyJjb3Vyc2UiOiAi44OJ44O844OPIiwgInJhY2VfbmFtZSI6ICLjgqLjg5/jg7zjg6vjg4jjg63jg5XjgqPjg7wifSwgInFhdGFyIiksCiAgICAoeyJjb3Vyc2UiOiAi44Oh44Kk44OA44OzIiwgInJhY2VfbmFtZSI6ICLjg4njg5DjgqTjgr/jg7zjg5UifSwgInVhZSIpLAogICAgKHsiY291cnNlIjogIuOCt+ODo+ODhuOCo+ODsyIsICJyYWNlX25hbWUiOiAi6aaZ5riv44Oe44Kk44OrIn0sICJob25nX2tvbmciKSwKICAgICh7ImNvdXJzZSI6ICLjg63jg7Pjgrfjg6Pjg7MiLCAicmFjZV9uYW1lIjogIuWHseaXi+mWgOizniJ9LCAiZnJhbmNlIiksCiAgICAoeyJjb3Vyc2UiOiAi44OL44Ol44O844Oe44O844Kx44OD44OIIiwgInJhY2VfbmFtZSI6ICLjgqTjgq7jg6rjgrkyMDAw44Ku44OL44O8In0sICJ1a19pcmVsYW5kIiksCiAgICAoeyJjb3Vyc2UiOiAi44K144Oz44K/44Ki44OL44K/IiwgInJhY2VfbmFtZSI6ICLjgqLjg6Hjg6rjgqvjg7Pjg4Djg7zjg5Pjg7wifSwgInVzYSIpLAogICAgKHsiY291cnNlIjogIuadseS6rCIsICJyYWNlX25hbWUiOiAi44OG44K544OI44K544OG44O844Kv44K5In0sICJqYXBhbiIpLApdKQpkZWYgdGVzdF9qdXJpc2RpY3Rpb25fZm9yX3Jvdyhyb3csIGV4cGVjdGVkKToKICAgIGFzc2VydCBqdXJpc2RpY3Rpb25fZm9yX3Jvdyhyb3cpID09IGV4cGVjdGVkCgoKZGVmIHRlc3Rfcm91dGVfcmVnaXN0cnlfcmVnaXN0cmF0aW9uX3N0YXR1cygpOgogICAgYXNzZXJ0IFJPVVRFX1JFR0lTVFJZWyJmcmFuY2UiXVsib2ZmaWNpYWxfcm91dGVfcmVnaXN0ZXJlZCJdIGlzIFRydWUKICAgIGFzc2VydCAiZnJhbmNlX2dhbG9wX3RyYWNraW5nIiBpbiBST1VURV9SRUdJU1RSWVsiZnJhbmNlIl1bInJvdXRlcyJdCiAgICBhc3NlcnQgUk9VVEVfUkVHSVNUUllbImhvbmdfa29uZyJdWyJvZmZpY2lhbF9yb3V0ZV9yZWdpc3RlcmVkIl0gaXMgVHJ1ZQogICAgYXNzZXJ0ICJoa2pjX3NlY3Rpb25hbHMiIGluIFJPVVRFX1JFR0lTVFJZWyJob25nX2tvbmciXVsicm91dGVzIl0KICAgIGZvciBqdXJpc2RpY3Rpb24gaW4gKCJ1a19pcmVsYW5kIiwgInFhdGFyIiwgInVhZSIsICJzYXVkaV9hcmFiaWEiLCAidXNhIiwgIm90aGVyX292ZXJzZWFzIik6CiAgICAgICAgYXNzZXJ0IFJPVVRFX1JFR0lTVFJZW2p1cmlzZGljdGlvbl1bIm9mZmljaWFsX3JvdXRlX3JlZ2lzdGVyZWQiXSBpcyBGYWxzZQogICAgICAgIGFzc2VydCBST1VURV9SRUdJU1RSWVtqdXJpc2RpY3Rpb25dWyJyb3V0ZXMiXSA9PSBbImpyYV9ob3JzZV9oaXN0b3J5Il0KCgpkZWYgdGVzdF9jb21wbGV0ZV9yb3dfaGFzX25vX3VucmVzb2x2ZWRfb2JzZXJ2YXRpb25zKCk6CiAgICBhc3NlcnQgY29tcHV0ZV91bnJlc29sdmVkX29ic2VydmF0aW9ucyhbX3JvdygpXSwgQWNxdWlzaXRpb25SZWNvcmRlcigpKSA9PSBbXQoKCmRlZiB0ZXN0X3VucmVzb2x2ZWRfb2JzZXJ2YXRpb25faXNvX2RhdGVfYW5kX2V4YWN0bHlfb25lX3Blcl9maWVsZCgpOgogICAgcmVjb3JkZXIgPSBBY3F1aXNpdGlvblJlY29yZGVyKCkKICAgIG9ic2VydmF0aW9ucyA9IGNvbXB1dGVfdW5yZXNvbHZlZF9vYnNlcnZhdGlvbnMoW19yb3codGltZT0iIildLCByZWNvcmRlcikKICAgIGFzc2VydCBvYnNlcnZhdGlvbnMgPT0gW3sKICAgICAgICAicmFjZV9pZCI6ICJSIiwgImhvcnNlX2lkIjogIkgiLCAiaG9yc2VfbnVtYmVyIjogIjEiLCAicnVuX2luZGV4IjogIjEiLAogICAgICAgICJkYXRlIjogIjIwMjUtMTAtMDUiLCAiZmllbGQiOiAidGltZSIsCiAgICAgICAgInJlYXNvbiI6ICJObyBvYnNlcnZlZCB2YWx1ZSB3YXMgY29sbGVjdGVkIGZvciB0aGlzIGZpZWxkIGFuZCBubyAiCiAgICAgICAgICAgICAgICAgICJtaXNzaW5nIHJlYXNvbiBvciByb3V0ZSBhdHRlbXB0IHdhcyByZWNvcmRlZCBmb3IgdGhpcyBzY29wZSIsCiAgICB9XQoKCmRlZiB0ZXN0X2ZhbGxiYWNrX2xhc3RfM2ZfaXNfdW5yZXNvbHZlZF9ldmVuX3dpdGhfYV92YWx1ZSgpOgogICAgb2JzZXJ2YXRpb25zID0gY29tcHV0ZV91bnJlc29sdmVkX29ic2VydmF0aW9ucygKICAgICAgICBbX3JvdyhsYXN0XzNmPSIzNi4wIiwgbGFzdF8zZl9zb3VyY2U9ImZhbGxiYWNrIildLCBBY3F1aXNpdGlvblJlY29yZGVyKCkpCiAgICBhc3NlcnQgW29ic1siZmllbGQiXSBmb3Igb2JzIGluIG9ic2VydmF0aW9uc10gPT0gWyJsYXN0XzNmIl0KCgpkZWYgdGVzdF9qdW1wX2xhc3RfM2ZfYWJzZW5jZV9pc19ub3RfYW5fb2JzZXJ2YXRpb24oKToKICAgIHJvdyA9IF9yb3coaGlzdG9yeV9zdXJmYWNlPSLpmpzlrrMiLCByYWNlX25hbWU9IumanOWus+ODhuOCueODiCIsIGxhc3RfM2Y9IiIsIGxhc3RfM2Zfc291cmNlPSIiKQogICAgYXNzZXJ0IGNvbXB1dGVfdW5yZXNvbHZlZF9vYnNlcnZhdGlvbnMoW3Jvd10sIEFjcXVpc2l0aW9uUmVjb3JkZXIoKSkgPT0gW10KCgpkZWYgdGVzdF9ub3RfYXBwbGljYWJsZV9maWVsZF9pc19ub3RfYW5fb2JzZXJ2YXRpb24oKToKICAgIHJvdyA9IF9yb3cobGFzdF8zZj0iIiwgbGFzdF8zZl9zb3VyY2U9IiIsIGxhc3RfM2Zfc3RhdHVzPSJOT1RfQVBQTElDQUJMRSIpCiAgICBhc3NlcnQgY29tcHV0ZV91bnJlc29sdmVkX29ic2VydmF0aW9ucyhbcm93XSwgQWNxdWlzaXRpb25SZWNvcmRlcigpKSA9PSBbXQoKCmRlZiB0ZXN0X3JlYXNvbl9pbmNsdWRlc19yb3dfbWlzc2luZ19yZWFzb25fYW5kX3JvdXRlX291dGNvbWVzKCk6CiAgICByZWNvcmRlciA9IEFjcXVpc2l0aW9uUmVjb3JkZXIoKQogICAgcmVjb3JkZXIucmVjb3JkKCJmcmFuY2VfZ2Fsb3BfdHJhY2tpbmciLCBvdXRjb21lPSJpZGVudGl0eV9zb3VyY2VfdW5hdmFpbGFibGUiLAogICAgICAgICAgICAgICAgICAgIHJhY2VfaWQ9IlIiLCBob3JzZV9pZD0iSCIsIGRhdGU9IjIwMjXlubQxMOaciDXml6UiLCBmaWVsZHM9KCJsYXN0XzNmIiwpKQogICAgcm93ID0gX3Jvdyhjb3Vyc2U9IuODreODs+OCt+ODo+ODsyIsIHJhY2VfbmFtZT0i5Yex5peL6ZaA6LOeIiwgbGFzdF8zZj0iIiwgbGFzdF8zZl9zb3VyY2U9IiIsCiAgICAgICAgICAgICAgIGxhc3RfM2ZfbWlzc2luZ19yZWFzb249Ik9GRklDSUFMX1NFQ1RJT05BTF9DRUxMX0VNUFRZIikKICAgIG9ic2VydmF0aW9ucyA9IGNvbXB1dGVfdW5yZXNvbHZlZF9vYnNlcnZhdGlvbnMoW3Jvd10sIHJlY29yZGVyKQogICAgYXNzZXJ0IGxlbihvYnNlcnZhdGlvbnMpID09IDEKICAgIHJlYXNvbiA9IG9ic2VydmF0aW9uc1swXVsicmVhc29uIl0KICAgIGFzc2VydCAiT0ZGSUNJQUxfU0VDVElPTkFMX0NFTExfRU1QVFkiIGluIHJlYXNvbgogICAgYXNzZXJ0ICJmcmFuY2VfZ2Fsb3BfdHJhY2tpbmc6IGlkZW50aXR5X3NvdXJjZV91bmF2YWlsYWJsZSIgaW4gcmVhc29uCgoKZGVmIHRlc3RfZHVwbGljYXRlX3Jvd3NfZGVkdXBlX2FuZF9tZXJnZV9yZWFzb25zX2RldGVybWluaXN0aWNhbGx5KCk6CiAgICByZWNvcmRlciA9IEFjcXVpc2l0aW9uUmVjb3JkZXIoKQogICAgZmlyc3QgPSBfcm93KGxhc3RfM2Y9IiIsIGxhc3RfM2Zfc291cmNlPSIiLCBsYXN0XzNmX21pc3NpbmdfcmVhc29uPSJSRUFTT05fQiIpCiAgICBzZWNvbmQgPSBfcm93KGxhc3RfM2Y9IiIsIGxhc3RfM2Zfc291cmNlPSIiLCBsYXN0XzNmX21pc3NpbmdfcmVhc29uPSJSRUFTT05fQSIpCiAgICBvYnNlcnZhdGlvbnMgPSBjb21wdXRlX3VucmVzb2x2ZWRfb2JzZXJ2YXRpb25zKFtmaXJzdCwgc2Vjb25kLCBkaWN0KGZpcnN0KV0sIHJlY29yZGVyKQogICAgYXNzZXJ0IGxlbihvYnNlcnZhdGlvbnMpID09IDEKICAgIGFzc2VydCBvYnNlcnZhdGlvbnNbMF1bInJlYXNvbiJdID09ICJSRUFTT05fQTsgUkVBU09OX0IiCgoKZGVmIHRlc3RfcWF0YXJfcm93X3JlYXNvbl9zdGF0ZXNfbm9fcmVnaXN0ZXJlZF9yb3V0ZSgpOgogICAgcm93ID0gX3Jvdyhjb3Vyc2U9IuODieODvOODjyIsIHJhY2VfbmFtZT0i44Ki44Of44O844Or44OI44Ot44OV44Kj44O8IiwgdGltZT0iIikKICAgIG9ic2VydmF0aW9ucyA9IGNvbXB1dGVfdW5yZXNvbHZlZF9vYnNlcnZhdGlvbnMoW3Jvd10sIEFjcXVpc2l0aW9uUmVjb3JkZXIoKSkKICAgIGFzc2VydCBsZW4ob2JzZXJ2YXRpb25zKSA9PSAxCiAgICBhc3NlcnQgb2JzZXJ2YXRpb25zWzBdWyJyZWFzb24iXSA9PSAoCiAgICAgICAgIm5vIG9mZmljaWFsIHNvdXJjZSByb3V0ZSByZWdpc3RlcmVkIGluIHRoaXMgc3lzdGVtIGZvciBxYXRhcjsgIgogICAgICAgICJKUkEgb2ZmaWNpYWwgaGlzdG9yeSBpcyB0aGUgb25seSByb3V0ZSBhbmQgbGlzdHMgbm8gdmFsdWUiKQoKCmRlZiB0ZXN0X2J1aWxkX3JlcG9ydF9yZWZ1c2VzX3RvX2ZhYnJpY2F0ZV9yb3V0ZXMoKToKICAgIHdpdGggcHl0ZXN0LnJhaXNlcyhWYWx1ZUVycm9yLCBtYXRjaD0iZmFicmljYXRlIik6CiAgICAgICAgYnVpbGRfYWNxdWlzaXRpb25fcmVwb3J0KHJhY2VfaWQ9IlIiLCByb3dzPVtfcm93KCldLCByZWNvcmRlcj1BY3F1aXNpdGlvblJlY29yZGVyKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGdlbmVyYXRlZF9hdD0iMjAyNi0xMS0wOFQwMDowMDowMCswMDowMCIpCgoKZGVmIHRlc3RfYnVpbGRfcmVwb3J0X3NoYXBlX2FuZF9zY29wZV9zdHJpbmdzKCk6CiAgICByZWNvcmRlciA9IEFjcXVpc2l0aW9uUmVjb3JkZXIoKQogICAgcmVjb3JkZXIucmVjb3JkKCJqcmFfaG9yc2VfaGlzdG9yeSIsIG91dGNvbWU9ImZldGNoZWQiLCByYWNlX2lkPSJSIiwgaG9yc2VfaWQ9IkgiLAogICAgICAgICAgICAgICAgICAgIGZpZWxkcz1BVURJVEVEX0ZJRUxEUykKICAgIHJlcG9ydCA9IGJ1aWxkX2FjcXVpc2l0aW9uX3JlcG9ydChyYWNlX2lkPSJSIiwgcm93cz1bX3Jvdyh0aW1lPSIiKV0sIHJlY29yZGVyPXJlY29yZGVyLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGdlbmVyYXRlZF9hdD0iMjAyNi0xMS0wOFQwMDowMDowMCswMDowMCIpCiAgICBhc3NlcnQgcmVwb3J0WyJyb2xlIl0gPT0gImRhdGFfY29sbGVjdG9yIgogICAgYXNzZXJ0IHJlcG9ydFsicmFjZV9pZCJdID09ICJSIgogICAgYXNzZXJ0IHJlcG9ydFsicm91dGVzIl0gPT0gWwogICAgICAgIHsicm91dGUiOiAianJhX2hvcnNlX2hpc3RvcnkiLCAib3V0Y29tZXMiOiBbImZldGNoZWQiXSwgImF0dGVtcHRzIjogMX1dCiAgICBhc3NlcnQgcmVwb3J0WyJ1bnJlc29sdmVkX2ZpZWxkcyJdID09IHsidGltZSI6IFsiSG9yc2UgMjAyNS0xMC0wNSBydW4xIl19CiAgICBhc3NlcnQgcmVwb3J0WyJldmlkZW5jZV9maWxlcyJdID09IFtdCiAgICBhc3NlcnQgW29ic1siZmllbGQiXSBmb3Igb2JzIGluIHJlcG9ydFsidW5yZXNvbHZlZF9vYnNlcnZhdGlvbnMiXV0gPT0gWyJ0aW1lIl0KICAgIGFzc2VydCAianJhX2hvcnNlX2hpc3Rvcnk6IGZldGNoZWQiIGluIHJlcG9ydFsidW5yZXNvbHZlZF9vYnNlcnZhdGlvbnMiXVswXVsicmVhc29uIl0KCgpkZWYgX2J1bmRsZSh0bXBfcGF0aDogUGF0aCwgZXZpZGVuY2VfcGF5bG9hZDogZGljdCB8IE5vbmUgPSBOb25lKToKICAgIHJhdyA9IHRtcF9wYXRoIC8gInJhdyIgLyAiaG9yc2VfSC5odG1sIgogICAgcmF3LnBhcmVudC5ta2RpcihwYXJlbnRzPVRydWUsIGV4aXN0X29rPVRydWUpCiAgICByYXcud3JpdGVfdGV4dCgiPGh0bWw+b2ZmaWNpYWwgaG9yc2UgaGlzdG9yeTwvaHRtbD4iLCBlbmNvZGluZz0idXRmLTgiKQogICAgcmVjb3JkZXIgPSBBY3F1aXNpdGlvblJlY29yZGVyKCkKICAgIHJlY29yZGVyLnJlY29yZCgianJhX2hvcnNlX2hpc3RvcnkiLCBvdXRjb21lPSJmZXRjaGVkIiwgcmFjZV9pZD0iUiIsIGhvcnNlX2lkPSJIIiwKICAgICAgICAgICAgICAgICAgICBmaWVsZHM9QVVESVRFRF9GSUVMRFMsIGFydGlmYWN0X3NoYTI1Nj1fcmVmKHJhdylbInNoYTI1NiJdLAogICAgICAgICAgICAgICAgICAgIGFydGlmYWN0X3BhdGg9c3RyKHJhdy5yZXNvbHZlKCkpLCB1cmw9Imh0dHBzOi8vaG9yc2UvSCIpCiAgICByZXBvcnQgPSBidWlsZF9hY3F1aXNpdGlvbl9yZXBvcnQocmFjZV9pZD0iUiIsIHJvd3M9W19yb3cocGFzc2luZ19vcmRlcj0iIildLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHJlY29yZGVyPXJlY29yZGVyLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGdlbmVyYXRlZF9hdD0iMjAyNi0xMS0wOFQwMDowMDowMCswMDowMCIpCiAgICBpZiBldmlkZW5jZV9wYXlsb2FkIGlzIE5vbmU6CiAgICAgICAgZXZpZGVuY2VfcGF5bG9hZCA9IHsiYXJ0aWZhY3RzIjogcmVjb3JkZXIuYXJ0aWZhY3RzX2Zvcl9yYWNlKCJSIil9CiAgICBvdXRfZGlyID0gdG1wX3BhdGggLyAiYWNxdWlzaXRpb24iCiAgICByZWYgPSB3cml0ZV9hY3F1aXNpdGlvbl9idW5kbGUob3V0X2RpciwgcmVwb3J0LCB7ImFydGlmYWN0X2luZGV4Lmpzb24iOiBldmlkZW5jZV9wYXlsb2FkfSkKICAgIHJldHVybiBvdXRfZGlyLCByZWYsIHJlY29yZGVyCgoKZGVmIHRlc3RfYnVuZGxlX3Bhc3Nlc19yZWFsX2hpc3RvcnlfZXhjZXB0aW9uX3ZhbGlkYXRpb24odG1wX3BhdGgpOgogICAgb3V0X2RpciwgcmVmLCBfID0gX2J1bmRsZSh0bXBfcGF0aCkKICAgIGV2aWRlbmNlX3JlZiA9IF9yZWYob3V0X2RpciAvICJhcnRpZmFjdF9pbmRleC5qc29uIikKICAgIHJlY29yZCA9IHsicmFjZV9pZCI6ICJSIiwgImhvcnNlX2lkIjogIkgiLCAiaG9yc2VfbnVtYmVyIjogIjEiLCAicnVuX2luZGV4IjogIjEiLAogICAgICAgICAgICAgICJkYXRlIjogIjIwMjUtMTAtMDUiLCAiZmllbGQiOiAicGFzc2luZ19vcmRlciIsCiAgICAgICAgICAgICAgInNvdXJjZV9hdHRlbXB0cyI6IHJlZiwgInNvdXJjZV9hcnRpZmFjdHMiOiBbZXZpZGVuY2VfcmVmXX0KICAgIGxvYWRlZCA9IF9hdHRlbXB0cyhyZWNvcmQpCiAgICBhc3NlcnQgbG9hZGVkWyJyb2xlIl0gPT0gImRhdGFfY29sbGVjdG9yIgogICAgYXNzZXJ0IGxvYWRlZFsiZXZpZGVuY2VfZmlsZXMiXSA9PSBbImFydGlmYWN0X2luZGV4Lmpzb24iXQogICAgX3VuYXZhaWxhYmxlX3Njb3BlKHJlY29yZCwgbG9hZGVkKSAgIyBleGFjdCBzY29wZSBpcyBjb3ZlcmVkOiBtdXN0IG5vdCByYWlzZQoKCmRlZiB0ZXN0X2J1bmRsZV9zY29wZV9ub3RfaW5fcmVwb3J0X3JhaXNlcyh0bXBfcGF0aCk6CiAgICBvdXRfZGlyLCByZWYsIF8gPSBfYnVuZGxlKHRtcF9wYXRoKQogICAgcmVjb3JkID0geyJyYWNlX2lkIjogIlIiLCAiaG9yc2VfaWQiOiAiSCIsICJob3JzZV9udW1iZXIiOiAiMSIsICJydW5faW5kZXgiOiAiMSIsCiAgICAgICAgICAgICAgImRhdGUiOiAiMjAyNS0xMC0wNSIsICJmaWVsZCI6ICJ0aW1lIiwKICAgICAgICAgICAgICAic291cmNlX2F0dGVtcHRzIjogcmVmLAogICAgICAgICAgICAgICJzb3VyY2VfYXJ0aWZhY3RzIjogW19yZWYob3V0X2RpciAvICJhcnRpZmFjdF9pbmRleC5qc29uIildfQogICAgbG9hZGVkID0gX2F0dGVtcHRzKHJlY29yZCkKICAgIHdpdGggcHl0ZXN0LnJhaXNlcyhIaXN0b3J5RXhjZXB0aW9uRXJyb3IpOgogICAgICAgIF91bmF2YWlsYWJsZV9zY29wZShyZWNvcmQsIGxvYWRlZCkKCgpkZWYgdGVzdF9idW5kbGVfYm9ndXNfZXZpZGVuY2VfcmVmZXJlbmNlX2ZhaWxzX3ZhbGlkYXRpb24odG1wX3BhdGgpOgogICAgYm9ndXMgPSB7ImFydGlmYWN0cyI6IFt7InBhdGgiOiBzdHIoKHRtcF9wYXRoIC8gInJhdyIgLyAiaG9yc2VfSC5odG1sIikucmVzb2x2ZSgpKSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJzaGEyNTYiOiAiMCIgKiA2NCwgImtpbmQiOiAianJhX2hvcnNlX2hpc3RvcnkiLCAidXJsIjogIiJ9XX0KICAgIG91dF9kaXIsIHJlZiwgXyA9IF9idW5kbGUodG1wX3BhdGgsIGJvZ3VzKQogICAgcmVjb3JkID0geyJyYWNlX2lkIjogIlIiLCAiaG9yc2VfaWQiOiAiSCIsICJob3JzZV9udW1iZXIiOiAiMSIsICJydW5faW5kZXgiOiAiMSIsCiAgICAgICAgICAgICAgImRhdGUiOiAiMjAyNS0xMC0wNSIsICJmaWVsZCI6ICJwYXNzaW5nX29yZGVyIiwKICAgICAgICAgICAgICAic291cmNlX2F0dGVtcHRzIjogcmVmLAogICAgICAgICAgICAgICJzb3VyY2VfYXJ0aWZhY3RzIjogW19yZWYob3V0X2RpciAvICJhcnRpZmFjdF9pbmRleC5qc29uIildfQogICAgd2l0aCBweXRlc3QucmFpc2VzKEhpc3RvcnlFeGNlcHRpb25FcnJvcik6CiAgICAgICAgX2F0dGVtcHRzKHJlY29yZCkKCgpkZWYgdGVzdF9idW5kbGVfd3JpdGVyX3JlamVjdHNfcGF0aF90cmF2ZXJzYWxfZXZpZGVuY2VfbmFtZXModG1wX3BhdGgpOgogICAgd2l0aCBweXRlc3QucmFpc2VzKFZhbHVlRXJyb3IsIG1hdGNoPSJwbGFpbiBmaWxlIG5hbWUiKToKICAgICAgICB3cml0ZV9hY3F1aXNpdGlvbl9idW5kbGUodG1wX3BhdGggLyAib3V0IiwgeyJyb2xlIjogImRhdGFfY29sbGVjdG9yIn0sCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHsiLi4vZXNjYXBlLmpzb24iOiB7fX0pCgoKZGVmIHRlc3RfaXNvX2RhdGVfbm9ybWFsaXplc19qYXBhbmVzZV9hbmRfaXNvX2FuZF9wYXNzZXNfdGhyb3VnaF90aGVfcmVzdCgpOgogICAgYXNzZXJ0IGlzb19kYXRlKCIyMDI15bm0MTDmnIg15pelIikgPT0gIjIwMjUtMTAtMDUiCiAgICBhc3NlcnQgaXNvX2RhdGUoIjIwMjUtMTAtMDUiKSA9PSAiMjAyNS0xMC0wNSIKICAgICMgVW5wYXJzZWFibGUgdGV4dCBpcyBwYXNzZWQgdGhyb3VnaCB1bmNoYW5nZWQsIG5ldmVyIGd1ZXNzZWQgYXQuCiAgICBhc3NlcnQgaXNvX2RhdGUoIuacquWumiIpID09ICLmnKrlrpoiCiAgICBhc3NlcnQgaXNvX2RhdGUoIiIpID09ICIiCgoKZGVmIHRlc3RfYXR0ZW1wdF9yZWNvcmRlZF9mb3JfYW5vdGhlcl9yYWNlX2RvZXNfbm90X3N1cHBvcnRfYV9yZWFzb24oKToKICAgIHJlY29yZGVyID0gQWNxdWlzaXRpb25SZWNvcmRlcigpCiAgICByZWNvcmRlci5yZWNvcmQoImpyYV9ob3JzZV9oaXN0b3J5Iiwgb3V0Y29tZT0iZmV0Y2hlZCIsIHJhY2VfaWQ9Ik9USEVSIiwKICAgICAgICAgICAgICAgICAgICBob3JzZV9pZD0iSCIsIGZpZWxkcz0oInRpbWUiLCkpCiAgICBvYnNlcnZhdGlvbnMgPSBjb21wdXRlX3VucmVzb2x2ZWRfb2JzZXJ2YXRpb25zKFtfcm93KHRpbWU9IiIpXSwgcmVjb3JkZXIpCiAgICBhc3NlcnQgb2JzZXJ2YXRpb25zWzBdWyJyZWFzb24iXSA9PSAoCiAgICAgICAgIk5vIG9ic2VydmVkIHZhbHVlIHdhcyBjb2xsZWN0ZWQgZm9yIHRoaXMgZmllbGQgYW5kIG5vICIKICAgICAgICAibWlzc2luZyByZWFzb24gb3Igcm91dGUgYXR0ZW1wdCB3YXMgcmVjb3JkZWQgZm9yIHRoaXMgc2NvcGUiKQoKCmRlZiB0ZXN0X2F0dGVtcHRfcmVjb3JkZWRfb25fYW5vdGhlcl9kYXRlX2RvZXNfbm90X3N1cHBvcnRfYV9yZWFzb24oKToKICAgIHJlY29yZGVyID0gQWNxdWlzaXRpb25SZWNvcmRlcigpCiAgICByZWNvcmRlci5yZWNvcmQoImpyYV9ob3JzZV9oaXN0b3J5Iiwgb3V0Y29tZT0iZmV0Y2hlZCIsIHJhY2VfaWQ9IlIiLAogICAgICAgICAgICAgICAgICAgIGhvcnNlX2lkPSJIIiwgZGF0ZT0iMjAyNOW5tDHmnIgx5pelIiwgZmllbGRzPSgidGltZSIsKSkKICAgIG9ic2VydmF0aW9ucyA9IGNvbXB1dGVfdW5yZXNvbHZlZF9vYnNlcnZhdGlvbnMoW19yb3codGltZT0iIildLCByZWNvcmRlcikKICAgIGFzc2VydCBvYnNlcnZhdGlvbnNbMF1bInJlYXNvbiJdID09ICgKICAgICAgICAiTm8gb2JzZXJ2ZWQgdmFsdWUgd2FzIGNvbGxlY3RlZCBmb3IgdGhpcyBmaWVsZCBhbmQgbm8gIgogICAgICAgICJtaXNzaW5nIHJlYXNvbiBvciByb3V0ZSBhdHRlbXB0IHdhcyByZWNvcmRlZCBmb3IgdGhpcyBzY29wZSIpCgoKZGVmIHRlc3RfdWtfcm93X3JlYXNvbl9pbmNsdWRlc190aGVfcmVnaXN0cnlfcmVhc29uKCk6CiAgICByb3cgPSBfcm93KGNvdXJzZT0i44OL44Ol44O844Oe44O844Kx44OD44OIIiwgcmFjZV9uYW1lPSLjgqTjgq7jg6rjgrkyMDAw44Ku44OL44O8IiwgdGltZT0iIikKICAgIG9ic2VydmF0aW9ucyA9IGNvbXB1dGVfdW5yZXNvbHZlZF9vYnNlcnZhdGlvbnMoW3Jvd10sIEFjcXVpc2l0aW9uUmVjb3JkZXIoKSkKICAgIGFzc2VydCBsZW4ob2JzZXJ2YXRpb25zKSA9PSAxCiAgICByZWFzb24gPSBvYnNlcnZhdGlvbnNbMF1bInJlYXNvbiJdCiAgICBhc3NlcnQgIm5vIG9mZmljaWFsIHNvdXJjZSByb3V0ZSByZWdpc3RlcmVkIGluIHRoaXMgc3lzdGVtIGZvciB1a19pcmVsYW5kIiBpbiByZWFzb24KICAgIGFzc2VydCAiSW1wZXJpYWwgc2VjdGlvbmFsIHByb3h5IGlzIHJlc2VhcmNoLW9ubHkiIGluIHJlYXNvbgo=
+"""Acquisition recorder/report: honest attempts only, exact-scope observations."""
+from __future__ import annotations
+
+import hashlib
+from pathlib import Path
+
+import pytest
+
+from jra_scraper.acquisition_report import (
+    AUDITED_FIELDS,
+    ROUTE_REGISTRY,
+    AcquisitionRecorder,
+    build_acquisition_report,
+    compute_unresolved_observations,
+    iso_date,
+    jurisdiction_for_row,
+    write_acquisition_bundle,
+)
+from src.data_integrity import _RAW_FIELDS
+from src.history_exceptions import HistoryExceptionError, _attempts, _unavailable_scope
+
+
+def _ref(path: Path) -> dict:
+    return {"path": str(path.resolve()),
+            "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+
+
+def _row(**overrides) -> dict:
+    row = {
+        "race_id": "R", "horse_id": "H", "horse_name": "Horse", "horse_number": "1",
+        "run_index": "1", "date": "2025年10月5日", "course": "東京",
+        "race_name": "テストステークス", "distance": "1600", "history_surface": "芝",
+        "track_condition": "良", "position": "1", "time": "1:33.0",
+        "last_3f": "34.0", "last_3f_source": "observed", "passing_order": "1-1",
+        "popularity": "1", "weight": "55", "jockey": "騎手", "pace": "M",
+        "weather": "晴", "odds": "2.0",
+    }
+    row.update(overrides)
+    return row
+
+
+def test_audited_fields_mirror_data_integrity_raw_fields():
+    assert tuple(AUDITED_FIELDS) == tuple(_RAW_FIELDS)
+
+
+def test_recorder_attempt_shape_and_optional_keys():
+    recorder = AcquisitionRecorder()
+    recorder.record("jra_horse_history", outcome="fetched", race_id="R", horse_id="H",
+                    fields=("time", "last_3f"), artifact_sha256="a" * 64,
+                    artifact_path="/tmp/raw/horse_H.html")
+    recorder.record("france_galop_tracking", outcome="error", race_id="R", horse_id="H",
+                    reason="boom", route_status="degraded")
+    attempts = recorder.attempts()
+    assert attempts[0] == {
+        "race_id": "R", "horse_id": "H", "horse_number": "", "run_index": "",
+        "date": "", "fields": ["time", "last_3f"], "route": "jra_horse_history",
+        "url": "", "outcome": "fetched", "artifact_sha256": "a" * 64, "reason": "",
+        "artifact_path": "/tmp/raw/horse_H.html",
+    }
+    assert "artifact_path" not in attempts[1]
+    assert attempts[1]["route_status"] == "degraded"
+    assert "route_status" not in attempts[0]
+
+
+def test_recorder_routes_aggregate_unique_outcomes():
+    recorder = AcquisitionRecorder()
+    recorder.record("jra_horse_history", outcome="fetched", race_id="R")
+    recorder.record("jra_horse_history", outcome="unavailable", race_id="R")
+    recorder.record("jra_horse_history", outcome="fetched", race_id="R")
+    recorder.record("jra_race_detail", outcome="cache_hit", race_id="R")
+    assert recorder.routes() == [
+        {"route": "jra_horse_history", "outcomes": ["fetched", "unavailable"], "attempts": 3},
+        {"route": "jra_race_detail", "outcomes": ["cache_hit"], "attempts": 1},
+    ]
+
+
+def test_recorder_artifact_registry_dedupes():
+    recorder = AcquisitionRecorder()
+    recorder.record("jra_horse_history", outcome="fetched", race_id="R",
+                    artifact_sha256="b" * 64, artifact_path="/tmp/raw/horse_H.html",
+                    url="https://horse/H")
+    recorder.register_artifact("/tmp/raw/france.pdf", "c" * 64,
+                               kind="france_tracking_pdf", race_id="R")
+    recorder.register_artifact("/tmp/raw/france.pdf", "c" * 64,
+                               kind="france_tracking_pdf", race_id="R")
+    artifacts = recorder.artifacts_for_race("R")
+    assert artifacts == [
+        {"path": "/tmp/raw/france.pdf", "sha256": "c" * 64,
+         "kind": "france_tracking_pdf", "url": ""},
+        {"path": "/tmp/raw/horse_H.html", "sha256": "b" * 64,
+         "kind": "jra_horse_history", "url": "https://horse/H"},
+    ]
+    assert recorder.artifacts_for_race("OTHER") == []
+
+
+@pytest.mark.parametrize("row,expected", [
+    ({"course": "ドーハ", "race_name": "アミールトロフィー"}, "qatar"),
+    ({"course": "メイダン", "race_name": "ドバイターフ"}, "uae"),
+    ({"course": "シャティン", "race_name": "香港マイル"}, "hong_kong"),
+    ({"course": "ロンシャン", "race_name": "凱旋門賞"}, "france"),
+    ({"course": "ニューマーケット", "race_name": "イギリス2000ギニー"}, "uk_ireland"),
+    ({"course": "サンタアニタ", "race_name": "アメリカンダービー"}, "usa"),
+    ({"course": "東京", "race_name": "テストステークス"}, "japan"),
+])
+def test_jurisdiction_for_row(row, expected):
+    assert jurisdiction_for_row(row) == expected
+
+
+def test_route_registry_registration_status():
+    assert ROUTE_REGISTRY["france"]["official_route_registered"] is True
+    assert "france_galop_tracking" in ROUTE_REGISTRY["france"]["routes"]
+    assert ROUTE_REGISTRY["hong_kong"]["official_route_registered"] is True
+    assert "hkjc_sectionals" in ROUTE_REGISTRY["hong_kong"]["routes"]
+    for jurisdiction in ("uk_ireland", "qatar", "uae", "saudi_arabia", "usa", "other_overseas"):
+        assert ROUTE_REGISTRY[jurisdiction]["official_route_registered"] is False
+        assert ROUTE_REGISTRY[jurisdiction]["routes"] == ["jra_horse_history"]
+
+
+def test_complete_row_has_no_unresolved_observations():
+    assert compute_unresolved_observations([_row()], AcquisitionRecorder()) == []
+
+
+def test_unresolved_observation_iso_date_and_exactly_one_per_field():
+    recorder = AcquisitionRecorder()
+    observations = compute_unresolved_observations([_row(time="")], recorder)
+    assert observations == [{
+        "race_id": "R", "horse_id": "H", "horse_number": "1", "run_index": "1",
+        "date": "2025-10-05", "field": "time",
+        "reason": "No observed value was collected for this field and no "
+                  "missing reason or route attempt was recorded for this scope",
+    }]
+
+
+def test_fallback_last_3f_is_unresolved_even_with_a_value():
+    observations = compute_unresolved_observations(
+        [_row(last_3f="36.0", last_3f_source="fallback")], AcquisitionRecorder())
+    assert [obs["field"] for obs in observations] == ["last_3f"]
+
+
+def test_jump_last_3f_absence_is_not_an_observation():
+    row = _row(history_surface="障害", race_name="障害テスト", last_3f="", last_3f_source="")
+    assert compute_unresolved_observations([row], AcquisitionRecorder()) == []
+
+
+def test_not_applicable_field_is_not_an_observation():
+    row = _row(last_3f="", last_3f_source="", last_3f_status="NOT_APPLICABLE")
+    assert compute_unresolved_observations([row], AcquisitionRecorder()) == []
+
+
+def test_reason_includes_row_missing_reason_and_route_outcomes():
+    recorder = AcquisitionRecorder()
+    recorder.record("france_galop_tracking", outcome="identity_source_unavailable",
+                    race_id="R", horse_id="H", date="2025年10月5日", fields=("last_3f",))
+    row = _row(course="ロンシャン", race_name="凱旋門賞", last_3f="", last_3f_source="",
+               last_3f_missing_reason="OFFICIAL_SECTIONAL_CELL_EMPTY")
+    observations = compute_unresolved_observations([row], recorder)
+    assert len(observations) == 1
+    reason = observations[0]["reason"]
+    assert "OFFICIAL_SECTIONAL_CELL_EMPTY" in reason
+    assert "france_galop_tracking: identity_source_unavailable" in reason
+
+
+def test_duplicate_rows_dedupe_and_merge_reasons_deterministically():
+    recorder = AcquisitionRecorder()
+    first = _row(last_3f="", last_3f_source="", last_3f_missing_reason="REASON_B")
+    second = _row(last_3f="", last_3f_source="", last_3f_missing_reason="REASON_A")
+    observations = compute_unresolved_observations([first, second, dict(first)], recorder)
+    assert len(observations) == 1
+    assert observations[0]["reason"] == "REASON_A; REASON_B"
+
+
+def test_qatar_row_reason_states_no_registered_route():
+    row = _row(course="ドーハ", race_name="アミールトロフィー", time="")
+    observations = compute_unresolved_observations([row], AcquisitionRecorder())
+    assert len(observations) == 1
+    assert observations[0]["reason"] == (
+        "no official source route registered in this system for qatar; "
+        "JRA official history is the only route and lists no value")
+
+
+def test_build_report_refuses_to_fabricate_routes():
+    with pytest.raises(ValueError, match="fabricate"):
+        build_acquisition_report(race_id="R", rows=[_row()], recorder=AcquisitionRecorder(),
+                                 generated_at="2026-11-08T00:00:00+00:00")
+
+
+def test_build_report_shape_and_scope_strings():
+    recorder = AcquisitionRecorder()
+    recorder.record("jra_horse_history", outcome="fetched", race_id="R", horse_id="H",
+                    fields=AUDITED_FIELDS)
+    report = build_acquisition_report(race_id="R", rows=[_row(time="")], recorder=recorder,
+                                      generated_at="2026-11-08T00:00:00+00:00")
+    assert report["role"] == "data_collector"
+    assert report["race_id"] == "R"
+    assert report["routes"] == [
+        {"route": "jra_horse_history", "outcomes": ["fetched"], "attempts": 1}]
+    assert report["unresolved_fields"] == {"time": ["Horse 2025-10-05 run1"]}
+    assert report["evidence_files"] == []
+    assert [obs["field"] for obs in report["unresolved_observations"]] == ["time"]
+    assert "jra_horse_history: fetched" in report["unresolved_observations"][0]["reason"]
+
+
+def _bundle(tmp_path: Path, evidence_payload: dict | None = None):
+    raw = tmp_path / "raw" / "horse_H.html"
+    raw.parent.mkdir(parents=True, exist_ok=True)
+    raw.write_text("<html>official horse history</html>", encoding="utf-8")
+    recorder = AcquisitionRecorder()
+    recorder.record("jra_horse_history", outcome="fetched", race_id="R", horse_id="H",
+                    fields=AUDITED_FIELDS, artifact_sha256=_ref(raw)["sha256"],
+                    artifact_path=str(raw.resolve()), url="https://horse/H")
+    report = build_acquisition_report(race_id="R", rows=[_row(passing_order="")],
+                                      recorder=recorder,
+                                      generated_at="2026-11-08T00:00:00+00:00")
+    if evidence_payload is None:
+        evidence_payload = {"artifacts": recorder.artifacts_for_race("R")}
+    out_dir = tmp_path / "acquisition"
+    ref = write_acquisition_bundle(out_dir, report, {"artifact_index.json": evidence_payload})
+    return out_dir, ref, recorder
+
+
+def test_bundle_passes_real_history_exception_validation(tmp_path):
+    out_dir, ref, _ = _bundle(tmp_path)
+    evidence_ref = _ref(out_dir / "artifact_index.json")
+    record = {"race_id": "R", "horse_id": "H", "horse_number": "1", "run_index": "1",
+              "date": "2025-10-05", "field": "passing_order",
+              "source_attempts": ref, "source_artifacts": [evidence_ref]}
+    loaded = _attempts(record)
+    assert loaded["role"] == "data_collector"
+    assert loaded["evidence_files"] == ["artifact_index.json"]
+    _unavailable_scope(record, loaded)  # exact scope is covered: must not raise
+
+
+def test_bundle_scope_not_in_report_raises(tmp_path):
+    out_dir, ref, _ = _bundle(tmp_path)
+    record = {"race_id": "R", "horse_id": "H", "horse_number": "1", "run_index": "1",
+              "date": "2025-10-05", "field": "time",
+              "source_attempts": ref,
+              "source_artifacts": [_ref(out_dir / "artifact_index.json")]}
+    loaded = _attempts(record)
+    with pytest.raises(HistoryExceptionError):
+        _unavailable_scope(record, loaded)
+
+
+def test_bundle_bogus_evidence_reference_fails_validation(tmp_path):
+    bogus = {"artifacts": [{"path": str((tmp_path / "raw" / "horse_H.html").resolve()),
+                            "sha256": "0" * 64, "kind": "jra_horse_history", "url": ""}]}
+    out_dir, ref, _ = _bundle(tmp_path, bogus)
+    record = {"race_id": "R", "horse_id": "H", "horse_number": "1", "run_index": "1",
+              "date": "2025-10-05", "field": "passing_order",
+              "source_attempts": ref,
+              "source_artifacts": [_ref(out_dir / "artifact_index.json")]}
+    with pytest.raises(HistoryExceptionError):
+        _attempts(record)
+
+
+def test_bundle_writer_rejects_path_traversal_evidence_names(tmp_path):
+    with pytest.raises(ValueError, match="plain file name"):
+        write_acquisition_bundle(tmp_path / "out", {"role": "data_collector"},
+                                 {"../escape.json": {}})
+
+
+def test_iso_date_normalizes_japanese_and_iso_and_passes_through_the_rest():
+    assert iso_date("2025年10月5日") == "2025-10-05"
+    assert iso_date("2025-10-05") == "2025-10-05"
+    # Unparseable text is passed through unchanged, never guessed at.
+    assert iso_date("未定") == "未定"
+    assert iso_date("") == ""
+
+
+def test_attempt_recorded_for_another_race_does_not_support_a_reason():
+    recorder = AcquisitionRecorder()
+    recorder.record("jra_horse_history", outcome="fetched", race_id="OTHER",
+                    horse_id="H", fields=("time",))
+    observations = compute_unresolved_observations([_row(time="")], recorder)
+    assert observations[0]["reason"] == (
+        "No observed value was collected for this field and no "
+        "missing reason or route attempt was recorded for this scope")
+
+
+def test_attempt_recorded_on_another_date_does_not_support_a_reason():
+    recorder = AcquisitionRecorder()
+    recorder.record("jra_horse_history", outcome="fetched", race_id="R",
+                    horse_id="H", date="2024年1月1日", fields=("time",))
+    observations = compute_unresolved_observations([_row(time="")], recorder)
+    assert observations[0]["reason"] == (
+        "No observed value was collected for this field and no "
+        "missing reason or route attempt was recorded for this scope")
+
+
+def test_uk_row_reason_includes_the_registry_reason():
+    row = _row(course="ニューマーケット", race_name="イギリス2000ギニー", time="")
+    observations = compute_unresolved_observations([row], AcquisitionRecorder())
+    assert len(observations) == 1
+    reason = observations[0]["reason"]
+    assert "no official source route registered in this system for uk_ireland" in reason
+    assert "Imperial sectional proxy is research-only" in reason
