@@ -332,3 +332,34 @@ def parse_imperial_proxy_observation(item: dict, row: dict) -> Decimal:
             or Decimal(str(item["section_distance_m"])) != Decimal("603.504")):
         raise ValueError("Declared imperial proxy differs from raw observation")
     return value
+
+
+def parse_metric_600m_observation(item: dict, row: dict) -> Decimal:
+    """Reproduce a metric final-600m sectional from a bound official artifact.
+
+    The bound file is one foreign-history artifact record (kind, official URL
+    and embedded source payload) exactly as source reparse consumes it. Only
+    sources whose parser reports an individual final-600m scope qualify. The
+    value is measured over exactly 600m, so no unit conversion is applied or
+    permitted; this is distinct from the imperial 603.504m proxy above.
+    """
+    source = item["source"]
+    raw = Path(source["path"]).read_bytes()
+    if hashlib.sha256(raw).hexdigest() != source["sha256"]:
+        raise ValueError("Metric 600m source artifact changed")
+    artifact = json.loads(raw.decode("utf-8"))
+    if artifact.get("kind") not in {"france_tracking_pdf", "hkjc_history_sectionals"}:
+        raise ValueError("Unsupported metric 600m source kind")
+    parsed = parse_foreign_history_artifact(str(artifact.get("html", "")), artifact)
+    if len(parsed) != 1:
+        raise ValueError("Metric 600m source observation is not unique")
+    observed = parsed[0]
+    row_day = _japanese_date(row["date"]) if "年" in str(row.get("date", "")) \
+        else date.fromisoformat(str(row["date"])).isoformat()
+    if (observed.get("horse_name") != row.get("horse_name") or observed.get("date") != row_day
+            or item.get("horse_name") != row.get("horse_name") or item.get("race_date") != row_day):
+        raise ValueError("Metric 600m source history identity differs")
+    if (observed.get("sectional_scope") != "individual_final600m"
+            or observed.get("last_3f_status") != "OBSERVED"):
+        raise ValueError("Metric 600m source is not an observed individual final-600m sectional")
+    return Decimal(str(observed["last_3f"]))
