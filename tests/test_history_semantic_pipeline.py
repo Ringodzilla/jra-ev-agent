@@ -10,7 +10,8 @@ from jra_scraper.models import HorseEntry
 from jra_scraper.pipeline import _coalesce_history_rows, _rows_from_embedded_history
 from jra_scraper.validation import OUTPUT_COLUMNS, _normalize_row
 from src.data_integrity import _history_result_observations, audit_collected_data, verify_source_artifacts
-from src.feature_engineering import UnsupportedHistoryObservation, summarize_history_rows
+from src.feature_engineering import (DEFAULT_LAST3F, UnsupportedHistoryObservation,
+                                     _comparable_last3f, summarize_history_rows)
 
 
 def source_page(header="平均1F", value="14.0", course="障害3,000メートル（芝）"):
@@ -47,7 +48,12 @@ def test_average_furlong_survives_csv_and_cannot_enter_common_features():
     assert restored["last_3f_status"] == "NOT_APPLICABLE"
     assert restored["average_1f"] == "14"
     assert restored["sectional_header"] == "平均1F"
-    with pytest.raises(UnsupportedHistoryObservation, match="last_3f"):
+    # Issue #38: a source-proven nonapplicable sectional is not consumed as a
+    # closing feature; the row contributes only the neutral constant. (The
+    # fixture's corner cell is separately NOT_OBSERVED, so summarize still
+    # stops on passing_order — a different field and a genuine gap.)
+    assert _comparable_last3f(restored) == DEFAULT_LAST3F
+    with pytest.raises(UnsupportedHistoryObservation, match="passing_order"):
         summarize_history_rows([restored], group_keys=("race_id", "horse_id"))
 
 
@@ -88,9 +94,12 @@ def test_verified_nonapplicability_is_acquisition_complete_but_not_a_numeric_def
     state = next(x for x in source["acquisition_coverage"]["records"] if x["field"] == "last_3f")
     assert state["state"] == "NOT_APPLICABLE"
     audit = audit_collected_data(data, {"r": {"career_starts_by_horse_number": {"1": 1}}})
-    finding = next(x for x in audit["findings"] if x["field"] == "last_3f")
-    assert finding["method"] == "unsupported_source_observation" and finding["required_missing"]
-    assert audit["gate"] == "BLOCKED_MISSING_DATA"
+    # Issue #38: nonapplicability is recorded, never replaced by a number in
+    # the source row, and no longer supplies a required-missing stop. (This
+    # sparse fixture row still stops on its genuinely absent distance and
+    # corner observation — different fields, unaffected by the change.)
+    assert not any(x["field"] == "last_3f" and x["required_missing"] for x in audit["findings"])
+    assert data["rows"][0]["last_3f"] == ""
     assert next(x for x in audit["missing_fields"] if x["field"] == "last_3f")["state"] == "NOT_APPLICABLE"
 
 
@@ -154,9 +163,15 @@ def test_source_proven_nonapplicability_rejects_an_injected_sectional():
     assert result["status"] == "MISMATCH"
 
 
-def test_explicit_jump_observation_still_requires_a_supported_model():
+def test_explicit_jump_sectional_absence_is_neutralized_not_required():
+    # Issue #38 supersedes the former "jump observation requires a supported
+    # model" stop for the sectional field: the absent last_3f of a jump
+    # history is classified NOT_APPLICABLE and only neutralized. Other
+    # genuinely missing fields of this sparse fixture row still stop the run.
     data = collected_observation(source_page())
     data["rows"][0]["history_surface"] = "障害"
     audit = audit_collected_data(data, {"r": {"career_starts_by_horse_number": {"1": 1}}})
+    assert not any(f["field"] == "last_3f" and f["required_missing"] for f in audit["findings"])
+    assert any(f["field"] == "last_3f" and f["method"] == "neutralize_jump_sectional_36"
+               for f in audit["findings"])
     assert audit["gate"] == "BLOCKED_MISSING_DATA"
-    assert any(f["method"] == "unsupported_source_observation" for f in audit["findings"])
