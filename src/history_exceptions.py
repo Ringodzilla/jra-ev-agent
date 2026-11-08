@@ -99,6 +99,7 @@ def _key(row):
 
 def _reject_projection_markers(collected):
     if any("approved_history_exceptions" in row or "approved_front_rate" in row
+           or "passing_order_not_used" in row
            for row in collected.get("rows", [])):
         raise HistoryExceptionError("Source histories must not contain model projection markers")
 
@@ -161,9 +162,38 @@ def _record(record, approval, collected, configs, purpose, digest, manifest):
                 or _number(item["individual_final_3_imperial_furlongs_seconds"]) != expected
                 or Decimal(str(item["section_distance_m"])) != Decimal("603.504")):
             raise HistoryExceptionError("Proxy differs from official imperial sectional observation")
+    elif field == "last_3f" and method == "metric_600m_proxy_seconds":
+        if (row.get("last_3f_source") != "fallback" and str(row.get("last_3f", "")).strip()):
+            raise HistoryExceptionError("Observed sectional cannot be overridden")
+        if not ids or Decimal(str(record["source_distance_m"])) != Decimal("600") or Decimal(str(record["target_distance_m"])) != 600:
+            raise HistoryExceptionError("Only explicit metric600m-to600m proxy is supported")
+        expected = _number(value)
+        observation_path = _file(record["proxy_observations"])
+        if observation_path not in {_file(ref) for ref in record["source_artifacts"]}:
+            raise HistoryExceptionError("Proxy observation must be in bound source evidence")
+        observations = json.loads(observation_path.read_text(encoding="utf-8"))
+        observed = [item for item in observations if item.get("horse_name") == row.get("horse_name")
+                    and item.get("race_date") == record["date"]]
+        if len(observed) != 1:
+            raise HistoryExceptionError("Proxy source horse and date do not match")
+        item = observed[0]
+        _file(item["source"])
+        from jra_scraper.foreign_history import parse_metric_600m_observation
+        if parse_metric_600m_observation(item, row) != expected:
+            raise HistoryExceptionError("Proxy differs from bound original sectional")
+        if (_number(item["individual_final_600m_seconds"]) != expected
+                or Decimal(str(item["section_distance_m"])) != Decimal("600")):
+            raise HistoryExceptionError("Proxy differs from official metric sectional observation")
     elif field == "passing_order" and method == "approved_front_rate":
         if not ids or _number(value) != Decimal("0.5") or str(row.get("passing_order", "")).strip():
             raise HistoryExceptionError("Only missing corner history with approved front_rate0.5 is supported")
+    elif field == "passing_order" and method == "distance_marker_positions_not_used":
+        if value is not None or not ids:
+            raise HistoryExceptionError("Distance-marker positions exception assigns no value and requires findings")
+        if not str(row.get("passing_order", "")).strip():
+            raise HistoryExceptionError("Absent corner history uses approved_front_rate, not distance-marker semantics")
+        if str(row.get("passing_order_status", "")).strip() == "OBSERVED":
+            raise HistoryExceptionError("Source-verified corner order cannot be redefined as distance-marker positions")
     elif field in {"weather", "pace"} and method == "not_used":
         if value is not None or str(row.get(field, "")).strip():
             raise HistoryExceptionError("not_used preserves only absent optional observations")
@@ -232,6 +262,11 @@ def model_history_rows(collected, audit):
         row.setdefault("approved_history_exceptions", {})[field] = deepcopy(record)
         if field == "last_3f":
             row["last_3f"] = str(record["value"])
-        elif field == "passing_order":
+        elif field == "passing_order" and record["method"] == "approved_front_rate":
             row["approved_front_rate"] = float(record["value"])
+        elif field == "passing_order" and record["method"] == "distance_marker_positions_not_used":
+            # The observed marker positions stay on the model row untouched;
+            # the marker instructs feature engineering not to consume them
+            # as corner order for this run.
+            row["passing_order_not_used"] = True
     return rows
