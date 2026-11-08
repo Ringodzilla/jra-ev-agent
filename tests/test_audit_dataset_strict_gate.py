@@ -10,10 +10,12 @@ import pytest
 
 from scripts.audit_dataset_strict_gate import (
     FORBIDDEN_OUTCOME_KEYS,
+    GOVERNANCE,
     audit_one_race,
     check_bindings,
     collect_source_bindings,
     distance_band,
+    evaluate_research_admission,
     find_forbidden_keys,
     horse_set_check_dataset,
     parse_post_time,
@@ -25,6 +27,7 @@ from scripts.audit_dataset_strict_gate import (
     structural_contract_dataset,
     verify_archive_manifest,
 )
+from src.data_integrity import audit_collected_data
 
 HORSE_ID = 'pw01dud102023101694/BA'
 RACE_ID = '20260502_京都_03'
@@ -348,3 +351,240 @@ def test_verify_archive_manifest_detects_tampering(tmp_path):
     result = verify_archive_manifest(dataset)
     assert result['all_match'] is False
     assert result['files'][0]['sha256_match'] is False
+
+
+# --- Research admission (governance decision, 2026-11-08) -----------------
+
+def _clean_payload(**overrides):
+    """A per-race audit payload whose every data-quality layer is clean;
+    only the archive-driven reparse cap keeps the strict gate UNVERIFIED."""
+    payload = {
+        'gate': 'UNVERIFIED', 'audit_executed': True,
+        'surface_gate': 'PASS', 'environment_gate': 'PASS',
+        'segment': {'surface': '芝', 'venue': '京都', 'distance': 1600,
+                    'band': 'マイル（1500–1800m）'},
+        'structural_contract_errors': [],
+        'source_issues': [],
+        'source_bindings': {'descriptors': 10, 'bound': 10, 'unbound': 0,
+                            'unbound_examples': []},
+        'collected_audit': {
+            'gate': 'UNVERIFIED', 'source_audit_status': 'UNVERIFIED',
+            'findings': [], 'unapproved_finding_count': 0,
+            'history_counts': [{'race_id': RACE_ID, 'horse_number': '1',
+                                'collected': 1, 'required': 1,
+                                'status': 'COMPLETE'}],
+            'history_counts_verified': True,
+            'acquisition_coverage': {'status': 'BLOCKED',
+                                      'counts': {'SOURCE_UNVERIFIED': 40}},
+        },
+    }
+    payload.update(overrides)
+    return payload
+
+
+def test_research_admission_granted_when_all_conditions_hold():
+    record = evaluate_research_admission(_clean_payload(), 'PASS', True)
+    assert record['status'] == 'ADMITTED_RESEARCH'
+    assert record['evidence_basis'] == 'preparation_stage'
+    assert record['reasons'] == []
+    assert all(record['conditions'].values())
+    assert record['pool_labels'] == {
+        'usage': 'posthoc_exploratory_training_only',
+        'production_eligible': False}
+    assert record['governance'] == GOVERNANCE
+
+
+def test_research_admission_fails_preparation_not_pass():
+    record = evaluate_research_admission(_clean_payload(), 'UNVERIFIED', True)
+    assert record['status'] == 'NOT_ADMITTED'
+    assert record['evidence_basis'] is None
+    assert record['reasons'] == ['PREPARATION_STATE_NOT_PASS']
+
+
+def test_research_admission_fails_unbound_provenance():
+    payload = _clean_payload(source_bindings={
+        'descriptors': 10, 'bound': 9, 'unbound': 1,
+        'unbound_examples': [{'kind': 'race_detail'}]})
+    record = evaluate_research_admission(payload, 'PASS', True)
+    assert record['status'] == 'NOT_ADMITTED'
+    assert record['reasons'] == ['PROVENANCE_NOT_FULLY_BOUND']
+
+
+def test_research_admission_fails_core_finding():
+    audit = dict(_clean_payload()['collected_audit'],
+                 gate='BLOCKED_MISSING_DATA', unapproved_finding_count=1,
+                 findings=[{'field': 'time', 'method': 'official_time',
+                            'required_missing': True, 'approved': False}])
+    record = evaluate_research_admission(
+        _clean_payload(collected_audit=audit), 'PASS', True)
+    assert record['status'] == 'NOT_ADMITTED'
+    assert 'CORE_GATE_BLOCKED' in record['reasons']
+    assert 'CORE_REQUIRED_MISSING' in record['reasons']
+    assert 'CORE_UNAPPROVED_FINDINGS' in record['reasons']
+
+
+def test_research_admission_fails_dataset_verification():
+    record = evaluate_research_admission(_clean_payload(), 'PASS', False)
+    assert record['status'] == 'NOT_ADMITTED'
+    assert record['reasons'] == ['DATASET_VERIFICATION_NOT_PASS']
+
+
+def test_research_admission_fails_dirt_surface():
+    payload = _clean_payload(
+        surface_gate='NOT_SUPPORTED_SURFACE',
+        segment={'surface': 'ダート', 'venue': '京都', 'distance': 1800,
+                 'band': 'マイル（1500–1800m）'})
+    record = evaluate_research_admission(payload, 'PASS', True)
+    assert record['status'] == 'NOT_ADMITTED'
+    assert record['reasons'] == ['SURFACE_NOT_SUPPORTED']
+
+
+def test_research_admission_fails_environment_gate():
+    payload = _clean_payload(environment_gate='UNVERIFIED_ENVIRONMENT')
+    record = evaluate_research_admission(payload, 'PASS', True)
+    assert record['status'] == 'NOT_ADMITTED'
+    assert record['reasons'] == ['ENVIRONMENT_GATE_NOT_PASS']
+
+
+def _string_values(node):
+    if isinstance(node, str):
+        yield node
+    elif isinstance(node, dict):
+        for value in node.values():
+            yield from _string_values(value)
+    elif isinstance(node, list):
+        for value in node:
+            yield from _string_values(value)
+
+
+def test_research_admission_never_relabels_reparse():
+    record = evaluate_research_admission(_clean_payload(), 'PASS', True)
+    assert record['status'] == 'ADMITTED_RESEARCH'
+    # The archive-alone verification status is carried through as-is.
+    assert record['verification_status'] == 'UNVERIFIED'
+    assert record['core_gate'] == 'UNVERIFIED'
+    assert record['strict_gate'] == 'UNVERIFIED'
+    # No field anywhere in the record carries the reparse-verified status
+    # as a value (the governance note may name it as out of scope, which
+    # is a different string and not a status assignment).
+    assert 'VERIFIED_REPARSE' not in set(_string_values(record))
+
+
+def test_audit_one_race_research_admission_end_to_end(tmp_path):
+    feature = _feature()
+    index = {(b['url'], b['sha256'])
+             for b in collect_source_bindings(feature)}
+    base = {'race_id': RACE_ID, 'record_type': 'retrospective_reconstructed',
+            'production_learning_eligible': False, 'model_ready': False,
+            'model_calculations_executed': False}
+    payload = audit_one_race(RACE_ID, feature, _prep(), _race_row(),
+                             tmp_path, index, base,
+                             {'path': 'f', 'sha256': 'e' * 64})
+    admission = payload['research_admission']
+    assert admission['status'] == 'ADMITTED_RESEARCH'
+    assert admission['evidence_basis'] == 'preparation_stage'
+    assert admission['verification_status'] == 'UNVERIFIED'
+    assert admission['pool_labels']['production_eligible'] is False
+    # Strict semantics are untouched by the admission layer.
+    assert payload['gate'] == 'UNVERIFIED'
+    assert payload['model_ready'] is False
+    assert payload['collected_audit']['source_audit_status'] == 'UNVERIFIED'
+    assert 'VERIFIED_REPARSE' not in set(_string_values(admission))
+
+
+def test_audit_one_race_dirt_not_admitted_by_governance(tmp_path):
+    info = dict(_feature()['race_info'], target_surface='ダート')
+    feature = _feature(race_info=info)
+    feature['horses'][0]['target_surface'] = 'ダート'
+    index = {(b['url'], b['sha256'])
+             for b in collect_source_bindings(feature)}
+    base = {'race_id': RACE_ID, 'record_type': 'retrospective_reconstructed',
+            'production_learning_eligible': False, 'model_ready': False,
+            'model_calculations_executed': False}
+    payload = audit_one_race(RACE_ID, feature, _prep(),
+                             _race_row(surface='ダート'), tmp_path, index,
+                             base, {'path': 'f', 'sha256': 'e' * 64})
+    admission = payload['research_admission']
+    assert admission['status'] == 'NOT_ADMITTED'
+    assert admission['reasons'] == ['SURFACE_NOT_SUPPORTED']
+    assert admission['evidence_basis'] is None
+
+
+def test_prediction_purpose_gate_behavior_unchanged():
+    """The core audit used with purpose 'prediction' is untouched by the
+    research-admission layer: unapproved imputations still block, and no
+    admission concept leaks into the core result."""
+    collected = {'rows': [], 'entries': [{
+        'race_id': RACE_ID, 'horse_id': HORSE_ID, 'horse_number': '1',
+        'assigned_weight': '57.0'}]}
+    configs = [{'race_id': RACE_ID,
+                'career_starts_by_horse_number': {'1': 0}}]
+    result = audit_collected_data(collected, configs, approvals=[],
+                                  purpose='prediction')
+    assert result['gate'] == 'BLOCKED_UNAPPROVED_IMPUTATION'
+    assert result['status'] == 'BLOCKED_UNAPPROVED_IMPUTATION'
+    methods = {f['method'] for f in result['findings']}
+    assert {'neutral_history_fallback', 'default_0',
+            'history_average_or_10'} <= methods
+    assert result['source_audit_status'] == 'UNVERIFIED'
+    assert 'research_admission' not in result
+
+
+def _mini_dataset_bound(tmp_path, feature):
+    """A minimal archive whose source index binds the fixture's provenance,
+    so its single candidate satisfies every admission condition."""
+    dataset = tmp_path / 'dataset'
+    dataset.mkdir()
+    prep = _prep()
+    index_records = [{'url': b['url'], 'sha256': b['sha256']}
+                     for b in collect_source_bindings(feature)]
+    files = {}
+    for month in ('05', '06', '07', '08', '09'):
+        prep_records = [prep] if month == '05' else []
+        feature_records = [feature] if month == '05' else []
+        _write_gz(dataset / f'audit_preparation_2026-{month}.jsonl.gz',
+                  prep_records)
+        _write_gz(dataset / f'features_2026-{month}.jsonl.gz',
+                  feature_records)
+        files[f'audit_preparation_2026-{month}.jsonl.gz'] = len(prep_records)
+        files[f'features_2026-{month}.jsonl.gz'] = len(feature_records)
+    _write_gz(dataset / 'races.jsonl.gz', [_race_row()])
+    _write_gz(dataset / 'source_index.jsonl.gz', index_records)
+    files['races.jsonl.gz'] = 1
+    files['source_index.jsonl.gz'] = len(index_records)
+    manifest_files = []
+    for name, records in files.items():
+        raw = (dataset / name).read_bytes()
+        manifest_files.append({'file': name, 'bytes': len(raw),
+                               'sha256': hashlib.sha256(raw).hexdigest(),
+                               'records': records})
+    manifest = {'files': manifest_files, 'collection_sha256': 'f' * 64,
+                'source_document_bodies_included': False}
+    (dataset / 'manifest.json').write_text(json.dumps(manifest))
+    (dataset / 'verify_dataset.py').write_text(
+        "import json\n\n\ndef verify():\n"
+        "    print(json.dumps({'status': 'PASS', 'races': 1}))\n")
+    return dataset
+
+
+def test_run_audit_admits_bound_candidate_to_research_pool(tmp_path):
+    dataset = _mini_dataset_bound(tmp_path, _feature())
+    summary = run_audit(dataset, tmp_path / 'out' / 'audit')
+    pool = summary['pool']
+    research = pool['research_admission']
+    assert research['status_counts'] == {'ADMITTED_RESEARCH': 1}
+    assert research['admitted_race_ids'] == [RACE_ID]
+    assert research['admitted_by_split'] == {'train': 1}
+    assert research['admitted_segment_cells'] == [
+        {'segment': '芝|京都|1600', 'races': 1}]
+    assert research['evidence_basis'] == 'preparation_stage'
+    assert research['verification_status'] == 'UNVERIFIED'
+    assert pool['new_totals'] == {'turf_races': 19, 'dirt_races': 0,
+                                  'jump_races': 0}
+    assert summary['research_admitted_race_ids'] == [RACE_ID]
+    assert summary['model_ready_race_ids'] == []
+    race_entry = summary['races'][0]
+    assert race_entry['gate'] == 'UNVERIFIED'
+    assert race_entry['research_admission']['status'] == 'ADMITTED_RESEARCH'
+    assert race_entry['research_admission']['evidence_basis'] == \
+        'preparation_stage'
