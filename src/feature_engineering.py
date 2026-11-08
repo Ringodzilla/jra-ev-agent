@@ -38,10 +38,17 @@ def validate_explicit_history_observations(row: dict[str, str]) -> None:
 def _history_front_score(row: dict) -> float:
     record = (row.get("approved_history_exceptions") or {}).get("passing_order")
     if record is not None:
-        if (record.get("method") != "approved_front_rate" or record.get("value") != 0.5
-                or row.get("approved_front_rate") != 0.5 or row.get("passing_order")):
-            raise UnsupportedHistoryObservation("Invalid approved corner exception")
-        return 0.5
+        if record.get("method") == "approved_front_rate":
+            if (record.get("value") != 0.5
+                    or row.get("approved_front_rate") != 0.5 or row.get("passing_order")):
+                raise UnsupportedHistoryObservation("Invalid approved corner exception")
+            return 0.5
+        if record.get("method") == "distance_marker_positions_not_used":
+            if (record.get("value") is not None or row.get("passing_order_not_used") is not True
+                    or not str(row.get("passing_order", "")).strip()):
+                raise UnsupportedHistoryObservation("Invalid distance-marker corner exception")
+            return 0.5
+        raise UnsupportedHistoryObservation("Invalid approved corner exception")
     return _front_running_score(
         row.get("passing_order", ""), status=str(row.get("passing_order_status", "")),
         reason=str(row.get("passing_order_missing_reason", "")),
@@ -415,10 +422,22 @@ def _comparable_last3f(row: dict[str, str]) -> float:
     record = (row.get("approved_history_exceptions") or {}).get("last_3f")
     if record is not None:
         value = _to_float(row.get("last_3f"), math.nan)
-        if (record.get("method") != "imperial_3f_proxy_seconds" or not math.isfinite(value)
+        if (record.get("method") not in ("imperial_3f_proxy_seconds", "metric_600m_proxy_seconds")
+                or not math.isfinite(value)
                 or value <= 0 or value != _to_float(record.get("value"), math.nan)):
             raise UnsupportedHistoryObservation("Invalid approved sectional proxy")
         return value
+    if not str(row.get("last_3f", "")).strip():
+        sectional_status = str(row.get("last_3f_status", "")).strip()
+        if sectional_status == "NOT_APPLICABLE" or (
+                sectional_status in ("UNVERIFIED", "NOT_OBSERVED")
+                and (str(row.get("target_surface", "")).strip() == "障害"
+                     or _history_surface(row) == "障害")):
+            # A jump history has no final-3F sectional to consume: the audit
+            # classifies the absent field NOT_APPLICABLE and the row
+            # contributes only the neutral constant. A number present in the
+            # cell (e.g. an average-1F figure) still stops below.
+            return DEFAULT_LAST3F
     _require_observed_history_field(row, "last_3f")
     status = str(row.get("last_3f_status", "")).strip()
     if status == "OBSERVED":
