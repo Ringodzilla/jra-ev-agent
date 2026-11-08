@@ -72,6 +72,26 @@ artifacts only: ``record_type=retrospective_reconstructed``,
 ``posthoc_exploratory_training_only`` with ``production_eligible=false``
 and never count toward the production minimums.  Model calculations are
 not executed.
+
+Research admission (governance decision, 2026-11-08).  The strict gate
+composition above is unchanged: from the published archive alone every
+race stays UNVERIFIED, because the archive excludes source document
+bodies and the core's hash-bound reparse therefore cannot run.  Under
+the user's decision of 2026-11-08 (task-management Issue #39, comment
+6722973492), preparation-stage evidence may substitute for that reparse
+for RESEARCH-TRACK admission only: when a race's ``audit_preparation``
+record is PASS, its SHA provenance chain binds completely against the
+verified source index, and the archive passed the manifest + verifier
+checks, the race is admitted to the research pool provided every other
+layer of the strict audit is clean (no required missing, no unapproved
+findings, complete history counts, no acquisition gaps, no structural
+contract errors, no leakage, environment gate PASS).  Admission is
+recorded separately from the gate as ``research_admission`` with
+``evidence_basis='preparation_stage'``; the underlying verification
+status stays UNVERIFIED and is never relabeled VERIFIED_REPARSE.  The
+decision does not extend the turf-only structural contract: dirt
+candidates stay un-admitted with their surface gate recorded.
+Prediction-purpose gates and production promotion are untouched.
 """
 from __future__ import annotations
 
@@ -401,8 +421,108 @@ def project_race_inputs(feature: dict, info: dict) -> tuple[list, list]:
     return entries, rows
 
 
+# Governance decision (user, 2026-11-08): preparation-stage evidence is
+# accepted for research-track admission of this archive.  Recorded as
+# task-management Issue #39, comment 6722973492.  The rule is documented
+# in docs/environment_model.md (migrated-dataset research admission).
+GOVERNANCE = {
+    'decision': 'accept_preparation_stage_evidence_for_research_track',
+    'decided_by': 'user',
+    'decision_date': '2026-11-08',
+    'recorded_at': 'task-management Issue #39 comment 6722973492',
+    'scope': 'research-track admission in this driver only',
+    'non_scope': ['prediction purpose gates', 'production promotion',
+                  'VERIFIED_REPARSE semantics', 'Stage 0 requirements',
+                  'dirt surface contract'],
+}
+EVIDENCE_BASIS_PREPARATION_STAGE = 'preparation_stage'
+
+
+def evaluate_research_admission(payload: dict, prep_state,
+                                dataset_verification_pass: bool) -> dict:
+    """Research-track admission under the 2026-11-08 governance decision.
+
+    This layer sits beside the strict gate composition and never feeds
+    back into it: the race's ``gate`` and ``model_ready`` keep their
+    strict meanings, and the core audit's verification status is carried
+    through unchanged (UNVERIFIED from the archive alone; never
+    relabeled VERIFIED_REPARSE).  A race is ADMITTED_RESEARCH only when
+    every condition holds; each failed condition is recorded by name.
+    """
+    conditions: dict = {}
+    reasons: list = []
+
+    def check(name: str, ok: bool, reason: str) -> None:
+        conditions[name] = bool(ok)
+        if not ok:
+            reasons.append(reason)
+
+    check('dataset_verification_pass', dataset_verification_pass,
+          'DATASET_VERIFICATION_NOT_PASS')
+    check('preparation_state_pass', prep_state == 'PASS',
+          'PREPARATION_STATE_NOT_PASS')
+    segment = payload.get('segment') or {}
+    surface_gate = payload.get('surface_gate') or (
+        'PASS' if segment.get('surface') == '芝' else 'NOT_SUPPORTED_SURFACE')
+    check('surface_supported', surface_gate == 'PASS',
+          'SURFACE_NOT_SUPPORTED')
+    check('environment_gate_pass', payload.get('environment_gate') == 'PASS',
+          'ENVIRONMENT_GATE_NOT_PASS')
+    check('core_audit_executed', bool(payload.get('audit_executed')),
+          'CORE_AUDIT_NOT_EXECUTED')
+    audit = payload.get('collected_audit') or {}
+    findings = audit.get('findings') or []
+    check('core_gate_not_blocked',
+          not str(audit.get('gate', '')).startswith('BLOCKED'),
+          'CORE_GATE_BLOCKED')
+    check('no_required_missing',
+          not any(f.get('required_missing') for f in findings),
+          'CORE_REQUIRED_MISSING')
+    check('no_unapproved_findings',
+          audit.get('unapproved_finding_count', 0) == 0,
+          'CORE_UNAPPROVED_FINDINGS')
+    counts = audit.get('history_counts') or []
+    check('history_counts_complete',
+          bool(counts)
+          and all(c.get('status') == 'COMPLETE' for c in counts)
+          and bool(audit.get('history_counts_verified')),
+          'HISTORY_COUNTS_NOT_COMPLETE')
+    coverage_counts = (audit.get('acquisition_coverage') or {}).get(
+        'counts') or {}
+    check('no_available_but_not_collected',
+          not coverage_counts.get('AVAILABLE_BUT_NOT_COLLECTED'),
+          'ACQUISITION_INCOMPLETE')
+    check('structural_contract_clean',
+          not (payload.get('structural_contract_errors') or []),
+          'STRUCTURAL_CONTRACT_ERRORS')
+    issues = payload.get('source_issues') or []
+    check('no_leakage', 'RESULT_LEAKAGE_RISK' not in issues,
+          'RESULT_LEAKAGE_RISK')
+    check('horse_set_verified', 'UNVERIFIED_HORSE_SET' not in issues,
+          'HORSE_SET_UNVERIFIED')
+    bindings = payload.get('source_bindings') or {}
+    check('provenance_fully_bound',
+          bool(bindings.get('descriptors')) and bindings.get('unbound') == 0,
+          'PROVENANCE_NOT_FULLY_BOUND')
+    admitted = not reasons
+    return {
+        'status': 'ADMITTED_RESEARCH' if admitted else 'NOT_ADMITTED',
+        'evidence_basis': (EVIDENCE_BASIS_PREPARATION_STAGE if admitted
+                           else None),
+        'verification_status': audit.get('source_audit_status',
+                                         'UNVERIFIED'),
+        'core_gate': audit.get('gate', payload.get('gate')),
+        'strict_gate': payload.get('gate'),
+        'conditions': conditions,
+        'reasons': reasons,
+        'pool_labels': ({'usage': 'posthoc_exploratory_training_only',
+                         'production_eligible': False} if admitted else None),
+        'governance': GOVERNANCE,
+    }
+
+
 def audit_one_race(race_id, feature, prep, race_row, out, index_set, base,
-                   feature_ref):
+                   feature_ref, dataset_verification_pass: bool = True):
     info = feature['race_info']
     horses = feature['horses']
     track = info['track']
@@ -430,6 +550,8 @@ def audit_one_race(race_id, feature, prep, race_row, out, index_set, base,
                    'horse_set_check': set_check,
                    'source_bindings': bindings,
                    'environment': None}
+        payload['research_admission'] = evaluate_research_admission(
+            payload, prep.get('state'), dataset_verification_pass)
         (out / f'{race_id}_audit.json').write_text(json.dumps(
             payload, ensure_ascii=False, indent=2))
         return payload
@@ -504,6 +626,8 @@ def audit_one_race(race_id, feature, prep, race_row, out, index_set, base,
                'career_source_checks': career_checks,
                'history_date_set_checks': date_checks,
                'horse_set_check': set_check}
+    payload['research_admission'] = evaluate_research_admission(
+        payload, prep.get('state'), dataset_verification_pass)
     (out / f'{race_id}_audit.json').write_text(json.dumps(
         payload, ensure_ascii=False, indent=2))
     return payload
@@ -559,7 +683,8 @@ def run_audit(dataset_dir: Path, out: Path, race_ids: list | None = None) -> dic
         try:
             payload = audit_one_race(
                 race_id, feature, preparations[race_id], races[race_id], out,
-                index_set, base, ref(feature_files[race_id]))
+                index_set, base, ref(feature_files[race_id]),
+                dataset_verification_pass=True)
         except Exception as exc:  # per-race containment; never fabricate
             payload = {**base, 'gate': 'AUDIT_ERROR', 'audit_executed': False,
                        'split': candidate['split'],
@@ -570,6 +695,8 @@ def run_audit(dataset_dir: Path, out: Path, race_ids: list | None = None) -> dic
                                                          candidate['distance'])},
                        'source_issues': ['AUDIT_PREPARATION_ERROR'],
                        'error': f'{type(exc).__name__}: {exc}'}
+            payload['research_admission'] = evaluate_research_admission(
+                payload, preparations[race_id].get('state'), True)
             (out / f'{race_id}_audit.json').write_text(json.dumps(
                 payload, ensure_ascii=False, indent=2))
         payloads.append(payload)
@@ -589,6 +716,11 @@ def run_audit(dataset_dir: Path, out: Path, race_ids: list | None = None) -> dic
         {'files': [ref(p) for p in code_paths]}, ensure_ascii=False, indent=2))
 
     admitted = [p for p in payloads if p.get('model_ready')]
+    research_admitted = [
+        p for p in payloads
+        if (p.get('research_admission') or {}).get('status')
+        == 'ADMITTED_RESEARCH']
+
     def cells(items):
         counter = Counter(
             f"{p['segment']['surface']}|{p['segment']['venue']}|{p['segment']['distance']}"
@@ -640,13 +772,36 @@ def run_audit(dataset_dir: Path, out: Path, race_ids: list | None = None) -> dic
                                         '+ 2026-10-24 PASS 2 (workstream C)',
                          'largest_cell': {'segment': '芝|新潟|2000', 'races': 3}},
             'admitted_race_ids': [p['race_id'] for p in admitted],
+            'research_admission': {
+                'governance': GOVERNANCE,
+                'evidence_basis': EVIDENCE_BASIS_PREPARATION_STAGE,
+                'verification_status': 'UNVERIFIED',
+                'status_counts': dict(Counter(
+                    (p.get('research_admission') or {}).get(
+                        'status', 'NOT_EVALUATED') for p in payloads)),
+                'reason_counts': dict(Counter(
+                    reason for p in payloads
+                    for reason in (p.get('research_admission') or {}).get(
+                        'reasons') or [])),
+                'admitted_race_ids': [p['race_id']
+                                      for p in research_admitted],
+                'admitted_by_split': dict(Counter(
+                    p['split'] for p in research_admitted)),
+                'admitted_by_surface': dict(Counter(
+                    p['segment']['surface'] for p in research_admitted)),
+                'admitted_segment_cells': cells(research_admitted),
+                'admitted_band_cells': band_cells(research_admitted)},
             'new_totals': {
-                'turf_races': 18 + sum(1 for p in admitted
+                'turf_races': 18 + sum(1 for p in research_admitted
                                        if p['segment']['surface'] == '芝'),
-                'dirt_races': sum(1 for p in admitted
+                'dirt_races': sum(1 for p in research_admitted
                                   if p['segment']['surface'] == 'ダート'),
-                'jump_races': sum(1 for p in admitted
+                'jump_races': sum(1 for p in research_admitted
                                   if p['segment']['surface'] == '障害')},
+            'new_totals_basis': 'previous pool + research-track admissions '
+                                '(evidence_basis=preparation_stage); '
+                                'strict-gate admissions stay in '
+                                'admitted_race_ids / model_ready_race_ids',
             'admitted_segment_cells': cells(admitted),
             'admitted_band_cells': band_cells(admitted),
             'candidate_segment_cells': cells(payloads),
@@ -655,6 +810,16 @@ def run_audit(dataset_dir: Path, out: Path, race_ids: list | None = None) -> dic
                    'core_gate': (p.get('collected_audit') or {}).get(
                        'gate', 'NOT_RUN'),
                    'model_ready': p.get('model_ready', False),
+                   'research_admission': {
+                       'status': (p.get('research_admission') or {}).get(
+                           'status'),
+                       'evidence_basis': (p.get('research_admission')
+                                          or {}).get('evidence_basis'),
+                       'verification_status': (
+                           p.get('research_admission') or {}).get(
+                           'verification_status'),
+                       'reasons': (p.get('research_admission') or {}).get(
+                           'reasons')},
                    'split': p.get('split'),
                    'segment': p.get('segment'),
                    'structural_contract_error_count':
@@ -663,6 +828,9 @@ def run_audit(dataset_dir: Path, out: Path, race_ids: list | None = None) -> dic
                    'audit': ref(out / f"{p['race_id']}_audit.json")}
                   for p in payloads],
         'model_ready_race_ids': [p['race_id'] for p in admitted],
+        'research_admitted_race_ids': [p['race_id']
+                                       for p in research_admitted],
+        'governance': GOVERNANCE,
         'approvals_used': [], 'model_calculations_executed': False,
         'method_parity': {
             'reference': 'scripts/audit_20261024_strict_gate.py (workstream C); '
@@ -686,12 +854,19 @@ def run_audit(dataset_dir: Path, out: Path, race_ids: list | None = None) -> dic
                 'is UNVERIFIED for every race by construction; provenance is '
                 'bound by (url, sha256) membership in the verified source '
                 'index and recorded per race, without changing the gate.',
+                'Research admission (2026-11-08 governance decision) is a '
+                'separate composition layer: evaluate_research_admission '
+                'records ADMITTED_RESEARCH with evidence_basis '
+                'preparation_stage beside the unchanged strict gate; the '
+                'core verification status stays UNVERIFIED and is never '
+                'relabeled VERIFIED_REPARSE.',
             ]},
     }
     (out / 'summary.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2))
     print(json.dumps({'output_dir': str(out),
                       'gate_counts': summary['gate_counts'],
-                      'model_ready': summary['model_ready_race_ids']},
+                      'model_ready': summary['model_ready_race_ids'],
+                      'research_admitted': len(research_admitted)},
                      ensure_ascii=False))
     return summary
 
