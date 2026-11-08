@@ -265,6 +265,9 @@ def audit_collected_data(collected: dict, race_configs: object, approvals: list 
             continue
         if str(row.get('last_3f_source', '')).strip() == 'fallback':
             finding(row, 'last_3f', 'parser_last3f_fallback', 'closing_strength,pace_score')
+        jump_history = ('障害' in str(row.get('race_name', ''))
+                        or str(row.get('history_surface')) == '障害'
+                        or str(row.get('target_surface')) == '障害')
         for field in _RAW_FIELDS:
             absent = _missing(row.get(field))
             if field == 'history_surface' and any(x in str(row.get('distance', '')) for x in ('芝', 'ダ', '障')):
@@ -289,12 +292,25 @@ def audit_collected_data(collected: dict, race_configs: object, approvals: list 
                     and _date_key(item.get('date', '')) == _date_key(row.get('date', ''))
                     and item.get('semantic_status')), {})
                 state = semantic.get('semantic_status')
+                # A jump race has no final-3F sectional to observe: its
+                # official record carries average-1F instead. Absence on a
+                # jump history is non-applicability, not a missing required
+                # field; the jump block below records the neutralization.
+                sectional_not_applicable = (
+                    field == 'last_3f' and absent
+                    and str(row.get('last_3f_status', '')).strip() != 'OBSERVED'
+                    and (jump_history or state == 'NOT_APPLICABLE'
+                         or '障害' in str(row.get('official_course_text', ''))))
                 missing.append({**{k: str(row.get(k, '')) for k in ('race_id', 'horse_number', 'run_index')},
-                                'field': field, 'state': state or ('missing' if absent else 'invalid'),
+                                'field': field,
+                                'state': 'NOT_APPLICABLE' if sectional_not_applicable else (
+                                    state or ('missing' if absent else 'invalid')),
                                 'model_used': field in _EFFECTS})
                 if field in _EFFECTS:
                     method, impact = _EFFECTS[field]
-                    if state:
+                    if sectional_not_applicable:
+                        pass
+                    elif state:
                         # Neither non-applicability nor a missing observation is
                         # permission to manufacture a comparable 3F/corner value.
                         finding(row, field, 'unsupported_source_observation', impact, True)
@@ -302,8 +318,13 @@ def audit_collected_data(collected: dict, race_configs: object, approvals: list 
                     else:
                         finding(row, field, method, impact, field in _REQUIRED)
                 required_missing |= field in _REQUIRED
-        if '障害' in str(row.get('race_name', '')) or str(row.get('history_surface')) == '障害' or str(row.get('target_surface')) == '障害':
-            if row.get('last_3f_status'):
+        if jump_history:
+            sectional_status = str(row.get('last_3f_status', '')).strip()
+            if sectional_status == 'OBSERVED' or (sectional_status and not _missing(row.get('last_3f'))):
+                # A claimed sectional on a jump history — an observed value,
+                # or a number carrying non-observed semantics such as an
+                # average-1F figure in the sectional cell — is a semantic
+                # conflict the common model cannot interpret, not an absence.
                 finding(row, 'last_3f', 'unsupported_source_observation', 'closing_strength,pace_score', True)
                 required_missing = True
             else:
