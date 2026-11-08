@@ -273,4 +273,18 @@ def attach_history_sources(collected: dict, raw_dir: Path) -> None:
     for artifact in cached:
         if artifact not in artifacts:
             artifacts.append(artifact)
+    foreign_dir = raw_dir / 'foreign_artifacts'
+    if foreign_dir.is_dir():
+        for path in sorted(foreign_dir.glob('*.json')):
+            try:
+                artifact = json.loads(path.read_text(encoding='utf-8'))
+            except (OSError, ValueError):
+                continue
+            if not isinstance(artifact, dict):
+                continue
+            key = (artifact.get('kind', ''), artifact.get('sha256', ''))
+            if any((existing.get('kind', ''), existing.get('sha256', '')) == key
+                   for existing in artifacts):
+                continue
+            artifacts.append(artifact)
     collected['source_audit'] = dict(source_audit, artifacts=artifacts)
