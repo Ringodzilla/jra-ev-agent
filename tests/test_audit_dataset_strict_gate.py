@@ -201,6 +201,43 @@ def test_select_environment_dataset_requires_before_post_and_surface_moisture():
     assert ok_dm is False
 
 
+def test_select_environment_dataset_dirt_moisture_contract():
+    """Dirt base form (2026-11-09): both dirt moisture points are the
+    required center variable; cushion is NOT_APPLICABLE and turf
+    moisture is never substituted."""
+    env = _feature()['environment']
+    post = '2026-05-02T10:30:00+09:00'
+    # Cushion absent (or present) is irrelevant for dirt: not required.
+    selected, ok = select_environment_dataset(
+        dict(env, cushion=None), 'ダート', '2026-05-02', post)
+    assert ok is True
+    assert selected['cushion'] is None
+    assert selected['cushion_applicability'] == 'NOT_APPLICABLE'
+    assert 'turf-course' in selected['cushion_not_applicable_reason']
+    # Each dirt moisture point is individually required.
+    for missing in ('dirt_moisture_goal', 'dirt_moisture_corner4'):
+        _, ok_missing = select_environment_dataset(
+            dict(env, **{missing: None}), 'ダート', '2026-05-02', post)
+        assert ok_missing is False
+    # Turf moisture cannot substitute for missing dirt moisture.
+    _, ok_sub = select_environment_dataset(
+        dict(env, dirt_moisture_goal=None, dirt_moisture_corner4=None,
+             turf_moisture_goal=9.9, turf_moisture_corner4=9.9),
+        'ダート', '2026-05-02', post)
+    assert ok_sub is False
+    # The moisture measurement must still precede post time.
+    _, ok_late = select_environment_dataset(
+        env, 'ダート', '2026-05-02', '2026-05-02T05:30:00+09:00')
+    assert ok_late is False
+    # Turf selection is unchanged: cushion stays required, and the turf
+    # selection carries no dirt applicability annotation.
+    turf_selected, ok_turf = select_environment_dataset(
+        env, '芝', '2026-05-02', post)
+    assert ok_turf is True
+    assert turf_selected['cushion'] is not None
+    assert 'cushion_applicability' not in turf_selected
+
+
 def test_parse_post_time_strict():
     assert parse_post_time('2026-05-02', '10:30') == '2026-05-02T10:30:00+09:00'
     with pytest.raises(ValueError):
@@ -272,7 +309,8 @@ def test_audit_one_race_records_labels_separation(tmp_path):
     assert payload['production_learning_eligible'] is False
 
 
-def test_audit_one_race_dirt_surface_gate(tmp_path):
+def test_audit_one_race_dirt_surface_gate_supported(tmp_path):
+    """Dirt base form (2026-11-09): dirt targets pass the surface gate."""
     info = dict(_feature()['race_info'], target_surface='ダート')
     feature = _feature(race_info=info)
     feature['horses'][0]['target_surface'] = 'ダート'
@@ -282,8 +320,29 @@ def test_audit_one_race_dirt_surface_gate(tmp_path):
     payload = audit_one_race(RACE_ID, feature, _prep(),
                              _race_row(surface='ダート'), tmp_path, set(),
                              base, {'path': 'f', 'sha256': 'e' * 64})
+    assert payload['surface_gate'] == 'PASS'
+    assert payload['environment_gate'] == 'PASS'
+    assert payload['environment']['cushion_applicability'] == 'NOT_APPLICABLE'
+    # The strict gate itself is still capped by the archive reparse.
+    assert payload['model_ready'] is False
+
+
+def test_audit_one_race_jump_surface_gate_unsupported(tmp_path):
+    """Jump is a separate surface category: no base form serves it."""
+    info = dict(_feature()['race_info'], target_surface='障害')
+    feature = _feature(race_info=info)
+    feature['horses'][0]['target_surface'] = '障害'
+    base = {'race_id': RACE_ID, 'record_type': 'retrospective_reconstructed',
+            'production_learning_eligible': False, 'model_ready': False,
+            'model_calculations_executed': False}
+    payload = audit_one_race(RACE_ID, feature, _prep(),
+                             _race_row(surface='障害'), tmp_path, set(),
+                             base, {'path': 'f', 'sha256': 'e' * 64})
     assert payload['surface_gate'] == 'NOT_SUPPORTED_SURFACE'
     assert payload['model_ready'] is False
+    admission = payload['research_admission']
+    assert admission['status'] == 'NOT_ADMITTED'
+    assert 'SURFACE_NOT_SUPPORTED' in admission['reasons']
 
 
 def _write_gz(path, records):
@@ -429,14 +488,32 @@ def test_research_admission_fails_dataset_verification():
     assert record['reasons'] == ['DATASET_VERIFICATION_NOT_PASS']
 
 
-def test_research_admission_fails_dirt_surface():
+def test_research_admission_grants_dirt_surface():
+    """Dirt base form (2026-11-09): a clean dirt payload is admitted
+    through the same preparation-stage evidence path as turf, and its
+    record additionally cites the dirt extension direction."""
     payload = _clean_payload(
-        surface_gate='NOT_SUPPORTED_SURFACE',
         segment={'surface': 'ダート', 'venue': '京都', 'distance': 1800,
                  'band': 'マイル（1500–1800m）'})
     record = evaluate_research_admission(payload, 'PASS', True)
+    assert record['status'] == 'ADMITTED_RESEARCH'
+    assert record['evidence_basis'] == 'preparation_stage'
+    assert record['reasons'] == []
+    assert record['pool_labels'] == {
+        'usage': 'posthoc_exploratory_training_only',
+        'production_eligible': False}
+    assert record['dirt_extension']['decision_date'] == '2026-11-09'
+
+
+def test_research_admission_fails_unsupported_surface():
+    payload = _clean_payload(
+        surface_gate='NOT_SUPPORTED_SURFACE',
+        segment={'surface': '障害', 'venue': '京都', 'distance': 3250,
+                 'band': '障害'})
+    record = evaluate_research_admission(payload, 'PASS', True)
     assert record['status'] == 'NOT_ADMITTED'
     assert record['reasons'] == ['SURFACE_NOT_SUPPORTED']
+    assert 'dirt_extension' not in record
 
 
 def test_research_admission_fails_environment_gate():
@@ -492,7 +569,10 @@ def test_audit_one_race_research_admission_end_to_end(tmp_path):
     assert 'VERIFIED_REPARSE' not in set(_string_values(admission))
 
 
-def test_audit_one_race_dirt_not_admitted_by_governance(tmp_path):
+def test_audit_one_race_dirt_admitted_under_dirt_extension(tmp_path):
+    """End to end: a data-complete dirt race is admitted to the research
+    pool under the 2026-11-09 dirt base form, with the same evidence
+    basis and pool labels as turf, while the strict gate stays capped."""
     info = dict(_feature()['race_info'], target_surface='ダート')
     feature = _feature(race_info=info)
     feature['horses'][0]['target_surface'] = 'ダート'
@@ -505,9 +585,63 @@ def test_audit_one_race_dirt_not_admitted_by_governance(tmp_path):
                              _race_row(surface='ダート'), tmp_path, index,
                              base, {'path': 'f', 'sha256': 'e' * 64})
     admission = payload['research_admission']
-    assert admission['status'] == 'NOT_ADMITTED'
-    assert admission['reasons'] == ['SURFACE_NOT_SUPPORTED']
-    assert admission['evidence_basis'] is None
+    assert admission['status'] == 'ADMITTED_RESEARCH'
+    assert admission['evidence_basis'] == 'preparation_stage'
+    assert admission['verification_status'] == 'UNVERIFIED'
+    assert admission['pool_labels']['production_eligible'] is False
+    assert admission['dirt_extension']['decision_date'] == '2026-11-09'
+    assert payload['gate'] == 'UNVERIFIED'
+    assert payload['model_ready'] is False
+    assert 'VERIFIED_REPARSE' not in set(_string_values(admission))
+
+
+def test_run_audit_admits_dirt_candidate_to_research_pool(tmp_path):
+    info = dict(_feature()['race_info'], target_surface='ダート')
+    feature = _feature(race_info=info)
+    feature['horses'][0]['target_surface'] = 'ダート'
+    dataset = tmp_path / 'dataset'
+    dataset.mkdir()
+    prep = _prep()
+    index_records = [{'url': b['url'], 'sha256': b['sha256']}
+                     for b in collect_source_bindings(feature)]
+    files = {}
+    for month in ('05', '06', '07', '08', '09'):
+        prep_records = [prep] if month == '05' else []
+        feature_records = [feature] if month == '05' else []
+        _write_gz(dataset / f'audit_preparation_2026-{month}.jsonl.gz',
+                  prep_records)
+        _write_gz(dataset / f'features_2026-{month}.jsonl.gz',
+                  feature_records)
+        files[f'audit_preparation_2026-{month}.jsonl.gz'] = len(prep_records)
+        files[f'features_2026-{month}.jsonl.gz'] = len(feature_records)
+    _write_gz(dataset / 'races.jsonl.gz', [_race_row(surface='ダート')])
+    _write_gz(dataset / 'source_index.jsonl.gz', index_records)
+    files['races.jsonl.gz'] = 1
+    files['source_index.jsonl.gz'] = len(index_records)
+    manifest_files = []
+    for name, records in files.items():
+        raw = (dataset / name).read_bytes()
+        manifest_files.append({'file': name, 'bytes': len(raw),
+                               'sha256': hashlib.sha256(raw).hexdigest(),
+                               'records': records})
+    manifest = {'files': manifest_files, 'collection_sha256': 'f' * 64,
+                'source_document_bodies_included': False}
+    (dataset / 'manifest.json').write_text(json.dumps(manifest))
+    (dataset / 'verify_dataset.py').write_text(
+        "import json\n\n\ndef verify():\n"
+        "    print(json.dumps({'status': 'PASS', 'races': 1}))\n")
+    summary = run_audit(dataset, tmp_path / 'out' / 'audit')
+    pool = summary['pool']
+    research = pool['research_admission']
+    assert research['status_counts'] == {'ADMITTED_RESEARCH': 1}
+    assert research['admitted_by_surface'] == {'ダート': 1}
+    assert research['admitted_by_split'] == {'train': 1}
+    assert research['admitted_segment_cells'] == [
+        {'segment': 'ダート|京都|1600', 'races': 1}]
+    assert pool['new_totals'] == {'turf_races': 18, 'dirt_races': 1,
+                                  'jump_races': 0}
+    assert summary['dirt_extension']['decision_date'] == '2026-11-09'
+    assert summary['surface_gate_counts'] == {'PASS': 1}
 
 
 def test_prediction_purpose_gate_behavior_unchanged():
