@@ -7,8 +7,11 @@ Re-runs, for the 2026-10-24 batch, the same strict gate audit that the
 the current core ``src.data_integrity.audit_collected_data`` with purpose
 ``environment_structural_research``, the structural contract from
 ``skills/jra-environment-research/scripts/structural_features.py``, the
-pre-post-time environment gate, the turf-only surface gate and the same
-leakage issue checks.  Method parity with the 10/25 adapter was verified by
+pre-post-time environment gate, the surface gate and the same
+leakage issue checks.  (The surface gate was turf-only when this audit
+first ran; the supported-surface set gained the dirt base form on
+2026-11-09 — see ``compose_gate``.  This batch's recorded outputs predate
+the extension and are unchanged.)  Method parity with the 10/25 adapter was verified by
 re-running the current core on the frozen 10/25 inputs: the recorded gates
 (PASS / BLOCKED_MISSING_DATA / BLOCKED_UNAPPROVED_IMPUTATION) and the
 input SHA256 reproduce exactly.
@@ -69,7 +72,7 @@ from bs4 import BeautifulSoup  # noqa: E402
 
 from jra_scraper.validation import _normalize_row  # noqa: E402
 from src.data_integrity import audit_collected_data, data_input_sha256  # noqa: E402
-from structural_features import HISTORY_FIELDS, TARGET_FIELDS  # noqa: E402
+from structural_features import HISTORY_FIELDS, TARGET_FIELDS, surface_supported  # noqa: E402
 
 TARGET = '2026-10-24'
 PURPOSE = 'environment_structural_research'
@@ -191,11 +194,18 @@ def select_environment(track_env: dict, post_time: str) -> tuple[dict, bool]:
 
 def compose_gate(ca_gate: str, surface: str, env_ok: bool,
                  structural_errors: list, issues: list) -> str:
-    """The 10/25 adapter's gate composition chain, verbatim order."""
+    """The 10/25 adapter's gate composition chain, verbatim order.
+
+    The surface step consults the structural contract's supported-surface
+    set (``structural_features.SURFACE_BASE_FORMS``).  That set gained the
+    dirt base form on 2026-11-09 (user direction; docs/condition_models.md),
+    so dirt targets now pass this step exactly as turf targets do; turf
+    outcomes are unchanged and jump targets remain NOT_SUPPORTED_SURFACE.
+    """
     gate = ca_gate
     if gate == 'PASS' and structural_errors:
         gate = 'BLOCKED_STRUCTURAL_CONTRACT'
-    elif gate == 'PASS' and surface != '芝':
+    elif gate == 'PASS' and not surface_supported(surface):
         gate = 'NOT_SUPPORTED_SURFACE'
     elif gate == 'PASS' and not env_ok:
         gate = 'UNVERIFIED_ENVIRONMENT'
@@ -617,7 +627,7 @@ def audit_one_race(race_id, feature, feature_path, out, source_by_url,
                'environment': environment,
                'environment_source_path': str(ENV_PATH),
                'environment_gate': 'PASS' if env_ok else 'UNVERIFIED_ENVIRONMENT',
-               'surface_gate': 'PASS' if surface == '芝' else 'NOT_SUPPORTED_SURFACE',
+               'surface_gate': 'PASS' if surface_supported(surface) else 'NOT_SUPPORTED_SURFACE',
                'collected_artifact': ref(out / f'{race_id}_collected.json'),
                'normalized_artifact': ref(out / f'{race_id}_normalized.json'),
                'source_issues': issues,
