@@ -110,10 +110,17 @@ def test_compose_gate_order_matches_reference_adapter():
     assert compose_gate('PASS', '芝', True, [], []) == 'PASS'
     assert compose_gate('PASS', '芝', True, [{'error': 'x'}], []) == \
         'BLOCKED_STRUCTURAL_CONTRACT'
-    assert compose_gate('PASS', 'ダート', True, [], []) == 'NOT_SUPPORTED_SURFACE'
+    # Dirt base form (2026-11-09): the supported-surface set consulted by
+    # the surface step now includes dirt, so a clean dirt target passes
+    # this step exactly as turf does.  The composition ORDER — structural
+    # contract, then surface, then environment, then issues — is the
+    # 10/25 adapter's, unchanged.
+    assert compose_gate('PASS', 'ダート', True, [], []) == 'PASS'
     # Structural contract outranks the surface gate, as in the 10/25 adapter.
     assert compose_gate('PASS', 'ダート', True, [{'error': 'x'}], []) == \
         'BLOCKED_STRUCTURAL_CONTRACT'
+    # Jump remains a separate, unsupported surface category.
+    assert compose_gate('PASS', '障害', True, [], []) == 'NOT_SUPPORTED_SURFACE'
     assert compose_gate('PASS', '芝', False, [], []) == 'UNVERIFIED_ENVIRONMENT'
     assert compose_gate('PASS', '芝', True, [], ['UNVERIFIED_HORSE_SET']) == 'UNVERIFIED'
     assert compose_gate('BLOCKED_MISSING_DATA', '芝', True, [], []) == \
