@@ -9,9 +9,11 @@ commit f5ac2b1): the current core ``src.data_integrity.audit_collected_data``
 with purpose ``environment_structural_research`` and no approvals, the
 structural contract from
 ``skills/jra-environment-research/scripts/structural_features.py``, the
-pre-post-time environment gate, the turf-only surface gate and the same
-leakage issue checks.  Gate composition reuses workstream C's
-``compose_gate`` verbatim.
+pre-post-time environment gate, the surface gate over the structural
+contract's supported base forms and the same leakage issue checks.
+Gate composition reuses workstream C's ``compose_gate`` verbatim; the
+supported-surface set it consults gained the dirt base form on
+2026-11-09 (see below).
 
 Candidate selection rule: a race is a candidate exactly when its
 ``audit_preparation`` record has ``state == 'PASS'`` (298 races; the split —
@@ -88,10 +90,22 @@ findings, complete history counts, no acquisition gaps, no structural
 contract errors, no leakage, environment gate PASS).  Admission is
 recorded separately from the gate as ``research_admission`` with
 ``evidence_basis='preparation_stage'``; the underlying verification
-status stays UNVERIFIED and is never relabeled VERIFIED_REPARSE.  The
-decision does not extend the turf-only structural contract: dirt
-candidates stay un-admitted with their surface gate recorded.
+status stays UNVERIFIED and is never relabeled VERIFIED_REPARSE.
 Prediction-purpose gates and production promotion are untouched.
+
+Dirt base form (user direction, 2026-11-09).  The 2026-11-08 decision
+did not extend the then turf-only structural contract, so the first
+admission run (2026-11-08) left the 80 dirt candidates un-admitted.
+On 2026-11-09 the user directed that dirt be used for learning too
+(「ダートも学習用に使おうよ」), authorizing the dirt base form recorded
+in ``structural_features.SURFACE_BASE_FORMS`` and
+docs/condition_models.md: dirt targets are served by the same base
+form, with the environment centered on the dirt moisture content
+(goal and corner 4 both required) and the cushion value treated as
+NOT_APPLICABLE.  Dirt candidates are therefore admitted through the
+same preparation-stage evidence path, with the same pool labels, and
+their admission records additionally cite ``DIRT_EXTENSION``.  Jump
+races remain a separate, unsupported surface category.
 """
 from __future__ import annotations
 
@@ -115,7 +129,7 @@ sys.path.insert(0, str(ROOT / 'skills' / 'jra-environment-research' / 'scripts')
 
 from jra_scraper.validation import _normalize_row  # noqa: E402
 from src.data_integrity import audit_collected_data, data_input_sha256  # noqa: E402
-from structural_features import HISTORY_FIELDS, TARGET_FIELDS  # noqa: E402
+from structural_features import HISTORY_FIELDS, TARGET_FIELDS, surface_supported  # noqa: E402
 
 from audit_20261024_strict_gate import (  # noqa: E402
     career_check_for,
@@ -265,16 +279,29 @@ def parse_post_time(race_date: str, hhmm: str) -> str:
 
 def select_environment_dataset(env: dict, surface: str, race_date: str,
                                post_time: str) -> tuple[dict, bool]:
-    """Same-day cushion/moisture observations, both before post time.
+    """Per-surface environment selection over the venue-day record.
 
     Mirrors workstream C's ``select_environment`` semantics over the
-    archive's single per-venue-day record instead of history lists.
+    archive's single per-venue-day record instead of history lists, with
+    the required observations fixed by each surface base form
+    (``structural_features.SURFACE_BASE_FORMS``):
+
+    - Turf base form (unchanged): same-day cushion and turf moisture,
+      both measured before post time; the turf moisture requirement is
+      met when at least one of goal / corner 4 is observed.
+    - Dirt base form (2026-11-09): the environment centers on the dirt
+      moisture content, so BOTH ``dirt_moisture_goal`` and
+      ``dirt_moisture_corner4`` must be observed the same day and
+      measured before post time.  The cushion value is a turf-course
+      measurement with no dirt analogue: it is recorded as
+      NOT_APPLICABLE and is never required or substituted (a venue-day
+      cushion value may exist in the record; it is not used).  Turf
+      moisture is likewise never substituted for dirt moisture.
+
+    The returned moisture record keeps all four observed moisture values
+    for either surface: observations are facts and are not discarded;
+    the base form only decides which of them are required.
     """
-    cushion = None
-    if (env.get('cushion') is not None
-            and str(env.get('cushion_measured_at', '')).startswith(race_date)):
-        cushion = {'measured_at': env['cushion_measured_at'],
-                   'cushion': env['cushion']}
     moisture = None
     if str(env.get('moisture_measured_at', '')).startswith(race_date):
         moisture = {'measured_at': env['moisture_measured_at'],
@@ -282,8 +309,24 @@ def select_environment_dataset(env: dict, surface: str, race_date: str,
                     'turf_moisture_corner4': env.get('turf_moisture_corner4'),
                     'dirt_moisture_goal': env.get('dirt_moisture_goal'),
                     'dirt_moisture_corner4': env.get('dirt_moisture_corner4')}
-    keys = {'芝': ('turf_moisture_goal', 'turf_moisture_corner4'),
-            'ダート': ('dirt_moisture_goal', 'dirt_moisture_corner4')}.get(surface, ())
+    if surface == 'ダート':
+        moisture_ok = bool(
+            moisture
+            and moisture.get('dirt_moisture_goal') is not None
+            and moisture.get('dirt_moisture_corner4') is not None)
+        env_ok = bool(moisture_ok and moisture['measured_at'] < post_time)
+        return {'cushion': None,
+                'cushion_applicability': 'NOT_APPLICABLE',
+                'cushion_not_applicable_reason':
+                    'Cushion value is a turf-course measurement; the dirt '
+                    'base form centers on dirt moisture content.',
+                'moisture': moisture}, env_ok
+    cushion = None
+    if (env.get('cushion') is not None
+            and str(env.get('cushion_measured_at', '')).startswith(race_date)):
+        cushion = {'measured_at': env['cushion_measured_at'],
+                   'cushion': env['cushion']}
+    keys = {'芝': ('turf_moisture_goal', 'turf_moisture_corner4')}.get(surface, ())
     moisture_ok = bool(moisture and keys
                        and any(moisture.get(k) is not None for k in keys))
     env_ok = bool(cushion and moisture_ok
@@ -437,6 +480,24 @@ GOVERNANCE = {
 }
 EVIDENCE_BASIS_PREPARATION_STAGE = 'preparation_stage'
 
+# Dirt base-form extension (user direction, 2026-11-09: 「ダートも学習用に
+# 使おうよ」).  The 2026-11-08 governance decision above did not cover
+# dirt; this separate direction authorizes admitting dirt candidates
+# under the dirt base form added to the structural contract
+# (structural_features.SURFACE_BASE_FORMS), through the same
+# preparation-stage evidence path and with the same pool labels.
+DIRT_EXTENSION = {
+    'decision': 'extend_structural_contract_with_dirt_base_form',
+    'decided_by': 'user',
+    'decision_date': '2026-11-09',
+    'user_direction': 'ダートも学習用に使おうよ',
+    'scope': 'research-track admission of dirt candidates under the '
+             'dirt base form',
+    'recorded_in': ['docs/condition_models.md', 'docs/environment_model.md'],
+    'non_scope': ['prediction purpose gates', 'production promotion',
+                  'Stage 0 requirements', 'jump surface'],
+}
+
 
 def evaluate_research_admission(payload: dict, prep_state,
                                 dataset_verification_pass: bool) -> dict:
@@ -463,7 +524,8 @@ def evaluate_research_admission(payload: dict, prep_state,
           'PREPARATION_STATE_NOT_PASS')
     segment = payload.get('segment') or {}
     surface_gate = payload.get('surface_gate') or (
-        'PASS' if segment.get('surface') == '芝' else 'NOT_SUPPORTED_SURFACE')
+        'PASS' if surface_supported(segment.get('surface'))
+        else 'NOT_SUPPORTED_SURFACE')
     check('surface_supported', surface_gate == 'PASS',
           'SURFACE_NOT_SUPPORTED')
     check('environment_gate_pass', payload.get('environment_gate') == 'PASS',
@@ -505,7 +567,7 @@ def evaluate_research_admission(payload: dict, prep_state,
           bool(bindings.get('descriptors')) and bindings.get('unbound') == 0,
           'PROVENANCE_NOT_FULLY_BOUND')
     admitted = not reasons
-    return {
+    record = {
         'status': 'ADMITTED_RESEARCH' if admitted else 'NOT_ADMITTED',
         'evidence_basis': (EVIDENCE_BASIS_PREPARATION_STAGE if admitted
                            else None),
@@ -519,6 +581,11 @@ def evaluate_research_admission(payload: dict, prep_state,
                          'production_eligible': False} if admitted else None),
         'governance': GOVERNANCE,
     }
+    if segment.get('surface') == 'ダート':
+        # Dirt admissions rest on the separate 2026-11-09 extension
+        # direction in addition to the 2026-11-08 evidence decision.
+        record['dirt_extension'] = DIRT_EXTENSION
+    return record
 
 
 def audit_one_race(race_id, feature, prep, race_row, out, index_set, base,
@@ -605,7 +672,7 @@ def audit_one_race(race_id, feature, prep, race_row, out, index_set, base,
                'post_time': post_time,
                'environment': environment,
                'environment_gate': 'PASS' if env_ok else 'UNVERIFIED_ENVIRONMENT',
-               'surface_gate': 'PASS' if surface == '芝' else 'NOT_SUPPORTED_SURFACE',
+               'surface_gate': 'PASS' if surface_supported(surface) else 'NOT_SUPPORTED_SURFACE',
                'collected_artifact': ref(out / f'{race_id}_collected.json'),
                'normalized_artifact': ref(out / f'{race_id}_normalized.json'),
                'source_issues': issues,
@@ -768,7 +835,8 @@ def run_audit(dataset_dir: Path, out: Path, race_ids: list | None = None) -> dic
             'labels': {'usage': 'posthoc_exploratory_training_only',
                        'production_eligible': False},
             'previous': {'turf_races': 18, 'dirt_races': 0, 'jump_races': 0,
-                         'composition': 'fixed evaluation 6 + 2026-10-25 PASS 10 '
+                         'composition': 'pre-dataset strict-gate pool: fixed '
+                                        'evaluation 6 + 2026-10-25 PASS 10 '
                                         '+ 2026-10-24 PASS 2 (workstream C)',
                          'largest_cell': {'segment': '芝|新潟|2000', 'races': 3}},
             'admitted_race_ids': [p['race_id'] for p in admitted],
@@ -798,10 +866,15 @@ def run_audit(dataset_dir: Path, out: Path, race_ids: list | None = None) -> dic
                                   if p['segment']['surface'] == 'ダート'),
                 'jump_races': sum(1 for p in research_admitted
                                   if p['segment']['surface'] == '障害')},
-            'new_totals_basis': 'previous pool + research-track admissions '
-                                '(evidence_basis=preparation_stage); '
-                                'strict-gate admissions stay in '
-                                'admitted_race_ids / model_ready_race_ids',
+            'new_totals_basis': 'pre-dataset strict pool (18 turf) + this '
+                                "run's research-track admissions "
+                                '(evidence_basis=preparation_stage).  The '
+                                '2026-11-08 run admitted the same 218 turf '
+                                'races, so turf is not double-counted; the '
+                                '80 dirt admissions are new under the '
+                                '2026-11-09 dirt base form.  Strict-gate '
+                                'admissions stay in admitted_race_ids / '
+                                'model_ready_race_ids',
             'admitted_segment_cells': cells(admitted),
             'admitted_band_cells': band_cells(admitted),
             'candidate_segment_cells': cells(payloads),
@@ -831,6 +904,7 @@ def run_audit(dataset_dir: Path, out: Path, race_ids: list | None = None) -> dic
         'research_admitted_race_ids': [p['race_id']
                                        for p in research_admitted],
         'governance': GOVERNANCE,
+        'dirt_extension': DIRT_EXTENSION,
         'approvals_used': [], 'model_calculations_executed': False,
         'method_parity': {
             'reference': 'scripts/audit_20261024_strict_gate.py (workstream C); '
@@ -860,6 +934,13 @@ def run_audit(dataset_dir: Path, out: Path, race_ids: list | None = None) -> dic
                 'preparation_stage beside the unchanged strict gate; the '
                 'core verification status stays UNVERIFIED and is never '
                 'relabeled VERIFIED_REPARSE.',
+                'Dirt base form (user direction, 2026-11-09): the surface '
+                'gate consults structural_features.SURFACE_BASE_FORMS; '
+                'dirt environment selection requires both dirt moisture '
+                'values (goal and corner 4) and records the cushion value '
+                'as NOT_APPLICABLE instead of requiring the turf-course '
+                'measurement.  Turf selection and turf outcomes are '
+                'unchanged; jump remains unsupported.',
             ]},
     }
     (out / 'summary.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2))
