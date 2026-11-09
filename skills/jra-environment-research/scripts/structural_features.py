@@ -23,6 +23,50 @@ COMPONENT_WEIGHTS = {'ability_score': 0.4772727273, 'course_score': 0.1590909091
                      'pace_score': 0.1818181818, 'weight_score': 0.0909090909,
                      'jockey_score': 0.0909090909}
 
+# Surface base forms (docs/condition_models.md).  The common base form —
+# HISTORY_FIELDS / TARGET_FIELDS and the component computation below — is
+# inherited unchanged by every supported surface; a surface base form only
+# fixes which target surface it serves and which same-day environment
+# observations its research connection requires.  No surface-specific
+# coefficient is introduced here: recalibration for a surface is a
+# separately validated condition difference, never part of the base form.
+#
+# - Turf: the environment centers on the cushion value and the turf
+#   moisture (goal / corner 4), both official same-day measurements.
+# - Dirt (added 2026-11-09 on the user's direction): the environment
+#   centers on the dirt moisture content (goal AND corner 4) as the
+#   continuous track-condition variable.  The cushion value is measured
+#   on the turf course and has no dirt analogue, so it is NOT_APPLICABLE
+#   for dirt: never required and never substituted, and turf moisture is
+#   likewise never substituted for dirt moisture.
+# - Jump （障害） is a separate surface category (docs/condition_models.md)
+#   and is deliberately absent: no flat-race base form serves it.
+SURFACE_BASE_FORMS = {
+    '芝': {
+        'form_id': 'turf_base_form_v1',
+        'target_surface': '芝',
+        'environment_required': ('cushion', 'turf_moisture'),
+        'environment_not_applicable': (),
+    },
+    'ダート': {
+        'form_id': 'dirt_base_form_v1',
+        'target_surface': 'ダート',
+        'environment_required': ('dirt_moisture_goal', 'dirt_moisture_corner4'),
+        'environment_not_applicable': ('cushion', 'turf_moisture'),
+    },
+}
+SUPPORTED_TARGET_SURFACES = frozenset(SURFACE_BASE_FORMS)
+
+
+def surface_base_form(surface):
+    """The base-form contract for a target surface, or None if unsupported."""
+    return SURFACE_BASE_FORMS.get(str(surface))
+
+
+def surface_supported(surface) -> bool:
+    """True when a structural base form serves this target surface."""
+    return str(surface) in SURFACE_BASE_FORMS
+
 
 def structural_features(history, target):
     """Caller must validate whole-race audit PASS and hashes before invoking."""
@@ -52,8 +96,8 @@ def structural_features(history, target):
     for key in ('target_distance', 'assigned_weight', 'frame_number'):
         if not math.isfinite(float(target[key])) or float(target[key]) <= 0:
             raise ValueError('Positive finite observed target required: ' + key)
-    if target['target_surface'] != '芝' or target['target_track_condition'] not in {'良', '稍重', '重', '不良'}:
-        raise ValueError('Observed turf target condition required')
+    if surface_base_form(target['target_surface']) is None or target['target_track_condition'] not in {'良', '稍重', '重', '不良'}:
+        raise ValueError('Observed target condition required for a supported surface base form')
     rows = [{key: row[key] for key in HISTORY_FIELDS} for row in history]
     summary = summarize_history_rows(rows, group_keys=('race_id', 'horse_id'))[
         (str(target['race_id']), str(target['horse_id']))]
