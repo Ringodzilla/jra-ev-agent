@@ -334,14 +334,69 @@ class JRAPipeline:
                 )
         return rows
 
-    def _store_foreign_artifact(self, artifact: dict, row, scope: dict[str, str]) -> None:
+    def _apply_hkjc_history(self, rows: list[dict[str, str]], *, cache_only: bool) -> None:
+        from .acquisition_report import iso_date
+        from .foreign_history import parse_foreign_history_artifact
+        from .france_galop import load_identity_sources
+        from .validation import _normalize_int
+
+        for row in rows:
+            if jurisdiction_for_row(row) != "hong_kong":
+                continue
+            day = iso_date(row["date"])
+            source_path = self.config.manual_history_csv.parent / "hkjc_history_sources.json"
+            source = load_identity_sources(source_path).get(f'{day}|{row["race_name"]}')
+            scope = {key: row.get(key, "") for key in
+                     ("race_id", "horse_id", "horse_number", "run_index", "date")}
+            fields = ("time", "last_3f")
+            if not source:
+                self.acquisition_recorder.record(
+                    "hkjc_sectionals", outcome="identity_source_unavailable", fields=fields, **scope
+                )
+                continue
+            url = source["url"]
+            try:
+                html = self.scraper.fetch(url, cache_only=cache_only)
+                identity = self.scraper.fetch(source["identity_url"], cache_only=cache_only)
+                if not html or not identity:
+                    raise ValueError("HKJC sectional or JRA identity page unavailable")
+                artifact = dict(
+                    kind="hkjc_history_sectionals", url=url, date=day, html=html,
+                    sha256=hashlib.sha256(html.encode()).hexdigest(),
+                    race_id=scope["race_id"], horse_id=scope["horse_id"],
+                    horse_name=row["horse_name"], expected_distance=int(_normalize_int(row["distance"])),
+                    race_number=source["race_number"],
+                    official_horse_name=self._foreign_horse_names_map()[scope["horse_id"]],
+                    identity_source=dict(url=source["identity_url"], html=identity,
+                                         sha256=hashlib.sha256(identity.encode()).hexdigest()),
+                )
+                observation = parse_foreign_history_artifact(html, artifact)[0]
+                descriptor = self._store_foreign_artifact(artifact, row, scope)
+            except (KeyError, TypeError, ValueError, OSError) as exc:
+                self.acquisition_recorder.record(
+                    "hkjc_sectionals", url=url, outcome="parse_failed",
+                    fields=fields, reason=str(exc), **scope
+                )
+                continue
+            row.update(_coalesce_history_rows(row, observation))
+            self.acquisition_recorder.record(
+                "hkjc_sectionals", url=url, outcome="observed", fields=fields,
+                artifact_sha256=hashlib.sha256(descriptor.read_bytes()).hexdigest(),
+                artifact_path=descriptor, **scope
+            )
+
+    def _store_foreign_artifact(self, artifact: dict, row, scope: dict[str, str]) -> Path:
         descriptor_dir = self.config.raw_dir / "foreign_artifacts"
         descriptor_dir.mkdir(parents=True, exist_ok=True)
         from .acquisition_report import iso_date
 
         date_iso = iso_date(artifact.get("date") or row.get("date", ""))
-        filename = f"france_tracking_{date_iso}_{safe_filename(scope['horse_id'])}.json"
-        (descriptor_dir / filename).write_text(
+        kind = artifact["kind"]
+        horse_key = safe_filename(scope["horse_id"])
+        race_key = safe_filename(scope["race_id"])
+        filename = f"{kind}_{race_key}_{date_iso}_{horse_key}.json"
+        descriptor = descriptor_dir / filename
+        descriptor.write_text(
             json.dumps(artifact, ensure_ascii=False, indent=2, sort_keys=True),
             encoding="utf-8",
         )
@@ -355,6 +410,8 @@ class JRAPipeline:
                 url=str(artifact.get("url", "")),
                 race_id=scope["race_id"],
             )
+
+        return descriptor
 
     def _process_race(
         self,
@@ -507,6 +564,9 @@ class JRAPipeline:
     ) -> tuple[list[dict[str, str]], bool]:
         embedded_rows = _rows_from_embedded_history(horse)
         if len(embedded_rows) >= 5:
+            if not reprocess_raw:
+                embedded_rows = self._apply_france_history(horse, embedded_rows)
+            self._apply_hkjc_history(embedded_rows, cache_only=reprocess_raw)
             return embedded_rows, False
 
         horse_raw_name = f"horse_{safe_filename(horse.horse_id)}.html"
@@ -539,6 +599,7 @@ class JRAPipeline:
                 target_race_date=horse.target_race_date,
             )
             rows = self._apply_france_history(horse, rows)
+            self._apply_hkjc_history(rows, cache_only=reprocess_raw)
             repair_result = history_repair.build_result(
                 horse,
                 rows=rows,
@@ -578,6 +639,7 @@ class JRAPipeline:
             target_race_date=horse.target_race_date,
         )
         rows = self._apply_france_history(horse, rows)
+        self._apply_hkjc_history(rows, cache_only=reprocess_raw)
         issues.extend(_issues_for_selected_history(detail_issues, rows))
         history_table_missing = any(
             issue.code == "history_table_missing" for issue in detail_issues

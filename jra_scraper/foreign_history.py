@@ -64,6 +64,9 @@ def _jra_identity(artifact, *, number, position, distance, track, race_name):
             or hashlib.sha256(html.encode()).hexdigest() != source["sha256"]):
         raise ValueError("JRA identity source is not hash-bound and official")
     soup = BeautifulSoup(html, "html.parser")
+    if (track, race_name) == ("PARISLONGCHAMP", "QATAR PRIX FOY"):
+        _prix_foy_identity(soup, source["url"], artifact, position, distance)
+        return
     day_text = _text(soup, ".cell.date")
     if _japanese_date(day_text) != artifact["date"]:
         raise ValueError("JRA identity source date mismatch")
@@ -89,6 +92,28 @@ def _jra_identity(artifact, *, number, position, distance, track, race_name):
     if (_text(row, "td.num .cell.num") != str(number)
             or _text(row, "td.place") != str(position)):
         raise ValueError("JRA identity runner number or finish mismatch")
+
+
+def _prix_foy_identity(soup, url, artifact, position, distance):
+    """Use the official bilingual horse history when JRADB has no race result."""
+    profile = urlparse(url)
+    if (profile.path != "/JRADB/accessU.html"
+            or parse_qs(profile.query).get("CNAME") != [artifact["horse_id"]]):
+        raise ValueError("Prix Foy JRA profile ID mismatch")
+    heading = _text(soup, "h1 .txt")
+    english = _text(soup, "h1 .name_en")
+    name = re.fullmatch(r"(.+)（[A-Z]{3}）", english)
+    if (heading != f'競走馬情報 {artifact["horse_name"]} {english}'
+            or not name or name[1].upper() != artifact["official_horse_name"]):
+        raise ValueError("Prix Foy bilingual JRA horse name mismatch")
+    rows = [tr for tr in soup.select("tr") if tr.select_one("td.race")
+            and tr.select_one("td.race").get_text(strip=True) == "フォワ賞"
+            and _japanese_date(_text(tr, "td.date")) == artifact["date"]]
+    cells = _one(rows, "Prix Foy JRA profile run").find_all("td", recursive=False)
+    if (len(cells) != 14 or cells[1].get_text(strip=True) != "仏"
+            or cells[3].get_text(strip=True) != f"芝{distance}"
+            or cells[7].get_text(strip=True) != str(position)):
+        raise ValueError("Prix Foy JRA profile race, distance or finish mismatch")
 
 
 def _nar(soup, artifact):
@@ -167,7 +192,10 @@ def _hkjc(soup, artifact):
     _jra_identity(artifact, number=cells[1].get_text(strip=True), position=cells[0].get_text(strip=True),
                   distance=int(distance[1]), track=meeting_track[1].strip().upper(),
                   race_name=spans[-1].get_text(" ", strip=True))
-    result.update(position=_positive(cells[0].get_text(strip=True)), time=cells[-1].get_text(strip=True),
+    time = cells[-1].get_text(strip=True)
+    if not re.fullmatch(r"\d+:[0-5]\d\.\d{2}", time):
+        raise ValueError("HKJC individual elapsed time unverified")
+    result.update(position=_positive(cells[0].get_text(strip=True)), time=time,
                   last_3f=str(last600), last_3f_status="OBSERVED",
                   last_3f_source="official_hkjc_individual_200m_sum",
                   last_3f_missing_reason="", individual_final800m_200m_splits=splits,

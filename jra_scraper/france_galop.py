@@ -11,29 +11,12 @@ fallback, no imputation, no identity by English name alone.
 
 Identity binding and the Prix Foy limitation
 --------------------------------------------
-The reparse binds the tracking runner to a JRA-registered horse only through
-an independent JRADB overseas result page (see ``_jra_identity`` in
-``foreign_history.py``). JRADB overseas result URLs carry opaque ``CNAME``
-identifiers, so they cannot be constructed or discovered from the race date
-and name alone. They are therefore *operator-supplied per race* through a
-JSON identity-source map (see :func:`load_identity_sources`), fetched at
-collect time, and SHA-bound into the artifact at build time by the existing
-parser. Automated JRADB discovery is future work.
-
-Consequence, documented rather than worked around: the Prix Foy
-(フォワ賞, e.g. 2025-09-07) was not sold by JRA, so a JRADB-format result
-page for it likely does not exist. A brief investigation on 2026-11-08
-confirmed the only JRA page for that race is a news announcement
-(2025-09-08, www.jra.go.jp/news/202509/090803.html) reporting just the one
-Japanese runner in a summary table; it is not in JRADB format (no
-``.cell.date`` / ``.cell.course``, no numbered runner table linking the
-registered horse ID, no full-year date), so ``_jra_identity`` cannot parse
-it. And even with a JRADB-format page, the existing ``_jra_identity``
-translations table only maps ``PARISLONGCHAMP`` to the Arc
-(``QATAR PRIX DE L'ARC DE TRIOMPHE`` / 凱旋門賞), so a Foy artifact would
-fail its race-name check. We do NOT weaken ``_jra_identity`` for this:
-without an identity source, collection for such a row stops at
-``identity_source_unavailable`` with no artifact built.
+The reparse normally binds the tracking runner through an independent JRADB
+overseas result page. Its opaque URL must be supplied through the identity map.
+For the Prix Foy, the same map accepts a JRADB bilingual horse profile with
+the exact registered ID, name, race date, distance and finish. The tracking
+PDF still supplies the race venue and exact timing observations. The
+collector stops if the mapped source is missing or cannot be verified.
 
 Design: pure / injectable. Logic functions perform no hard network calls;
 ``fetch_bytes`` / ``fetch_text`` / ``fetch_identity`` are callables supplied
@@ -49,6 +32,7 @@ from pathlib import Path
 import re
 
 from jra_scraper.foreign_history import parse_foreign_history_artifact
+from jra_scraper.validation import _normalize_int
 
 
 # JRA course markers -> (expected_course in the tracking PDF, venue code in
@@ -285,7 +269,7 @@ def collect_france_history(row: dict, *, official_horse_name: str, fetch_bytes,
     expected_course, code = venue
     try:
         date_iso = _row_date_iso(row)
-        distance = int(str(row.get("distance", "")).strip())
+        distance = int(_normalize_int(str(row.get("distance", "")).strip()))
     except (TypeError, ValueError) as exc:
         return _done("row_date_or_distance_unavailable",
                      f"Row date/distance cannot be read exactly: {exc}")

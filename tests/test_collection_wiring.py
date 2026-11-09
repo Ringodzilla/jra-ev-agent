@@ -180,7 +180,7 @@ def test_france_pass_merges_observation_and_writes_descriptor(tmp_path, france_s
     assert {call["horse_id"] for call in france_stub.calls} == {"HF", "HK"}
     descriptors = sorted((tmp_path / "raw" / "foreign_artifacts").glob("*.json"))
     assert [path.name for path in descriptors] == [
-        "france_tracking_2025-10-05_HF.json", "france_tracking_2025-10-05_HK.json"]
+        "france_tracking_pdf_R_2025-10-05_HF.json", "france_tracking_pdf_R_2025-10-05_HK.json"]
     descriptor = json.loads(descriptors[0].read_text(encoding="utf-8"))
     assert descriptor["kind"] == "france_tracking_pdf"
 
@@ -390,7 +390,7 @@ def test_store_foreign_artifact_registers_the_bound_pdf(tmp_path):
                 "pdf_sha256": "d" * 64}
     pipeline._store_foreign_artifact(
         artifact, _france_row("HF"), {"race_id": "R", "horse_id": "HF"})
-    descriptor = tmp_path / "raw" / "foreign_artifacts" / "france_tracking_2025-10-05_HF.json"
+    descriptor = tmp_path / "raw" / "foreign_artifacts" / "france_tracking_pdf_R_2025-10-05_HF.json"
     assert json.loads(descriptor.read_text(encoding="utf-8"))["kind"] == "france_tracking_pdf"
     assert pipeline.acquisition_recorder.artifacts() == [{
         "path": str(tmp_path / "france_tracking.pdf"), "sha256": "d" * 64,
@@ -403,3 +403,51 @@ def test_write_acquisition_bundles_skips_a_race_with_no_recorded_routes(tmp_path
     refs = pipeline._write_acquisition_bundles([_france_row("HF")], ["R"])
     assert refs == []
     assert not (tmp_path / "raw" / "acquisition").exists()
+
+
+@pytest.mark.parametrize("case", ["observed", "unmapped", "unavailable"])
+def test_hkjc_collector_binds_reparsed_observation(tmp_path, case):
+    from test_foreign_history import HKJC, identity_source
+    from src.skill_workflow import attach_history_sources
+    from src.data_integrity import verify_source_artifacts
+
+    config = _config(tmp_path)
+    pipeline = JRAPipeline(config)
+    identity = identity_source()
+    url = "https://racing.hkjc.com/results"
+    if case != "unmapped":
+        (tmp_path / "hkjc_history_sources.json").write_text(json.dumps({
+            "2026-04-26|QE2世C": {"url": url, "identity_url": identity["url"], "race_number": 9}
+        }))
+    (tmp_path / "foreign_horse_names.json").write_text(
+        json.dumps({"official-jra-id": "MASQUERADE BALL"})
+    )
+    row = dict(race_id="R", horse_id="official-jra-id", horse_name="マスカレードボール",
+               date="2026-04-26", target_race_date="2026-08-29", course="香港",
+               distance="芝2000", race_name="QE2世C")
+    with patch.object(pipeline.scraper, "fetch", side_effect=lambda u, **_: {
+        url: HKJC if case == "observed" else None, identity["url"]: identity["html"]
+    }[u]) as fetch:
+        pipeline._apply_hkjc_history([row], cache_only=True)
+    attempt = pipeline.acquisition_recorder.attempts()[0]
+    if case != "observed":
+        assert "last_3f" not in row
+        assert attempt["outcome"] == (
+            "identity_source_unavailable" if case == "unmapped" else "parse_failed"
+        )
+        return
+    assert all(call.kwargs["cache_only"] for call in fetch.call_args_list)
+    assert attempt["outcome"] == "observed"
+    descriptor = Path(attempt["artifact_path"])
+    assert hashlib.sha256(descriptor.read_bytes()).hexdigest() == attempt["artifact_sha256"]
+    assert row["time"] == "2:00.80"
+    assert row["last_3f"] == "32.96"
+    assert "passing_order" not in row
+    observed_row = {k: row[k] for k in
+                    ("race_id", "horse_id", "horse_name", "date", "target_race_date",
+                     "position", "time", "last_3f", "last_3f_status")}
+    collected = {"rows": [observed_row]}
+    attach_history_sources(collected, config.raw_dir)
+    assert verify_source_artifacts(collected)["status"] == "PASS"
+    observed_row["time"] = "125"
+    assert verify_source_artifacts(collected)["status"] == "MISMATCH"
