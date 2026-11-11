@@ -17,6 +17,32 @@ from analysis.environment_model import train_and_compare
 from scripts.train_environment_model import build_training_races
 
 
+# Measurement stamps whose same-day, pre-capture timing a usable snapshot
+# must prove, per surface contract. Turf (and jump) races are measured via
+# the cushion value; dirt races have no cushion measurement at all and are
+# measured via dirt moisture instead (docs/environment_model.md).
+_TURF_MEASUREMENT_STAMPS = ('cushion_measured_at', 'moisture_measured_at', 'weather_captured_at')
+_DIRT_MEASUREMENT_STAMPS = ('moisture_measured_at', 'weather_captured_at')
+
+
+def is_dirt_snapshot(snapshot: dict) -> bool:
+    """True when the snapshot's capture contract is the dirt one.
+
+    capture_environment records its per-surface contract in
+    required_fields_for_surface; only the dirt contract requires
+    dirt_moisture_goal (and never cushion_measured_at). Snapshots without
+    the contract field are not dirt snapshots.
+    """
+    required = snapshot.get('required_fields_for_surface')
+    return isinstance(required, (list, tuple)) and 'dirt_moisture_goal' in required
+
+
+def _measurement_stamp_keys(snapshot: dict) -> tuple[str, ...]:
+    if is_dirt_snapshot(snapshot):
+        return _DIRT_MEASUREMENT_STAMPS
+    return _TURF_MEASUREMENT_STAMPS
+
+
 def usable_snapshot(snapshot: dict) -> bool:
     if snapshot.get('eligible_for_learning') is not True or snapshot.get('value_type') != 'observed':
         return False
@@ -24,7 +50,7 @@ def usable_snapshot(snapshot: dict) -> bool:
         captured = datetime.fromisoformat(snapshot['captured_at'])
         cutoff = datetime.fromisoformat(snapshot['cutoff_at'])
         stamps = [datetime.fromisoformat(snapshot[key]) for key in
-                  ('cushion_measured_at', 'moisture_measured_at', 'weather_captured_at')]
+                  _measurement_stamp_keys(snapshot)]
         return (captured.tzinfo is not None and cutoff.tzinfo is not None and captured < cutoff
                 and all(stamp.tzinfo is not None and stamp <= captured
                         and stamp.astimezone(timezone(timedelta(hours=9))).date().isoformat() == snapshot['date'] for stamp in stamps))
