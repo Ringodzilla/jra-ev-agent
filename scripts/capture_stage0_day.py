@@ -271,11 +271,12 @@ def run_capture(targets: list[dict], root: Path, now: datetime) -> dict:
 
 def collect_status(root: Path = ROOT) -> dict:
     """Accumulated Stage 0 counts and progress toward promotion minimums."""
-    from scripts.update_environment_learning import usable_snapshot
+    from scripts.update_environment_learning import is_dirt_snapshot, usable_snapshot
 
     observations_dir = root / "report/environment_observations"
     races: dict[str, int] = {}
     eligible_races: set[str] = set()
+    dirt_eligible_races: set[str] = set()
     snapshot_total = 0
     if observations_dir.is_dir():
         for folder in sorted(observations_dir.iterdir()):
@@ -290,13 +291,29 @@ def collect_status(root: Path = ROOT) -> dict:
                 snapshot_total += 1
                 races[race_id] = races.get(race_id, 0) + 1
                 if usable_snapshot(snap):
-                    eligible_races.add(race_id)
+                    if is_dirt_snapshot(snap):
+                        dirt_eligible_races.add(race_id)
+                    else:
+                        eligible_races.add(race_id)
     status: dict = {
         "observations_dir": str(observations_dir),
         "races_with_observations": len(races),
         "snapshots": snapshot_total,
         "learning_eligible_races": len(eligible_races),
         "learning_eligible_race_ids": sorted(eligible_races),
+        # docs/environment_model.md defines the Stage 0 minimums and splits
+        # without any rule for how dirt observations count, so dirt races
+        # accumulate visibly but are never counted toward the minimums
+        # until a counting definition is approved.
+        "dirt_learning_eligible_races": len(dirt_eligible_races),
+        "dirt_learning_eligible_race_ids": sorted(dirt_eligible_races),
+        "dirt_counting": {
+            "status": "accumulating_uncounted",
+            "counted_toward_minimums": False,
+            "reason": "docs/environment_model.md does not define how dirt "
+                      "observations count toward the Stage 0 minimums or "
+                      "split assignment; accumulated only.",
+        },
         "minimum_races": MINIMUM_RACES,
         "minimum_total": sum(MINIMUM_RACES.values()),
         "learning_status": None,
