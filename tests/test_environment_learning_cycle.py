@@ -15,6 +15,82 @@ def snapshot(day='2026-02-01', race_id='R1'):
             'source_url': 'https://www.jra.go.jp/JRADB/accessD.html'}
 
 
+def dirt_snapshot(day='2026-02-01', race_id='D1'):
+    # Shape recorded by capture_environment for a dirt race: the dirt
+    # contract requires dirt moisture and has no cushion measurement key
+    # at all (the cushion page may even have failed; that is non-blocking
+    # for dirt).
+    return {'race_id': race_id, 'track': '東京', 'date': day, 'eligible_for_learning': True,
+            'value_type': 'observed', 'captured_at': day + 'T09:00:00+09:00',
+            'cutoff_at': day + 'T15:40:00+09:00', 'weather_captured_at': day + 'T09:00:00+09:00',
+            'weather': '晴', 'track_condition': '良',
+            'dirt_moisture_goal': 2.5, 'dirt_moisture_corner4': 2.0,
+            'moisture_measured_at': day + 'T06:00:00+09:00',
+            'required_fields_for_surface': ['weather', 'track_condition', 'weather_captured_at',
+                                            'moisture_measured_at', 'dirt_moisture_goal',
+                                            'dirt_moisture_corner4'],
+            'source_url': 'https://www.jra.go.jp/JRADB/accessD.html'}
+
+
+def test_dirt_snapshot_is_usable_without_any_cushion_measurement():
+    valid = dirt_snapshot()
+    assert 'cushion_measured_at' not in valid
+    assert usable_snapshot(valid)
+    # A cushion stamp may be present (track-level page) but is not part of
+    # the dirt contract: even a stale one must not gate dirt usability.
+    assert usable_snapshot(dict(valid, cushion_measured_at='2026-01-31T07:00:00+09:00',
+                                cushion=10.0))
+    for change in ({'value_type': 'forecast'}, {'eligible_for_learning': False},
+                   {'captured_at': '2026-02-01T16:00:00+09:00'},
+                   {'weather_captured_at': '2026-02-01T17:00:00+09:00'},
+                   {'moisture_measured_at': '2026-01-31T06:00:00+09:00'},
+                   {'cutoff_at': None}, {'captured_at': 'not-a-date'}):
+        assert not usable_snapshot(dict(valid, **change))
+    missing_moisture = dict(valid)
+    del missing_moisture['moisture_measured_at']
+    assert not usable_snapshot(missing_moisture)
+
+
+def test_turf_contract_snapshot_still_requires_cushion_stamp():
+    # A snapshot carrying the turf contract explicitly (not just by the
+    # legacy default) keeps the cushion requirement unchanged.
+    valid = dict(snapshot(), required_fields_for_surface=[
+        'weather', 'track_condition', 'weather_captured_at', 'moisture_measured_at',
+        'cushion_measured_at', 'cushion', 'turf_moisture_goal', 'turf_moisture_corner4'])
+    assert usable_snapshot(valid)
+    assert not usable_snapshot(dict(valid, cushion_measured_at='2026-01-31T07:00:00+09:00'))
+    missing = dict(valid)
+    del missing['cushion_measured_at']
+    assert not usable_snapshot(missing)
+
+
+def test_dirt_case_folds_in_as_recorded_exclusion_not_pending(tmp_path):
+    day, race_id = '2026-02-01', 'D1'
+    rows = [{'race_id': race_id, 'horse_id': f'H{h}', 'horse_number': str(h), 'horse_name': f'H{h}',
+             'run_index': '1', 'date': '2026-01-01', 'target_race_date': day,
+             'target_track': '東京', 'target_surface': 'ダート', 'target_weather': '晴',
+             'target_track_condition': '良', 'course': '東京', 'distance': '1600',
+             'target_distance': '1600', 'position': str(h), 'last_3f': '36'} for h in (1, 2)]
+    data = {'data_collector': {'rows': rows, 'environment_snapshots': [dirt_snapshot(day, race_id)]}}
+    directory = tmp_path / 'report/races' / race_id
+    directory.mkdir(parents=True)
+    (directory / 'pipeline_run.json').write_text(json.dumps(data))
+    labels = [{'race_id': race_id, '式別': '単勝', '組番': '', '馬番': '1', '払戻金': '200'}]
+    label_path = tmp_path / 'data/processed/result_labels.csv'
+    label_path.parent.mkdir(parents=True)
+    with label_path.open('w') as file:
+        writer = csv.DictWriter(file, fieldnames=list(labels[0])); writer.writeheader(); writer.writerows(labels)
+    result = update_learning(tmp_path)
+    # The dirt observation is usable and folds in; the (turf-only) training
+    # dataset then excludes the race with its reason recorded, instead of
+    # the race being stuck in pending_environment forever.
+    assert result['pending_environment'] == []
+    assert result['excluded_races'] == [
+        {'race_id': race_id, 'reason': 'turf_cushion_not_applicable_to_dirt'}]
+    assert result['status'] == 'INSUFFICIENT_DATA'
+    assert not result['production_model_changed']
+
+
 def test_training_never_trusts_a_future_forecast_or_after_race_snapshot():
     valid = snapshot()
     assert usable_snapshot(valid)
