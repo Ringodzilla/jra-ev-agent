@@ -276,6 +276,81 @@ def test_main_not_race_day_records_skips(tmp_path, capsys):
     assert {s["reason"] for s in out["skipped"]} == {"not_race_day"}
 
 
+def _dirt_usable_snapshot(race_id, date, post_time, now):
+    # Shape recorded by capture_environment for a dirt race: the dirt
+    # contract requires dirt moisture and carries no cushion measurement.
+    snap = _usable_snapshot(race_id, date, post_time, now)
+    del snap["cushion_measured_at"]
+    snap["dirt_moisture_goal"] = 2.5
+    snap["dirt_moisture_corner4"] = 2.0
+    snap["required_fields_for_surface"] = [
+        "weather", "track_condition", "weather_captured_at",
+        "moisture_measured_at", "dirt_moisture_goal", "dirt_moisture_corner4"]
+    return snap
+
+
+def _fake_dirt_capture_runner(targets, root, now):
+    results = {}
+    for target in targets:
+        snap = _dirt_usable_snapshot(target["race_id"], target["race_date"],
+                                     target["post_time"], now)
+        folder = root / "report/environment_observations" / target["race_id"]
+        folder.mkdir(parents=True, exist_ok=True)
+        name = now.strftime("%Y%m%dT%H%M%S%f") + ".json"
+        (folder / name).write_text(json.dumps(snap, ensure_ascii=False),
+                                   encoding="utf-8")
+        snap["observation_path"] = str(folder / name)
+        results[target["race_id"]] = snap
+    return results
+
+
+def test_main_capture_dirt_race_accumulates_uncounted(tmp_path, capsys):
+    _config_dir(tmp_path, [{
+        "race_name": "武蔵野ステークス", "race_date": DATE, "track": "東京",
+        "race_number": 11, "post_time": "15:30", "surface": "ダート",
+        "distance": "1600m",
+        "source_url": "https://www.jra.go.jp/JRADB/accessD.html?CNAME=d",
+    }])
+    now = datetime(2026, 11, 15, 8, 0, tzinfo=JST)
+    rc = main(["--date", DATE, "--mode", "morning"], now=now,
+              scraper=FakeScraper(PROGRAM_HTML),
+              capture_runner=_fake_dirt_capture_runner, root=tmp_path)
+    assert rc == 0
+    out = json.loads(capsys.readouterr().out)
+    captured_ids = {c["race_id"] for c in out["captured"]}
+    assert captured_ids == {"20261115_東京_11"}
+    # The dirt snapshot folds into the status aggregation as accumulated
+    # but uncounted: docs define no dirt counting rule for the minimums.
+    status = collect_status(tmp_path)
+    assert status["learning_eligible_races"] == 0
+    assert status["dirt_learning_eligible_races"] == 1
+    assert status["dirt_learning_eligible_race_ids"] == ["20261115_東京_11"]
+    assert status["dirt_counting"]["counted_toward_minimums"] is False
+    assert status["dirt_counting"]["status"] == "accumulating_uncounted"
+    assert status["eligible_pool_progress"] == {
+        "current": 0, "minimum_total": 140, "remaining": 140}
+
+
+def test_collect_status_separates_dirt_from_counted_pool(tmp_path):
+    obs = tmp_path / "report/environment_observations"
+    now = datetime(2026, 11, 15, 8, 0, tzinfo=JST)
+    turf = _usable_snapshot("20261115_京都_11", DATE, "15:40", now)
+    folder = obs / "20261115_京都_11"
+    folder.mkdir(parents=True)
+    (folder / "snap.json").write_text(json.dumps(turf), encoding="utf-8")
+    dirt = _dirt_usable_snapshot("20261115_東京_11", DATE, "15:30", now)
+    folder2 = obs / "20261115_東京_11"
+    folder2.mkdir(parents=True)
+    (folder2 / "snap.json").write_text(json.dumps(dirt), encoding="utf-8")
+    status = collect_status(tmp_path)
+    assert status["races_with_observations"] == 2
+    assert status["learning_eligible_races"] == 1
+    assert status["learning_eligible_race_ids"] == ["20261115_京都_11"]
+    assert status["dirt_learning_eligible_races"] == 1
+    assert status["eligible_pool_progress"]["current"] == 1
+    assert status["eligible_pool_progress"]["remaining"] == 139
+
+
 def test_collect_status_with_learning_status_file(tmp_path):
     obs = tmp_path / "report/environment_observations"
     good = _usable_snapshot("20261115_京都_11", DATE, "15:40",
