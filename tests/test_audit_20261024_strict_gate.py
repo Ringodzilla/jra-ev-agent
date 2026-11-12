@@ -97,12 +97,76 @@ def test_select_environment_requires_same_day_before_post():
                             {'measured_at': '2026-10-23T09:00:00+09:00', 'cushion': 9.9}],
         'moisture_history': [{'measured_at': '2026-10-24T05:30:00+09:00'}],
     }
-    environment, ok = select_environment(track_env, '2026-10-24T15:40:00+09:00')
+    environment, ok = select_environment(track_env, '芝',
+                                         '2026-10-24T15:40:00+09:00')
     assert ok is True
     assert environment['cushion']['cushion'] == 9.5
-    _, ok_late = select_environment(track_env, '2026-10-24T06:00:00+09:00')
+    _, ok_late = select_environment(track_env, '芝', '2026-10-24T06:00:00+09:00')
     assert ok_late is False
-    _, ok_missing = select_environment({'cushion_history': []}, '2026-10-24T15:40:00+09:00')
+    _, ok_missing = select_environment({'cushion_history': []}, '芝',
+                                       '2026-10-24T15:40:00+09:00')
+    assert ok_missing is False
+
+
+def _dirt_track_env(moisture):
+    return {
+        'cushion_history': [{'measured_at': '2026-10-24T07:00:00+09:00',
+                             'cushion': 10.0}],
+        'moisture_history': [moisture],
+    }
+
+
+def test_select_environment_dirt_requires_both_dirt_moisture_points():
+    # Dirt base form: BOTH dirt moisture points, same day, before post.
+    # The venue-day cushion value is a turf-course measurement: it is
+    # recorded as NOT_APPLICABLE and never required for dirt.
+    moisture = {'measured_at': '2026-10-24T05:30:00+09:00',
+                'turf_moisture_goal': 11.1, 'turf_moisture_corner4': 13.2,
+                'dirt_moisture_goal': 7.7, 'dirt_moisture_corner4': 8.3}
+    environment, ok = select_environment(
+        _dirt_track_env(moisture), 'ダート', '2026-10-24T09:45:00+09:00')
+    assert ok is True
+    assert environment['cushion'] is None
+    assert environment['cushion_applicability'] == 'NOT_APPLICABLE'
+    assert environment['moisture']['dirt_moisture_goal'] == 7.7
+    assert environment['moisture']['dirt_moisture_corner4'] == 8.3
+    # All four observed moisture values stay recorded.
+    assert environment['moisture']['turf_moisture_goal'] == 11.1
+
+
+def test_select_environment_dirt_never_requires_cushion():
+    moisture = {'measured_at': '2026-10-24T05:30:00+09:00',
+                'dirt_moisture_goal': 7.7, 'dirt_moisture_corner4': 8.3}
+    _, ok = select_environment({'moisture_history': [moisture]}, 'ダート',
+                               '2026-10-24T09:45:00+09:00')
+    assert ok is True
+
+
+def test_select_environment_dirt_rejects_missing_dirt_point():
+    # Turf moisture never substitutes for a missing dirt point.
+    for missing in ('dirt_moisture_goal', 'dirt_moisture_corner4'):
+        moisture = {'measured_at': '2026-10-24T05:30:00+09:00',
+                    'turf_moisture_goal': 11.1, 'turf_moisture_corner4': 13.2,
+                    'dirt_moisture_goal': 7.7, 'dirt_moisture_corner4': 8.3}
+        moisture[missing] = None
+        _, ok = select_environment(
+            _dirt_track_env(moisture), 'ダート', '2026-10-24T09:45:00+09:00')
+        assert ok is False
+
+
+def test_select_environment_dirt_requires_same_day_before_post():
+    moisture = {'measured_at': '2026-10-24T05:30:00+09:00',
+                'dirt_moisture_goal': 7.7, 'dirt_moisture_corner4': 8.3}
+    _, ok_late = select_environment(
+        _dirt_track_env(moisture), 'ダート', '2026-10-24T05:00:00+09:00')
+    assert ok_late is False
+    other_day = {'measured_at': '2026-10-23T05:30:00+09:00',
+                 'dirt_moisture_goal': 7.7, 'dirt_moisture_corner4': 8.3}
+    _, ok_other_day = select_environment(
+        _dirt_track_env(other_day), 'ダート', '2026-10-24T09:45:00+09:00')
+    assert ok_other_day is False
+    _, ok_missing = select_environment({}, 'ダート',
+                                       '2026-10-24T09:45:00+09:00')
     assert ok_missing is False
 
 
