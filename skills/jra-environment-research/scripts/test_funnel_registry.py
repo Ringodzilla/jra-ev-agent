@@ -27,6 +27,9 @@ class RegistryConsistencyTests(unittest.TestCase):
             counts[spec['family']] = counts.get(spec['family'], 0) + 1
         self.assertEqual(counts, fr.FAMILY_COUNTS)
 
+    @unittest.skipUnless(
+        REGISTRY_MD.exists(),
+        'markdown original lives outside the repository (~/workspace/jra-funnel)')
     def test_matches_markdown_original(self):
         parsed = fr.parse_registry_markdown(REGISTRY_MD)
         structured = {}
