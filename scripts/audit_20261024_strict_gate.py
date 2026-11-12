@@ -10,8 +10,11 @@ the current core ``src.data_integrity.audit_collected_data`` with purpose
 pre-post-time environment gate, the surface gate and the same
 leakage issue checks.  (The surface gate was turf-only when this audit
 first ran; the supported-surface set gained the dirt base form on
-2026-11-09 — see ``compose_gate``.  This batch's recorded outputs predate
-the extension and are unchanged.)  Method parity with the 10/25 adapter was verified by
+2026-11-09 — see ``compose_gate`` — and the environment selection was
+aligned with the dirt base form on 2026-11-12 — see
+``select_environment``.  Runs recorded before each change are preserved
+unchanged; a re-audit writes a new run directory.)  Method parity with
+the 10/25 adapter was verified by
 re-running the current core on the frozen 10/25 inputs: the recorded gates
 (PASS / BLOCKED_MISSING_DATA / BLOCKED_UNAPPROVED_IMPUTATION) and the
 input SHA256 reproduce exactly.
@@ -177,14 +180,48 @@ def parse_post_time(text: str) -> str:
     return post.isoformat()
 
 
-def select_environment(track_env: dict, post_time: str) -> tuple[dict, bool]:
-    """Latest same-day cushion/moisture observations, both before post time."""
+def select_environment(track_env: dict, surface: str,
+                       post_time: str) -> tuple[dict, bool]:
+    """Per-surface environment selection from the venue-day histories.
+
+    Mirrors the dataset driver's ``select_environment_dataset``
+    semantics, with the required observations fixed by each surface
+    base form (``structural_features.SURFACE_BASE_FORMS``):
+
+    - Turf (and any non-dirt surface; unchanged): the same-day cushion
+      and moisture observations, both measured before post time.
+    - Dirt base form (2026-11-09): the environment centers on the dirt
+      moisture content, so the same-day moisture observation must
+      carry BOTH ``dirt_moisture_goal`` and ``dirt_moisture_corner4``,
+      measured before post time.  The cushion value is a turf-course
+      measurement with no dirt analogue: it is recorded as
+      NOT_APPLICABLE and is never required or substituted (a venue-day
+      cushion value may exist in the reconstruction; it is not used).
+      Turf moisture is likewise never substituted for dirt moisture.
+
+    The returned moisture record keeps all four observed moisture
+    values: observations are facts and are not discarded; the base
+    form only decides which of them are required.
+    """
     def selected(kind: str):
         values = [x for x in track_env.get(kind + '_history', [])
                   if str(x.get('measured_at', '')).startswith(TARGET)]
         return values[0] if values else None
 
-    cushion, moisture = selected('cushion'), selected('moisture')
+    moisture = selected('moisture')
+    if surface == 'ダート':
+        env_ok = bool(moisture
+                      and moisture.get('dirt_moisture_goal') is not None
+                      and moisture.get('dirt_moisture_corner4') is not None
+                      and moisture['measured_at'] < post_time)
+        return {'cushion': None,
+                'cushion_applicability': 'NOT_APPLICABLE',
+                'cushion_not_applicable_reason':
+                    'Cushion value is a turf-course measurement; the dirt '
+                    'base form centers on dirt moisture content.',
+                'moisture': moisture}, env_ok
+
+    cushion = selected('cushion')
     environment = {'cushion': cushion, 'moisture': moisture}
     env_ok = bool(cushion and moisture
                   and cushion['measured_at'] < post_time
@@ -466,6 +503,11 @@ def main() -> int:
                 'of aborting the batch.',
                 "Hydration uses the current core's artifact keys ('html', "
                 "'sha256'); the Oct-28 adapter used 'raw_html'.",
+                'Environment selection is per surface base form (2026-11-12 '
+                're-audit alignment, mirroring the dataset driver): dirt '
+                'targets require BOTH dirt moisture points (goal and '
+                'corner 4, same day, before post time) and record cushion '
+                'as NOT_APPLICABLE; the turf selection is unchanged.',
             ]},
     }
     (out / 'summary.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2))
@@ -604,7 +646,8 @@ def audit_one_race(race_id, feature, feature_path, out, source_by_url,
         raise ValueError('Collected and normalized input hashes differ')
 
     contract = structural_contract(rows, entries)
-    environment, env_ok = select_environment(tracks.get(track, {}), post_time)
+    environment, env_ok = select_environment(tracks.get(track, {}), surface,
+                                             post_time)
     issues = []
     if not (set_check['same_set'] and set_check['starter_set_same']):
         issues.append('UNVERIFIED_HORSE_SET')
