@@ -28,6 +28,7 @@ import json
 from pathlib import Path
 import re
 import sys
+from urllib.parse import urljoin
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
@@ -178,6 +179,30 @@ def merge_targets(schedule: list[dict], configs: list[dict]) -> list[dict]:
             combined["config_path"] = target["config_path"]
         merged[target["race_id"]] = combined
     return sorted(merged.values(), key=lambda t: (t["track"], t["race_number"]))
+
+
+RACE_LIST_CNAME = "pw01dli00/F3"
+
+
+def fetch_race_links(client, root: Path) -> list:
+    """Parse JRADB entry-list links for the upcoming meetings.
+
+    The list is the JRADB entry-table top page, reached by POSTing its
+    doAction CNAME. A plain GET of the legacy race-list path returns a
+    parameter-error page with no links (observed 2026-11-13), and the
+    parser's race ids carry the calendar date as the last 8-digit run
+    of each race CNAME.
+    """
+    config = build_scrape_config(root)
+    html = client.fetch_post(
+        urljoin(config.base_url, "/JRADB/accessD.html"),
+        {"CNAME": RACE_LIST_CNAME},
+        raw_name="race_list.html",
+        use_cache=False,
+    )
+    if not html:
+        return []
+    return JRAParser(config.base_url).parse_race_list(html)
 
 
 def resolve_source_urls(targets: list[dict], links: list) -> list[dict]:
@@ -397,14 +422,7 @@ def main(argv: list[str] | None = None, *, now: datetime | None = None,
     configs = load_config_races(root / "config", race_date)
     targets = merge_targets(schedule, configs)
 
-    links = []
-    race_list_html = client.fetch_relative(
-        build_scrape_config(root).race_list_path, raw_name="race_list.html",
-        use_cache=False)
-    if race_list_html:
-        links = JRAParser(build_scrape_config(root).base_url).parse_race_list(
-            race_list_html)
-    resolve_source_urls(targets, links)
+    resolve_source_urls(targets, fetch_race_links(client, root))
 
     if args.dry_run:
         print(json.dumps({
