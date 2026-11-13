@@ -20,7 +20,21 @@ class TestJRAParser(unittest.TestCase):
         html = (FIX / "race_list.html").read_text(encoding="utf-8")
         races = self.parser.parse_race_list(html)
         self.assertEqual(2, len(races))
-        self.assertTrue(races[0].race_id.startswith("20260301_中山_11"))
+        # The fixture CNAME carries the meeting code (20260301) ahead of
+        # the calendar date; the race date is the last run (20260329).
+        self.assertTrue(races[0].race_id.startswith("20260329_中山_11"))
+
+    def test_parse_race_list_uses_last_cname_date_run(self):
+        # Real JRADB entry CNAMEs carry the meeting code (year + round +
+        # day) ahead of the calendar date: 2026 0503 11 20261114 is the
+        # 2026-11-14 race, not a 2026-05-03 race.
+        html = ('<a href="/JRADB/accessD.html?CNAME='
+                'pw01dde0105202605031120261114/3E">'
+                "東京11R 武蔵野ステークス 馬番確定</a>")
+        races = self.parser.parse_race_list(html)
+        self.assertEqual(1, len(races))
+        self.assertEqual("20261114_東京_11", races[0].race_id)
+        self.assertEqual("2026-11-14", races[0].race_date)
 
     def test_parse_race_detail_extracts_horses_and_ids(self):
         html = (FIX / "race_detail.html").read_text(encoding="utf-8")
