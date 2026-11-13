@@ -11,6 +11,7 @@ from types import SimpleNamespace
 from scripts.capture_stage0_day import (
     collect_status,
     decide_action,
+    fetch_race_links,
     load_config_races,
     main,
     merge_targets,
@@ -176,6 +177,49 @@ class FakeScraper:
 
     def fetch_relative(self, path, raw_name=None, **kwargs):
         return ""
+
+    def fetch_post(self, url, data, raw_name=None, **kwargs):
+        return ""
+
+
+RACE_LIST_HTML = """
+<html><body>
+<a href="/JRADB/accessD.html?CNAME=pw01dde0105202605031120261114/3E">東京11R 武蔵野ステークス 馬番確定</a>
+<a href="/JRADB/accessD.html?CNAME=pw01dde0108202605031120261114/1C">京都11R デイリー杯2歳ステークス 馬番確定</a>
+<a href="/JRADB/accessD.html?CNAME=pw01dde0108202605041120261115/4C">京都11R エリザベス女王杯 馬番確定</a>
+</body></html>
+"""
+
+
+class ListScraper:
+    def __init__(self, html):
+        self.html = html
+        self.calls = []
+
+    def fetch_post(self, url, data, raw_name=None, **kwargs):
+        self.calls.append((url, data))
+        return self.html
+
+
+def test_fetch_race_links_posts_doaction_cname_and_parses_dates(tmp_path):
+    client = ListScraper(RACE_LIST_HTML)
+    links = fetch_race_links(client, tmp_path)
+    assert client.calls[0][1] == {"CNAME": "pw01dli00/F3"}
+    by_id = {link.race_id: link for link in links}
+    # The calendar date is the LAST 8-digit run of the CNAME; the first
+    # run is the meeting code (2026 + round 05 + day 03/04).
+    assert by_id["20261114_東京_11"].race_date == "2026-11-14"
+    assert by_id["20261114_京都_11"].race_date == "2026-11-14"
+    assert by_id["20261115_京都_11"].race_date == "2026-11-15"
+    targets = [{"race_id": "20261114_東京_11", "race_date": "2026-11-14",
+                "track": "東京", "race_number": 11, "source_url": ""}]
+    resolve_source_urls(targets, links)
+    assert targets[0]["source_url"].endswith("20261114/3E")
+
+
+def test_fetch_race_links_empty_when_post_fails(tmp_path):
+    assert fetch_race_links(ListScraper(""), tmp_path) == []
+    assert fetch_race_links(ListScraper(None), tmp_path) == []
 
 
 def _usable_snapshot(race_id, date, post_time, now):
