@@ -54,6 +54,9 @@ class FakeScraper:
     def fetch_relative(self, path, raw_name=None, use_cache=True):
         return ""
 
+    def fetch_post(self, url, data, raw_name=None, use_cache=True):
+        return ""
+
 
 def _write_kyoto_config(root: Path) -> None:
     config_dir = root / "config"
