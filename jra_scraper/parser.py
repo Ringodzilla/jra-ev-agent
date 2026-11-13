@@ -1110,9 +1110,12 @@ class JRAParser:
     @staticmethod
     def _build_race_id(href: str, race_name: str) -> str:
         date = ""
-        match = re.search(r"(20\d{6})", href)
-        if match:
-            date = match.group(1)
+        dates = re.findall(r"(20\d{6})", href)
+        if dates:
+            # JRADB CNAMEs embed the meeting code (year + round/day, e.g.
+            # "20260503" for 2026, round 5, day 3) ahead of the calendar
+            # date; the calendar date is the LAST 8-digit run.
+            date = dates[-1]
         track = next((t for t in TRACKS if t in race_name), "unknown")
         race_match = re.search(r"(\d{1,2})R", race_name)
         race_no = f"{int(race_match.group(1)):02d}" if race_match else "00"
