@@ -54,6 +54,7 @@ from jra_scraper.scraper import JRAScraper, safe_filename
 from scripts.capture_stage0_day import (
     JST,
     build_scrape_config,
+    fetch_race_links,
     load_config_races,
     merge_targets,
     parse_program_page,
@@ -86,15 +87,7 @@ def discover_targets(root: Path, race_date: str, scraper) -> tuple[list[dict], b
     schedule = parse_program_page(html, race_date) if html else []
     configs = load_config_races(root / "config", race_date)
     targets = merge_targets(schedule, configs)
-    links = []
-    race_list_html = client.fetch_relative(
-        build_scrape_config(root).race_list_path, raw_name="race_list.html",
-        use_cache=False)
-    if race_list_html:
-        from jra_scraper.parser import JRAParser
-        links = JRAParser(build_scrape_config(root).base_url).parse_race_list(
-            race_list_html)
-    resolve_source_urls(targets, links)
+    resolve_source_urls(targets, fetch_race_links(client, root))
     return targets, bool(html), url
 
 
