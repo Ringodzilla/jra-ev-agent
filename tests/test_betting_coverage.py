@@ -361,7 +361,7 @@ def test_canonical_ticket_generation_fails_closed_on_invalid_lineage(
     assert any(error_fragment in error for error in plan["probability_lineage"]["validation"]["errors"])
 
 
-def test_canonical_wakuren_expands_frames_and_drops_selection_missing_top_horse() -> None:
+def test_canonical_wakuren_expands_frames_and_keeps_selection_without_top_horse() -> None:
     rows = [dict(_row(1, win=0.6), frame_number="1"), dict(_row(2, win=0.4), frame_number="2")]
     candidate = {
         "key": "r_coverage|wakuren|1-2",
@@ -386,12 +386,15 @@ def test_canonical_wakuren_expands_frames_and_drops_selection_missing_top_horse(
         patch.object(betting, "_select_optimized_tickets", return_value=[wrong_top]),
         patch.object(betting, "_optimize_portfolio_stakes", return_value=[wrong_top]),
     ):
-        dropped = betting.generate_tickets(
+        kept = betting.generate_tickets(
             rows,
             candidate_evaluations=[win_candidate],
             candidate_validation={"status": "OK"},
         )
-    assert dropped["tickets"] == []
+    # User decision 2026-11-14: a selection is no longer dropped for
+    # missing the top win-probability horse (here horse 1, win=0.6).
+    assert len(kept["tickets"]) == 1
+    assert kept["tickets"][0]["horse_numbers"] == ["2"]
 
 
 def test_preserved_safety_guards_and_optimizer_no_allocation_path() -> None:
