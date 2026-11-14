@@ -513,13 +513,15 @@ def generate_tickets(
             enriched,
             limit=3,
         )
+        # User decision 2026-11-14: no top-probability-horse requirement.
+        # The portfolio stands on eligibility and portfolio safety checks;
+        # value selections are not vetoed for missing the top horse.
         race_tickets = _select_optimized_tickets(
             selection_pool,
             per_race_limit=per_race_limit,
             prefer_wide=prefer_wide,
             force_win_standout=_has_win_standout(enriched),
             min_portfolio_ev=min_portfolio_ev,
-            required_horse_number=top_win_horse_number,
         )
         race_tickets = _optimize_portfolio_stakes(
             race_tickets,
@@ -537,9 +539,6 @@ def generate_tickets(
             if missing_actionable_win_candidate_numbers
             else "optimized_portfolio"
         )
-        if race_tickets and top_win_horse_number not in _portfolio_horse_numbers(race_tickets):
-            race_tickets = []
-            selection_reason = "top_win_probability_horse_missing_after_portfolio_checks"
         if not race_tickets and selection_reason == "optimized_portfolio":
             if top_win_horse_number and not any(
                 top_win_horse_number in _ticket_horse_numbers(ticket)
@@ -842,13 +841,14 @@ def _generate_tickets_from_candidate_evaluations(
         )
         top_horse = _top_win_probability_horse_number(race_rows)
         top3 = _top_win_probability_horse_numbers(race_rows, limit=3)
+        # User decision 2026-11-14: no top-probability-horse requirement
+        # (see generate_tickets); eligibility and portfolio safety decide.
         race_tickets = _select_optimized_tickets(
             selection_pool,
             per_race_limit=per_race_limit,
             prefer_wide=prefer_wide,
             force_win_standout=False,
             min_portfolio_ev=min_portfolio_ev,
-            required_horse_number=top_horse,
         )
         race_tickets = _optimize_portfolio_stakes(
             race_tickets,
@@ -859,8 +859,6 @@ def _generate_tickets_from_candidate_evaluations(
         )
         race_tickets = _rebalance_race_stakes(race_tickets, bankroll_per_race=bankroll_per_race)
         race_tickets = _annotate_portfolio_tickets(_prune_gami_tickets(race_tickets))
-        if race_tickets and top_horse not in _portfolio_horse_numbers(race_tickets):
-            race_tickets = []
         annotated = _annotate_candidate_selection(
             _rank_ticket_pool(candidate_pool, prefer_wide=prefer_wide),
             selected_tickets=race_tickets,
