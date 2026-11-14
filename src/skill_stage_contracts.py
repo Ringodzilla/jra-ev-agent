@@ -161,7 +161,27 @@ def stage_checks(step: str, output: dict, prior: dict[str, dict], *, mode: str) 
             checks.update(ev_checks(rows))
             checks["same_probability_rows"] = rows == _rows(prior.get("probability", {}), "ev_rows")
             from analysis.candidate_ev import build_candidate_evaluations
-            expected = build_candidate_evaluations(rows, _rows(collection, "combo_odds"))
+            from strategy.live_odds import latest_complete_odds_rows
+            # The collection file legitimately holds odds history for many
+            # races and snapshots (shared CSV), while the workflows price
+            # from the active races' current odds only: react_workflow
+            # scopes with latest_complete_odds_rows + active race ids, and
+            # final_workflow passes the single live snapshot as collected.
+            # Recompute against that same scoped input, not the raw file.
+            active_race_ids = {str(r.get("race_id", "")) for r in rows}
+            all_odds = _rows(collection, "combo_odds")
+            if mode == "final":
+                scoped_odds = [
+                    row for row in all_odds
+                    if str(row.get("race_id", "")) in active_race_ids
+                ]
+            else:
+                scoped_odds = [
+                    row
+                    for row in latest_complete_odds_rows(all_odds)
+                    if str(row.get("race_id", "")) in active_race_ids
+                ]
+            expected = build_candidate_evaluations(rows, scoped_odds)
             checks["canonical_candidates_recalculated"] = (
                 output.get("candidate_evaluations") == expected["candidate_evaluations"]
                 and output.get("validation") == expected["validation"])
