@@ -40,11 +40,14 @@ class DataIntegrityTests(unittest.TestCase):
                                         purpose='environment_structural_research')
         self.assertEqual(research['findings'], [])
         self.assertEqual(research['gate'], 'UNVERIFIED')  # Raw evidence still mandatory.
+        # Past-run odds are no longer an audited model input in any
+        # purpose (user decision 2026-11-14), so their absence adds no
+        # finding even for structural research.
         self.row['odds'] = ''
         research = audit_collected_data(self.data, self.config,
                                         purpose='environment_structural_research')
-        self.assertEqual({f['field'] for f in research['findings']}, {'odds'})
-        self.assertEqual(research['gate'], 'BLOCKED_UNAPPROVED_IMPUTATION')
+        self.assertEqual(research['findings'], [])
+        self.assertEqual(research['gate'], 'UNVERIFIED')
 
     def test_structural_research_rejects_target_market_in_features(self):
         research = audit_collected_data(self.data, self.config,
