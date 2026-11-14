@@ -285,7 +285,16 @@ class FinalPredictionWorkflow:
                 self.skill_sequence.record('integrity_audit', self.skill_sequence.bind(audit), checks={'audit_completed': bool(audit.get('input_sha256'))})
                 self.skill_sequence.record('approval_gate', self.skill_sequence.bind(audit), checks={'integrity_and_approvals_pass': audit.get('gate') == 'PASS'}, failure_code=str(audit.get('gate', 'UNVERIFIED')))
             except SkillGateBlocked as exc:
-                return self._finish_after_live(plan, collected=collected, code='NO_GO_DATA_INTEGRITY_BLOCKED', reason=str(exc))
+                reason = str(exc)
+                audit = dict(collected.get('data_integrity_audit') or {})
+                causes = list(audit.get('blocker_causes') or [])
+                if causes:
+                    # Say what is missing and why, not just the gate name
+                    # (user request 2026-11-14).
+                    reason = '{} | {}'.format(
+                        reason,
+                        '; '.join(str(c.get('summary', '')) for c in causes))
+                return self._finish_after_live(plan, collected=collected, code='NO_GO_DATA_INTEGRITY_BLOCKED', reason=reason)
 
     def _build_fixed_analysis(
         self,
