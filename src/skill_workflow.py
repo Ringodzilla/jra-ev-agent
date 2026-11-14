@@ -282,8 +282,9 @@ def attach_history_sources(collected: dict, raw_dir: Path) -> None:
                 continue
             if not isinstance(artifact, dict):
                 continue
-            scope = (str(artifact.get('race_id', '')), str(artifact.get('horse_id', '')))
-            if scope not in seen or artifact in artifacts:
+            key = (artifact.get('kind', ''), artifact.get('sha256', ''))
+            if any((existing.get('kind', ''), existing.get('sha256', '')) == key
+                   for existing in artifacts):
                 continue
             artifacts.append(artifact)
     collected['source_audit'] = dict(source_audit, artifacts=artifacts)
