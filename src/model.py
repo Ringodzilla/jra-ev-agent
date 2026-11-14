@@ -347,10 +347,11 @@ def _predict_structural_odds(row: dict, *, current_odds: float, fair_odds: float
     time_signal = (days_since_last_run - 35.0) / 120.0
     time_factor = _clamp(1.0 + (0.5 * time_signal), 0.94, 1.10)
 
-    avg_odds = _to_float(row.get("avg_odds"), current_odds)
-    volatility = _to_float(row.get("odds_volatility"), 0.0)
+    # User decision 2026-11-14: past-run odds features (avg_odds,
+    # odds_volatility) are not model inputs; the structural odds anchor
+    # no longer blends them in.
     history_count = _to_float(row.get("history_count"), 0.0)
-    anchor_weight = _clamp(0.16 + (0.04 * min(history_count, 5.0)) + (0.10 * volatility), 0.14, 0.40)
+    anchor_weight = _clamp(0.16 + (0.04 * min(history_count, 5.0)), 0.14, 0.40)
     if band == "outsider":
         anchor_weight = max(anchor_weight, 0.30)
     elif band == "longshot":
@@ -359,8 +360,6 @@ def _predict_structural_odds(row: dict, *, current_odds: float, fair_odds: float
     adjusted = current_odds * popularity_factor * time_factor
     if fair_odds > 0:
         adjusted = ((1.0 - anchor_weight) * adjusted) + (anchor_weight * fair_odds)
-    if avg_odds > 0:
-        adjusted = (0.82 * adjusted) + (0.18 * avg_odds)
 
     if band == "favorite":
         lower_multiplier = 0.72
