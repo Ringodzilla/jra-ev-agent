@@ -6,6 +6,7 @@ from strategy.betting import (
     _annotate_candidate_selection,
     _max_horse_stake_dependency_ratio,
     _optimize_portfolio_stakes,
+    _portfolio_horse_numbers,
     _select_optimized_tickets,
 )
 
@@ -64,6 +65,41 @@ class TestBetBuilderSafety(unittest.TestCase):
         )
 
         self.assertEqual([], selected)
+
+    def test_optimizer_adds_priority_coverage_ticket(self):
+        # canonical_ticket_ev prices jra_live singles as hit_prob * win_odds.
+        value = _wide("1-2", ev=1.50)
+        value["win_odds"] = "12.0"
+        coverage = _wide("3-4", ev=1.40)
+        coverage["win_odds"] = "12.0"
+        coverage["ticket_role"] = "coverage"
+        coverage["coverage_reason"] = "marked_core_pair_real_odds"
+        # A second priority coverage ticket makes the loop hit its
+        # per-race-limit break after the first one is appended.
+        coverage2 = _wide("5-6", ev=1.30)
+        coverage2["win_odds"] = "12.0"
+        coverage2["ticket_role"] = "coverage"
+        coverage2["coverage_reason"] = "marked_core_pair_real_odds"
+
+        selected = _select_optimized_tickets(
+            [value, coverage, coverage2],
+            per_race_limit=2,
+            prefer_wide=True,
+            force_win_standout=False,
+            min_portfolio_ev=1.0,
+        )
+
+        self.assertEqual(
+            {"1-2", "3-4"}, {ticket["horse_number"] for ticket in selected}
+        )
+
+    def test_portfolio_horse_numbers_collects_every_leg(self):
+        tickets = [
+            {"horse_numbers": ["1", "2"]},
+            {"horse_number": "3"},
+            {"horse_numbers": []},
+        ]
+        self.assertEqual({"1", "2", "3"}, _portfolio_horse_numbers(tickets))
 
     def test_stake_optimizer_caps_non_core_horse_dependency(self):
         tickets = [
