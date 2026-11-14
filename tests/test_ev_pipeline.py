@@ -1415,7 +1415,11 @@ class TestEVPipeline(unittest.TestCase):
             if ticket["bet_type"] == "win"
         }
 
-        self.assertEqual({"1", "4"}, selected_win_numbers)
+        # User decision 2026-11-14 removed the top win-probability horse
+        # requirement (which forced horse "4" in); the two slots now go
+        # to the highest-EV eligible win candidates, "1" and "2". Horse
+        # "1" still proves the refill from the complete eligible universe.
+        self.assertEqual({"1", "2"}, selected_win_numbers)
 
     def test_selection_caps_rank_the_post_calibration_eligible_pool(self):
         low_ev_first = {
