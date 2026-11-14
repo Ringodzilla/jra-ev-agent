@@ -81,23 +81,54 @@ class ReactiveRaceWorkflow:
     def run(self, race_configs: list[dict[str, object]], **kwargs) -> dict[str, object]:
         if not self.enforce_skill_gates:
             return self._run(race_configs, **kwargs)
-        self.skill_sequence = SkillSequence(self.config.stages_dir)
-        try:
-            self.skill_sequence.record('intake', self.skill_sequence.bind({'race_configs': race_configs, 'workflow_settings': asdict(self.settings), 'ev_weights': asdict(self.ev_calculator.weights)}), checks={
-                'race_configs_present': bool(race_configs),
-                'required_race_identity': all(bool(c.get('race_date') and c.get('track') and c.get('race_number') and c.get('source_url')) for c in race_configs),
-            })
-            return self._run(race_configs, **kwargs)
-        except SkillGateBlocked as exc:
-            skipped = {'status': 'skipped', 'reason': str(exc)}
-            payload = {'data_collector': self._audit_collected, 'analyzer': skipped,
-                       'simulator': skipped, 'ev_calculator': skipped,
-                       'bet_builder': {**skipped, 'tickets': []},
-                       'reviewer': {'status': 'NG', 'reason': str(exc), 'reason_codes': ['SKILL_GATE_BLOCKED'], 'repair_actions': []},
-                       'article_writer': {**skipped, 'markdown': ''},
-                       'skill_workflow': self.skill_sequence.summary(), 'attempt': 0}
-            self._write_stage_outputs(payload)
-            return payload
+        recovery: dict[str, object] | None = None
+        while True:
+            self.skill_sequence = SkillSequence(self.config.stages_dir)
+            try:
+                self.skill_sequence.record('intake', self.skill_sequence.bind({'race_configs': race_configs, 'workflow_settings': asdict(self.settings), 'ev_weights': asdict(self.ev_calculator.weights)}), checks={
+                    'race_configs_present': bool(race_configs),
+                    'required_race_identity': all(bool(c.get('race_date') and c.get('track') and c.get('race_number') and c.get('source_url')) for c in race_configs),
+                })
+                payload = self._run(race_configs, **kwargs)
+                if recovery is not None:
+                    audit = dict(payload.get('data_collector') or {}).get(
+                        'data_integrity_audit') or {}
+                    payload['collection_recovery'] = {
+                        **recovery, 'outcome_gate': audit.get('gate')}
+                return payload
+            except SkillGateBlocked as exc:
+                # Recovery (user request 2026-11-14): when every blocker
+                # is a collection miss or a failed fetch, the data exists
+                # and a re-collection can fix it, so retry once with a
+                # forced rebuild and aggressive repair instead of
+                # returning NO_GO. Saved inputs are frozen evidence and
+                # are never re-collected.
+                audit = dict(self._audit_collected or {}).get(
+                    'data_integrity_audit') or {}
+                causes = list(audit.get('blocker_causes') or [])
+                if (recovery is None and causes
+                        and all(c.get('recoverable') for c in causes)
+                        and kwargs.get('collected_input') is None):
+                    recovery = {'attempted': True,
+                                'previous_gate': audit.get('gate'),
+                                'causes': causes}
+                    kwargs = {**kwargs, 'force_rebuild': True,
+                              'initial_aggressive_repair': True}
+                    continue
+                blocked_exc = exc
+                break
+        skipped = {'status': 'skipped', 'reason': str(blocked_exc)}
+        payload = {'data_collector': self._audit_collected, 'analyzer': skipped,
+                   'simulator': skipped, 'ev_calculator': skipped,
+                   'bet_builder': {**skipped, 'tickets': []},
+                   'reviewer': {'status': 'NG', 'reason': str(blocked_exc), 'reason_codes': ['SKILL_GATE_BLOCKED'], 'repair_actions': []},
+                   'article_writer': {**skipped, 'markdown': ''},
+                   'skill_workflow': self.skill_sequence.summary(), 'attempt': 0}
+        if recovery is not None:
+            payload['collection_recovery'] = {
+                **recovery, 'outcome_gate': 'BLOCKED'}
+        self._write_stage_outputs(payload)
+        return payload
 
     def _run(
         self,
@@ -108,6 +139,7 @@ class ReactiveRaceWorkflow:
         horse_limit: int | None = None,
         reprocess_raw: bool = False,
         collected_input: dict | None = None,
+        initial_aggressive_repair: bool = False,
     ) -> dict[str, object]:
         if collected_input is not None:
             if not self.enforce_skill_gates or self.skill_sequence is None:
@@ -120,7 +152,7 @@ class ReactiveRaceWorkflow:
         collector = self._select_collector(race_configs)
 
         for attempt in range(self.settings.max_repair_attempts + 1):
-            aggressive_repair = attempt > 0
+            aggressive_repair = attempt > 0 or initial_aggressive_repair
             collected = deepcopy(collected_input) if collected_input is not None else collector.run(
                 race_configs,
                 force_rebuild=force_rebuild or aggressive_repair,
