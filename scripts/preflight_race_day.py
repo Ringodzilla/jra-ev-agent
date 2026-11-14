@@ -130,12 +130,17 @@ def build_preflight_config(root: Path, race_date: str, race_id: str) -> ScrapeCo
 
 
 def run_collection(config: dict, root: Path, race_date: str) -> dict:
-    """Collect one race with the existing DataCollectorAgent machinery."""
+    """Collect one race with the existing DataCollectorAgent machinery.
+
+    Always a fresh rebuild: a preflight that audits previously collected
+    rows can certify stale data (it missed the 2026-11-13 NAR recovery
+    route that way), so processed-state reuse is never allowed here.
+    """
     from src.agents.data_collector import DataCollectorAgent
 
     agent = DataCollectorAgent(
         build_preflight_config(root, race_date, str(config["race_id"])))
-    return agent.run([config])
+    return agent.run([config], force_rebuild=True)
 
 
 def classify_finding(finding: dict) -> str:
