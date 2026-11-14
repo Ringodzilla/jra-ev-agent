@@ -85,6 +85,51 @@ def test_all_stages_with_real_source_and_legitimate_no_go(tmp_path, mode, status
     assert sequence.summary()["execution_kind"] == "deterministic_code_gates_not_llm_skill_execution"
 
 
+def _payloads_with_shared_combo_odds(tmp_path, *, current_odds="2"):
+    """Stage payloads whose collection file also holds foreign/stale odds.
+
+    Mirrors the production shared CSV: other races' rows and an older
+    snapshot of the active race sit next to the current odds. The EV
+    contract must recompute from the scoped current odds only.
+    """
+    from analysis.candidate_ev import build_candidate_evaluations
+    payloads = stage_payloads(mode="prediction")
+    evrow = payloads["ev"]["ev_rows"][0]
+    current = dict(race_id="R", bet_type="win", combination="1", odds=current_odds,
+                   captured_at="2026-10-24T10:00:00+00:00")
+    stale = dict(current, odds="9", captured_at="2026-10-24T09:00:00+00:00")
+    foreign = dict(race_id="OTHER", bet_type="win", combination="1", odds="5",
+                   captured_at="2026-10-24T10:00:00+00:00")
+    payloads["collection"]["combo_odds"] = [stale, foreign, current]
+    audit = audit_collected_data(payloads["collection"],
+                                 payloads["intake"]["race_configs"], purpose="prediction")
+    payloads["integrity_audit"] = audit
+    payloads["approval_gate"] = deepcopy(audit)
+    scoped = dict(ev_rows=[evrow], **build_candidate_evaluations([evrow], [current]))
+    payloads["probability"] = deepcopy(scoped)
+    payloads["ev"] = scoped
+    return payloads
+
+
+def test_ev_contract_ignores_foreign_and_stale_combo_odds(tmp_path):
+    sequence = SkillSequence(tmp_path, mode="prediction")
+    run_until(sequence, _payloads_with_shared_combo_odds(tmp_path), "tickets")
+    assert sequence.summary()["blocked_step"] is None
+    assert "ev" in sequence.summary()["completed_steps"]
+
+
+def test_ev_contract_still_blocks_when_current_odds_differ(tmp_path):
+    payloads = _payloads_with_shared_combo_odds(tmp_path)
+    # The workflow priced from odds "2"; the collection's current row now
+    # says "7", so the recalculation must mismatch and block the EV stage.
+    payloads["collection"]["combo_odds"][-1]["odds"] = "7"
+    sequence = SkillSequence(tmp_path, mode="prediction")
+    run_until(sequence, payloads, "ev")
+    with pytest.raises(SkillGateBlocked):
+        sequence.record("ev", sequence.bind(payloads["ev"]), checks={"ok": True})
+    assert sequence.summary()["blocked_step"] == "ev"
+
+
 @pytest.mark.parametrize("step", [step for step, _ in STEPS])
 def test_arbitrary_payload_never_passes_even_with_caller_true(tmp_path, step):
     sequence = SkillSequence(tmp_path)
