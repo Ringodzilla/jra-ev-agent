@@ -77,7 +77,6 @@ def summarize_history_rows(
         distance_values = [_to_float(row.get("distance"), 0.0) for row in ordered]
         time_values = [_distance_speed_score(row) for row in ordered]
         front_values = [_history_front_score(row) for row in ordered]
-        odds_values = [_to_float(row.get("odds"), 0.0) for row in ordered]
 
         avg_finish = _weighted_mean(finish_values, weights, default=10.0)
         avg_last3f = _weighted_mean(last3f_values, weights, default=DEFAULT_LAST3F)
@@ -86,11 +85,9 @@ def summarize_history_rows(
         avg_distance = _weighted_mean(distance_values, weights, default=0.0)
         speed_score = _weighted_mean(time_values, weights, default=0.0)
         front_rate = _weighted_mean(front_values, weights, default=0.5)
-        avg_odds = _weighted_positive_mean(odds_values, weights)
-        recent_odds = _weighted_positive_mean(odds_values[:2], weights[:2]) if odds_values[:2] else 0.0
-        prior_odds = _weighted_positive_mean(odds_values[2:], weights[2:]) if odds_values[2:] else avg_odds
-        odds_trend = _odds_trend(odds_values)
-        odds_volatility = _odds_volatility(odds_values)
+        # User decision 2026-11-14: past-run odds are not carried by the
+        # production source, so odds-derived history features are not
+        # model inputs; an unmeasured feature is excluded, not imputed.
         win_rate = _weighted_mean([1.0 if value <= 1.0 else 0.0 for value in finish_values], weights, default=0.0)
         top3_rate = _weighted_mean([1.0 if value <= 3.0 else 0.0 for value in finish_values], weights, default=0.0)
         consistency = 1.0 / (1.0 + pstdev(finish_values)) if len(finish_values) >= 2 else 1.0
@@ -115,11 +112,6 @@ def summarize_history_rows(
             "avg_popularity": avg_popularity,
             "avg_weight": avg_weight,
             "avg_distance": avg_distance,
-            "avg_odds": avg_odds,
-            "recent_odds": recent_odds or avg_odds,
-            "prior_odds": prior_odds or avg_odds,
-            "odds_trend": odds_trend,
-            "odds_volatility": odds_volatility,
             "speed_score": speed_score,
             "front_rate": front_rate,
             "win_rate": win_rate,
@@ -236,9 +228,6 @@ def build_feature_row(
     avg_last3f = _to_float(history_summary.get("avg_last3f"), DEFAULT_LAST3F)
     avg_popularity = _to_float(history_summary.get("avg_popularity"), 10.0)
     avg_weight = _to_float(history_summary.get("avg_weight"), DEFAULT_WEIGHT)
-    avg_odds = _to_float(history_summary.get("avg_odds"), 0.0)
-    odds_trend = _to_float(history_summary.get("odds_trend"), 0.0)
-    odds_volatility = _to_float(history_summary.get("odds_volatility"), 0.0)
     speed_score = _to_float(history_summary.get("speed_score"), 0.0)
     win_rate = _to_float(history_summary.get("win_rate"), 0.0)
     top3_rate = _to_float(history_summary.get("top3_rate"), 0.0)
@@ -334,12 +323,9 @@ def build_feature_row(
         "avg_last3f": _fmt_float(avg_last3f),
         "avg_popularity": _fmt_float(avg_popularity),
         "avg_weight": _fmt_float(avg_weight),
-        "avg_odds": _fmt_float(avg_odds),
         "current_popularity_score": _fmt_float(current_popularity),
         "popularity_gap": _fmt_float(popularity_gap),
         "days_since_last_run": str(days_since_last_run),
-        "odds_history_trend": _fmt_float(odds_trend),
-        "odds_volatility": _fmt_float(odds_volatility),
         "odds_snapshot_count": str(int(odds_snapshot_count)),
         "odds_first": _fmt_float(odds_first),
         "odds_latest": _fmt_float(odds_latest),
@@ -385,17 +371,7 @@ def _weighted_mean(values: Sequence[float], weights: Sequence[float], *, default
     return total / total_weight
 
 
-def _weighted_positive_mean(values: Sequence[float], weights: Sequence[float]) -> float:
-    filtered_values: list[float] = []
-    filtered_weights: list[float] = []
-    for value, weight in zip(values, weights):
-        if value <= 0:
-            continue
-        filtered_values.append(value)
-        filtered_weights.append(weight)
-    if not filtered_weights:
-        return 0.0
-    return _weighted_mean(filtered_values, filtered_weights, default=0.0)
+
 
 
 def _weighted_counts(values: Iterable[str], weights: Sequence[float]) -> dict[str, float]:
@@ -556,28 +532,6 @@ def _condition_confidence(value: object, key: str) -> float:
         gap = abs(target_index - condition_index)
         evidence += max(0.0, float(count_value)) * {0: 1.0, 1: 0.35, 2: 0.10, 3: 0.0}[gap]
     return max(0.0, min(1.0, evidence / 3.0))
-
-
-def _odds_trend(odds_values: Sequence[float]) -> float:
-    positive = [value for value in odds_values if value > 0]
-    if len(positive) < 2:
-        return 0.0
-    recent = sum(positive[:2]) / min(len(positive[:2]), 2)
-    prior_slice = positive[2:] or positive[1:]
-    prior = sum(prior_slice) / max(len(prior_slice), 1)
-    if prior <= 0:  # pragma: no cover - positive is filtered above
-        return 0.0
-    return max(-0.4, min(0.4, (recent - prior) / prior))
-
-
-def _odds_volatility(odds_values: Sequence[float]) -> float:
-    positive = [value for value in odds_values if value > 0]
-    if len(positive) < 2:
-        return 0.0
-    average = sum(positive) / len(positive)
-    if average <= 0:  # pragma: no cover - positive is filtered above
-        return 0.0
-    return max(0.0, min(1.0, pstdev(positive) / average))
 
 
 def _days_between(start: str, end: str) -> int:
