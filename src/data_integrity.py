@@ -13,6 +13,27 @@ from src.acquisition_coverage import field_coverage, missing_source_coverage
 _RAW_FIELDS = ('date', 'course', 'race_name', 'distance', 'history_surface', 'track_condition',
                'position', 'time', 'last_3f', 'passing_order', 'popularity', 'weight',
                'jockey', 'pace', 'weather', 'odds')
+# History measurement contract (2026-11-13, Arima scope; task-management
+# Issue #39): the adopted official source for past runs (the JRA
+# horse-profile history) carries no win odds, race pace or weather for a
+# past run, and no recovery route is operated for those fields. They are
+# therefore NOT_MEASURED for history rows by contract: the audit emits no
+# coverage records for them and records this contract in every audit
+# output. No value is substituted at the coverage layer; how feature
+# engineering treats the absent values is governed separately by the
+# explicit imputation approvals. Review trigger: after the Arima Kinen
+# (2026-12-27) post-race review.
+_HISTORY_NOT_MEASURED_FIELDS = frozenset({'odds', 'pace', 'weather'})
+_HISTORY_MEASUREMENT_CONTRACT = {
+    'scope': 'history_rows',
+    'not_measured_fields': sorted(_HISTORY_NOT_MEASURED_FIELDS),
+    'basis': ('Adopted official horse-profile source carries no past-run '
+              'odds, pace or weather; no recovery route is operated.'),
+    'decided': '2026-11-13',
+    'review_trigger': 'After the Arima Kinen 2026-12-27 post-race review',
+}
+_COVERAGE_FIELDS = tuple(field for field in _RAW_FIELDS
+                         if field not in _HISTORY_NOT_MEASURED_FIELDS)
 _REQUIRED = {'date', 'distance', 'position', 'time'}
 _EFFECTS = {
     'date': ('default_35_days', 'days_since_last_run'),
@@ -23,7 +44,10 @@ _EFFECTS = {
     'passing_order': ('neutral_0.5', 'front_rate,pace_score,track_bias_score'),
     'popularity': ('default_10', 'avg_popularity,popularity_gap'),
     'weight': ('default_55', 'avg_weight,weight_score'),
-    'odds': ('exclude_nonpositive_then_default_0', 'avg_odds,odds_trend,odds_volatility'),
+    # 'odds' is intentionally absent (user decision 2026-11-14): past-run
+    # odds are not a model input, so their absence is not an imputation
+    # finding; the history measurement contract already excludes them
+    # from acquisition coverage.
     'course': ('exclude_empty_from_map', 'venue_match,course_score'),
     'history_surface': ('exclude_empty_from_map', 'surface_match,course_score'),
     'track_condition': ('exclude_empty_from_map_or_neutral_0.5', 'track_condition_score,course_score'),
@@ -80,7 +104,7 @@ def verify_source_artifacts(collected: dict) -> dict:
         html = artifact.get('html')
         if not isinstance(html, str) or hashlib.sha256(html.encode()).hexdigest() != artifact.get('sha256'):
             return {'status': 'UNVERIFIED', 'mismatches': [],
-                    'acquisition_coverage': missing_source_coverage(collected, _RAW_FIELDS)}
+                    'acquisition_coverage': missing_source_coverage(collected, _COVERAGE_FIELDS)}
         try:
             parser = JRAParser(base_url='https://jra.jp')
             race_id = str(artifact.get('race_id', ''))
@@ -111,7 +135,7 @@ def verify_source_artifacts(collected: dict) -> dict:
                 continue
         except (ValueError, TypeError, KeyError, OSError):
             return {'status': 'UNVERIFIED', 'mismatches': [],
-                    'acquisition_coverage': missing_source_coverage(collected, _RAW_FIELDS)}
+                    'acquisition_coverage': missing_source_coverage(collected, _COVERAGE_FIELDS)}
         for raw_row in parsed:
             row = _normalize_row(raw_row)
             row['date'] = _date_key(row.get('date'))
@@ -123,7 +147,7 @@ def verify_source_artifacts(collected: dict) -> dict:
     rows = collected.get('rows', [])
     if not rows:
         return {'status': 'UNVERIFIED', 'mismatches': [],
-                'acquisition_coverage': missing_source_coverage(collected, _RAW_FIELDS)}
+                'acquisition_coverage': missing_source_coverage(collected, _COVERAGE_FIELDS)}
     mismatches = []
     detected_imputations = []
     acquisition = []
@@ -134,13 +158,13 @@ def verify_source_artifacts(collected: dict) -> dict:
         originals = reparsed.get(key, [])
         target_date = normalized_input.get('target_race_date', '')
         if not target_date:
-            acquisition.extend(missing_source_coverage({'rows': [row]}, _RAW_FIELDS)['records'])
+            acquisition.extend(missing_source_coverage({'rows': [row]}, _COVERAGE_FIELDS)['records'])
             mismatches.append({'row': row, 'field': 'target_race_date', 'source_value': 'missing_cutoff'})
             continue
         if target_date:
             originals = [r for r in originals if r.get('date', '') < target_date]
         if not originals:
-            acquisition.extend(missing_source_coverage({'rows': [row]}, _RAW_FIELDS)['records'])
+            acquisition.extend(missing_source_coverage({'rows': [row]}, _COVERAGE_FIELDS)['records'])
             mismatches.append({'row': row, 'field': 'source_row', 'source_value': 'unmatched_horse_date_or_after_target'})
             continue
         fields = _RAW_FIELDS + (('average_1f',) if any(
@@ -149,6 +173,15 @@ def verify_source_artifacts(collected: dict) -> dict:
         for field in fields:
             value = str(normalized_input.get(field) or '').strip()
             values = [str(original.get(field) or '').strip() for original in originals]
+            if field in _HISTORY_NOT_MEASURED_FIELDS:
+                # Contract fields are not measured: no coverage record is
+                # emitted and an absent value makes no claim. A present
+                # value is still a claim about the source, so it is
+                # verified against the reparsed originals exactly like
+                # any measured field (tampering stays detectable).
+                if value and value not in values:
+                    mismatches.append({'row': row, 'field': field, 'source_value': values})
+                continue
             record = field_coverage(row, normalized_input, field, originals, collected)
             acquisition.append(record)
             if record['state'] == 'SOURCE_SEMANTIC_CONFLICT':
@@ -230,6 +263,79 @@ def _history_odds_observations(html: str, artifact: dict) -> list[dict]:
                  horse_name=artifact.get('horse_name', ''), date=day, odds=value)]
 
 
+_CAUSE_SUMMARIES = {
+    'collection_miss': '{fields} はソースに存在するが未取得（取得ミス）',
+    'fetch_failed': '{fields} の取得に失敗した',
+    'source_missing': '{fields} はソースに存在しない',
+    'imputation_required': '{fields} は補完（値の捏造）が必要なため対象外',
+    'source_unverified': 'ソースの再検証に失敗した',
+}
+
+
+def _classify_blocker_causes(*, unapproved: list, coverage_records: list,
+                             source_verified: bool, excepted) -> list:
+    """Group a blocked audit's causes so a NO_GO answer can say what is
+    missing and why (user request 2026-11-14). Recoverable causes are
+    the ones a re-collection can fix: the source has the value but it
+    was not collected, or the fetch failed. A value the source does not
+    carry, or one only a substitution could invent, is not recoverable.
+    """
+    buckets: dict[str, dict] = {}
+
+    def add(cause: str, field: str, recoverable: bool) -> None:
+        bucket = buckets.setdefault(
+            cause, {'cause': cause, 'fields': {}, 'count': 0,
+                    'recoverable': recoverable})
+        bucket['fields'][field] = bucket['fields'].get(field, 0) + 1
+        bucket['count'] += 1
+
+    imputation_fields = {
+        str(f.get('field', '')) for f in unapproved
+        if f.get('method') not in (None, '', 'none',
+                                   'unsupported_source_observation')}
+    for record in coverage_records:
+        state = record.get('state')
+        if state in {'OBSERVED', 'NOT_MEASURED', 'NOT_APPLICABLE',
+                     'SUBSTITUTED'} or excepted(record):
+            continue
+        field = str(record.get('field', ''))
+        if state in {'AVAILABLE_BUT_NOT_COLLECTED', 'NOT_ATTEMPTED'}:
+            add('collection_miss', field, True)
+        elif state == 'FETCH_FAILED':
+            add('fetch_failed', field, True)
+        elif state in {'SOURCE_FIELD_MISSING', 'SOURCE_ROUTE_UNAVAILABLE'}:
+            if field not in imputation_fields:
+                add('source_missing', field, False)
+        elif state == 'SOURCE_UNVERIFIED':
+            add('source_unverified', field, False)
+    for finding in unapproved:
+        if excepted(finding):
+            continue
+        method = finding.get('method')
+        field = str(finding.get('field', ''))
+        if method == 'unsupported_source_observation':
+            add('source_missing', field, False)
+        elif method in (None, '', 'none'):
+            if finding.get('required_missing'):
+                add('source_missing', field, False)
+        else:
+            add('imputation_required', field, False)
+    if not source_verified:
+        add('source_unverified', '(source)', False)
+    causes = []
+    for cause in ('collection_miss', 'fetch_failed', 'source_missing',
+                  'imputation_required', 'source_unverified'):
+        if cause not in buckets:
+            continue
+        bucket = buckets[cause]
+        fields = ', '.join(
+            f'{field}×{count}'
+            for field, count in sorted(bucket['fields'].items()))
+        bucket['summary'] = _CAUSE_SUMMARIES[cause].format(fields=fields)
+        causes.append(bucket)
+    return causes
+
+
 def audit_collected_data(collected: dict, race_configs: object, approvals: list | None = None,
                          purpose: str = 'prediction') -> dict:
     """Audit missing raw fields separately from feature fallback authorization.
@@ -248,6 +354,20 @@ def audit_collected_data(collected: dict, race_configs: object, approvals: list 
     counts: list[dict] = []
     required_missing = not entries
     unknown_counts = False
+    # Standing-approved substitution methods by field, with the same
+    # validity criteria the approval matcher below applies. Used in the
+    # row loop to treat a source-unsupported field like a missing one
+    # when the user has standing-approved its substitution (2026-11-14).
+    standing_methods = {
+        str(a['field']): str(a['method'])
+        for a in approvals or []
+        if isinstance(a, dict)
+        and a.get('kind') == 'standing_method'
+        and a.get('approved_by') == 'user'
+        and a.get('status') == 'APPROVED'
+        and isinstance(a.get('evidence'), str) and a['evidence'].strip()
+        and a.get('field') and a.get('method')
+    }
 
     def finding(row: dict, field: str, method: str, impact: str, required: bool = False) -> None:
         identity = {k: str(row.get(k, '')) for k in ('race_id', 'horse_id', 'horse_number', 'run_index')}
@@ -310,11 +430,18 @@ def audit_collected_data(collected: dict, race_configs: object, approvals: list 
                     method, impact = _EFFECTS[field]
                     if sectional_not_applicable:
                         pass
-                    elif state:
+                    elif state and standing_methods.get(field) != method:
                         # Neither non-applicability nor a missing observation is
                         # permission to manufacture a comparable 3F/corner value.
                         finding(row, field, 'unsupported_source_observation', impact, True)
                         required_missing = True
+                    elif state:
+                        # User decision 2026-11-14: when the user has
+                        # standing-approved this field's substitution, a
+                        # source that cannot carry the field is the same
+                        # informational situation as a missing value, so the
+                        # approved substitution applies instead of blocking.
+                        finding(row, field, method, impact, field in _REQUIRED)
                     else:
                         finding(row, field, method, impact, field in _REQUIRED)
                 required_missing |= field in _REQUIRED
@@ -406,6 +533,26 @@ def audit_collected_data(collected: dict, race_configs: object, approvals: list 
         if approved:
             for f in race_findings:
                 f['approved'] = True
+    # Standing method approvals (2026-11-13, Arima scope; Issue #39): the
+    # user approved specific (field, method) substitutions as a class, so a
+    # matching finding is approved regardless of the input hash. Every
+    # application is recorded in the audit output; an approval record
+    # without user attribution, APPROVED status or evidence never applies.
+    standing_applied = set()
+    for approval in approvals or []:
+        if not (isinstance(approval, dict)
+                and approval.get('kind') == 'standing_method'
+                and approval.get('approved_by') == 'user'
+                and approval.get('status') == 'APPROVED'
+                and isinstance(approval.get('evidence'), str)
+                and approval['evidence'].strip()
+                and approval.get('field') and approval.get('method')):
+            continue
+        for f in findings:
+            if (not f['approved'] and f['field'] == approval['field']
+                    and f['method'] == approval['method']):
+                f['approved'] = True
+                standing_applied.add((approval['field'], approval['method']))
     unapproved = [f for f in findings if not f['approved']]
     coverage = source_check['acquisition_coverage']
     source_verified = source_check['status'] == 'PASS'
@@ -449,6 +596,11 @@ def audit_collected_data(collected: dict, race_configs: object, approvals: list 
                 'PASS' if source_verified and not unknown_counts else 'UNVERIFIED')))
     if exception_error:
         gate = 'UNVERIFIED'
+    blocker_causes = _classify_blocker_causes(
+        unapproved=unapproved, coverage_records=coverage['records'],
+        source_verified=source_verified, excepted=excepted)
+    recoverable_blockers = bool(blocker_causes) and all(
+        cause['recoverable'] for cause in blocker_causes)
     return {'schema_version': 1, 'status': gate, 'gate': gate, 'purpose': purpose,
             'verification_issues': source_check['mismatches'],
             'recovered_imputation_provenance': source_check.get('detected_imputations', []),
@@ -457,8 +609,16 @@ def audit_collected_data(collected: dict, race_configs: object, approvals: list 
             'acquisition_coverage': coverage,
             'missing_fields': missing, 'missing_field_counts': dict(Counter(m['field'] for m in missing)),
             'history_counts': counts, 'history_counts_verified': not unknown_counts,
-            'unapproved_finding_count': len(unapproved), 'source_audit_status': 'VERIFIED_REPARSE' if source_verified else 'UNVERIFIED',
+            'unapproved_finding_count': len(unapproved),
+            'blocker_causes': blocker_causes,
+            'recoverable_blockers': recoverable_blockers,
+            'source_audit_status': 'VERIFIED_REPARSE' if source_verified else 'UNVERIFIED',
             'raw_provenance_status': 'VERIFIED_REPARSE' if source_verified else 'UNVERIFIED',
+            'history_measurement_contract': dict(_HISTORY_MEASUREMENT_CONTRACT),
+            'standing_approvals_applied': [
+                {'field': field, 'method': method}
+                for field, method in sorted(standing_applied)],
             'limitations': ['Normalized inputs only; original-source parser omissions are not verified.',
                             'Collector quality flags and nonempty numeric values do not prove observed origin.',
-                            'Raw history reparse verifies reproducibility, not independent parser completeness or current entry provenance.']}
+                            'Raw history reparse verifies reproducibility, not independent parser completeness or current entry provenance.',
+                            'History odds, pace and weather are not measured by contract (2026-11-13, Arima scope): the adopted horse-profile source carries none of them and no acquisition coverage is claimed for them.']}
