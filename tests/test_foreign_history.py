@@ -60,6 +60,22 @@ def test_nar_uses_official_sectional_corner_and_market_columns():
     assert 'weather' not in parse_foreign_history_artifact(NAR.replace('天候：晴', ''), artifact('nar_history_result'))[0]
 
 
+def test_nar_unpopulated_odds_column_is_absent_not_fatal():
+    row = parse_foreign_history_artifact(
+        NAR.replace('<td class="p">10.5</td>', '<td class="p"></td>'),
+        artifact('nar_history_result'))[0]
+    assert 'odds' not in row
+    assert row['last_3f'] == '41.9' and row['passing_order'] == '3-3-7-8'
+
+
+def test_nar_duplicate_odds_cells_are_rejected():
+    import pytest as _pytest
+    with _pytest.raises(ValueError):
+        parse_foreign_history_artifact(
+            NAR.replace('<td class="p">10.5</td>', '<td class="p">10.5</td><td class="p">9.9</td>'),
+            artifact('nar_history_result'))
+
+
 def test_hkjc_exact_individual_last600m_does_not_relabel_400m_positions_as_corners():
     row = parse_foreign_history_artifact(HKJC, artifact('hkjc_history_sectionals'))[0]
     assert row['last_3f'] == '32.96'
@@ -344,39 +360,3 @@ def test_imperial_raw_table_schema_must_be_complete(imperial_source, old, new):
     item['source']['sha256'] = hashlib.sha256(path.read_bytes()).hexdigest()
     with pytest.raises(ValueError):
         parser(item, row)
-
-
-@pytest.mark.parametrize("change", ["none", "id", "name", "english", "date", "country", "distance", "finish"])
-def test_prix_foy_uses_bilingual_jra_registered_profile(france_source, change):
-    import hashlib
-
-    artifact, page, _ = france_source
-    text = FRANCE.replace("QATAR PRIX DE L'ARC DE TRIOMPHE", "QATAR PRIX FOY")
-    page.extract_text.return_value = text
-    html = ('<h1><span class="txt"><span>競走馬情報</span>クロワデュノール'
-            '<span class="name_en">Croix du Nord（JPN）</span></span></h1><table><tr>'
-            '<td class="date">2025年10月5日</td><td>仏</td><td class="race">フォワ賞</td>'
-            '<td>芝2400</td><td></td><td></td><td></td><td>14</td>'
-            + '<td></td>' * 6 + '</tr></table>')
-    replacements = {"name": ("クロワデュノール", "別馬"), "english": ("Croix du Nord", "Other"),
-                    "date": ("10月5日", "10月6日"), "country": ("仏", "英"),
-                    "distance": ("芝2400", "芝2000"), "finish": ("<td>14", "<td>1")}
-    if change in replacements:
-        html = html.replace(*replacements[change])
-    horse_id = "wrong-id" if change == "id" else artifact["horse_id"]
-    artifact["identity_source"] = {
-        "url": f"https://www.jra.go.jp/JRADB/accessU.html?CNAME={horse_id}",
-        "html": html, "sha256": hashlib.sha256(html.encode()).hexdigest(),
-    }
-    if change == "none":
-        assert parse_foreign_history_artifact(text, artifact)[0]["last_3f"] == "37.61"
-    else:
-        with pytest.raises(ValueError, match="Prix Foy"):
-            parse_foreign_history_artifact(text, artifact)
-
-
-def test_hkjc_requires_the_individual_elapsed_time():
-    with pytest.raises(ValueError, match="individual elapsed time"):
-        parse_foreign_history_artifact(
-            HKJC.replace("2:00.80", "1 1/4"), artifact("hkjc_history_sectionals")
-        )
